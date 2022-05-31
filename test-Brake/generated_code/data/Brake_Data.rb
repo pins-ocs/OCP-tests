@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brake_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -90,7 +90,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -258,9 +258,9 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :v_f => 0,
-    :v_i => 1,
-    :x_i => 0,
+    :v_f => 0.0,
+    :v_i => 1.0,
+    :x_i => 0.0,
 
     # Post Processing Parameters
 
@@ -330,11 +330,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 1,
-        :n      => 400,
+        :n      => 400.0,
+        :length => 1.0,
       },
     ],
   };

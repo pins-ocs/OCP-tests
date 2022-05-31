@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,12 +99,12 @@ namespace MaximumAscentDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MaximumAscent::Dfd_odeDxxup_numRows() const { return 4; }
-  integer MaximumAscent::Dfd_odeDxxup_numCols() const { return 9; }
-  integer MaximumAscent::Dfd_odeDxxup_nnz()     const { return 24; }
+  integer MaximumAscent::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer MaximumAscent::Dfd_odeDxxpu_numCols() const { return 9; }
+  integer MaximumAscent::Dfd_odeDxxpu_nnz()     const { return 24; }
 
   void
-  MaximumAscent::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  MaximumAscent::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -133,7 +133,7 @@ namespace MaximumAscentDefine {
 
 
   void
-  MaximumAscent::Dfd_odeDxxup_sparse(
+  MaximumAscent::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -202,18 +202,18 @@ namespace MaximumAscentDefine {
     result__[ 22  ] = result__[19];
     result__[ 23  ] = __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 24, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 24, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MaximumAscent::D2fd_odeD2xxup_numRows() const { return 9; }
-  integer MaximumAscent::D2fd_odeD2xxup_numCols() const { return 9; }
-  integer MaximumAscent::D2fd_odeD2xxup_nnz()     const { return 33; }
+  integer MaximumAscent::D2fd_odeD2xxpu_numRows() const { return 9; }
+  integer MaximumAscent::D2fd_odeD2xxpu_numCols() const { return 9; }
+  integer MaximumAscent::D2fd_odeD2xxpu_nnz()     const { return 33; }
 
   void
-  MaximumAscent::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  MaximumAscent::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -251,7 +251,7 @@ namespace MaximumAscentDefine {
 
 
   void
-  MaximumAscent::D2fd_odeD2xxup_sparse(
+  MaximumAscent::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -329,13 +329,13 @@ namespace MaximumAscentDefine {
     result__[ 30  ] = result__[27];
     result__[ 31  ] = result__[28];
     real_type t55  = Tbar(t3);
-    real_type t63  = 1.0 / (-QM__[0] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
+    real_type t63  = 1.0 / (-t3 * QM__[0] * ModelPars[iM_mdot] + ModelPars[iM_m0]);
     real_type t64  = UM__[0];
     real_type t65  = sin(t64);
     real_type t69  = cos(t64);
-    result__[ 32  ] = t65 * t63 * t55 * t1 + t69 * t63 * t55 * t25;
+    result__[ 32  ] = t1 * t55 * t63 * t65 + t25 * t55 * t63 * t69;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 33, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 33, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

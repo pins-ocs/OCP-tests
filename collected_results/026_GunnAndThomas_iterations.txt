@@ -25,20 +25,6 @@ END Mesh[mesh]
 Model Parameters
 ....................................x1_i = 1
 ....................................x2_i = 0
-INFO CLASS = GunnAndThomas
-  #nodes      = 201
-  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(2/2)
-  total       = nZ=806, UC=200, Q=201
-  index start = omega=804, p=806
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 6] ( 0.00372  , 0.00473  ) [   24.2   ,   24.3   ] 0.0102     [0:0:2:0:3:0:0:0:0:0:0:0]
@@ -64,7 +50,7 @@ NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 21, 2] ( 1.1e-08  , 1.1e-09  ) [ 1.25e-08 , 1.25e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 22, 2] ( 1.1e-09  , 1.1e-10  ) [ 1.25e-09 , 1.25e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 23, 1] ( 1.1e-10  , 5.05e-16 ) [ 1.25e-10 , 3.6e-16  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 1.1e-10  , 5.08e-16 ) [ 1.25e-10 , 3.65e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -78,8 +64,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 806           N. System pars = 200
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 19.8[ms]      timeout        = 0 [ms]
-iteration      = 23            Memory Used    = 92Kb (+69bytes)
+Elapsed Time   = 21.7[ms]      timeout        = 0 [ms]
+iteration      = 23            Memory Used    = 93Kb (+21bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -95,15 +81,15 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 2.554e-14     last ||d||_inf = 1.125e-14
-last ||f||_1   = 5.0454e-16    last ||d||_1   = 3.6039e-16
-last ||f||_2   = 1.4935e-15    last ||d||_2   = 9.3897e-16
+last ||f||_inf = 2.2564e-14    last ||d||_inf = 9.3076e-15
+last ||f||_1   = 5.0769e-16    last ||d||_1   = 3.6477e-16
+last ||f||_2   = 1.4802e-15    last ||d||_2   = 9.4166e-16
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

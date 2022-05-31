@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,29 +20,29 @@
 -- User Header
 
 -- Auxiliary values
-jn_max                   = 65
+jn_max                   = 65.0
+epsi_COV                 = 0.01
+v_nom                    = 0.173
+js_min                   = -50
+epsi_ACC                 = 0.01
+epsi_VMAX                = 0.01
+tol_ACC                  = 0.01
+epsi_PATH                = 0.01
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-v_nom                    = 0.173
-tol_COV                  = 0.01
-epsi_COV                 = 0.01
-epsi_VMAX                = 0.01
 deltaFeed                = v_nom
-tol_ACC                  = 0.01
-tol_CTRL                 = 0.01
-js_min                   = -50
-epsi_PATH                = 0.01
-epsi_CTRL                = 0.01
 tol_VMAX                 = 0.01
-js_max                   = 30
+js_max                   = 30.0
 tol_PATH                 = 0.01
-epsi_ACC                 = 0.01
-mesh_segments            = 100
+tol_CTRL                 = 0.01
+tol_COV                  = 0.01
+epsi_CTRL                = 0.01
+mesh_segments            = 100.0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -63,7 +63,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -77,10 +77,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "CNOC_dump",
@@ -145,7 +145,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -284,16 +284,16 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
-    an_f = 0,
-    an_i = 0,
-    as_f = 0,
-    as_i = 0,
-    n_f  = 0,
-    n_i  = 0,
-    vn_f = 0,
-    vn_i = 0,
-    vs_f = 0,
-    vs_i = 0,
+    an_f = 0.0,
+    an_i = 0.0,
+    as_f = 0.0,
+    as_i = 0.0,
+    n_f  = 0.0,
+    n_i  = 0.0,
+    vn_f = 0.0,
+    vn_i = 0.0,
+    vs_f = 0.0,
+    vs_i = 0.0,
 
     -- Post Processing Parameters
     an_max                   = 1.2,
@@ -319,12 +319,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     jsControl = {
-      type      = ,
+      type      = "LOGARITHMIC",
       epsilon   = epsi_CTRL,
       tolerance = tol_CTRL,
     },
     jnControl = {
-      type      = ,
+      type      = "LOGARITHMIC",
       epsilon   = epsi_CTRL,
       tolerance = tol_CTRL,
     },
@@ -421,12 +421,12 @@ content = {
       
       {
         x0           = -0.01,
-        y0           = 0,
+        y0           = 0.0,
         x1           = 0.02,
         y1           = 0.002,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -435,25 +435,25 @@ content = {
         x0           = 0.02,
         y0           = 0.002,
         x1           = 0.05,
-        y1           = 0,
+        y1           = 0.0,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
       
       {
         x0           = 0.05,
-        y0           = 0,
+        y0           = 0.0,
         x1           = 0.05,
         y1           = 0.01,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
-        angle0       = 0,
+        angle0       = 0.0,
         angle1       = 3.1415,
       },
       
@@ -463,8 +463,8 @@ content = {
         x1           = 0.02,
         y1           = 0.012,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -475,8 +475,8 @@ content = {
         x1           = -0.01,
         y1           = 0.01,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -487,8 +487,8 @@ content = {
         x1           = -0.01,
         y1           = 0.02,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -499,8 +499,8 @@ content = {
         x1           = 0.02,
         y1           = 0.022,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -511,8 +511,8 @@ content = {
         x1           = 0.05,
         y1           = 0.02,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -523,11 +523,11 @@ content = {
         x1           = 0.05,
         y1           = 0.03,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
-        angle0       = 0,
+        angle0       = 0.0,
         angle1       = 3.1415,
       },
       
@@ -537,8 +537,8 @@ content = {
         x1           = 0.02,
         y1           = 0.032,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -549,8 +549,8 @@ content = {
         x1           = -0.01,
         y1           = 0.03,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -561,8 +561,8 @@ content = {
         x1           = -0.01,
         y1           = 0.04,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -573,8 +573,8 @@ content = {
         x1           = 0.02,
         y1           = 0.042,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -585,8 +585,8 @@ content = {
         x1           = 0.05,
         y1           = 0.04,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -597,11 +597,11 @@ content = {
         x1           = 0.05,
         y1           = 0.05,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
-        angle0       = 0,
+        angle0       = 0.0,
         angle1       = 3.1415,
       },
       
@@ -611,8 +611,8 @@ content = {
         x1           = 0.02,
         y1           = 0.052,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -623,8 +623,8 @@ content = {
         x1           = -0.01,
         y1           = 0.05,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -635,8 +635,8 @@ content = {
         x1           = -0.01,
         y1           = 0.06,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -647,8 +647,8 @@ content = {
         x1           = 0.02,
         y1           = 0.062,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },
@@ -659,8 +659,8 @@ content = {
         x1           = 0.05,
         y1           = 0.06,
         feedRate     = v_nom,
-        spindleRate  = 3000,
-        crossSection = 1,
+        spindleRate  = 3000.0,
+        crossSection = 1.0,
         tolerance    = path_following_tolerance,
         n            = mesh_segments,
       },

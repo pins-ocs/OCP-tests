@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Pugliese_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-t__M = 38.15
-g__S = 3.5
 g__M = 1.5
-C__M = (1-1/t__M)*g__M*p__M
-YEAR = 365.25
+g__S = 3.5
 t__S = 45.15
+YEAR = 365.25
+t__M = 38.15
+C__M = (1-1/t__M)*g__M*p__M
 C__S = (1-1/t__S)*g__S*p__S
 
 mechatronix do |data|
@@ -97,7 +97,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -263,7 +263,7 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :K         => 107,
+    :K         => 107.0,
     :a         => 0.00402,
     :a__IL     => 131.26,
     :a__R      => 0.072,
@@ -274,7 +274,7 @@ mechatronix do |data|
     :mu__R     => 0.72,
     :r         => 0.006,
     :rho__D    => 0.00686,
-    :w2        => 500,
+    :w2        => 500.0,
     :kappa__AC => 5.44,
     :kappa__R  => 32.81,
 
@@ -283,22 +283,22 @@ mechatronix do |data|
     # Boundary Conditions
     :C0  => 2.63e-05,
     :D0  => 0.049,
-    :Ip0 => 0,
+    :Ip0 => 0.0,
     :R0  => 2.53,
-    :T0  => 47,
+    :T0  => 47.0,
 
     # Post Processing Parameters
 
     # User Function Parameters
-    :e     => 5000,
+    :e     => 5000.0,
     :e__C  => 0.75,
     :e__D  => 0.02,
     :e__IL => 0.1245,
     :i0    => 0.00299,
-    :s     => 10,
-    :s__C  => 10,
+    :s     => 10.0,
+    :s__C  => 10.0,
     :s__D  => 0.4,
-    :s__IL => 1000,
+    :s__IL => 1000.0,
 
     # Continuation Parameters
 
@@ -344,11 +344,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 400,
         :length => 5*YEAR,
+        :n      => 400.0,
       },
     ],
   };

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,17 +20,17 @@
 -- User Header
 
 -- Auxiliary values
-tol_ctrl0  = 0.01
-tol_T      = 0.1
 epsi_ctrl0 = 0.01
-epsi_T     = 0.01
 epsi_ctrl  = epsi_ctrl0
+tol_ctrl0  = 0.01
 tol_ctrl   = tol_ctrl0
+epsi_T     = 0.01
+tol_T      = 0.1
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -51,7 +51,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -65,10 +65,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "ICLOCS_SingularArc_dump",
@@ -133,7 +133,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -259,12 +259,12 @@ content = {
     -- Model Parameters
 
     -- Guess Parameters
-    T_init = 100,
+    T_init = 100.0,
 
     -- Boundary Conditions
     x1_i = 1/2.00*Pi,
-    x2_i = 4,
-    x3_i = 0,
+    x2_i = 4.0,
+    x3_i = 0.0,
 
     -- Post Processing Parameters
 
@@ -288,7 +288,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = epsi_ctrl,
       tolerance = tol_ctrl,
     },
@@ -315,12 +315,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 400,
-        length = 1,
+        length = 1.0,
+        n      = 400.0,
       },
     },
   },

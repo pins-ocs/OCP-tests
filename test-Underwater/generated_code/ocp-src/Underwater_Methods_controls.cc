@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -247,17 +247,17 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 0.5e0 * t3 * t1;
     result__[ 1   ] = result__[0];
     real_type t8   = ALIAS_u1Control_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = LM__[3] * t3 + t8;
+    result__[ 2   ] = t3 * LM__[3] + t8;
     real_type t10  = 1.0 / ModelPars[iM_m3];
     result__[ 3   ] = 0.5e0 * t10 * t1;
     result__[ 4   ] = result__[3];
     real_type t15  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
-    result__[ 5   ] = LM__[4] * t10 + t15;
+    result__[ 5   ] = t10 * LM__[4] + t15;
     real_type t17  = 1.0 / ModelPars[iM_inertia];
     result__[ 6   ] = 0.5e0 * t17 * t1;
     result__[ 7   ] = result__[6];
     real_type t22  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
-    result__[ 8   ] = LM__[5] * t17 + t22;
+    result__[ 8   ] = t17 * LM__[5] + t22;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }
@@ -376,211 +376,6 @@ namespace UnderwaterDefine {
     U__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * LM__[5], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 3 );
-  }
-
-  /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  Underwater::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[6], LM__[6];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    XM__[4] = (XL__[4]+XR__[4])/2;
-    XM__[5] = (XL__[5]+XR__[5])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    LM__[4] = (LL__[4]+LR__[4])/2;
-    LM__[5] = (LL__[5]+LR__[5])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_1_0 = 0.0e0;
-    real_type tmp_2_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_1_1 = 0.0e0;
-    real_type tmp_2_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type tmp_1_2 = 0.0e0;
-    real_type tmp_2_2 = 0.0e0;
-    real_type tmp_0_3 = 0.0e0;
-    real_type tmp_1_3 = 0.0e0;
-    real_type tmp_2_3 = 0.0e0;
-    real_type tmp_0_4 = 0.0e0;
-    real_type tmp_1_4 = 0.0e0;
-    real_type tmp_2_4 = 0.0e0;
-    real_type tmp_0_5 = 0.0e0;
-    real_type tmp_1_5 = 0.0e0;
-    real_type tmp_2_5 = 0.0e0;
-    real_type tmp_0_6 = 0.0e0;
-    real_type tmp_1_6 = 0.0e0;
-    real_type tmp_2_6 = 0.0e0;
-    real_type tmp_0_7 = 0.0e0;
-    real_type tmp_1_7 = 0.0e0;
-    real_type tmp_2_7 = 0.0e0;
-    real_type tmp_0_8 = 0.0e0;
-    real_type tmp_1_8 = 0.0e0;
-    real_type tmp_2_8 = 0.0e0;
-    real_type t2   = 1.0 / ModelPars[iM_m1];
-    real_type t5   = u3Control.solve_rhs(-LM__[3] * t2, -1, 1);
-    real_type tmp_0_9 = -0.5e0 * t2 * t5;
-    real_type tmp_1_9 = 0.0e0;
-    real_type tmp_2_9 = 0.0e0;
-    real_type tmp_0_10 = 0.0e0;
-    real_type t9   = 1.0 / ModelPars[iM_m3];
-    real_type t12  = u3Control.solve_rhs(-LM__[4] * t9, -1, 1);
-    real_type tmp_1_10 = -0.5e0 * t9 * t12;
-    real_type tmp_2_10 = 0.0e0;
-    real_type tmp_0_11 = 0.0e0;
-    real_type tmp_1_11 = 0.0e0;
-    real_type t16  = 1.0 / ModelPars[iM_inertia];
-    real_type t19  = u3Control.solve_rhs(-LM__[5] * t16, -1, 1);
-    real_type tmp_2_11 = -0.5e0 * t16 * t19;
-    real_type tmp_0_12 = 0.0e0;
-    real_type tmp_1_12 = 0.0e0;
-    real_type tmp_2_12 = 0.0e0;
-    real_type tmp_0_13 = 0.0e0;
-    real_type tmp_1_13 = 0.0e0;
-    real_type tmp_2_13 = 0.0e0;
-    real_type tmp_0_14 = 0.0e0;
-    real_type tmp_1_14 = 0.0e0;
-    real_type tmp_2_14 = 0.0e0;
-    real_type tmp_0_15 = 0.0e0;
-    real_type tmp_1_15 = 0.0e0;
-    real_type tmp_2_15 = 0.0e0;
-    real_type tmp_0_16 = 0.0e0;
-    real_type tmp_1_16 = 0.0e0;
-    real_type tmp_2_16 = 0.0e0;
-    real_type tmp_0_17 = 0.0e0;
-    real_type tmp_1_17 = 0.0e0;
-    real_type tmp_2_17 = 0.0e0;
-    real_type tmp_0_18 = 0.0e0;
-    real_type tmp_1_18 = 0.0e0;
-    real_type tmp_2_18 = 0.0e0;
-    real_type tmp_0_19 = 0.0e0;
-    real_type tmp_1_19 = 0.0e0;
-    real_type tmp_2_19 = 0.0e0;
-    real_type tmp_0_20 = 0.0e0;
-    real_type tmp_1_20 = 0.0e0;
-    real_type tmp_2_20 = 0.0e0;
-    real_type tmp_0_21 = tmp_0_9;
-    real_type tmp_1_21 = 0.0e0;
-    real_type tmp_2_21 = 0.0e0;
-    real_type tmp_0_22 = 0.0e0;
-    real_type tmp_1_22 = tmp_1_10;
-    real_type tmp_2_22 = 0.0e0;
-    real_type tmp_0_23 = 0.0e0;
-    real_type tmp_1_23 = 0.0e0;
-    real_type tmp_2_23 = tmp_2_11;
-    real_type tmp_0_24 = 0.0e0;
-    real_type tmp_1_24 = 0.0e0;
-    real_type tmp_2_24 = 0.0e0;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(1, 0) = tmp_1_0;
-    DuDxlxlp(2, 0) = tmp_2_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(1, 1) = tmp_1_1;
-    DuDxlxlp(2, 1) = tmp_2_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(1, 2) = tmp_1_2;
-    DuDxlxlp(2, 2) = tmp_2_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    DuDxlxlp(1, 3) = tmp_1_3;
-    DuDxlxlp(2, 3) = tmp_2_3;
-    DuDxlxlp(0, 4) = tmp_0_4;
-    DuDxlxlp(1, 4) = tmp_1_4;
-    DuDxlxlp(2, 4) = tmp_2_4;
-    DuDxlxlp(0, 5) = tmp_0_5;
-    DuDxlxlp(1, 5) = tmp_1_5;
-    DuDxlxlp(2, 5) = tmp_2_5;
-    DuDxlxlp(0, 6) = tmp_0_6;
-    DuDxlxlp(1, 6) = tmp_1_6;
-    DuDxlxlp(2, 6) = tmp_2_6;
-    DuDxlxlp(0, 7) = tmp_0_7;
-    DuDxlxlp(1, 7) = tmp_1_7;
-    DuDxlxlp(2, 7) = tmp_2_7;
-    DuDxlxlp(0, 8) = tmp_0_8;
-    DuDxlxlp(1, 8) = tmp_1_8;
-    DuDxlxlp(2, 8) = tmp_2_8;
-    DuDxlxlp(0, 9) = tmp_0_9;
-    DuDxlxlp(1, 9) = tmp_1_9;
-    DuDxlxlp(2, 9) = tmp_2_9;
-    DuDxlxlp(0, 10) = tmp_0_10;
-    DuDxlxlp(1, 10) = tmp_1_10;
-    DuDxlxlp(2, 10) = tmp_2_10;
-    DuDxlxlp(0, 11) = tmp_0_11;
-    DuDxlxlp(1, 11) = tmp_1_11;
-    DuDxlxlp(2, 11) = tmp_2_11;
-    DuDxlxlp(0, 12) = tmp_0_12;
-    DuDxlxlp(1, 12) = tmp_1_12;
-    DuDxlxlp(2, 12) = tmp_2_12;
-    DuDxlxlp(0, 13) = tmp_0_13;
-    DuDxlxlp(1, 13) = tmp_1_13;
-    DuDxlxlp(2, 13) = tmp_2_13;
-    DuDxlxlp(0, 14) = tmp_0_14;
-    DuDxlxlp(1, 14) = tmp_1_14;
-    DuDxlxlp(2, 14) = tmp_2_14;
-    DuDxlxlp(0, 15) = tmp_0_15;
-    DuDxlxlp(1, 15) = tmp_1_15;
-    DuDxlxlp(2, 15) = tmp_2_15;
-    DuDxlxlp(0, 16) = tmp_0_16;
-    DuDxlxlp(1, 16) = tmp_1_16;
-    DuDxlxlp(2, 16) = tmp_2_16;
-    DuDxlxlp(0, 17) = tmp_0_17;
-    DuDxlxlp(1, 17) = tmp_1_17;
-    DuDxlxlp(2, 17) = tmp_2_17;
-    DuDxlxlp(0, 18) = tmp_0_18;
-    DuDxlxlp(1, 18) = tmp_1_18;
-    DuDxlxlp(2, 18) = tmp_2_18;
-    DuDxlxlp(0, 19) = tmp_0_19;
-    DuDxlxlp(1, 19) = tmp_1_19;
-    DuDxlxlp(2, 19) = tmp_2_19;
-    DuDxlxlp(0, 20) = tmp_0_20;
-    DuDxlxlp(1, 20) = tmp_1_20;
-    DuDxlxlp(2, 20) = tmp_2_20;
-    DuDxlxlp(0, 21) = tmp_0_21;
-    DuDxlxlp(1, 21) = tmp_1_21;
-    DuDxlxlp(2, 21) = tmp_2_21;
-    DuDxlxlp(0, 22) = tmp_0_22;
-    DuDxlxlp(1, 22) = tmp_1_22;
-    DuDxlxlp(2, 22) = tmp_2_22;
-    DuDxlxlp(0, 23) = tmp_0_23;
-    DuDxlxlp(1, 23) = tmp_1_23;
-    DuDxlxlp(2, 23) = tmp_2_23;
-    DuDxlxlp(0, 24) = tmp_0_24;
-    DuDxlxlp(1, 24) = tmp_1_24;
-    DuDxlxlp(2, 24) = tmp_2_24;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 75 );
   }
 
   /*\

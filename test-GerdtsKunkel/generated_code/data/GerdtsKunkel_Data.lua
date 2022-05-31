@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -24,7 +24,7 @@
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -45,7 +45,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -59,10 +59,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "GerdtsKunkel_dump",
@@ -127,7 +127,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -255,11 +255,11 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
-    x1_f = 0,
-    x1_i = 0,
+    x1_f = 0.0,
+    x1_i = 0.0,
     x2_f = -1,
-    x2_i = 1,
-    x3_i = 0,
+    x2_i = 1.0,
+    x3_i = 0.0,
 
     -- Post Processing Parameters
 
@@ -297,12 +297,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 1000,
-        length = 1,
+        length = 1.0,
+        n      = 1000.0,
       },
     },
   },

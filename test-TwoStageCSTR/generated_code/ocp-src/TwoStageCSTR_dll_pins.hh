@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_dll_pins.hh                                       |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,6 +51,7 @@
 
 
 #include <MechatronixInterfaceMruby/MechatronixInterfaceMruby.hh>
+#include <MechatronixInterfaceMruby/mruby_include.hh>
 
 #include "TwoStageCSTR.hh"
 #include "TwoStageCSTR_Pars.hh"
@@ -155,6 +156,7 @@ namespace TwoStageCSTRDefine {
     void
     guess( GenericContainer const & gc_guess ) {
       model.guess( gc_guess );
+      model.info();
     }
 
     TWOSTAGECSTR_API_DLL

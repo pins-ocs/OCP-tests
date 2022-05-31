@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -315,78 +315,6 @@ namespace LUUS_DrugDisplacementDefine {
   }
 
   /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  LUUS_DrugDisplacement::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t2   = XM__[1];
-    real_type t3   = g1(t1, t2);
-    real_type t4   = LM__[0];
-    real_type t7   = LM__[1];
-    real_type t8   = g3(t1, t2);
-    real_type t11  = 0.232e3 * t1 * t4 + 5.0 * t8 * t7;
-    real_type t14  = uControl.solve_rhs(-0.2000000000e0 * t11 * t3, 0, 8);
-    real_type t15  = g1_D_1(t1, t2);
-    real_type t19  = g3_D_1(t1, t2);
-    real_type tmp_0_0 = 0.5e0 * (-0.2000000000e0 * t11 * t15 - 0.2000000000e0 * (0.232e3 * t4 + 5.0 * t19 * t7) * t3) * t14;
-    real_type t27  = g1_D_2(t1, t2);
-    real_type t31  = g3_D_2(t1, t2);
-    real_type tmp_0_1 = 0.5e0 * (-0.2000000000e0 * t11 * t27 - 0.1000000000e1 * t31 * t7 * t3) * t14;
-    real_type t36  = t3 * t14;
-    real_type tmp_0_2 = -0.2320000000e2 * t1 * t36;
-    real_type tmp_0_3 = -0.5000000000e0 * t8 * t36;
-    real_type tmp_0_4 = tmp_0_0;
-    real_type tmp_0_5 = tmp_0_1;
-    real_type tmp_0_6 = tmp_0_2;
-    real_type tmp_0_7 = tmp_0_3;
-    real_type tmp_0_8 = 0.0e0;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    DuDxlxlp(0, 4) = tmp_0_4;
-    DuDxlxlp(0, 5) = tmp_0_5;
-    DuDxlxlp(0, 6) = tmp_0_6;
-    DuDxlxlp(0, 7) = tmp_0_7;
-    DuDxlxlp(0, 8) = tmp_0_8;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 9 );
-  }
-
-  /*\
   :|:   ___         _           _   ___    _   _            _
   :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
   :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
@@ -416,7 +344,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t20  = pow(V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9, 2);
     real_type t22  = g3(t6, t7);
     real_type t28  = pow(V__[1] - (t14 * t22 + 0.928e0 - 0.464e2 * t6) * t9, 2);
-    real_type result__ = t1 * t3 + t20 + t28;
+    real_type result__ = t3 * t1 + t20 + t28;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -449,7 +377,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t10  = g4(t6, t7);
     real_type t14  = t2 - 2 * t7;
     real_type t25  = g3(t6, t7);
-    result__[ 0   ] = t1 * t3 - 0.928e2 * t6 * t8 * t1 * (V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9) - 2 * t25 * t8 * t1 * (V__[1] - (t14 * t25 + 0.928e0 - 0.464e2 * t6) * t9);
+    result__[ 0   ] = t3 * t1 - 0.928e2 * t6 * t8 * t1 * (V__[0] - ((0.2e-1 - t6) * t10 + 0.464e2 * t14 * t6) * t9) - 2 * t25 * t8 * t1 * (V__[1] - (t14 * t25 + 0.928e0 - 0.464e2 * t6) * t9);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

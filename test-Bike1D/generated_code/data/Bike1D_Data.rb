@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,7 +21,7 @@ include Mechatronix
 
 # Auxiliary values
 mur_min = -1
-mur_max = 1
+mur_max = 1.0
 muf_min = -1
 
 mechatronix do |data|
@@ -93,7 +93,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -264,16 +264,16 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :v_f => 10,
-    :v_i => 10,
+    :v_f => 10.0,
+    :v_i => 10.0,
 
     # Post Processing Parameters
-    :v_min => 1,
+    :v_min => 1.0,
 
     # User Function Parameters
-    :Pmax => 50000,
-    :m    => 275,
-    :vmax => 100,
+    :Pmax => 50000.0,
+    :m    => 275.0,
+    :vmax => 100.0,
 
     # Continuation Parameters
 
@@ -290,7 +290,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :delta => 0, :delta2 => 0, :h => 0.01 }
+  data.MappedObjects[:clip] = { :h => 0.01, :delta2 => 0.0, :delta => 0.0 }
 
 
   #                  _             _
@@ -348,11 +348,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 1000,
-        :length => 1000,
+        :n      => 1000.0,
+        :length => 1000.0,
       },
     ],
   };

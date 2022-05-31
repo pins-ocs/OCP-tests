@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_max = 0.01;
-    real_type uaMax = 10;
-    real_type ubMax = 2;
     real_type tol_max = 0.01;
+    real_type uaMax = 10;
+    real_type epsi_max = 0.01;
+    real_type ubMax = 2;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -167,13 +167,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uaControl = data_Controls["uaControl"];
-    data_uaControl["type"]      = ;
+    data_uaControl["type"]      = "COS_LOGARITHMIC";
     data_uaControl["epsilon"]   = epsi_max;
     data_uaControl["tolerance"] = tol_max;
 
 
     GenericContainer & data_ubControl = data_Controls["ubControl"];
-    data_ubControl["type"]      = ;
+    data_ubControl["type"]      = "COS_LOGARITHMIC";
     data_ubControl["epsilon"]   = epsi_max;
     data_ubControl["tolerance"] = tol_max;
 
@@ -186,12 +186,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Train_data.Mesh["s0"] = 0;
-Train_data.Mesh["segments"][0]["n"] = 25;
 Train_data.Mesh["segments"][0]["length"] = 0.25;
-Train_data.Mesh["segments"][1]["n"] = 3000;
+Train_data.Mesh["segments"][0]["n"] = 25;
 Train_data.Mesh["segments"][1]["length"] = 0.75;
-Train_data.Mesh["segments"][2]["n"] = 100;
+Train_data.Mesh["segments"][1]["n"] = 3000;
 Train_data.Mesh["segments"][2]["length"] = 3.8;
+Train_data.Mesh["segments"][2]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -208,7 +208,10 @@ Train_data.Mesh["segments"][2]["length"] = 3.8;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

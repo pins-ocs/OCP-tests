@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,12 +89,12 @@ namespace GerdtsKunkelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::Dfd_odeDxxup_numRows() const { return 3; }
-  integer GerdtsKunkel::Dfd_odeDxxup_numCols() const { return 7; }
-  integer GerdtsKunkel::Dfd_odeDxxup_nnz()     const { return 10; }
+  integer GerdtsKunkel::Dfd_odeDxxpu_numRows() const { return 3; }
+  integer GerdtsKunkel::Dfd_odeDxxpu_numCols() const { return 7; }
+  integer GerdtsKunkel::Dfd_odeDxxpu_nnz()     const { return 10; }
 
   void
-  GerdtsKunkel::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  GerdtsKunkel::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -109,7 +109,7 @@ namespace GerdtsKunkelDefine {
 
 
   void
-  GerdtsKunkel::Dfd_odeDxxup_sparse(
+  GerdtsKunkel::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -145,24 +145,24 @@ namespace GerdtsKunkelDefine {
     result__[ 8   ] = __INV_DZETA;
     result__[ 9   ] = -UM__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::D2fd_odeD2xxup_numRows() const { return 7; }
-  integer GerdtsKunkel::D2fd_odeD2xxup_numCols() const { return 7; }
-  integer GerdtsKunkel::D2fd_odeD2xxup_nnz()     const { return 1; }
+  integer GerdtsKunkel::D2fd_odeD2xxpu_numRows() const { return 7; }
+  integer GerdtsKunkel::D2fd_odeD2xxpu_numCols() const { return 7; }
+  integer GerdtsKunkel::D2fd_odeD2xxpu_nnz()     const { return 1; }
 
   void
-  GerdtsKunkel::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  GerdtsKunkel::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 6   ; jIndex[0 ] = 6   ;
   }
 
 
   void
-  GerdtsKunkel::D2fd_odeD2xxup_sparse(
+  GerdtsKunkel::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -190,7 +190,7 @@ namespace GerdtsKunkelDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -LM__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

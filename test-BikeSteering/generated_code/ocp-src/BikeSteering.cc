@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering.cc                                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -14,9 +14,6 @@
  |             paolo.bosetti@unitn.it                                    |
 \*-----------------------------------------------------------------------*/
 
-
-// use pragma to include libraries
-#include <MechatronixCore/MechatronixLibs.hh>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -407,7 +404,7 @@ namespace BikeSteeringDefine {
 
     this->info_BC();
     this->info_classes();
-    this->info();
+    // this->info(); stampato dopo GUESS
   }
 
   /* --------------------------------------------------------------------------

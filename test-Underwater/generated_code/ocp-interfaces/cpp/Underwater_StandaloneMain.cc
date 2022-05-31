@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tol_penalty = 0.01;
     real_type epsi_penalty = 0.1;
     real_type epsi_max = epsi_penalty;
-    real_type tol_penalty = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -175,19 +175,19 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
-    data_u1Control["type"]      = ;
+    data_u1Control["type"]      = "COS_LOGARITHMIC";
     data_u1Control["epsilon"]   = epsi_penalty;
     data_u1Control["tolerance"] = tol_penalty;
 
 
     GenericContainer & data_u2Control = data_Controls["u2Control"];
-    data_u2Control["type"]      = ;
+    data_u2Control["type"]      = "COS_LOGARITHMIC";
     data_u2Control["epsilon"]   = epsi_penalty;
     data_u2Control["tolerance"] = tol_penalty;
 
 
     GenericContainer & data_u3Control = data_Controls["u3Control"];
-    data_u3Control["type"]      = ;
+    data_u3Control["type"]      = "COS_LOGARITHMIC";
     data_u3Control["epsilon"]   = epsi_penalty;
     data_u3Control["tolerance"] = tol_penalty;
 
@@ -200,8 +200,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Underwater_data.Mesh["s0"] = 0;
-Underwater_data.Mesh["segments"][0]["n"] = 1000;
 Underwater_data.Mesh["segments"][0]["length"] = 1;
+Underwater_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers
@@ -218,7 +218,10 @@ Underwater_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

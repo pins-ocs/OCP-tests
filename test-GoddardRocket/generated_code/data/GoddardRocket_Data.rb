@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,31 +20,31 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_mass_max = 0.025
-vc            = 620
-m_i           = 1
-h_i           = 1
-tol_mass_max  = 0.01
-tol_T_max     = 0.01
-tol_T         = tol_T_max
 mc            = 0.6
+m_i           = 1.0
+tol_T_max     = 0.01
 epsi_T_max    = 0.1
-epsi_T        = epsi_T_max
 tol_TS_max    = 0.0001
+tol_TS        = tol_TS_max
+epsi_T        = epsi_T_max
+vc            = 620.0
+epsi_mass_max = 0.025
+tol_mass_max  = 0.01
+tol_T         = tol_T_max
+g0            = 1.0
+Tmax          = 3.5*g0*m_i
+epsi_mass     = epsi_mass_max
+tol_v_max     = 0.01
+tol_v         = tol_v_max
+Dc            = 0.5*vc*m_i/g0
 m_f           = mc*m_i
 epsi_TS_max   = 0.025
 epsi_TS       = epsi_TS_max
 epsi_v_max    = 0.1
-tol_TS        = tol_TS_max
-tol_mass      = tol_mass_max
-epsi_mass     = epsi_mass_max
-g0            = 1
-c             = 0.5*(g0*h_i)**(1/2.0)
-Dc            = 0.5*vc*m_i/g0
-Tmax          = 3.5*g0*m_i
 epsi_v        = epsi_v_max
-tol_v_max     = 0.01
-tol_v         = tol_v_max
+h_i           = 1.0
+c             = 0.5*(g0*h_i)**(1/2.0)
+tol_mass      = tol_mass_max
 
 mechatronix do |data|
 
@@ -115,7 +115,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -289,14 +289,14 @@ mechatronix do |data|
     :h_i => h_i,
     :m_f => m_f,
     :m_i => m_i,
-    :v_i => 0,
+    :v_i => 0.0,
 
     # Post Processing Parameters
 
     # User Function Parameters
     :Dc => Dc,
     :g0 => g0,
-    :hc => 500,
+    :hc => 500.0,
 
     # Continuation Parameters
     :epsi_TS_max   => epsi_TS_max,
@@ -392,11 +392,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 1,
-        :n      => 400,
+        :length => 1.0,
+        :n      => 400.0,
       },
     ],
   };

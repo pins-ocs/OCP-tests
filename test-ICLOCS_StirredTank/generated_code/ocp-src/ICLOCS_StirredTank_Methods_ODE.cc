@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_ODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 18/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,15 +97,15 @@ namespace ICLOCS_StirredTankDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::Drhs_odeDxup_numRows() const { return 2; }
-  integer ICLOCS_StirredTank::Drhs_odeDxup_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::Drhs_odeDxup_nnz()     const { return 7; }
+  integer ICLOCS_StirredTank::Drhs_odeDxpu_numRows() const { return 2; }
+  integer ICLOCS_StirredTank::Drhs_odeDxpu_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::Drhs_odeDxpu_nnz()     const { return 7; }
 
   void
-  ICLOCS_StirredTank::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_StirredTank::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
     iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
     iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
@@ -116,7 +116,7 @@ namespace ICLOCS_StirredTankDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_StirredTank::Drhs_odeDxup_sparse(
+  ICLOCS_StirredTank::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -145,11 +145,11 @@ namespace ICLOCS_StirredTankDefine {
     real_type t25  = ModelPars[iM_a];
     real_type t27  = U__[iU_u] * t25;
     result__[ 4   ] = (t18 * t22 - t27 - t3) * t1;
-    real_type t31  = t6 - ModelPars[iM_Tc];
-    result__[ 5   ] = -t31 * t25 * t1;
-    result__[ 6   ] = t3 * (ModelPars[iM_Tf] - t6) + t23 - t31 * t27;
+    real_type t33  = t6 - ModelPars[iM_Tc];
+    result__[ 5   ] = t3 * (ModelPars[iM_Tf] - t6) + t23 - t33 * t27;
+    result__[ 6   ] = -t33 * t25 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 7, i_segment );
   }
 
   /*\

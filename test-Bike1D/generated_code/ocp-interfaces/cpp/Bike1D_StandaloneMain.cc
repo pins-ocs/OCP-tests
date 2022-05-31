@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -159,22 +159,22 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
-    data_clip["delta2"] = 0;
     data_clip["h"] = 0.01;
+    data_clip["delta2"] = 0;
+    data_clip["delta"] = 0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_murControl = data_Controls["murControl"];
-    data_murControl["type"]      = ;
+    data_murControl["type"]      = "COS_LOGARITHMIC";
     data_murControl["epsilon"]   = 0.001;
     data_murControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_mufControl = data_Controls["mufControl"];
-    data_mufControl["type"]      = ;
+    data_mufControl["type"]      = "COS_LOGARITHMIC";
     data_mufControl["epsilon"]   = 0.001;
     data_mufControl["tolerance"] = 0.001;
 
@@ -214,7 +214,10 @@ Bike1D_data.Mesh["segments"][0]["length"] = 1000;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

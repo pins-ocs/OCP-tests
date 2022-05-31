@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_ODE.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -115,12 +115,12 @@ namespace FarmerDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Farmer::Drhs_odeDxup_numRows() const { return 5; }
-  integer Farmer::Drhs_odeDxup_numCols() const { return 9; }
-  integer Farmer::Drhs_odeDxup_nnz()     const { return 10; }
+  integer Farmer::Drhs_odeDxpu_numRows() const { return 5; }
+  integer Farmer::Drhs_odeDxpu_numCols() const { return 9; }
+  integer Farmer::Drhs_odeDxpu_nnz()     const { return 10; }
 
   void
-  Farmer::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Farmer::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -137,7 +137,7 @@ namespace FarmerDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Farmer::Drhs_odeDxup_sparse(
+  Farmer::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -162,7 +162,7 @@ namespace FarmerDefine {
     result__[ 8   ] = -t9;
     result__[ 9   ] = t9;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 10, i_segment );
   }
 
   /*\
@@ -206,6 +206,110 @@ namespace FarmerDefine {
     result__[ 4   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Farmer::eta_numEqns() const { return 5; }
+
+  void
+  Farmer::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Farmer::DetaDxp_numRows() const { return 5; }
+  integer Farmer::DetaDxp_numCols() const { return 5; }
+  integer Farmer::DetaDxp_nnz()     const { return 0; }
+
+  void
+  Farmer::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Farmer::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Farmer::nu_numEqns() const { return 5; }
+
+  void
+  Farmer::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    result__[ 4   ] = V__[4];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer Farmer::DnuDxp_numRows() const { return 5; }
+  integer Farmer::DnuDxp_numCols() const { return 5; }
+  integer Farmer::DnuDxp_nnz()     const { return 0; }
+
+  void
+  Farmer::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  Farmer::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

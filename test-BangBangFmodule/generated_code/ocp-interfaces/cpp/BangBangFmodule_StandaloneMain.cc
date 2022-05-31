@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type FmMax = 10;
     real_type FpMax = 10;
+    real_type FmMax = 10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -154,13 +154,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlP = data_Controls["controlP"];
-    data_controlP["type"]      = ;
+    data_controlP["type"]      = "CUBIC";
     data_controlP["epsilon"]   = 0.001;
     data_controlP["tolerance"] = 0.001;
 
 
     GenericContainer & data_controlM = data_Controls["controlM"];
-    data_controlM["type"]      = ;
+    data_controlM["type"]      = "CUBIC";
     data_controlM["epsilon"]   = 0.001;
     data_controlM["tolerance"] = 0.001;
 
@@ -191,7 +191,10 @@ BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

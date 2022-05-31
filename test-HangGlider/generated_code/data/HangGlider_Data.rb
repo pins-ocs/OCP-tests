@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HangGlider_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_max = 0.01
-W0       = 1000
-W        = W0
-cL_min   = 0
-cL_max   = 1.4
 tol_max  = 0.01
+epsi_max = 0.01
+cL_min   = 0.0
+cL_max   = 1.4
+W0       = 1000.0
+W        = W0
 
 mechatronix do |data|
 
@@ -96,7 +96,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -270,31 +270,31 @@ mechatronix do |data|
     :cL_max => cL_max,
     :cL_min => cL_min,
     :g      => 9.80665,
-    :m      => 100,
+    :m      => 100.0,
 
     # Guess Parameters
-    :Tguess => 105,
+    :Tguess => 105.0,
 
     # Boundary Conditions
     :vx_f => 13.2275675,
     :vx_i => 13.2275675,
     :vy_f => -1.28750052,
     :vy_i => -1.28750052,
-    :x_i  => 0,
-    :y_f  => 900,
-    :y_i  => 1000,
+    :x_i  => 0.0,
+    :y_f  => 900.0,
+    :y_i  => 1000.0,
 
     # Post Processing Parameters
 
     # User Function Parameters
-    :S   => 14,
-    :rc  => 100,
+    :S   => 14.0,
+    :rc  => 100.0,
     :rho => 1.13,
     :uc  => 2.5,
 
     # Continuation Parameters
     :W0       => W0,
-    :W1       => 0,
+    :W1       => 0.0,
     :tol_max  => tol_max,
     :tol_min  => 0.0001,
     :epsi_max => epsi_max,
@@ -362,11 +362,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 1,
-        :n      => 400,
+        :length => 1.0,
+        :n      => 400.0,
       },
     ],
   };

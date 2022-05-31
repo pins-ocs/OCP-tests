@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -211,82 +211,6 @@ namespace TyreDynamicDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  TyreDynamic::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  TyreDynamic::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = 1.0 / X__[iX_v];
-    real_type t4   = b__oControl(U__[iU_b__o], -1, 1);
-    real_type t7   = p__oControl(U__[iU_p__o], -1, 1);
-    real_type result__ = t4 * t2 + t7 * t2;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  TyreDynamic::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_v];
-    real_type t2   = 1.0 / t1;
-    real_type t4   = ModelPars[iM_h__b];
-    real_type t6   = OnlyBrakingRear(X__[iX_b] - t4);
-    real_type t10  = OnlyTractionRear(-t4 - X__[iX_p]);
-    real_type t15  = 1.0 / ModelPars[iM_lambda__max] * X__[iX_lambda];
-    real_type t17  = LongSlipRear_min(-1 - t15);
-    real_type t20  = LongSlipRear_max(t15 - 1);
-    real_type t23  = v_min(1 - t1);
-    real_type result__ = t10 * t2 + t17 * t2 + t20 * t2 + t23 * t2 + t6 * t2;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -407,10 +331,10 @@ namespace TyreDynamicDefine {
    |              |___/                 |___/
   \*/
 
-  integer TyreDynamic::DlagrangeDxup_numEqns() const { return 7; }
+  integer TyreDynamic::DlagrangeDxpu_numEqns() const { return 7; }
 
   void
-  TyreDynamic::DlagrangeDxup_eval(
+  TyreDynamic::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -436,16 +360,16 @@ namespace TyreDynamicDefine {
     result__[ 5   ] = 2 * t15 * t7 * t2;
     result__[ 6   ] = 2 * t15 * t7 * t4;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TyreDynamic::D2lagrangeD2xup_numRows() const { return 7; }
-  integer TyreDynamic::D2lagrangeD2xup_numCols() const { return 7; }
-  integer TyreDynamic::D2lagrangeD2xup_nnz()     const { return 7; }
+  integer TyreDynamic::D2lagrangeD2xpu_numRows() const { return 7; }
+  integer TyreDynamic::D2lagrangeD2xpu_numCols() const { return 7; }
+  integer TyreDynamic::D2lagrangeD2xpu_nnz()     const { return 7; }
 
   void
-  TyreDynamic::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TyreDynamic::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
@@ -457,7 +381,7 @@ namespace TyreDynamicDefine {
 
 
   void
-  TyreDynamic::D2lagrangeD2xup_sparse(
+  TyreDynamic::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -483,7 +407,7 @@ namespace TyreDynamicDefine {
     result__[ 5   ] = result__[2];
     result__[ 6   ] = result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 7, i_segment );
   }
 
   /*\
@@ -589,15 +513,15 @@ namespace TyreDynamicDefine {
     result__[ 3   ] = XR__[iX_p] - XL__[iX_p];
     result__[ 4   ] = XR__[iX_b] - XL__[iX_b];
     real_type t13  = ModelPars[iM_m];
-    result__[ 5   ] = t1 * t13 * LR__[iL_lambda1__xo] - t13 * t2 * LL__[iL_lambda1__xo];
+    result__[ 5   ] = t13 * t1 * LR__[iL_lambda1__xo] - t13 * t2 * LL__[iL_lambda1__xo];
     real_type t20  = ModelPars[iM_Iw];
-    result__[ 6   ] = t1 * t20 * LR__[iL_lambda2__xo] - t2 * t20 * LL__[iL_lambda2__xo];
+    result__[ 6   ] = t20 * t1 * LR__[iL_lambda2__xo] - t20 * t2 * LL__[iL_lambda2__xo];
     real_type t27  = ModelPars[iM_l__x];
-    result__[ 7   ] = t1 * t27 * LR__[iL_lambda3__xo] - t2 * t27 * LL__[iL_lambda3__xo];
+    result__[ 7   ] = t27 * t1 * LR__[iL_lambda3__xo] - t27 * t2 * LL__[iL_lambda3__xo];
     real_type t34  = ModelPars[iM_tau__p];
-    result__[ 8   ] = t1 * t34 * LR__[iL_lambda4__xo] - t2 * t34 * LL__[iL_lambda4__xo];
+    result__[ 8   ] = t34 * t1 * LR__[iL_lambda4__xo] - t34 * t2 * LL__[iL_lambda4__xo];
     real_type t41  = ModelPars[iM_tau__b];
-    result__[ 9   ] = t1 * t41 * LR__[iL_lambda5__xo] - t2 * t41 * LL__[iL_lambda5__xo];
+    result__[ 9   ] = t41 * t1 * LR__[iL_lambda5__xo] - t41 * t2 * LL__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,14 +82,14 @@ namespace BangBangFtminDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtmin::Drhs_odeDxup_numRows() const { return 2; }
-  integer BangBangFtmin::Drhs_odeDxup_numCols() const { return 4; }
-  integer BangBangFtmin::Drhs_odeDxup_nnz()     const { return 4; }
+  integer BangBangFtmin::Drhs_odeDxpu_numRows() const { return 2; }
+  integer BangBangFtmin::Drhs_odeDxpu_numCols() const { return 4; }
+  integer BangBangFtmin::Drhs_odeDxpu_nnz()     const { return 4; }
 
   void
-  BangBangFtmin::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFtmin::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 1   ; jIndex[3 ] = 3   ;
   }
@@ -98,7 +98,7 @@ namespace BangBangFtminDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFtmin::Drhs_odeDxup_sparse(
+  BangBangFtmin::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -110,10 +110,10 @@ namespace BangBangFtminDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = P__[iP_T];
     result__[ 1   ] = X__[iX_v];
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = U__[iU_F];
+    result__[ 2   ] = U__[iU_F];
+    result__[ 3   ] = result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 4, i_segment );
   }
 
   /*\
@@ -151,6 +151,104 @@ namespace BangBangFtminDefine {
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtmin::eta_numEqns() const { return 2; }
+
+  void
+  BangBangFtmin::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFtmin::DetaDxp_numRows() const { return 2; }
+  integer BangBangFtmin::DetaDxp_numCols() const { return 3; }
+  integer BangBangFtmin::DetaDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFtmin::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFtmin::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtmin::nu_numEqns() const { return 2; }
+
+  void
+  BangBangFtmin::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFtmin::DnuDxp_numRows() const { return 2; }
+  integer BangBangFtmin::DnuDxp_numCols() const { return 3; }
+  integer BangBangFtmin::DnuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFtmin::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFtmin::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

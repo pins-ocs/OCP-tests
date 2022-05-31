@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_dll_pins.hh                                      |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,6 +51,7 @@
 
 
 #include <MechatronixInterfaceMruby/MechatronixInterfaceMruby.hh>
+#include <MechatronixInterfaceMruby/mruby_include.hh>
 
 #include "BangBangFtmin.hh"
 #include "BangBangFtmin_Pars.hh"
@@ -155,6 +156,7 @@ namespace BangBangFtminDefine {
     void
     guess( GenericContainer const & gc_guess ) {
       model.guess( gc_guess );
+      model.info();
     }
 
     BANGBANGFTMIN_API_DLL

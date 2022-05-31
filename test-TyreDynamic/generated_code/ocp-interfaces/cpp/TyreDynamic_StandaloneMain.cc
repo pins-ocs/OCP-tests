@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,22 +50,22 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type eps_c0 = 0.1;
-    real_type eps_c = eps_c0;
-    real_type tol_c0 = 0.1;
-    real_type tol_c = tol_c0;
-    real_type TT__max = 800;
-    real_type E__pow = 60*TT__max;
-    real_type h__b = 1;
-    real_type L = 300;
-    real_type mesh_np = 2.000000000*L;
     real_type v__0 = 10;
+    real_type tol_c0 = 0.1;
+    real_type eps_l = 0.01;
+    real_type tol_c = tol_c0;
+    real_type tol_l = 0.01;
     real_type w__t0 = 1;
     real_type w__t = w__t0;
-    real_type tol_l = 0.01;
-    real_type eps_l = 0.01;
     real_type rw = 0.3;
     real_type omega__0 = 1/rw*v__0;
+    real_type eps_c0 = 0.1;
+    real_type eps_c = eps_c0;
+    real_type h__b = 1;
+    real_type TT__max = 800;
+    real_type E__pow = 60*TT__max;
+    real_type L = 300;
+    real_type mesh_np = 2.000000000*L;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -226,9 +226,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clipInt = gc_MappedObjects["clipInt"];
+    data_clipInt["delta"] = 0;
     data_clipInt["delta2"] = 0;
     data_clipInt["h"] = 0.01;
-    data_clipInt["delta"] = 0;
 
     // SignRegularizedWithErf
     GenericContainer & data_sign_reg = gc_MappedObjects["sign_reg"];
@@ -243,13 +243,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_b__oControl = data_Controls["b__oControl"];
-    data_b__oControl["type"]      = ;
+    data_b__oControl["type"]      = "COS_LOGARITHMIC";
     data_b__oControl["epsilon"]   = eps_c;
     data_b__oControl["tolerance"] = tol_c;
 
 
     GenericContainer & data_p__oControl = data_Controls["p__oControl"];
-    data_p__oControl["type"]      = ;
+    data_p__oControl["type"]      = "COS_LOGARITHMIC";
     data_p__oControl["epsilon"]   = eps_c;
     data_p__oControl["tolerance"] = tol_c;
 
@@ -317,7 +317,10 @@ TyreDynamic_data.Mesh["segments"][2]["length"] = .1*L;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

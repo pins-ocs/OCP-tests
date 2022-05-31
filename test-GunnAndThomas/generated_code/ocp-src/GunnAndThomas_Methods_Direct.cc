@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,12 +94,12 @@ namespace GunnAndThomasDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GunnAndThomas::Dfd_odeDxxup_numRows() const { return 2; }
-  integer GunnAndThomas::Dfd_odeDxxup_numCols() const { return 5; }
-  integer GunnAndThomas::Dfd_odeDxxup_nnz()     const { return 10; }
+  integer GunnAndThomas::Dfd_odeDxxpu_numRows() const { return 2; }
+  integer GunnAndThomas::Dfd_odeDxxpu_numCols() const { return 5; }
+  integer GunnAndThomas::Dfd_odeDxxpu_nnz()     const { return 10; }
 
   void
-  GunnAndThomas::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  GunnAndThomas::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -114,7 +114,7 @@ namespace GunnAndThomasDefine {
 
 
   void
-  GunnAndThomas::Dfd_odeDxxup_sparse(
+  GunnAndThomas::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -151,20 +151,20 @@ namespace GunnAndThomasDefine {
     result__[ 6   ] = t7 + 0.5e0 - __INV_DZETA;
     result__[ 7   ] = result__[5];
     result__[ 8   ] = t7 + 0.5e0 + __INV_DZETA;
-    result__[ 9   ] = 9 * t5 - t4;
+    result__[ 9   ] = -t4 + 9 * t5;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GunnAndThomas::D2fd_odeD2xxup_numRows() const { return 5; }
-  integer GunnAndThomas::D2fd_odeD2xxup_numCols() const { return 5; }
-  integer GunnAndThomas::D2fd_odeD2xxup_nnz()     const { return 8; }
+  integer GunnAndThomas::D2fd_odeD2xxpu_numRows() const { return 5; }
+  integer GunnAndThomas::D2fd_odeD2xxpu_numCols() const { return 5; }
+  integer GunnAndThomas::D2fd_odeD2xxpu_nnz()     const { return 8; }
 
   void
-  GunnAndThomas::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  GunnAndThomas::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 4   ;
@@ -177,7 +177,7 @@ namespace GunnAndThomasDefine {
 
 
   void
-  GunnAndThomas::D2fd_odeD2xxup_sparse(
+  GunnAndThomas::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -212,7 +212,7 @@ namespace GunnAndThomasDefine {
     result__[ 6   ] = result__[4];
     result__[ 7   ] = result__[5];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 8, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

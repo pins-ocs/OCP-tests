@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-b  = 3
-a  = 1
+a  = 1.0
+b  = 3.0
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0
@@ -29,7 +29,7 @@ L  = L0
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -50,7 +50,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -64,10 +64,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "HangingChain_dump",
@@ -132,7 +132,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -269,7 +269,7 @@ content = {
 
     -- Continuation Parameters
     L0 = L0,
-    L1 = 4,
+    L1 = 4.0,
 
     -- Constraints Parameters
   },
@@ -290,12 +290,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        length = 1,
-        n      = 400,
+        n      = 400.0,
+        length = 1.0,
       },
     },
   },

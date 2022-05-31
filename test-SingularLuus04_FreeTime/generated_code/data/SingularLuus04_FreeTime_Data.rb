@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularLuus04_FreeTime_Data.rb                                #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-theta0 = 1
-theta  = theta0
-u_tol  = 0.01
+theta0 = 1.0
 u_epsi = 0.01
+u_tol  = 0.01
+theta  = theta0
 
 mechatronix do |data|
 
@@ -94,7 +94,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -264,15 +264,15 @@ mechatronix do |data|
     :theta => theta,
 
     # Guess Parameters
-    :T_guess => 50,
+    :T_guess => 50.0,
 
     # Boundary Conditions
-    :x_f => 0,
-    :x_i => 1,
-    :y_f => 0,
-    :y_i => 0,
-    :z_f => 0,
-    :z_i => 0,
+    :x_f => 0.0,
+    :x_i => 1.0,
+    :y_f => 0.0,
+    :y_i => 0.0,
+    :z_f => 0.0,
+    :z_i => 0.0,
 
     # Post Processing Parameters
 
@@ -334,11 +334,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 1,
-        :n      => 5000,
+        :length => 1.0,
+        :n      => 5000.0,
       },
     ],
   };

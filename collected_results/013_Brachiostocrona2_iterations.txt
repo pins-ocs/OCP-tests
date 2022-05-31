@@ -38,20 +38,6 @@ Model Parameters
 ..................................theta0 = -0.3805063771123649
 ......................................xf = 5
 ......................................yf = -2
-INFO CLASS = Brachiostocrona2
-  #nodes      = 501
-  dim         = u=1, q=1, x=3, p=1, bc(active/total)=(5/5)
-  total       = nZ=3012, UC=500, Q=501
-  index start = omega=3006, p=3011
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 4] ( 0.00352  , 0.000971 ) [  0.406   ,  0.164   ] 0.729      [3:0:0:0:0:0:0:0:0:0:0:0]
@@ -59,7 +45,7 @@ NewtonDumped --- start iterations ---
 [  3, 1] ( 0.00023  , 2.34e-06 ) [  0.0153  , 0.000152 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  4, 1] ( 2.34e-06 , 1.97e-09 ) [ 0.000148 , 9.47e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  5, 2] ( 1.97e-09 , 1.97e-10 ) [ 9.47e-08 , 9.47e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[  6, 1] ( 1.97e-10 , 6.42e-17 ) [ 9.47e-09 , 1.08e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 1.97e-10 , 6.3e-17  ) [ 9.47e-09 , 1.09e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
@@ -68,14 +54,14 @@ NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  7, 1] ( 0.000178 , 1.12e-06 ) [  0.0183  , 0.000174 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  8, 1] ( 1.12e-06 , 5.98e-11 ) [ 0.000173 , 8.71e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  9, 1] ( 5.98e-11 , 3.16e-16 ) [ 8.71e-09 , 2.36e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 5.98e-11 , 7.11e-14 ) [ 8.71e-09 , 7.97e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 10, 1] ( 0.000353 , 4.31e-06 ) [  0.0369  , 0.000599 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 11, 1] ( 4.31e-06 , 5.38e-10 ) [ 0.000594 , 9.4e-08  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 12, 1] ( 5.38e-10 , 1.43e-16 ) [ 9.4e-08  , 7.01e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 1] ( 5.38e-10 , 7.81e-14 ) [ 9.4e-08  , 4.43e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
 NewtonDumped --- start iterations ---
@@ -89,7 +75,7 @@ NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 16, 1] ( 0.000156 , 6.33e-07 ) [  0.0191  , 4.25e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 17, 1] ( 6.33e-07 , 1.66e-11 ) [ 4.29e-05 , 1.13e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 18, 1] ( 1.66e-11 , 5.64e-16 ) [ 1.13e-09 , 8.6e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 1] ( 1.66e-11 , 5.6e-15  ) [ 1.13e-09 , 4.12e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -103,8 +89,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 3012          N. System pars = 500
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 22.4[ms]      timeout        = 0 [ms]
-iteration      = 18            Memory Used    = 355Kb (+31bytes)
+Elapsed Time   = 30.7[ms]      timeout        = 0 [ms]
+iteration      = 18            Memory Used    = 358Kb (+21bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -120,15 +106,15 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 3.806e-15     last ||d||_inf = 2.2753e-14
-last ||f||_1   = 5.6379e-16    last ||d||_1   = 8.5976e-15
-last ||f||_2   = 1.0674e-15    last ||d||_2   = 1.1464e-14
+last ||f||_inf = 1.7633e-12    last ||d||_inf = 3.9896e-12
+last ||f||_1   = 5.6031e-15    last ||d||_1   = 4.119e-14
+last ||f||_2   = 7.0437e-14    last ||d||_2   = 1.8834e-13
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

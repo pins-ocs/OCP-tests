@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -143,72 +143,6 @@ namespace TrainDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  Train::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Train::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = uaControl(U__[iU_ua], 0, ModelPars[iM_uaMax]);
-    real_type t6   = ubControl(U__[iU_ub], 0, ModelPars[iM_ubMax]);
-    real_type result__ = t3 + t6;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Train::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -321,10 +255,10 @@ namespace TrainDefine {
    |              |___/                 |___/
   \*/
 
-  integer Train::DlagrangeDxup_numEqns() const { return 4; }
+  integer Train::DlagrangeDxpu_numEqns() const { return 4; }
 
   void
-  Train::DlagrangeDxup_eval(
+  Train::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -339,23 +273,23 @@ namespace TrainDefine {
     result__[ 2   ] = X__[iX_v];
     result__[ 3   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::D2lagrangeD2xup_numRows() const { return 4; }
-  integer Train::D2lagrangeD2xup_numCols() const { return 4; }
-  integer Train::D2lagrangeD2xup_nnz()     const { return 2; }
+  integer Train::D2lagrangeD2xpu_numRows() const { return 4; }
+  integer Train::D2lagrangeD2xpu_numCols() const { return 4; }
+  integer Train::D2lagrangeD2xpu_nnz()     const { return 2; }
 
   void
-  Train::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Train::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 1   ;
   }
 
 
   void
-  Train::D2lagrangeD2xup_sparse(
+  Train::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -368,7 +302,7 @@ namespace TrainDefine {
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 2, i_segment );
   }
 
   /*\

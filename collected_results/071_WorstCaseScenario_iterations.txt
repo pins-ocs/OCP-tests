@@ -23,20 +23,6 @@ END Mesh[mesh]
 
 Model Parameters
 .....................................x_i = 0
-INFO CLASS = WorstCaseScenario
-  #nodes      = 401
-  dim         = u=1, q=1, x=1, p=0, bc(active/total)=(1/1)
-  total       = nZ=803, UC=400, Q=401
-  index start = omega=802, p=803
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,10] ( 0.00156  , 0.00197  ) [   739    ,   739    ] 0.000262   [1:0:5:0:3:0:0:0:0:0:0:0]
@@ -56,8 +42,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 803           N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.5[ms]       timeout        = 0 [ms]
-iteration      = 4             Memory Used    = 91Kb (+17bytes)
+Elapsed Time   = 6.87[ms]      timeout        = 0 [ms]
+iteration      = 4             Memory Used    = 91Kb (+78bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -81,7 +67,7 @@ last ||f||_2   = 4.1395e-18    last ||d||_2   = 4.2618e-18
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

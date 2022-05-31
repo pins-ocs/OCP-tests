@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: EconomicGrowthModel_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,15 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-u_epsi0 = 0.1
-u_tol0  = 0.1
-x2_i    = 2
-x1_i    = 1
-t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+x1_i    = 1.0
+x2_i    = 2.0
 l1_i    = -1/x1_i/x2_i
-l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
-u_tol   = u_tol0
+u_epsi0 = 0.1
 u_epsi  = u_epsi0
+u_tol0  = 0.1
+u_tol   = u_tol0
+t0      = -Math::Math::log(x1_i/x2_i)/x2_i
+l2_i    = l1_i*(x1_i*t0+Math::exp(-t0*x2_i))
 
 mechatronix do |data|
 
@@ -99,7 +99,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -267,7 +267,7 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :Qc   => 10,
+    :Qc   => 10.0,
     :x1_i => x1_i,
     :x2_i => x2_i,
 
@@ -346,11 +346,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 1000,
-        :length => 1,
+        :n      => 1000.0,
+        :length => 1.0,
       },
     ],
   };

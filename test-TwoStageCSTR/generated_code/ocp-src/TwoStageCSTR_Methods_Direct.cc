@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -114,12 +114,12 @@ namespace TwoStageCSTRDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::Dfd_odeDxxup_numRows() const { return 4; }
-  integer TwoStageCSTR::Dfd_odeDxxup_numCols() const { return 10; }
-  integer TwoStageCSTR::Dfd_odeDxxup_nnz()     const { return 27; }
+  integer TwoStageCSTR::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer TwoStageCSTR::Dfd_odeDxxpu_numCols() const { return 10; }
+  integer TwoStageCSTR::Dfd_odeDxxpu_nnz()     const { return 27; }
 
   void
-  TwoStageCSTR::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TwoStageCSTR::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -151,7 +151,7 @@ namespace TwoStageCSTRDefine {
 
 
   void
-  TwoStageCSTR::Dfd_odeDxxup_sparse(
+  TwoStageCSTR::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -220,18 +220,18 @@ namespace TwoStageCSTRDefine {
     result__[ 25  ] = -result__[8] * t8;
     result__[ 26  ] = t15 + 0.25e0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 27, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 27, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::D2fd_odeD2xxup_numRows() const { return 10; }
-  integer TwoStageCSTR::D2fd_odeD2xxup_numCols() const { return 10; }
-  integer TwoStageCSTR::D2fd_odeD2xxup_nnz()     const { return 40; }
+  integer TwoStageCSTR::D2fd_odeD2xxpu_numRows() const { return 10; }
+  integer TwoStageCSTR::D2fd_odeD2xxpu_numCols() const { return 10; }
+  integer TwoStageCSTR::D2fd_odeD2xxpu_nnz()     const { return 40; }
 
   void
-  TwoStageCSTR::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TwoStageCSTR::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -276,7 +276,7 @@ namespace TwoStageCSTRDefine {
 
 
   void
-  TwoStageCSTR::D2fd_odeD2xxup_sparse(
+  TwoStageCSTR::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -362,7 +362,7 @@ namespace TwoStageCSTRDefine {
     result__[ 38  ] = result__[35];
     result__[ 39  ] = result__[38];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 40, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 40, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

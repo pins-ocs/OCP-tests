@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,19 +94,19 @@ namespace OrbitTransferDefine {
     result__[ 1   ] = V__[3] - (t9 * t7 - 1.0 / t12 * ModelPars[iM_mu] + t20 * t17 * t15) * t2;
     real_type t27  = cos(t16);
     result__[ 2   ] = V__[4] - (-t9 * t1 * t6 + t20 * t27 * t15) * t2;
-    result__[ 3   ] = ModelPars[iM_mdot] * t2 + V__[0];
+    result__[ 3   ] = t2 * ModelPars[iM_mdot] + V__[0];
     result__[ 4   ] = -t9 * t6 * t2 + V__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer OrbitTransfer::Dfd_odeDxxup_numRows() const { return 5; }
-  integer OrbitTransfer::Dfd_odeDxxup_numCols() const { return 11; }
-  integer OrbitTransfer::Dfd_odeDxxup_nnz()     const { return 30; }
+  integer OrbitTransfer::Dfd_odeDxxpu_numRows() const { return 5; }
+  integer OrbitTransfer::Dfd_odeDxxpu_numCols() const { return 11; }
+  integer OrbitTransfer::Dfd_odeDxxpu_nnz()     const { return 30; }
 
   void
-  OrbitTransfer::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  OrbitTransfer::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 7   ;
@@ -141,7 +141,7 @@ namespace OrbitTransferDefine {
 
 
   void
-  OrbitTransfer::Dfd_odeDxxup_sparse(
+  OrbitTransfer::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -220,18 +220,18 @@ namespace OrbitTransferDefine {
     result__[ 28  ] = result__[25];
     result__[ 29  ] = result__[26];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 30, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 30, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer OrbitTransfer::D2fd_odeD2xxup_numRows() const { return 11; }
-  integer OrbitTransfer::D2fd_odeD2xxup_numCols() const { return 11; }
-  integer OrbitTransfer::D2fd_odeD2xxup_nnz()     const { return 41; }
+  integer OrbitTransfer::D2fd_odeD2xxpu_numRows() const { return 11; }
+  integer OrbitTransfer::D2fd_odeD2xxpu_numCols() const { return 11; }
+  integer OrbitTransfer::D2fd_odeD2xxpu_nnz()     const { return 41; }
 
   void
-  OrbitTransfer::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  OrbitTransfer::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 10  ;
@@ -277,7 +277,7 @@ namespace OrbitTransferDefine {
 
 
   void
-  OrbitTransfer::D2fd_odeD2xxup_sparse(
+  OrbitTransfer::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -374,7 +374,7 @@ namespace OrbitTransferDefine {
     real_type t79  = 1.0 / t11;
     result__[ 40  ] = t79 * t20 * t18 + t79 * t7 * t3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 41, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 41, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -24,7 +24,7 @@
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -45,7 +45,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -59,10 +59,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Farmer_dump",
@@ -127,7 +127,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -251,20 +251,20 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    tau__1 = 3,
-    tau__2 = 25,
-    tau__3 = 10,
-    tau__4 = 60,
-    tau__5 = 120,
+    tau__1 = 3.0,
+    tau__2 = 25.0,
+    tau__3 = 10.0,
+    tau__4 = 60.0,
+    tau__5 = 120.0,
     w1     = 1.3,
     w2     = 0.1,
     w3     = 1.2,
     w4     = 0.9,
-    wJ1    = 1,
-    wJ2    = 1,
-    wJ3    = 1,
-    wJ4    = 1,
-    wP     = 1,
+    wJ1    = 1.0,
+    wJ2    = 1.0,
+    wJ3    = 1.0,
+    wJ4    = 1.0,
+    wP     = 1.0,
 
     -- Guess Parameters
 
@@ -280,8 +280,8 @@ content = {
     -- User Function Parameters
     P1 = 0.1,
     P2 = 0.1,
-    t1 = 0,
-    t2 = 60,
+    t1 = 0.0,
+    t2 = 60.0,
 
     -- Continuation Parameters
 
@@ -297,22 +297,22 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     x1__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x2__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x3__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     x4__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
@@ -339,12 +339,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 400,
-        length = 2,
+        n      = 400.0,
+        length = 2.0,
       },
     },
   },

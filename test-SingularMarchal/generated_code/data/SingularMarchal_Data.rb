@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularMarchal_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -91,7 +91,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -261,9 +261,9 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :x_f => 2,
-    :x_i => 2,
-    :y_f => 2,
+    :x_f => 2.0,
+    :x_i => 2.0,
+    :y_f => 2.0,
     :y_i => -2,
 
     # Post Processing Parameters
@@ -322,11 +322,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 1000,
-        :length => 8,
+        :length => 8.0,
+        :n      => 1000.0,
       },
     ],
   };

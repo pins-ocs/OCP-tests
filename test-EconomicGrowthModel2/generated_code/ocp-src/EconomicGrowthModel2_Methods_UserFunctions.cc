@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -283,7 +283,7 @@ namespace EconomicGrowthModel2Define {
     real_type t7   = log(xo__b);
     real_type t10  = exp((1 - xo__s) * t4 + xo__s * t7);
     real_type t12  = xo__s * xo__s;
-    real_type result__ = t10 * t12 * t2 - t10 * xo__s * t2;
+    real_type result__ = t10 * t12 * t2 - t10 * t2 * xo__s;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

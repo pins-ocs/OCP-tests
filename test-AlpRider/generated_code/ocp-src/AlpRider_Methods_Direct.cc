@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 17/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,12 +94,12 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::Dfd_odeDxxup_numRows() const { return 4; }
-  integer AlpRider::Dfd_odeDxxup_numCols() const { return 10; }
-  integer AlpRider::Dfd_odeDxxup_nnz()     const { return 20; }
+  integer AlpRider::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer AlpRider::Dfd_odeDxxpu_numCols() const { return 10; }
+  integer AlpRider::Dfd_odeDxxpu_nnz()     const { return 20; }
 
   void
-  AlpRider::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  AlpRider::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 8   ;
@@ -124,7 +124,7 @@ namespace AlpRiderDefine {
 
 
   void
-  AlpRider::Dfd_odeDxxup_sparse(
+  AlpRider::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -172,24 +172,24 @@ namespace AlpRiderDefine {
     result__[ 18  ] = -1.0;
     result__[ 19  ] = -3.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 20, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 20, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::D2fd_odeD2xxup_numRows() const { return 10; }
-  integer AlpRider::D2fd_odeD2xxup_numCols() const { return 10; }
-  integer AlpRider::D2fd_odeD2xxup_nnz()     const { return 0; }
+  integer AlpRider::D2fd_odeD2xxpu_numRows() const { return 10; }
+  integer AlpRider::D2fd_odeD2xxpu_numCols() const { return 10; }
+  integer AlpRider::D2fd_odeD2xxpu_nnz()     const { return 0; }
 
   void
-  AlpRider::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  AlpRider::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  AlpRider::D2fd_odeD2xxup_sparse(
+  AlpRider::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,

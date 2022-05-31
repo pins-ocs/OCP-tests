@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -152,7 +152,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_aControl = data_Controls["aControl"];
-    data_aControl["type"]      = ;
+    data_aControl["type"]      = "LOGARITHMIC";
     data_aControl["epsilon"]   = 0.01;
     data_aControl["tolerance"] = 0.01;
 
@@ -174,8 +174,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brake_data.Mesh["s0"] = 0;
-Brake_data.Mesh["segments"][0]["length"] = 1;
 Brake_data.Mesh["segments"][0]["n"] = 400;
+Brake_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -192,7 +192,10 @@ Brake_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

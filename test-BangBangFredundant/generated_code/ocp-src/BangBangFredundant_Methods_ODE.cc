@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_ODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -107,12 +107,12 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFredundant::Drhs_odeDxup_numRows() const { return 6; }
-  integer BangBangFredundant::Drhs_odeDxup_numCols() const { return 8; }
-  integer BangBangFredundant::Drhs_odeDxup_nnz()     const { return 7; }
+  integer BangBangFredundant::Drhs_odeDxpu_numRows() const { return 6; }
+  integer BangBangFredundant::Drhs_odeDxpu_numCols() const { return 8; }
+  integer BangBangFredundant::Drhs_odeDxpu_nnz()     const { return 7; }
 
   void
-  BangBangFredundant::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFredundant::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
@@ -126,7 +126,7 @@ namespace BangBangFredundantDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFredundant::Drhs_odeDxup_sparse(
+  BangBangFredundant::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -144,7 +144,7 @@ namespace BangBangFredundantDefine {
     result__[ 5   ] = 1;
     result__[ 6   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 7, i_segment );
   }
 
   /*\
@@ -190,6 +190,112 @@ namespace BangBangFredundantDefine {
     result__[ 5   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 6, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::eta_numEqns() const { return 6; }
+
+  void
+  BangBangFredundant::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DetaDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DetaDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DetaDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFredundant::nu_numEqns() const { return 6; }
+
+  void
+  BangBangFredundant::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    result__[ 4   ] = V__[4];
+    result__[ 5   ] = V__[5];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFredundant::DnuDxp_numRows() const { return 6; }
+  integer BangBangFredundant::DnuDxp_numCols() const { return 6; }
+  integer BangBangFredundant::DnuDxp_nnz()     const { return 0; }
+
+  void
+  BangBangFredundant::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFredundant::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

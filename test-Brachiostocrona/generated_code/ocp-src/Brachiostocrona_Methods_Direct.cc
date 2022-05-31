@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -102,12 +102,12 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::Dfd_odeDxxup_numRows() const { return 4; }
-  integer Brachiostocrona::Dfd_odeDxxup_numCols() const { return 10; }
-  integer Brachiostocrona::Dfd_odeDxxup_nnz()     const { return 22; }
+  integer Brachiostocrona::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer Brachiostocrona::Dfd_odeDxxpu_numCols() const { return 10; }
+  integer Brachiostocrona::Dfd_odeDxxpu_nnz()     const { return 22; }
 
   void
-  Brachiostocrona::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brachiostocrona::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -134,7 +134,7 @@ namespace BrachiostocronaDefine {
 
 
   void
-  Brachiostocrona::Dfd_odeDxxup_sparse(
+  Brachiostocrona::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -192,18 +192,18 @@ namespace BrachiostocronaDefine {
     result__[ 20  ] = __INV_DZETA;
     result__[ 21  ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 22, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 22, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2fd_odeD2xxup_numRows() const { return 10; }
-  integer Brachiostocrona::D2fd_odeD2xxup_numCols() const { return 10; }
-  integer Brachiostocrona::D2fd_odeD2xxup_nnz()     const { return 20; }
+  integer Brachiostocrona::D2fd_odeD2xxpu_numRows() const { return 10; }
+  integer Brachiostocrona::D2fd_odeD2xxpu_numCols() const { return 10; }
+  integer Brachiostocrona::D2fd_odeD2xxpu_nnz()     const { return 20; }
 
   void
-  Brachiostocrona::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brachiostocrona::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 9   ;
@@ -228,7 +228,7 @@ namespace BrachiostocronaDefine {
 
 
   void
-  Brachiostocrona::D2fd_odeD2xxup_sparse(
+  Brachiostocrona::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -288,7 +288,7 @@ namespace BrachiostocronaDefine {
     result__[ 18  ] = result__[16];
     result__[ 19  ] = result__[17];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 20, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 20, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

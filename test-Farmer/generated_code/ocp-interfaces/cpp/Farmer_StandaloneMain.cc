@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -174,25 +174,25 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_x1__oControl = data_Controls["x1__oControl"];
-    data_x1__oControl["type"]      = ;
+    data_x1__oControl["type"]      = "COS_LOGARITHMIC";
     data_x1__oControl["epsilon"]   = 0.001;
     data_x1__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x2__oControl = data_Controls["x2__oControl"];
-    data_x2__oControl["type"]      = ;
+    data_x2__oControl["type"]      = "COS_LOGARITHMIC";
     data_x2__oControl["epsilon"]   = 0.001;
     data_x2__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x3__oControl = data_Controls["x3__oControl"];
-    data_x3__oControl["type"]      = ;
+    data_x3__oControl["type"]      = "COS_LOGARITHMIC";
     data_x3__oControl["epsilon"]   = 0.001;
     data_x3__oControl["tolerance"] = 0.001;
 
 
     GenericContainer & data_x4__oControl = data_Controls["x4__oControl"];
-    data_x4__oControl["type"]      = ;
+    data_x4__oControl["type"]      = "COS_LOGARITHMIC";
     data_x4__oControl["epsilon"]   = 0.001;
     data_x4__oControl["tolerance"] = 0.001;
 
@@ -232,7 +232,10 @@ Farmer_data.Mesh["segments"][0]["length"] = 2;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

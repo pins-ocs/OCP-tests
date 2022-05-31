@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -173,13 +173,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
-    data_u1Control["type"]      = ;
+    data_u1Control["type"]      = "COS_LOGARITHMIC";
     data_u1Control["epsilon"]   = u_epsilon;
     data_u1Control["tolerance"] = u_tolerance;
 
 
     GenericContainer & data_u2Control = data_Controls["u2Control"];
-    data_u2Control["type"]      = ;
+    data_u2Control["type"]      = "COS_LOGARITHMIC";
     data_u2Control["epsilon"]   = u_epsilon;
     data_u2Control["tolerance"] = u_tolerance;
 
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_TwoLinkRobotArm_data.Mesh["s0"] = 0;
-ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
 
 
     // alias for user object classes passed as pointers
@@ -210,7 +210,10 @@ ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

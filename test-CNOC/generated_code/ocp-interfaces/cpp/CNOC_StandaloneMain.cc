@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,22 +51,22 @@ main() {
 
     // Auxiliary values
     real_type jn_max = 65;
+    real_type epsi_COV = 0.01;
+    real_type v_nom = 0.173;
+    real_type js_min = -50;
+    real_type epsi_ACC = 0.01;
+    real_type epsi_VMAX = 0.01;
+    real_type tol_ACC = 0.01;
+    real_type epsi_PATH = 0.01;
     real_type path_following_tolerance = 1.0e-05;
     real_type pf_error = path_following_tolerance;
-    real_type v_nom = 0.173;
-    real_type tol_COV = 0.01;
-    real_type epsi_COV = 0.01;
-    real_type epsi_VMAX = 0.01;
     real_type deltaFeed = v_nom;
-    real_type tol_ACC = 0.01;
-    real_type tol_CTRL = 0.01;
-    real_type js_min = -50;
-    real_type epsi_PATH = 0.01;
-    real_type epsi_CTRL = 0.01;
     real_type tol_VMAX = 0.01;
     real_type js_max = 30;
     real_type tol_PATH = 0.01;
-    real_type epsi_ACC = 0.01;
+    real_type tol_CTRL = 0.01;
+    real_type tol_COV = 0.01;
+    real_type epsi_CTRL = 0.01;
     real_type mesh_segments = 100;
     integer InfoLevel = 4;
 
@@ -196,13 +196,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jsControl = data_Controls["jsControl"];
-    data_jsControl["type"]      = ;
+    data_jsControl["type"]      = "LOGARITHMIC";
     data_jsControl["epsilon"]   = epsi_CTRL;
     data_jsControl["tolerance"] = tol_CTRL;
 
 
     GenericContainer & data_jnControl = data_Controls["jnControl"];
-    data_jnControl["type"]      = ;
+    data_jnControl["type"]      = "LOGARITHMIC";
     data_jnControl["epsilon"]   = epsi_CTRL;
     data_jnControl["tolerance"] = tol_CTRL;
 
@@ -491,7 +491,10 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

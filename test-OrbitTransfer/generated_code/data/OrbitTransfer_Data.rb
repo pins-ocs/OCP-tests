@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: OrbitTransfer_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-r0   = 1
-m0   = 1
-mu   = 1
-tf   = 16.60*(r0**3/mu)**(1/2.0)
+mu   = 1.0
+m0   = 1.0
+r0   = 1.0
 T    = 0.1405e-1*m0*mu/r0**2
-v0   = (mu/r0)**(1/2.0)
 mdot = 0.533*T*(mu/r0)**(1/2.0)
+tf   = 16.60*(r0**3/mu)**(1/2.0)
+v0   = (mu/r0)**(1/2.0)
 
 mechatronix do |data|
 
@@ -97,7 +97,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -325,11 +325,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 1000,
-        :length => 1,
+        :n      => 1000.0,
+        :length => 1.0,
       },
     ],
   };

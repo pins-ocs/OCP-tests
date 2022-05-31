@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_dll_pins.hh                                       |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,6 +51,7 @@
 
 
 #include <MechatronixInterfaceMruby/MechatronixInterfaceMruby.hh>
+#include <MechatronixInterfaceMruby/mruby_include.hh>
 
 #include "BrysonDenham.hh"
 #include "BrysonDenham_Pars.hh"
@@ -155,6 +156,7 @@ namespace BrysonDenhamDefine {
     void
     guess( GenericContainer const & gc_guess ) {
       model.guess( gc_guess );
+      model.info();
     }
 
     BRYSONDENHAM_API_DLL

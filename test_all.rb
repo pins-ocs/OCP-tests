@@ -26,7 +26,7 @@ end
 FileUtils.rm_rf "./collected_results/"
 FileUtils.mkdir "./collected_results/"
 
-def do_test(dir,idx,ffile)
+def do_test(dir,idx,ffile,ffile2)
   name = dir.split("test-")[1];
   FileUtils.cd dir do
     puts "\n\n"
@@ -52,13 +52,17 @@ def do_test(dir,idx,ffile)
     end
   end
   begin
-    ff = "#{dir}/generated_code/iterations.txt";
+    ff   = "#{dir}/generated_code/iterations.txt";
+    iter = -1;
     if File.exist? "#{dir}/generated_code/data/#{name}_OCP_result.txt" then
       gg = "./collected_results/#{'%03d' % idx}_#{name}_iterations.txt";
+      File.open(ff).grep(/iteration\s+=\s+(\d+)/){ |n| iter = $1; }
     else
-      gg = "./collected_results/#{'%03d' % idx}_#{name}_iterations_NO_OK.txt";    
+      gg = "./collected_results/#{'%03d' % idx}_#{name}_iterations_NO_OK.txt";
     end
     FileUtils.cp ff, gg if File.exist? ff
+    ffile2.puts " iteration = " + ("%-5s" % iter) + " " + name
+    ffile2.flush
   rescue => e
     p e
     ffile.puts name
@@ -73,7 +77,7 @@ end
 banner =
 "==============================================================================\n" +
 "                 TEST OPTIMAL BENCHMARK CONTROL PROBLEMS                      \n"+
-"==============================================================================\n" 
+"==============================================================================\n"
 
 puts "#{banner}"
 
@@ -82,9 +86,9 @@ ocps_path  = '.'
 tests_dirs = []
 excluded_tests = []
 Dir.entries(ocps_path).select {|f|
-  if File.directory?(f) && 
-     f != '.' &&  f != '..' && 
-     (f.include? "test-") && 
+  if File.directory?(f) &&
+     f != '.' &&  f != '..' &&
+     (f.include? "test-") &&
      !(f.include? "-no-test") then
     tests_dirs << f
   end
@@ -109,12 +113,14 @@ File.open("./collected_results/000_list.txt","w") do |file|
 end
 
 puts "Start loop on tests"
-ffile = File.open("./collected_results/000_list_failed.txt","w")
+ffile  = File.open("./collected_results/000_list_failed.txt","w")
+ffile2 = File.open("./collected_results/000_iterations.txt","w")
 tests_dirs.each_with_index do |d,idx|
   puts "\n"
   puts "-------------------------------------------------------------------------------"
   puts "Testing: #{d}"
-  do_test(d,idx+1,ffile) ;
+  do_test(d,idx+1,ffile,ffile2) ;
   puts "\n\n#{d}\n\n\n"
 end
 ffile.close()
+ffile2.close()

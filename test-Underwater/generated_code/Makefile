@@ -1,8 +1,8 @@
 
 
 cmd1:
-	@echo "Compile Underwater_Methods_AdjointODE.cc"
-	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_AdjointODE.o -c ./ocp-src/Underwater_Methods_AdjointODE.cc
+	@echo "Compile Underwater_Methods_AdjointODE_HxHuHp.cc"
+	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_AdjointODE_HxHuHp.o -c ./ocp-src/Underwater_Methods_AdjointODE_HxHuHp.cc
 
 
 cmd2:
@@ -41,17 +41,22 @@ cmd8:
 
 
 cmd9:
+	@echo "Compile Underwater_Methods_AdjointODE_JuJpLT.cc"
+	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_AdjointODE_JuJpLT.o -c ./ocp-src/Underwater_Methods_AdjointODE_JuJpLT.cc
+
+
+cmd10:
 	@echo "Compile Underwater_Methods_boundary_conditions.cc"
 	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_boundary_conditions.o -c ./ocp-src/Underwater_Methods_boundary_conditions.cc
 
 
-cmd10:
+cmd11:
 	@echo "Compile Underwater_Methods_ODE.cc"
 	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_ODE.o -c ./ocp-src/Underwater_Methods_ODE.cc
 
 
-cmd11:
+cmd12:
 	@echo "Compile Underwater_Methods_Direct.cc"
 	clang++ -fPIC -Os -g -fcolor-diagnostics -std=c++11 -stdlib=libc++  -I/usr/local/include  -I././ocp-src -F/Library/Frameworks  -o ./ocp-src/Underwater_Methods_Direct.o -c ./ocp-src/Underwater_Methods_Direct.cc
-all:  cmd1 cmd2 cmd3 cmd4 cmd5 cmd6 cmd7 cmd8 cmd9 cmd10 cmd11
+all:  cmd1 cmd2 cmd3 cmd4 cmd5 cmd6 cmd7 cmd8 cmd9 cmd10 cmd11 cmd12
 

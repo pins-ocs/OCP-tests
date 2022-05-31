@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -188,12 +188,12 @@ namespace CNOCDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer CNOC::Drhs_odeDxup_numRows() const { return 7; }
-  integer CNOC::Drhs_odeDxup_numCols() const { return 9; }
-  integer CNOC::Drhs_odeDxup_nnz()     const { return 29; }
+  integer CNOC::Drhs_odeDxpu_numRows() const { return 7; }
+  integer CNOC::Drhs_odeDxpu_numCols() const { return 9; }
+  integer CNOC::Drhs_odeDxpu_nnz()     const { return 29; }
 
   void
-  CNOC::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  CNOC::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -229,7 +229,7 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::Drhs_odeDxup_sparse(
+  CNOC::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -292,7 +292,7 @@ namespace CNOCDefine {
     result__[ 27  ] = -t31 * t55 + U__[iU_jn];
     result__[ 28  ] = result__[22];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 29, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 29, i_segment );
   }
 
   /*\
@@ -340,6 +340,114 @@ namespace CNOCDefine {
     result__[ 6   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 7, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer CNOC::eta_numEqns() const { return 7; }
+
+  void
+  CNOC::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
+    result__[ 6   ] = L__[iL_lambda7__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",7, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer CNOC::DetaDxp_numRows() const { return 7; }
+  integer CNOC::DetaDxp_numCols() const { return 7; }
+  integer CNOC::DetaDxp_nnz()     const { return 0; }
+
+  void
+  CNOC::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  CNOC::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer CNOC::nu_numEqns() const { return 7; }
+
+  void
+  CNOC::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    result__[ 4   ] = V__[4];
+    result__[ 5   ] = V__[5];
+    result__[ 6   ] = V__[6];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 7, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer CNOC::DnuDxp_numRows() const { return 7; }
+  integer CNOC::DnuDxp_numCols() const { return 7; }
+  integer CNOC::DnuDxp_nnz()     const { return 0; }
+
+  void
+  CNOC::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  CNOC::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

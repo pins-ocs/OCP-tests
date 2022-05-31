@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GerdtsKunkel_main.m                                            %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -35,8 +35,7 @@ ocp = GerdtsKunkel( 'GerdtsKunkel' );
 % READ PROBLEM DATA-------------------------------------------------------------
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(GerdtsKunkel_data);
-%ocp.setup('../../data/GerdtsKunkel_Data.lua');
-ocp.setup('../../data/GerdtsKunkel_Data.rb');
+ocp.setup('../../data/GerdtsKunkel_Data');  % automatically try extension .rb and .lua
 ocp.infoLevel(4);
 
 ocp.set_guess(); % use default guess generated in MAPLE

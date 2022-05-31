@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TyreDynamic_Data.rb                                            #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,22 +20,22 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-eps_c0   = 0.1
-eps_c    = eps_c0
+v__0     = 10.0
 tol_c0   = 0.1
-tol_c    = tol_c0
-TT__max  = 800
-E__pow   = 60*TT__max
-h__b     = 1
-L        = 300
-mesh_np  = 2.000000000*L
-v__0     = 10
-w__t0    = 1
-w__t     = w__t0
-tol_l    = 0.01
 eps_l    = 0.01
+tol_c    = tol_c0
+tol_l    = 0.01
+w__t0    = 1.0
+w__t     = w__t0
 rw       = 0.3
 omega__0 = 1/rw*v__0
+eps_c0   = 0.1
+eps_c    = eps_c0
+h__b     = 1.0
+TT__max  = 800.0
+E__pow   = 60*TT__max
+L        = 300.0
+mesh_np  = 2.000000000*L
 
 mechatronix do |data|
 
@@ -106,7 +106,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -275,27 +275,27 @@ mechatronix do |data|
     # Model Parameters
     :Iw         => 0.4351,
     :b__lb      => -1,
-    :b__ub      => 1,
+    :b__ub      => 1.0,
     :l__x       => 0.1,
-    :m          => 115,
+    :m          => 115.0,
     :p__lb      => -1,
-    :p__ub      => 1,
+    :p__ub      => 1.0,
     :rw         => rw,
     :tau__b     => 0.1,
     :tau__p     => 0.1,
-    :v__adm     => 1,
-    :v__lb      => 0,
-    :v__ub      => 10000,
+    :v__adm     => 1.0,
+    :v__lb      => 0.0,
+    :v__ub      => 10000.0,
     :w__U       => 0.0001,
     :w__t       => w__t,
     :b__o__lb   => -1,
-    :b__o__ub   => 1,
+    :b__o__ub   => 1.0,
     :lambda__lb => -1,
-    :lambda__ub => 1,
-    :omega__lb  => 0,
-    :omega__ub  => 10000,
+    :lambda__ub => 1.0,
+    :omega__lb  => 0.0,
+    :omega__ub  => 10000.0,
     :p__o__lb   => -1,
-    :p__o__ub   => 1,
+    :p__o__ub   => 1.0,
 
     # Guess Parameters
     :p__ss      => 0.175698,
@@ -304,25 +304,25 @@ mechatronix do |data|
 
     # Boundary Conditions
     :b__ss => 0.1,
-    :v__ss => 10,
+    :v__ss => 10.0,
 
     # Post Processing Parameters
     :g           => 9.81,
     :h__b        => h__b,
-    :lambda__max => 1,
+    :lambda__max => 1.0,
 
     # User Function Parameters
-    :BT__max  => 300,
-    :Bx0      => 10,
+    :BT__max  => 300.0,
+    :Bx0      => 10.0,
     :Cx0      => 1.6,
     :E__pow   => E__pow,
-    :TB__max  => 500,
+    :TB__max  => 500.0,
     :TT__max  => TT__max,
     :kD       => 0.2,
     :kDo      => 0.001,
-    :mu__x0   => 1,
+    :mu__x0   => 1.0,
     :rho_a    => 1.1839,
-    :BTv__max => 50,
+    :BTv__max => 50.0,
 
     # Continuation Parameters
     :eps_c0 => eps_c0,
@@ -330,7 +330,7 @@ mechatronix do |data|
     :tol_c0 => tol_c0,
     :tol_c1 => 0.01,
     :w__t0  => w__t0,
-    :w__t1  => 1,
+    :w__t1  => 1.0,
 
     # Constraints Parameters
   }
@@ -354,7 +354,7 @@ mechatronix do |data|
   data.MappedObjects[:clipSup] = { :h => 0.01 }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clipInt] = { :delta2 => 0, :h => 0.01, :delta => 0 }
+  data.MappedObjects[:clipInt] = { :delta => 0.0, :delta2 => 0.0, :h => 0.01 }
 
   # SignRegularizedWithErf
   data.MappedObjects[:sign_reg] = { :h => 0.01 }
@@ -446,7 +446,7 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
         :n      => 0.4*mesh_np,

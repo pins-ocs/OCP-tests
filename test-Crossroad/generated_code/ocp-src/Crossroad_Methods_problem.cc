@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -138,82 +138,6 @@ namespace CrossroadDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  Crossroad::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Crossroad::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = jerkControl(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Crossroad::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = Tpositive(-X__[iX_Ts]);
-    real_type t4   = X__[iX_a] * X__[iX_a];
-    real_type t6   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
-    real_type t9   = X__[iX_v];
-    real_type t10  = t9 * t9;
-    real_type t11  = t10 * t10;
-    real_type t13  = kappa(X__[iX_s]);
-    real_type t14  = t13 * t13;
-    real_type t17  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
-    real_type t21  = AccBound(1.0 / t6 * t4 + 1.0 / t17 * t14 * t11 - 1);
-    real_type t22  = VelBound_min(-t9);
-    real_type t25  = VelBound_max(t9 - ModelPars[iM_v_max]);
-    real_type result__ = t2 + t21 + t22 + t25;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -331,10 +255,10 @@ namespace CrossroadDefine {
    |              |___/                 |___/
   \*/
 
-  integer Crossroad::DlagrangeDxup_numEqns() const { return 5; }
+  integer Crossroad::DlagrangeDxpu_numEqns() const { return 5; }
 
   void
-  Crossroad::DlagrangeDxup_eval(
+  Crossroad::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -350,19 +274,19 @@ namespace CrossroadDefine {
     real_type t1   = ModelPars[iM_wJ];
     real_type t2   = U__[iU_jerk];
     real_type t3   = t2 * t2;
-    result__[ 3   ] = t3 * t1 + ModelPars[iM_wT];
+    result__[ 3   ] = t1 * t3 + ModelPars[iM_wT];
     result__[ 4   ] = 2 * X__[iX_Ts] * t1 * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Crossroad::D2lagrangeD2xup_numRows() const { return 5; }
-  integer Crossroad::D2lagrangeD2xup_numCols() const { return 5; }
-  integer Crossroad::D2lagrangeD2xup_nnz()     const { return 3; }
+  integer Crossroad::D2lagrangeD2xpu_numRows() const { return 5; }
+  integer Crossroad::D2lagrangeD2xpu_numCols() const { return 5; }
+  integer Crossroad::D2lagrangeD2xpu_nnz()     const { return 3; }
 
   void
-  Crossroad::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Crossroad::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 3   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 4   ; jIndex[2 ] = 4   ;
@@ -370,7 +294,7 @@ namespace CrossroadDefine {
 
 
   void
-  Crossroad::D2lagrangeD2xup_sparse(
+  Crossroad::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -385,7 +309,7 @@ namespace CrossroadDefine {
     result__[ 1   ] = result__[0];
     result__[ 2   ] = 2 * X__[iX_Ts] * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,9 +89,9 @@ namespace SingularConstrainedCalogeroDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = QM__[0];
-    real_type t9   = uMaxBound(XM__[0] - t2 - t1 + 1);
-    real_type t10  = uControl(t1, 0, 2);
-    real_type result__ = (t2 - 4) * t1 + t1 * LM__[0] + t9 + t10;
+    real_type t7   = uControl(t1, 0, 2);
+    real_type t10  = uMaxBound(XM__[0] - t2 - t1 + 1);
+    real_type result__ = (t2 - 4) * t1 + t1 * LM__[0] + t7 + t10;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -127,10 +127,10 @@ namespace SingularConstrainedCalogeroDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = QM__[0];
-    real_type t4   = UM__[0];
-    real_type t6   = ALIAS_uMaxBound_D(XM__[0] - t1 - t4 + 1);
-    real_type t7   = ALIAS_uControl_D_1(t4, 0, 2);
-    result__[ 0   ] = t1 - 4 + LM__[0] - t6 + t7;
+    real_type t3   = UM__[0];
+    real_type t4   = ALIAS_uControl_D_1(t3, 0, 2);
+    real_type t7   = ALIAS_uMaxBound_D(XM__[0] - t1 - t3 + 1);
+    result__[ 0   ] = t1 - 4 + LM__[0] + t4 - t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -221,10 +221,10 @@ namespace SingularConstrainedCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = UM__[0];
-    real_type t5   = ALIAS_uMaxBound_DD(XM__[0] - QM__[0] - t3 + 1);
-    real_type t6   = ALIAS_uControl_D_1_1(t3, 0, 2);
-    result__[ 0   ] = t5 + t6;
+    real_type t1   = UM__[0];
+    real_type t2   = ALIAS_uControl_D_1_1(t1, 0, 2);
+    real_type t6   = ALIAS_uMaxBound_DD(XM__[0] - QM__[0] - t1 + 1);
+    result__[ 0   ] = t2 + t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -256,53 +256,6 @@ namespace SingularConstrainedCalogeroDefine {
       "SingularConstrainedCalogero::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"
     );
-  }
-
-  /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  SingularConstrainedCalogero::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[1], LM__[1];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type tmp_0_3 = 0.0e0;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 4 );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 17/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,12 +86,12 @@ namespace AlpRiderDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DHxpDxp_numRows() const { return 4; }
-  integer AlpRider::DHxpDxp_numCols() const { return 4; }
-  integer AlpRider::DHxpDxp_nnz()     const { return 4; }
+  integer AlpRider::DHxpDxpu_numRows() const { return 4; }
+  integer AlpRider::DHxpDxpu_numCols() const { return 6; }
+  integer AlpRider::DHxpDxpu_nnz()     const { return 4; }
 
   void
-  AlpRider::DHxpDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+  AlpRider::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -100,7 +100,7 @@ namespace AlpRiderDefine {
 
 
   void
-  AlpRider::DHxpDxp_sparse(
+  AlpRider::DHxpDxpu_sparse(
     NodeType2 const    & NODE__,
     V_const_pointer_type V__,
     U_const_pointer_type U__,
@@ -117,7 +117,7 @@ namespace AlpRiderDefine {
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxp_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 4, i_segment );
   }
 
   /*\
@@ -153,27 +153,6 @@ namespace AlpRiderDefine {
     result__[ 1   ] = U__[iU_u2] / 50 + t3 + 2 * t4 - t5 + 3 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DHuDxp_numRows() const { return 2; }
-  integer AlpRider::DHuDxp_numCols() const { return 4; }
-  integer AlpRider::DHuDxp_nnz()     const { return 0; }
-
-  void
-  AlpRider::DHuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  AlpRider::DHuDxp_sparse(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

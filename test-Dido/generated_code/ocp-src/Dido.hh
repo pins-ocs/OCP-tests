@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido.hh                                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -181,19 +181,16 @@ namespace DidoDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    info_classes() const;
+    void info_classes() const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))
     DIDO_API_DLL
-    void
-    setup_parameters( GenericContainer const & gc );
+    void setup_parameters( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_parameters( real_const_ptr Pars );
+    void setup_parameters( real_const_ptr Pars );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
@@ -203,28 +200,23 @@ namespace DidoDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_classes( GenericContainer const & gc );
+    void setup_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_user_classes( GenericContainer const & gc );
+    void setup_user_classes( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_user_mapped_functions( GenericContainer const & gc );
+    void setup_user_mapped_functions( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_controls( GenericContainer const & gc );
+    void setup_controls( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     DIDO_API_DLL
-    void
-    setup_pointers( GenericContainer const & gc );
+    void setup_pointers( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
@@ -235,12 +227,10 @@ namespace DidoDefine {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (all in one)
     DIDO_API_DLL
-    void
-    setup( GenericContainer const & gc );
+    void setup( GenericContainer const & gc );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    void
-    get_names( GenericContainer & out ) const;
+    void get_names( GenericContainer & out ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Continuation phase update
@@ -253,8 +243,7 @@ namespace DidoDefine {
     ) override;
 
     // save model parameters
-    void
-    save_OCP_info( GenericContainer & gc ) const override;
+    void save_OCP_info( GenericContainer & gc ) const override;
 
   };
 }

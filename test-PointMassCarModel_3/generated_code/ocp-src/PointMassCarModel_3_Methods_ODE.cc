@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -191,12 +191,12 @@ namespace PointMassCarModel_3Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_3::Drhs_odeDxup_numRows() const { return 7; }
-  integer PointMassCarModel_3::Drhs_odeDxup_numCols() const { return 9; }
-  integer PointMassCarModel_3::Drhs_odeDxup_nnz()     const { return 21; }
+  integer PointMassCarModel_3::Drhs_odeDxpu_numRows() const { return 7; }
+  integer PointMassCarModel_3::Drhs_odeDxpu_numCols() const { return 9; }
+  integer PointMassCarModel_3::Drhs_odeDxpu_nnz()     const { return 21; }
 
   void
-  PointMassCarModel_3::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_3::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -224,7 +224,7 @@ namespace PointMassCarModel_3Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PointMassCarModel_3::Drhs_odeDxup_sparse(
+  PointMassCarModel_3::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -258,17 +258,17 @@ namespace PointMassCarModel_3Define {
     real_type t18  = sin(t2);
     result__[ 6   ] = t10 * t18;
     result__[ 7   ] = 2 * t9 * t18 * t1;
-    result__[ 8   ] = (-t7 * t14 - t5 * t8) * t10;
+    result__[ 8   ] = (-t14 * t7 - t5 * t8) * t10;
     result__[ 9   ] = -t5 * t10 * t11;
     result__[ 10  ] = -t5 * t10 * t12;
     result__[ 11  ] = -t5 * t10 * t13;
     result__[ 12  ] = t10;
-    result__[ 13  ] = 2 * (-t5 * t14 + X__[iX_Omega]) * t9;
+    result__[ 13  ] = 2 * (-t14 * t5 + X__[iX_Omega]) * t9;
     real_type t34  = ModelPars[iM_kD];
     result__[ 14  ] = -2 * t1 * t34 * result__[12];
     result__[ 15  ] = result__[12];
     real_type t38  = t1 * t1;
-    result__[ 16  ] = 2 * (-t38 * t34 + X__[iX_fx]) * t9;
+    result__[ 16  ] = 2 * (-t34 * t38 + X__[iX_fx]) * t9;
     real_type t44  = ModelPars[iM_v__Omega__max];
     result__[ 17  ] = 2 * t9 * t44 * U__[iU_v__Omega];
     result__[ 18  ] = result__[15] * t44;
@@ -276,7 +276,7 @@ namespace PointMassCarModel_3Define {
     result__[ 19  ] = 2 * t9 * t48 * U__[iU_v__fx];
     result__[ 20  ] = result__[15] * t48;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 21, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 21, i_segment );
   }
 
   /*\
@@ -324,6 +324,114 @@ namespace PointMassCarModel_3Define {
     result__[ 6   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 7, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer PointMassCarModel_3::eta_numEqns() const { return 7; }
+
+  void
+  PointMassCarModel_3::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
+    result__[ 6   ] = L__[iL_lambda7__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",7, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_3::DetaDxp_numRows() const { return 7; }
+  integer PointMassCarModel_3::DetaDxp_numCols() const { return 7; }
+  integer PointMassCarModel_3::DetaDxp_nnz()     const { return 0; }
+
+  void
+  PointMassCarModel_3::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  PointMassCarModel_3::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer PointMassCarModel_3::nu_numEqns() const { return 7; }
+
+  void
+  PointMassCarModel_3::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    result__[ 4   ] = V__[4];
+    result__[ 5   ] = V__[5];
+    result__[ 6   ] = V__[6];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 7, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer PointMassCarModel_3::DnuDxp_numRows() const { return 7; }
+  integer PointMassCarModel_3::DnuDxp_numCols() const { return 7; }
+  integer PointMassCarModel_3::DnuDxp_nnz()     const { return 0; }
+
+  void
+  PointMassCarModel_3::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  PointMassCarModel_3::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

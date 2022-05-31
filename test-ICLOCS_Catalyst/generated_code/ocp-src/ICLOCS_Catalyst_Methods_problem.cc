@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -117,70 +117,6 @@ namespace ICLOCS_CatalystDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  ICLOCS_Catalyst::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_Catalyst::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = uControl(U__[iU_u], 0, 1);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_Catalyst::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -293,10 +229,10 @@ namespace ICLOCS_CatalystDefine {
    |              |___/                 |___/
   \*/
 
-  integer ICLOCS_Catalyst::DlagrangeDxup_numEqns() const { return 3; }
+  integer ICLOCS_Catalyst::DlagrangeDxpu_numEqns() const { return 3; }
 
   void
-  ICLOCS_Catalyst::DlagrangeDxup_eval(
+  ICLOCS_Catalyst::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -310,22 +246,22 @@ namespace ICLOCS_CatalystDefine {
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_Catalyst::D2lagrangeD2xup_numRows() const { return 3; }
-  integer ICLOCS_Catalyst::D2lagrangeD2xup_numCols() const { return 3; }
-  integer ICLOCS_Catalyst::D2lagrangeD2xup_nnz()     const { return 0; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xpu_numRows() const { return 3; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xpu_numCols() const { return 3; }
+  integer ICLOCS_Catalyst::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
-  ICLOCS_Catalyst::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_Catalyst::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  ICLOCS_Catalyst::D2lagrangeD2xup_sparse(
+  ICLOCS_Catalyst::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

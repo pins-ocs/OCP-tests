@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "PointMassCarModel_2_Mex"
-DESCRIPTION  'Mex file for PointMassCarModel_2'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

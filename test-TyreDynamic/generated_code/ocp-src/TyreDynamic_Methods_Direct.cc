@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_Guess.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -147,19 +147,19 @@ namespace TyreDynamicDefine {
     result__[ 1   ] = V__[1] * t1 * ModelPars[iM_Iw] + ModelPars[iM_rw] * t7 - t16 - t19 - t22;
     real_type t27  = kappa__w(t1, t15);
     result__[ 2   ] = V__[2] * ModelPars[iM_l__x] * t1 - (t27 - t6) * t1;
-    result__[ 3   ] = ModelPars[iM_tau__p] * t1 * V__[3] + t13 - UM__[0];
-    result__[ 4   ] = ModelPars[iM_tau__b] * t1 * V__[4] + t17 - UM__[1];
+    result__[ 3   ] = V__[3] * ModelPars[iM_tau__p] * t1 + t13 - UM__[0];
+    result__[ 4   ] = V__[4] * ModelPars[iM_tau__b] * t1 + t17 - UM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TyreDynamic::Dfd_odeDxxup_numRows() const { return 5; }
-  integer TyreDynamic::Dfd_odeDxxup_numCols() const { return 12; }
-  integer TyreDynamic::Dfd_odeDxxup_nnz()     const { return 30; }
+  integer TyreDynamic::Dfd_odeDxxpu_numRows() const { return 5; }
+  integer TyreDynamic::Dfd_odeDxxpu_numCols() const { return 12; }
+  integer TyreDynamic::Dfd_odeDxxpu_nnz()     const { return 30; }
 
   void
-  TyreDynamic::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TyreDynamic::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
@@ -194,7 +194,7 @@ namespace TyreDynamicDefine {
 
 
   void
-  TyreDynamic::Dfd_odeDxxup_sparse(
+  TyreDynamic::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -290,18 +290,18 @@ namespace TyreDynamicDefine {
     result__[ 28  ] = 0.5e0 + t61;
     result__[ 29  ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 30, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 30, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TyreDynamic::D2fd_odeD2xxup_numRows() const { return 12; }
-  integer TyreDynamic::D2fd_odeD2xxup_numCols() const { return 12; }
-  integer TyreDynamic::D2fd_odeD2xxup_nnz()     const { return 52; }
+  integer TyreDynamic::D2fd_odeD2xxpu_numRows() const { return 12; }
+  integer TyreDynamic::D2fd_odeD2xxpu_numCols() const { return 12; }
+  integer TyreDynamic::D2fd_odeD2xxpu_nnz()     const { return 52; }
 
   void
-  TyreDynamic::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TyreDynamic::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -358,7 +358,7 @@ namespace TyreDynamicDefine {
 
 
   void
-  TyreDynamic::D2fd_odeD2xxup_sparse(
+  TyreDynamic::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -473,7 +473,7 @@ namespace TyreDynamicDefine {
     result__[ 50  ] = result__[48];
     result__[ 51  ] = result__[49];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 52, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 52, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

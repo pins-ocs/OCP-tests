@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 17/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol0 = 0.1;
-    real_type tol = tol0;
-    real_type W0 = 0;
     real_type epsi0 = 0.1;
+    real_type W0 = 0;
     real_type epsi = epsi0;
+    real_type tol0 = 0.1;
     real_type W = W0;
+    real_type tol = tol0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -188,8 +188,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 AlpRider_data.Mesh["s0"] = 0;
-AlpRider_data.Mesh["segments"][0]["length"] = 20;
 AlpRider_data.Mesh["segments"][0]["n"] = 4000;
+AlpRider_data.Mesh["segments"][0]["length"] = 20;
 
 
     // alias for user object classes passed as pointers
@@ -206,7 +206,10 @@ AlpRider_data.Mesh["segments"][0]["n"] = 4000;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

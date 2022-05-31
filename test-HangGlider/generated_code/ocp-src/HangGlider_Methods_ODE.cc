@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,16 +99,16 @@ namespace HangGliderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HangGlider::Drhs_odeDxup_numRows() const { return 4; }
-  integer HangGlider::Drhs_odeDxup_numCols() const { return 6; }
-  integer HangGlider::Drhs_odeDxup_nnz()     const { return 14; }
+  integer HangGlider::Drhs_odeDxpu_numRows() const { return 4; }
+  integer HangGlider::Drhs_odeDxpu_numCols() const { return 6; }
+  integer HangGlider::Drhs_odeDxpu_nnz()     const { return 14; }
 
   void
-  HangGlider::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HangGlider::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 5   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 5   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 4   ;
     iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
     iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
     iIndex[6 ] = 2   ; jIndex[6 ] = 3   ;
@@ -125,7 +125,7 @@ namespace HangGliderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  HangGlider::Drhs_odeDxup_sparse(
+  HangGlider::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -177,19 +177,19 @@ namespace HangGliderDefine {
     real_type t57  = t56 * t9;
     real_type t59  = w_D_2(t4, result__[3]);
     result__[ 6   ] = -t50 * t22 * t3 + (-t59 * t18 - t19 * t57 - result__[1] * t54) * t26 * t3;
-    real_type t64  = t9 * t8;
-    result__[ 7   ] = (-2 * result__[1] * t14 * t64 - t19 * t17) * t26 * t3;
-    real_type t71  = t26 * t2;
-    result__[ 8   ] = t21 * t71;
+    real_type t64  = t26 * t2;
+    result__[ 7   ] = t21 * t64;
+    real_type t65  = t9 * t8;
+    result__[ 8   ] = (-2 * result__[1] * t14 * t65 - t19 * t17) * t26 * t3;
     real_type t74  = -t19 * t15 + result__[1] * t18;
     real_type t75  = t74 * t7;
     result__[ 9   ] = -t23 * t75 * t3 + (-t33 * t15 - t19 * t28 + result__[1] * t31) * t26 * t3;
     result__[ 10  ] = -t38 * t75 * t3 + (-t19 * t42 + result__[1] * t45 + t18) * t26 * t3;
-    result__[ 11  ] = -t50 * t75 * t3 + (-t59 * t15 - t54 * t19 + result__[1] * t57) * t26 * t3;
-    result__[ 12  ] = (-2 * t19 * t14 * t64 + result__[1] * t17) * t26 * t3;
-    result__[ 13  ] = t74 * t71 - ModelPars[iM_g];
+    result__[ 11  ] = -t50 * t75 * t3 + (-t59 * t15 - t19 * t54 + result__[1] * t57) * t26 * t3;
+    result__[ 12  ] = t74 * t64 - ModelPars[iM_g];
+    result__[ 13  ] = (-2 * t19 * t14 * t65 + result__[1] * t17) * t26 * t3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 14, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 14, i_segment );
   }
 
   /*\
@@ -231,6 +231,108 @@ namespace HangGliderDefine {
     result__[ 3   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HangGlider::eta_numEqns() const { return 4; }
+
+  void
+  HangGlider::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HangGlider::DetaDxp_numRows() const { return 4; }
+  integer HangGlider::DetaDxp_numCols() const { return 5; }
+  integer HangGlider::DetaDxp_nnz()     const { return 0; }
+
+  void
+  HangGlider::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  HangGlider::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HangGlider::nu_numEqns() const { return 4; }
+
+  void
+  HangGlider::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HangGlider::DnuDxp_numRows() const { return 4; }
+  integer HangGlider::DnuDxp_numCols() const { return 5; }
+  integer HangGlider::DnuDxp_nnz()     const { return 0; }
+
+  void
+  HangGlider::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  HangGlider::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

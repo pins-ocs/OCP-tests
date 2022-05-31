@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,17 +20,17 @@
 -- User Header
 
 -- Auxiliary values
-tol_ctrl  = 0.01
 xy_tol0   = 0.1
-epsi_ctrl = 0.01
-xy_tol    = xy_tol0
+tol_ctrl  = 0.01
 xy_eps0   = 0.1
+xy_tol    = xy_tol0
+epsi_ctrl = 0.01
 xy_eps    = xy_eps0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -51,7 +51,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -65,10 +65,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "ICLOCS_ContinuousMP_dump",
@@ -133,7 +133,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -338,7 +338,7 @@ content = {
     -- Boundary Conditions
 
     -- Post Processing Parameters
-    xy_bound = 2,
+    xy_bound = 2.0,
 
     -- User Function Parameters
 
@@ -1092,12 +1092,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        length = 1,
-        n      = 50,
+        n      = 50.0,
+        length = 1.0,
       },
     },
   },

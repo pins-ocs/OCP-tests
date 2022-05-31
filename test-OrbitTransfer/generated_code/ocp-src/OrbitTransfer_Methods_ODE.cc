@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -85,12 +85,12 @@ namespace OrbitTransferDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer OrbitTransfer::Drhs_odeDxup_numRows() const { return 5; }
-  integer OrbitTransfer::Drhs_odeDxup_numCols() const { return 6; }
-  integer OrbitTransfer::Drhs_odeDxup_nnz()     const { return 12; }
+  integer OrbitTransfer::Drhs_odeDxpu_numRows() const { return 5; }
+  integer OrbitTransfer::Drhs_odeDxpu_numCols() const { return 6; }
+  integer OrbitTransfer::Drhs_odeDxpu_nnz()     const { return 12; }
 
   void
-  OrbitTransfer::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  OrbitTransfer::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
@@ -109,7 +109,7 @@ namespace OrbitTransferDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  OrbitTransfer::Drhs_odeDxup_sparse(
+  OrbitTransfer::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -149,7 +149,7 @@ namespace OrbitTransferDefine {
     result__[ 10  ] = -t14 * t22;
     result__[ 11  ] = t23 * result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 12, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 12, i_segment );
   }
 
   /*\
@@ -193,6 +193,110 @@ namespace OrbitTransferDefine {
     result__[ 4   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::eta_numEqns() const { return 5; }
+
+  void
+  OrbitTransfer::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda4__xo];
+    result__[ 1   ] = L__[iL_lambda5__xo];
+    result__[ 2   ] = L__[iL_lambda1__xo];
+    result__[ 3   ] = L__[iL_lambda2__xo];
+    result__[ 4   ] = L__[iL_lambda3__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DetaDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DetaDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DetaDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer OrbitTransfer::nu_numEqns() const { return 5; }
+
+  void
+  OrbitTransfer::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[2];
+    result__[ 1   ] = V__[3];
+    result__[ 2   ] = V__[4];
+    result__[ 3   ] = V__[0];
+    result__[ 4   ] = V__[1];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer OrbitTransfer::DnuDxp_numRows() const { return 5; }
+  integer OrbitTransfer::DnuDxp_numCols() const { return 5; }
+  integer OrbitTransfer::DnuDxp_nnz()     const { return 0; }
+
+  void
+  OrbitTransfer::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  OrbitTransfer::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

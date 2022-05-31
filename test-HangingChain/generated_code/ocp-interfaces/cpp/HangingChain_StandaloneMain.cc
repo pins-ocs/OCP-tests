@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type b = 3;
     real_type a = 1;
+    real_type b = 3;
     real_type u0 = b-a;
     real_type L0 = (u0^2+1)^(1/2.0);
     real_type L = L0;
@@ -164,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangingChain_data.Mesh["s0"] = 0;
-HangingChain_data.Mesh["segments"][0]["length"] = 1;
 HangingChain_data.Mesh["segments"][0]["n"] = 400;
+HangingChain_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -182,7 +182,10 @@ HangingChain_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

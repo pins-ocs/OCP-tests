@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_Guess.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -102,12 +102,12 @@ namespace ZermeloDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Zermelo::Dfd_odeDxxup_numRows() const { return 5; }
-  integer Zermelo::Dfd_odeDxxup_numCols() const { return 11; }
-  integer Zermelo::Dfd_odeDxxup_nnz()     const { return 28; }
+  integer Zermelo::Dfd_odeDxxpu_numRows() const { return 5; }
+  integer Zermelo::Dfd_odeDxxpu_numCols() const { return 11; }
+  integer Zermelo::Dfd_odeDxxpu_nnz()     const { return 28; }
 
   void
-  Zermelo::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Zermelo::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -140,7 +140,7 @@ namespace ZermeloDefine {
 
 
   void
-  Zermelo::Dfd_odeDxxup_sparse(
+  Zermelo::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -214,18 +214,18 @@ namespace ZermeloDefine {
     result__[ 26  ] = result__[21];
     result__[ 27  ] = __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 28, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 28, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Zermelo::D2fd_odeD2xxup_numRows() const { return 11; }
-  integer Zermelo::D2fd_odeD2xxup_numCols() const { return 11; }
-  integer Zermelo::D2fd_odeD2xxup_nnz()     const { return 53; }
+  integer Zermelo::D2fd_odeD2xxpu_numRows() const { return 11; }
+  integer Zermelo::D2fd_odeD2xxpu_numCols() const { return 11; }
+  integer Zermelo::D2fd_odeD2xxpu_nnz()     const { return 53; }
 
   void
-  Zermelo::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Zermelo::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -283,7 +283,7 @@ namespace ZermeloDefine {
 
 
   void
-  Zermelo::D2fd_odeD2xxup_sparse(
+  Zermelo::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -390,7 +390,7 @@ namespace ZermeloDefine {
     result__[ 51  ] = result__[50];
     result__[ 52  ] = t52 * t45 * t5 * t44 + t48 * t45 * t5 * t50;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 53, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 53, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,12 +108,12 @@ namespace Bike1DDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Bike1D::Dfd_odeDxxup_numRows() const { return 1; }
-  integer Bike1D::Dfd_odeDxxup_numCols() const { return 4; }
-  integer Bike1D::Dfd_odeDxxup_nnz()     const { return 4; }
+  integer Bike1D::Dfd_odeDxxpu_numRows() const { return 1; }
+  integer Bike1D::Dfd_odeDxxpu_numCols() const { return 4; }
+  integer Bike1D::Dfd_odeDxxpu_nnz()     const { return 4; }
 
   void
-  Bike1D::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Bike1D::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -122,7 +122,7 @@ namespace Bike1DDefine {
 
 
   void
-  Bike1D::Dfd_odeDxxup_sparse(
+  Bike1D::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -150,24 +150,24 @@ namespace Bike1DDefine {
     result__[ 2   ] = -ModelPars[iM_g];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Bike1D::D2fd_odeD2xxup_numRows() const { return 4; }
-  integer Bike1D::D2fd_odeD2xxup_numCols() const { return 4; }
-  integer Bike1D::D2fd_odeD2xxup_nnz()     const { return 0; }
+  integer Bike1D::D2fd_odeD2xxpu_numRows() const { return 4; }
+  integer Bike1D::D2fd_odeD2xxpu_numCols() const { return 4; }
+  integer Bike1D::D2fd_odeD2xxpu_nnz()     const { return 0; }
 
   void
-  Bike1D::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Bike1D::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  Bike1D::D2fd_odeD2xxup_sparse(
+  Bike1D::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,

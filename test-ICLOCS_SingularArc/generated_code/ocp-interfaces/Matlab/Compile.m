@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_SingularArc_Data.rb                                     %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -25,7 +25,12 @@ old_dir = cd(fileparts(which(mfilename)));
 MODEL     = 'ICLOCS_SingularArc';
 lib_name  = [MODEL, '.m'];
 SRCS_BASE = '../../ocp-src/';
-SRCS      = [ MODEL '_Mex.cc GenericContainerMatlabInterface.cc ' ];
+SRCS      = [ ...
+  MODEL '_Mex.cc ' ...
+  MODEL '_Mex_class.cc '  ...
+  MODEL '_Mex_methods.cc '  ...
+  MODEL '_Mex_user.cc GenericContainerMatlabInterface.cc ' ...
+];
 OBJS      = '';
 LIBS      = [];
 INC       = ['-I' SRCS_BASE ' '];

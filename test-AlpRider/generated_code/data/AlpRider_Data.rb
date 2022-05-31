@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: AlpRider_Data.rb                                               #
 #                                                                       #
-#  version: 1.0   date 17/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol0  = 0.1
-tol   = tol0
-W0    = 0
 epsi0 = 0.1
+W0    = 0.0
 epsi  = epsi0
+tol0  = 0.1
 W     = W0
+tol   = tol0
 
 mechatronix do |data|
 
@@ -270,14 +270,14 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :y1_f => 2,
-    :y1_i => 2,
-    :y2_f => 3,
-    :y2_i => 1,
-    :y3_f => 1,
-    :y3_i => 2,
+    :y1_f => 2.0,
+    :y1_i => 2.0,
+    :y2_f => 3.0,
+    :y2_i => 1.0,
+    :y3_f => 1.0,
+    :y3_i => 2.0,
     :y4_f => -2,
-    :y4_i => 1,
+    :y4_i => 1.0,
 
     # Post Processing Parameters
 
@@ -285,7 +285,7 @@ mechatronix do |data|
 
     # Continuation Parameters
     :W0    => W0,
-    :W1    => 100,
+    :W1    => 100.0,
     :epsi0 => epsi0,
     :epsi1 => 0.001,
     :tol0  => tol0,
@@ -345,11 +345,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 20,
-        :n      => 4000,
+        :n      => 4000.0,
+        :length => 20.0,
       },
     ],
   };

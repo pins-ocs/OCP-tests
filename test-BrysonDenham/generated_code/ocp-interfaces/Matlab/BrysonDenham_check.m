@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: BrysonDenham_main.m                                            %
 %                                                                       %
-%  version: 1.0   date 11/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -22,7 +22,7 @@ close all
 % create object
 ocp = BrysonDenham( 'BrysonDenham' );
 
-ocp.setup('../../data/BrysonDenham_Data.rb');
+ocp.setup('../../data/BrysonDenham_Data'); % automatically try extension .rb and .lua
 ocp.infoLevel(4);
 ocp.set_guess(); % use default guess generated in MAPLE
 [Z,U] = ocp.get_raw_solution();

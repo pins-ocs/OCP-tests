@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 17/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -80,12 +80,12 @@ namespace AlpRiderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::Drhs_odeDxup_numRows() const { return 4; }
-  integer AlpRider::Drhs_odeDxup_numCols() const { return 6; }
-  integer AlpRider::Drhs_odeDxup_nnz()     const { return 14; }
+  integer AlpRider::Drhs_odeDxpu_numRows() const { return 4; }
+  integer AlpRider::Drhs_odeDxpu_numCols() const { return 6; }
+  integer AlpRider::Drhs_odeDxpu_nnz()     const { return 14; }
 
   void
-  AlpRider::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  AlpRider::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
@@ -106,7 +106,7 @@ namespace AlpRiderDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  AlpRider::Drhs_odeDxup_sparse(
+  AlpRider::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -131,7 +131,7 @@ namespace AlpRiderDefine {
     result__[ 12  ] = 1;
     result__[ 13  ] = 3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 14, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 14, i_segment );
   }
 
   /*\

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-epsi_max = 0.01
-uaMax    = 10
-ubMax    = 2
 tol_max  = 0.01
+uaMax    = 10.0
+epsi_max = 0.01
+ubMax    = 2.0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -49,7 +49,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -63,10 +63,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Train_dump",
@@ -131,7 +131,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -260,10 +260,10 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
-    v_f = 0,
-    v_i = 0,
-    x_f = 6,
-    x_i = 0,
+    v_f = 0.0,
+    v_i = 0.0,
+    x_f = 6.0,
+    x_i = 0.0,
 
     -- Post Processing Parameters
 
@@ -290,12 +290,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uaControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = epsi_max,
       tolerance = tol_max,
     },
     ubControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = epsi_max,
       tolerance = tol_max,
     },
@@ -311,22 +311,22 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 25,
         length = 0.25,
+        n      = 25.0,
       },
       
       {
-        n      = 3000,
         length = 0.75,
+        n      = 3000.0,
       },
       
       {
-        n      = 100,
         length = 3.8,
+        n      = 100.0,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -113,12 +113,12 @@ namespace HangGliderDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HangGlider::Dfd_odeDxxup_numRows() const { return 4; }
-  integer HangGlider::Dfd_odeDxxup_numCols() const { return 10; }
-  integer HangGlider::Dfd_odeDxxup_nnz()     const { return 26; }
+  integer HangGlider::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer HangGlider::Dfd_odeDxxpu_numCols() const { return 10; }
+  integer HangGlider::Dfd_odeDxxpu_nnz()     const { return 26; }
 
   void
-  HangGlider::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HangGlider::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -149,7 +149,7 @@ namespace HangGliderDefine {
 
 
   void
-  HangGlider::Dfd_odeDxxup_sparse(
+  HangGlider::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -249,18 +249,18 @@ namespace HangGliderDefine {
     result__[ 24  ] = -(-2 * t23 * t18 * t74 + t3 * t21) * t31 * t7;
     result__[ 25  ] = -t86 * t82 + ModelPars[iM_g];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 26, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 26, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HangGlider::D2fd_odeD2xxup_numRows() const { return 10; }
-  integer HangGlider::D2fd_odeD2xxup_numCols() const { return 10; }
-  integer HangGlider::D2fd_odeD2xxup_nnz()     const { return 63; }
+  integer HangGlider::D2fd_odeD2xxpu_numRows() const { return 10; }
+  integer HangGlider::D2fd_odeD2xxpu_numCols() const { return 10; }
+  integer HangGlider::D2fd_odeD2xxpu_nnz()     const { return 63; }
 
   void
-  HangGlider::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HangGlider::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -328,7 +328,7 @@ namespace HangGliderDefine {
 
 
   void
-  HangGlider::D2fd_odeD2xxup_sparse(
+  HangGlider::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -442,10 +442,10 @@ namespace HangGliderDefine {
     result__[ 5   ] = result__[2];
     real_type t248 = t22 * t24;
     real_type t249 = t13 * t28;
-    real_type t253 = -2 * t249 * t248 - t33 * t31;
+    real_type t253 = -2 * t248 * t249 - t31 * t33;
     real_type t254 = t253 * t42;
     real_type t269 = t33 * t28;
-    real_type t273 = t13 * t31 - 2 * t269 * t248;
+    real_type t273 = t13 * t31 - 2 * t248 * t269;
     real_type t274 = t273 * t42;
     result__[ 6   ] = (t37 * t254 * t5 / 2 - (-t13 * t43 * t248 - t33 * t46 / 2 - t49 * t31 / 2) * t61 * t5) * t1 + (t37 * t274 * t5 / 2 - (-t33 * t43 * t248 - t49 * t28 * t248 + t13 * t46 / 2) * t61 * t5) * t80;
     real_type t289 = t42 * t4;
@@ -518,8 +518,8 @@ namespace HangGliderDefine {
     result__[ 52  ] = result__[49];
     result__[ 53  ] = result__[50];
     real_type t523 = t24 * t61;
-    result__[ 54  ] = 2 * t249 * t523 * t4 * t2 * t1 + 2 * t269 * t523 * t4 * t2 * t80;
-    result__[ 55  ] = -t253 * t61 * t4 * t1 - t273 * t61 * t4 * t80;
+    result__[ 54  ] = 2 * t1 * t2 * t249 * t4 * t523 + 2 * t2 * t269 * t4 * t523 * t80;
+    result__[ 55  ] = -t1 * t253 * t4 * t61 - t273 * t4 * t61 * t80;
     result__[ 56  ] = result__[31];
     result__[ 57  ] = result__[39];
     result__[ 58  ] = result__[47];
@@ -528,7 +528,7 @@ namespace HangGliderDefine {
     result__[ 61  ] = result__[58];
     result__[ 62  ] = result__[55];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 63, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 63, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

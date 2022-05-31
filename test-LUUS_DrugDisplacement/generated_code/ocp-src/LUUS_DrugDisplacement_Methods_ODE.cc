@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_ODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -88,12 +88,12 @@ namespace LUUS_DrugDisplacementDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer LUUS_DrugDisplacement::Drhs_odeDxup_numRows() const { return 2; }
-  integer LUUS_DrugDisplacement::Drhs_odeDxup_numCols() const { return 4; }
-  integer LUUS_DrugDisplacement::Drhs_odeDxup_nnz()     const { return 8; }
+  integer LUUS_DrugDisplacement::Drhs_odeDxpu_numRows() const { return 2; }
+  integer LUUS_DrugDisplacement::Drhs_odeDxpu_numCols() const { return 4; }
+  integer LUUS_DrugDisplacement::Drhs_odeDxpu_nnz()     const { return 8; }
 
   void
-  LUUS_DrugDisplacement::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  LUUS_DrugDisplacement::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -108,7 +108,7 @@ namespace LUUS_DrugDisplacementDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LUUS_DrugDisplacement::Drhs_odeDxup_sparse(
+  LUUS_DrugDisplacement::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -136,18 +136,18 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t25  = t24 * t1;
     real_type t27  = g4_D_2(t2, t3);
     result__[ 1   ] = t14 * t25 + (t7 * t27 - 0.928e2 * t2) * t17;
-    result__[ 2   ] = 0.464e2 * t2 * t17;
-    result__[ 3   ] = t14 * t16;
+    result__[ 2   ] = t14 * t16;
+    result__[ 3   ] = 0.464e2 * t2 * t17;
     real_type t33  = g3(t2, t3);
     real_type t36  = t11 * t33 + 0.928e0 - 0.464e2 * t2;
     real_type t38  = g3_D_1(t2, t3);
     result__[ 4   ] = t36 * t5 + (t11 * t38 - 0.464e2) * t17;
     real_type t43  = g3_D_2(t2, t3);
     result__[ 5   ] = t36 * t25 + (t11 * t43 - 2 * t33) * t17;
-    result__[ 6   ] = t33 * t17;
-    result__[ 7   ] = t36 * t16;
+    result__[ 6   ] = t36 * t16;
+    result__[ 7   ] = t33 * t17;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 8, i_segment );
   }
 
   /*\
@@ -185,6 +185,104 @@ namespace LUUS_DrugDisplacementDefine {
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer LUUS_DrugDisplacement::eta_numEqns() const { return 2; }
+
+  void
+  LUUS_DrugDisplacement::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer LUUS_DrugDisplacement::DetaDxp_numRows() const { return 2; }
+  integer LUUS_DrugDisplacement::DetaDxp_numCols() const { return 3; }
+  integer LUUS_DrugDisplacement::DetaDxp_nnz()     const { return 0; }
+
+  void
+  LUUS_DrugDisplacement::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  LUUS_DrugDisplacement::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer LUUS_DrugDisplacement::nu_numEqns() const { return 2; }
+
+  void
+  LUUS_DrugDisplacement::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer LUUS_DrugDisplacement::DnuDxp_numRows() const { return 2; }
+  integer LUUS_DrugDisplacement::DnuDxp_numCols() const { return 3; }
+  integer LUUS_DrugDisplacement::DnuDxp_nnz()     const { return 0; }
+
+  void
+  LUUS_DrugDisplacement::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  LUUS_DrugDisplacement::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

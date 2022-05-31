@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -121,13 +121,13 @@ namespace BangBangFredundantDefine {
     real_type t6   = XM__[3];
     real_type t16  = UM__[0];
     real_type t19  = UM__[1];
-    real_type t21  = ModelPars[iM_w_F];
-    real_type t23  = Flim_min(-1 - t5 - t6);
-    real_type t26  = Flim_max(t5 + t6 - 1);
-    real_type t28  = ModelPars[iM_maxAF];
-    real_type t29  = aF1Control(t16, -t28, t28);
-    real_type t30  = aF2Control(t19, -t28, t28);
-    real_type result__ = LM__[0] * XM__[1] + (t5 + t6) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t16 * LM__[4] + t19 * LM__[5] + t23 * t21 + t26 * t21 + t29 + t30;
+    real_type t21  = ModelPars[iM_maxAF];
+    real_type t22  = aF1Control(t16, -t21, t21);
+    real_type t23  = aF2Control(t19, -t21, t21);
+    real_type t24  = ModelPars[iM_w_F];
+    real_type t26  = Flim_min(-1 - t5 - t6);
+    real_type t29  = Flim_max(t5 + t6 - 1);
+    real_type result__ = LM__[0] * XM__[1] + (t5 + t6) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t16 * LM__[4] + t19 * LM__[5] + t22 + t23 + t26 * t24 + t29 * t24;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -348,154 +348,6 @@ namespace BangBangFredundantDefine {
     U__[ iU_aF2 ] = aF2Control.solve(-LM__[5], -t2, t2);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
-  }
-
-  /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangFredundant::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[6], LM__[6];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    XM__[4] = (XL__[4]+XR__[4])/2;
-    XM__[5] = (XL__[5]+XR__[5])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    LM__[4] = (LL__[4]+LR__[4])/2;
-    LM__[5] = (LL__[5]+LR__[5])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_1_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_1_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type tmp_1_2 = 0.0e0;
-    real_type tmp_0_3 = 0.0e0;
-    real_type tmp_1_3 = 0.0e0;
-    real_type tmp_0_4 = 0.0e0;
-    real_type tmp_1_4 = 0.0e0;
-    real_type tmp_0_5 = 0.0e0;
-    real_type tmp_1_5 = 0.0e0;
-    real_type tmp_0_6 = 0.0e0;
-    real_type tmp_1_6 = 0.0e0;
-    real_type tmp_0_7 = 0.0e0;
-    real_type tmp_1_7 = 0.0e0;
-    real_type tmp_0_8 = 0.0e0;
-    real_type tmp_1_8 = 0.0e0;
-    real_type tmp_0_9 = 0.0e0;
-    real_type tmp_1_9 = 0.0e0;
-    real_type t2   = ModelPars[iM_maxAF];
-    real_type t3   = aF2Control.solve_rhs(-LM__[4], -t2, t2);
-    real_type tmp_0_10 = -0.5e0 * t3;
-    real_type tmp_1_10 = 0.0e0;
-    real_type tmp_0_11 = 0.0e0;
-    real_type t6   = aF2Control.solve_rhs(-LM__[5], -t2, t2);
-    real_type tmp_1_11 = -0.5e0 * t6;
-    real_type tmp_0_12 = 0.0e0;
-    real_type tmp_1_12 = 0.0e0;
-    real_type tmp_0_13 = 0.0e0;
-    real_type tmp_1_13 = 0.0e0;
-    real_type tmp_0_14 = 0.0e0;
-    real_type tmp_1_14 = 0.0e0;
-    real_type tmp_0_15 = 0.0e0;
-    real_type tmp_1_15 = 0.0e0;
-    real_type tmp_0_16 = 0.0e0;
-    real_type tmp_1_16 = 0.0e0;
-    real_type tmp_0_17 = 0.0e0;
-    real_type tmp_1_17 = 0.0e0;
-    real_type tmp_0_18 = 0.0e0;
-    real_type tmp_1_18 = 0.0e0;
-    real_type tmp_0_19 = 0.0e0;
-    real_type tmp_1_19 = 0.0e0;
-    real_type tmp_0_20 = 0.0e0;
-    real_type tmp_1_20 = 0.0e0;
-    real_type tmp_0_21 = 0.0e0;
-    real_type tmp_1_21 = 0.0e0;
-    real_type tmp_0_22 = tmp_0_10;
-    real_type tmp_1_22 = 0.0e0;
-    real_type tmp_0_23 = 0.0e0;
-    real_type tmp_1_23 = tmp_1_11;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(1, 0) = tmp_1_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(1, 1) = tmp_1_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(1, 2) = tmp_1_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    DuDxlxlp(1, 3) = tmp_1_3;
-    DuDxlxlp(0, 4) = tmp_0_4;
-    DuDxlxlp(1, 4) = tmp_1_4;
-    DuDxlxlp(0, 5) = tmp_0_5;
-    DuDxlxlp(1, 5) = tmp_1_5;
-    DuDxlxlp(0, 6) = tmp_0_6;
-    DuDxlxlp(1, 6) = tmp_1_6;
-    DuDxlxlp(0, 7) = tmp_0_7;
-    DuDxlxlp(1, 7) = tmp_1_7;
-    DuDxlxlp(0, 8) = tmp_0_8;
-    DuDxlxlp(1, 8) = tmp_1_8;
-    DuDxlxlp(0, 9) = tmp_0_9;
-    DuDxlxlp(1, 9) = tmp_1_9;
-    DuDxlxlp(0, 10) = tmp_0_10;
-    DuDxlxlp(1, 10) = tmp_1_10;
-    DuDxlxlp(0, 11) = tmp_0_11;
-    DuDxlxlp(1, 11) = tmp_1_11;
-    DuDxlxlp(0, 12) = tmp_0_12;
-    DuDxlxlp(1, 12) = tmp_1_12;
-    DuDxlxlp(0, 13) = tmp_0_13;
-    DuDxlxlp(1, 13) = tmp_1_13;
-    DuDxlxlp(0, 14) = tmp_0_14;
-    DuDxlxlp(1, 14) = tmp_1_14;
-    DuDxlxlp(0, 15) = tmp_0_15;
-    DuDxlxlp(1, 15) = tmp_1_15;
-    DuDxlxlp(0, 16) = tmp_0_16;
-    DuDxlxlp(1, 16) = tmp_1_16;
-    DuDxlxlp(0, 17) = tmp_0_17;
-    DuDxlxlp(1, 17) = tmp_1_17;
-    DuDxlxlp(0, 18) = tmp_0_18;
-    DuDxlxlp(1, 18) = tmp_1_18;
-    DuDxlxlp(0, 19) = tmp_0_19;
-    DuDxlxlp(1, 19) = tmp_1_19;
-    DuDxlxlp(0, 20) = tmp_0_20;
-    DuDxlxlp(1, 20) = tmp_1_20;
-    DuDxlxlp(0, 21) = tmp_0_21;
-    DuDxlxlp(1, 21) = tmp_1_21;
-    DuDxlxlp(0, 22) = tmp_0_22;
-    DuDxlxlp(1, 22) = tmp_1_22;
-    DuDxlxlp(0, 23) = tmp_0_23;
-    DuDxlxlp(1, 23) = tmp_1_23;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 48 );
   }
 
   /*\

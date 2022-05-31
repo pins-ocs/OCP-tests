@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 11/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,24 +20,24 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-jn_max                   = 65
+jn_max                   = 65.0
+epsi_COV                 = 0.01
+v_nom                    = 0.173
+js_min                   = -50
+epsi_ACC                 = 0.01
+epsi_VMAX                = 0.01
+tol_ACC                  = 0.01
+epsi_PATH                = 0.01
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-v_nom                    = 0.173
-tol_COV                  = 0.01
-epsi_COV                 = 0.01
-epsi_VMAX                = 0.01
 deltaFeed                = v_nom
-tol_ACC                  = 0.01
-tol_CTRL                 = 0.01
-js_min                   = -50
-epsi_PATH                = 0.01
-epsi_CTRL                = 0.01
 tol_VMAX                 = 0.01
-js_max                   = 30
+js_max                   = 30.0
 tol_PATH                 = 0.01
-epsi_ACC                 = 0.01
-mesh_segments            = 100
+tol_CTRL                 = 0.01
+tol_COV                  = 0.01
+epsi_CTRL                = 0.01
+mesh_segments            = 100.0
 
 mechatronix do |data|
 
@@ -108,7 +108,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -289,16 +289,16 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :an_f => 0,
-    :an_i => 0,
-    :as_f => 0,
-    :as_i => 0,
-    :n_f  => 0,
-    :n_i  => 0,
-    :vn_f => 0,
-    :vn_i => 0,
-    :vs_f => 0,
-    :vs_i => 0,
+    :an_f => 0.0,
+    :an_i => 0.0,
+    :as_f => 0.0,
+    :as_i => 0.0,
+    :n_f  => 0.0,
+    :n_i  => 0.0,
+    :vn_f => 0.0,
+    :vn_i => 0.0,
+    :vs_f => 0.0,
+    :vs_i => 0.0,
 
     # Post Processing Parameters
     :an_max                   => 1.2,
@@ -460,12 +460,12 @@ mechatronix do |data|
     :segments => [
       {
         :x0           => -0.01,
-        :y0           => 0,
+        :y0           => 0.0,
         :x1           => 0.02,
         :y1           => 0.002,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -473,24 +473,24 @@ mechatronix do |data|
         :x0           => 0.02,
         :y0           => 0.002,
         :x1           => 0.05,
-        :y1           => 0,
+        :y1           => 0.0,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
       {
         :x0           => 0.05,
-        :y0           => 0,
+        :y0           => 0.0,
         :x1           => 0.05,
         :y1           => 0.01,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
-        :angle0       => 0,
+        :angle0       => 0.0,
         :angle1       => 3.1415,
       },
       {
@@ -499,8 +499,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.012,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -510,8 +510,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.01,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -521,8 +521,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.02,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -532,8 +532,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.022,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -543,8 +543,8 @@ mechatronix do |data|
         :x1           => 0.05,
         :y1           => 0.02,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -554,11 +554,11 @@ mechatronix do |data|
         :x1           => 0.05,
         :y1           => 0.03,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
-        :angle0       => 0,
+        :angle0       => 0.0,
         :angle1       => 3.1415,
       },
       {
@@ -567,8 +567,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.032,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -578,8 +578,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.03,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -589,8 +589,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.04,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -600,8 +600,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.042,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -611,8 +611,8 @@ mechatronix do |data|
         :x1           => 0.05,
         :y1           => 0.04,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -622,11 +622,11 @@ mechatronix do |data|
         :x1           => 0.05,
         :y1           => 0.05,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
-        :angle0       => 0,
+        :angle0       => 0.0,
         :angle1       => 3.1415,
       },
       {
@@ -635,8 +635,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.052,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -646,8 +646,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.05,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -657,8 +657,8 @@ mechatronix do |data|
         :x1           => -0.01,
         :y1           => 0.06,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -668,8 +668,8 @@ mechatronix do |data|
         :x1           => 0.02,
         :y1           => 0.062,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },
@@ -679,8 +679,8 @@ mechatronix do |data|
         :x1           => 0.05,
         :y1           => 0.06,
         :feedRate     => v_nom,
-        :spindleRate  => 3000,
-        :crossSection => 1,
+        :spindleRate  => 3000.0,
+        :crossSection => 1.0,
         :tolerance    => path_following_tolerance,
         :n            => mesh_segments,
       },

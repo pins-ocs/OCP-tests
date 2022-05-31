@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,23 +20,23 @@
 -- User Header
 
 -- Auxiliary values
-mu     = 398600441800000
+days   = 1.0
+u0     = 0.0
 T      = 0.68
-days   = 1
-tf     = 86400*days
-u0     = 0
-days1  = 30
-r0     = 6678140
-v0     = (mu/r0)**(1/2.0)
-u0_bar = u0/v0
-Isp    = 1500
+days1  = 30.0
+r0     = 6678140.0
+Isp    = 1500.0
 g0     = 9.80665
 mdot   = T/g0/Isp
+mu     = 398600441800000.0
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
+tf     = 86400*days
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -57,7 +57,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -71,10 +71,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "MaximumAscent_dump",
@@ -139,7 +139,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -265,17 +265,17 @@ content = {
 
     -- Model Parameters
     days = days,
-    m0   = 5000,
+    m0   = 5000.0,
     mdot = mdot,
 
     -- Guess Parameters
 
     -- Boundary Conditions
-    r0_bar = 1,
-    theta0 = 0,
+    r0_bar = 1.0,
+    theta0 = 0.0,
     u0_bar = u0_bar,
-    uf_bar = 0,
-    v0_bar = 1,
+    uf_bar = 0.0,
+    v0_bar = 1.0,
 
     -- Post Processing Parameters
     r0 = r0,
@@ -285,7 +285,7 @@ content = {
     T = T,
 
     -- Continuation Parameters
-    days0 = 1,
+    days0 = 1.0,
     days1 = days1,
 
     -- Constraints Parameters
@@ -307,12 +307,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
+        length = 1.0,
         n      = 1000*days1,
-        length = 1,
       },
     },
   },

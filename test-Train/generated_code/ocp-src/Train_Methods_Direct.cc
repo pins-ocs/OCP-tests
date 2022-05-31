@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_Guess.cc                                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -102,12 +102,12 @@ namespace TrainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::Dfd_odeDxxup_numRows() const { return 2; }
-  integer Train::Dfd_odeDxxup_numCols() const { return 6; }
-  integer Train::Dfd_odeDxxup_nnz()     const { return 10; }
+  integer Train::Dfd_odeDxxpu_numRows() const { return 2; }
+  integer Train::Dfd_odeDxxpu_numCols() const { return 6; }
+  integer Train::Dfd_odeDxxpu_nnz()     const { return 10; }
 
   void
-  Train::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Train::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -122,7 +122,7 @@ namespace TrainDefine {
 
 
   void
-  Train::Dfd_odeDxxup_sparse(
+  Train::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -161,18 +161,18 @@ namespace TrainDefine {
     result__[ 8   ] = -1.0;
     result__[ 9   ] = 1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::D2fd_odeD2xxup_numRows() const { return 6; }
-  integer Train::D2fd_odeD2xxup_numCols() const { return 6; }
-  integer Train::D2fd_odeD2xxup_nnz()     const { return 16; }
+  integer Train::D2fd_odeD2xxpu_numRows() const { return 6; }
+  integer Train::D2fd_odeD2xxpu_numCols() const { return 6; }
+  integer Train::D2fd_odeD2xxpu_nnz()     const { return 16; }
 
   void
-  Train::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Train::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -193,7 +193,7 @@ namespace TrainDefine {
 
 
   void
-  Train::D2fd_odeD2xxup_sparse(
+  Train::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -240,7 +240,7 @@ namespace TrainDefine {
     result__[ 14  ] = result__[12];
     result__[ 15  ] = result__[13];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 16, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 16, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

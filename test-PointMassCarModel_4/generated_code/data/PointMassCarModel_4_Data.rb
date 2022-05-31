@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_4_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,15 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-m         = 700
-up_epsi0  = 0.1
-up_tol0   = 0.01
 p_epsi0   = 0.1
-wT0       = 0.01
-wT        = wT0
-kD        = 0.2500000000/m
 p_tol0    = 0.1
 road_tol0 = 0.01
+up_epsi0  = 0.1
+up_tol0   = 0.01
+m         = 700.0
+kD        = 0.2500000000/m
+wT0       = 0.01
+wT        = wT0
 
 mechatronix do |data|
 
@@ -99,7 +99,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -270,20 +270,20 @@ mechatronix do |data|
     # Model Parameters
     :kD            => kD,
     :wT            => wT,
-    :v__Omega__max => 5,
-    :v__fx__max    => 30,
+    :v__Omega__max => 5.0,
+    :v__fx__max    => 30.0,
 
     # Guess Parameters
-    :Vguess => 10,
+    :Vguess => 10.0,
 
     # Boundary Conditions
-    :V0 => 0,
+    :V0 => 0.0,
 
     # Post Processing Parameters
-    :Pmax       => 200000,
+    :Pmax       => 200000.0,
     :g          => 9.806,
     :m          => m,
-    :mu__x__max => 1,
+    :mu__x__max => 1.0,
     :mu__y__max => 1.5,
 
     # User Function Parameters
@@ -292,7 +292,7 @@ mechatronix do |data|
     :p_epsi0  => p_epsi0,
     :p_epsi1  => 0.001,
     :wT0      => wT0,
-    :wT1      => 1,
+    :wT1      => 1.0,
     :up_epsi0 => up_epsi0,
     :up_epsi1 => 0.01,
 
@@ -385,81 +385,81 @@ mechatronix do |data|
   # User defined classes: R O A D
   data.Road =
   {
-    :theta0   => 0,
-    :s0       => 0,
-    :x0       => 0,
-    :y0       => 0,
+    :theta0   => 0.0,
+    :s0       => 0.0,
+    :x0       => 0.0,
+    :y0       => 0.0,
     :is_SAE   => false,
     :segments => [
       {
-        :rightWidth => 60,
-        :curvature  => 0,
+        :length     => 190.0,
+        :gridSize   => 1.0,
+        :rightWidth => 60.0,
         :leftWidth  => 15/2.0,
-        :gridSize   => 1,
-        :length     => 190,
+        :curvature  => 0.0,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0.003225806452,
-        :leftWidth  => 60,
-        :gridSize   => 1,
         :length     => 973.8937227,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 60.0,
+        :curvature  => 0.003225806452,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-        :length     => 180,
+        :length     => 180.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.0,
       },
       {
-        :rightWidth => 15,
+        :length     => 235.619449,
+        :gridSize   => 1.0,
+        :rightWidth => 15.0,
+        :leftWidth  => 20.0,
         :curvature  => 0.006666666667,
-        :leftWidth  => 20,
-        :gridSize   => 1,
+      },
+      {
+        :length     => 240.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.0,
+      },
+      {
         :length     => 235.619449,
-      },
-      {
-        :rightWidth => 30,
-        :curvature  => 0,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-        :length     => 240,
-      },
-      {
-        :rightWidth => 30,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
         :curvature  => -1/150.0,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-        :length     => 235.619449,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-        :length     => 200,
+        :length     => 200.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.0,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0.025,
-        :leftWidth  => 30,
-        :gridSize   => 1,
         :length     => 125.6637062,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.025,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0,
-        :leftWidth  => 30,
-        :gridSize   => 1,
-        :length     => 480,
+        :length     => 480.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.0,
       },
       {
-        :rightWidth => 30,
-        :curvature  => 0,
-        :leftWidth  => 30,
+        :length     => 10.0,
         :gridSize   => 0.1,
-        :length     => 10,
+        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :curvature  => 0.0,
       },
     ],
   };

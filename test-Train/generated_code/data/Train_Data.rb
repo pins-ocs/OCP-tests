@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Train_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_max = 0.01
-uaMax    = 10
-ubMax    = 2
 tol_max  = 0.01
+uaMax    = 10.0
+epsi_max = 0.01
+ubMax    = 2.0
 
 mechatronix do |data|
 
@@ -94,7 +94,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -265,10 +265,10 @@ mechatronix do |data|
     # Guess Parameters
 
     # Boundary Conditions
-    :v_f => 0,
-    :v_i => 0,
-    :x_f => 6,
-    :x_i => 0,
+    :v_f => 0.0,
+    :v_i => 0.0,
+    :x_f => 6.0,
+    :x_i => 0.0,
 
     # Post Processing Parameters
 
@@ -339,19 +339,19 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 25,
         :length => 0.25,
+        :n      => 25.0,
       },
       {
-        :n      => 3000,
         :length => 0.75,
+        :n      => 3000.0,
       },
       {
-        :n      => 100,
         :length => 3.8,
+        :n      => 100.0,
       },
     ],
   };

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: LUUS_Singular04_main.m                                         %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -35,8 +35,7 @@ ocp = LUUS_Singular04( 'LUUS_Singular04' );
 % READ PROBLEM DATA-------------------------------------------------------------
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(LUUS_Singular04_data);
-%ocp.setup('../../data/LUUS_Singular04_Data.lua');
-ocp.setup('../../data/LUUS_Singular04_Data.rb');
+ocp.setup('../../data/LUUS_Singular04_Data');  % automatically try extension .rb and .lua
 ocp.infoLevel(4);
 
 ocp.set_guess(); % use default guess generated in MAPLE

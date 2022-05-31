@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,36 +20,36 @@
 -- User Header
 
 -- Auxiliary values
-epsi_mass_max = 0.025
-vc            = 620
-m_i           = 1
-h_i           = 1
-tol_mass_max  = 0.01
-tol_T_max     = 0.01
-tol_T         = tol_T_max
 mc            = 0.6
+m_i           = 1.0
+tol_T_max     = 0.01
 epsi_T_max    = 0.1
-epsi_T        = epsi_T_max
 tol_TS_max    = 0.0001
+tol_TS        = tol_TS_max
+epsi_T        = epsi_T_max
+vc            = 620.0
+epsi_mass_max = 0.025
+tol_mass_max  = 0.01
+tol_T         = tol_T_max
+g0            = 1.0
+Tmax          = 3.5*g0*m_i
+epsi_mass     = epsi_mass_max
+tol_v_max     = 0.01
+tol_v         = tol_v_max
+Dc            = 0.5*vc*m_i/g0
 m_f           = mc*m_i
 epsi_TS_max   = 0.025
 epsi_TS       = epsi_TS_max
 epsi_v_max    = 0.1
-tol_TS        = tol_TS_max
-tol_mass      = tol_mass_max
-epsi_mass     = epsi_mass_max
-g0            = 1
-c             = 0.5*(g0*h_i)**(1/2.0)
-Dc            = 0.5*vc*m_i/g0
-Tmax          = 3.5*g0*m_i
 epsi_v        = epsi_v_max
-tol_v_max     = 0.01
-tol_v         = tol_v_max
+h_i           = 1.0
+c             = 0.5*(g0*h_i)**(1/2.0)
+tol_mass      = tol_mass_max
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -70,7 +70,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -84,10 +84,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "GoddardRocket_dump",
@@ -152,7 +152,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -284,14 +284,14 @@ content = {
     h_i = h_i,
     m_f = m_f,
     m_i = m_i,
-    v_i = 0,
+    v_i = 0.0,
 
     -- Post Processing Parameters
 
     -- User Function Parameters
     Dc = Dc,
     g0 = g0,
-    hc = 500,
+    hc = 500.0,
 
     -- Continuation Parameters
     epsi_TS_max   = epsi_TS_max,
@@ -323,7 +323,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     TControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = epsi_T,
       tolerance = tol_T,
     },
@@ -362,12 +362,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        length = 1,
-        n      = 400,
+        length = 1.0,
+        n      = 400.0,
       },
     },
   },

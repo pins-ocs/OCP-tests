@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,18 +89,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t17  = 1.0 / t16;
     result__[ 1   ] = V__[1] - t7 * t5 + 1.0 / t9 - t17 * t13 * t11;
     real_type t22  = cos(t12);
-    result__[ 2   ] = -t17 * t22 * t11 + t7 * t4 * t2 + V__[2];
+    result__[ 2   ] = -t11 * t17 * t22 + t2 * t4 * t7 + V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxup_numRows() const { return 3; }
-  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxup_numCols() const { return 7; }
-  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxup_nnz()     const { return 18; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxpu_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxpu_numCols() const { return 7; }
+  integer ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxpu_nnz()     const { return 18; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -123,7 +123,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxup_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -182,18 +182,18 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t28  = sin(t15);
     result__[ 17  ] = t20 * t28 * t14;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 18, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 18, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxup_numRows() const { return 7; }
-  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxup_numCols() const { return 7; }
-  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxup_nnz()     const { return 33; }
+  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxpu_numRows() const { return 7; }
+  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxpu_numCols() const { return 7; }
+  integer ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxpu_nnz()     const { return 33; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -231,7 +231,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxup_sparse(
+  ICLOCS_MinimumFuelOrbitRaising::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -308,7 +308,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t53  = cos(t45);
     result__[ 32  ] = t49 * t46 * t43 * t1 + t49 * t53 * t43 * t21;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 33, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 33, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 18/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -282,10 +282,10 @@ namespace ICLOCS_StirredTankDefine {
    |              |___/                 |___/
   \*/
 
-  integer ICLOCS_StirredTank::DlagrangeDxup_numEqns() const { return 4; }
+  integer ICLOCS_StirredTank::DlagrangeDxpu_numEqns() const { return 4; }
 
   void
-  ICLOCS_StirredTank::DlagrangeDxup_eval(
+  ICLOCS_StirredTank::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -300,23 +300,23 @@ namespace ICLOCS_StirredTankDefine {
     result__[ 0   ] = 2 * t4 * t1;
     real_type t8   = X__[iX_x2] - ModelPars[iM_x2_f];
     result__[ 1   ] = 2 * t8 * t1;
-    real_type t12  = U__[iU_u] - ModelPars[iM_u_f];
-    result__[ 2   ] = 2 * t12 * t1;
-    real_type t15  = t4 * t4;
-    real_type t16  = t8 * t8;
-    real_type t17  = t12 * t12;
-    result__[ 3   ] = ModelPars[iM_w_time] + t15 + t16 + t17;
+    real_type t11  = t4 * t4;
+    real_type t12  = t8 * t8;
+    real_type t15  = U__[iU_u] - ModelPars[iM_u_f];
+    real_type t16  = t15 * t15;
+    result__[ 2   ] = ModelPars[iM_w_time] + t11 + t12 + t16;
+    result__[ 3   ] = 2 * t15 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::D2lagrangeD2xup_numRows() const { return 4; }
-  integer ICLOCS_StirredTank::D2lagrangeD2xup_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::D2lagrangeD2xup_nnz()     const { return 9; }
+  integer ICLOCS_StirredTank::D2lagrangeD2xpu_numRows() const { return 4; }
+  integer ICLOCS_StirredTank::D2lagrangeD2xpu_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::D2lagrangeD2xpu_nnz()     const { return 9; }
 
   void
-  ICLOCS_StirredTank::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_StirredTank::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -330,7 +330,7 @@ namespace ICLOCS_StirredTankDefine {
 
 
   void
-  ICLOCS_StirredTank::D2lagrangeD2xup_sparse(
+  ICLOCS_StirredTank::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -350,7 +350,7 @@ namespace ICLOCS_StirredTankDefine {
     result__[ 7   ] = result__[3];
     result__[ 8   ] = result__[5];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 9, i_segment );
   }
 
   /*\

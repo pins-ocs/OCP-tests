@@ -1,22 +1,21 @@
 restart:;
 with(XOptima):;
-#XOptimaInfo() ;
-EQ1    := diff(x(t),t) = v(t):
-EQ2    := diff(v(t),t) = u(t):
-EQNS_T := [ EQ||(1..2)]: <%> ;
-qvars := [x(t),v(t)] ;
-cvars := [u(t)] ;
-pars := [];
+;
+EQ1 := diff(x(t),t) = v(t):
+EQ2 := diff(v(t),t) = u(t):
+ode := [ EQ||(1..2)]: <%>;
+qvars := [x(t),v(t)];
+cvars := [u(t)];
 loadDynamicSystem(
-  equations  = EQNS_T,
-  controls   = cvars,
-  states     = qvars
+  equations = ode,
+  controls  = cvars,
+  states    = qvars
 ) ;
 addBoundaryConditions(
   initial=[x=0,v=1],
   final=[x=0,v=-1]
 );
-infoBoundaryConditions() ;
+infoBoundaryConditions();
 setTarget( lagrange = u(zeta)^2/2 );
 addUnilateralConstraint(
   x(zeta) < 1/9, X1bound,
@@ -25,21 +24,25 @@ addUnilateralConstraint(
   tolerance = tol,
   scale     = 1
 );
+;
 pars := [
   epsi = 0.0001,
   tol  = 0.0001
 ];
-GUESS := [
-  x = 0,
-  v = 1-2*zeta
+POST := [
+  [ x_exact(zeta), "x_exact" ],
+  [ u_exact(zeta), "u_exact" ]
 ];
-REGION := [
-];
+CONT := [];
+GUESS := [ x = 0, v = 1-2*zeta ];
+MESHP_DEF := [length=1, n=100];
+project_dir  := "../generated_code";
+project_name := "BrysonDenham";
 generateOCProblem(
-  "BrysonDenham",
-  parameters        = pars,
-  mesh              = [length=1,n=400],
-  states_guess      = GUESS,
-  admissible_region = REGION
+  project_name,
+  parameters   = pars,
+  mesh         = [length=1,n=400],
+  states_guess = GUESS
 );
 ;
+# if used in batch mode use the comment to quit;

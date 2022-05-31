@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,12 +83,12 @@ namespace HangingChainDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HangingChain::Dfd_odeDxxup_numRows() const { return 2; }
-  integer HangingChain::Dfd_odeDxxup_numCols() const { return 5; }
-  integer HangingChain::Dfd_odeDxxup_nnz()     const { return 6; }
+  integer HangingChain::Dfd_odeDxxpu_numRows() const { return 2; }
+  integer HangingChain::Dfd_odeDxxpu_numCols() const { return 5; }
+  integer HangingChain::Dfd_odeDxxpu_nnz()     const { return 6; }
 
   void
-  HangingChain::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HangingChain::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -99,7 +99,7 @@ namespace HangingChainDefine {
 
 
   void
-  HangingChain::Dfd_odeDxxup_sparse(
+  HangingChain::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -130,26 +130,26 @@ namespace HangingChainDefine {
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
-    result__[ 5   ] = -1.0 / t4 * t1;
+    result__[ 5   ] = -t1 / t4;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 6, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HangingChain::D2fd_odeD2xxup_numRows() const { return 5; }
-  integer HangingChain::D2fd_odeD2xxup_numCols() const { return 5; }
-  integer HangingChain::D2fd_odeD2xxup_nnz()     const { return 1; }
+  integer HangingChain::D2fd_odeD2xxpu_numRows() const { return 5; }
+  integer HangingChain::D2fd_odeD2xxpu_numCols() const { return 5; }
+  integer HangingChain::D2fd_odeD2xxpu_nnz()     const { return 1; }
 
   void
-  HangingChain::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HangingChain::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
   }
 
 
   void
-  HangingChain::D2fd_odeD2xxup_sparse(
+  HangingChain::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -179,7 +179,7 @@ namespace HangingChainDefine {
     real_type t5   = sqrt(t4);
     result__[ 0   ] = t3 / t5 / t4 * t1 - 1.0 / t5 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

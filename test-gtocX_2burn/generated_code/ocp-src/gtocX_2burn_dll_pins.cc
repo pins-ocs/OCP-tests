@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_dll_pins.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -179,12 +179,7 @@ namespace gtocX_2burnDefine {
       // to C++ parameters
       GenericContainer gc_data;
       Mechatronix::mrb_to_GC( mrb, data_value, gc_data, "mrb_to_GC:" );
-      it->second->guess(
-        gc_data(
-          "Guess",
-          "mrb_gtocX_2burn_ocp_guess Missing field `Guess`"
-        )
-      );
+      it->second->guess( gc_data( "Guess", "mrb_gtocX_2burn_ocp_guess" ) );
     }
     return mrb_str_new_cstr( mrb, "guess done" );
   }

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,18 +20,18 @@
 -- User Header
 
 -- Auxiliary values
-t__M = 38.15
-g__S = 3.5
 g__M = 1.5
-C__M = (1-1/t__M)*g__M*p__M
-YEAR = 365.25
+g__S = 3.5
 t__S = 45.15
+YEAR = 365.25
+t__M = 38.15
+C__M = (1-1/t__M)*g__M*p__M
 C__S = (1-1/t__S)*g__S*p__S
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -52,7 +52,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -66,10 +66,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Pugliese_dump",
@@ -134,7 +134,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -258,7 +258,7 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    K         = 107,
+    K         = 107.0,
     a         = 0.00402,
     a__IL     = 131.26,
     a__R      = 0.072,
@@ -269,7 +269,7 @@ content = {
     mu__R     = 0.72,
     r         = 0.006,
     rho__D    = 0.00686,
-    w2        = 500,
+    w2        = 500.0,
     kappa__AC = 5.44,
     kappa__R  = 32.81,
 
@@ -278,22 +278,22 @@ content = {
     -- Boundary Conditions
     C0  = 2.63e-05,
     D0  = 0.049,
-    Ip0 = 0,
+    Ip0 = 0.0,
     R0  = 2.53,
-    T0  = 47,
+    T0  = 47.0,
 
     -- Post Processing Parameters
 
     -- User Function Parameters
-    e     = 5000,
+    e     = 5000.0,
     e__C  = 0.75,
     e__D  = 0.02,
     e__IL = 0.1245,
     i0    = 0.00299,
-    s     = 10,
-    s__C  = 10,
+    s     = 10.0,
+    s__C  = 10.0,
     s__D  = 0.4,
-    s__IL = 1000,
+    s__IL = 1000.0,
 
     -- Continuation Parameters
 
@@ -316,12 +316,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 400,
         length = 5*YEAR,
+        n      = 400.0,
       },
     },
   },

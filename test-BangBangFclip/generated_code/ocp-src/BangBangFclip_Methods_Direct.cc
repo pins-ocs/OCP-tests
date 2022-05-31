@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,12 +104,12 @@ namespace BangBangFclipDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFclip::Dfd_odeDxxup_numRows() const { return 3; }
-  integer BangBangFclip::Dfd_odeDxxup_numCols() const { return 7; }
-  integer BangBangFclip::Dfd_odeDxxup_nnz()     const { return 11; }
+  integer BangBangFclip::Dfd_odeDxxpu_numRows() const { return 3; }
+  integer BangBangFclip::Dfd_odeDxxpu_numCols() const { return 7; }
+  integer BangBangFclip::Dfd_odeDxxpu_nnz()     const { return 11; }
 
   void
-  BangBangFclip::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFclip::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -125,7 +125,7 @@ namespace BangBangFclipDefine {
 
 
   void
-  BangBangFclip::Dfd_odeDxxup_sparse(
+  BangBangFclip::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -163,18 +163,18 @@ namespace BangBangFclipDefine {
     result__[ 9   ] = __INV_DZETA;
     result__[ 10  ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 11, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 11, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFclip::D2fd_odeD2xxup_numRows() const { return 7; }
-  integer BangBangFclip::D2fd_odeD2xxup_numCols() const { return 7; }
-  integer BangBangFclip::D2fd_odeD2xxup_nnz()     const { return 4; }
+  integer BangBangFclip::D2fd_odeD2xxpu_numRows() const { return 7; }
+  integer BangBangFclip::D2fd_odeD2xxpu_numCols() const { return 7; }
+  integer BangBangFclip::D2fd_odeD2xxpu_nnz()     const { return 4; }
 
   void
-  BangBangFclip::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFclip::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 5   ;
     iIndex[2 ] = 5   ; jIndex[2 ] = 2   ;
@@ -183,7 +183,7 @@ namespace BangBangFclipDefine {
 
 
   void
-  BangBangFclip::D2fd_odeD2xxup_sparse(
+  BangBangFclip::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -215,7 +215,7 @@ namespace BangBangFclipDefine {
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

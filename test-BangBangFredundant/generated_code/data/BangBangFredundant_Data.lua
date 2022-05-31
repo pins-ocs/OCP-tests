@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,13 +20,13 @@
 -- User Header
 
 -- Auxiliary values
+maxAF = 100.0
 h0    = 0.01
-maxAF = 100
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -47,7 +47,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -61,10 +61,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "BangBangFredundant_dump",
@@ -129,7 +129,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -264,15 +264,15 @@ content = {
     -- Continuation Parameters
 
     -- Constraints Parameters
-    w_F = 10,
+    w_F = 10.0,
   },
 
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
+    clipdelta2 = 0.0,
+    clipdelta = 0.0,
     cliph = h0,
-    clipdelta2 = 0,
-    clipdelta = 0,
   },
 
   -- Controls
@@ -280,12 +280,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     aF1Control = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
     aF2Control = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = 0.001,
       tolerance = 0.001,
     },
@@ -318,12 +318,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 100,
-        length = 1,
+        length = 1.0,
+        n      = 100.0,
       },
     },
   },

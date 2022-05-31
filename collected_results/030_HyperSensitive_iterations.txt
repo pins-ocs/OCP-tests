@@ -18,20 +18,6 @@ END Mesh[mesh]
 Model Parameters
 .....................................y_f = 1
 .....................................y_i = 1.5
-INFO CLASS = HyperSensitive
-  #nodes      = 51
-  dim         = u=1, q=1, x=1, p=0, bc(active/total)=(2/2)
-  total       = nZ=104, UC=50, Q=51
-  index start = omega=102, p=104
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 2] (  0.024   ,  0.0207  ) [  0.453   ,  0.258   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -57,8 +43,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 104           N. System pars = 50
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.5[ms]       timeout        = 0 [ms]
-iteration      = 10            Memory Used    = 24Kb (+1bytes)
+Elapsed Time   = 7.09[ms]      timeout        = 0 [ms]
+iteration      = 10            Memory Used    = 23Kb (+51bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -82,7 +68,7 @@ last ||f||_2   = 6.8203e-17    last ||d||_2   = 6.2805e-17
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

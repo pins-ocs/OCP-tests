@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -172,73 +172,6 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  ICLOCS_TwoLinkRobotArm::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_TwoLinkRobotArm::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = u1Control(U__[iU_u1], -1, 1);
-    real_type t6   = u2Control(U__[iU_u2], -1, 1);
-    real_type result__ = t3 * t1 + t6 * t1;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_TwoLinkRobotArm::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -331,7 +264,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t5   = P__[iP_T];
     real_type t11  = t3 * t3;
     real_type t16  = t5 * t5;
-    result__[ 8   ] = 1.0 / t5 * (2 * t3 * t2 + 2 * t5) - 1.0 / t16 * (2 * t3 * t2 * t5 - t11 * t2 + t16);
+    result__[ 8   ] = 1.0 / t5 * (2 * t2 * t3 + 2 * t5) - 1.0 / t16 * (2 * t3 * t2 * t5 - t11 * t2 + t16);
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 9, i_segment_left, i_segment_right );
   }
@@ -383,10 +316,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
    |              |___/                 |___/
   \*/
 
-  integer ICLOCS_TwoLinkRobotArm::DlagrangeDxup_numEqns() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::DlagrangeDxpu_numEqns() const { return 7; }
 
   void
-  ICLOCS_TwoLinkRobotArm::DlagrangeDxup_eval(
+  ICLOCS_TwoLinkRobotArm::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -401,25 +334,25 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     real_type t1   = ModelPars[iM_rho];
-    real_type t3   = P__[iP_T] * t1;
-    real_type t4   = U__[iU_u1];
-    result__[ 4   ] = 2 * t4 * t3;
-    real_type t6   = U__[iU_u2];
-    result__[ 5   ] = 2 * t6 * t3;
-    real_type t8   = t4 * t4;
-    real_type t9   = t6 * t6;
-    result__[ 6   ] = (t8 + t9) * t1;
+    real_type t2   = U__[iU_u1];
+    real_type t3   = t2 * t2;
+    real_type t4   = U__[iU_u2];
+    real_type t5   = t4 * t4;
+    result__[ 4   ] = (t3 + t5) * t1;
+    real_type t8   = P__[iP_T] * t1;
+    result__[ 5   ] = 2 * t2 * t8;
+    result__[ 6   ] = 2 * t4 * t8;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_numRows() const { return 7; }
-  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_numCols() const { return 7; }
-  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_nnz()     const { return 6; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_numRows() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_numCols() const { return 7; }
+  integer ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_nnz()     const { return 6; }
 
   void
-  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 6   ;
     iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
@@ -430,7 +363,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
 
   void
-  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xup_sparse(
+  ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -448,7 +381,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 6, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 6, i_segment );
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SlidingMode_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -152,7 +152,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
-    data_uControl["type"]      = ;
+    data_uControl["type"]      = "COS_LOGARITHMIC";
     data_uControl["epsilon"]   = 0.001;
     data_uControl["tolerance"] = 0.001;
 
@@ -165,8 +165,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SlidingMode_data.Mesh["s0"] = 0;
-SlidingMode_data.Mesh["segments"][0]["length"] = 3;
 SlidingMode_data.Mesh["segments"][0]["n"] = 100;
+SlidingMode_data.Mesh["segments"][0]["length"] = 3;
 
 
     // alias for user object classes passed as pointers
@@ -183,7 +183,10 @@ SlidingMode_data.Mesh["segments"][0]["n"] = 100;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

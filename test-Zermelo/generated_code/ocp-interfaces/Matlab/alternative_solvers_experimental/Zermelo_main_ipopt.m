@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Zermelo_fsolve_main.m                                          %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -34,7 +34,7 @@ ocp = Zermelo( 'Zermelo' );
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-ocp.setup('../../data/Zermelo_Data.rb');
+ocp.setup('../../data/Zermelo_Data'); % automatically try extension .rb and .lua
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);

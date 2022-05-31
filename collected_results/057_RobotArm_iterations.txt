@@ -50,20 +50,6 @@ Model Parameters
 ..............................u_epsilon1 = 1e-05
 ............................u_tolerance0 = 0.01
 ............................u_tolerance1 = 1e-05
-INFO CLASS = RobotArm
-  #nodes      = 401
-  dim         = u=3, q=1, x=6, p=1, bc(active/total)=(12/12)
-  total       = nZ=4825, UC=1200, Q=401
-  index start = omega=4812, p=4824
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 5] ( 0.000849 ,  0.0012  ) [   3.12   ,   3.1    ] 0.0256     [0:0:2:0:2:0:0:0:0:0:0:0]
@@ -81,7 +67,7 @@ NewtonDumped --- start iterations ---
 [ 13, 1] ( 7.54e-05 , 7.92e-07 ) [ 0.00138  , 4.39e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 14, 1] ( 7.92e-07 , 8.55e-09 ) [ 5.96e-05 , 1.77e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 15, 1] ( 8.55e-09 , 7.46e-12 ) [ 1.87e-06 , 1.63e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 16, 1] ( 7.46e-12 , 2.71e-15 ) [ 1.64e-09 , 1.41e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 1] ( 7.46e-12 , 2.73e-15 ) [ 1.64e-09 ,  2e-15   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
@@ -96,7 +82,7 @@ NewtonDumped --- start iterations ---
 [ 22, 2] ( 1.21e-08 , 1.2e-09  ) [ 4.18e-07 , 4.14e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 23, 2] ( 1.2e-09  , 1.2e-10  ) [ 4.13e-08 , 4.13e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 24, 2] ( 1.2e-10  , 1.2e-11  ) [ 4.13e-09 , 4.13e-10 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 25, 1] ( 1.2e-11  , 2.21e-15 ) [ 4.13e-10 , 7.2e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 1] ( 1.2e-11  , 2.13e-15 ) [ 4.13e-10 , 6.23e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.4, ds=0.2, old_s=  0.2
 NewtonDumped --- start iterations ---
@@ -105,7 +91,7 @@ NewtonDumped --- start iterations ---
 [ 27,11] ( 1.34e-05 , 2.66e-06 ) [ 0.000989 , 9.15e-05 ] 0.148      [10:0:0:0:0:0:0:0:0:0:0:0]
 [ 28, 1] ( 2.66e-06 , 1.62e-08 ) [ 8.64e-05 , 1.13e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 29, 1] ( 1.62e-08 , 2.23e-11 ) [ 1.21e-07 , 1.67e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 30, 1] ( 2.23e-11 , 1.68e-15 ) [ 1.67e-10 , 5.65e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 30, 1] ( 2.23e-11 , 1.7e-15  ) [ 1.67e-10 , 4.8e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.7, ds=0.3, old_s=  0.4
 NewtonDumped --- start iterations ---
@@ -114,7 +100,7 @@ NewtonDumped --- start iterations ---
 [ 32, 6] ( 1.32e-05 , 2.89e-06 ) [ 0.00325  , 0.000458 ] 0.023      [5:0:0:0:0:0:0:0:0:0:0:0]
 [ 33, 1] ( 2.89e-06 , 1.27e-07 ) [ 4.42e-05 , 7.56e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 34, 1] ( 1.27e-07 , 1.29e-09 ) [  9e-08   , 9.09e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 35, 1] ( 1.29e-09 , 1.4e-13  ) [ 9.28e-10 , 9.94e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 35, 1] ( 1.29e-09 , 1.4e-13  ) [ 9.28e-10 , 9.89e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.3, old_s=0.7000000000000001
 NewtonDumped --- start iterations ---
@@ -142,8 +128,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 4825          N. System pars = 1200
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 79[ms]        timeout        = 0 [ms]
-iteration      = 45            Memory Used    = 805Kb (+66bytes)
+Elapsed Time   = 115[ms]       timeout        = 0 [ms]
+iteration      = 45            Memory Used    = 812Kb (+44bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -159,7 +145,7 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 2.0593e-07    last ||d||_inf = 4.7808e-10
+last ||f||_inf = 2.0593e-07    last ||d||_inf = 4.7804e-10
 last ||f||_1   = 8.5361e-11    last ||d||_1   = 4.223e-12
 last ||f||_2   = 4.1926e-09    last ||d||_2   = 1.3072e-11
 ----------------------------------------------------------------------
@@ -167,7 +153,7 @@ last ||f||_2   = 4.1926e-09    last ||d||_2   = 1.3072e-11
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

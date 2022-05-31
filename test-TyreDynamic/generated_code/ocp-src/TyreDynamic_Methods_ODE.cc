@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_ODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -138,12 +138,12 @@ namespace TyreDynamicDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TyreDynamic::Drhs_odeDxup_numRows() const { return 5; }
-  integer TyreDynamic::Drhs_odeDxup_numCols() const { return 7; }
-  integer TyreDynamic::Drhs_odeDxup_nnz()     const { return 13; }
+  integer TyreDynamic::Drhs_odeDxpu_numRows() const { return 5; }
+  integer TyreDynamic::Drhs_odeDxpu_numCols() const { return 7; }
+  integer TyreDynamic::Drhs_odeDxpu_nnz()     const { return 13; }
 
   void
-  TyreDynamic::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  TyreDynamic::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -163,7 +163,7 @@ namespace TyreDynamicDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TyreDynamic::Drhs_odeDxup_sparse(
+  TyreDynamic::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -205,7 +205,7 @@ namespace TyreDynamicDefine {
     result__[ 11  ] = -1;
     result__[ 12  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 13, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 13, i_segment );
   }
 
   /*\
@@ -250,6 +250,141 @@ namespace TyreDynamicDefine {
     result__[ 4   ] = ModelPars[iM_tau__b] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TyreDynamic::eta_numEqns() const { return 5; }
+
+  void
+  TyreDynamic::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_v];
+    result__[ 0   ] = L__[iL_lambda1__xo] * ModelPars[iM_m] * t1;
+    result__[ 1   ] = L__[iL_lambda2__xo] * t1 * ModelPars[iM_Iw];
+    result__[ 2   ] = L__[iL_lambda3__xo] * ModelPars[iM_l__x] * t1;
+    result__[ 3   ] = L__[iL_lambda4__xo] * ModelPars[iM_tau__p] * t1;
+    result__[ 4   ] = L__[iL_lambda5__xo] * ModelPars[iM_tau__b] * t1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TyreDynamic::DetaDxp_numRows() const { return 5; }
+  integer TyreDynamic::DetaDxp_numCols() const { return 5; }
+  integer TyreDynamic::DetaDxp_nnz()     const { return 5; }
+
+  void
+  TyreDynamic::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 0   ;
+  }
+
+
+  void
+  TyreDynamic::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ModelPars[iM_m] * L__[iL_lambda1__xo];
+    result__[ 1   ] = ModelPars[iM_Iw] * L__[iL_lambda2__xo];
+    result__[ 2   ] = ModelPars[iM_l__x] * L__[iL_lambda3__xo];
+    result__[ 3   ] = ModelPars[iM_tau__p] * L__[iL_lambda4__xo];
+    result__[ 4   ] = ModelPars[iM_tau__b] * L__[iL_lambda5__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DetaDxp_sparse", 5, i_segment );
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TyreDynamic::nu_numEqns() const { return 5; }
+
+  void
+  TyreDynamic::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_v];
+    result__[ 0   ] = V__[0] * ModelPars[iM_m] * t1;
+    result__[ 1   ] = V__[1] * t1 * ModelPars[iM_Iw];
+    result__[ 2   ] = V__[2] * ModelPars[iM_l__x] * t1;
+    result__[ 3   ] = V__[3] * ModelPars[iM_tau__p] * t1;
+    result__[ 4   ] = V__[4] * ModelPars[iM_tau__b] * t1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TyreDynamic::DnuDxp_numRows() const { return 5; }
+  integer TyreDynamic::DnuDxp_numCols() const { return 5; }
+  integer TyreDynamic::DnuDxp_nnz()     const { return 5; }
+
+  void
+  TyreDynamic::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 0   ;
+  }
+
+
+  void
+  TyreDynamic::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ModelPars[iM_m] * V__[0];
+    result__[ 1   ] = ModelPars[iM_Iw] * V__[1];
+    result__[ 2   ] = ModelPars[iM_l__x] * V__[2];
+    result__[ 3   ] = ModelPars[iM_tau__p] * V__[3];
+    result__[ 4   ] = ModelPars[iM_tau__b] * V__[4];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DnuDxp_sparse", 5, i_segment );
   }
 
 }

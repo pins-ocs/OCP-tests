@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -214,12 +214,12 @@ namespace PointMassCarModel_3Define {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_3::Dfd_odeDxxup_numRows() const { return 7; }
-  integer PointMassCarModel_3::Dfd_odeDxxup_numCols() const { return 16; }
-  integer PointMassCarModel_3::Dfd_odeDxxup_nnz()     const { return 48; }
+  integer PointMassCarModel_3::Dfd_odeDxxpu_numRows() const { return 7; }
+  integer PointMassCarModel_3::Dfd_odeDxxpu_numCols() const { return 16; }
+  integer PointMassCarModel_3::Dfd_odeDxxpu_nnz()     const { return 48; }
 
   void
-  PointMassCarModel_3::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_3::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -272,7 +272,7 @@ namespace PointMassCarModel_3Define {
 
 
   void
-  PointMassCarModel_3::Dfd_odeDxxup_sparse(
+  PointMassCarModel_3::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -347,7 +347,7 @@ namespace PointMassCarModel_3Define {
     result__[ 16  ] = result__[12];
     result__[ 17  ] = result__[13];
     result__[ 18  ] = -0.5e0 * (-t7 * t22 - t5 * t8) * t10;
-    result__[ 19  ] = 0.5e0 * t5 * t14;
+    result__[ 19  ] = 0.5e0 * t14 * t5;
     real_type t42  = 0.5e0 * t5 * t17;
     result__[ 20  ] = t42 + result__[10];
     result__[ 21  ] = 0.5e0 * t5 * t20;
@@ -383,18 +383,18 @@ namespace PointMassCarModel_3Define {
     result__[ 46  ] = result__[41];
     result__[ 47  ] = __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 48, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 48, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_3::D2fd_odeD2xxup_numRows() const { return 16; }
-  integer PointMassCarModel_3::D2fd_odeD2xxup_numCols() const { return 16; }
-  integer PointMassCarModel_3::D2fd_odeD2xxup_nnz()     const { return 124; }
+  integer PointMassCarModel_3::D2fd_odeD2xxpu_numRows() const { return 16; }
+  integer PointMassCarModel_3::D2fd_odeD2xxpu_numCols() const { return 16; }
+  integer PointMassCarModel_3::D2fd_odeD2xxpu_nnz()     const { return 124; }
 
   void
-  PointMassCarModel_3::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_3::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -523,7 +523,7 @@ namespace PointMassCarModel_3Define {
 
 
   void
-  PointMassCarModel_3::D2fd_odeD2xxup_sparse(
+  PointMassCarModel_3::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -737,7 +737,7 @@ namespace PointMassCarModel_3Define {
     result__[ 122 ] = result__[119];
     result__[ 123 ] = result__[122];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 124, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 124, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

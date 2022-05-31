@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -120,70 +120,6 @@ namespace ICLOCS_SpeyerDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  ICLOCS_Speyer::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_Speyer::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  ICLOCS_Speyer::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -300,10 +236,10 @@ namespace ICLOCS_SpeyerDefine {
    |              |___/                 |___/
   \*/
 
-  integer ICLOCS_Speyer::DlagrangeDxup_numEqns() const { return 3; }
+  integer ICLOCS_Speyer::DlagrangeDxpu_numEqns() const { return 3; }
 
   void
-  ICLOCS_Speyer::DlagrangeDxup_eval(
+  ICLOCS_Speyer::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -319,16 +255,16 @@ namespace ICLOCS_SpeyerDefine {
     result__[ 1   ] = t3 * t2 - t2;
     result__[ 2   ] = ModelPars[iM_b] * U__[iU_u];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_Speyer::D2lagrangeD2xup_numRows() const { return 3; }
-  integer ICLOCS_Speyer::D2lagrangeD2xup_numCols() const { return 3; }
-  integer ICLOCS_Speyer::D2lagrangeD2xup_nnz()     const { return 3; }
+  integer ICLOCS_Speyer::D2lagrangeD2xpu_numRows() const { return 3; }
+  integer ICLOCS_Speyer::D2lagrangeD2xpu_numCols() const { return 3; }
+  integer ICLOCS_Speyer::D2lagrangeD2xpu_nnz()     const { return 3; }
 
   void
-  ICLOCS_Speyer::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_Speyer::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
@@ -336,7 +272,7 @@ namespace ICLOCS_SpeyerDefine {
 
 
   void
-  ICLOCS_Speyer::D2lagrangeD2xup_sparse(
+  ICLOCS_Speyer::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -351,7 +287,7 @@ namespace ICLOCS_SpeyerDefine {
     result__[ 1   ] = 3 * t2 - 1;
     result__[ 2   ] = ModelPars[iM_b];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
   }
 
   /*\

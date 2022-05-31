@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -73,18 +73,18 @@ namespace HyperSensitiveDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[0];
     real_type t2   = t1 * t1;
-    result__[ 0   ] = t2 * t1 - UM__[0] + V__[0];
+    result__[ 0   ] = t1 * t2 - UM__[0] + V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::Dfd_odeDxxup_numRows() const { return 1; }
-  integer HyperSensitive::Dfd_odeDxxup_numCols() const { return 3; }
-  integer HyperSensitive::Dfd_odeDxxup_nnz()     const { return 3; }
+  integer HyperSensitive::Dfd_odeDxxpu_numRows() const { return 1; }
+  integer HyperSensitive::Dfd_odeDxxpu_numCols() const { return 3; }
+  integer HyperSensitive::Dfd_odeDxxpu_nnz()     const { return 3; }
 
   void
-  HyperSensitive::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HyperSensitive::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -92,7 +92,7 @@ namespace HyperSensitiveDefine {
 
 
   void
-  HyperSensitive::Dfd_odeDxxup_sparse(
+  HyperSensitive::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -119,18 +119,18 @@ namespace HyperSensitiveDefine {
     result__[ 1   ] = t3 + __INV_DZETA;
     result__[ 2   ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::D2fd_odeD2xxup_numRows() const { return 3; }
-  integer HyperSensitive::D2fd_odeD2xxup_numCols() const { return 3; }
-  integer HyperSensitive::D2fd_odeD2xxup_nnz()     const { return 4; }
+  integer HyperSensitive::D2fd_odeD2xxpu_numRows() const { return 3; }
+  integer HyperSensitive::D2fd_odeD2xxpu_numCols() const { return 3; }
+  integer HyperSensitive::D2fd_odeD2xxpu_nnz()     const { return 4; }
 
   void
-  HyperSensitive::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  HyperSensitive::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
@@ -139,7 +139,7 @@ namespace HyperSensitiveDefine {
 
 
   void
-  HyperSensitive::D2fd_odeD2xxup_sparse(
+  HyperSensitive::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -166,7 +166,7 @@ namespace HyperSensitiveDefine {
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

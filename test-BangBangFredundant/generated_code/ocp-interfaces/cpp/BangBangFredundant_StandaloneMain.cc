@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type h0 = 0.01;
     real_type maxAF = 100;
+    real_type h0 = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -151,22 +151,22 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = h0;
     data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_aF1Control = data_Controls["aF1Control"];
-    data_aF1Control["type"]      = ;
+    data_aF1Control["type"]      = "COS_LOGARITHMIC";
     data_aF1Control["epsilon"]   = 0.001;
     data_aF1Control["tolerance"] = 0.001;
 
 
     GenericContainer & data_aF2Control = data_Controls["aF2Control"];
-    data_aF2Control["type"]      = ;
+    data_aF2Control["type"]      = "COS_LOGARITHMIC";
     data_aF2Control["epsilon"]   = 0.001;
     data_aF2Control["tolerance"] = 0.001;
 
@@ -194,8 +194,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFredundant_data.Mesh["s0"] = 0;
-BangBangFredundant_data.Mesh["segments"][0]["n"] = 100;
 BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
+BangBangFredundant_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -212,7 +212,10 @@ BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

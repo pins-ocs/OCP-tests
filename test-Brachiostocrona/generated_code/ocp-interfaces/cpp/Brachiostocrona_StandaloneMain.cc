@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -53,8 +53,8 @@ main() {
     real_type g = 9.81;
     real_type xf = 5;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -162,7 +162,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_vthetaControl = data_Controls["vthetaControl"];
-    data_vthetaControl["type"]      = ;
+    data_vthetaControl["type"]      = "QUADRATIC";
     data_vthetaControl["epsilon"]   = 0.001;
     data_vthetaControl["tolerance"] = 0.001;
 
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brachiostocrona_data.Mesh["s0"] = 0;
-Brachiostocrona_data.Mesh["segments"][0]["n"] = 500;
 Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
+Brachiostocrona_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers
@@ -193,7 +193,10 @@ Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

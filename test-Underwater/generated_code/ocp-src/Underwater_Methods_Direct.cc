@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -133,12 +133,12 @@ namespace UnderwaterDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Underwater::Dfd_odeDxxup_numRows() const { return 6; }
-  integer Underwater::Dfd_odeDxxup_numCols() const { return 16; }
-  integer Underwater::Dfd_odeDxxup_nnz()     const { return 47; }
+  integer Underwater::Dfd_odeDxxpu_numRows() const { return 6; }
+  integer Underwater::Dfd_odeDxxpu_numCols() const { return 16; }
+  integer Underwater::Dfd_odeDxxpu_nnz()     const { return 47; }
 
   void
-  Underwater::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Underwater::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -190,7 +190,7 @@ namespace UnderwaterDefine {
 
 
   void
-  Underwater::Dfd_odeDxxup_sparse(
+  Underwater::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -228,7 +228,7 @@ namespace UnderwaterDefine {
     real_type t4   = cos(t3);
     real_type t6   = XM__[3];
     real_type t7   = sin(t3);
-    real_type t9   = t4 * t2 - t7 * t6;
+    real_type t9   = t2 * t4 - t6 * t7;
     result__[ 1   ] = -0.5e0 * t9 * t1;
     result__[ 2   ] = -0.5e0 * t4 * t1;
     real_type t15  = 0.5e0 * t7 * t1;
@@ -237,7 +237,7 @@ namespace UnderwaterDefine {
     result__[ 5   ] = result__[1];
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[3];
-    result__[ 8   ] = -t7 * t2 - t6 * t4;
+    result__[ 8   ] = -t2 * t7 - t4 * t6;
     result__[ 9   ] = result__[0];
     result__[ 10  ] = -0.5e0 * result__[8] * t1;
     result__[ 11  ] = t15;
@@ -289,18 +289,18 @@ namespace UnderwaterDefine {
     result__[ 45  ] = -t49 * t1;
     result__[ 46  ] = -t2 * t50 * t6 - t49 * UM__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 47, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 47, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Underwater::D2fd_odeD2xxup_numRows() const { return 16; }
-  integer Underwater::D2fd_odeD2xxup_numCols() const { return 16; }
-  integer Underwater::D2fd_odeD2xxup_nnz()     const { return 66; }
+  integer Underwater::D2fd_odeD2xxpu_numRows() const { return 16; }
+  integer Underwater::D2fd_odeD2xxpu_numCols() const { return 16; }
+  integer Underwater::D2fd_odeD2xxpu_nnz()     const { return 66; }
 
   void
-  Underwater::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Underwater::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 4   ;
@@ -371,7 +371,7 @@ namespace UnderwaterDefine {
 
 
   void
-  Underwater::D2fd_odeD2xxup_sparse(
+  Underwater::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -494,7 +494,7 @@ namespace UnderwaterDefine {
     result__[ 64  ] = result__[53];
     result__[ 65  ] = result__[54];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 66, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 66, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

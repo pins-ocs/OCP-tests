@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type r0 = 1;
-    real_type m0 = 1;
     real_type mu = 1;
-    real_type tf = 16.60*(r0^3/mu)^(1/2.0);
+    real_type m0 = 1;
+    real_type r0 = 1;
     real_type T = 0.1405e-1*m0*mu/r0^2;
-    real_type v0 = (mu/r0)^(1/2.0);
     real_type mdot = 0.533*T*(mu/r0)^(1/2.0);
+    real_type tf = 16.60*(r0^3/mu)^(1/2.0);
+    real_type v0 = (mu/r0)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -189,7 +189,10 @@ OrbitTransfer_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type tol0 = 0.1;
+    real_type tol = tol0;
     real_type epsilon0 = 0.001;
     real_type epsilon = epsilon0;
-    real_type tol = tol0;
     real_type epsi0 = 0.1;
     real_type epsi = epsi0;
     integer InfoLevel = 4;
@@ -164,7 +164,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
-    data_u1Control["type"]      = ;
+    data_u1Control["type"]      = "COS_LOGARITHMIC";
     data_u1Control["epsilon"]   = epsi;
     data_u1Control["tolerance"] = tol;
 
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoPhaseSchwartz_data.Mesh["s0"] = 0;
-TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
 TwoPhaseSchwartz_data.Mesh["segments"][0]["length"] = 1;
+TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -210,7 +210,10 @@ TwoPhaseSchwartz_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

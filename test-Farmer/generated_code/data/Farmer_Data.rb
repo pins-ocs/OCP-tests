@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Farmer_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -90,7 +90,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -256,20 +256,20 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :tau__1 => 3,
-    :tau__2 => 25,
-    :tau__3 => 10,
-    :tau__4 => 60,
-    :tau__5 => 120,
+    :tau__1 => 3.0,
+    :tau__2 => 25.0,
+    :tau__3 => 10.0,
+    :tau__4 => 60.0,
+    :tau__5 => 120.0,
     :w1     => 1.3,
     :w2     => 0.1,
     :w3     => 1.2,
     :w4     => 0.9,
-    :wJ1    => 1,
-    :wJ2    => 1,
-    :wJ3    => 1,
-    :wJ4    => 1,
-    :wP     => 1,
+    :wJ1    => 1.0,
+    :wJ2    => 1.0,
+    :wJ3    => 1.0,
+    :wJ4    => 1.0,
+    :wP     => 1.0,
 
     # Guess Parameters
 
@@ -285,8 +285,8 @@ mechatronix do |data|
     # User Function Parameters
     :P1 => 0.1,
     :P2 => 0.1,
-    :t1 => 0,
-    :t2 => 60,
+    :t1 => 0.0,
+    :t2 => 60.0,
 
     # Continuation Parameters
 
@@ -370,11 +370,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 400,
-        :length => 2,
+        :n      => 400.0,
+        :length => 2.0,
       },
     ],
   };

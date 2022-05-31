@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,20 +20,20 @@
 -- User Header
 
 -- Auxiliary values
-wT0       = 0.01
-m         = 700
-p_epsi0   = 0.1
-kD        = 0.2500000000/m
-wT        = wT0
 up_tol0   = 0.01
-p_tol0    = 0.1
 up_epsi0  = 0.1
+m         = 700.0
+kD        = 0.2500000000/m
 road_tol0 = 0.01
+wT0       = 0.01
+wT        = wT0
+p_epsi0   = 0.1
+p_tol0    = 0.1
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -54,7 +54,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -68,10 +68,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "PointMassCarModel_2_dump",
@@ -136,7 +136,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -263,19 +263,19 @@ content = {
     -- Model Parameters
     kD            = kD,
     wT            = wT,
-    v__Omega__max = 5,
-    v__fx__max    = 30,
+    v__Omega__max = 5.0,
+    v__fx__max    = 30.0,
 
     -- Guess Parameters
 
     -- Boundary Conditions
-    V0 = 5,
+    V0 = 5.0,
 
     -- Post Processing Parameters
-    Pmax       = 200000,
+    Pmax       = 200000.0,
     g          = 9.806,
     m          = m,
-    mu__x__max = 1,
+    mu__x__max = 1.0,
     mu__y__max = 1.5,
 
     -- User Function Parameters
@@ -284,7 +284,7 @@ content = {
     p_epsi0  = p_epsi0,
     p_epsi1  = 0.001,
     wT0      = wT0,
-    wT1      = 1,
+    wT1      = 1.0,
     up_epsi0 = up_epsi0,
     up_epsi1 = 0.01,
 
@@ -300,12 +300,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     v__fxControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = up_epsi0,
       tolerance = up_tol0,
     },
     v__OmegaControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = up_epsi0,
       tolerance = up_tol0,
     },
@@ -356,91 +356,91 @@ content = {
   -- User defined classes: R O A D
   Road = 
   {
-    theta0   = 0,
-    s0       = 0,
-    x0       = 0,
-    y0       = 0,
+    theta0   = 0.0,
+    s0       = 0.0,
+    x0       = 0.0,
+    y0       = 0.0,
     is_SAE   = false,
     segments = {
       
       {
-        rightWidth = 60,
-        curvature  = 0,
+        length     = 190.0,
+        rightWidth = 60.0,
         leftWidth  = 15/2.0,
-        gridSize   = 1,
-        length     = 190,
+        curvature  = 0.0,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0.003225806452,
-        leftWidth  = 60,
-        gridSize   = 1,
         length     = 973.8937227,
+        rightWidth = 30.0,
+        leftWidth  = 60.0,
+        curvature  = 0.003225806452,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0,
-        leftWidth  = 30,
-        gridSize   = 1,
-        length     = 180,
+        length     = 180.0,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 15,
+        length     = 235.619449,
+        rightWidth = 15.0,
+        leftWidth  = 20.0,
         curvature  = 0.006666666667,
-        leftWidth  = 20,
-        gridSize   = 1,
+        gridSize   = 1.0,
+      },
+      
+      {
+        length     = 240.0,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
+        gridSize   = 1.0,
+      },
+      
+      {
         length     = 235.619449,
-      },
-      
-      {
-        rightWidth = 30,
-        curvature  = 0,
-        leftWidth  = 30,
-        gridSize   = 1,
-        length     = 240,
-      },
-      
-      {
-        rightWidth = 30,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
         curvature  = -1/150.0,
-        leftWidth  = 30,
-        gridSize   = 1,
-        length     = 235.619449,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0,
-        leftWidth  = 30,
-        gridSize   = 1,
-        length     = 200,
+        length     = 200.0,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0.025,
-        leftWidth  = 30,
-        gridSize   = 1,
         length     = 125.6637062,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.025,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0,
-        leftWidth  = 30,
-        gridSize   = 1,
-        length     = 480,
+        length     = 480.0,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
+        gridSize   = 1.0,
       },
       
       {
-        rightWidth = 30,
-        curvature  = 0,
-        leftWidth  = 30,
+        length     = 10.0,
+        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
         gridSize   = 0.1,
-        length     = 10,
       },
     },
   },

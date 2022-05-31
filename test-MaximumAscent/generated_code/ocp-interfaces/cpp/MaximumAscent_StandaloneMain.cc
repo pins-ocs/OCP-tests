@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,18 +50,18 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mu = 398600441800000;
-    real_type T = 0.68;
     real_type days = 1;
-    real_type tf = 86400*days;
     real_type u0 = 0;
+    real_type T = 0.68;
     real_type days1 = 30;
     real_type r0 = 6678140;
-    real_type v0 = (mu/r0)^(1/2.0);
-    real_type u0_bar = u0/v0;
     real_type Isp = 1500;
     real_type g0 = 9.80665;
     real_type mdot = T/g0/Isp;
+    real_type mu = 398600441800000;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type u0_bar = u0/v0;
+    real_type tf = 86400*days;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -181,8 +181,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MaximumAscent_data.Mesh["s0"] = 0;
-MaximumAscent_data.Mesh["segments"][0]["n"] = 1000*days1;
 MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
+MaximumAscent_data.Mesh["segments"][0]["n"] = 1000*days1;
 
 
     // alias for user object classes passed as pointers
@@ -199,7 +199,10 @@ MaximumAscent_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

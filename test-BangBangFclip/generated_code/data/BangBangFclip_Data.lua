@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-h0         = 0.01
-vFmax      = 10
 tolerance0 = 0.01
+h0         = 0.01
 epsilon0   = 0.1
+vFmax      = 10.0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -49,7 +49,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -63,10 +63,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "BangBangFclip_dump",
@@ -131,7 +131,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -255,7 +255,7 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    maxClip = 1,
+    maxClip = 1.0,
     minClip = -1,
     vFmax   = vFmax,
 
@@ -281,9 +281,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
+    clipdelta = 0.0,
+    clipdelta2 = 0.0,
     cliph = h0,
-    clipdelta2 = 0,
-    clipdelta = 0,
   },
 
   -- Controls
@@ -291,7 +291,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     controlForce = {
-      type      = ,
+      type      = "QUADRATIC",
       epsilon   = epsilon0,
       tolerance = tolerance0,
     },
@@ -307,12 +307,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 100,
-        length = 1,
+        length = 1.0,
+        n      = 100.0,
       },
     },
   },

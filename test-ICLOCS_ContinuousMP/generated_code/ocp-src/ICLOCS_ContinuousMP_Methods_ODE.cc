@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -471,12 +471,12 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_ContinuousMP::Drhs_odeDxup_numRows() const { return 80; }
-  integer ICLOCS_ContinuousMP::Drhs_odeDxup_numCols() const { return 100; }
-  integer ICLOCS_ContinuousMP::Drhs_odeDxup_nnz()     const { return 120; }
+  integer ICLOCS_ContinuousMP::Drhs_odeDxpu_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::Drhs_odeDxpu_numCols() const { return 100; }
+  integer ICLOCS_ContinuousMP::Drhs_odeDxpu_nnz()     const { return 120; }
 
   void
-  ICLOCS_ContinuousMP::Drhs_odeDxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_ContinuousMP::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 20  ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 21  ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 22  ;
@@ -603,7 +603,7 @@ namespace ICLOCS_ContinuousMPDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_ContinuousMP::Drhs_odeDxup_sparse(
+  ICLOCS_ContinuousMP::Drhs_odeDxpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -754,7 +754,7 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 118 ] = 0.2e0 * t60;
     result__[ 119 ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxup_sparse", 120, i_segment );
+      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 120, i_segment );
   }
 
   /*\
@@ -948,6 +948,260 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 79  ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 80, i_segment );
+  }
+
+  /*\
+   |        _
+   |    ___| |_ __ _
+   |   / _ \ __/ _` |
+   |  |  __/ || (_| |
+   |   \___|\__\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_ContinuousMP::eta_numEqns() const { return 80; }
+
+  void
+  ICLOCS_ContinuousMP::eta_eval(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = L__[iL_lambda1__xo];
+    result__[ 1   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = L__[iL_lambda3__xo];
+    result__[ 3   ] = L__[iL_lambda4__xo];
+    result__[ 4   ] = L__[iL_lambda5__xo];
+    result__[ 5   ] = L__[iL_lambda6__xo];
+    result__[ 6   ] = L__[iL_lambda7__xo];
+    result__[ 7   ] = L__[iL_lambda8__xo];
+    result__[ 8   ] = L__[iL_lambda9__xo];
+    result__[ 9   ] = L__[iL_lambda10__xo];
+    result__[ 10  ] = L__[iL_lambda11__xo];
+    result__[ 11  ] = L__[iL_lambda12__xo];
+    result__[ 12  ] = L__[iL_lambda13__xo];
+    result__[ 13  ] = L__[iL_lambda14__xo];
+    result__[ 14  ] = L__[iL_lambda15__xo];
+    result__[ 15  ] = L__[iL_lambda16__xo];
+    result__[ 16  ] = L__[iL_lambda17__xo];
+    result__[ 17  ] = L__[iL_lambda18__xo];
+    result__[ 18  ] = L__[iL_lambda19__xo];
+    result__[ 19  ] = L__[iL_lambda20__xo];
+    result__[ 20  ] = L__[iL_lambda21__xo];
+    result__[ 21  ] = L__[iL_lambda22__xo];
+    result__[ 22  ] = L__[iL_lambda23__xo];
+    result__[ 23  ] = L__[iL_lambda24__xo];
+    result__[ 24  ] = L__[iL_lambda25__xo];
+    result__[ 25  ] = L__[iL_lambda26__xo];
+    result__[ 26  ] = L__[iL_lambda27__xo];
+    result__[ 27  ] = L__[iL_lambda28__xo];
+    result__[ 28  ] = L__[iL_lambda29__xo];
+    result__[ 29  ] = L__[iL_lambda30__xo];
+    result__[ 30  ] = L__[iL_lambda31__xo];
+    result__[ 31  ] = L__[iL_lambda32__xo];
+    result__[ 32  ] = L__[iL_lambda33__xo];
+    result__[ 33  ] = L__[iL_lambda34__xo];
+    result__[ 34  ] = L__[iL_lambda35__xo];
+    result__[ 35  ] = L__[iL_lambda36__xo];
+    result__[ 36  ] = L__[iL_lambda37__xo];
+    result__[ 37  ] = L__[iL_lambda38__xo];
+    result__[ 38  ] = L__[iL_lambda39__xo];
+    result__[ 39  ] = L__[iL_lambda40__xo];
+    result__[ 40  ] = L__[iL_lambda41__xo];
+    result__[ 41  ] = L__[iL_lambda42__xo];
+    result__[ 42  ] = L__[iL_lambda43__xo];
+    result__[ 43  ] = L__[iL_lambda44__xo];
+    result__[ 44  ] = L__[iL_lambda45__xo];
+    result__[ 45  ] = L__[iL_lambda46__xo];
+    result__[ 46  ] = L__[iL_lambda47__xo];
+    result__[ 47  ] = L__[iL_lambda48__xo];
+    result__[ 48  ] = L__[iL_lambda49__xo];
+    result__[ 49  ] = L__[iL_lambda50__xo];
+    result__[ 50  ] = L__[iL_lambda51__xo];
+    result__[ 51  ] = L__[iL_lambda52__xo];
+    result__[ 52  ] = L__[iL_lambda53__xo];
+    result__[ 53  ] = L__[iL_lambda54__xo];
+    result__[ 54  ] = L__[iL_lambda55__xo];
+    result__[ 55  ] = L__[iL_lambda56__xo];
+    result__[ 56  ] = L__[iL_lambda57__xo];
+    result__[ 57  ] = L__[iL_lambda58__xo];
+    result__[ 58  ] = L__[iL_lambda59__xo];
+    result__[ 59  ] = L__[iL_lambda60__xo];
+    result__[ 60  ] = L__[iL_lambda61__xo];
+    result__[ 61  ] = L__[iL_lambda62__xo];
+    result__[ 62  ] = L__[iL_lambda63__xo];
+    result__[ 63  ] = L__[iL_lambda64__xo];
+    result__[ 64  ] = L__[iL_lambda65__xo];
+    result__[ 65  ] = L__[iL_lambda66__xo];
+    result__[ 66  ] = L__[iL_lambda67__xo];
+    result__[ 67  ] = L__[iL_lambda68__xo];
+    result__[ 68  ] = L__[iL_lambda69__xo];
+    result__[ 69  ] = L__[iL_lambda70__xo];
+    result__[ 70  ] = L__[iL_lambda71__xo];
+    result__[ 71  ] = L__[iL_lambda72__xo];
+    result__[ 72  ] = L__[iL_lambda73__xo];
+    result__[ 73  ] = L__[iL_lambda74__xo];
+    result__[ 74  ] = L__[iL_lambda75__xo];
+    result__[ 75  ] = L__[iL_lambda76__xo];
+    result__[ 76  ] = L__[iL_lambda77__xo];
+    result__[ 77  ] = L__[iL_lambda78__xo];
+    result__[ 78  ] = L__[iL_lambda79__xo];
+    result__[ 79  ] = L__[iL_lambda80__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__,"eta_eval",80, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_ContinuousMP::DetaDxp_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::DetaDxp_numCols() const { return 100; }
+  integer ICLOCS_ContinuousMP::DetaDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_ContinuousMP::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_ContinuousMP::DetaDxp_sparse(
+    NodeType2 const    & NODE__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
+  }
+
+  /*\
+   |    _ __  _   _
+   |   | '_ \| | | |
+   |   | | | | |_| |
+   |   |_| |_|\__,_|
+  \*/
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_ContinuousMP::nu_numEqns() const { return 80; }
+
+  void
+  ICLOCS_ContinuousMP::nu_eval(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    integer  i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = V__[0];
+    result__[ 1   ] = V__[1];
+    result__[ 2   ] = V__[2];
+    result__[ 3   ] = V__[3];
+    result__[ 4   ] = V__[4];
+    result__[ 5   ] = V__[5];
+    result__[ 6   ] = V__[6];
+    result__[ 7   ] = V__[7];
+    result__[ 8   ] = V__[8];
+    result__[ 9   ] = V__[9];
+    result__[ 10  ] = V__[10];
+    result__[ 11  ] = V__[11];
+    result__[ 12  ] = V__[12];
+    result__[ 13  ] = V__[13];
+    result__[ 14  ] = V__[14];
+    result__[ 15  ] = V__[15];
+    result__[ 16  ] = V__[16];
+    result__[ 17  ] = V__[17];
+    result__[ 18  ] = V__[18];
+    result__[ 19  ] = V__[19];
+    result__[ 20  ] = V__[20];
+    result__[ 21  ] = V__[21];
+    result__[ 22  ] = V__[22];
+    result__[ 23  ] = V__[23];
+    result__[ 24  ] = V__[24];
+    result__[ 25  ] = V__[25];
+    result__[ 26  ] = V__[26];
+    result__[ 27  ] = V__[27];
+    result__[ 28  ] = V__[28];
+    result__[ 29  ] = V__[29];
+    result__[ 30  ] = V__[30];
+    result__[ 31  ] = V__[31];
+    result__[ 32  ] = V__[32];
+    result__[ 33  ] = V__[33];
+    result__[ 34  ] = V__[34];
+    result__[ 35  ] = V__[35];
+    result__[ 36  ] = V__[36];
+    result__[ 37  ] = V__[37];
+    result__[ 38  ] = V__[38];
+    result__[ 39  ] = V__[39];
+    result__[ 40  ] = V__[40];
+    result__[ 41  ] = V__[41];
+    result__[ 42  ] = V__[42];
+    result__[ 43  ] = V__[43];
+    result__[ 44  ] = V__[44];
+    result__[ 45  ] = V__[45];
+    result__[ 46  ] = V__[46];
+    result__[ 47  ] = V__[47];
+    result__[ 48  ] = V__[48];
+    result__[ 49  ] = V__[49];
+    result__[ 50  ] = V__[50];
+    result__[ 51  ] = V__[51];
+    result__[ 52  ] = V__[52];
+    result__[ 53  ] = V__[53];
+    result__[ 54  ] = V__[54];
+    result__[ 55  ] = V__[55];
+    result__[ 56  ] = V__[56];
+    result__[ 57  ] = V__[57];
+    result__[ 58  ] = V__[58];
+    result__[ 59  ] = V__[59];
+    result__[ 60  ] = V__[60];
+    result__[ 61  ] = V__[61];
+    result__[ 62  ] = V__[62];
+    result__[ 63  ] = V__[63];
+    result__[ 64  ] = V__[64];
+    result__[ 65  ] = V__[65];
+    result__[ 66  ] = V__[66];
+    result__[ 67  ] = V__[67];
+    result__[ 68  ] = V__[68];
+    result__[ 69  ] = V__[69];
+    result__[ 70  ] = V__[70];
+    result__[ 71  ] = V__[71];
+    result__[ 72  ] = V__[72];
+    result__[ 73  ] = V__[73];
+    result__[ 74  ] = V__[74];
+    result__[ 75  ] = V__[75];
+    result__[ 76  ] = V__[76];
+    result__[ 77  ] = V__[77];
+    result__[ 78  ] = V__[78];
+    result__[ 79  ] = V__[79];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "nu_eval", 80, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_ContinuousMP::DnuDxp_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::DnuDxp_numCols() const { return 100; }
+  integer ICLOCS_ContinuousMP::DnuDxp_nnz()     const { return 0; }
+
+  void
+  ICLOCS_ContinuousMP::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  ICLOCS_ContinuousMP::DnuDxp_sparse(
+    NodeType const     & NODE__,
+    V_const_pointer_type V__,
+    P_const_pointer_type P__,
+    real_type            result__[]
+  ) const {
+    // EMPTY!
   }
 
 }

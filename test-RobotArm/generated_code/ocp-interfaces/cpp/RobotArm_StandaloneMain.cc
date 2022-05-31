@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type u_epsilon0 = 0.01;
     real_type u_tolerance0 = 0.01;
     real_type u_tolerance = u_tolerance0;
-    real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
@@ -169,19 +169,19 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u_rhoControl = data_Controls["u_rhoControl"];
-    data_u_rhoControl["type"]      = ;
+    data_u_rhoControl["type"]      = "COS_LOGARITHMIC";
     data_u_rhoControl["epsilon"]   = u_epsilon;
     data_u_rhoControl["tolerance"] = u_tolerance;
 
 
     GenericContainer & data_u_thetaControl = data_Controls["u_thetaControl"];
-    data_u_thetaControl["type"]      = ;
+    data_u_thetaControl["type"]      = "COS_LOGARITHMIC";
     data_u_thetaControl["epsilon"]   = u_epsilon;
     data_u_thetaControl["tolerance"] = u_tolerance;
 
 
     GenericContainer & data_u_phiControl = data_Controls["u_phiControl"];
-    data_u_phiControl["type"]      = ;
+    data_u_phiControl["type"]      = "COS_LOGARITHMIC";
     data_u_phiControl["epsilon"]   = u_epsilon;
     data_u_phiControl["tolerance"] = u_tolerance;
 
@@ -212,7 +212,10 @@ RobotArm_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

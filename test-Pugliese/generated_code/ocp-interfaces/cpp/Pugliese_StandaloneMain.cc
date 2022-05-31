@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type t__M = 38.15;
-    real_type g__S = 3.5;
     real_type g__M = 1.5;
-    real_type C__M = (1-1/t__M)*g__M*p__M;
-    real_type YEAR = 365.25;
+    real_type g__S = 3.5;
     real_type t__S = 45.15;
+    real_type YEAR = 365.25;
+    real_type t__M = 38.15;
+    real_type C__M = (1-1/t__M)*g__M*p__M;
     real_type C__S = (1-1/t__S)*g__S*p__S;
     integer InfoLevel = 4;
 
@@ -190,8 +190,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Pugliese_data.Mesh["s0"] = 0;
-Pugliese_data.Mesh["segments"][0]["n"] = 400;
 Pugliese_data.Mesh["segments"][0]["length"] = 5*YEAR;
+Pugliese_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -208,7 +208,10 @@ Pugliese_data.Mesh["segments"][0]["length"] = 5*YEAR;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

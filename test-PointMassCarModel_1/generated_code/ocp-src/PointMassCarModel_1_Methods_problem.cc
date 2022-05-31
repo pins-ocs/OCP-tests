@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -270,89 +270,6 @@ namespace PointMassCarModel_1Define {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  PointMassCarModel_1::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  PointMassCarModel_1::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
-    real_type t7   = v__fxControl(U__[iU_v__fx], -1, 1);
-    real_type t10  = v__OmegaControl(U__[iU_v__Omega], -1, 1);
-    real_type result__ = t10 * t5 + t5 * t7;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  PointMassCarModel_1::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_V];
-    real_type t3   = X__[iX_n];
-    real_type t5   = inv_zeta__dot(t1, X__[iX_alpha], t3, Q__[iQ_Kappa]);
-    real_type t6   = X__[iX_fx];
-    real_type t7   = t6 * t6;
-    real_type t9   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t13  = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t14  = 1.0 / t13;
-    real_type t17  = X__[iX_Omega] * X__[iX_Omega];
-    real_type t18  = t1 * t1;
-    real_type t21  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    real_type t26  = AdherenceEllipse(t14 / t9 * t7 + t14 / t21 * t18 * t17 - 1);
-    real_type t30  = RoadLeftBorder(t3 - Q__[iQ_leftWidth]);
-    real_type t34  = RoadRightBorder(-t3 - Q__[iQ_rightWidth]);
-    real_type t43  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t6 * t1 - 1);
-    real_type t45  = LimitMinSpeed(-t1);
-    real_type result__ = t26 * t5 + t30 * t5 + t34 * t5 + t43 * t5 + t45 * t5;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -472,10 +389,10 @@ namespace PointMassCarModel_1Define {
    |              |___/                 |___/
   \*/
 
-  integer PointMassCarModel_1::DlagrangeDxup_numEqns() const { return 7; }
+  integer PointMassCarModel_1::DlagrangeDxpu_numEqns() const { return 7; }
 
   void
-  PointMassCarModel_1::DlagrangeDxup_eval(
+  PointMassCarModel_1::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -501,16 +418,16 @@ namespace PointMassCarModel_1Define {
     result__[ 5   ] = 0;
     result__[ 6   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_1::D2lagrangeD2xup_numRows() const { return 7; }
-  integer PointMassCarModel_1::D2lagrangeD2xup_numCols() const { return 7; }
-  integer PointMassCarModel_1::D2lagrangeD2xup_nnz()     const { return 9; }
+  integer PointMassCarModel_1::D2lagrangeD2xpu_numRows() const { return 7; }
+  integer PointMassCarModel_1::D2lagrangeD2xpu_numCols() const { return 7; }
+  integer PointMassCarModel_1::D2lagrangeD2xpu_nnz()     const { return 9; }
 
   void
-  PointMassCarModel_1::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_1::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -524,7 +441,7 @@ namespace PointMassCarModel_1Define {
 
 
   void
-  PointMassCarModel_1::D2lagrangeD2xup_sparse(
+  PointMassCarModel_1::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -555,7 +472,7 @@ namespace PointMassCarModel_1Define {
     real_type t11  = inv_zeta__dot_D_1_1(t2, t3, t4, t5);
     result__[ 8   ] = t11 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 9, i_segment );
   }
 
   /*\

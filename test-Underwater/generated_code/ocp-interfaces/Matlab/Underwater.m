@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Underwater.m                                                   %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -66,6 +66,66 @@ classdef Underwater < handle
       self.dim_pars      = res.dim_pars;
       self.num_active_BC = res.num_active_BC;
       self.dim_ineq      = res.dim_ineq;
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Q( self )
+      Underwater_Mex( 'dim_Q', self.objectHandle );
+      res = Underwater_Mex( 'dim_Q', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_X( self )
+      Underwater_Mex( 'dim_X', self.objectHandle );
+      res = Underwater_Mex( 'dim_X', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Pars( self )
+      Underwater_Mex( 'dim_Pars', self.objectHandle );
+      res = Underwater_Mex( 'dim_Pars', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_BC( self )
+      Underwater_Mex( 'dim_BC', self.objectHandle );
+      res = Underwater_Mex( 'dim_BC', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Post( self )
+      Underwater_Mex( 'dim_Post', self.objectHandle );
+      res = Underwater_Mex( 'dim_Post', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Ipost( self )
+      Underwater_Mex( 'dim_Ipost', self.objectHandle );
+      res = Underwater_Mex( 'dim_Ipost', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_active_BC( self )
+      Underwater_Mex( 'num_active_BC', self.objectHandle );
+      res = Underwater_Mex( 'num_active_BC', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_nodes( self )
+      Underwater_Mex( 'num_nodes', self.objectHandle );
+      res = Underwater_Mex( 'num_nodes', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_equations( self )
+      Underwater_Mex( 'num_equations', self.objectHandle );
+      res = Underwater_Mex( 'num_equations', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_segments( self )
+      Underwater_Mex( 'num_segments', self.objectHandle );
+      res = Underwater_Mex( 'num_segments', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_full_bc( self )
+      Underwater_Mex( 'dim_full_bc', self.objectHandle );
+      res = Underwater_Mex( 'dim_full_bc', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_ineq( self )
+      Underwater_Mex( 'dim_ineq', self.objectHandle );
+      res = Underwater_Mex( 'dim_ineq', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function n = names( self )
@@ -157,6 +217,15 @@ classdef Underwater < handle
       % res.Pointers
       %
       res = Underwater_Mex( 'get_ocp_data', self.objectHandle );
+    end
+
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    % INFO
+    % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function info( self )
+      Underwater_Mex( 'info', self.objectHandle );
     end
 
     % ---------------------------------------------------------------------
@@ -649,7 +718,7 @@ classdef Underwater < handle
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [a,c] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
+    function [ac] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
                                     iseg_R, t_R, x_R, lambda_R, ...
                                     pars, U )
       %
@@ -659,12 +728,12 @@ classdef Underwater < handle
       % <<FD1.jpg>>
       %
       [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [a,c] = Underwater_Mex( 'ac', self.objectHandle, ...
+      ac = Underwater_Mex( 'ac', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
     end
     % ---------------------------------------------------------------------
-    function [ DaDxlxlp, DaDu, DcDxlxlp, DcDu ] = ...
+    function [ DacDxlxlp, DacDu ] = ...
       eval_DacDxlxlpu( self, iseg_L, t_L, x_L, lambda_L, ...
                              iseg_R, t_R, x_R, lambda_R, ...
                              pars, U )
@@ -675,7 +744,7 @@ classdef Underwater < handle
       % <<FD2.jpg>>
       %
       [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [DaDxlxlp, DaDu, DcDxlxlp, DcDu] = Underwater_Mex( ...
+      [DacDxlxlp, DacDu] = Underwater_Mex( ...
         'DacDxlxlpu', self.objectHandle, ...
         iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
       );
@@ -765,13 +834,13 @@ classdef Underwater < handle
     end
     % ---------------------------------------------------------------------
     %
-    function J = eval_Drhs_odeDxup( self, iseg, q, x, u, pars )
+    function J = eval_Drhs_odeDxpu( self, iseg, q, x, u, pars )
       %
       % Compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
       % respect to `x`.
       %
       J = Underwater_Mex(...
-        'Drhs_odeDxup', self.objectHandle, iseg, q, x, u, pars...
+        'Drhs_odeDxpu', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
@@ -847,15 +916,15 @@ classdef Underwater < handle
       );
     end
     % ---------------------------------------------------------------------
-    function DlagrangeDxup = eval_DlagrangeDxup( self, iseg, q, x, u, pars )
-      DlagrangeDxup = Underwater_Mex( ...
-        'DlagrangeDxup', self.objectHandle, iseg, q, x, u, pars ...
+    function DlagrangeDxpu = eval_DlagrangeDxpu( self, iseg, q, x, u, pars )
+      DlagrangeDxpu = Underwater_Mex( ...
+        'DlagrangeDxpu', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function D2lagrangeD2xup = eval_D2lagrangeD2xup( self, iseg, q, x, u, pars )
-      D2lagrangeD2xup = Underwater_Mex( ...
-        'D2lagrangeD2xup', self.objectHandle, iseg, q, x, u, pars ...
+    function D2lagrangeD2xpu = eval_D2lagrangeD2xpu( self, iseg, q, x, u, pars )
+      D2lagrangeD2xpu = Underwater_Mex( ...
+        'D2lagrangeD2xpu', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     %
@@ -881,13 +950,13 @@ classdef Underwater < handle
       end
     end
     % ---------------------------------------------------------------------
-    function Dfd_odeDxxup = eval_Dfd_odeDxxup( self, iseg_L, t_L, x_L, ...
+    function Dfd_odeDxxpu = eval_Dfd_odeDxxpu( self, iseg_L, t_L, x_L, ...
                                                      iseg_R, t_R, x_R, ...
                                                      U, pars )
       if iseg_L == iseg_R
         [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        Dfd_odeDxxup = Underwater_Mex( ...
-          'Dfd_odeDxxup', self.objectHandle, ...
+        Dfd_odeDxxpu = Underwater_Mex( ...
+          'Dfd_odeDxxpu', self.objectHandle, ...
           iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
         );
       else
@@ -895,24 +964,24 @@ classdef Underwater < handle
         nx = self.dim_x;
         np = self.dim_pars;
         nu = self.dim_u;
-        Dfd_odeDxxup = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
+        Dfd_odeDxxpu = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
       end
     end
     % ---------------------------------------------------------------------
-    function D2fd_odeD2xxup = eval_D2fd_odeD2xxup( self, iseg_L, t_L, x_L, ...
+    function D2fd_odeD2xxpu = eval_D2fd_odeD2xxpu( self, iseg_L, t_L, x_L, ...
                                                          iseg_R, t_R, x_R, ...
                                                          U, pars, lambda )
       if iseg_L == iseg_R
         [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        D2fd_odeD2xxup = Underwater_Mex( ...
-          'D2fd_odeD2xxup', self.objectHandle, ...
+        D2fd_odeD2xxpu = Underwater_Mex( ...
+          'D2fd_odeD2xxpu', self.objectHandle, ...
           iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
         );
       else
         nx = self.dim_x;
         np = self.dim_pars;
         nu = self.dim_u;
-        D2fd_odeD2xxup = zeros( 2*nx+nu+np );
+        D2fd_odeD2xxpu = zeros( 2*nx+nu+np );
       end
     end
     % ---------------------------------------------------------------------
@@ -971,16 +1040,16 @@ classdef Underwater < handle
       end
     end
     % ---------------------------------------------------------------------
-    function Jc = eval_DcDxup( self, iseg, q, x, u, pars )
+    function Jc = eval_DcDxpu( self, iseg, q, x, u, pars )
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
       Jc = Underwater_Mex(...
-        'DLTargsDxup', self.objectHandle, iseg, q, x, u, pars ...
+        'DLTargsDxpu', self.objectHandle, iseg, q, x, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
-    function Jc = eval_Dfd_cDxxup( self, iseg_L, t_L, x_L, ...
+    function Jc = eval_Dfd_cDxxpu( self, iseg_L, t_L, x_L, ...
                                          iseg_R, t_R, x_R, ...
                                          u, pars )
       %
@@ -991,7 +1060,7 @@ classdef Underwater < handle
         [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         q      = (q_L+q_R)./2;
         x      = (x_L+x_R)./2;
-        Jc_pre = self.eval_DcDxup( iseg_L, q, x, u, pars );
+        Jc_pre = self.eval_DcDxpu( iseg_L, q, x, u, pars );
         Jx     = 0.5*Jc_pre(:,1:nx);
         Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
       else
@@ -1000,16 +1069,16 @@ classdef Underwater < handle
       end
     end
     % ---------------------------------------------------------------------
-    function Hc = eval_D2cD2xup( self, iseg, q, x, u, pars, omega )
+    function Hc = eval_D2cD2xpu( self, iseg, q, x, u, pars, omega )
       %
       % Evaluate hessian of constraints omega . c(x,u,p) <= 0
       %
       Hc = Underwater_Mex(...
-        'D2LTargsD2xup', self.objectHandle, iseg, q, x, u, pars, omega ...
+        'D2LTargsD2xpu', self.objectHandle, iseg, q, x, u, pars, omega ...
       );
     end
     % ---------------------------------------------------------------------
-    function HcBIG = eval_D2fd_cD2xxup( self, iseg_L, t_L, x_L, ...
+    function HcBIG = eval_D2fd_cD2xxpu( self, iseg_L, t_L, x_L, ...
                                               iseg_R, t_R, x_R, ...
                                               u, pars, omega )
       %
@@ -1019,7 +1088,7 @@ classdef Underwater < handle
         [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
         q_M = (q_R+q_L)/2;
         x_M = (x_R+x_L)/2;
-        Hc = self.eval_D2cD2xup( iseg_L, q_M, x_M, u, pars, omega );
+        Hc = self.eval_D2cD2xpu( iseg_L, q_M, x_M, u, pars, omega );
         nx = self.dim_x;
         A  = Hc(1:nx,1:nx)./4;
         B  = Hc(1:nx,nx+1:end)./2;
@@ -1040,25 +1109,25 @@ classdef Underwater < handle
     %   | || |\  | |_| | ||  _ <| |__| |___  | |
     %  |___|_| \_|____/___|_| \_\_____\____| |_|
     % ---------------------------------------------------------------------
-    function Hx = eval_Hx( self, iseg, q, x, lambda, V, u, pars )
+    function Hxp = eval_Hxp( self, iseg, q, x, lambda, V, u, pars )
       %
       % Derivative of H(x,V,lambda,u,pars,zeta) =
       %   J(x,u,pars,zeta) + lambda.(f(x,u,pars,zeta)-A(x,pars,zeta)*V)
       %
-      % Hx(x,V,lambda,u,p,zeta) = partial_x H(...)
+      % Hxp(x,V,lambda,u,p,zeta) = partial_{xp} H(...)
       %
-      Hx = Underwater_Mex(...
-        'Hx', self.objectHandle, iseg, q, x, lambda, V, u, pars...
+      Hxp = Underwater_Mex(...
+        'Hxp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DHxDxp( self, iseg, q, x, lambda, V, u, pars )
+    function J = eval_DHxpDxpu( self, iseg, q, x, lambda, V, u, pars )
       %
-      % Compute the jacobian of `Hx(q,x,lambda,V,pars)`
+      % Compute the jacobian of `Hxp(q,x,lambda,V,pars)`
       % respect to `x` and `pars`.
       %
       J = Underwater_Mex(...
-        'DHxDxp', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
+        'DHxpDxpu', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
       );
     end
     % ---------------------------------------------------------------------
@@ -1071,32 +1140,6 @@ classdef Underwater < handle
       %
       Hu = Underwater_Mex(...
         'Hu', self.objectHandle, iseg, q, x, lambda, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DHuDxp( self, iseg, q, x, lambda, u, pars )
-      %
-      % Compute the jacobian of `Hu(q,x,lambda,u,pars)`
-      % respect to `x` and `pars`.
-      %
-      J = Underwater_Mex(...
-        'DHuDxp', self.objectHandle, iseg, q, x, lambda, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function Hp = eval_Hp( self, iseg, q, x, lambda, V, u, pars )
-      Hp = Underwater_Mex(...
-        'Hp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DHpDp( self, q, x, lambda, V, u, pars )
-      %
-      % Compute the jacobian of `Hp(q,x,lambda,V,u,pars)`
-      % respect to `pars`.
-      %
-      J = Underwater_Mex(...
-        'DHpDp', self.objectHandle, q, x, lambda, V, u, pars...
       );
     end
     % ---------------------------------------------------------------------
@@ -1118,111 +1161,21 @@ classdef Underwater < handle
       J = Underwater_Mex( 'JU', self.objectHandle, iseg, q, x, u, pars );
     end
     % ---------------------------------------------------------------------
-    function JPx = eval_JPx( self, iseg, q, x, u, pars )
-      JPx = Underwater_Mex(...
-        'JPx', self.objectHandle, iseg, q, x, u, pars...
+    function LT = eval_LT( self, iseg, q, x, u, pars )
+      LT = Underwater_Mex(...
+        'LT', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function JUx = eval_JUx( self, iseg, q, x, u, pars )
-      JUx = Underwater_Mex(...
-        'JUx', self.objectHandle, iseg, q, x, u, pars...
+    function JP = eval_JP( self, iseg, q, x, u, pars )
+      JP = Underwater_Mex(...
+        'JP', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
-    function LTx = eval_LTx( self, iseg, q, x, u, pars )
-      LTx = Underwater_Mex(...
-        'LTx', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JPu = eval_JPu( self, iseg, q, x, u, pars )
-      JPu = Underwater_Mex(...
-        'JPu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JUu = eval_JUu( self, iseg, q, x, u, pars )
-      JUu = Underwater_Mex(...
-        'JUu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function LTu = eval_LTu( self, iseg, q, x, u, pars )
-      LTu = Underwater_Mex(...
-        'LTu', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JPp = eval_JPp( self, iseg, q, x, u, pars )
-      JPp = Underwater_Mex(...
-        'JPp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function JUp = eval_JUp( self, iseg, q, x, u, pars )
-      JUp = Underwater_Mex(...
-        'JUp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function LTp = eval_LTp( self, iseg, q, x, u, pars )
-      LTp = Underwater_Mex(...
-        'LTp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJPxDxp = eval_DJPxDxp( self, iseg, q, x, u, pars )
-      DJPxDxp = Underwater_Mex(...
-        'DJPxDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJUxDxp = eval_DJUxDxp( self, iseg, q, x, u, pars )
-      DJUxDxp = Underwater_Mex(...
-        'DJUxDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DLTxDxp = eval_DLTxDxp( self, iseg, q, x, u, pars )
-      DLTxDxp = Underwater_Mex(...
-        'DLTxDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJPuDxp = eval_DJPuDxp( self, iseg, q, x, u, pars )
-      DJPuDxp = Underwater_Mex(...
-        'DJPuDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJUuDxp = eval_DJUuDxp( self, iseg, q, x, u, pars )
-      DJUuDxp = Underwater_Mex(...
-        'DJUuDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DLTuDxp = eval_DLTuDxp( self, iseg, q, x, u, pars )
-      DLTuDxp = Underwater_Mex(...
-        'DLTuDxp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJPpDp = eval_DJPpDp( self, iseg, q, x, u, pars )
-      DJPpDp = Underwater_Mex(...
-        'DJPpDp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DJUpDp = eval_DJUpDp( self, iseg, q, x, u, pars )
-      DJUpDp = Underwater_Mex(...
-        'DJUpDp', self.objectHandle, iseg, q, x, u, pars...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DLTpDp = eval_DLTpDp( self, iseg, q, x, u, pars )
-      DLTpDp = Underwater_Mex(...
-        'DLTpDp', self.objectHandle, iseg, q, x, u, pars...
+    function JU = eval_JU( self, iseg, q, x, u, pars )
+      JU = Underwater_Mex(...
+        'JU', self.objectHandle, iseg, q, x, u, pars...
       );
     end
     % ---------------------------------------------------------------------
@@ -1299,103 +1252,83 @@ classdef Underwater < handle
     %
     % ---------------------------------------------------------------------
     function res = A_pattern( self )
-      res = Underwater_Mex('eval_A_pattern', self.objectHandle );
+      res = Underwater_Mex('A_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DbcDxxp_pattern( self )
-      res = Underwater_Mex('eval_DbcDxxp_pattern', self.objectHandle );
+      res = Underwater_Mex('DbcDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = D2bcD2xxp_pattern( self )
-      res = Underwater_Mex('eval_D2bcD2xxp_pattern', self.objectHandle );
+      res = Underwater_Mex('D2bcD2xxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = Drhs_odeDxup_pattern( self )
-      res = Underwater_Mex('eval_Drhs_odeDxup_pattern', self.objectHandle );
+    function res = Drhs_odeDxpu_pattern( self )
+      res = Underwater_Mex('Drhs_odeDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DsegmentLinkDxp_pattern( self )
-      res = Underwater_Mex('eval_DsegmentLinkDxp_pattern', self.objectHandle );
+      res = Underwater_Mex('DsegmentLinkDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DjumpDxlxlp_pattern( self )
-      res = Underwater_Mex('eval_DjumpDxlxlp_pattern', self.objectHandle );
+      res = Underwater_Mex('DjumpDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHxDxp_pattern( self )
-      res = Underwater_Mex('eval_DHxDxp_pattern', self.objectHandle );
+    function res = DHxpDxpu_pattern( self )
+      res = Underwater_Mex('DHxpDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJPxDxp_pattern( self )
-      res = Underwater_Mex('eval_DJPxDxp_pattern', self.objectHandle );
+    function res = DJPDxpu_pattern( self )
+      res = Underwater_Mex('DJPDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DLTxDxp_pattern( self )
-      res = Underwater_Mex('eval_DLTxDxp_pattern', self.objectHandle );
+    function res = DLTDxpu_pattern( self )
+      res = Underwater_Mex('DLTDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJUxDxp_pattern( self )
-      res = Underwater_Mex('eval_DJUxDxp_pattern', self.objectHandle );
+    function res = DJUDxpu_pattern( self )
+      res = Underwater_Mex('DJUDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHuDxp_pattern( self )
-      res = Underwater_Mex('eval_DHuDxp_pattern', self.objectHandle );
+    function res = D2JPD2xpu_pattern( self )
+      res = Underwater_Mex('D2JPD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJPuDxp_pattern( self )
-      res = Underwater_Mex('eval_DJPuDxp_pattern', self.objectHandle );
+    function res = D2LTD2xpu_pattern( self )
+      res = Underwater_Mex('D2LTD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DLTuDxp_pattern( self )
-      res = Underwater_Mex('eval_DLTuDxp_pattern', self.objectHandle );
+    function res = D2JUD2xpu_pattern( self )
+      res = Underwater_Mex('D2JUD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DJUuDxp_pattern( self )
-      res = Underwater_Mex('eval_DJUuDxp_pattern', self.objectHandle );
+    function res = DLTargsDxpu_pattern( self )
+      res = Underwater_Mex('DLTargsDxpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHpDp_pattern( self )
-      res = Underwater_Mex('eval_DHpDp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJPpDp_pattern( self )
-      res = Underwater_Mex('eval_DJPpDp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DLTpDp_pattern( self )
-      res = Underwater_Mex('eval_DLTpDp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJUpDp_pattern( self )
-      res = Underwater_Mex('eval_DJUpDp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DLTargsDxup_pattern( self )
-      res = Underwater_Mex('eval_DLTargsDxup_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = D2LTargsD2xup_pattern( self )
-      res = Underwater_Mex('eval_D2LTargsD2xup_pattern', self.objectHandle );
+    function res = D2LTargsD2xpu_pattern( self )
+      res = Underwater_Mex('D2LTargsD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DnuDxp_pattern( self )
-      res = Underwater_Mex('eval_DnuDxp_pattern', self.objectHandle );
+      res = Underwater_Mex('DnuDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DetaDxp_pattern( self )
-      res = Underwater_Mex('eval_DetaDxp_pattern', self.objectHandle );
+      res = Underwater_Mex('DetaDxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DgDxlxlp_pattern( self )
-      res = Underwater_Mex('eval_DgDxlxlp_pattern', self.objectHandle );
+      res = Underwater_Mex('DgDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DgDu_pattern( self )
-      res = Underwater_Mex('eval_DgDu_pattern', self.objectHandle );
+      res = Underwater_Mex('DgDu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DmDuu_pattern( self )
-      res = Underwater_Mex('eval_DmDuu_pattern', self.objectHandle );
+      res = Underwater_Mex('DmDuu_pattern', self.objectHandle );
     end
 
     % ---------------------------------------------------------------------

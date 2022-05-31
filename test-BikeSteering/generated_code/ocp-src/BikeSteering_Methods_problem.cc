@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -119,72 +119,6 @@ namespace BikeSteeringDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  BikeSteering::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BikeSteering::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ModelPars[iM_Fmax];
-    real_type t4   = FyControl(U__[iU_Fy], -t3, t3);
-    real_type result__ = t4 * X__[iX_TimeSize];
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BikeSteering::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = minimumTimeSize(-X__[iX_TimeSize]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -299,10 +233,10 @@ namespace BikeSteeringDefine {
    |              |___/                 |___/
   \*/
 
-  integer BikeSteering::DlagrangeDxup_numEqns() const { return 4; }
+  integer BikeSteering::DlagrangeDxpu_numEqns() const { return 4; }
 
   void
-  BikeSteering::DlagrangeDxup_eval(
+  BikeSteering::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -317,22 +251,22 @@ namespace BikeSteeringDefine {
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::D2lagrangeD2xup_numRows() const { return 4; }
-  integer BikeSteering::D2lagrangeD2xup_numCols() const { return 4; }
-  integer BikeSteering::D2lagrangeD2xup_nnz()     const { return 0; }
+  integer BikeSteering::D2lagrangeD2xpu_numRows() const { return 4; }
+  integer BikeSteering::D2lagrangeD2xpu_numCols() const { return 4; }
+  integer BikeSteering::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
-  BikeSteering::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BikeSteering::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  BikeSteering::D2lagrangeD2xup_sparse(
+  BikeSteering::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

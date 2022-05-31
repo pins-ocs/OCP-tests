@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -88,12 +88,12 @@ namespace SingularCalogeroDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogero::Dfd_odeDxxup_numRows() const { return 1; }
-  integer SingularCalogero::Dfd_odeDxxup_numCols() const { return 3; }
-  integer SingularCalogero::Dfd_odeDxxup_nnz()     const { return 3; }
+  integer SingularCalogero::Dfd_odeDxxpu_numRows() const { return 1; }
+  integer SingularCalogero::Dfd_odeDxxpu_numCols() const { return 3; }
+  integer SingularCalogero::Dfd_odeDxxpu_nnz()     const { return 3; }
 
   void
-  SingularCalogero::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularCalogero::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -101,7 +101,7 @@ namespace SingularCalogeroDefine {
 
 
   void
-  SingularCalogero::Dfd_odeDxxup_sparse(
+  SingularCalogero::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -126,24 +126,24 @@ namespace SingularCalogeroDefine {
     result__[ 1   ] = __INV_DZETA;
     result__[ 2   ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogero::D2fd_odeD2xxup_numRows() const { return 3; }
-  integer SingularCalogero::D2fd_odeD2xxup_numCols() const { return 3; }
-  integer SingularCalogero::D2fd_odeD2xxup_nnz()     const { return 0; }
+  integer SingularCalogero::D2fd_odeD2xxpu_numRows() const { return 3; }
+  integer SingularCalogero::D2fd_odeD2xxpu_numCols() const { return 3; }
+  integer SingularCalogero::D2fd_odeD2xxpu_nnz()     const { return 0; }
 
   void
-  SingularCalogero::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularCalogero::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  SingularCalogero::D2fd_odeD2xxup_sparse(
+  SingularCalogero::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,16 +20,16 @@
 -- User Header
 
 -- Auxiliary values
-L        = 100
-s_f      = L
-jerk_max = 10
+jerk_max = 10.0
 wJ       = 1/jerk_max**2
+L        = 100.0
 jerk_min = -10
+s_f      = L
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -50,7 +50,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -64,10 +64,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "Crossroad_dump",
@@ -132,7 +132,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -259,28 +259,28 @@ content = {
     -- Model Parameters
     L        = L,
     wJ       = wJ,
-    wT       = 10,
+    wT       = 10.0,
     jerk_max = jerk_max,
     jerk_min = jerk_min,
 
     -- Guess Parameters
-    Vmean = 2,
+    Vmean = 2.0,
 
     -- Boundary Conditions
-    a_f = 0,
-    a_i = 0,
+    a_f = 0.0,
+    a_i = 0.0,
     s_f = s_f,
-    s_i = 0,
-    v_f = 1,
-    v_i = 0,
+    s_i = 0.0,
+    v_f = 1.0,
+    v_i = 0.0,
 
     -- Post Processing Parameters
-    v_max     = 30,
-    alat_max  = 4,
-    along_max = 4,
+    v_max     = 30.0,
+    alat_max  = 4.0,
+    along_max = 4.0,
 
     -- User Function Parameters
-    kappa0 = 0,
+    kappa0 = 0.0,
     kappa1 = 1/10.00,
     kappa2 = 1/10.00,
 
@@ -298,7 +298,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     jerkControl = {
-      type      = ,
+      type      = "LOGARITHMIC",
       epsilon   = 0.01,
       tolerance = 0.01,
     },
@@ -343,17 +343,17 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
         length = 0.5,
-        n      = 100,
+        n      = 100.0,
       },
       
       {
         length = 0.5,
-        n      = 100,
+        n      = 100.0,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -125,72 +125,6 @@ namespace BangBangFmoduleDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  BangBangFmodule::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BangBangFmodule::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = controlP(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
-    real_type t6   = controlM(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
-    real_type result__ = t3 + t6;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BangBangFmodule::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -303,10 +237,10 @@ namespace BangBangFmoduleDefine {
    |              |___/                 |___/
   \*/
 
-  integer BangBangFmodule::DlagrangeDxup_numEqns() const { return 4; }
+  integer BangBangFmodule::DlagrangeDxpu_numEqns() const { return 4; }
 
   void
-  BangBangFmodule::DlagrangeDxup_eval(
+  BangBangFmodule::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -321,22 +255,22 @@ namespace BangBangFmoduleDefine {
     result__[ 2   ] = 1;
     result__[ 3   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::D2lagrangeD2xup_numRows() const { return 4; }
-  integer BangBangFmodule::D2lagrangeD2xup_numCols() const { return 4; }
-  integer BangBangFmodule::D2lagrangeD2xup_nnz()     const { return 0; }
+  integer BangBangFmodule::D2lagrangeD2xpu_numRows() const { return 4; }
+  integer BangBangFmodule::D2lagrangeD2xpu_numCols() const { return 4; }
+  integer BangBangFmodule::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
-  BangBangFmodule::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFmodule::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  BangBangFmodule::D2lagrangeD2xup_sparse(
+  BangBangFmodule::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

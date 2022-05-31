@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_Guess.cc                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -98,12 +98,12 @@ namespace SingularLuus04_FreeTimeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularLuus04_FreeTime::Dfd_odeDxxup_numRows() const { return 4; }
-  integer SingularLuus04_FreeTime::Dfd_odeDxxup_numCols() const { return 9; }
-  integer SingularLuus04_FreeTime::Dfd_odeDxxup_nnz()     const { return 19; }
+  integer SingularLuus04_FreeTime::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer SingularLuus04_FreeTime::Dfd_odeDxxpu_numCols() const { return 9; }
+  integer SingularLuus04_FreeTime::Dfd_odeDxxpu_nnz()     const { return 19; }
 
   void
-  SingularLuus04_FreeTime::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularLuus04_FreeTime::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -127,7 +127,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
 
   void
-  SingularLuus04_FreeTime::Dfd_odeDxxup_sparse(
+  SingularLuus04_FreeTime::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -175,18 +175,18 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 17  ] = result__[12];
     result__[ 18  ] = __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 19, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 19, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularLuus04_FreeTime::D2fd_odeD2xxup_numRows() const { return 9; }
-  integer SingularLuus04_FreeTime::D2fd_odeD2xxup_numCols() const { return 9; }
-  integer SingularLuus04_FreeTime::D2fd_odeD2xxup_nnz()     const { return 20; }
+  integer SingularLuus04_FreeTime::D2fd_odeD2xxpu_numRows() const { return 9; }
+  integer SingularLuus04_FreeTime::D2fd_odeD2xxpu_numCols() const { return 9; }
+  integer SingularLuus04_FreeTime::D2fd_odeD2xxpu_nnz()     const { return 20; }
 
   void
-  SingularLuus04_FreeTime::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularLuus04_FreeTime::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -211,7 +211,7 @@ namespace SingularLuus04_FreeTimeDefine {
 
 
   void
-  SingularLuus04_FreeTime::D2fd_odeD2xxup_sparse(
+  SingularLuus04_FreeTime::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -260,7 +260,7 @@ namespace SingularLuus04_FreeTimeDefine {
     result__[ 18  ] = result__[17];
     result__[ 19  ] = result__[18];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 20, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 20, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

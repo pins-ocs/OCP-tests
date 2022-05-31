@@ -33,20 +33,6 @@ Model Parameters
 ..................................uf_bar = 0
 ......................................v0 = 7725.7584967673565
 ..................................v0_bar = 1
-INFO CLASS = MaximumAscent
-  #nodes      = 30001
-  dim         = u=1, q=1, x=4, p=0, bc(active/total)=(6/6)
-  total       = nZ=240014, UC=30000, Q=30001
-  index start = omega=240008, p=240014
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -78,7 +64,7 @@ N. Equations   = 240014        N. System pars = 30000
 Convergence failed due to:
 NewtonDumped[OCP_solver_NewtonDumped]::solve() cant compute initial parameters
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 0.477[ms]     timeout        = 0 [ms]
+Elapsed Time   = 0.658[ms]     timeout        = 0 [ms]
 iteration      = 0             Memory Used    = 19Mb (+60Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -103,7 +89,7 @@ last ||f||_2   = 0             last ||d||_2   = 0
     |\ | /  \  |     /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \     
     | \| \__/  |     \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/     
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

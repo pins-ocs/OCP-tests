@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,22 +92,22 @@ namespace gtocX_2burn_parsDefine {
     real_type t17  = acceleration_r(t16, t8);
     real_type t18  = t17 * ModelPars[iM_w_nonlin];
     real_type t19  = sin(t15);
-    result__[ 0   ] = -t11 * t18 * t19 + V__[0];
+    result__[ 0   ] = -t19 * t18 * t11 + V__[0];
     real_type t23  = cos(t15);
-    result__[ 1   ] = t11 * t18 * t23 + V__[1];
-    real_type t30  = pow(t13 * t23 + t14 * t19 + 1, 2);
+    result__[ 1   ] = t23 * t18 * t11 + V__[1];
+    real_type t30  = pow(t23 * t13 + t19 * t14 + 1, 2);
     result__[ 2   ] = V__[2] - t9 / t6 / t5 * t30 * t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::Dfd_odeDxxup_numRows() const { return 3; }
-  integer gtocX_2burn_pars::Dfd_odeDxxup_numCols() const { return 9; }
-  integer gtocX_2burn_pars::Dfd_odeDxxup_nnz()     const { return 21; }
+  integer gtocX_2burn_pars::Dfd_odeDxxpu_numRows() const { return 3; }
+  integer gtocX_2burn_pars::Dfd_odeDxxpu_numCols() const { return 9; }
+  integer gtocX_2burn_pars::Dfd_odeDxxpu_nnz()     const { return 21; }
 
   void
-  gtocX_2burn_pars::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  gtocX_2burn_pars::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -133,7 +133,7 @@ namespace gtocX_2burn_parsDefine {
 
 
   void
-  gtocX_2burn_pars::Dfd_odeDxxup_sparse(
+  gtocX_2burn_pars::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -213,18 +213,18 @@ namespace gtocX_2burn_parsDefine {
     real_type t89  = t4 * t4;
     result__[ 20  ] = 3.0 / 2.0 * t8 / t5 / t89 * t87 * t3;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 21, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 21, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::D2fd_odeD2xxup_numRows() const { return 9; }
-  integer gtocX_2burn_pars::D2fd_odeD2xxup_numCols() const { return 9; }
-  integer gtocX_2burn_pars::D2fd_odeD2xxup_nnz()     const { return 49; }
+  integer gtocX_2burn_pars::D2fd_odeD2xxpu_numRows() const { return 9; }
+  integer gtocX_2burn_pars::D2fd_odeD2xxpu_numCols() const { return 9; }
+  integer gtocX_2burn_pars::D2fd_odeD2xxpu_nnz()     const { return 49; }
 
   void
-  gtocX_2burn_pars::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  gtocX_2burn_pars::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -278,7 +278,7 @@ namespace gtocX_2burn_parsDefine {
 
 
   void
-  gtocX_2burn_pars::D2fd_odeD2xxup_sparse(
+  gtocX_2burn_pars::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -452,7 +452,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t388 = t123 * t123;
     result__[ 48  ] = (t257 * t363 / 4 - t354 * t322 - t31 * t367 * t28 * t240 - t31 * t371 * t37 * t240) * t1 + (-t274 * t363 / 4 + t337 * t322 + t46 * t367 * t28 * t240 + t46 * t371 * t37 * t240) * t43 - 0.15e2 / 4.0 * t9 / t7 / t155 / t6 * t388 * t56;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 49, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 49, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -206,22 +206,22 @@ namespace PointMassCarModel_1Define {
     real_type t24  = XM__[4];
     real_type t28  = UM__[1];
     real_type t34  = UM__[0];
-    real_type t39  = t24 * t24;
-    real_type t41  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t45  = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t46  = 1.0 / t45;
-    real_type t48  = t15 * t15;
-    real_type t51  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    real_type t56  = AdherenceEllipse(t46 / t41 * t39 + t46 / t51 * t21 * t48 - 1);
-    real_type t58  = ALIAS_leftWidth(t5);
-    real_type t60  = RoadLeftBorder(t4 - t58);
-    real_type t62  = ALIAS_rightWidth(t5);
-    real_type t64  = RoadRightBorder(-t4 - t62);
-    real_type t73  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t24 * t2 - 1);
-    real_type t75  = LimitMinSpeed(-t2);
-    real_type t77  = v__fxControl(t34, -1, 1);
-    real_type t79  = v__OmegaControl(t28, -1, 1);
-    real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-ModelPars[iM_kD] * t21 + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t56 * t7 + t60 * t7 + t64 * t7 + t73 * t7 + t75 * t7 + t77 * t7 + t79 * t7;
+    real_type t39  = v__fxControl(t34, -1, 1);
+    real_type t41  = v__OmegaControl(t28, -1, 1);
+    real_type t43  = t24 * t24;
+    real_type t45  = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
+    real_type t49  = ModelPars[iM_g] * ModelPars[iM_g];
+    real_type t50  = 1.0 / t49;
+    real_type t52  = t15 * t15;
+    real_type t55  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
+    real_type t60  = AdherenceEllipse(t50 / t45 * t43 + t50 / t55 * t21 * t52 - 1);
+    real_type t62  = ALIAS_leftWidth(t5);
+    real_type t64  = RoadLeftBorder(t4 - t62);
+    real_type t66  = ALIAS_rightWidth(t5);
+    real_type t68  = RoadRightBorder(-t4 - t66);
+    real_type t77  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t24 * t2 - 1);
+    real_type t79  = LimitMinSpeed(-t2);
+    real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-t21 * ModelPars[iM_kD] + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t39 * t7 + t41 * t7 + t60 * t7 + t64 * t7 + t68 * t7 + t77 * t7 + t79 * t7;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -518,147 +518,6 @@ namespace PointMassCarModel_1Define {
   }
 
   /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  PointMassCarModel_1::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[11], XM__[5], LM__[5];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    QM__[1] = (QL__[1]+QR__[1])/2;
-    QM__[2] = (QL__[2]+QR__[2])/2;
-    QM__[3] = (QL__[3]+QR__[3])/2;
-    QM__[4] = (QL__[4]+QR__[4])/2;
-    QM__[5] = (QL__[5]+QR__[5])/2;
-    QM__[6] = (QL__[6]+QR__[6])/2;
-    QM__[7] = (QL__[7]+QR__[7])/2;
-    QM__[8] = (QL__[8]+QR__[8])/2;
-    QM__[9] = (QL__[9]+QR__[9])/2;
-    QM__[10] = (QL__[10]+QR__[10])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    XM__[4] = (XL__[4]+XR__[4])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    LM__[4] = (LL__[4]+LR__[4])/2;
-    integer i_segment = LEFT__.i_segment;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_1_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_1_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type tmp_1_2 = 0.0e0;
-    real_type tmp_0_3 = 0.0e0;
-    real_type tmp_1_3 = 0.0e0;
-    real_type tmp_0_4 = 0.0e0;
-    real_type tmp_1_4 = 0.0e0;
-    real_type tmp_0_5 = 0.0e0;
-    real_type tmp_1_5 = 0.0e0;
-    real_type tmp_0_6 = 0.0e0;
-    real_type tmp_1_6 = 0.0e0;
-    real_type tmp_0_7 = 0.0e0;
-    real_type tmp_1_7 = 0.0e0;
-    real_type tmp_0_8 = 0.0e0;
-    real_type t2   = ModelPars[iM_v__Omega__max];
-    real_type t4   = v__OmegaControl.solve_rhs(-t2 * LM__[3], -1, 1);
-    real_type tmp_1_8 = -0.5e0 * t2 * t4;
-    real_type t8   = ModelPars[iM_v__fx__max];
-    real_type t10  = v__OmegaControl.solve_rhs(-t8 * LM__[4], -1, 1);
-    real_type tmp_0_9 = -0.5e0 * t8 * t10;
-    real_type tmp_1_9 = 0.0e0;
-    real_type tmp_0_10 = 0.0e0;
-    real_type tmp_1_10 = 0.0e0;
-    real_type tmp_0_11 = 0.0e0;
-    real_type tmp_1_11 = 0.0e0;
-    real_type tmp_0_12 = 0.0e0;
-    real_type tmp_1_12 = 0.0e0;
-    real_type tmp_0_13 = 0.0e0;
-    real_type tmp_1_13 = 0.0e0;
-    real_type tmp_0_14 = 0.0e0;
-    real_type tmp_1_14 = 0.0e0;
-    real_type tmp_0_15 = 0.0e0;
-    real_type tmp_1_15 = 0.0e0;
-    real_type tmp_0_16 = 0.0e0;
-    real_type tmp_1_16 = 0.0e0;
-    real_type tmp_0_17 = 0.0e0;
-    real_type tmp_1_17 = 0.0e0;
-    real_type tmp_0_18 = 0.0e0;
-    real_type tmp_1_18 = tmp_1_8;
-    real_type tmp_0_19 = tmp_0_9;
-    real_type tmp_1_19 = 0.0e0;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(1, 0) = tmp_1_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(1, 1) = tmp_1_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(1, 2) = tmp_1_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    DuDxlxlp(1, 3) = tmp_1_3;
-    DuDxlxlp(0, 4) = tmp_0_4;
-    DuDxlxlp(1, 4) = tmp_1_4;
-    DuDxlxlp(0, 5) = tmp_0_5;
-    DuDxlxlp(1, 5) = tmp_1_5;
-    DuDxlxlp(0, 6) = tmp_0_6;
-    DuDxlxlp(1, 6) = tmp_1_6;
-    DuDxlxlp(0, 7) = tmp_0_7;
-    DuDxlxlp(1, 7) = tmp_1_7;
-    DuDxlxlp(0, 8) = tmp_0_8;
-    DuDxlxlp(1, 8) = tmp_1_8;
-    DuDxlxlp(0, 9) = tmp_0_9;
-    DuDxlxlp(1, 9) = tmp_1_9;
-    DuDxlxlp(0, 10) = tmp_0_10;
-    DuDxlxlp(1, 10) = tmp_1_10;
-    DuDxlxlp(0, 11) = tmp_0_11;
-    DuDxlxlp(1, 11) = tmp_1_11;
-    DuDxlxlp(0, 12) = tmp_0_12;
-    DuDxlxlp(1, 12) = tmp_1_12;
-    DuDxlxlp(0, 13) = tmp_0_13;
-    DuDxlxlp(1, 13) = tmp_1_13;
-    DuDxlxlp(0, 14) = tmp_0_14;
-    DuDxlxlp(1, 14) = tmp_1_14;
-    DuDxlxlp(0, 15) = tmp_0_15;
-    DuDxlxlp(1, 15) = tmp_1_15;
-    DuDxlxlp(0, 16) = tmp_0_16;
-    DuDxlxlp(1, 16) = tmp_1_16;
-    DuDxlxlp(0, 17) = tmp_0_17;
-    DuDxlxlp(1, 17) = tmp_1_17;
-    DuDxlxlp(0, 18) = tmp_0_18;
-    DuDxlxlp(1, 18) = tmp_1_18;
-    DuDxlxlp(0, 19) = tmp_0_19;
-    DuDxlxlp(1, 19) = tmp_1_19;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 40 );
-  }
-
-  /*\
   :|:   ___         _           _   ___    _   _            _
   :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
   :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
@@ -705,7 +564,7 @@ namespace PointMassCarModel_1Define {
     real_type t69  = pow(V__[2] - (-t24 * ModelPars[iM_kD] + t12) * t5, 2);
     real_type t75  = pow(-t5 * ModelPars[iM_v__Omega__max] * t9 + V__[3], 2);
     real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t6 + V__[4], 2);
-    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t5 * t7 + t58 + t62 + t69 + t75 + t81;
+    real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t7 * t5 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
     }
@@ -732,7 +591,7 @@ namespace PointMassCarModel_1Define {
     real_type t6   = U__[iU_v__fx];
     real_type t7   = ALIAS_v__fxControl_D_1(t6, -1, 1);
     real_type t10  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t5 * t7 - 2 * t5 * t10 * (-t5 * t10 * t6 + V__[4]);
+    result__[ 0   ] = t7 * t5 - 2 * t5 * t10 * (-t5 * t10 * t6 + V__[4]);
     real_type t17  = U__[iU_v__Omega];
     real_type t18  = ALIAS_v__OmegaControl_D_1(t17, -1, 1);
     real_type t21  = ModelPars[iM_v__Omega__max];

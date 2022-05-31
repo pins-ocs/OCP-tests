@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 17/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,17 +20,17 @@
 -- User Header
 
 -- Auxiliary values
-tol0  = 0.1
-tol   = tol0
-W0    = 0
 epsi0 = 0.1
+W0    = 0.0
 epsi  = epsi0
+tol0  = 0.1
 W     = W0
+tol   = tol0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -51,7 +51,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -65,10 +65,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "AlpRider_dump",
@@ -133,7 +133,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -265,14 +265,14 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
-    y1_f = 2,
-    y1_i = 2,
-    y2_f = 3,
-    y2_i = 1,
-    y3_f = 1,
-    y3_i = 2,
+    y1_f = 2.0,
+    y1_i = 2.0,
+    y2_f = 3.0,
+    y2_i = 1.0,
+    y3_f = 1.0,
+    y3_i = 2.0,
     y4_f = -2,
-    y4_i = 1,
+    y4_i = 1.0,
 
     -- Post Processing Parameters
 
@@ -280,7 +280,7 @@ content = {
 
     -- Continuation Parameters
     W0    = W0,
-    W1    = 100,
+    W1    = 100.0,
     epsi0 = epsi0,
     epsi1 = 0.001,
     tol0  = tol0,
@@ -316,12 +316,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        length = 20,
-        n      = 4000,
+        n      = 4000.0,
+        length = 20.0,
       },
     },
   },

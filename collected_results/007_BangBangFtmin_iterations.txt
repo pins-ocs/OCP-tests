@@ -23,20 +23,6 @@ num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 1 npts = 101 no data set
 END Mesh[mesh]
-INFO CLASS = BangBangFtmin
-  #nodes      = 101
-  dim         = u=1, q=1, x=2, p=1, bc(active/total)=(4/4)
-  total       = nZ=409, UC=100, Q=101
-  index start = omega=404, p=408
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 Failed check on parameter: 0 < T
 fail 0 < -38.57921666249994
@@ -53,7 +39,7 @@ fail 0 < -0.23685052070312307
 [  4, 1] ( 0.00221  , 0.000183 ) [  0.0444  , 0.00491  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  5, 1] ( 0.000183 , 2.12e-06 ) [ 0.00602  , 6.51e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  6, 1] ( 2.12e-06 , 1.34e-10 ) [ 6.62e-05 , 4.03e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  7, 1] ( 1.34e-10 , 2.69e-17 ) [ 4.03e-09 , 6.17e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 1] ( 1.34e-10 , 2.76e-17 ) [ 4.03e-09 , 6.17e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -67,8 +53,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 409           N. System pars = 100
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.28[ms]      timeout        = 0 [ms]
-iteration      = 7             Memory Used    = 68Kb (+1bytes)
+Elapsed Time   = 5.68[ms]      timeout        = 0 [ms]
+iteration      = 7             Memory Used    = 69Kb (+81bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -84,15 +70,15 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 2.047e-16     last ||d||_inf = 2.4498e-12
-last ||f||_1   = 2.6912e-17    last ||d||_1   = 6.1691e-13
-last ||f||_2   = 4.5818e-17    last ||d||_2   = 1.2293e-12
+last ||f||_inf = 5.4644e-16    last ||d||_inf = 2.4503e-12
+last ||f||_1   = 2.7616e-17    last ||d||_1   = 6.17e-13
+last ||f||_2   = 5.2552e-17    last ||d||_2   = 1.2293e-12
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

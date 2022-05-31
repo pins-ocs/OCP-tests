@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: PointMassCarModel_1_fsolve_main.m                              %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -35,7 +35,7 @@ ocp = PointMassCarModel_1( 'PointMassCarModel_1' );
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-ocp.setup('../../data/PointMassCarModel_1_Data.rb');
+ocp.setup('../../data/PointMassCarModel_1_Data'); % automatically try extension .rb and .lua
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);

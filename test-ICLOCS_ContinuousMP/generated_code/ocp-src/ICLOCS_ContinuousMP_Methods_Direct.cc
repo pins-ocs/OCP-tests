@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -637,12 +637,12 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_ContinuousMP::Dfd_odeDxxup_numRows() const { return 80; }
-  integer ICLOCS_ContinuousMP::Dfd_odeDxxup_numCols() const { return 180; }
-  integer ICLOCS_ContinuousMP::Dfd_odeDxxup_nnz()     const { return 360; }
+  integer ICLOCS_ContinuousMP::Dfd_odeDxxpu_numRows() const { return 80; }
+  integer ICLOCS_ContinuousMP::Dfd_odeDxxpu_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::Dfd_odeDxxpu_nnz()     const { return 360; }
 
   void
-  ICLOCS_ContinuousMP::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_ContinuousMP::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 20  ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 80  ;
@@ -1007,7 +1007,7 @@ namespace ICLOCS_ContinuousMPDefine {
 
 
   void
-  ICLOCS_ContinuousMP::Dfd_odeDxxup_sparse(
+  ICLOCS_ContinuousMP::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -1587,18 +1587,18 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 358 ] = __INV_DZETA;
     result__[ 359 ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 360, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 360, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_ContinuousMP::D2fd_odeD2xxup_numRows() const { return 180; }
-  integer ICLOCS_ContinuousMP::D2fd_odeD2xxup_numCols() const { return 180; }
-  integer ICLOCS_ContinuousMP::D2fd_odeD2xxup_nnz()     const { return 160; }
+  integer ICLOCS_ContinuousMP::D2fd_odeD2xxpu_numRows() const { return 180; }
+  integer ICLOCS_ContinuousMP::D2fd_odeD2xxpu_numCols() const { return 180; }
+  integer ICLOCS_ContinuousMP::D2fd_odeD2xxpu_nnz()     const { return 160; }
 
   void
-  ICLOCS_ContinuousMP::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_ContinuousMP::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 80  ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
@@ -1763,7 +1763,7 @@ namespace ICLOCS_ContinuousMPDefine {
 
 
   void
-  ICLOCS_ContinuousMP::D2fd_odeD2xxup_sparse(
+  ICLOCS_ContinuousMP::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -2144,7 +2144,7 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 158 ] = result__[79];
     result__[ 159 ] = result__[158];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 160, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 160, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

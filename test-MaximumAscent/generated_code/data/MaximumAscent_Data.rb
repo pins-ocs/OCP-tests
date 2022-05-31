@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: MaximumAscent_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,18 +20,18 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mu     = 398600441800000
+days   = 1.0
+u0     = 0.0
 T      = 0.68
-days   = 1
-tf     = 86400*days
-u0     = 0
-days1  = 30
-r0     = 6678140
-v0     = (mu/r0)**(1/2.0)
-u0_bar = u0/v0
-Isp    = 1500
+days1  = 30.0
+r0     = 6678140.0
+Isp    = 1500.0
 g0     = 9.80665
 mdot   = T/g0/Isp
+mu     = 398600441800000.0
+v0     = (mu/r0)**(1/2.0)
+u0_bar = u0/v0
+tf     = 86400*days
 
 mechatronix do |data|
 
@@ -102,7 +102,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -270,17 +270,17 @@ mechatronix do |data|
 
     # Model Parameters
     :days => days,
-    :m0   => 5000,
+    :m0   => 5000.0,
     :mdot => mdot,
 
     # Guess Parameters
 
     # Boundary Conditions
-    :r0_bar => 1,
-    :theta0 => 0,
+    :r0_bar => 1.0,
+    :theta0 => 0.0,
     :u0_bar => u0_bar,
-    :uf_bar => 0,
-    :v0_bar => 1,
+    :uf_bar => 0.0,
+    :v0_bar => 1.0,
 
     # Post Processing Parameters
     :r0 => r0,
@@ -290,7 +290,7 @@ mechatronix do |data|
     :T => T,
 
     # Continuation Parameters
-    :days0 => 1,
+    :days0 => 1.0,
     :days1 => days1,
 
     # Constraints Parameters
@@ -335,11 +335,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
+        :length => 1.0,
         :n      => 1000*days1,
-        :length => 1,
       },
     ],
   };

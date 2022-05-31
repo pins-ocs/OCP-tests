@@ -14,20 +14,6 @@ num. segments = 1
 num. nodes = 1001
 Segment N.0: s0 = 0 length = 2.5 npts = 1001 no data set
 END Mesh[mesh]
-INFO CLASS = Rayleight
-  #nodes      = 1001
-  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(2/2)
-  total       = nZ=4006, UC=1000, Q=1001
-  index start = omega=4004, p=4006
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 2] (  0.0025  ,  0.0047  ) [   2.13   ,   1.99   ] 0.9        [0:0:0:0:1:0:0:0:0:0:0:0]
@@ -49,8 +35,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 4006          N. System pars = 1000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 7.31[ms]      timeout        = 0 [ms]
-iteration      = 6             Memory Used    = 372Kb (+77bytes)
+Elapsed Time   = 11.4[ms]      timeout        = 0 [ms]
+iteration      = 6             Memory Used    = 373Kb (+30bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -74,7 +60,7 @@ last ||f||_2   = 2.1462e-16    last ||d||_2   = 6.2123e-15
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

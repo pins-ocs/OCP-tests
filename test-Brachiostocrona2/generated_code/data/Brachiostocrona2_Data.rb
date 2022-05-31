@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona2_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 10/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,14 +20,14 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi0  = 1
 yf     = -2
-xf     = 5
-epsi   = epsi0
 g      = 9.81
-Tf     = (-2.0*yf/g)**(1/2.0)
-Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+xf     = 5.0
 theta0 = Math::atan2(yf,xf)
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf     = (-2.0*yf/g)**(1/2.0)
+epsi0  = 1.0
+epsi   = epsi0
 
 mechatronix do |data|
 
@@ -98,7 +98,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-12, # tolerance for stopping criteria
+      :tolerance            => 1e-10, # tolerance for stopping criteria
       :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
       :lambda_min           => 1e-10, # minimum lambda for linesearch
       :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
@@ -266,7 +266,7 @@ mechatronix do |data|
     # Model Parameters
     :epsi   => epsi,
     :g      => g,
-    :mass   => 1,
+    :mass   => 1.0,
     :theta0 => theta0,
 
     # Guess Parameters
@@ -283,7 +283,7 @@ mechatronix do |data|
 
     # Continuation Parameters
     :epsi0 => epsi0,
-    :epsi1 => 0,
+    :epsi1 => 0.0,
 
     # Constraints Parameters
   }
@@ -339,11 +339,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :n      => 500,
-        :length => 1,
+        :length => 1.0,
+        :n      => 500.0,
       },
     ],
   };

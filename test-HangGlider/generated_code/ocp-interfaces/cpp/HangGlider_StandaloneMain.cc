@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tol_max = 0.01;
     real_type epsi_max = 0.01;
-    real_type W0 = 1000;
-    real_type W = W0;
     real_type cL_min = 0;
     real_type cL_max = 1.4;
-    real_type tol_max = 0.01;
+    real_type W0 = 1000;
+    real_type W = W0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -184,7 +184,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_cLControl = data_Controls["cLControl"];
-    data_cLControl["type"]      = ;
+    data_cLControl["type"]      = "QUADRATIC2";
     data_cLControl["epsilon"]   = epsi_max;
     data_cLControl["tolerance"] = tol_max;
 
@@ -224,7 +224,10 @@ HangGlider_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_MinimumFuelOrbitRaising_fsolve_main.m                   %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -40,8 +40,7 @@ nlsys = @(x) nlsys_local(ocp,x);
 % READ PROBLEM DATA-------------------------------------------------------------
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(ICLOCS_MinimumFuelOrbitRaising_data);
-%ocp.setup('../../data/ICLOCS_MinimumFuelOrbitRaising_Data.lua');
-ocp.setup('../../data/ICLOCS_MinimumFuelOrbitRaising_Data.rb');
+ocp.setup('../../data/ICLOCS_MinimumFuelOrbitRaising_Data'); % automatically try extension .rb and .lua
 ocp.infoLevel(infolevel);
 ocp.set_guess(); % use default guess
 

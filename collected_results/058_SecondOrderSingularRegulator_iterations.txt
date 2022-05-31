@@ -21,20 +21,6 @@ num. segments = 1
 num. nodes = 501
 Segment N.0: s0 = 0 length = 5 npts = 501 no data set
 END Mesh[mesh]
-INFO CLASS = SecondOrderSingularRegulator
-  #nodes      = 501
-  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(2/2)
-  total       = nZ=2006, UC=500, Q=501
-  index start = omega=2004, p=2006
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,22] ( 0.00748  ,  0.0101  ) [   0.25   ,  0.222   ] 0.109      [0:0:21:0:0:0:0:0:0:0:0:0]
@@ -127,8 +113,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 2006          N. System pars = 500
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 94.1[ms]      timeout        = 0 [ms]
-iteration      = 74            Memory Used    = 196Kb (+62bytes)
+Elapsed Time   = 139[ms]       timeout        = 0 [ms]
+iteration      = 74            Memory Used    = 197Kb (+52bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -152,7 +138,7 @@ last ||f||_2   = 6.367e-14     last ||d||_2   = 3.9026e-15
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

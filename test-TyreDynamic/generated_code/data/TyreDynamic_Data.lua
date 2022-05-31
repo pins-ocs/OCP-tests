@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,27 +20,27 @@
 -- User Header
 
 -- Auxiliary values
-eps_c0   = 0.1
-eps_c    = eps_c0
+v__0     = 10.0
 tol_c0   = 0.1
-tol_c    = tol_c0
-TT__max  = 800
-E__pow   = 60*TT__max
-h__b     = 1
-L        = 300
-mesh_np  = 2.000000000*L
-v__0     = 10
-w__t0    = 1
-w__t     = w__t0
-tol_l    = 0.01
 eps_l    = 0.01
+tol_c    = tol_c0
+tol_l    = 0.01
+w__t0    = 1.0
+w__t     = w__t0
 rw       = 0.3
 omega__0 = 1/rw*v__0
+eps_c0   = 0.1
+eps_c    = eps_c0
+h__b     = 1.0
+TT__max  = 800.0
+E__pow   = 60*TT__max
+L        = 300.0
+mesh_np  = 2.000000000*L
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -61,7 +61,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -75,10 +75,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "TyreDynamic_dump",
@@ -143,7 +143,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -270,27 +270,27 @@ content = {
     -- Model Parameters
     Iw         = 0.4351,
     b__lb      = -1,
-    b__ub      = 1,
+    b__ub      = 1.0,
     l__x       = 0.1,
-    m          = 115,
+    m          = 115.0,
     p__lb      = -1,
-    p__ub      = 1,
+    p__ub      = 1.0,
     rw         = rw,
     tau__b     = 0.1,
     tau__p     = 0.1,
-    v__adm     = 1,
-    v__lb      = 0,
-    v__ub      = 10000,
+    v__adm     = 1.0,
+    v__lb      = 0.0,
+    v__ub      = 10000.0,
     w__U       = 0.0001,
     w__t       = w__t,
     b__o__lb   = -1,
-    b__o__ub   = 1,
+    b__o__ub   = 1.0,
     lambda__lb = -1,
-    lambda__ub = 1,
-    omega__lb  = 0,
-    omega__ub  = 10000,
+    lambda__ub = 1.0,
+    omega__lb  = 0.0,
+    omega__ub  = 10000.0,
     p__o__lb   = -1,
-    p__o__ub   = 1,
+    p__o__ub   = 1.0,
 
     -- Guess Parameters
     p__ss      = 0.175698,
@@ -299,25 +299,25 @@ content = {
 
     -- Boundary Conditions
     b__ss = 0.1,
-    v__ss = 10,
+    v__ss = 10.0,
 
     -- Post Processing Parameters
     g           = 9.81,
     h__b        = h__b,
-    lambda__max = 1,
+    lambda__max = 1.0,
 
     -- User Function Parameters
-    BT__max  = 300,
-    Bx0      = 10,
+    BT__max  = 300.0,
+    Bx0      = 10.0,
     Cx0      = 1.6,
     E__pow   = E__pow,
-    TB__max  = 500,
+    TB__max  = 500.0,
     TT__max  = TT__max,
     kD       = 0.2,
     kDo      = 0.001,
-    mu__x0   = 1,
+    mu__x0   = 1.0,
     rho_a    = 1.1839,
-    BTv__max = 50,
+    BTv__max = 50.0,
 
     -- Continuation Parameters
     eps_c0 = eps_c0,
@@ -325,7 +325,7 @@ content = {
     tol_c0 = tol_c0,
     tol_c1 = 0.01,
     w__t0  = w__t0,
-    w__t1  = 1,
+    w__t1  = 1.0,
 
     -- Constraints Parameters
   },
@@ -339,9 +339,9 @@ content = {
   -- ClipSuperior
     clipSuph = 0.01,
   -- ClipIntervalWithErf
-    clipIntdelta2 = 0,
+    clipIntdelta = 0.0,
+    clipIntdelta2 = 0.0,
     clipInth = 0.01,
-    clipIntdelta = 0,
   -- SignRegularizedWithErf
     sign_regh = 0.01,
   -- AbsoluteValueRegularizedWithErf
@@ -353,12 +353,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     b__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = eps_c,
       tolerance = tol_c,
     },
     p__oControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = eps_c,
       tolerance = tol_c,
     },
@@ -409,7 +409,7 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {

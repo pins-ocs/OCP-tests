@@ -20,22 +20,8 @@ END Mesh[mesh]
 
 Model Parameters
 .......................................T = 0.1405
-......................................md = 0.0749
+......................................md = 0.07490000000000001
 ...............................theta_max = 3.141592653589793
-INFO CLASS = ICLOCS_MinimumFuelOrbitRaising
-  #nodes      = 401
-  dim         = u=1, q=1, x=3, p=0, bc(active/total)=(5/5)
-  total       = nZ=2411, UC=400, Q=401
-  index start = omega=2406, p=2411
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,72] (  0.0016  ,  0.0016  ) [  0.689   ,   1.45   ] 0.000111   [0:0:1:70:0:0:0:0:0:0:0:0]
@@ -62,8 +48,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 2411          N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 90.6[ms]      timeout        = 0 [ms]
-iteration      = 11            Memory Used    = 236Kb (+29bytes)
+Elapsed Time   = 117[ms]       timeout        = 0 [ms]
+iteration      = 11            Memory Used    = 237Kb (+8bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -79,31 +65,31 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 9.0854e-10    last ||d||_inf = 2.6139e-07
-last ||f||_1   = 3.2342e-11    last ||d||_1   = 5.5799e-08
-last ||f||_2   = 1.111e-10     last ||d||_2   = 9.098e-08
+last ||f||_inf = 9.0872e-10    last ||d||_inf = 2.6137e-07
+last ||f||_1   = 3.2332e-11    last ||d||_1   = 5.5793e-08
+last ||f||_2   = 1.1111e-10    last ||d||_2   = 9.0972e-08
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-At cell 143 solution is not a minimum H=-0.046980342344130566, ||g||_inf=1.0275888459084605e-16, u=[-2.3313574984157897 ]
-DgDu(0,0) = -0.253294861134172
-At cell 146 solution is not a minimum H=-0.055083775741942564, ||g||_inf=1.7161622328821133e-16, u=[-2.313218763091197 ]
-DgDu(0,0) = -0.24734565496099545
-At cell 147 solution is not a minimum H=-0.054915268525689176, ||g||_inf=2.06080419031445e-16, u=[-2.3071362000375113 ]
-DgDu(0,0) = -0.24537426137808524
-At cell 149 solution is not a minimum H=-0.05884011174979509, ||g||_inf=2.4075671762647224e-16, u=[-2.2949221615432487 ]
-DgDu(0,0) = -0.2414494887556263
-At cell 150 solution is not a minimum H=-0.05867529154932821, ||g||_inf=2.40921837710628e-16, u=[-2.2887901550226704 ]
-DgDu(0,0) = -0.2394962664688371
-At cell 151 solution is not a minimum H=-0.05851169495061048, ||g||_inf=3.271897503134014e-16, u=[-2.282645365899293 ]
-DgDu(0,0) = -0.2375492529432885
+At cell 143 solution is not a minimum H=-0.04698034234413129, ||g||_inf=1.3701184612112805e-16, u=[-2.3313574983758305 ]
+DgDu(0,0) = -0.2532948611258946
+At cell 146 solution is not a minimum H=-0.055083775741889385, ||g||_inf=1.3729297863056906e-16, u=[-2.3132187630505303 ]
+DgDu(0,0) = -0.24734565495274627
+At cell 147 solution is not a minimum H=-0.054915268525649596, ||g||_inf=1.5456031427358375e-16, u=[-2.3071361999966005 ]
+DgDu(0,0) = -0.245374261369847
+At cell 149 solution is not a minimum H=-0.05884011174972903, ||g||_inf=2.063629008226905e-16, u=[-2.2949221615018347 ]
+DgDu(0,0) = -0.24144948874741196
+At cell 150 solution is not a minimum H=-0.05867529154926754, ||g||_inf=2.0650443232339546e-16, u=[-2.288790154980998 ]
+DgDu(0,0) = -0.23949626646063576
+At cell 151 solution is not a minimum H=-0.05851169495055525, ||g||_inf=2.066461580926746e-16, u=[-2.282645365857357 ]
+DgDu(0,0) = -0.23754925293510096
 skipping...
 Check Controls End
 target [Lagrange,Mayer]       = [ -0.3841, 0 ]

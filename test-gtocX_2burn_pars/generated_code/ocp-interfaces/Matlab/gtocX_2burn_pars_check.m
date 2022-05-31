@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: gtocX_2burn_pars_main.m                                        %
 %                                                                       %
-%  version: 1.0   date 10/4/2022                                        %
+%  version: 1.0   date 1/6/2022                                         %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -22,7 +22,7 @@ close all
 % create object
 ocp = gtocX_2burn_pars( 'gtocX_2burn_pars' );
 
-ocp.setup('../../data/gtocX_2burn_pars_Data.rb');
+ocp.setup('../../data/gtocX_2burn_pars_Data'); % automatically try extension .rb and .lua
 ocp.infoLevel(4);
 ocp.set_guess(); % use default guess generated in MAPLE
 [Z,U] = ocp.get_raw_solution();

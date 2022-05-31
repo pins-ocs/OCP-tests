@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_dll_ruby.hh                                         |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -151,6 +151,7 @@ namespace Hager_2000Define {
     void
     guess( GenericContainer & gc_data ) {
       model.guess( gc_data );
+      model.info();
     }
 
     HAGER_2000_API_DLL

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoStageCSTR_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 11/4/2022                                        #
+#  version: 1.0   date 1/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -266,7 +266,7 @@ mechatronix do |data|
     :x1_i => 0.15,
     :x2_i => -0.03,
     :x3_i => 0.1,
-    :x4_i => 0,
+    :x4_i => 0.0,
 
     # Post Processing Parameters
 
@@ -330,11 +330,11 @@ mechatronix do |data|
   # User defined classes: M E S H
   data.Mesh =
   {
-    :s0       => 0,
+    :s0       => 0.0,
     :segments => [
       {
-        :length => 2,
-        :n      => 400,
+        :n      => 400.0,
+        :length => 2.0,
       },
     ],
   };

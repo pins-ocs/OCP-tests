@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,70 +104,6 @@ namespace BertolazziCorsoExample1Define {
     }
     return result__;
   }
-
-  /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  BertolazziCorsoExample1::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BertolazziCorsoExample1::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  BertolazziCorsoExample1::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -284,10 +220,10 @@ namespace BertolazziCorsoExample1Define {
    |              |___/                 |___/
   \*/
 
-  integer BertolazziCorsoExample1::DlagrangeDxup_numEqns() const { return 4; }
+  integer BertolazziCorsoExample1::DlagrangeDxpu_numEqns() const { return 4; }
 
   void
-  BertolazziCorsoExample1::DlagrangeDxup_eval(
+  BertolazziCorsoExample1::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -299,20 +235,20 @@ namespace BertolazziCorsoExample1Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
-    real_type t2   = U__[iU_F];
-    result__[ 2   ] = 2 * t2 * P__[iP_T];
-    result__[ 3   ] = t2 * t2;
+    real_type t1   = U__[iU_F];
+    result__[ 2   ] = t1 * t1;
+    result__[ 3   ] = 2 * t1 * P__[iP_T];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BertolazziCorsoExample1::D2lagrangeD2xup_numRows() const { return 4; }
-  integer BertolazziCorsoExample1::D2lagrangeD2xup_numCols() const { return 4; }
-  integer BertolazziCorsoExample1::D2lagrangeD2xup_nnz()     const { return 3; }
+  integer BertolazziCorsoExample1::D2lagrangeD2xpu_numRows() const { return 4; }
+  integer BertolazziCorsoExample1::D2lagrangeD2xpu_numCols() const { return 4; }
+  integer BertolazziCorsoExample1::D2lagrangeD2xpu_nnz()     const { return 3; }
 
   void
-  BertolazziCorsoExample1::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BertolazziCorsoExample1::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 3   ; jIndex[2 ] = 2   ;
@@ -320,7 +256,7 @@ namespace BertolazziCorsoExample1Define {
 
 
   void
-  BertolazziCorsoExample1::D2lagrangeD2xup_sparse(
+  BertolazziCorsoExample1::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -334,7 +270,7 @@ namespace BertolazziCorsoExample1Define {
     result__[ 1   ] = 2 * U__[iU_F];
     result__[ 2   ] = result__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
   }
 
   /*\

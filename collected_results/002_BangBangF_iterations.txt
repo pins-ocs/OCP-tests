@@ -33,24 +33,10 @@ Segment N.0: s0 = 0 length = 1 npts = 101 no data set
 END Mesh[mesh]
 
 Model Parameters
-..................................v__max = 0.3
+..................................v__max = 0.30000000000000004
 .....................................v_f = 0
 .....................................v_i = 0
 .....................................x_i = 0
-INFO CLASS = BangBangF
-  #nodes      = 101
-  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(3/3)
-  total       = nZ=407, UC=100, Q=101
-  index start = omega=404, p=407
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 8] (  0.0041  , 0.00415  ) [   5.93   ,   5.9    ] 0.0025     [2:0:0:0:0:0:0:0:4:0:0:0]
@@ -76,7 +62,7 @@ NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 21, 1] ( 1.72e-05 , 4.96e-07 ) [ 2.66e-05 , 1.17e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 22, 1] ( 4.96e-07 , 5.14e-10 ) [ 1.17e-06 , 8.75e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 23, 1] ( 5.14e-10 , 8.08e-16 ) [ 8.77e-10 , 1.27e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 5.14e-10 , 8.05e-16 ) [ 8.77e-10 , 1.31e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -90,8 +76,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 407           N. System pars = 100
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 21.3[ms]      timeout        = 0 [ms]
-iteration      = 23            Memory Used    = 56Kb (+7bytes)
+Elapsed Time   = 38.1[ms]      timeout        = 0 [ms]
+iteration      = 23            Memory Used    = 56Kb (+58bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -107,15 +93,15 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 1.4703e-13    last ||d||_inf = 7.262e-15
-last ||f||_1   = 8.0821e-16    last ||d||_1   = 1.2749e-15
-last ||f||_2   = 1.031e-14     last ||d||_2   = 2.782e-15
+last ||f||_inf = 1.4701e-13    last ||d||_inf = 7.6803e-15
+last ||f||_1   = 8.0528e-16    last ||d||_1   = 1.3117e-15
+last ||f||_2   = 1.0308e-14    last ||d||_2   = 2.9069e-15
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type h0 = 0.01;
-    real_type vFmax = 10;
     real_type tolerance0 = 0.01;
+    real_type h0 = 0.01;
     real_type epsilon0 = 0.1;
+    real_type vFmax = 10;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -162,16 +162,16 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = h0;
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
+    data_clip["h"] = h0;
 
     // Controls
     // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlForce = data_Controls["controlForce"];
-    data_controlForce["type"]      = ;
+    data_controlForce["type"]      = "QUADRATIC";
     data_controlForce["epsilon"]   = epsilon0;
     data_controlForce["tolerance"] = tolerance0;
 
@@ -184,8 +184,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFclip_data.Mesh["s0"] = 0;
-BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
 BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
+BangBangFclip_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -202,7 +202,10 @@ BangBangFclip_data.Mesh["segments"][0]["length"] = 1;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

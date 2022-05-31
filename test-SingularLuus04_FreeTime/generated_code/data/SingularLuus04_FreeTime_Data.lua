@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-theta0 = 1
-theta  = theta0
-u_tol  = 0.01
+theta0 = 1.0
 u_epsi = 0.01
+u_tol  = 0.01
+theta  = theta0
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -49,7 +49,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -63,10 +63,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "SingularLuus04_FreeTime_dump",
@@ -131,7 +131,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -259,15 +259,15 @@ content = {
     theta = theta,
 
     -- Guess Parameters
-    T_guess = 50,
+    T_guess = 50.0,
 
     -- Boundary Conditions
-    x_f = 0,
-    x_i = 1,
-    y_f = 0,
-    y_i = 0,
-    z_f = 0,
-    z_i = 0,
+    x_f = 0.0,
+    x_i = 1.0,
+    y_f = 0.0,
+    y_i = 0.0,
+    z_f = 0.0,
+    z_i = 0.0,
 
     -- Post Processing Parameters
 
@@ -291,7 +291,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = u_epsi,
       tolerance = u_tol,
     },
@@ -307,12 +307,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        length = 1,
-        n      = 5000,
+        length = 1.0,
+        n      = 5000.0,
       },
     },
   },

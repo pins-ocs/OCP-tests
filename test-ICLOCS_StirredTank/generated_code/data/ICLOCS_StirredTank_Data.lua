@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 18/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,21 +20,21 @@
 -- User Header
 
 -- Auxiliary values
-x_tol      = 0.01
+epsi_ctrl0 = 0.1
 tol_ctrl0  = 0.1
 tol_ctrl   = tol_ctrl0
-epsi_T     = 0.01
 x_epsi     = 0.01
-w_time_max = 1
-w_time     = w_time_max
-epsi_ctrl0 = 0.1
-tol_T      = 1
+tol_T      = 1.0
+x_tol      = 0.01
 epsi_ctrl  = epsi_ctrl0
+epsi_T     = 0.01
+w_time_max = 1.0
+w_time     = w_time_max
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -55,7 +55,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -69,10 +69,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "ICLOCS_StirredTank_dump",
@@ -137,7 +137,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -260,26 +260,26 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    En     = 5,
+    En     = 5.0,
     Tc     = 0.38158,
     Tf     = 0.3947,
     a      = 0.117,
-    k      = 300,
-    theta  = 20,
+    k      = 300.0,
+    theta  = 20.0,
     u_f    = 0.76,
     w_time = w_time,
     x1_f   = 0.2632,
     x2_f   = 0.6519,
 
     -- Guess Parameters
-    T_guess = 90,
+    T_guess = 90.0,
 
     -- Boundary Conditions
     x1_i = 0.98,
     x2_i = 0.39,
 
     -- Post Processing Parameters
-    T_min = 10,
+    T_min = 10.0,
 
     -- User Function Parameters
 
@@ -303,7 +303,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = ,
+      type      = "LOGARITHMIC",
       epsilon   = epsi_ctrl,
       tolerance = tol_ctrl,
     },
@@ -354,12 +354,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 400,
-        length = 1,
+        n      = 400.0,
+        length = 1.0,
       },
     },
   },

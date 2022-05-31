@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -153,80 +153,12 @@ namespace RobotArmDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type result__ = t2 * L__[iL_lambda1__xo] * U__[iU_u_rho] + t2 * L__[iL_lambda2__xo] * U__[iU_u_theta] + t2 * L__[iL_lambda3__xo] * U__[iU_u_phi] + t2 * L__[iL_lambda4__xo] * X__[iX_rho1] + t2 * L__[iL_lambda5__xo] * X__[iX_theta1] + t2 * L__[iL_lambda6__xo] * X__[iX_phi1];
+    real_type result__ = U__[iU_u_rho] * t2 * L__[iL_lambda1__xo] + U__[iU_u_theta] * t2 * L__[iL_lambda2__xo] + U__[iU_u_phi] * t2 * L__[iL_lambda3__xo] + X__[iX_rho1] * t2 * L__[iL_lambda4__xo] + X__[iX_theta1] * t2 * L__[iL_lambda5__xo] + X__[iX_phi1] * t2 * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
-
-  /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  RobotArm::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  RobotArm::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = u_rhoControl(U__[iU_u_rho], -1, 1);
-    real_type t6   = u_thetaControl(U__[iU_u_theta], -1, 1);
-    real_type t9   = u_phiControl(U__[iU_u_phi], -1, 1);
-    real_type result__ = t3 * t1 + t6 * t1 + t9 * t1;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  RobotArm::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   /*\
    |   _
@@ -275,9 +207,9 @@ namespace RobotArmDefine {
     real_const_ptr     XR__ = RIGHT__.x;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = P__[iP_T];
-    real_type t2   = ModelPars[iM_W];
-    real_type result__ = -(t1 * (t2 - 1) - t2) * t1;
+    real_type t1   = ModelPars[iM_W];
+    real_type t3   = P__[iP_T];
+    real_type result__ = -t3 * (t3 * (t1 - 1) - t1);
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -363,10 +295,10 @@ namespace RobotArmDefine {
    |              |___/                 |___/
   \*/
 
-  integer RobotArm::DlagrangeDxup_numEqns() const { return 10; }
+  integer RobotArm::DlagrangeDxpu_numEqns() const { return 10; }
 
   void
-  RobotArm::DlagrangeDxup_eval(
+  RobotArm::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -387,22 +319,22 @@ namespace RobotArmDefine {
     result__[ 8   ] = 0;
     result__[ 9   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer RobotArm::D2lagrangeD2xup_numRows() const { return 10; }
-  integer RobotArm::D2lagrangeD2xup_numCols() const { return 10; }
-  integer RobotArm::D2lagrangeD2xup_nnz()     const { return 0; }
+  integer RobotArm::D2lagrangeD2xpu_numRows() const { return 10; }
+  integer RobotArm::D2lagrangeD2xpu_numCols() const { return 10; }
+  integer RobotArm::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
-  RobotArm::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  RobotArm::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  RobotArm::D2lagrangeD2xup_sparse(
+  RobotArm::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

@@ -13,7 +13,7 @@ cmake_minimum_required(VERSION 3.14)
 set( TARGET FlowInAchannel )
 project( ${TARGET} CXX )
 
-set( CMAKE_VERBOSE_MAKEFILE           TRUE  )
+set( CMAKE_VERBOSE_MAKEFILE           FALSE )
 set( CMAKE_INSTALL_MESSAGE            NEVER )
 set( CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON    )
 set( CMAKE_MACOSX_RPATH               ./lib )
@@ -83,8 +83,14 @@ endforeach()
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/ocp-src )
 
-add_library( ${TARGET}        SHARED ${SOURCES} ${HEADERS} )
-add_library( ${TARGET}_static STATIC ${SOURCES} ${HEADERS} )
+# https://stackoverflow.com/questions/2152077/is-it-possible-to-get-cmake-to-build-both-a-static-and-shared-library-at-the-sam
+
+add_library( objlib OBJECT ${SOURCES})
+# shared libraries need PIC
+set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE 1)
+
+add_library( ${TARGET}        SHARED $<TARGET_OBJECTS:objlib> )
+add_library( ${TARGET}_static STATIC $<TARGET_OBJECTS:objlib> )
 
 add_executable( main ocp-interfaces/cpp/${TARGET}_Main.cc )
 

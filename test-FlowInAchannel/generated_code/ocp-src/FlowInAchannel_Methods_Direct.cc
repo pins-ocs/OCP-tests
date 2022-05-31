@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,12 +89,12 @@ namespace FlowInAchannelDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer FlowInAchannel::Dfd_odeDxxup_numRows() const { return 4; }
-  integer FlowInAchannel::Dfd_odeDxxup_numCols() const { return 8; }
-  integer FlowInAchannel::Dfd_odeDxxup_nnz()     const { return 20; }
+  integer FlowInAchannel::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer FlowInAchannel::Dfd_odeDxxpu_numCols() const { return 8; }
+  integer FlowInAchannel::Dfd_odeDxxpu_nnz()     const { return 20; }
 
   void
-  FlowInAchannel::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  FlowInAchannel::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
@@ -119,7 +119,7 @@ namespace FlowInAchannelDefine {
 
 
   void
-  FlowInAchannel::Dfd_odeDxxup_sparse(
+  FlowInAchannel::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -169,18 +169,18 @@ namespace FlowInAchannelDefine {
     result__[ 18  ] = result__[14];
     result__[ 19  ] = t12 + __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 20, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 20, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer FlowInAchannel::D2fd_odeD2xxup_numRows() const { return 8; }
-  integer FlowInAchannel::D2fd_odeD2xxup_numCols() const { return 8; }
-  integer FlowInAchannel::D2fd_odeD2xxup_nnz()     const { return 16; }
+  integer FlowInAchannel::D2fd_odeD2xxpu_numRows() const { return 8; }
+  integer FlowInAchannel::D2fd_odeD2xxpu_numCols() const { return 8; }
+  integer FlowInAchannel::D2fd_odeD2xxpu_nnz()     const { return 16; }
 
   void
-  FlowInAchannel::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  FlowInAchannel::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 2   ;
@@ -201,7 +201,7 @@ namespace FlowInAchannelDefine {
 
 
   void
-  FlowInAchannel::D2fd_odeD2xxup_sparse(
+  FlowInAchannel::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -246,7 +246,7 @@ namespace FlowInAchannelDefine {
     result__[ 14  ] = result__[9];
     result__[ 15  ] = result__[14];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 16, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 16, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

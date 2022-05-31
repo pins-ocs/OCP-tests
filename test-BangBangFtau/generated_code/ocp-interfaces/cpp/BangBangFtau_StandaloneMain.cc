@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -155,9 +155,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
-    data_clip["delta"] = 0;
     data_clip["h"] = 0.1;
+    data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
 
     // Controls: No penalties or barriers constraint defined
 
@@ -201,8 +201,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtau_data.Mesh["s0"] = 0;
-BangBangFtau_data.Mesh["segments"][0]["length"] = 1;
 BangBangFtau_data.Mesh["segments"][0]["n"] = 400;
+BangBangFtau_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -219,7 +219,10 @@ BangBangFtau_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -155,73 +155,6 @@ namespace GoddardRocketDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  GoddardRocket::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  GoddardRocket::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = TControl(U__[iU_T], 0, ModelPars[iM_Tmax]);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  GoddardRocket::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = massPositive(-X__[iX_m]);
-    real_type t4   = vPositive(-X__[iX_v]);
-    real_type t6   = TSPositive(-P__[iP_TimeSize]);
-    real_type result__ = t2 + t4 + t6;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -337,10 +270,10 @@ namespace GoddardRocketDefine {
    |              |___/                 |___/
   \*/
 
-  integer GoddardRocket::DlagrangeDxup_numEqns() const { return 5; }
+  integer GoddardRocket::DlagrangeDxpu_numEqns() const { return 5; }
 
   void
-  GoddardRocket::DlagrangeDxup_eval(
+  GoddardRocket::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -356,22 +289,22 @@ namespace GoddardRocketDefine {
     result__[ 3   ] = 0;
     result__[ 4   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GoddardRocket::D2lagrangeD2xup_numRows() const { return 5; }
-  integer GoddardRocket::D2lagrangeD2xup_numCols() const { return 5; }
-  integer GoddardRocket::D2lagrangeD2xup_nnz()     const { return 0; }
+  integer GoddardRocket::D2lagrangeD2xpu_numRows() const { return 5; }
+  integer GoddardRocket::D2lagrangeD2xpu_numCols() const { return 5; }
+  integer GoddardRocket::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
-  GoddardRocket::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  GoddardRocket::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  GoddardRocket::D2lagrangeD2xup_sparse(
+  GoddardRocket::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,

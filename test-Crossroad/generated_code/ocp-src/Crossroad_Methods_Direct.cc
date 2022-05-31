@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_Guess.cc                                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,21 +97,21 @@ namespace CrossroadDefine {
     V__[3] = __INV_DZETA*(XR__[3]-XL__[3]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[3];
-    result__[ 0   ] = -XM__[1] * t1 + V__[0];
-    result__[ 1   ] = -XM__[2] * t1 + V__[1];
-    result__[ 2   ] = -UM__[0] * t1 + V__[2];
+    result__[ 0   ] = -t1 * XM__[1] + V__[0];
+    result__[ 1   ] = -t1 * XM__[2] + V__[1];
+    result__[ 2   ] = -t1 * UM__[0] + V__[2];
     result__[ 3   ] = V__[3];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Crossroad::Dfd_odeDxxup_numRows() const { return 4; }
-  integer Crossroad::Dfd_odeDxxup_numCols() const { return 9; }
-  integer Crossroad::Dfd_odeDxxup_nnz()     const { return 19; }
+  integer Crossroad::Dfd_odeDxxpu_numRows() const { return 4; }
+  integer Crossroad::Dfd_odeDxxpu_numCols() const { return 9; }
+  integer Crossroad::Dfd_odeDxxpu_nnz()     const { return 19; }
 
   void
-  Crossroad::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Crossroad::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -135,7 +135,7 @@ namespace CrossroadDefine {
 
 
   void
-  Crossroad::Dfd_odeDxxup_sparse(
+  Crossroad::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -183,18 +183,18 @@ namespace CrossroadDefine {
     result__[ 17  ] = result__[12];
     result__[ 18  ] = __INV_DZETA;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 19, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 19, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Crossroad::D2fd_odeD2xxup_numRows() const { return 9; }
-  integer Crossroad::D2fd_odeD2xxup_numCols() const { return 9; }
-  integer Crossroad::D2fd_odeD2xxup_nnz()     const { return 20; }
+  integer Crossroad::D2fd_odeD2xxpu_numRows() const { return 9; }
+  integer Crossroad::D2fd_odeD2xxpu_numCols() const { return 9; }
+  integer Crossroad::D2fd_odeD2xxpu_nnz()     const { return 20; }
 
   void
-  Crossroad::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Crossroad::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 7   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
@@ -219,7 +219,7 @@ namespace CrossroadDefine {
 
 
   void
-  Crossroad::D2fd_odeD2xxup_sparse(
+  Crossroad::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -268,7 +268,7 @@ namespace CrossroadDefine {
     result__[ 18  ] = result__[17];
     result__[ 19  ] = result__[18];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 20, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 20, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

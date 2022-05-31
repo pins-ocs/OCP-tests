@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_Guess.cc                                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,12 +82,12 @@ namespace RayleightDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Rayleight::Dfd_odeDxxup_numRows() const { return 2; }
-  integer Rayleight::Dfd_odeDxxup_numCols() const { return 5; }
-  integer Rayleight::Dfd_odeDxxup_nnz()     const { return 9; }
+  integer Rayleight::Dfd_odeDxxpu_numRows() const { return 2; }
+  integer Rayleight::Dfd_odeDxxpu_numCols() const { return 5; }
+  integer Rayleight::Dfd_odeDxxpu_nnz()     const { return 9; }
 
   void
-  Rayleight::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Rayleight::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -101,7 +101,7 @@ namespace RayleightDefine {
 
 
   void
-  Rayleight::Dfd_odeDxxup_sparse(
+  Rayleight::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -136,18 +136,18 @@ namespace RayleightDefine {
     result__[ 7   ] = t3 - 0.70e0 + __INV_DZETA;
     result__[ 8   ] = -4.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Rayleight::D2fd_odeD2xxup_numRows() const { return 5; }
-  integer Rayleight::D2fd_odeD2xxup_numCols() const { return 5; }
-  integer Rayleight::D2fd_odeD2xxup_nnz()     const { return 4; }
+  integer Rayleight::D2fd_odeD2xxpu_numRows() const { return 5; }
+  integer Rayleight::D2fd_odeD2xxpu_numCols() const { return 5; }
+  integer Rayleight::D2fd_odeD2xxpu_nnz()     const { return 4; }
 
   void
-  Rayleight::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Rayleight::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 3   ; jIndex[2 ] = 1   ;
@@ -156,7 +156,7 @@ namespace RayleightDefine {
 
 
   void
-  Rayleight::D2fd_odeD2xxup_sparse(
+  Rayleight::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -185,7 +185,7 @@ namespace RayleightDefine {
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

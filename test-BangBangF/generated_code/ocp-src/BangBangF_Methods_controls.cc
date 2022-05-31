@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,10 +91,10 @@ namespace BangBangFDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = XM__[1];
     real_type t5   = UM__[0];
-    real_type t7   = C1(t2);
-    real_type t8   = C1_constr(t7);
-    real_type t9   = FControl(t5, -1, 1);
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t8 + t9;
+    real_type t7   = FControl(t5, -1, 1);
+    real_type t8   = C1(t2);
+    real_type t9   = C1_constr(t8);
+    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t7 + t9;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -271,64 +271,6 @@ namespace BangBangFDefine {
     U__[ iU_F ] = FControl.solve(-LM__[1], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
-  }
-
-  /*\
-   |  ____        ____       _      _                           _       _   _
-   | |  _ \ _   _|  _ \__  _| |_  _| |_ __     __ _ _ __   __ _| |_   _| |_(_) ___
-   | | | | | | | | | | \ \/ / \ \/ / | '_ \   / _` | '_ \ / _` | | | | | __| |/ __|
-   | | |_| | |_| | |_| |>  <| |>  <| | |_) | | (_| | | | | (_| | | |_| | |_| | (__
-   | |____/ \__,_|____//_/\_\_/_/\_\_| .__/   \__,_|_| |_|\__,_|_|\__, |\__|_|\___|
-   |                                 |_|                          |___/
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void
-  BangBangF::DuDxlxlp_full_analytic(
-    NodeType2 const &          LEFT__,
-    NodeType2 const &          RIGHT__,
-    P_const_pointer_type       P__,
-    U_const_pointer_type       UM__,
-    MatrixWrapper<real_type> & DuDxlxlp
-  ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    integer i_segment = LEFT__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type tmp_0_0 = 0.0e0;
-    real_type tmp_0_1 = 0.0e0;
-    real_type tmp_0_2 = 0.0e0;
-    real_type t2   = FControl.solve_rhs(-LM__[1], -1, 1);
-    real_type tmp_0_3 = -0.5e0 * t2;
-    real_type tmp_0_4 = 0.0e0;
-    real_type tmp_0_5 = 0.0e0;
-    real_type tmp_0_6 = 0.0e0;
-    real_type tmp_0_7 = tmp_0_3;
-    DuDxlxlp(0, 0) = tmp_0_0;
-    DuDxlxlp(0, 1) = tmp_0_1;
-    DuDxlxlp(0, 2) = tmp_0_2;
-    DuDxlxlp(0, 3) = tmp_0_3;
-    DuDxlxlp(0, 4) = tmp_0_4;
-    DuDxlxlp(0, 5) = tmp_0_5;
-    DuDxlxlp(0, 6) = tmp_0_6;
-    DuDxlxlp(0, 7) = tmp_0_7;
-    if ( m_debug )
-      Mechatronix::check( DuDxlxlp.data(), "DuDxlxlp_full_analytic", 8 );
   }
 
   /*\

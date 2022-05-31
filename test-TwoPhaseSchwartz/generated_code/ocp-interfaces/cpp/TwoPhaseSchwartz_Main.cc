@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -14,9 +14,6 @@
  |             paolo.bosetti@unitn.it                                    |
 \*-----------------------------------------------------------------------*/
 
-
-#define MECHATRONIX_USE_RUBY
-//#define MECHATRONIX_USE_LUA
 
 #include "TwoPhaseSchwartz.hh"
 #include "TwoPhaseSchwartz_Pars.hh"
@@ -44,19 +41,17 @@ main() {
     // user defined Object instances (external)
     MeshStd          mesh( "mesh" );
 
-    #ifdef MECHATRONIX_USE_RUBY
-    string fname = "./data/TwoPhaseSchwartz_Data.rb";
-    #endif
-    #ifdef MECHATRONIX_USE_LUA
-    string fname = "./data/TwoPhaseSchwartz_Data.lua";
-    #endif
+    string fname = "./data/TwoPhaseSchwartz_Data"; // no .lua or .rb extension
 
     // read Ruby/Lua script
-    Mechatronix::load_script( fname, gc_data );
+    {
+      bool ok = Mechatronix::load_script( fname, gc_data );
+      UTILS_ASSERT( ok, "Failed to load file: {}\n", fname );
+    }
 
     // change info level
     if ( gc_data.exists( "InfoLevel" ) )
-      console.changeLevel( gc_data("InfoLevel").get_int() );
+      console.changeLevel( gc_data("InfoLevel").get_as_int() );
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
@@ -72,7 +67,10 @@ main() {
     m_model->setup( gc_data );
 
     // initialize nonlinear system initial point
-    m_model->guess( gc_data("Guess","Missing `Guess` field") );
+    m_model->guess( gc_data("Guess","main") );
+
+    // print information about solver
+    m_model->info();
 
     // solve nonlinear system
     // m_model->set_timeout_ms( 100 );

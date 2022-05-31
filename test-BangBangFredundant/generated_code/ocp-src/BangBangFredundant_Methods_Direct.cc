@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -125,12 +125,12 @@ namespace BangBangFredundantDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFredundant::Dfd_odeDxxup_numRows() const { return 6; }
-  integer BangBangFredundant::Dfd_odeDxxup_numCols() const { return 14; }
-  integer BangBangFredundant::Dfd_odeDxxup_nnz()     const { return 24; }
+  integer BangBangFredundant::Dfd_odeDxxpu_numRows() const { return 6; }
+  integer BangBangFredundant::Dfd_odeDxxpu_numCols() const { return 14; }
+  integer BangBangFredundant::Dfd_odeDxxpu_nnz()     const { return 24; }
 
   void
-  BangBangFredundant::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFredundant::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
@@ -159,7 +159,7 @@ namespace BangBangFredundantDefine {
 
 
   void
-  BangBangFredundant::Dfd_odeDxxup_sparse(
+  BangBangFredundant::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -215,24 +215,24 @@ namespace BangBangFredundantDefine {
     result__[ 22  ] = __INV_DZETA;
     result__[ 23  ] = -1.0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 24, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 24, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFredundant::D2fd_odeD2xxup_numRows() const { return 14; }
-  integer BangBangFredundant::D2fd_odeD2xxup_numCols() const { return 14; }
-  integer BangBangFredundant::D2fd_odeD2xxup_nnz()     const { return 0; }
+  integer BangBangFredundant::D2fd_odeD2xxpu_numRows() const { return 14; }
+  integer BangBangFredundant::D2fd_odeD2xxpu_numCols() const { return 14; }
+  integer BangBangFredundant::D2fd_odeD2xxpu_nnz()     const { return 0; }
 
   void
-  BangBangFredundant::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFredundant::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  BangBangFredundant::D2fd_odeD2xxup_sparse(
+  BangBangFredundant::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,

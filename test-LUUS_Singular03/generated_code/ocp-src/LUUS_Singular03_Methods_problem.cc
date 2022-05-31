@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -131,74 +131,6 @@ namespace LUUS_Singular03Define {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  LUUS_Singular03::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  LUUS_Singular03::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x1] * X__[iX_x1];
-    real_type t4   = X__[iX_x2] * X__[iX_x2];
-    real_type t6   = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
-    real_type t9   = uControl(U__[iU_u], -1, 1);
-    real_type result__ = t9 * (t2 + t4 + t6);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  LUUS_Singular03::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -313,10 +245,10 @@ namespace LUUS_Singular03Define {
    |              |___/                 |___/
   \*/
 
-  integer LUUS_Singular03::DlagrangeDxup_numEqns() const { return 3; }
+  integer LUUS_Singular03::DlagrangeDxpu_numEqns() const { return 3; }
 
   void
-  LUUS_Singular03::DlagrangeDxup_eval(
+  LUUS_Singular03::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -330,23 +262,23 @@ namespace LUUS_Singular03Define {
     result__[ 1   ] = 2 * X__[iX_x2];
     result__[ 2   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer LUUS_Singular03::D2lagrangeD2xup_numRows() const { return 3; }
-  integer LUUS_Singular03::D2lagrangeD2xup_numCols() const { return 3; }
-  integer LUUS_Singular03::D2lagrangeD2xup_nnz()     const { return 2; }
+  integer LUUS_Singular03::D2lagrangeD2xpu_numRows() const { return 3; }
+  integer LUUS_Singular03::D2lagrangeD2xpu_numCols() const { return 3; }
+  integer LUUS_Singular03::D2lagrangeD2xpu_nnz()     const { return 2; }
 
   void
-  LUUS_Singular03::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  LUUS_Singular03::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
 
   void
-  LUUS_Singular03::D2lagrangeD2xup_sparse(
+  LUUS_Singular03::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -359,7 +291,7 @@ namespace LUUS_Singular03Define {
     result__[ 0   ] = 2;
     result__[ 1   ] = 2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 2, i_segment );
   }
 
   /*\

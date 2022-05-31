@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,20 +20,20 @@
 -- User Header
 
 -- Auxiliary values
-u_epsi0 = 0.1
-u_tol0  = 0.1
-x2_i    = 2
-x1_i    = 1
-t0      = -ln(x1_i/x2_i)/x2_i
+x1_i    = 1.0
+x2_i    = 2.0
 l1_i    = -1/x1_i/x2_i
-l2_i    = l1_i*(x1_i*t0+exp(-t0*x2_i))
-u_tol   = u_tol0
+u_epsi0 = 0.1
 u_epsi  = u_epsi0
+u_tol0  = 0.1
+u_tol   = u_tol0
+t0      = -ln(x1_i/x2_i)/x2_i
+l2_i    = l1_i*(x1_i*t0+exp(-t0*x2_i))
 
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -54,7 +54,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -68,10 +68,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "EconomicGrowthModel_dump",
@@ -136,7 +136,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -262,7 +262,7 @@ content = {
     -- Guess Parameters
 
     -- Boundary Conditions
-    Qc   = 10,
+    Qc   = 10.0,
     x1_i = x1_i,
     x2_i = x2_i,
 
@@ -291,7 +291,7 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     uControl = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = u_epsi,
       tolerance = u_tol,
     },
@@ -318,12 +318,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 1000,
-        length = 1,
+        n      = 1000.0,
+        length = 1.0,
       },
     },
   },

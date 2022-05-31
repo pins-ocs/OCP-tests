@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_dll_ruby.hh                                       |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -151,6 +151,7 @@ namespace BrysonDenhamDefine {
     void
     guess( GenericContainer & gc_data ) {
       model.guess( gc_data );
+      model.info();
     }
 
     BRYSONDENHAM_API_DLL

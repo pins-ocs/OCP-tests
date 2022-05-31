@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -196,23 +196,23 @@ namespace PointMassCarModel_1Define {
     real_type t4   = sin(t3);
     real_type t8   = ALIAS_Kappa(QM__[0]);
     real_type t9   = inv_zeta__dot(t2, t3, XM__[0], t8);
-    result__[ 0   ] = -t2 * t4 * t9 + V__[0];
+    result__[ 0   ] = -t9 * t4 * t2 + V__[0];
     result__[ 1   ] = -t9 * XM__[3] + t8 + V__[1];
     real_type t15  = t2 * t2;
-    result__[ 2   ] = V__[2] - (-t15 * ModelPars[iM_kD] + XM__[4]) * t9;
-    result__[ 3   ] = -t9 * UM__[1] * ModelPars[iM_v__Omega__max] + V__[3];
-    result__[ 4   ] = -t9 * UM__[0] * ModelPars[iM_v__fx__max] + V__[4];
+    result__[ 2   ] = V__[2] - (-ModelPars[iM_kD] * t15 + XM__[4]) * t9;
+    result__[ 3   ] = -t9 * ModelPars[iM_v__Omega__max] * UM__[1] + V__[3];
+    result__[ 4   ] = -t9 * ModelPars[iM_v__fx__max] * UM__[0] + V__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_1::Dfd_odeDxxup_numRows() const { return 5; }
-  integer PointMassCarModel_1::Dfd_odeDxxup_numCols() const { return 12; }
-  integer PointMassCarModel_1::Dfd_odeDxxup_nnz()     const { return 40; }
+  integer PointMassCarModel_1::Dfd_odeDxxpu_numRows() const { return 5; }
+  integer PointMassCarModel_1::Dfd_odeDxxpu_numCols() const { return 12; }
+  integer PointMassCarModel_1::Dfd_odeDxxpu_nnz()     const { return 40; }
 
   void
-  PointMassCarModel_1::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_1::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -257,7 +257,7 @@ namespace PointMassCarModel_1Define {
 
 
   void
-  PointMassCarModel_1::Dfd_odeDxxup_sparse(
+  PointMassCarModel_1::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -360,18 +360,18 @@ namespace PointMassCarModel_1Define {
     result__[ 38  ] = __INV_DZETA;
     result__[ 39  ] = -t13 * t57;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 40, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 40, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer PointMassCarModel_1::D2fd_odeD2xxup_numRows() const { return 12; }
-  integer PointMassCarModel_1::D2fd_odeD2xxup_numCols() const { return 12; }
-  integer PointMassCarModel_1::D2fd_odeD2xxup_nnz()     const { return 108; }
+  integer PointMassCarModel_1::D2fd_odeD2xxpu_numRows() const { return 12; }
+  integer PointMassCarModel_1::D2fd_odeD2xxpu_numCols() const { return 12; }
+  integer PointMassCarModel_1::D2fd_odeD2xxpu_nnz()     const { return 108; }
 
   void
-  PointMassCarModel_1::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  PointMassCarModel_1::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -484,7 +484,7 @@ namespace PointMassCarModel_1Define {
 
 
   void
-  PointMassCarModel_1::D2fd_odeD2xxup_sparse(
+  PointMassCarModel_1::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -681,7 +681,7 @@ namespace PointMassCarModel_1Define {
     result__[ 106 ] = result__[103];
     result__[ 107 ] = result__[104];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 108, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 108, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

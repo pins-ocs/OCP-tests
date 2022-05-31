@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_dll_ruby.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,7 +104,7 @@ namespace ICLOCS_CatalystDefine {
     if ( it == problems.end() ) {
       return false;
     } else {
-      it->second->guess( gc_data("Guess", "ICLOCS_Catalyst_ocp_guess missing field `Guess`" ) );
+      it->second->guess( gc_data("Guess", "ICLOCS_Catalyst_ocp_guess" ) );
       return true;
     }
   }

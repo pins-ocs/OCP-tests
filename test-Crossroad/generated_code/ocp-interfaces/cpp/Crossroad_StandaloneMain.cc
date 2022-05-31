@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type L = 100;
-    real_type s_f = L;
     real_type jerk_max = 10;
     real_type wJ = 1/jerk_max^2;
+    real_type L = 100;
     real_type jerk_min = -10;
+    real_type s_f = L;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -175,7 +175,7 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jerkControl = data_Controls["jerkControl"];
-    data_jerkControl["type"]      = ;
+    data_jerkControl["type"]      = "LOGARITHMIC";
     data_jerkControl["epsilon"]   = 0.01;
     data_jerkControl["tolerance"] = 0.01;
 
@@ -235,7 +235,10 @@ Crossroad_data.Mesh["segments"][1]["n"] = 100;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

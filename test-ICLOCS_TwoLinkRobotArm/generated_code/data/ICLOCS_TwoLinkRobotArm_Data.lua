@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Data.lua                                |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -28,7 +28,7 @@ u_tolerance  = u_tolerance0
 content = {
 
   -- activate run time debug
-  data.Debug = true,
+  Debug = true,
 
   -- Enable doctor
   Doctor = false,
@@ -49,7 +49,7 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = [1,$MAX_THREAD_NUM-1].max,
+  N_threads   = 4,
   U_threaded  = true,
   F_threaded  = true,
   JF_threaded = true,
@@ -63,10 +63,10 @@ content = {
   JacobianCheck_epsilon = 1e-4,
 
   -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
-  JacobianDiscretization = 'ANALYTIC,
+  JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
-  JacobianDiscretizationBC = 'ANALYTIC',
+  JacobianDiscretizationBC = "ANALYTIC",
 
   -- Dump Function and Jacobian if uncommented
   -- DumpFile = "ICLOCS_TwoLinkRobotArm_dump",
@@ -131,7 +131,7 @@ content = {
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
     },
-  }
+  },
 
   --[[
    ____        _
@@ -258,21 +258,21 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    T_guess = 3,
-    W       = 0,
+    T_guess = 3.0,
+    W       = 0.0,
     rho     = 0.01,
 
     -- Guess Parameters
 
     -- Boundary Conditions
     alpha_f        = 0.522,
-    alpha_i        = 0,
+    alpha_i        = 0.0,
     theta_f        = 0.5,
-    theta_i        = 0,
-    omega__alpha_f = 0,
-    omega__alpha_i = 0,
-    omega__beta_f  = 0,
-    omega__beta_i  = 0,
+    theta_i        = 0.0,
+    omega__alpha_f = 0.0,
+    omega__alpha_i = 0.0,
+    omega__beta_f  = 0.0,
+    omega__beta_i  = 0.0,
 
     -- Post Processing Parameters
 
@@ -296,12 +296,12 @@ content = {
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     u1Control = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = u_epsilon,
       tolerance = u_tolerance,
     },
     u2Control = {
-      type      = ,
+      type      = "COS_LOGARITHMIC",
       epsilon   = u_epsilon,
       tolerance = u_tolerance,
     },
@@ -317,12 +317,12 @@ content = {
   -- User defined classes: M E S H
   Mesh = 
   {
-    s0       = 0,
+    s0       = 0.0,
     segments = {
       
       {
-        n      = 800,
-        length = 1,
+        length = 1.0,
+        n      = 800.0,
       },
     },
   },

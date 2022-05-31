@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -533,7 +533,7 @@ namespace gtocX_2burnDefine {
     real_type t260 = x_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t262 = y_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t264 = z_position_D_5_6(t138, t139, t140, t141, t142, t143, t8);
-    result__[ 65  ] = t137 * t260 + t146 * t262 + t149 * t264;
+    result__[ 65  ] = t260 * t137 + t262 * t146 + t264 * t149;
     result__[ 66  ] = result__[41];
     result__[ 67  ] = result__[47];
     result__[ 68  ] = result__[53];
@@ -542,7 +542,7 @@ namespace gtocX_2burnDefine {
     real_type t266 = x_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t268 = y_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
     real_type t270 = z_position_D_6_6(t138, t139, t140, t141, t142, t143, t8);
-    result__[ 71  ] = t137 * t266 + t146 * t268 + t149 * t270;
+    result__[ 71  ] = t266 * t137 + t268 * t146 + t270 * t149;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 72, i_segment_left, i_segment_right );
   }

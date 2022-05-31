@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -168,74 +168,6 @@ namespace FarmerDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-  \*/
-
-  real_type
-  Farmer::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = 0;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JP_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Farmer::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = x1__oControl(U__[iU_x1__o], -0.1e-2, 100);
-    real_type t4   = x2__oControl(U__[iU_x2__o], -0.1e-2, 100);
-    real_type t6   = x3__oControl(U__[iU_x3__o], -0.1e-2, 100);
-    real_type t8   = x4__oControl(U__[iU_x4__o], -0.1e-2, 100);
-    real_type result__ = t2 + t4 + t6 + t8;
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "JU_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type
-  Farmer::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type result__ = LimitX2X4(X__[iX_x2] + X__[iX_x4] - 0.12e0);
-    if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "LT_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  /*\
    |   _
    |  | |   __ _ __ _ _ _ __ _ _ _  __ _ ___
    |  | |__/ _` / _` | '_/ _` | ' \/ _` / -_)
@@ -372,10 +304,10 @@ namespace FarmerDefine {
    |              |___/                 |___/
   \*/
 
-  integer Farmer::DlagrangeDxup_numEqns() const { return 9; }
+  integer Farmer::DlagrangeDxpu_numEqns() const { return 9; }
 
   void
-  Farmer::DlagrangeDxup_eval(
+  Farmer::DlagrangeDxpu_eval(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -413,16 +345,16 @@ namespace FarmerDefine {
     result__[ 7   ] = 2 * t41;
     result__[ 8   ] = 2 * t48;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxup_eval", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 9, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Farmer::D2lagrangeD2xup_numRows() const { return 9; }
-  integer Farmer::D2lagrangeD2xup_numCols() const { return 9; }
-  integer Farmer::D2lagrangeD2xup_nnz()     const { return 28; }
+  integer Farmer::D2lagrangeD2xpu_numRows() const { return 9; }
+  integer Farmer::D2lagrangeD2xpu_numCols() const { return 9; }
+  integer Farmer::D2lagrangeD2xpu_nnz()     const { return 28; }
 
   void
-  Farmer::D2lagrangeD2xup_pattern( integer iIndex[], integer jIndex[] ) const {
+  Farmer::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -455,7 +387,7 @@ namespace FarmerDefine {
 
 
   void
-  Farmer::D2lagrangeD2xup_sparse(
+  Farmer::D2lagrangeD2xpu_sparse(
     NodeType const     & NODE__,
     U_const_pointer_type U__,
     P_const_pointer_type P__,
@@ -516,7 +448,7 @@ namespace FarmerDefine {
     result__[ 26  ] = result__[19];
     result__[ 27  ] = t42;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xup_eval", 28, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 28, i_segment );
   }
 
   /*\

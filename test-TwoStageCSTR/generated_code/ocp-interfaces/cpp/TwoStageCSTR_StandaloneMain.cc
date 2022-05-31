@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 11/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -158,13 +158,13 @@ main() {
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
-    data_u1Control["type"]      = ;
+    data_u1Control["type"]      = "COS_LOGARITHMIC";
     data_u1Control["epsilon"]   = epsi;
     data_u1Control["tolerance"] = tol;
 
 
     GenericContainer & data_u2Control = data_Controls["u2Control"];
-    data_u2Control["type"]      = ;
+    data_u2Control["type"]      = "COS_LOGARITHMIC";
     data_u2Control["epsilon"]   = epsi;
     data_u2Control["tolerance"] = tol;
 
@@ -177,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoStageCSTR_data.Mesh["s0"] = 0;
-TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
 TwoStageCSTR_data.Mesh["segments"][0]["n"] = 400;
+TwoStageCSTR_data.Mesh["segments"][0]["length"] = 2;
 
 
     // alias for user object classes passed as pointers
@@ -195,7 +195,10 @@ TwoStageCSTR_data.Mesh["segments"][0]["n"] = 400;
     model.setup( gc_data );
 
     // initialize nonlinear system initial point
-    model.guess( gc_data("Guess","Missing `Guess` field") );
+    model.guess( gc_data("Guess","main") );
+
+    // print info about the solver setup
+    model.info();
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

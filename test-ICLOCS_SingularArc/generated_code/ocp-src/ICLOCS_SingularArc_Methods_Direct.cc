@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 10/4/2022                                        |
+ |  version: 1.0   date 1/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -100,12 +100,12 @@ namespace ICLOCS_SingularArcDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_SingularArc::Dfd_odeDxxup_numRows() const { return 3; }
-  integer ICLOCS_SingularArc::Dfd_odeDxxup_numCols() const { return 8; }
-  integer ICLOCS_SingularArc::Dfd_odeDxxup_nnz()     const { return 14; }
+  integer ICLOCS_SingularArc::Dfd_odeDxxpu_numRows() const { return 3; }
+  integer ICLOCS_SingularArc::Dfd_odeDxxpu_numCols() const { return 8; }
+  integer ICLOCS_SingularArc::Dfd_odeDxxpu_nnz()     const { return 14; }
 
   void
-  ICLOCS_SingularArc::Dfd_odeDxxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_SingularArc::Dfd_odeDxxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
@@ -124,7 +124,7 @@ namespace ICLOCS_SingularArcDefine {
 
 
   void
-  ICLOCS_SingularArc::Dfd_odeDxxup_sparse(
+  ICLOCS_SingularArc::Dfd_odeDxxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -168,18 +168,18 @@ namespace ICLOCS_SingularArcDefine {
     result__[ 12  ] = __INV_DZETA;
     result__[ 13  ] = -t4;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Dfd_odeDxxup_eval", 14, i_segment );
+      Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 14, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_SingularArc::D2fd_odeD2xxup_numRows() const { return 8; }
-  integer ICLOCS_SingularArc::D2fd_odeD2xxup_numCols() const { return 8; }
-  integer ICLOCS_SingularArc::D2fd_odeD2xxup_nnz()     const { return 10; }
+  integer ICLOCS_SingularArc::D2fd_odeD2xxpu_numRows() const { return 8; }
+  integer ICLOCS_SingularArc::D2fd_odeD2xxpu_numCols() const { return 8; }
+  integer ICLOCS_SingularArc::D2fd_odeD2xxpu_nnz()     const { return 10; }
 
   void
-  ICLOCS_SingularArc::D2fd_odeD2xxup_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_SingularArc::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 7   ;
@@ -194,7 +194,7 @@ namespace ICLOCS_SingularArcDefine {
 
 
   void
-  ICLOCS_SingularArc::D2fd_odeD2xxup_sparse(
+  ICLOCS_SingularArc::D2fd_odeD2xxpu_sparse(
     NodeType const &     LEFT__,
     NodeType const &     RIGHT__,
     P_const_pointer_type P__,
@@ -237,7 +237,7 @@ namespace ICLOCS_SingularArcDefine {
     result__[ 8   ] = result__[7];
     result__[ 9   ] = result__[6];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxup_eval", 10, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 10, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

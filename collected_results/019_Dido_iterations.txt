@@ -15,20 +15,6 @@ num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 10 npts = 101 no data set
 END Mesh[mesh]
-INFO CLASS = Dido
-  #nodes      = 101
-  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(3/3)
-  total       = nZ=407, UC=100, Q=101
-  index start = omega=404, p=407
-END INFO
-Solver Master System:   CyclicReduction+LU and LastBlock LUPQ
-Solver Controls:        Newton
-Jacobian evaluation:    Analitic Jacobian
-Jacobian BC evaluation: Analitic Jacobian
-Initializer Controls:   Quasi-Newton
-Used threads:           15
-
-
 NewtonDumped --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 2] (  0.0295  ,  0.0378  ) [   2.47   ,  0.569   ] 0.496      [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -54,8 +40,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 407           N. System pars = 100
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 5.18[ms]      timeout        = 0 [ms]
-iteration      = 10            Memory Used    = 56Kb (+7bytes)
+Elapsed Time   = 7.98[ms]      timeout        = 0 [ms]
+iteration      = 10            Memory Used    = 57Kb (+17bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -79,7 +65,7 @@ last ||f||_2   = 1.5288e-16    last ||d||_2   = 1.1583e-16
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties)
+Check Jacobian Begin (disabling penalties for check)
 All internal blocks OK
 Last block: OK
 Check Jacobian End
