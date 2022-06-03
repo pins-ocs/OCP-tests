@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HangGlider_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -21,8 +21,8 @@ include Mechatronix
 
 # Auxiliary values
 tol_max  = 0.01
-epsi_max = 0.01
 cL_min   = 0.0
+epsi_max = 0.01
 cL_max   = 1.4
 W0       = 1000.0
 W        = W0
@@ -365,8 +365,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 400.0,
+        :length => 1.0,
       },
     ],
   };

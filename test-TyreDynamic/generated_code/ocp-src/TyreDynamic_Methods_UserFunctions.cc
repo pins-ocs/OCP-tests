@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_UserFunctions.cc                           |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -282,7 +282,7 @@ namespace TyreDynamicDefine {
     real_type t11  = ModelPars[iM_Cx0];
     real_type t14  = atan(t4 * xo__lambda);
     real_type t16  = cos(t11 * t14);
-    real_type result__ = ModelPars[iM_mu__x0] * t16 * t11 / (t6 * t7 + 1) * t4 * ModelPars[iM_m] * ModelPars[iM_g];
+    real_type result__ = ModelPars[iM_mu__x0] * t16 * t11 / (t7 * t6 + 1) * t4 * ModelPars[iM_m] * ModelPars[iM_g];
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),

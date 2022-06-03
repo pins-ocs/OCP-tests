@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GunnAndThomas_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -319,8 +319,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 200.0,
+        :length => 1.0,
       },
     ],
   };

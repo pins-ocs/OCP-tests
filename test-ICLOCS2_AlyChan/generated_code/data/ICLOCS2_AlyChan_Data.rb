@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS2_AlyChan_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+u_tol_max  = 1e-06
 u_epsi_max = 1e-06
 u_epsi     = u_epsi_max
-u_tol_max  = 1e-06
 u_tol      = u_tol_max
 
 mechatronix do |data|

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -282,7 +282,7 @@ namespace TyreDynamicDefine {
     real_type t32  = 1 - t1;
     real_type t33  = v_min(t32);
     real_type t35  = ALIAS_v_min_D(t32);
-    result__[ 8   ] = -t3 * t33 - t35 * t9;
+    result__[ 8   ] = -t33 * t3 - t35 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 9, i_segment );
   }
@@ -320,7 +320,7 @@ namespace TyreDynamicDefine {
     result__[ 0   ] = -t5 * t3;
     real_type t7   = 1.0 / t1;
     real_type t8   = ALIAS_b__oControl_D_1(t4, -1, 1);
-    result__[ 1   ] = t8 * t7;
+    result__[ 1   ] = t7 * t8;
     real_type t9   = U__[iU_p__o];
     real_type t10  = p__oControl(t9, -1, 1);
     result__[ 2   ] = -t10 * t3;

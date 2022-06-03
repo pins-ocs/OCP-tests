@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Zermelo_ffi_structs.rb                                            #
 #                                                                          #
-#  version: 1.0   date 1/6/2022                                            #
+#  version: 1.0   date 4/6/2022                                            #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #

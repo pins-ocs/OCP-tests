@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -247,7 +247,7 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = log(xo__a);
     real_type t3   = 1 - xo__s;
     real_type t5   = log(xo__b);
-    real_type t8   = exp(t3 * t2 + xo__s * t5);
+    real_type t8   = exp(t2 * t3 + t5 * xo__s);
     real_type result__ = -t8 * t1 + t8 * (-t2 + t5) * t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -283,7 +283,7 @@ namespace EconomicGrowthModel2Define {
     real_type t7   = log(xo__b);
     real_type t10  = exp((1 - xo__s) * t4 + xo__s * t7);
     real_type t12  = xo__s * xo__s;
-    real_type result__ = t10 * t12 * t2 - t10 * t2 * xo__s;
+    real_type result__ = t10 * t12 * t2 - t10 * xo__s * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         isRegular(result__),
@@ -299,7 +299,7 @@ namespace EconomicGrowthModel2Define {
     real_type t1   = 1.0 / xo__b;
     real_type t2   = log(xo__a);
     real_type t5   = log(xo__b);
-    real_type t8   = exp((1 - xo__s) * t2 + xo__s * t5);
+    real_type t8   = exp((1 - xo__s) * t2 + t5 * xo__s);
     real_type result__ = t8 * t1 + t8 * (-t2 + t5) * xo__s * t1;
     if ( m_debug ) {
       UTILS_ASSERT(

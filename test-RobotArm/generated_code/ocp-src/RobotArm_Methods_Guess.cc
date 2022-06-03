@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -276,9 +276,9 @@ namespace RobotArmDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 3, 0 );
-    UGUESS__[ iU_u_rho   ] = 0;
-    UGUESS__[ iU_u_theta ] = 0;
-    UGUESS__[ iU_u_phi   ] = 0;
+    UGUESS__[ iU_u_rho   ] = u_phiControl.solve(-L__[iL_lambda1__xo], -1, 1);
+    UGUESS__[ iU_u_theta ] = u_phiControl.solve(-L__[iL_lambda2__xo], -1, 1);
+    UGUESS__[ iU_u_phi   ] = u_phiControl.solve(-L__[iL_lambda3__xo], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 3, i_segment );
   }

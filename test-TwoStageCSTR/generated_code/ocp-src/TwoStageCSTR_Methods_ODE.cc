@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -155,7 +155,7 @@ namespace TwoStageCSTRDefine {
     real_type t11  = R2_D_2(t8, t9);
     result__[ 8   ] = -t11;
     result__[ 9   ] = -result__[2] * t6;
-    result__[ 10  ] = -t6 * result__[3] + 1;
+    result__[ 10  ] = -result__[3] * t6 + 1;
     result__[ 11  ] = t10;
     result__[ 12  ] = -2 - U__[iU_u2] + t11;
     result__[ 13  ] = -result__[4] * t6;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -151,8 +151,8 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
     data_clip["h"] = h0;
 
     // Controls
@@ -194,8 +194,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFredundant_data.Mesh["s0"] = 0;
-BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
 BangBangFredundant_data.Mesh["segments"][0]["n"] = 100;
+BangBangFredundant_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

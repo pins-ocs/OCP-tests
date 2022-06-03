@@ -1,0 +1,218 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "main"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"install",
+			"target_link_libraries",
+			"add_compile_definitions",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 91,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 101,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 110,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 34,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 80,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-std=c++11 -stdlib=libc++ -F/Library/Frameworks -fPIC -arch x86_64 -Os -g -fcolor-diagnostics -I/usr/local/include -std=c++11 -stdlib=libc++ -F/Library/Frameworks -fPIC -arch x86_64 -Os -g -fcolor-diagnostics -I/usr/local/include -isysroot /Applications/Xcode-13.4.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 4,
+					"define" : "_USE_MATH_DEFINES"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "objlib::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "main::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/bin"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-std=c++11 -stdlib=libc++ -F/Library/Frameworks -fPIC -arch x86_64 -Os -g -fcolor-diagnostics -I/usr/local/include -std=c++11 -stdlib=libc++ -F/Library/Frameworks -fPIC -arch x86_64 -Os -g -fcolor-diagnostics -I/usr/local/include",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker .",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_Direct.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_Guess.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_ODE.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_UserFunctions.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_boundary_conditions.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_controls.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_Methods_problem.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_dll_pins.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "CMakeFiles/objlib.dir/./ocp-src/Brachiostocrona_dll_ruby.cc.o",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "main",
+	"nameOnDisk" : "main",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "ocp-interfaces/cpp/Brachiostocrona_Main.cc",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

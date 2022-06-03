@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Brachiostocrona_ffi_structs.rb                                    #
 #                                                                          #
-#  version: 1.0   date 1/6/2022                                            #
+#  version: 1.0   date 17/6/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,17 +40,31 @@ module Brachiostocrona
   class Brachiostocrona_model_params < FFI::Struct
     layout(
 
-      :Tf,   :data_t,
+      :Tf,        :data_t,
 
-      :Vf,   :data_t,
+      :Vf,        :data_t,
 
-      :g,    :data_t,
+      :g,         :data_t,
 
-      :mass, :data_t,
+      :mass,      :data_t,
 
-      :xf,   :data_t,
+      :mu0,       :data_t,
 
-      :yf,   :data_t,
+      :mu1,       :data_t,
+
+      :w_ARG,     :data_t,
+
+      :w_ARG0,    :data_t,
+
+      :w_ARG1,    :data_t,
+
+      :xf,        :data_t,
+
+      :y0_low,    :data_t,
+
+      :yf,        :data_t,
+
+      :slope_low, :data_t,
 
     )
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon0 = 0.01;
     real_type u_tolerance0 = 0.01;
     real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 

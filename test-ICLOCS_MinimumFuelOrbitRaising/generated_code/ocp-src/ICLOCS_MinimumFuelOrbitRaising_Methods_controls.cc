@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -361,7 +361,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t14  = mass(Q__[iQ_zeta]);
     real_type t15  = 1.0 / t14;
     real_type t19  = cos(t10);
-    result__[ 0   ] = -2 * t15 * t19 * t9 * (V__[1] - t5 * t3 + 1.0 / t7 - t15 * t11 * t9) + 2 * t15 * t11 * t9 * (-t15 * t19 * t9 + t2 * t5 * X__[iX_vr] + V__[2]);
+    result__[ 0   ] = -2 * t15 * t19 * t9 * (V__[1] - t5 * t3 + 1.0 / t7 - t15 * t11 * t9) + 2 * t15 * t11 * t9 * (-t15 * t19 * t9 + t5 * t2 * X__[iX_vr] + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

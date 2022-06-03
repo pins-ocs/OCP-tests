@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -162,7 +162,7 @@ namespace EconomicGrowthModelDefine {
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
     real_type t36  = Q(t4, t5);
-    result__[ 10  ] = t36 * t1 - t36 * t10;
+    result__[ 10  ] = t36 * t1 - t10 * t36;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 11, i_segment );
   }

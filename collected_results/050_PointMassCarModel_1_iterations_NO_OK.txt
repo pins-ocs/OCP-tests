@@ -1457,7 +1457,7 @@ NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 301, maxIter = 300, tolerance = 1e-09
 ||d||_inf = 5493.6, ||f||_inf = 0.020263
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 5.69[sec]     timeout        = 0 [ms]
+Elapsed Time   = 6.28[sec]     timeout        = 0 [ms]
 iteration      = 301           Memory Used    = 3Mb (+32Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

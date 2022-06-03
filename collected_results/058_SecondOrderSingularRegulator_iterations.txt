@@ -113,7 +113,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 2006          N. System pars = 500
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 139[ms]       timeout        = 0 [ms]
+Elapsed Time   = 137[ms]       timeout        = 0 [ms]
 iteration      = 74            Memory Used    = 197Kb (+52bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

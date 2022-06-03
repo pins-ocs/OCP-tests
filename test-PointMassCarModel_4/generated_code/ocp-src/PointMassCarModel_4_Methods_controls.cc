@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -225,7 +225,7 @@ namespace PointMassCarModel_4Define {
     real_type t72  = ALIAS_rightWidth(t10);
     real_type t74  = RoadRightBorder(-t9 - t72);
     real_type t83  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t29 * t7 - 1);
-    real_type result__ = t3 * ModelPars[iM_wT] + t12 * t3 * LM__[0] + t16 * t7 * t3 * LM__[1] - t3 * (t11 * t12 - t20) * LM__[2] + t3 * (-t26 * ModelPars[iM_kD] + t29) * LM__[3] + ModelPars[iM_v__Omega__max] * t35 * t3 * LM__[4] + ModelPars[iM_v__fx__max] * t41 * t3 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
+    real_type result__ = t3 * ModelPars[iM_wT] + t12 * t3 * LM__[0] + t16 * t7 * t3 * LM__[1] - t3 * (t11 * t12 - t20) * LM__[2] + t3 * (-ModelPars[iM_kD] * t26 + t29) * LM__[3] + ModelPars[iM_v__Omega__max] * t35 * t3 * LM__[4] + ModelPars[iM_v__fx__max] * t41 * t3 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -598,7 +598,7 @@ namespace PointMassCarModel_4Define {
     real_type t4   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     real_type t6   = t2 * t2;
     real_type t8   = ModelPars[iM_v__fx__max] * ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t4 * t2 + 2 * t8 * t6;
+    result__[ 0   ] = t2 * t4 + 2 * t6 * t8;
     real_type t12  = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     real_type t15  = ModelPars[iM_v__Omega__max] * ModelPars[iM_v__Omega__max];
     result__[ 1   ] = t12 * t2 + 2 * t15 * t6;

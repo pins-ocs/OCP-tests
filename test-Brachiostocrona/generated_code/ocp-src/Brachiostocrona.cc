@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.cc                                             |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 17/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -62,6 +62,7 @@ namespace BrachiostocronaDefine {
 
   char const *namesUvars[numUvars+1] = {
     "vtheta",
+    "sz",
     nullptr
   };
 
@@ -86,6 +87,8 @@ namespace BrachiostocronaDefine {
 
   char const *namesPostProcess[numPostProcess+1] = {
     "vthetaControl",
+    "low",
+    "ARG",
     nullptr
   };
 
@@ -98,8 +101,15 @@ namespace BrachiostocronaDefine {
     "Vf",
     "g",
     "mass",
+    "mu0",
+    "mu1",
+    "w_ARG",
+    "w_ARG0",
+    "w_ARG1",
     "xf",
+    "y0_low",
     "yf",
+    "slope_low",
     nullptr
   };
 
@@ -147,9 +157,13 @@ namespace BrachiostocronaDefine {
   // Constraints 1D
   // Constraints 2D
   // User classes
+  , Pen1D("Pen1D")
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -195,6 +209,21 @@ namespace BrachiostocronaDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "Brachiostocrona::update_continuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuation_step_0( s ); break;
+      default:
+        UTILS_ERROR(
+          "Brachiostocrona::update_continuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------
@@ -256,6 +285,14 @@ namespace BrachiostocronaDefine {
   */
   void
   Brachiostocrona::setup_user_classes( GenericContainer const & gc ) {
+
+    // Initialize user classes (user mesh oject not initialized here)
+    UTILS_ASSERT0(
+      gc.exists("Pen1D"),
+      "in Brachiostocrona::setup_classes(gc) missing key: ``Pen1D''\n"
+    );
+    Pen1D.setup( gc("Pen1D") );
+
   }
 
   /* --------------------------------------------------------------------------
@@ -330,18 +367,16 @@ namespace BrachiostocronaDefine {
   void
   Brachiostocrona::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    vthetaControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( vthetaControl.info(),msg_level);
+
+    m_console->message("\nUser class (local)\n",msg_level);
+    m_console->message( Pen1D.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

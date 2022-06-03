@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,24 +20,24 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-jn_max                   = 65.0
-epsi_COV                 = 0.01
-v_nom                    = 0.173
-js_min                   = -50
-epsi_ACC                 = 0.01
-epsi_VMAX                = 0.01
+tol_COV                  = 0.01
 tol_ACC                  = 0.01
-epsi_PATH                = 0.01
+tol_PATH                 = 0.01
 path_following_tolerance = 1.0e-05
 pf_error                 = path_following_tolerance
-deltaFeed                = v_nom
-tol_VMAX                 = 0.01
 js_max                   = 30.0
-tol_PATH                 = 0.01
+epsi_PATH                = 0.01
+epsi_COV                 = 0.01
+js_min                   = -50
+v_nom                    = 0.173
+deltaFeed                = v_nom
 tol_CTRL                 = 0.01
-tol_COV                  = 0.01
-epsi_CTRL                = 0.01
+epsi_ACC                 = 0.01
+tol_VMAX                 = 0.01
+jn_max                   = 65.0
+epsi_VMAX                = 0.01
 mesh_segments            = 100.0
+epsi_CTRL                = 0.01
 
 mechatronix do |data|
 

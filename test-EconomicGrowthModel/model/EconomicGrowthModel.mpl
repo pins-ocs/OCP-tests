@@ -63,12 +63,14 @@ CONT := [
     [uControl,"tolerance"] = u_tol0*(1-s)+u_tol1*s
   ]
 ];
+project_name := "EconomicGrowthModel";
+project_dir  := "../generated_code";
 generateOCProblem(
-  "EconomicGrowthModel",
+  project_name,
   post_processing = POST,
   parameters      = PARS,
   mesh            = [ length=1, n=1000 ],
   continuation    = CONT,
   states_guess    = [ T=1, x1=x1_i, x2=x2_i ]
 );
-;
+# if used in batch mode use the comment to quit;

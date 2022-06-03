@@ -1,0 +1,179 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "libBrachiostocrona_static.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"install",
+			"add_compile_definitions",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 89,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 102,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 34,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 80,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "objlib::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "Brachiostocrona_static::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code"
+		}
+	},
+	"name" : "Brachiostocrona_static",
+	"nameOnDisk" : "libBrachiostocrona_static.a",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_Direct.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_Guess.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_ODE.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_UserFunctions.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_controls.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_Methods_problem.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_dll_pins.cc.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/objlib.dir/ocp-src/Brachiostocrona_dll_ruby.cc.o",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

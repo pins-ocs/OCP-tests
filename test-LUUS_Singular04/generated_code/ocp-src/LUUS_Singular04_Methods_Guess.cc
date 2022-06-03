@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -255,7 +255,9 @@ namespace LUUS_Singular04Define {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = 0;
+    real_type t3   = X__[iX_x1] * X__[iX_x1];
+    real_type t5   = ModelPars[iM_epsi_x] * ModelPars[iM_epsi_x];
+    UGUESS__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5) * L__[iL_lambda3__xo], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }

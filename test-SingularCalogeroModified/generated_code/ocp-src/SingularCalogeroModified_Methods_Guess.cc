@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_Guess.cc                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -254,7 +254,13 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = 0;
+    real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
+    real_type t4   = t3 * t3;
+    real_type t5   = ModelPars[iM_C];
+    real_type t6   = t5 * t5;
+    real_type t8   = X__[iX_x];
+    real_type t14  = t8 * t8;
+    UGUESS__[ iU_u ] = uControl.solve(-1.0 / (2 * t5 * t8 * t3 - 2 * t5 * t3 + t6 * t4 + t14 - 2 * t8 + ModelPars[iM_epsilon] + 1) * L__[iL_lambda2__xo], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }

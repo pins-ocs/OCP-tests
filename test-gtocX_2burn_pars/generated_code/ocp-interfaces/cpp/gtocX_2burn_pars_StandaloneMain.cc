@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type ray_epsi = 0.001;
     real_type ray_tol = 0.001;
+    real_type ray_epsi = 0.001;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

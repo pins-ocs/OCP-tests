@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-mur_min = -1
-mur_max = 1.0
 muf_min = -1
+mur_max = 1.0
+mur_min = -1
 
 content = {
 
@@ -278,9 +278,9 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    cliph = 0.01,
     clipdelta2 = 0.0,
     clipdelta = 0.0,
+    cliph = 0.01,
   },
 
   -- Controls
@@ -324,8 +324,8 @@ content = {
     segments = {
       
       {
-        n      = 1000.0,
         length = 1000.0,
+        n      = 1000.0,
       },
     },
   },

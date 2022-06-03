@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.hh                                             |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 17/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -58,6 +58,7 @@ namespace BrachiostocronaDefine {
   using namespace MechatronixLoad;
 
   // user class in namespaces
+  using Mechatronix::PenaltyBarrier1DGreaterThan;
   using Mechatronix::MeshStd;
 
 
@@ -108,7 +109,7 @@ namespace BrachiostocronaDefine {
   class Brachiostocrona : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[6];
+    real_type ModelPars[13];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU vthetaControl;
@@ -122,6 +123,7 @@ namespace BrachiostocronaDefine {
     // User mapped functions - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
+    Mechatronix::PenaltyBarrier1DGreaterThan Pen1D;
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::MeshStd * pMesh;
@@ -131,6 +133,7 @@ namespace BrachiostocronaDefine {
     Brachiostocrona const & operator = ( Brachiostocrona const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuation_step_0( real_type s );
 
   public:
 

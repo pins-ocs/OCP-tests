@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -125,7 +125,7 @@ namespace RobotArmDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = u_rhoControl(U__[iU_u_rho], -1, 1);
-    result__[ 0   ] = t1 * t3;
+    result__[ 0   ] = t3 * t1;
     real_type t5   = u_thetaControl(U__[iU_u_theta], -1, 1);
     result__[ 1   ] = t5 * t1;
     real_type t7   = u_phiControl(U__[iU_u_phi], -1, 1);

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Data.lua                                            |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-tol_penalty  = 0.01
 epsi_penalty = 0.1
 epsi_max     = epsi_penalty
+tol_penalty  = 0.01
 
 content = {
 

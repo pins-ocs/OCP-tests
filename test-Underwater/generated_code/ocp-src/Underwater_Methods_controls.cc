@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -247,17 +247,17 @@ namespace UnderwaterDefine {
     result__[ 0   ] = 0.5e0 * t3 * t1;
     result__[ 1   ] = result__[0];
     real_type t8   = ALIAS_u1Control_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = t3 * LM__[3] + t8;
+    result__[ 2   ] = LM__[3] * t3 + t8;
     real_type t10  = 1.0 / ModelPars[iM_m3];
     result__[ 3   ] = 0.5e0 * t10 * t1;
     result__[ 4   ] = result__[3];
     real_type t15  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
-    result__[ 5   ] = t10 * LM__[4] + t15;
+    result__[ 5   ] = LM__[4] * t10 + t15;
     real_type t17  = 1.0 / ModelPars[iM_inertia];
     result__[ 6   ] = 0.5e0 * t17 * t1;
     result__[ 7   ] = result__[6];
     real_type t22  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
-    result__[ 8   ] = t17 * LM__[5] + t22;
+    result__[ 8   ] = LM__[5] * t17 + t22;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }

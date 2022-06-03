@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -153,20 +153,20 @@ namespace EconomicGrowthModel2Define {
     real_type t8   = t7 * t6;
     real_type t10  = L__[iL_lambda4__xo];
     real_type t12  = (1 - t2) * t10;
-    result__[ 0   ] = t12 * t8 + t3 * t8;
+    result__[ 0   ] = t8 * t12 + t8 * t3;
     real_type t14  = Q_D_1_2(t4, t5);
     real_type t15  = t7 * t14;
-    result__[ 1   ] = t12 * t15 + t15 * t3;
+    result__[ 1   ] = t15 * t12 + t15 * t3;
     real_type t18  = Q_D_1(t4, t5);
-    result__[ 2   ] = t12 * t18 + t18 * t3;
-    result__[ 3   ] = t1 * t18 * t7 - t10 * t18 * t7;
+    result__[ 2   ] = t18 * t12 + t18 * t3;
+    result__[ 3   ] = t7 * t18 * t1 - t7 * t18 * t10;
     result__[ 4   ] = result__[1];
     real_type t25  = Q_D_2_2(t4, t5);
     real_type t26  = t7 * t25;
-    result__[ 5   ] = t12 * t26 + t26 * t3;
+    result__[ 5   ] = t26 * t12 + t26 * t3;
     real_type t29  = Q_D_2(t4, t5);
-    result__[ 6   ] = t12 * t29 + t29 * t3;
-    result__[ 7   ] = t1 * t29 * t7 - t10 * t29 * t7;
+    result__[ 6   ] = t29 * t12 + t29 * t3;
+    result__[ 7   ] = t7 * t29 * t1 - t7 * t29 * t10;
     result__[ 8   ] = L__[iL_lambda1__xo];
     result__[ 9   ] = L__[iL_lambda3__xo];
     result__[ 10  ] = result__[2];
@@ -174,7 +174,7 @@ namespace EconomicGrowthModel2Define {
     result__[ 12  ] = result__[8];
     result__[ 13  ] = result__[9];
     real_type t36  = Q(t4, t5);
-    result__[ 14  ] = t1 * t36 - t10 * t36;
+    result__[ 14  ] = t36 * t1 - t10 * t36;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 15, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -491,15 +491,15 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 77  ] = 0.12e1 * L__[iL_lambda58__xo];
     result__[ 78  ] = 0.12e1 * L__[iL_lambda59__xo];
     result__[ 79  ] = 0.12e1 * L__[iL_lambda60__xo];
-    result__[ 80  ] = t161 + t3;
-    result__[ 81  ] = t165 + t8;
-    result__[ 82  ] = t169 + t13;
+    result__[ 80  ] = t3 + t161;
+    result__[ 81  ] = t8 + t165;
+    result__[ 82  ] = t13 + t169;
     result__[ 83  ] = t173 + t18;
     result__[ 84  ] = t177 + t23;
     result__[ 85  ] = t181 + t28;
     result__[ 86  ] = t185 + t33;
     result__[ 87  ] = t189 + t38;
-    result__[ 88  ] = t193 + t43;
+    result__[ 88  ] = t43 + t193;
     result__[ 89  ] = t197 + t48;
     result__[ 90  ] = t201 + t53;
     result__[ 91  ] = t205 + t58;

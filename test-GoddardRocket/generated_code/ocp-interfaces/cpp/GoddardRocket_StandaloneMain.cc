@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,31 +50,20 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mc = 0.6;
-    real_type m_i = 1;
-    real_type tol_T_max = 0.01;
-    real_type epsi_T_max = 0.1;
-    real_type tol_TS_max = 0.0001;
-    real_type tol_TS = tol_TS_max;
-    real_type epsi_T = epsi_T_max;
-    real_type vc = 620;
-    real_type epsi_mass_max = 0.025;
-    real_type tol_mass_max = 0.01;
-    real_type tol_T = tol_T_max;
-    real_type g0 = 1;
-    real_type Tmax = 3.5*g0*m_i;
-    real_type epsi_mass = epsi_mass_max;
-    real_type tol_v_max = 0.01;
-    real_type tol_v = tol_v_max;
-    real_type Dc = 0.5*vc*m_i/g0;
-    real_type m_f = mc*m_i;
     real_type epsi_TS_max = 0.025;
-    real_type epsi_TS = epsi_TS_max;
+    real_type tol_v_max = 0.01;
     real_type epsi_v_max = 0.1;
     real_type epsi_v = epsi_v_max;
-    real_type h_i = 1;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
+    real_type epsilon0 = 0.1;
+    real_type tol_mass_max = 0.01;
     real_type tol_mass = tol_mass_max;
+    real_type epsi_TS = epsi_TS_max;
+    real_type tol_v = tol_v_max;
+    real_type epsi_mass_max = 0.025;
+    real_type epsi_mass = epsi_mass_max;
+    real_type tol_TS_max = 0.0001;
+    real_type tol_TS = tol_TS_max;
+    real_type epsilon = epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -130,7 +119,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 1;
+    data_Solver["ns_continuation_end"]   = 2;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -155,37 +144,37 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
-    data_Parameters["Tmax"] = Tmax;
-    data_Parameters["c"] = c;
+    data_Parameters["Hscale"] = 23800;
+    data_Parameters["Tmax"] = 193;
+    data_Parameters["Ve"] = 1580.9425;
+    data_Parameters["epsilon"] = epsilon;
+    data_Parameters["g"] = 32.174;
 
     // Guess Parameters
+    data_Parameters["TimeSize_guess"] = 40;
 
     // Boundary Conditions
-    data_Parameters["h_i"] = h_i;
-    data_Parameters["m_f"] = m_f;
-    data_Parameters["m_i"] = m_i;
+    data_Parameters["h_i"] = 0;
+    data_Parameters["m_f"] = 1;
+    data_Parameters["m_i"] = 3;
     data_Parameters["v_i"] = 0;
 
     // Post Processing Parameters
 
     // User Function Parameters
-    data_Parameters["Dc"] = Dc;
-    data_Parameters["g0"] = g0;
-    data_Parameters["hc"] = 500;
+    data_Parameters["D0"] = 5.49153485e-05;
 
     // Continuation Parameters
     data_Parameters["epsi_TS_max"] = epsi_TS_max;
     data_Parameters["epsi_TS_min"] = 1e-10;
-    data_Parameters["epsi_T_max"] = epsi_T_max;
-    data_Parameters["epsi_T_min"] = 1e-07;
     data_Parameters["epsi_mass_max"] = epsi_mass_max;
     data_Parameters["epsi_mass_min"] = 0.0001;
     data_Parameters["epsi_v_max"] = epsi_v_max;
     data_Parameters["epsi_v_min"] = 0.0001;
+    data_Parameters["epsilon0"] = epsilon0;
+    data_Parameters["epsilon1"] = 1e-08;
     data_Parameters["tol_TS_max"] = tol_TS_max;
     data_Parameters["tol_TS_min"] = 0.001;
-    data_Parameters["tol_T_max"] = tol_T_max;
-    data_Parameters["tol_T_min"] = 0.0001;
     data_Parameters["tol_mass_max"] = tol_mass_max;
     data_Parameters["tol_mass_min"] = 0.0001;
     data_Parameters["tol_v_max"] = tol_v_max;
@@ -195,16 +184,7 @@ main() {
 
     // functions mapped on objects
 
-    // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
-    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
-    GenericContainer & data_Controls = gc_data["Controls"];
-    GenericContainer & data_TControl = data_Controls["TControl"];
-    data_TControl["type"]      = "COS_LOGARITHMIC";
-    data_TControl["epsilon"]   = epsi_T;
-    data_TControl["tolerance"] = tol_T;
-
-
+    // Controls: No penalties or barriers constraint defined
 
     // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
@@ -235,7 +215,7 @@ main() {
     // User defined classes: M E S H
 GoddardRocket_data.Mesh["s0"] = 0;
 GoddardRocket_data.Mesh["segments"][0]["length"] = 1;
-GoddardRocket_data.Mesh["segments"][0]["n"] = 400;
+GoddardRocket_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

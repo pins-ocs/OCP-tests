@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -266,7 +266,7 @@ namespace RobotArmDefine {
     real_type t4   = L__[iL_lambda2__xo];
     result__[ 0   ] = t4 * t3;
     real_type t5   = I_theta_D_2(t1, t2);
-    result__[ 1   ] = t4 * t5;
+    result__[ 1   ] = t5 * t4;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = L__[iL_lambda3__xo] * t6;
     if ( m_debug )
@@ -338,7 +338,7 @@ namespace RobotArmDefine {
     real_type t4   = V__[4];
     result__[ 0   ] = t4 * t3;
     real_type t5   = I_theta_D_2(t1, t2);
-    result__[ 1   ] = t4 * t5;
+    result__[ 1   ] = t5 * t4;
     real_type t6   = I_phi_D(t1);
     result__[ 2   ] = V__[5] * t6;
     if ( m_debug )

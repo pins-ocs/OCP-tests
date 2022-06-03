@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 17/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,11 +20,17 @@
 -- User Header
 
 -- Auxiliary values
-g  = 9.81
-xf = 5.0
-yf = -2
-Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-Tf = (-2.0*yf/g)**(1/2.0)
+xf     = 5.0
+mu0    = 0.1
+g      = 9.81
+mu     = mu0
+tol1   = 1e-06
+w_ARG0 = 1.0
+w_ARG  = w_ARG0
+yf     = -2
+Tf     = (-2.0*yf/g)**(1/2.0)
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+epsi1  = 1e-06
 
 content = {
 
@@ -90,7 +96,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1, -- suppress all messages
     -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     initialize_control_solver = 'QuasiNewton',
@@ -220,7 +226,7 @@ content = {
 
     -- continuation parameters
     ns_continuation_begin = 0,
-    ns_continuation_end   = 0,
+    ns_continuation_end   = 1,
   },
 
   --[[
@@ -256,8 +262,11 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    g    = g,
-    mass = 1.0,
+    g         = g,
+    mass      = 1.0,
+    w_ARG     = w_ARG,
+    y0_low    = -0.2,
+    slope_low = -0.375,
 
     -- Guess Parameters
     Tf = Tf,
@@ -272,6 +281,10 @@ content = {
     -- User Function Parameters
 
     -- Continuation Parameters
+    mu0    = mu0,
+    mu1    = 1e-06,
+    w_ARG0 = w_ARG0,
+    w_ARG1 = 1000000.0,
 
     -- Constraints Parameters
   },
@@ -298,6 +311,14 @@ content = {
   },
 
   -- User defined classes initialization
+  -- User defined classes: P E N 1 D
+  Pen1D = 
+  {
+    epsilon   = epsi1,
+    tolerance = tol1,
+    subType   = "BARRIER_LOG0",
+    active    = true,
+  },
   -- User defined classes: M E S H
   Mesh = 
   {
@@ -305,8 +326,8 @@ content = {
     segments = {
       
       {
+        n      = 100.0,
         length = 1.0,
-        n      = 500.0,
       },
     },
   },

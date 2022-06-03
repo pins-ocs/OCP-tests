@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Mex.cc                                           |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -266,19 +266,7 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DD_D_2",&ProblemStorage::do_DD_D_2},
   {"DD_D_1_1",&ProblemStorage::do_DD_D_1_1},
   {"DD_D_1_2",&ProblemStorage::do_DD_D_1_2},
-  {"DD_D_2_2",&ProblemStorage::do_DD_D_2_2},
-  {"gg",&ProblemStorage::do_gg},
-  {"gg_D",&ProblemStorage::do_gg_D},
-  {"explog",&ProblemStorage::do_explog},
-  {"explog_D_1",&ProblemStorage::do_explog_D_1},
-  {"explog_D_2",&ProblemStorage::do_explog_D_2},
-  {"explog_D_3",&ProblemStorage::do_explog_D_3},
-  {"explog_D_1_1",&ProblemStorage::do_explog_D_1_1},
-  {"explog_D_1_2",&ProblemStorage::do_explog_D_1_2},
-  {"explog_D_1_3",&ProblemStorage::do_explog_D_1_3},
-  {"explog_D_2_2",&ProblemStorage::do_explog_D_2_2},
-  {"explog_D_2_3",&ProblemStorage::do_explog_D_2_3},
-  {"explog_D_3_3",&ProblemStorage::do_explog_D_3_3}
+  {"DD_D_2_2",&ProblemStorage::do_DD_D_2_2}
 };
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

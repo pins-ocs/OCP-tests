@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -441,7 +441,7 @@ namespace HangGliderDefine {
     real_type t25  = w(t10, t12);
     real_type t32  = t14 * t8;
     real_type t33  = t1 * t15;
-    result__[ 0   ] = t4 - 2 * (-2 * t11 * t20 * t33 - t23 * t25) * t32 * t6 * (V__[2] - (-t11 * t21 - t24 * t25) * t14 * t9) - 2 * (-2 * t20 * t25 * t33 + t11 * t23) * t32 * t6 * (V__[3] - (t11 * t24 - t21 * t25) * t14 * t9 + ModelPars[iM_g] * t6);
+    result__[ 0   ] = t4 - 2 * (-2 * t11 * t20 * t33 - t23 * t25) * t32 * t6 * (V__[2] - (-t11 * t21 - t24 * t25) * t14 * t9) - 2 * (-2 * t20 * t25 * t33 + t11 * t23) * t32 * t6 * (V__[3] - (t11 * t24 - t25 * t21) * t14 * t9 + ModelPars[iM_g] * t6);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

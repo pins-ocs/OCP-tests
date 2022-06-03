@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 17/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,6 +22,7 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
+using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 
@@ -41,6 +42,9 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
+#define ALIAS_penalization_DD(__t1) Pen1D.evaluate_DD( __t1)
+#define ALIAS_penalization_D(__t1) Pen1D.evaluate_D( __t1)
+#define ALIAS_penalization(__t1) Pen1D.evaluate( __t1)
 #define ALIAS_vthetaControl_D_3(__t1, __t2, __t3) vthetaControl.D_3( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_2(__t1, __t2, __t3) vthetaControl.D_2( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_1(__t1, __t2, __t3) vthetaControl.D_1( __t1, __t2, __t3)
@@ -89,7 +93,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::Drhs_odeDxpu_numRows() const { return 4; }
-  integer Brachiostocrona::Drhs_odeDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::Drhs_odeDxpu_numCols() const { return 7; }
   integer Brachiostocrona::Drhs_odeDxpu_nnz()     const { return 9; }
 
   void

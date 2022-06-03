@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 17/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,6 +22,7 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
+using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 using namespace BrachiostocronaLoad;
@@ -42,19 +43,25 @@ main() {
 
   try {
 
-    Brachiostocrona  model("Brachiostocrona",n_threads,&console);
-    GenericContainer gc_data;
-    GenericContainer gc_solution;
+    Brachiostocrona             model("Brachiostocrona",n_threads,&console);
+    GenericContainer            gc_data;
+    GenericContainer            gc_solution;
 
     // user defined Object instances (external)
-    MeshStd          mesh( "mesh" );
+    MeshStd                     mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
     real_type xf = 5;
+    real_type mu0 = 0.1;
+    real_type g = 9.81;
+    real_type mu = mu0;
+    real_type tol1 = 1e-06;
+    real_type w_ARG0 = 1;
+    real_type w_ARG = w_ARG0;
     real_type yf = -2;
-    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type epsi1 = 1e-06;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -65,7 +72,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -110,7 +117,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -138,6 +145,9 @@ main() {
     // Model Parameters
     data_Parameters["g"] = g;
     data_Parameters["mass"] = 1;
+    data_Parameters["w_ARG"] = w_ARG;
+    data_Parameters["y0_low"] = -0.2;
+    data_Parameters["slope_low"] = -0.375;
 
     // Guess Parameters
     data_Parameters["Tf"] = Tf;
@@ -152,6 +162,10 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
+    data_Parameters["mu0"] = mu0;
+    data_Parameters["mu1"] = 1e-06;
+    data_Parameters["w_ARG0"] = w_ARG0;
+    data_Parameters["w_ARG1"] = 1000000;
 
     // Constraints Parameters
 
@@ -173,10 +187,15 @@ main() {
     // Constraint2D: none defined
 
     // User defined classes initialization
+    // User defined classes: P E N 1 D
+Brachiostocrona_data.Pen1D["epsilon"] = epsi1;
+Brachiostocrona_data.Pen1D["tolerance"] = tol1;
+Brachiostocrona_data.Pen1D["subType"] = "BARRIER_LOG0";
+Brachiostocrona_data.Pen1D["active"] = true;
     // User defined classes: M E S H
 Brachiostocrona_data.Mesh["s0"] = 0;
+Brachiostocrona_data.Mesh["segments"][0]["n"] = 100;
 Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
-Brachiostocrona_data.Mesh["segments"][0]["n"] = 500;
 
 
     // alias for user object classes passed as pointers

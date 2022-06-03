@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_AdjointODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -138,7 +138,7 @@ namespace Bike1DDefine {
     real_type t5   = Tmax_normalized(t1);
     real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
     real_type t8   = murControl(U__[iU_mur], ModelPars[iM_mur_min], t7);
-    result__[ 0   ] = t8 * t2;
+    result__[ 0   ] = t2 * t8;
     real_type t11  = mufControl(U__[iU_muf], ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t11 * t2;
     if ( m_debug )

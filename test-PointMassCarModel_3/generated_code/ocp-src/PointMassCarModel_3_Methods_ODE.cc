@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_ODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -241,7 +241,7 @@ namespace PointMassCarModel_3Define {
     real_type t5   = ALIAS_Kappa(t4);
     real_type t6   = zeta__dot_D_4(t1, t2, t3, t5);
     real_type t7   = ALIAS_Kappa_D(t4);
-    real_type t8   = t7 * t6;
+    real_type t8   = t6 * t7;
     real_type t9   = X__[iX_sqrt_inv_Vseg];
     real_type t10  = t9 * t9;
     result__[ 0   ] = t10 * t8;
@@ -258,17 +258,17 @@ namespace PointMassCarModel_3Define {
     real_type t18  = sin(t2);
     result__[ 6   ] = t10 * t18;
     result__[ 7   ] = 2 * t9 * t18 * t1;
-    result__[ 8   ] = (-t14 * t7 - t5 * t8) * t10;
+    result__[ 8   ] = (-t7 * t14 - t5 * t8) * t10;
     result__[ 9   ] = -t5 * t10 * t11;
     result__[ 10  ] = -t5 * t10 * t12;
     result__[ 11  ] = -t5 * t10 * t13;
     result__[ 12  ] = t10;
-    result__[ 13  ] = 2 * (-t14 * t5 + X__[iX_Omega]) * t9;
+    result__[ 13  ] = 2 * (-t5 * t14 + X__[iX_Omega]) * t9;
     real_type t34  = ModelPars[iM_kD];
     result__[ 14  ] = -2 * t1 * t34 * result__[12];
     result__[ 15  ] = result__[12];
     real_type t38  = t1 * t1;
-    result__[ 16  ] = 2 * (-t34 * t38 + X__[iX_fx]) * t9;
+    result__[ 16  ] = 2 * (-t38 * t34 + X__[iX_fx]) * t9;
     real_type t44  = ModelPars[iM_v__Omega__max];
     result__[ 17  ] = 2 * t9 * t44 * U__[iU_v__Omega];
     result__[ 18  ] = result__[15] * t44;

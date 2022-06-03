@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -276,8 +276,9 @@ namespace BangBangFredundantDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_aF1 ] = 0;
-    UGUESS__[ iU_aF2 ] = 0;
+    real_type t2   = ModelPars[iM_maxAF];
+    UGUESS__[ iU_aF1 ] = aF2Control.solve(-L__[iL_lambda5__xo], -t2, t2);
+    UGUESS__[ iU_aF2 ] = aF2Control.solve(-L__[iL_lambda6__xo], -t2, t2);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -354,8 +354,9 @@ namespace PointMassCarModel_2Define {
     real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_v__fx    ] = 0;
-    UGUESS__[ iU_v__Omega ] = 0;
+    real_type t8   = zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
+    UGUESS__[ iU_v__fx    ] = v__OmegaControl.solve(-t8 * ModelPars[iM_v__fx__max] * L__[iL_lambda4__xo], -1, 1);
+    UGUESS__[ iU_v__Omega ] = v__OmegaControl.solve(-t8 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }

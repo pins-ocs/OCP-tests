@@ -55,7 +55,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 4014          N. System pars = 500
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 24.5[ms]      timeout        = 0 [ms]
+Elapsed Time   = 26.9[ms]      timeout        = 0 [ms]
 iteration      = 8             Memory Used    = 467Kb (+12bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -72,9 +72,9 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 1.0644e-13    last ||d||_inf = 1.5689e-12
-last ||f||_1   = 1.0792e-15    last ||d||_1   = 2.1465e-13
-last ||f||_2   = 4.1137e-15    last ||d||_2   = 4.0948e-13
+last ||f||_inf = 1.0627e-13    last ||d||_inf = 1.5689e-12
+last ||f||_1   = 1.0792e-15    last ||d||_1   = 2.1464e-13
+last ||f||_2   = 4.1126e-15    last ||d||_2   = 4.0948e-13
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

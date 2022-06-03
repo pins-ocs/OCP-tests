@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Mex.cc                                           |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -324,19 +324,6 @@ public:
   void do_DD_D_1_1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DD_D_1_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DD_D_2_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_gg( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_gg_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_gg_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_1_1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_1_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_1_3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_2_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_2_3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_explog_D_3_3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
 };
 

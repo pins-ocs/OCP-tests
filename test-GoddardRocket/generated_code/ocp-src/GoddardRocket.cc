@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket.cc                                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -59,7 +59,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesUvars[numUvars+1] = {
-    "T",
+    "w",
     nullptr
   };
 
@@ -82,11 +82,11 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
-    "TControl",
     "massPositive",
     "vPositive",
     "TSPositive",
     "Time",
+    "T",
     "target",
     nullptr
   };
@@ -96,27 +96,27 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
-    "Dc",
+    "D0",
+    "Hscale",
     "Tmax",
-    "c",
-    "g0",
+    "Ve",
+    "epsilon",
+    "g",
     "h_i",
-    "hc",
     "m_f",
     "m_i",
     "v_i",
+    "TimeSize_guess",
     "epsi_TS_max",
     "epsi_TS_min",
-    "epsi_T_max",
-    "epsi_T_min",
     "epsi_mass_max",
     "epsi_mass_min",
     "epsi_v_max",
     "epsi_v_min",
+    "epsilon0",
+    "epsilon1",
     "tol_TS_max",
     "tol_TS_min",
-    "tol_T_max",
-    "tol_T_min",
     "tol_mass_max",
     "tol_mass_min",
     "tol_v_max",
@@ -140,7 +140,6 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesConstraintU[numConstraintU+1] = {
-    "TControl",
     nullptr
   };
 
@@ -165,7 +164,6 @@ namespace GoddardRocketDefine {
   )
   : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
-  , TControl("TControl")
   // Constraints LT
   , massPositive("massPositive")
   , vPositive("vPositive")
@@ -178,7 +176,7 @@ namespace GoddardRocketDefine {
 
     // continuation
     this->ns_continuation_begin = 0;
-    this->ns_continuation_end   = 1;
+    this->ns_continuation_end   = 2;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -232,6 +230,7 @@ namespace GoddardRocketDefine {
     );
     switch ( phase ) {
       case 0: continuation_step_0( s ); break;
+      case 1: continuation_step_1( s ); break;
       default:
         UTILS_ERROR(
           "GoddardRocket::update_continuation( phase number={}, old_s={}, s={} )"
@@ -351,14 +350,7 @@ namespace GoddardRocketDefine {
   */
   void
   GoddardRocket::setup_controls( GenericContainer const & gc_data ) {
-    // initialize Control penalties
-    UTILS_ASSERT0(
-      gc_data.exists("Controls"),
-      "GoddardRocket::setup_classes: Missing key `Controls` in data\n"
-    );
-    GenericContainer const & gc = gc_data("Controls");
-    TControl.setup( gc("TControl") );
-    // setup iterative solver
+    // no Control penalties, setup only iterative solver
     this->setup_control_solver( gc_data );
   }
 
@@ -399,11 +391,6 @@ namespace GoddardRocketDefine {
   GoddardRocket::info_classes() const {
     int msg_level = 3;
     ostringstream mstr;
-
-    m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    TControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
     mstr.str("");

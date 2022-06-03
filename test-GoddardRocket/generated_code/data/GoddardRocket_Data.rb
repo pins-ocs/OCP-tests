@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 14/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,31 +20,20 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mc            = 0.6
-m_i           = 1.0
-tol_T_max     = 0.01
-epsi_T_max    = 0.1
-tol_TS_max    = 0.0001
-tol_TS        = tol_TS_max
-epsi_T        = epsi_T_max
-vc            = 620.0
-epsi_mass_max = 0.025
-tol_mass_max  = 0.01
-tol_T         = tol_T_max
-g0            = 1.0
-Tmax          = 3.5*g0*m_i
-epsi_mass     = epsi_mass_max
-tol_v_max     = 0.01
-tol_v         = tol_v_max
-Dc            = 0.5*vc*m_i/g0
-m_f           = mc*m_i
 epsi_TS_max   = 0.025
-epsi_TS       = epsi_TS_max
+tol_v_max     = 0.01
 epsi_v_max    = 0.1
 epsi_v        = epsi_v_max
-h_i           = 1.0
-c             = 0.5*(g0*h_i)**(1/2.0)
+epsilon0      = 0.1
+tol_mass_max  = 0.01
 tol_mass      = tol_mass_max
+epsi_TS       = epsi_TS_max
+tol_v         = tol_v_max
+epsi_mass_max = 0.025
+epsi_mass     = epsi_mass_max
+tol_TS_max    = 0.0001
+tol_TS        = tol_TS_max
+epsilon       = epsilon0
 
 mechatronix do |data|
 
@@ -100,7 +89,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
     # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
@@ -247,7 +236,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 1,
+    :ns_continuation_end   => 2,
   }
 
   #                                       _
@@ -280,37 +269,37 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :Tmax => Tmax,
-    :c    => c,
+    :Hscale  => 23800.0,
+    :Tmax    => 193.0,
+    :Ve      => 1580.9425,
+    :epsilon => epsilon,
+    :g       => 32.174,
 
     # Guess Parameters
+    :TimeSize_guess => 40.0,
 
     # Boundary Conditions
-    :h_i => h_i,
-    :m_f => m_f,
-    :m_i => m_i,
+    :h_i => 0.0,
+    :m_f => 1.0,
+    :m_i => 3.0,
     :v_i => 0.0,
 
     # Post Processing Parameters
 
     # User Function Parameters
-    :Dc => Dc,
-    :g0 => g0,
-    :hc => 500.0,
+    :D0 => 5.49153485e-05,
 
     # Continuation Parameters
     :epsi_TS_max   => epsi_TS_max,
     :epsi_TS_min   => 1e-10,
-    :epsi_T_max    => epsi_T_max,
-    :epsi_T_min    => 1e-07,
     :epsi_mass_max => epsi_mass_max,
     :epsi_mass_min => 0.0001,
     :epsi_v_max    => epsi_v_max,
     :epsi_v_min    => 0.0001,
+    :epsilon0      => epsilon0,
+    :epsilon1      => 1e-10,
     :tol_TS_max    => tol_TS_max,
     :tol_TS_min    => 0.001,
-    :tol_T_max     => tol_T_max,
-    :tol_T_min     => 0.0001,
     :tol_mass_max  => tol_mass_max,
     :tol_mass_min  => 0.0001,
     :tol_v_max     => tol_v_max,
@@ -334,16 +323,8 @@ mechatronix do |data|
   #  / __/ _ \| '_ \| __| '__/ _ \| / __|
   # | (_| (_) | | | | |_| | | (_) | \__ \
   #  \___\___/|_| |_|\__|_|  \___/|_|___/
-  # Controls
-  # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
-  # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  # Controls: No penalties or barriers constraint defined
   data.Controls = {}
-  data.Controls[:TControl] = {
-    :type      => 'COS_LOGARITHMIC',
-    :epsilon   => epsi_T,
-    :tolerance => tol_T
-  }
-
 
 
   #                      _             _       _
@@ -396,7 +377,7 @@ mechatronix do |data|
     :segments => [
       {
         :length => 1.0,
-        :n      => 400.0,
+        :n      => 100.0,
       },
     ],
   };
