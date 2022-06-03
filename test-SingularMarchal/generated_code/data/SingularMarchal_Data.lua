@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -299,8 +299,8 @@ content = {
     segments = {
       
       {
-        length = 8.0,
         n      = 1000.0,
+        length = 8.0,
       },
     },
   },

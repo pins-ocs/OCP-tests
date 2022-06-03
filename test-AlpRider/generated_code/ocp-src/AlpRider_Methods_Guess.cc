@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -254,8 +254,12 @@ namespace AlpRiderDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_u1 ] = 0;
-    UGUESS__[ iU_u2 ] = 0;
+    real_type t1   = L__[iL_lambda1__xo];
+    real_type t2   = L__[iL_lambda2__xo];
+    real_type t3   = L__[iL_lambda3__xo];
+    real_type t4   = L__[iL_lambda4__xo];
+    UGUESS__[ iU_u1 ] = -50 * t1 - 50 * t2 - 50 * t3 - 50 * t4;
+    UGUESS__[ iU_u2 ] = -50 * t1 - 100 * t2 + 50 * t3 - 150 * t4;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }

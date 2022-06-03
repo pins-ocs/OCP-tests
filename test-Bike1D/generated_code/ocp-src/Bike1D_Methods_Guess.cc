@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -273,8 +273,12 @@ namespace Bike1DDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_mur ] = 0;
-    UGUESS__[ iU_muf ] = 0;
+    real_type t4   = X__[iX_v];
+    real_type t5   = t4 * ModelPars[iM_g] * L__[iL_lambda1__xo];
+    real_type t7   = Tmax_normalized(t4);
+    real_type t9   = clip(t7, 0, ModelPars[iM_mur_max]);
+    UGUESS__[ iU_mur ] = mufControl.solve(-t5, ModelPars[iM_mur_min], t9);
+    UGUESS__[ iU_muf ] = mufControl.solve(-t5, ModelPars[iM_muf_min], 0);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }

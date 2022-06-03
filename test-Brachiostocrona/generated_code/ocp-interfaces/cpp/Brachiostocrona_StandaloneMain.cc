@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,11 +50,17 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
     real_type xf = 5;
+    real_type g = 9.81;
+    real_type w_ARG0 = 1;
+    real_type w_ARG = w_ARG0;
     real_type yf = -2;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type mu0 = 0.1;
+    real_type mu = mu0;
+    real_type low_tolerance0 = 0.1;
+    real_type low_tolerance = low_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -65,7 +71,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -110,7 +116,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -138,6 +144,10 @@ main() {
     // Model Parameters
     data_Parameters["g"] = g;
     data_Parameters["mass"] = 1;
+    data_Parameters["mu"] = mu;
+    data_Parameters["w_ARG"] = w_ARG;
+    data_Parameters["y0_low"] = -0.2;
+    data_Parameters["slope_low"] = -0.375;
 
     // Guess Parameters
     data_Parameters["Tf"] = Tf;
@@ -152,6 +162,10 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
+    data_Parameters["mu0"] = mu0;
+    data_Parameters["mu1"] = 1e-05;
+    data_Parameters["w_ARG0"] = w_ARG0;
+    data_Parameters["w_ARG1"] = 100000;
 
     // Constraints Parameters
 
@@ -176,7 +190,7 @@ main() {
     // User defined classes: M E S H
 Brachiostocrona_data.Mesh["s0"] = 0;
 Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
-Brachiostocrona_data.Mesh["segments"][0]["n"] = 500;
+Brachiostocrona_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

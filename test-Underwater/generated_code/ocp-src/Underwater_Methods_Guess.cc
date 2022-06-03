@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -285,9 +285,9 @@ namespace UnderwaterDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 3, 0 );
-    UGUESS__[ iU_u1 ] = 0;
-    UGUESS__[ iU_u2 ] = 0;
-    UGUESS__[ iU_u3 ] = 0;
+    UGUESS__[ iU_u1 ] = u3Control.solve(-1.0 / ModelPars[iM_m1] * L__[iL_lambda4__xo], -1, 1);
+    UGUESS__[ iU_u2 ] = u3Control.solve(-1.0 / ModelPars[iM_m3] * L__[iL_lambda5__xo], -1, 1);
+    UGUESS__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * L__[iL_lambda6__xo], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 3, i_segment );
   }

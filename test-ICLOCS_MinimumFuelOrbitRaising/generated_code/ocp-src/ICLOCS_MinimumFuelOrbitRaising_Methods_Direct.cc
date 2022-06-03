@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t17  = 1.0 / t16;
     result__[ 1   ] = V__[1] - t7 * t5 + 1.0 / t9 - t17 * t13 * t11;
     real_type t22  = cos(t12);
-    result__[ 2   ] = -t11 * t17 * t22 + t2 * t4 * t7 + V__[2];
+    result__[ 2   ] = -t17 * t22 * t11 + t7 * t4 * t2 + V__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 3, i_segment );
   }

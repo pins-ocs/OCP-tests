@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,9 +21,9 @@
 
 -- Auxiliary values
 theta0 = 1.0
+theta  = theta0
 u_epsi = 0.01
 u_tol  = 0.01
-theta  = theta0
 
 content = {
 

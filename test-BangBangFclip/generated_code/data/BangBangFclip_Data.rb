@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tolerance0 = 0.01
-h0         = 0.01
-epsilon0   = 0.1
 vFmax      = 10.0
+tolerance0 = 0.01
+epsilon0   = 0.1
+h0         = 0.01
 
 mechatronix do |data|
 
@@ -336,8 +336,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 100.0,
+        :length => 1.0,
       },
     ],
   };

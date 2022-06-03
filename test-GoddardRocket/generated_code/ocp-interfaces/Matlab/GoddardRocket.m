@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GoddardRocket.m                                                %
 %                                                                       %
-%  version: 1.0   date 1/6/2022                                         %
+%  version: 1.0   date 14/6/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -544,11 +544,11 @@ classdef GoddardRocket < handle
     % CONTROLS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function res = T( self )
+    function res = w( self )
       %
-      % Return the solution for the control: T
+      % Return the solution for the control: w
       %
-      res = GoddardRocket_Mex( 'get_solution', self.objectHandle, 'T' );
+      res = GoddardRocket_Mex( 'get_solution', self.objectHandle, 'w' );
     end
 
     % ---------------------------------------------------------------------
@@ -556,12 +556,6 @@ classdef GoddardRocket < handle
     % POSTPROCESSING
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function res = post_processing_TControl( self )
-      %
-      % Return the solution for the post processing variable: TControl
-      %
-      res = GoddardRocket_Mex( 'get_solution', self.objectHandle, 'TControl' );
-    end
     function res = post_processing_massPositive( self )
       %
       % Return the solution for the post processing variable: massPositive
@@ -585,6 +579,12 @@ classdef GoddardRocket < handle
       % Return the solution for the post processing variable: Time
       %
       res = GoddardRocket_Mex( 'get_solution', self.objectHandle, 'Time' );
+    end
+    function res = post_processing_T( self )
+      %
+      % Return the solution for the post processing variable: T
+      %
+      res = GoddardRocket_Mex( 'get_solution', self.objectHandle, 'T' );
     end
     function res = post_processing_target( self )
       %
@@ -1331,58 +1331,6 @@ classdef GoddardRocket < handle
       res = GoddardRocket_Mex('DD_D_2_2', self.objectHandle, xo__h, xo__v );
     end
     % ---------------------------------------------------------------------
-    function res = gg( self, xo__h )
-      res = GoddardRocket_Mex('gg', self.objectHandle, xo__h );
-    end
-    % ---------------------------------------------------------------------
-    function res = gg_D( self, xo__h )
-      res = GoddardRocket_Mex('gg_D', self.objectHandle, xo__h );
-    end
-    % ---------------------------------------------------------------------
-    function res = gg_DD( self, xo__h )
-      res = GoddardRocket_Mex('gg_DD', self.objectHandle, xo__h );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_1( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_1', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_2( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_2', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_3( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_3', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_1_1( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_1_1', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_1_2( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_1_2', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_1_3( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_1_3', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_2_2( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_2_2', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_2_3( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_2_3', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
-    function res = explog_D_3_3( self, xo__s, xo__a, xo__b )
-      res = GoddardRocket_Mex('explog_D_3_3', self.objectHandle, xo__s, xo__a, xo__b );
-    end
-    % ---------------------------------------------------------------------
     % PLOT SOLUTION
     % ---------------------------------------------------------------------
     function plot_states( self )
@@ -1409,11 +1357,11 @@ classdef GoddardRocket < handle
     % ---------------------------------------------------------------------
     function plot_controls( self )
       plot(...
-        self.zeta(), self.T(), ...
+        self.zeta(), self.w(), ...
         'Linewidth', 2 ...
       );
       title('controls');
-      legend( 'T' );
+      legend( 'w' );
     end
   end
 end

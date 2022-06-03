@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mur_min = -1
-mur_max = 1.0
 muf_min = -1
+mur_max = 1.0
+mur_min = -1
 
 mechatronix do |data|
 
@@ -290,7 +290,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :h => 0.01, :delta2 => 0.0, :delta => 0.0 }
+  data.MappedObjects[:clip] = { :delta2 => 0.0, :delta => 0.0, :h => 0.01 }
 
 
   #                  _             _
@@ -351,8 +351,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 1000.0,
         :length => 1000.0,
+        :n      => 1000.0,
       },
     ],
   };

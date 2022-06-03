@@ -161,7 +161,7 @@ NewtonDumped --- start iterations ---
 [ 69, 4] ( 7.6e-07  , 3.94e-08 ) [ 4.08e-06 , 1.98e-07 ] 0.729      [3:0:0:0:0:0:0:0:0:0:0:0]
 [ 70, 1] ( 3.94e-08 , 2.82e-10 ) [ 2.08e-07 , 2.39e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 71, 1] ( 2.82e-10 , 2.24e-14 ) [ 2.44e-10 , 3.14e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 71, 1] ( 2.82e-10 , 2.24e-14 ) [ 2.44e-10 , 3.01e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.2, old_s=  0.8
 NewtonDumped --- start iterations ---
@@ -188,7 +188,7 @@ NewtonDumped --- start iterations ---
 [ 91, 1] ( 1.05e-06 , 9.92e-08 ) [ 5.54e-08 , 4.54e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 92, 1] ( 9.92e-08 , 2.66e-09 ) [ 6.2e-09  , 2.3e-10  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 93, 1] ( 2.66e-09 , 4.39e-12 ) [ 2.5e-10  , 5.03e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 93, 1] ( 2.66e-09 , 4.4e-12  ) [ 2.5e-10  , 5.03e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -202,7 +202,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 2411          N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 164[ms]       timeout        = 0 [ms]
+Elapsed Time   = 165[ms]       timeout        = 0 [ms]
 iteration      = 93            Memory Used    = 296Kb (+9bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -219,9 +219,9 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 4.0983e-09    last ||d||_inf = 1.7188e-10
-last ||f||_1   = 4.393e-12     last ||d||_1   = 5.034e-13
-last ||f||_2   = 1.1164e-10    last ||d||_2   = 6.8305e-12
+last ||f||_inf = 4.0979e-09    last ||d||_inf = 1.7185e-10
+last ||f||_1   = 4.3965e-12    last ||d||_1   = 5.0324e-13
+last ||f||_2   = 1.1163e-10    last ||d||_2   = 6.8295e-12
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

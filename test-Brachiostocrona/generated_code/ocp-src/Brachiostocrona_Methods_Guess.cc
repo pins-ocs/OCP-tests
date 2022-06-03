@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -250,7 +250,7 @@ namespace BrachiostocronaDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer Brachiostocrona::u_guess_numEqns() const { return 1; }
+  integer Brachiostocrona::u_guess_numEqns() const { return 2; }
 
   void
   Brachiostocrona::u_guess_eval(
@@ -263,10 +263,11 @@ namespace BrachiostocronaDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
+    std::fill_n( UGUESS__.pointer(), 2, 0 );
     UGUESS__[ iU_vtheta ] = 0;
+    UGUESS__[ iU_sz     ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

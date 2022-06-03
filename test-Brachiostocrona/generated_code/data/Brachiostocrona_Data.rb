@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brachiostocrona_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 14/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,11 +20,17 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g  = 9.81
-xf = 5.0
-yf = -2
-Vf = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-Tf = (-2.0*yf/g)**(1/2.0)
+xf             = 5.0
+g              = 9.81
+w_ARG0         = 1.0
+w_ARG          = w_ARG0
+yf             = -2
+Vf             = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf             = (-2.0*yf/g)**(1/2.0)
+mu0            = 0.1
+mu             = mu0
+low_tolerance0 = 0.1
+low_tolerance  = low_tolerance0
 
 mechatronix do |data|
 
@@ -80,7 +86,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
     # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
@@ -227,7 +233,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
   }
 
   #                                       _
@@ -261,8 +267,12 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :g    => g,
-    :mass => 1.0,
+    :g         => g,
+    :mass      => 1.0,
+    :mu        => mu,
+    :w_ARG     => w_ARG,
+    :y0_low    => -0.2,
+    :slope_low => -0.375,
 
     # Guess Parameters
     :Tf => Tf,
@@ -277,6 +287,10 @@ mechatronix do |data|
     # User Function Parameters
 
     # Continuation Parameters
+    :mu0    => mu0,
+    :mu1    => 1e-05,
+    :w_ARG0 => w_ARG0,
+    :w_ARG1 => 100000.0,
 
     # Constraints Parameters
   }
@@ -332,7 +346,7 @@ mechatronix do |data|
     :segments => [
       {
         :length => 1.0,
-        :n      => 500.0,
+        :n      => 100.0,
       },
     ],
   };

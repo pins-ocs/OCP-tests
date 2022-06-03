@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_controls.cc                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -328,7 +328,7 @@ namespace EconomicGrowthModel2Define {
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = Q(XM__[0], XM__[1]);
-    U__[ iU_u ] = uControl.solve(-t4 * LM__[1] + t4 * LM__[3], 0, 1);
+    U__[ iU_u ] = uControl.solve(-t4 * LM__[1] + LM__[3] * t4, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

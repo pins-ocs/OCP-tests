@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: GoddardRocket_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 1/6/2022                                            #
+#  version: 1.0   date 14/6/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,55 +40,55 @@ module GoddardRocket
   class GoddardRocket_model_params < FFI::Struct
     layout(
 
-      :Dc,            :data_t,
+      :D0,             :data_t,
 
-      :Tmax,          :data_t,
+      :Hscale,         :data_t,
 
-      :c,             :data_t,
+      :Tmax,           :data_t,
 
-      :g0,            :data_t,
+      :Ve,             :data_t,
 
-      :h_i,           :data_t,
+      :epsilon,        :data_t,
 
-      :hc,            :data_t,
+      :g,              :data_t,
 
-      :m_f,           :data_t,
+      :h_i,            :data_t,
 
-      :m_i,           :data_t,
+      :m_f,            :data_t,
 
-      :v_i,           :data_t,
+      :m_i,            :data_t,
 
-      :epsi_TS_max,   :data_t,
+      :v_i,            :data_t,
 
-      :epsi_TS_min,   :data_t,
+      :TimeSize_guess, :data_t,
 
-      :epsi_T_max,    :data_t,
+      :epsi_TS_max,    :data_t,
 
-      :epsi_T_min,    :data_t,
+      :epsi_TS_min,    :data_t,
 
-      :epsi_mass_max, :data_t,
+      :epsi_mass_max,  :data_t,
 
-      :epsi_mass_min, :data_t,
+      :epsi_mass_min,  :data_t,
 
-      :epsi_v_max,    :data_t,
+      :epsi_v_max,     :data_t,
 
-      :epsi_v_min,    :data_t,
+      :epsi_v_min,     :data_t,
 
-      :tol_TS_max,    :data_t,
+      :epsilon0,       :data_t,
 
-      :tol_TS_min,    :data_t,
+      :epsilon1,       :data_t,
 
-      :tol_T_max,     :data_t,
+      :tol_TS_max,     :data_t,
 
-      :tol_T_min,     :data_t,
+      :tol_TS_min,     :data_t,
 
-      :tol_mass_max,  :data_t,
+      :tol_mass_max,   :data_t,
 
-      :tol_mass_min,  :data_t,
+      :tol_mass_min,   :data_t,
 
-      :tol_v_max,     :data_t,
+      :tol_v_max,      :data_t,
 
-      :tol_v_min,     :data_t,
+      :tol_v_min,      :data_t,
 
     )
 
@@ -137,9 +137,6 @@ module GoddardRocket
       # 2D constraints
 
       # Controls
-      :TControlType,      :index_t,
-      :TControlEpsilon,   :data_t,
-      :TControlTolerance, :data_t,
     )
 
     def initialize

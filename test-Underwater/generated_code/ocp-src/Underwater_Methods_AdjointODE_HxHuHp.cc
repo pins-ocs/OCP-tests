@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -224,9 +224,9 @@ namespace UnderwaterDefine {
     result__[ 16  ] = result__[7];
     result__[ 17  ] = result__[11];
     result__[ 18  ] = result__[14];
-    result__[ 19  ] = t47 * t45;
-    result__[ 20  ] = t36 * t34;
-    result__[ 21  ] = t32 * t26;
+    result__[ 19  ] = t45 * t47;
+    result__[ 20  ] = t34 * t36;
+    result__[ 21  ] = t26 * t32;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 22, i_segment );
   }

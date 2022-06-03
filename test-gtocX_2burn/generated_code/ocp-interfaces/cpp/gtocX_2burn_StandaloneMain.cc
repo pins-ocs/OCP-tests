@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -174,8 +174,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 gtocX_2burn_data.Mesh["s0"] = 0;
-gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
 gtocX_2burn_data.Mesh["segments"][0]["length"] = 1;
+gtocX_2burn_data.Mesh["segments"][0]["n"] = 50;
 
 
     // alias for user object classes passed as pointers

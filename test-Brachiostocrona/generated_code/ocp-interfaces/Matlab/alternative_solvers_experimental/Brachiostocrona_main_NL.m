@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona_fsolve_main.m                                  %
 %                                                                       %
-%  version: 1.0   date 1/6/2022                                         %
+%  version: 1.0   date 14/6/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %

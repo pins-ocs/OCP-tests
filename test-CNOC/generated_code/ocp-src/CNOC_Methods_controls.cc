@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -539,8 +539,8 @@ namespace CNOCDefine {
     real_type t98  = t87 * t84;
     real_type t103 = pow(V__[2] + t1 * (-t12 * t14 * t98 - t34), 2);
     real_type t110 = pow(V__[3] + t1 * (t13 * t84 * t87 - t44), 2);
-    real_type t117 = pow(V__[4] + t1 * (-t12 * t44 * t98 - t2), 2);
-    real_type t124 = pow(V__[5] + t1 * (t12 * t34 * t98 - t7), 2);
+    real_type t117 = pow(V__[4] + t1 * (-t98 * t44 * t12 - t2), 2);
+    real_type t124 = pow(V__[5] + t1 * (t98 * t34 * t12 - t7), 2);
     real_type t126 = V__[6] * V__[6];
     real_type t127 = t1 * t66 + t1 * t69 + t1 * t78 + t1 * t81 + t103 + t110 + t117 + t124 + t126 + t91 + t95;
     real_type result__ = t1 * t22 + t1 * t29 + t1 * t32 + t1 * t39 + t1 * t42 + t1 * t49 + t1 * t5 + t1 * t52 + t1 * t9 + t11 + t127;

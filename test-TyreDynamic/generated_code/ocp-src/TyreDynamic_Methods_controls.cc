@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -450,7 +450,7 @@ namespace TyreDynamicDefine {
     result__[ 0   ] = -2 * V__[3] * ModelPars[iM_tau__p] * t1 + t4 * t2 + 2 * t3 - 2 * X__[iX_p];
     real_type t14  = U__[iU_b__o];
     real_type t15  = ALIAS_b__oControl_D_1(t14, -1, 1);
-    result__[ 1   ] = -2 * t1 * V__[4] * ModelPars[iM_tau__b] + t15 * t2 + 2 * t14 - 2 * X__[iX_b];
+    result__[ 1   ] = -2 * V__[4] * ModelPars[iM_tau__b] * t1 + t15 * t2 + 2 * t14 - 2 * X__[iX_b];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }
@@ -481,9 +481,9 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1.0 / X__[iX_v];
     real_type t4   = ALIAS_p__oControl_D_1_1(U__[iU_p__o], -1, 1);
-    result__[ 0   ] = t4 * t2 + 2;
+    result__[ 0   ] = t2 * t4 + 2;
     real_type t7   = ALIAS_b__oControl_D_1_1(U__[iU_b__o], -1, 1);
-    result__[ 1   ] = t7 * t2 + 2;
+    result__[ 1   ] = t2 * t7 + 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }

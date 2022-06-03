@@ -1,0 +1,1534 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		00F16C455FB54EECAC94699F /* install */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7DC0F35989A84A05B10E4F03 /* Build configuration list for PBXAggregateTarget "install" */;
+			buildPhases = (
+				93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */,
+			);
+			dependencies = (
+				D649BE46F1C34DCFABFCC5BC /* PBXTargetDependency */,
+			);
+			name = install;
+			productName = install;
+		};
+		A8F402C4ED66487A8164BDC1 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 8BA7CA9C885C4DE0AFDE1653 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				6D439BEA0C8F4281E74C73C2 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				A7D445A151F04EE486849DFA /* PBXTargetDependency */,
+				E601E73752B148618E1798F7 /* PBXTargetDependency */,
+				6E9B532425734A4998582DC7 /* PBXTargetDependency */,
+				AE34943CE19E45F192FC09B0 /* PBXTargetDependency */,
+				5EEF102FEE5D478383E850FB /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 35A3EFC9CA114CEE876B44A8 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				FEEFA8FBDF0F201DD5817CA8 /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		024E396E8611414FA8BE8429 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = E1596C0A94584A098C0F2BA2 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */; };
+		1AE3184B646C41F0A9F7ED56 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc */ = {isa = PBXBuildFile; fileRef = A601624E1800409490AEE8E9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc */; };
+		28E49C727A4D4EEDB6ACC748 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 20CE48CBC8B346F9BE19493B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */; };
+		47C3D024421146D9BC60CCC5 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_pins.cc */ = {isa = PBXBuildFile; fileRef = 8E590BBBCB524993B2E5080A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_pins.cc */; };
+		560E067694B240689F66FC1F /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_problem.cc */ = {isa = PBXBuildFile; fileRef = 89AF9419E5E14B3CA0943913 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_problem.cc */; };
+		7A7068693A9E4793BB005F19 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_ODE.cc */ = {isa = PBXBuildFile; fileRef = E933E063289E4043BEBB14AE /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_ODE.cc */; };
+		8F7D3A81C4C949A6BD2EC112 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_controls.cc */ = {isa = PBXBuildFile; fileRef = B473616AB63C4AA48647C415 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_controls.cc */; };
+		A5C6E9E49D2E4FE19558BA2E /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Guess.cc */ = {isa = PBXBuildFile; fileRef = B58A351262B04C2F8038B9D8 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Guess.cc */; };
+		A84BD2C83FCE41A4951603FE /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc */ = {isa = PBXBuildFile; fileRef = 716965A1282C4007B32E55C9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc */; };
+		AE2C5A26AFE9423F863EC65E /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona.cc */ = {isa = PBXBuildFile; fileRef = 8F0976C9F8C94D9CB2D113FB /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona.cc */; };
+		AE91C315C145432DB0E3876F /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Direct.cc */ = {isa = PBXBuildFile; fileRef = 3EDF40E60F9448E0B87AFD79 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Direct.cc */; };
+		C19EA5DB15B744E99F2405BF /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_UserFunctions.cc */ = {isa = PBXBuildFile; fileRef = E693F672A9D34408B9375353 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_UserFunctions.cc */; };
+		C85BC418EAAB4AD3B2064CFC /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_ruby.cc */ = {isa = PBXBuildFile; fileRef = DB89E878CCEE4959AF474954 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_ruby.cc */; };
+		CB3881A761824953BFE3D4F8 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 1F042F29FB364119A984495A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */; };
+		E8280CC12E7F4E22B2A421CD /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc */ = {isa = PBXBuildFile; fileRef = FCB336B624C34670BD418047 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc */; };
+		F7674C4019E442969687B6BB /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXBuildFile; fileRef = 1D5C5EBA034C4E4DBB59A250 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */; };
+		FC670EDF012140039A8B4E11 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-interfaces/cpp/Brachiostocrona_Main.cc */ = {isa = PBXBuildFile; fileRef = B96D7926AD834FF1BAC2AF6B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-interfaces/cpp/Brachiostocrona_Main.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		020328B7D3414F3AA4BDBD42 /* Release */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Release;
+		};
+		850A6EE6574D487599BA920F /* RelWithDebInfo */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = RelWithDebInfo;
+		};
+		B8E59E70E43A4D7DBD701F69 /* MinSizeRel */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = MinSizeRel;
+		};
+		FA653EFD9C454225AF01AD8B /* Debug */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXContainerItemProxy section */
+		2A0FC958FDE34F988BC5A2DD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BDB474DDA044F85BDB75F67;
+			remoteInfo = objlib;
+		};
+		2A78D10A278A4C93A9F07559 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F478BB9F02F6402D899ADBD0;
+			remoteInfo = ZERO_CHECK;
+		};
+		2DB19A86A0394F2EA86818B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A8F402C4ED66487A8164BDC1;
+			remoteInfo = ALL_BUILD;
+		};
+		3F7DCE1426624C1994A6FB1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DF275D798D5456AAC952E0D;
+			remoteInfo = Brachiostocrona;
+		};
+		4B19007A2358403CAF9F7D70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC40F82AABA34B2E8EA7D2CD;
+			remoteInfo = Brachiostocrona_static;
+		};
+		5BC18BD2E8654BAD95F49BE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F478BB9F02F6402D899ADBD0;
+			remoteInfo = ZERO_CHECK;
+		};
+		6057342674F045B9AF4FF578 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC40F82AABA34B2E8EA7D2CD;
+			remoteInfo = Brachiostocrona_static;
+		};
+		7221A76671E248ACA7C8179B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BDB474DDA044F85BDB75F67;
+			remoteInfo = objlib;
+		};
+		77D20471F94E4D30A421D244 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AE84CFFD34F64BE4BF497F59;
+			remoteInfo = main;
+		};
+		AFE515ED815C4C34BDB3C337 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F478BB9F02F6402D899ADBD0;
+			remoteInfo = ZERO_CHECK;
+		};
+		B4CB7E692CC743BB92EC0BC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BDB474DDA044F85BDB75F67;
+			remoteInfo = objlib;
+		};
+		B709B0E17BCA45BBA43D284E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F478BB9F02F6402D899ADBD0;
+			remoteInfo = ZERO_CHECK;
+		};
+		F43E238C1EA04BF0ABF5EE46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FA992BE4904AE494166769 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F478BB9F02F6402D899ADBD0;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0BCEF5C24D01444E92A0DA60 /* main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = main; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D5C5EBA034C4E4DBB59A250 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		1F042F29FB364119A984495A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		20CE48CBC8B346F9BE19493B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		3EDF40E60F9448E0B87AFD79 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Direct.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_Direct.cc; path = "ocp-src/Brachiostocrona_Methods_Direct.cc"; sourceTree = SOURCE_ROOT; };
+		43913E59E4F74E2FAA04208C /* objlib */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libobjlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BFF519839B54C7386F601BF /* Brachiostocrona_static */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBrachiostocrona_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		54C0D01A920A480EAA475B77 /* Brachiostocrona */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; path = libBrachiostocrona.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		5525575A7F8E4A9D85F2D2F0 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		716965A1282C4007B32E55C9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_boundary_conditions.cc; path = "ocp-src/Brachiostocrona_Methods_boundary_conditions.cc"; sourceTree = SOURCE_ROOT; };
+		89AF9419E5E14B3CA0943913 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_problem.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_problem.cc; path = "ocp-src/Brachiostocrona_Methods_problem.cc"; sourceTree = SOURCE_ROOT; };
+		8E590BBBCB524993B2E5080A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_pins.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_dll_pins.cc; path = "ocp-src/Brachiostocrona_dll_pins.cc"; sourceTree = SOURCE_ROOT; };
+		8F0976C9F8C94D9CB2D113FB /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona.cc; path = "ocp-src/Brachiostocrona.cc"; sourceTree = SOURCE_ROOT; };
+		A601624E1800409490AEE8E9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_AdjointODE_JuJpLT.cc; path = "ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc"; sourceTree = SOURCE_ROOT; };
+		B473616AB63C4AA48647C415 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_controls.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_controls.cc; path = "ocp-src/Brachiostocrona_Methods_controls.cc"; sourceTree = SOURCE_ROOT; };
+		B58A351262B04C2F8038B9D8 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Guess.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_Guess.cc; path = "ocp-src/Brachiostocrona_Methods_Guess.cc"; sourceTree = SOURCE_ROOT; };
+		B96D7926AD834FF1BAC2AF6B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-interfaces/cpp/Brachiostocrona_Main.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Main.cc; path = "ocp-interfaces/cpp/Brachiostocrona_Main.cc"; sourceTree = SOURCE_ROOT; };
+		DB89E878CCEE4959AF474954 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_ruby.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_dll_ruby.cc; path = "ocp-src/Brachiostocrona_dll_ruby.cc"; sourceTree = SOURCE_ROOT; };
+		E1596C0A94584A098C0F2BA2 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; name = CMakeLists.txt; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		E693F672A9D34408B9375353 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_UserFunctions.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_UserFunctions.cc; path = "ocp-src/Brachiostocrona_Methods_UserFunctions.cc"; sourceTree = SOURCE_ROOT; };
+		E933E063289E4043BEBB14AE /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_ODE.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_ODE.cc; path = "ocp-src/Brachiostocrona_Methods_ODE.cc"; sourceTree = SOURCE_ROOT; };
+		FCB336B624C34670BD418047 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Brachiostocrona_Methods_AdjointODE_HxHuHp.cc; path = "ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		11A1736D51D04CC598FA2B68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C6B98CC92DB4227A42AA304 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA4EAE072EF4D7480A95DC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9828504C0464E98B239665F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		038AFA96D5FB4455B07B08D9 = {
+			isa = PBXGroup;
+			children = (
+				0BD8664873C54E0CA4CB2757 /* objlib */,
+				BC3A1268E8074E0C8A11A2ED /* Brachiostocrona */,
+				7B84EB1FF367471EAABC0EC7 /* Brachiostocrona_static */,
+				6970E1746F784AF396AEBE0D /* main */,
+				D2E8F384821C47118E2664D7 /* ALL_BUILD */,
+				59D931814170483A9A0039C2 /* Products */,
+				B2E5C6870D1B4811B8426F1C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		0BD8664873C54E0CA4CB2757 /* objlib */ = {
+			isa = PBXGroup;
+			children = (
+				7FEC834FA085488A9D24C611 /* Source Files */,
+				E1596C0A94584A098C0F2BA2 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */,
+			);
+			name = objlib;
+			sourceTree = "<group>";
+		};
+		59D931814170483A9A0039C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54C0D01A920A480EAA475B77 /* Brachiostocrona */,
+				4BFF519839B54C7386F601BF /* Brachiostocrona_static */,
+				0BCEF5C24D01444E92A0DA60 /* main */,
+				43913E59E4F74E2FAA04208C /* objlib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6970E1746F784AF396AEBE0D /* main */ = {
+			isa = PBXGroup;
+			children = (
+				703364C47A1C4746A1BB880B /* Source Files */,
+				1D5C5EBA034C4E4DBB59A250 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		703364C47A1C4746A1BB880B /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				B96D7926AD834FF1BAC2AF6B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-interfaces/cpp/Brachiostocrona_Main.cc */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		7B84EB1FF367471EAABC0EC7 /* Brachiostocrona_static */ = {
+			isa = PBXGroup;
+			children = (
+				20CE48CBC8B346F9BE19493B /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */,
+			);
+			name = Brachiostocrona_static;
+			sourceTree = "<group>";
+		};
+		7FEC834FA085488A9D24C611 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F0976C9F8C94D9CB2D113FB /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona.cc */,
+				FCB336B624C34670BD418047 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc */,
+				A601624E1800409490AEE8E9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc */,
+				3EDF40E60F9448E0B87AFD79 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Direct.cc */,
+				B58A351262B04C2F8038B9D8 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Guess.cc */,
+				E933E063289E4043BEBB14AE /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_ODE.cc */,
+				E693F672A9D34408B9375353 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_UserFunctions.cc */,
+				716965A1282C4007B32E55C9 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc */,
+				B473616AB63C4AA48647C415 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_controls.cc */,
+				89AF9419E5E14B3CA0943913 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_problem.cc */,
+				8E590BBBCB524993B2E5080A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_pins.cc */,
+				DB89E878CCEE4959AF474954 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_ruby.cc */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		873D0C16AD194C48970F625A /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		B2E5C6870D1B4811B8426F1C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BC3A1268E8074E0C8A11A2ED /* Brachiostocrona */ = {
+			isa = PBXGroup;
+			children = (
+				1F042F29FB364119A984495A /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */,
+			);
+			name = Brachiostocrona;
+			sourceTree = "<group>";
+		};
+		D2E8F384821C47118E2664D7 /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				873D0C16AD194C48970F625A /* CMake Rules */,
+				5525575A7F8E4A9D85F2D2F0 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4DF275D798D5456AAC952E0D /* Brachiostocrona */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B941E9C2BA04104A7DEEBAE /* Build configuration list for PBXNativeTarget "Brachiostocrona" */;
+			buildPhases = (
+				ABA4EAE072EF4D7480A95DC3 /* Frameworks */,
+				1998CFF94203C19AED83441D /* CMake PostBuild Rules */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0C2C0C9749864F48A3260772 /* PBXTargetDependency */,
+				3CC37D47CCBF485297455C2B /* PBXTargetDependency */,
+			);
+			name = Brachiostocrona;
+			productName = Brachiostocrona;
+			productReference = 54C0D01A920A480EAA475B77 /* Brachiostocrona */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		8BDB474DDA044F85BDB75F67 /* objlib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5C53726B62745CF8B371F2B /* Build configuration list for PBXNativeTarget "objlib" */;
+			buildPhases = (
+				433C0A7169854EF0A5B0584C /* Sources */,
+				C9828504C0464E98B239665F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D454D37D2F64C7FB968DE25 /* PBXTargetDependency */,
+			);
+			name = objlib;
+			productName = objlib;
+			productReference = 43913E59E4F74E2FAA04208C /* objlib */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AE84CFFD34F64BE4BF497F59 /* main */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34CC521E8BDD44F99C822FEE /* Build configuration list for PBXNativeTarget "main" */;
+			buildPhases = (
+				34E597E85044432CA8C41002 /* Sources */,
+				3C6B98CC92DB4227A42AA304 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9322C263342049A19BC260FF /* PBXTargetDependency */,
+				45B769BF199B428F808EAD7F /* PBXTargetDependency */,
+			);
+			name = main;
+			productName = main;
+			productReference = 0BCEF5C24D01444E92A0DA60 /* main */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC40F82AABA34B2E8EA7D2CD /* Brachiostocrona_static */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 45773EF56BA24FB2BB3AED00 /* Build configuration list for PBXNativeTarget "Brachiostocrona_static" */;
+			buildPhases = (
+				11A1736D51D04CC598FA2B68 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0BAC45D9C9734A3EB78594B5 /* PBXTargetDependency */,
+				8BF79F80A95C49CF90747223 /* PBXTargetDependency */,
+			);
+			name = Brachiostocrona_static;
+			productName = Brachiostocrona_static;
+			productReference = 4BFF519839B54C7386F601BF /* Brachiostocrona_static */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F9FA992BE4904AE494166769 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1340;
+			};
+			buildConfigurationList = 338D6A92D16A4913AB2957A5 /* Build configuration list for PBXProject "Brachiostocrona" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				FA653EFD9C454225AF01AD8B /* Debug */,
+				020328B7D3414F3AA4BDBD42 /* Release */,
+				B8E59E70E43A4D7DBD701F69 /* MinSizeRel */,
+				850A6EE6574D487599BA920F /* RelWithDebInfo */,
+			);
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 0;
+			mainGroup = 038AFA96D5FB4455B07B08D9;
+			projectDirPath = ../;
+			projectRoot = "";
+			targets = (
+				A8F402C4ED66487A8164BDC1 /* ALL_BUILD */,
+				4DF275D798D5456AAC952E0D /* Brachiostocrona */,
+				DC40F82AABA34B2E8EA7D2CD /* Brachiostocrona_static */,
+				F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */,
+				00F16C455FB54EECAC94699F /* install */,
+				AE84CFFD34F64BE4BF497F59 /* main */,
+				8BDB474DDA044F85BDB75F67 /* objlib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1998CFF94203C19AED83441D /* CMake PostBuild Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake PostBuild Rules";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Debug/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Debug/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Debug/libBrachiostocrona.dylib
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Release/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Release/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Release/libBrachiostocrona.dylib
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/MinSizeRel/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/MinSizeRel/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/MinSizeRel/libBrachiostocrona.dylib
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -E cmake_symlink_library /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/RelWithDebInfo/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/RelWithDebInfo/libBrachiostocrona.dylib /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/RelWithDebInfo/libBrachiostocrona.dylib
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		3C0110FC8322DE7E50886E21 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		6D439BEA0C8F4281E74C73C2 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+"/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeFiles/ALL_BUILD"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  echo Build\\ all\\ projects
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  echo Build\\ all\\ projects
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		87AF4882E018677E2624B544 = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		93426DA6A4AC2C2AC9CE883C /* CMake PostBuild Rules */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "CMake PostBuild Rules";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  /usr/local/Cellar/cmake/3.23.2/bin/cmake -DBUILD_TYPE=$CONFIGURATION$EFFECTIVE_PLATFORM_NAME -P cmake_install.cmake
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+		9B50530E35CC49C82C2FACCF = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here
+exit 0";
+			showEnvVarsInLog = 0;
+		};
+		FEEFA8FBDF0F201DD5817CA8 /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+"/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeFiles/ZERO_CHECK"			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e
+if test \"$CONFIGURATION\" = \"Debug\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  make -f /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"Release\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  make -f /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"MinSizeRel\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  make -f /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeScripts/ReRunCMake.make
+fi
+if test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :
+  cd /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode
+  make -f /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/CMakeScripts/ReRunCMake.make
+fi
+";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		34E597E85044432CA8C41002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC670EDF012140039A8B4E11 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-interfaces/cpp/Brachiostocrona_Main.cc */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		433C0A7169854EF0A5B0584C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE2C5A26AFE9423F863EC65E /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona.cc */,
+				E8280CC12E7F4E22B2A421CD /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_HxHuHp.cc */,
+				1AE3184B646C41F0A9F7ED56 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_AdjointODE_JuJpLT.cc */,
+				AE91C315C145432DB0E3876F /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Direct.cc */,
+				A5C6E9E49D2E4FE19558BA2E /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_Guess.cc */,
+				7A7068693A9E4793BB005F19 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_ODE.cc */,
+				C19EA5DB15B744E99F2405BF /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_UserFunctions.cc */,
+				A84BD2C83FCE41A4951603FE /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_boundary_conditions.cc */,
+				8F7D3A81C4C949A6BD2EC112 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_controls.cc */,
+				560E067694B240689F66FC1F /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_Methods_problem.cc */,
+				47C3D024421146D9BC60CCC5 /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_pins.cc */,
+				C85BC418EAAB4AD3B2064CFC /* /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src/Brachiostocrona_dll_ruby.cc */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0BAC45D9C9734A3EB78594B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */;
+			targetProxy = B709B0E17BCA45BBA43D284E /* PBXContainerItemProxy */;
+		};
+		0C2C0C9749864F48A3260772 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */;
+			targetProxy = AFE515ED815C4C34BDB3C337 /* PBXContainerItemProxy */;
+		};
+		1D454D37D2F64C7FB968DE25 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */;
+			targetProxy = F43E238C1EA04BF0ABF5EE46 /* PBXContainerItemProxy */;
+		};
+		3CC37D47CCBF485297455C2B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BDB474DDA044F85BDB75F67 /* objlib */;
+			targetProxy = 2A0FC958FDE34F988BC5A2DD /* PBXContainerItemProxy */;
+		};
+		45B769BF199B428F808EAD7F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC40F82AABA34B2E8EA7D2CD /* Brachiostocrona_static */;
+			targetProxy = 6057342674F045B9AF4FF578 /* PBXContainerItemProxy */;
+		};
+		5EEF102FEE5D478383E850FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AE84CFFD34F64BE4BF497F59 /* main */;
+			targetProxy = 77D20471F94E4D30A421D244 /* PBXContainerItemProxy */;
+		};
+		6E9B532425734A4998582DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DF275D798D5456AAC952E0D /* Brachiostocrona */;
+			targetProxy = 3F7DCE1426624C1994A6FB1D /* PBXContainerItemProxy */;
+		};
+		8BF79F80A95C49CF90747223 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BDB474DDA044F85BDB75F67 /* objlib */;
+			targetProxy = 7221A76671E248ACA7C8179B /* PBXContainerItemProxy */;
+		};
+		9322C263342049A19BC260FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */;
+			targetProxy = 5BC18BD2E8654BAD95F49BE8 /* PBXContainerItemProxy */;
+		};
+		A7D445A151F04EE486849DFA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F478BB9F02F6402D899ADBD0 /* ZERO_CHECK */;
+			targetProxy = 2A78D10A278A4C93A9F07559 /* PBXContainerItemProxy */;
+		};
+		AE34943CE19E45F192FC09B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC40F82AABA34B2E8EA7D2CD /* Brachiostocrona_static */;
+			targetProxy = 4B19007A2358403CAF9F7D70 /* PBXContainerItemProxy */;
+		};
+		D649BE46F1C34DCFABFCC5BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A8F402C4ED66487A8164BDC1 /* ALL_BUILD */;
+			targetProxy = 2DB19A86A0394F2EA86818B1 /* PBXContainerItemProxy */;
+		};
+		E601E73752B148618E1798F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BDB474DDA044F85BDB75F67 /* objlib */;
+			targetProxy = B4CB7E692CC743BB92EC0BC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E09C37D509E46358FB7A12B /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/build";
+			};
+			name = RelWithDebInfo;
+		};
+		1044142E46CF4F0B93C5EEAE /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		12B40876CF64431AB5047011 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",Brachiostocrona_EXPORTS,_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Debug";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		15BDAAED9ADE425B93078A76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/build";
+			};
+			name = Debug;
+		};
+		1AF8C60E73CB4245B03233A4 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		1F3AC97A88604E55B8F321FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		1F9BD2FBFA19427BA970D6A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",Brachiostocrona_EXPORTS,_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Release";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		2413890F80BD4EDCBB10DE9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Debug/libBrachiostocrona_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		3B3E415F1B704CEE818216E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Release/libBrachiostocrona_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		3FA7E194F507410F823C25C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Brachiostocrona.build/Debug/objlib.build/";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -fPIC ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = objlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		50BEB52F29BA493A8004B8DE /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		5C719443814442DAB0187159 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		694517D43EA542A7968DEC71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		71E2C2CB1A08452BA2EE01CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		73F328C3261B4D1DB772F191 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Brachiostocrona.build/RelWithDebInfo/objlib.build/";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include        -DNDEBUG -fPIC ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = objlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		764DF38BCEDB49A08919CB54 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		822B6465C4E4410398321A13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		870B420DF7DD4D4B8A4CE8AC /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",Brachiostocrona_EXPORTS,_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/MinSizeRel";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		89ABE9AB97E444FD8902A663 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/build";
+			};
+			name = MinSizeRel;
+		};
+		8CE2F43E371844CD9118A3EC /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include        -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/RelWithDebInfo/libBrachiostocrona_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		8D37FEB543E94E4D8542E506 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		8FAFC4333DA747B7A55144DA /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = "";
+				DYLIB_CURRENT_VERSION = "";
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .dylib;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",Brachiostocrona_EXPORTS,_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/RelWithDebInfo";
+				LIBRARY_STYLE = DYNAMIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include        -DNDEBUG -fPIC ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -dynamiclib -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		9A8723D08E7B43D48B0E2088 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include        -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		9BCBD634AA52485EA55FFF22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk;
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/build";
+			};
+			name = Release;
+		};
+		9FE7129FD7A047E1BB2154C7 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = RelWithDebInfo;
+		};
+		A5D65FA60B594B6A8D296E29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = install;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		ADDBA5BE9C2D4A2DB585AFB0 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Brachiostocrona.build/MinSizeRel/objlib.build/";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG -fPIC ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = objlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		B17BAB0C996A484DA1437BDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include -std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include ";
+				OTHER_LIBTOOLFLAGS = ("","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Debug;
+		};
+		B7D1B616B05C4AFDBEFC732A /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = lib;
+				EXECUTABLE_SUFFIX = .a;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG ";
+				OTHER_LIBTOOLFLAGS = ("","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_HxHuHp.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_AdjointODE_JuJpLT.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Direct.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_Guess.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_ODE.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_UserFunctions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_boundary_conditions.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_controls.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_Methods_problem.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_pins.o","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/$(PROJECT_NAME).build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/objlib.build/$(OBJECT_FILE_DIR_normal:base)/x86_64/Brachiostocrona_dll_ruby.o");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Brachiostocrona_static;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		D458F2B535F34BD5838CA082 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'","$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = ("","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+		DA9438A1A79745DDA40235F3 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG ";
+				OTHER_LDFLAGS = ("-F/Library/Frameworks -L/usr/local/lib -Xlinker -rpath -Xlinker /Library/Frameworks -Xlinker -rpath -Xlinker . -Wl,-search_paths_first -Wl,-headerpad_max_install_names","/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/MinSizeRel/libBrachiostocrona_static.a","-F/Library/Frameworks -framework MechatronixODE -framework MechatronixSolver -framework MechatronixVehicle -framework MechatronixManufacturing -framework MechatronixRoad -framework MechatronixInterfaceMruby -framework MechatronixNLSolver -framework MechatronixCore -framework Accelerate","$(inherited)");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = main;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = MinSizeRel;
+		};
+		DE89BD7231AC49A787B87255 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode/Brachiostocrona.build/Release/objlib.build/";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = ("'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",_USE_MATH_DEFINES,"$(inherited)");
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = ("/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/ocp-src","$(inherited)");
+				INSTALL_PATH = "";
+				LIBRARY_STYLE = STATIC;
+				OTHER_CPLUSPLUSFLAGS = "-std=c++11                -F/Library/Frameworks -fPIC -arch x86_64        -fcolor-diagnostics -I/usr/local/include     -DNDEBUG -fPIC ";
+				OTHER_LIBTOOLFLAGS = ("");
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = objlib;
+				SECTORDER_FLAGS = "";
+				SYMROOT = "/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/Xcode";
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = ("$(inherited)");
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1B941E9C2BA04104A7DEEBAE /* Build configuration list for PBXNativeTarget "Brachiostocrona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				12B40876CF64431AB5047011 /* Debug */,
+				1F9BD2FBFA19427BA970D6A0 /* Release */,
+				870B420DF7DD4D4B8A4CE8AC /* MinSizeRel */,
+				8FAFC4333DA747B7A55144DA /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		338D6A92D16A4913AB2957A5 /* Build configuration list for PBXProject "Brachiostocrona" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15BDAAED9ADE425B93078A76 /* Debug */,
+				9BCBD634AA52485EA55FFF22 /* Release */,
+				89ABE9AB97E444FD8902A663 /* MinSizeRel */,
+				0E09C37D509E46358FB7A12B /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		34CC521E8BDD44F99C822FEE /* Build configuration list for PBXNativeTarget "main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2413890F80BD4EDCBB10DE9A /* Debug */,
+				3B3E415F1B704CEE818216E6 /* Release */,
+				DA9438A1A79745DDA40235F3 /* MinSizeRel */,
+				8CE2F43E371844CD9118A3EC /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		35A3EFC9CA114CEE876B44A8 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C719443814442DAB0187159 /* Debug */,
+				71E2C2CB1A08452BA2EE01CA /* Release */,
+				50BEB52F29BA493A8004B8DE /* MinSizeRel */,
+				8D37FEB543E94E4D8542E506 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		45773EF56BA24FB2BB3AED00 /* Build configuration list for PBXNativeTarget "Brachiostocrona_static" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B17BAB0C996A484DA1437BDF /* Debug */,
+				1F3AC97A88604E55B8F321FF /* Release */,
+				B7D1B616B05C4AFDBEFC732A /* MinSizeRel */,
+				9A8723D08E7B43D48B0E2088 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7DC0F35989A84A05B10E4F03 /* Build configuration list for PBXAggregateTarget "install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D65FA60B594B6A8D296E29 /* Debug */,
+				822B6465C4E4410398321A13 /* Release */,
+				1044142E46CF4F0B93C5EEAE /* MinSizeRel */,
+				9FE7129FD7A047E1BB2154C7 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8BA7CA9C885C4DE0AFDE1653 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				694517D43EA542A7968DEC71 /* Debug */,
+				D458F2B535F34BD5838CA082 /* Release */,
+				764DF38BCEDB49A08919CB54 /* MinSizeRel */,
+				1AF8C60E73CB4245B03233A4 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B5C53726B62745CF8B371F2B /* Build configuration list for PBXNativeTarget "objlib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FA7E194F507410F823C25C8 /* Debug */,
+				DE89BD7231AC49A787B87255 /* Release */,
+				ADDBA5BE9C2D4A2DB585AFB0 /* MinSizeRel */,
+				73F328C3261B4D1DB772F191 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F9FA992BE4904AE494166769 /* Project object */;
+}

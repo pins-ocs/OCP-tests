@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -128,7 +128,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DJPDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DJPDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DJPDxpu_numCols() const { return 7; }
   integer Brachiostocrona::DJPDxpu_nnz()     const { return 0; }
 
   void
@@ -149,7 +149,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DLTDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DLTDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DLTDxpu_numCols() const { return 7; }
   integer Brachiostocrona::DLTDxpu_nnz()     const { return 0; }
 
   void
@@ -170,7 +170,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DJUDxpu_numRows() const { return 1; }
-  integer Brachiostocrona::DJUDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DJUDxpu_numCols() const { return 7; }
   integer Brachiostocrona::DJUDxpu_nnz()     const { return 2; }
 
   void
@@ -201,7 +201,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DLTargsDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DLTargsDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DLTargsDxpu_numCols() const { return 7; }
   integer Brachiostocrona::DLTargsDxpu_nnz()     const { return 0; }
 
   void
@@ -223,8 +223,8 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2JPD2xpu_numRows() const { return 6; }
-  integer Brachiostocrona::D2JPD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2JPD2xpu_numRows() const { return 7; }
+  integer Brachiostocrona::D2JPD2xpu_numCols() const { return 7; }
   integer Brachiostocrona::D2JPD2xpu_nnz()     const { return 0; }
 
   void
@@ -246,8 +246,8 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2LTD2xpu_numRows() const { return 6; }
-  integer Brachiostocrona::D2LTD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2LTD2xpu_numRows() const { return 7; }
+  integer Brachiostocrona::D2LTD2xpu_numCols() const { return 7; }
   integer Brachiostocrona::D2LTD2xpu_nnz()     const { return 0; }
 
   void
@@ -269,8 +269,8 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2JUD2xpu_numRows() const { return 6; }
-  integer Brachiostocrona::D2JUD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2JUD2xpu_numRows() const { return 7; }
+  integer Brachiostocrona::D2JUD2xpu_numCols() const { return 7; }
   integer Brachiostocrona::D2JUD2xpu_nnz()     const { return 3; }
 
   void
@@ -306,8 +306,8 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2LTargsD2xpu_numRows() const { return 6; }
-  integer Brachiostocrona::D2LTargsD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2LTargsD2xpu_numRows() const { return 7; }
+  integer Brachiostocrona::D2LTargsD2xpu_numCols() const { return 7; }
   integer Brachiostocrona::D2LTargsD2xpu_nnz()     const { return 0; }
 
   void

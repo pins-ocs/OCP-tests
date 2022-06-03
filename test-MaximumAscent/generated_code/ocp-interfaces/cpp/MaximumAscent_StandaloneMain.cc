@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,18 +50,18 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type days = 1;
-    real_type u0 = 0;
-    real_type T = 0.68;
-    real_type days1 = 30;
-    real_type r0 = 6678140;
+    real_type mu = 398600441800000;
     real_type Isp = 1500;
+    real_type r0 = 6678140;
+    real_type days1 = 30;
+    real_type v0 = (mu/r0)^(1/2.0);
+    real_type days = 1;
+    real_type T = 0.68;
     real_type g0 = 9.80665;
     real_type mdot = T/g0/Isp;
-    real_type mu = 398600441800000;
-    real_type v0 = (mu/r0)^(1/2.0);
-    real_type u0_bar = u0/v0;
     real_type tf = 86400*days;
+    real_type u0 = 0;
+    real_type u0_bar = u0/v0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

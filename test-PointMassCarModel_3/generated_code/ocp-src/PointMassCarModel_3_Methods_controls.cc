@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -225,7 +225,7 @@ namespace PointMassCarModel_3Define {
     real_type t72  = ALIAS_rightWidth(t9);
     real_type t74  = RoadRightBorder(-t8 - t72);
     real_type t83  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t30 * t6 - 1);
-    real_type result__ = t3 * ModelPars[iM_wT] + t3 * t11 * LM__[0] + t3 * t16 * t6 * LM__[1] + (-t10 * t11 + t22) * t3 * LM__[2] + (-ModelPars[iM_kD] * t27 + t30) * t3 * LM__[3] + t3 * ModelPars[iM_v__Omega__max] * t34 * LM__[4] + t3 * ModelPars[iM_v__fx__max] * t40 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
+    real_type result__ = t3 * ModelPars[iM_wT] + t3 * t11 * LM__[0] + t3 * t16 * t6 * LM__[1] + (-t10 * t11 + t22) * t3 * LM__[2] + (-t27 * ModelPars[iM_kD] + t30) * t3 * LM__[3] + t3 * ModelPars[iM_v__Omega__max] * t34 * LM__[4] + t3 * ModelPars[iM_v__fx__max] * t40 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
     if ( m_debug ) {
       UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -599,10 +599,10 @@ namespace PointMassCarModel_3Define {
     real_type t4   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     real_type t7   = ModelPars[iM_v__fx__max] * ModelPars[iM_v__fx__max];
     real_type t8   = t2 * t2;
-    result__[ 0   ] = t4 * t2 + 2 * t8 * t7;
+    result__[ 0   ] = t2 * t4 + 2 * t7 * t8;
     real_type t12  = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     real_type t15  = ModelPars[iM_v__Omega__max] * ModelPars[iM_v__Omega__max];
-    result__[ 1   ] = t12 * t2 + 2 * t8 * t15;
+    result__[ 1   ] = t12 * t2 + 2 * t15 * t8;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }

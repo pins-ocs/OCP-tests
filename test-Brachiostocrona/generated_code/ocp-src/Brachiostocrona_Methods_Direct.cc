@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -103,7 +103,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::Dfd_odeDxxpu_numRows() const { return 4; }
-  integer Brachiostocrona::Dfd_odeDxxpu_numCols() const { return 10; }
+  integer Brachiostocrona::Dfd_odeDxxpu_numCols() const { return 11; }
   integer Brachiostocrona::Dfd_odeDxxpu_nnz()     const { return 22; }
 
   void
@@ -114,19 +114,19 @@ namespace BrachiostocronaDefine {
     iIndex[3 ] = 0   ; jIndex[3 ] = 4   ;
     iIndex[4 ] = 0   ; jIndex[4 ] = 6   ;
     iIndex[5 ] = 0   ; jIndex[5 ] = 7   ;
-    iIndex[6 ] = 0   ; jIndex[6 ] = 9   ;
+    iIndex[6 ] = 0   ; jIndex[6 ] = 10  ;
     iIndex[7 ] = 1   ; jIndex[7 ] = 1   ;
     iIndex[8 ] = 1   ; jIndex[8 ] = 2   ;
     iIndex[9 ] = 1   ; jIndex[9 ] = 3   ;
     iIndex[10] = 1   ; jIndex[10] = 5   ;
     iIndex[11] = 1   ; jIndex[11] = 6   ;
     iIndex[12] = 1   ; jIndex[12] = 7   ;
-    iIndex[13] = 1   ; jIndex[13] = 9   ;
+    iIndex[13] = 1   ; jIndex[13] = 10  ;
     iIndex[14] = 2   ; jIndex[14] = 2   ;
     iIndex[15] = 2   ; jIndex[15] = 3   ;
     iIndex[16] = 2   ; jIndex[16] = 6   ;
     iIndex[17] = 2   ; jIndex[17] = 7   ;
-    iIndex[18] = 2   ; jIndex[18] = 9   ;
+    iIndex[18] = 2   ; jIndex[18] = 10  ;
     iIndex[19] = 3   ; jIndex[19] = 3   ;
     iIndex[20] = 3   ; jIndex[20] = 7   ;
     iIndex[21] = 3   ; jIndex[21] = 8   ;
@@ -198,32 +198,32 @@ namespace BrachiostocronaDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2fd_odeD2xxpu_numRows() const { return 10; }
-  integer Brachiostocrona::D2fd_odeD2xxpu_numCols() const { return 10; }
+  integer Brachiostocrona::D2fd_odeD2xxpu_numRows() const { return 11; }
+  integer Brachiostocrona::D2fd_odeD2xxpu_numCols() const { return 11; }
   integer Brachiostocrona::D2fd_odeD2xxpu_nnz()     const { return 20; }
 
   void
   Brachiostocrona::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 2   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 2   ; jIndex[1 ] = 7   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 9   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 10  ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 2   ;
     iIndex[4 ] = 3   ; jIndex[4 ] = 3   ;
     iIndex[5 ] = 3   ; jIndex[5 ] = 6   ;
     iIndex[6 ] = 3   ; jIndex[6 ] = 7   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 9   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 10  ;
     iIndex[8 ] = 6   ; jIndex[8 ] = 3   ;
     iIndex[9 ] = 6   ; jIndex[9 ] = 7   ;
-    iIndex[10] = 6   ; jIndex[10] = 9   ;
+    iIndex[10] = 6   ; jIndex[10] = 10  ;
     iIndex[11] = 7   ; jIndex[11] = 2   ;
     iIndex[12] = 7   ; jIndex[12] = 3   ;
     iIndex[13] = 7   ; jIndex[13] = 6   ;
     iIndex[14] = 7   ; jIndex[14] = 7   ;
-    iIndex[15] = 7   ; jIndex[15] = 9   ;
-    iIndex[16] = 9   ; jIndex[16] = 2   ;
-    iIndex[17] = 9   ; jIndex[17] = 3   ;
-    iIndex[18] = 9   ; jIndex[18] = 6   ;
-    iIndex[19] = 9   ; jIndex[19] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 10  ;
+    iIndex[16] = 10  ; jIndex[16] = 2   ;
+    iIndex[17] = 10  ; jIndex[17] = 3   ;
+    iIndex[18] = 10  ; jIndex[18] = 6   ;
+    iIndex[19] = 10  ; jIndex[19] = 7   ;
   }
 
 

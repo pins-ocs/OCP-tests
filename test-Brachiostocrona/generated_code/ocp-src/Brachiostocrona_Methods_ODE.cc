@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::Drhs_odeDxpu_numRows() const { return 4; }
-  integer Brachiostocrona::Drhs_odeDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::Drhs_odeDxpu_numCols() const { return 7; }
   integer Brachiostocrona::Drhs_odeDxpu_nnz()     const { return 9; }
 
   void

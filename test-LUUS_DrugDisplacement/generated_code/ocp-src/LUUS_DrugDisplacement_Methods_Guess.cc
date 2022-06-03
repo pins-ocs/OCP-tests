@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_Guess.cc                         |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -257,7 +257,11 @@ namespace LUUS_DrugDisplacementDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = 0;
+    real_type t1   = X__[iX_x1];
+    real_type t2   = X__[iX_x2];
+    real_type t3   = g1(t1, t2);
+    real_type t8   = g3(t1, t2);
+    UGUESS__[ iU_u ] = uControl.solve(-0.2000000000e0 * (0.232e3 * t1 * L__[iL_lambda1__xo] + 5.0 * t8 * L__[iL_lambda2__xo]) * t3, 0, 8);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }

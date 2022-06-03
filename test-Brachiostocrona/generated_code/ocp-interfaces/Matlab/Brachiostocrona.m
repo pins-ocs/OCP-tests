@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brachiostocrona.m                                              %
 %                                                                       %
-%  version: 1.0   date 1/6/2022                                         %
+%  version: 1.0   date 14/6/2022                                        %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -562,6 +562,12 @@ classdef Brachiostocrona < handle
       %
       res = Brachiostocrona_Mex( 'get_solution', self.objectHandle, 'vtheta' );
     end
+    function res = sz( self )
+      %
+      % Return the solution for the control: sz
+      %
+      res = Brachiostocrona_Mex( 'get_solution', self.objectHandle, 'sz' );
+    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -573,6 +579,12 @@ classdef Brachiostocrona < handle
       % Return the solution for the post processing variable: vthetaControl
       %
       res = Brachiostocrona_Mex( 'get_solution', self.objectHandle, 'vthetaControl' );
+    end
+    function res = post_processing_low( self )
+      %
+      % Return the solution for the post processing variable: low
+      %
+      res = Brachiostocrona_Mex( 'get_solution', self.objectHandle, 'low' );
     end
 
     % ---------------------------------------------------------------------
@@ -1313,10 +1325,11 @@ classdef Brachiostocrona < handle
     function plot_controls( self )
       plot(...
         self.zeta(), self.vtheta(), ...
+        self.zeta(), self.sz(), ...
         'Linewidth', 2 ...
       );
       title('controls');
-      legend( 'vth\eta' );
+      legend( 'vth\eta', 'sz' );
     end
   end
 end

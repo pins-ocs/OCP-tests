@@ -45,4 +45,4 @@ dumps
 *.sav
 *.bak
 /**/build
-collected_results/.idea
+/**/.idea

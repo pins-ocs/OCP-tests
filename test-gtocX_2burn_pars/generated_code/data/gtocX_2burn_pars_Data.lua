@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 4/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-ray_epsi = 0.001
 ray_tol  = 0.001
+ray_epsi = 0.001
 
 content = {
 

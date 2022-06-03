@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Crossroad_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -23,8 +23,8 @@ include Mechatronix
 jerk_max = 10.0
 wJ       = 1/jerk_max**2
 L        = 100.0
-jerk_min = -10
 s_f      = L
+jerk_min = -10
 
 mechatronix do |data|
 
@@ -377,12 +377,12 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 0.5,
         :n      => 100.0,
+        :length => 0.5,
       },
       {
-        :length => 0.5,
         :n      => 100.0,
+        :length => 0.5,
       },
     ],
   };

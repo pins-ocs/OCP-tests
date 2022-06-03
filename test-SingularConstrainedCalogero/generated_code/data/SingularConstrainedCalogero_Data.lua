@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Data.lua                           |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -310,8 +310,8 @@ content = {
     segments = {
       
       {
-        n      = 600.0,
         length = 3.0,
+        n      = 600.0,
       },
     },
   },

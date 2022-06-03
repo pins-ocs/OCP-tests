@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Pars.hh                                        |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -19,20 +19,20 @@
 #define BRACHIOSTOCRONAPARS_DOT_HH
 
 #define numBc                    5
-#define numModelPars             6
+#define numModelPars             14
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
 #define numConstraintU           1
 #define numXvars                 4
 #define numLvars                 4
-#define numUvars                 1
+#define numUvars                 2
 #define numOMEGAvars             5
 #define numQvars                 1
 #define numPvars                 1
-#define numPostProcess           1
+#define numPostProcess           2
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_x           0
@@ -48,6 +48,7 @@
 
 // Uvars
 #define iU_vtheta      0
+#define iU_sz          1
 
 // Qvars
 #define iQ_zeta        0
@@ -60,8 +61,16 @@
 #define iM_Vf          1
 #define iM_g           2
 #define iM_mass        3
-#define iM_xf          4
-#define iM_yf          5
+#define iM_mu          4
+#define iM_mu0         5
+#define iM_mu1         6
+#define iM_w_ARG       7
+#define iM_w_ARG0      8
+#define iM_w_ARG1      9
+#define iM_xf          10
+#define iM_y0_low      11
+#define iM_yf          12
+#define iM_slope_low   13
 
 #endif
 

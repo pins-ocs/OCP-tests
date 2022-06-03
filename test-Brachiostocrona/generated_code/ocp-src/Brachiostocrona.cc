@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.cc                                             |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 14/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -62,6 +62,7 @@ namespace BrachiostocronaDefine {
 
   char const *namesUvars[numUvars+1] = {
     "vtheta",
+    "sz",
     nullptr
   };
 
@@ -86,6 +87,7 @@ namespace BrachiostocronaDefine {
 
   char const *namesPostProcess[numPostProcess+1] = {
     "vthetaControl",
+    "low",
     nullptr
   };
 
@@ -98,8 +100,16 @@ namespace BrachiostocronaDefine {
     "Vf",
     "g",
     "mass",
+    "mu",
+    "mu0",
+    "mu1",
+    "w_ARG",
+    "w_ARG0",
+    "w_ARG1",
     "xf",
+    "y0_low",
     "yf",
+    "slope_low",
     nullptr
   };
 
@@ -148,8 +158,11 @@ namespace BrachiostocronaDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -195,6 +208,21 @@ namespace BrachiostocronaDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "Brachiostocrona::update_continuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuation_step_0( s ); break;
+      default:
+        UTILS_ERROR(
+          "Brachiostocrona::update_continuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------

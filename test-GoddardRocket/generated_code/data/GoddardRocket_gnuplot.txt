@@ -4,7 +4,7 @@
 #
 set title "Controls"
 plot \
-  "GoddardRocket_OCP_result.txt" every ::1 using 2:6 with linespoints title "T" 
+  "GoddardRocket_OCP_result.txt" every ::1 using 2:6 with linespoints title "w" 
 
 pause -1 "Hit any key to continue"
 

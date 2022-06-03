@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular02_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,9 +21,9 @@
 
 -- Auxiliary values
 Tf           = 5.0
+u_epsilon0   = 0.01
 epsi_x1      = 0.0001
 u_tolerance0 = 0.01
-u_epsilon0   = 0.01
 
 content = {
 

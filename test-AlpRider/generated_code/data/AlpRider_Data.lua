@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,11 +21,11 @@
 
 -- Auxiliary values
 epsi0 = 0.1
-W0    = 0.0
-epsi  = epsi0
 tol0  = 0.1
-W     = W0
 tol   = tol0
+epsi  = epsi0
+W0    = 0.0
+W     = W0
 
 content = {
 
@@ -320,8 +320,8 @@ content = {
     segments = {
       
       {
-        n      = 4000.0,
         length = 20.0,
+        n      = 4000.0,
       },
     },
   },

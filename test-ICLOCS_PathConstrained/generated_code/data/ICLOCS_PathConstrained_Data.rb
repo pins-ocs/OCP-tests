@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_PathConstrained_Data.rb                                 #
 #                                                                       #
-#  version: 1.0   date 1/6/2022                                         #
+#  version: 1.0   date 3/6/2022                                         #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl0 = 0.01
-epsi_ctrl  = epsi_ctrl0
 tol_ctrl0  = 0.01
 tol_ctrl   = tol_ctrl0
+epsi_ctrl0 = 0.01
+epsi_ctrl  = epsi_ctrl0
 
 mechatronix do |data|
 
@@ -337,8 +337,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 400.0,
+        :length => 1.0,
       },
     ],
   };

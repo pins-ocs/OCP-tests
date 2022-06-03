@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 1/6/2022                                         |
+ |  version: 1.0   date 3/6/2022                                         |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -270,8 +270,8 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithErf
-    clipdelta2 = 0.0,
     clipdelta = 0.0,
+    clipdelta2 = 0.0,
     cliph = h0,
   },
 
@@ -322,8 +322,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 100.0,
+        length = 1.0,
       },
     },
   },
