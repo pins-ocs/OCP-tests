@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 14/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -47,6 +47,15 @@ using Mechatronix::MeshStd;
 #define ALIAS_vPositive_D(__t1) vPositive.D( __t1)
 #define ALIAS_massPositive_DD(__t1) massPositive.DD( __t1)
 #define ALIAS_massPositive_D(__t1) massPositive.D( __t1)
+#define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2(__t1, __t2, __t3) uControl.D_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1(__t1, __t2, __t3) uControl.D_1( __t1, __t2, __t3)
+#define ALIAS_uControl_D_3_3(__t1, __t2, __t3) uControl.D_3_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2_3(__t1, __t2, __t3) uControl.D_2_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2_2(__t1, __t2, __t3) uControl.D_2_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_3(__t1, __t2, __t3) uControl.D_1_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_2(__t1, __t2, __t3) uControl.D_1_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_1(__t1, __t2, __t3) uControl.D_1_1( __t1, __t2, __t3)
 
 
 namespace GoddardRocketDefine {
@@ -74,11 +83,10 @@ namespace GoddardRocketDefine {
     real_type t1   = P__[iP_TimeSize];
     real_type t2   = X__[iX_v];
     result__[ 0   ] = t2 * t1;
-    real_type t3   = ModelPars[iM_Tmax];
-    real_type t5   = U__[iU_w] + 1;
-    real_type t9   = DD(X__[iX_h], t2);
-    result__[ 1   ] = (1.0 / X__[iX_m] * (t5 * t3 / 2 - t9) - ModelPars[iM_g]) * t1;
-    result__[ 2   ] = -1.0 / ModelPars[iM_Ve] * t5 * t3 * t1 / 2;
+    real_type t4   = T(U__[iU_u]);
+    real_type t6   = DD(X__[iX_h], t2);
+    result__[ 1   ] = (1.0 / X__[iX_m] * (t4 - t6) - ModelPars[iM_g]) * t1;
+    result__[ 2   ] = -1.0 / ModelPars[iM_Ve] * t4 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
   }
@@ -124,18 +132,19 @@ namespace GoddardRocketDefine {
     result__[ 2   ] = -t5 * t2 * result__[0];
     real_type t7   = DD_D_2(t1, result__[1]);
     result__[ 3   ] = -t5 * t7 * result__[0];
-    real_type t10  = ModelPars[iM_Tmax];
-    real_type t13  = (U__[iU_w] + 1) * t10;
-    real_type t15  = DD(t1, result__[1]);
-    real_type t16  = t13 / 2 - t15;
-    real_type t18  = t4 * t4;
-    result__[ 4   ] = -1.0 / t18 * t16 * result__[0];
-    result__[ 5   ] = t5 * t16 - ModelPars[iM_g];
-    real_type t23  = t10 * result__[0];
-    result__[ 6   ] = t5 * t23 / 2;
-    real_type t26  = 1.0 / ModelPars[iM_Ve];
-    result__[ 7   ] = -t26 * t13 / 2;
-    result__[ 8   ] = -t26 * t23 / 2;
+    real_type t10  = U__[iU_u];
+    real_type t11  = T(t10);
+    real_type t12  = DD(t1, result__[1]);
+    real_type t13  = t11 - t12;
+    real_type t15  = t4 * t4;
+    result__[ 4   ] = -1.0 / t15 * t13 * result__[0];
+    result__[ 5   ] = t5 * t13 - ModelPars[iM_g];
+    real_type t20  = T_D(t10);
+    real_type t21  = t20 * result__[0];
+    result__[ 6   ] = t5 * t21;
+    real_type t23  = 1.0 / ModelPars[iM_Ve];
+    result__[ 7   ] = -t23 * t11;
+    result__[ 8   ] = -t23 * t21;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 9, i_segment );
   }

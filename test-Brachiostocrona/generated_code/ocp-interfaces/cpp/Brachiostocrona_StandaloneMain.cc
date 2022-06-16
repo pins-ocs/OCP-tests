@@ -52,16 +52,16 @@ main() {
 
     // Auxiliary values
     real_type xf = 5;
-    real_type mu0 = 0.1;
     real_type g = 9.81;
-    real_type mu = mu0;
-    real_type tol1 = 1e-06;
     real_type w_ARG0 = 1;
     real_type w_ARG = w_ARG0;
+    real_type mu0 = 0.1;
+    real_type epsi1 = 1e-06;
+    real_type mu = mu0;
+    real_type tol1 = 1e-06;
     real_type yf = -2;
     real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
-    real_type epsi1 = 1e-06;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -194,8 +194,8 @@ Brachiostocrona_data.Pen1D["subType"] = "BARRIER_LOG0";
 Brachiostocrona_data.Pen1D["active"] = true;
     // User defined classes: M E S H
 Brachiostocrona_data.Mesh["s0"] = 0;
-Brachiostocrona_data.Mesh["segments"][0]["n"] = 100;
 Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;
+Brachiostocrona_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

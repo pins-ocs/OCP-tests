@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 14/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,20 +50,24 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_TS_max = 0.025;
     real_type tol_v_max = 0.01;
-    real_type epsi_v_max = 0.1;
-    real_type epsi_v = epsi_v_max;
-    real_type epsilon0 = 0.1;
+    real_type epsi_TS_max = 0.025;
+    real_type epsi_TS = epsi_TS_max;
+    real_type tol_TS_max = 0.0001;
+    real_type tol_u_max = 0.01;
+    real_type tol_u = tol_u_max;
+    real_type epsi_u_max = 0.01;
+    real_type epsi_u = epsi_u_max;
+    real_type tol_v = tol_v_max;
+    real_type tol_TS = tol_TS_max;
     real_type tol_mass_max = 0.01;
     real_type tol_mass = tol_mass_max;
-    real_type epsi_TS = epsi_TS_max;
-    real_type tol_v = tol_v_max;
+    real_type epsi_v_max = 0.1;
+    real_type epsi_v = epsi_v_max;
     real_type epsi_mass_max = 0.025;
     real_type epsi_mass = epsi_mass_max;
-    real_type tol_TS_max = 0.0001;
-    real_type tol_TS = tol_TS_max;
-    real_type epsilon = epsilon0;
+    real_type mu0 = 0;
+    real_type mu = mu0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -74,7 +78,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -145,10 +149,9 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["Hscale"] = 23800;
-    data_Parameters["Tmax"] = 193;
     data_Parameters["Ve"] = 1580.9425;
-    data_Parameters["epsilon"] = epsilon;
     data_Parameters["g"] = 32.174;
+    data_Parameters["mu"] = mu;
 
     // Guess Parameters
     data_Parameters["TimeSize_guess"] = 40;
@@ -160,23 +163,28 @@ main() {
     data_Parameters["v_i"] = 0;
 
     // Post Processing Parameters
+    data_Parameters["Tmax"] = 193;
 
     // User Function Parameters
     data_Parameters["D0"] = 5.49153485e-05;
 
     // Continuation Parameters
+    data_Parameters["mu0"] = mu0;
+    data_Parameters["mu1"] = 0;
     data_Parameters["epsi_TS_max"] = epsi_TS_max;
     data_Parameters["epsi_TS_min"] = 1e-10;
     data_Parameters["epsi_mass_max"] = epsi_mass_max;
     data_Parameters["epsi_mass_min"] = 0.0001;
+    data_Parameters["epsi_u_max"] = epsi_u_max;
+    data_Parameters["epsi_u_min"] = 1e-07;
     data_Parameters["epsi_v_max"] = epsi_v_max;
     data_Parameters["epsi_v_min"] = 0.0001;
-    data_Parameters["epsilon0"] = epsilon0;
-    data_Parameters["epsilon1"] = 1e-08;
     data_Parameters["tol_TS_max"] = tol_TS_max;
     data_Parameters["tol_TS_min"] = 0.001;
     data_Parameters["tol_mass_max"] = tol_mass_max;
     data_Parameters["tol_mass_min"] = 0.0001;
+    data_Parameters["tol_u_max"] = tol_u_max;
+    data_Parameters["tol_u_min"] = 0.0001;
     data_Parameters["tol_v_max"] = tol_v_max;
     data_Parameters["tol_v_min"] = 0.0001;
 
@@ -184,7 +192,16 @@ main() {
 
     // functions mapped on objects
 
-    // Controls: No penalties or barriers constraint defined
+    // Controls
+    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+    GenericContainer & data_Controls = gc_data["Controls"];
+    GenericContainer & data_uControl = data_Controls["uControl"];
+    data_uControl["type"]      = "COS_LOGARITHMIC";
+    data_uControl["epsilon"]   = epsi_u;
+    data_uControl["tolerance"] = tol_u;
+
+
 
     // ConstraintLT
     // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE

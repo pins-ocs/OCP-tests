@@ -1,0 +1,48 @@
+
+#
+# CONTROLS
+#
+set title "Controls"
+plot \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:6 with linespoints title "alpha" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:7 with linespoints title "u2" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:8 with linespoints title "c_h" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:9 with linespoints title "c_theta" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:10 with linespoints title "c_phi" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:11 with linespoints title "c_V" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:12 with linespoints title "c_G" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:13 with linespoints title "c_psi" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:14 with linespoints title "c_sigma" 
+
+pause -1 "Hit any key to continue"
+
+#
+# STATES
+#
+
+set title "States"
+plot \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:15 with linespoints title "h" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:16 with linespoints title "theta" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:17 with linespoints title "phi" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:18 with linespoints title "V" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:19 with linespoints title "G" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:20 with linespoints title "psi" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:21 with linespoints title "sigma" 
+
+pause -1 "Hit any key to continue"
+
+#
+# MULTIPLIERS
+#
+set title "Multipliers"
+plot \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:22 with linespoints title "lambda1__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:23 with linespoints title "lambda2__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:24 with linespoints title "lambda3__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:25 with linespoints title "lambda4__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:26 with linespoints title "lambda5__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:27 with linespoints title "lambda6__xo" , \
+  "HypersonicProblem3DOF_OCP_result.txt" every ::1 using 2:28 with linespoints title "lambda7__xo" 
+
+pause -1 "Hit any key to continue"

@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: GoddardRocket_ffi_structs.rb                                      #
 #                                                                          #
-#  version: 1.0   date 14/6/2022                                           #
+#  version: 1.0   date 19/6/2022                                           #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -48,8 +48,6 @@ module GoddardRocket
 
       :Ve,             :data_t,
 
-      :epsilon,        :data_t,
-
       :g,              :data_t,
 
       :h_i,            :data_t,
@@ -57,6 +55,12 @@ module GoddardRocket
       :m_f,            :data_t,
 
       :m_i,            :data_t,
+
+      :mu,             :data_t,
+
+      :mu0,            :data_t,
+
+      :mu1,            :data_t,
 
       :v_i,            :data_t,
 
@@ -70,13 +74,13 @@ module GoddardRocket
 
       :epsi_mass_min,  :data_t,
 
+      :epsi_u_max,     :data_t,
+
+      :epsi_u_min,     :data_t,
+
       :epsi_v_max,     :data_t,
 
       :epsi_v_min,     :data_t,
-
-      :epsilon0,       :data_t,
-
-      :epsilon1,       :data_t,
 
       :tol_TS_max,     :data_t,
 
@@ -85,6 +89,10 @@ module GoddardRocket
       :tol_mass_max,   :data_t,
 
       :tol_mass_min,   :data_t,
+
+      :tol_u_max,      :data_t,
+
+      :tol_u_min,      :data_t,
 
       :tol_v_max,      :data_t,
 
@@ -137,6 +145,9 @@ module GoddardRocket
       # 2D constraints
 
       # Controls
+      :uControlType,      :index_t,
+      :uControlEpsilon,   :data_t,
+      :uControlTolerance, :data_t,
     )
 
     def initialize

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 14/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -47,6 +47,15 @@ using Mechatronix::MeshStd;
 #define ALIAS_vPositive_D(__t1) vPositive.D( __t1)
 #define ALIAS_massPositive_DD(__t1) massPositive.DD( __t1)
 #define ALIAS_massPositive_D(__t1) massPositive.D( __t1)
+#define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2(__t1, __t2, __t3) uControl.D_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1(__t1, __t2, __t3) uControl.D_1( __t1, __t2, __t3)
+#define ALIAS_uControl_D_3_3(__t1, __t2, __t3) uControl.D_3_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2_3(__t1, __t2, __t3) uControl.D_2_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_2_2(__t1, __t2, __t3) uControl.D_2_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_3(__t1, __t2, __t3) uControl.D_1_3( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_2(__t1, __t2, __t3) uControl.D_1_2( __t1, __t2, __t3)
+#define ALIAS_uControl_D_1_1(__t1, __t2, __t3) uControl.D_1_1( __t1, __t2, __t3)
 
 
 namespace GoddardRocketDefine {
@@ -97,7 +106,7 @@ namespace GoddardRocketDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer GoddardRocket::JU_numEqns() const { return 0; }
+  integer GoddardRocket::JU_numEqns() const { return 1; }
 
   void
   GoddardRocket::JU_eval(
@@ -106,7 +115,13 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = uControl(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -188,13 +203,13 @@ namespace GoddardRocketDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GoddardRocket::DJUDxpu_numRows() const { return 0; }
+  integer GoddardRocket::DJUDxpu_numRows() const { return 1; }
   integer GoddardRocket::DJUDxpu_numCols() const { return 5; }
-  integer GoddardRocket::DJUDxpu_nnz()     const { return 0; }
+  integer GoddardRocket::DJUDxpu_nnz()     const { return 1; }
 
   void
   GoddardRocket::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
   }
 
 
@@ -205,7 +220,13 @@ namespace GoddardRocketDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -303,11 +324,11 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer GoddardRocket::D2JUD2xpu_numRows() const { return 5; }
   integer GoddardRocket::D2JUD2xpu_numCols() const { return 5; }
-  integer GoddardRocket::D2JUD2xpu_nnz()     const { return 0; }
+  integer GoddardRocket::D2JUD2xpu_nnz()     const { return 1; }
 
   void
   GoddardRocket::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
   }
 
 
@@ -319,7 +340,14 @@ namespace GoddardRocketDefine {
     real_const_ptr       OMEGA__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = OMEGA__[0] * t2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 1, i_segment );
   }
 
 

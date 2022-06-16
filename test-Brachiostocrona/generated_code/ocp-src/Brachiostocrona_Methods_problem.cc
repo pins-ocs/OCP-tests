@@ -275,7 +275,7 @@ namespace BrachiostocronaDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_slope_low];
     real_type t5   = U__[iU_sz];
-    real_type t9   = (t2 * X__[iX_x] + t5 - X__[iX_y] + ModelPars[iM_y0_low]) * ModelPars[iM_w_ARG];
+    real_type t9   = (X__[iX_x] * t2 + t5 - X__[iX_y] + ModelPars[iM_y0_low]) * ModelPars[iM_w_ARG];
     result__[ 0   ] = 2 * t2 * t9;
     real_type t11  = 2 * t9;
     result__[ 1   ] = -t11;

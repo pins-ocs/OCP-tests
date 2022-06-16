@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket.cc                                               |
  |                                                                       |
- |  version: 1.0   date 14/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -59,7 +59,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesUvars[numUvars+1] = {
-    "w",
+    "u",
     nullptr
   };
 
@@ -82,6 +82,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
+    "uControl",
     "massPositive",
     "vPositive",
     "TSPositive",
@@ -100,25 +101,29 @@ namespace GoddardRocketDefine {
     "Hscale",
     "Tmax",
     "Ve",
-    "epsilon",
     "g",
     "h_i",
     "m_f",
     "m_i",
+    "mu",
+    "mu0",
+    "mu1",
     "v_i",
     "TimeSize_guess",
     "epsi_TS_max",
     "epsi_TS_min",
     "epsi_mass_max",
     "epsi_mass_min",
+    "epsi_u_max",
+    "epsi_u_min",
     "epsi_v_max",
     "epsi_v_min",
-    "epsilon0",
-    "epsilon1",
     "tol_TS_max",
     "tol_TS_min",
     "tol_mass_max",
     "tol_mass_min",
+    "tol_u_max",
+    "tol_u_min",
     "tol_v_max",
     "tol_v_min",
     nullptr
@@ -140,6 +145,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesConstraintU[numConstraintU+1] = {
+    "uControl",
     nullptr
   };
 
@@ -164,6 +170,7 @@ namespace GoddardRocketDefine {
   )
   : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
+  , uControl("uControl")
   // Constraints LT
   , massPositive("massPositive")
   , vPositive("vPositive")
@@ -172,7 +179,7 @@ namespace GoddardRocketDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
     // continuation
     this->ns_continuation_begin = 0;
@@ -350,7 +357,14 @@ namespace GoddardRocketDefine {
   */
   void
   GoddardRocket::setup_controls( GenericContainer const & gc_data ) {
-    // no Control penalties, setup only iterative solver
+    // initialize Control penalties
+    UTILS_ASSERT0(
+      gc_data.exists("Controls"),
+      "GoddardRocket::setup_classes: Missing key `Controls` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Controls");
+    uControl.setup( gc("uControl") );
+    // setup iterative solver
     this->setup_control_solver( gc_data );
   }
 
@@ -390,20 +404,18 @@ namespace GoddardRocketDefine {
   void
   GoddardRocket::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
+
+    m_console->message("\nControls\n",msg_level);
+    m_console->message( uControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    massPositive.info(mstr);
-    vPositive.info(mstr);
-    TSPositive.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( massPositive.info(),msg_level);
+    m_console->message( vPositive.info(),msg_level);
+    m_console->message( TSPositive.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

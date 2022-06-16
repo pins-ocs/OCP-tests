@@ -21,16 +21,16 @@
 
 -- Auxiliary values
 xf     = 5.0
-mu0    = 0.1
 g      = 9.81
-mu     = mu0
-tol1   = 1e-06
 w_ARG0 = 1.0
 w_ARG  = w_ARG0
+mu0    = 0.1
+epsi1  = 1e-06
+mu     = mu0
+tol1   = 1e-06
 yf     = -2
 Tf     = (-2.0*yf/g)**(1/2.0)
 Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-epsi1  = 1e-06
 
 content = {
 
@@ -326,8 +326,8 @@ content = {
     segments = {
       
       {
-        n      = 100.0,
         length = 1.0,
+        n      = 100.0,
       },
     },
   },

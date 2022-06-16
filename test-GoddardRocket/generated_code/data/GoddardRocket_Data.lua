@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 14/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,20 +20,24 @@
 -- User Header
 
 -- Auxiliary values
-epsi_TS_max   = 0.025
 tol_v_max     = 0.01
-epsi_v_max    = 0.1
-epsi_v        = epsi_v_max
-epsilon0      = 0.1
+epsi_TS_max   = 0.025
+epsi_TS       = epsi_TS_max
+tol_TS_max    = 0.0001
+tol_u_max     = 0.01
+tol_u         = tol_u_max
+epsi_u_max    = 0.01
+epsi_u        = epsi_u_max
+tol_v         = tol_v_max
+tol_TS        = tol_TS_max
 tol_mass_max  = 0.01
 tol_mass      = tol_mass_max
-epsi_TS       = epsi_TS_max
-tol_v         = tol_v_max
+epsi_v_max    = 0.1
+epsi_v        = epsi_v_max
 epsi_mass_max = 0.025
 epsi_mass     = epsi_mass_max
-tol_TS_max    = 0.0001
-tol_TS        = tol_TS_max
-epsilon       = epsilon0
+mu0           = 0.0
+mu            = mu0
 
 content = {
 
@@ -99,7 +103,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1, -- suppress all messages
     -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     initialize_control_solver = 'QuasiNewton',
@@ -264,11 +268,10 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    Hscale  = 23800.0,
-    Tmax    = 193.0,
-    Ve      = 1580.9425,
-    epsilon = epsilon,
-    g       = 32.174,
+    Hscale = 23800.0,
+    Ve     = 1580.9425,
+    g      = 32.174,
+    mu     = mu,
 
     -- Guess Parameters
     TimeSize_guess = 40.0,
@@ -280,23 +283,28 @@ content = {
     v_i = 0.0,
 
     -- Post Processing Parameters
+    Tmax = 193.0,
 
     -- User Function Parameters
     D0 = 5.49153485e-05,
 
     -- Continuation Parameters
+    mu0           = mu0,
+    mu1           = 0.0,
     epsi_TS_max   = epsi_TS_max,
     epsi_TS_min   = 1e-10,
     epsi_mass_max = epsi_mass_max,
     epsi_mass_min = 0.0001,
+    epsi_u_max    = epsi_u_max,
+    epsi_u_min    = 1e-07,
     epsi_v_max    = epsi_v_max,
     epsi_v_min    = 0.0001,
-    epsilon0      = epsilon0,
-    epsilon1      = 1e-08,
     tol_TS_max    = tol_TS_max,
     tol_TS_min    = 0.001,
     tol_mass_max  = tol_mass_max,
     tol_mass_min  = 0.0001,
+    tol_u_max     = tol_u_max,
+    tol_u_min     = 0.0001,
     tol_v_max     = tol_v_max,
     tol_v_min     = 0.0001,
 
@@ -307,7 +315,16 @@ content = {
   MappedObjects = {
   },
 
-  -- Controls: No penalties or barriers constraint defined
+  -- Controls
+  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  Controls = {
+    uControl = {
+      type      = "COS_LOGARITHMIC",
+      epsilon   = epsi_u,
+      tolerance = tol_u,
+    },
+  },
 
   Constraints = {
   --  _  _____
