@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_UserFunctions.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -90,7 +90,7 @@ namespace ZermeloDefine {
     real_type result__ = -xo__y;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -103,7 +103,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX_D_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -116,7 +116,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX_D_1_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -129,7 +129,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX_D_1_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -142,7 +142,7 @@ namespace ZermeloDefine {
     real_type result__ = -1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX_D_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -155,7 +155,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velX_D_2_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -168,7 +168,7 @@ namespace ZermeloDefine {
     real_type result__ = xo__x;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -181,7 +181,7 @@ namespace ZermeloDefine {
     real_type result__ = 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY_D_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -194,7 +194,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY_D_1_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -207,7 +207,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY_D_1_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -220,7 +220,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY_D_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -233,7 +233,7 @@ namespace ZermeloDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_velY_D_2_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );

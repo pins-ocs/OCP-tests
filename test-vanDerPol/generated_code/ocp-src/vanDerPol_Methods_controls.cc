@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -95,7 +95,7 @@ namespace vanDerPolDefine {
     real_type t15  = uControl(t10, -1, 1);
     real_type result__ = t2 + t4 + t3 * LM__[0] + (t3 * (-t2 + 1) - t1 + t10) * LM__[1] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -316,7 +316,7 @@ namespace vanDerPolDefine {
     real_type t17  = pow(V__[1] - t3 * (-t2 + 1) + t1 - t7, 2);
     real_type result__ = t8 * (t2 + t4 + ModelPars[iM_epsilon]) + t12 + t17;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

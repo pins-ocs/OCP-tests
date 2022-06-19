@@ -682,39 +682,39 @@ classdef HypersonicProblem3DOF < handle
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'velocity magnitude' );
     end
-    function res = post_processing_angle_deg( self )
+    function res = post_processing_angle__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: angle_deg
+      % Return the solution for the post processing variable: angle__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'angle [deg]' );
     end
-    function res = post_processing_longitude_deg( self )
+    function res = post_processing_longitude__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: longitude_deg
+      % Return the solution for the post processing variable: longitude__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'longitude [deg]' );
     end
-    function res = post_processing_latitude_deg( self )
+    function res = post_processing_latitude__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: latitude_deg
+      % Return the solution for the post processing variable: latitude__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'latitude [deg]' );
     end
-    function res = post_processing_velocity_flight_minus_path_angle_deg( self )
+    function res = post_processing_velocity_flight_minus_path_angle__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: velocity_flight_minus_path_angle_deg
+      % Return the solution for the post processing variable: velocity_flight_minus_path_angle__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'velocity flight-path angle [deg]' );
     end
-    function res = post_processing_velocity_heading_angle_deg( self )
+    function res = post_processing_velocity_heading_angle__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: velocity_heading_angle_deg
+      % Return the solution for the post processing variable: velocity_heading_angle__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'velocity heading angle [deg]' );
     end
-    function res = post_processing_bank_angle_deg( self )
+    function res = post_processing_bank_angle__open_deg_close_( self )
       %
-      % Return the solution for the post processing variable: bank_angle_deg
+      % Return the solution for the post processing variable: bank_angle__open_deg_close_
       %
       res = HypersonicProblem3DOF_Mex( 'get_solution', self.objectHandle, 'bank angle [deg]' );
     end

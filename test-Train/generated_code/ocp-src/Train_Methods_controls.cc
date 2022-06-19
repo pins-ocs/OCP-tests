@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,7 +104,7 @@ namespace TrainDefine {
     real_type t15  = ubControl(t9, 0, ModelPars[iM_ubMax]);
     real_type result__ = t2 * t1 + t2 * LM__[0] + (t8 + t1 - t9) * LM__[1] + t13 + t15;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -324,7 +324,7 @@ namespace TrainDefine {
     real_type t15  = pow(V__[1] - t13 - t1 + t4, 2);
     real_type result__ = t3 + t6 + t10 + t15;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

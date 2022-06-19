@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -189,7 +189,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -1.0 / (xo__n * xo__Kappa - 1) * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -203,7 +203,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -1.0 / (xo__n * xo__Kappa - 1) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_1( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -216,7 +216,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_1_1( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -230,7 +230,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = 1.0 / (xo__n * xo__Kappa - 1) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_1_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -245,7 +245,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = xo__Kappa / t4 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_1_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -260,7 +260,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = xo__n / t4 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_1_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -274,7 +274,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = 1.0 / (xo__n * xo__Kappa - 1) * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -288,7 +288,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = 1.0 / (xo__n * xo__Kappa - 1) * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_2_2( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -303,7 +303,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -xo__Kappa / t5 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_2_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -318,7 +318,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -xo__n / t5 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_2_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -333,7 +333,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = xo__Kappa / t5 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -350,7 +350,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -2 * t8 / t5 / t4 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_3_3( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -367,7 +367,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -2 * xo__n * xo__Kappa / t5 / t4 * t2 + 1.0 / t5 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_3_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -382,7 +382,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = xo__n / t5 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );
@@ -399,7 +399,7 @@ namespace PointMassCarModel_2Define {
     real_type result__ = -2 * t8 / t5 / t4 * t1 * xo__V;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_zeta__dot_D_4_4( V={}, alpha={}, n={}, Kappa={} ) return {}\n",
         xo__V, xo__alpha, xo__n, xo__Kappa, result__
       );

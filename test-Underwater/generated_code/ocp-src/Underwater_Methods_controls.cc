@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -133,7 +133,7 @@ namespace UnderwaterDefine {
     real_type t61  = u3Control(t47, -1, 1);
     real_type result__ = (t6 * t4 + t9 * t8) * t2 * LM__[0] + (-t9 * t4 + t6 * t8) * t2 * LM__[1] + t21 * t2 * LM__[2] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * LM__[3] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * LM__[4] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * LM__[5] + t57 * t2 + t59 * t2 + t61 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -422,7 +422,7 @@ namespace UnderwaterDefine {
     real_type t68  = pow(V__[5] - (t59 * t8 + t59 * (t40 - t36) * t16 * t12) * t1, 2);
     real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + t22 + t29 + t34 + t46 + t56 + t68;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

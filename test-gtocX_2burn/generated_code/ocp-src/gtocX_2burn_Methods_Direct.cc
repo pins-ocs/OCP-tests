@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_Guess.cc                                   |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,12 +99,12 @@ namespace gtocX_2burnDefine {
     real_type t17  = acceleration_r(t16, t8);
     real_type t18  = t17 * ModelPars[iM_w_nonlin];
     real_type t19  = sin(t15);
-    result__[ 1   ] = -t19 * t18 * t11 + V__[1];
+    result__[ 1   ] = -t11 * t18 * t19 + V__[1];
     real_type t23  = cos(t15);
-    result__[ 2   ] = t23 * t18 * t11 + V__[2];
+    result__[ 2   ] = t11 * t18 * t23 + V__[2];
     result__[ 3   ] = V__[3];
     result__[ 4   ] = V__[4];
-    real_type t30  = pow(t23 * t13 + t19 * t14 + 1, 2);
+    real_type t30  = pow(t13 * t23 + t14 * t19 + 1, 2);
     result__[ 5   ] = V__[5] - t9 / t6 / t5 * t30 * t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 6, i_segment );

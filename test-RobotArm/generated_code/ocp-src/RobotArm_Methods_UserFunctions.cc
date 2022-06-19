@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -118,7 +118,7 @@ namespace RobotArmDefine {
     real_type result__ = t3 * t2 / 3 + t5 * xo__rho / 3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_phi( rho={} ) return {}\n",
         xo__rho, result__
       );
@@ -133,7 +133,7 @@ namespace RobotArmDefine {
     real_type result__ = -t3 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_phi_D( rho={} ) return {}\n",
         xo__rho, result__
       );
@@ -146,7 +146,7 @@ namespace RobotArmDefine {
     real_type result__ = 2 * ModelPars[iM_L];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_phi_DD( rho={} ) return {}\n",
         xo__rho, result__
       );
@@ -162,7 +162,7 @@ namespace RobotArmDefine {
     real_type result__ = t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );
@@ -178,7 +178,7 @@ namespace RobotArmDefine {
     real_type result__ = t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta_D_1( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );
@@ -194,7 +194,7 @@ namespace RobotArmDefine {
     real_type result__ = t3 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta_D_1_1( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );
@@ -210,7 +210,7 @@ namespace RobotArmDefine {
     real_type result__ = 2 * t4 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta_D_1_2( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );
@@ -226,7 +226,7 @@ namespace RobotArmDefine {
     real_type result__ = 2 * t4 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta_D_2( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );
@@ -244,7 +244,7 @@ namespace RobotArmDefine {
     real_type result__ = 2 * t3 * t1 - 2 * t6 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_I_theta_D_2_2( rho={}, phi={} ) return {}\n",
         xo__rho, xo__phi, result__
       );

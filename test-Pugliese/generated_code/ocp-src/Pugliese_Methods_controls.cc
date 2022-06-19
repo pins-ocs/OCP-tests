@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace PuglieseDefine {
     real_type t35  = XM__[2];
     real_type result__ = t1 + 1.0 / (t6 + ModelPars[iM_b]) * t6 * ModelPars[iM_w2] * ModelPars[iM_a] + ((1 - 1.0 / ModelPars[iM_K] * t1) * ModelPars[iM_r] - t20 * t19 - t1 * t19 * t5 * ModelPars[iM_kappa__AC]) * LM__[0] + (t30 - (t35 * ModelPars[iM_kappa__R] + t33 + ModelPars[iM_mu__C]) * t19) * LM__[1] + (t29 * ModelPars[iM_a__R] + t32 * ModelPars[iM_a__IL] - t35 * ModelPars[iM_mu__R]) * LM__[2] + (-t29 * ModelPars[iM_mu__D] + ModelPars[iM_rho__D]) * LM__[3] - t5 * ModelPars[iM_lambda] * LM__[4];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -248,7 +248,7 @@ namespace PuglieseDefine {
     real_type t51  = pow(t13 * ModelPars[iM_lambda] + V__[4], 2);
     real_type result__ = t18 + t31 + t40 + t46 + t51;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

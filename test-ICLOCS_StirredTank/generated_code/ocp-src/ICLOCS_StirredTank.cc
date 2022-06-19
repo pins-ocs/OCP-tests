@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -409,27 +409,20 @@ namespace ICLOCS_StirredTankDefine {
   void
   ICLOCS_StirredTank::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    uControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( uControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    tfbound.info(mstr);
-    x1bound_min.info(mstr);
-    x1bound_max.info(mstr);
-    x2bound_min.info(mstr);
-    x2bound_max.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( tfbound.info(),msg_level);
+    m_console->message( x1bound_min.info(),msg_level);
+    m_console->message( x1bound_max.info(),msg_level);
+    m_console->message( x2bound_min.info(),msg_level);
+    m_console->message( x2bound_max.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

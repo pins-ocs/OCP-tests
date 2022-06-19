@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_3_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,15 +20,15 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-road_tol0 = 0.01
 up_tol0   = 0.01
+wT0       = 0.01
+wT        = wT0
+road_tol0 = 0.01
+up_epsi0  = 0.1
+p_tol0    = 0.1
+p_epsi0   = 0.1
 m         = 700.0
 kD        = 0.2500000000/m
-p_tol0    = 0.1
-wT0       = 0.01
-up_epsi0  = 0.1
-p_epsi0   = 0.1
-wT        = wT0
 
 mechatronix do |data|
 
@@ -392,74 +392,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :curvature  => 0.0,
-        :leftWidth  => 15/2.0,
         :rightWidth => 60.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 15/2.0,
         :length     => 190.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
       },
       {
-        :curvature  => 0.003225806452,
+        :rightWidth => 30.0,
+        :gridSize   => 1.0,
         :leftWidth  => 60.0,
-        :rightWidth => 30.0,
         :length     => 973.8937227,
-        :gridSize   => 1.0,
+        :curvature  => 0.003225806452,
       },
       {
-        :curvature  => 0.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 180.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
       },
       {
-        :curvature  => 0.006666666667,
-        :leftWidth  => 20.0,
         :rightWidth => 15.0,
-        :length     => 235.619449,
         :gridSize   => 1.0,
+        :leftWidth  => 20.0,
+        :length     => 235.619449,
+        :curvature  => 0.006666666667,
       },
       {
-        :curvature  => 0.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 240.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
       },
       {
-        :curvature  => -1/150.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 235.619449,
-        :gridSize   => 1.0,
+        :curvature  => -1/150.0,
       },
       {
-        :curvature  => 0.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 200.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
       },
       {
-        :curvature  => 0.025,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 125.6637062,
-        :gridSize   => 1.0,
+        :curvature  => 0.025,
       },
       {
-        :curvature  => 0.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
+        :gridSize   => 1.0,
+        :leftWidth  => 30.0,
         :length     => 480.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
       },
       {
-        :curvature  => 0.0,
-        :leftWidth  => 30.0,
         :rightWidth => 30.0,
-        :length     => 10.0,
         :gridSize   => 0.1,
+        :leftWidth  => 30.0,
+        :length     => 10.0,
+        :curvature  => 0.0,
       },
     ],
   };

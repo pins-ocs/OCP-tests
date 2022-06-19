@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: gtocX_2burn_pars_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 4/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -334,8 +334,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 50.0,
         :length => 1.0,
+        :n      => 50.0,
       },
     ],
   };

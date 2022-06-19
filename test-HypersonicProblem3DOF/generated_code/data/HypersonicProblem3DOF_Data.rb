@@ -20,26 +20,26 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-WTF0          = 1.0
-to_rad        = 0.01745329252
-sigma_dot_max = 10*to_rad
-one_km        = 1000.0
-h_i           = 40*one_km
-V_f           = 2*one_km
-V_i           = 2*one_km
-u_epsilon     = 0.1
-G_i           = -15*to_rad
-CTRL0         = 1.0
-S             = 7500*one_km
-theta_f       = 2*to_rad
-CTRL          = CTRL0
-G_f           = -15*to_rad
 ODE0          = 0.0
-WTF           = WTF0
-re            = 6378*one_km
-ODE           = ODE0
-phi_f         = 0.5*to_rad
 u_tolerance   = 0.1
+WTF0          = 1.0
+WTF           = WTF0
+to_rad        = 0.01745329252
+G_i           = -15*to_rad
+u_epsilon     = 0.1
+phi_f         = 0.5*to_rad
+G_f           = -15*to_rad
+one_km        = 1000.0
+re            = 6378*one_km
+theta_f       = 2*to_rad
+V_i           = 2*one_km
+sigma_dot_max = 10*to_rad
+h_i           = 40*one_km
+S             = 7500*one_km
+V_f           = 2*one_km
+CTRL0         = 1.0
+CTRL          = CTRL0
+ODE           = ODE0
 
 mechatronix do |data|
 
@@ -400,8 +400,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 400.0,
         :length => 1.0,
+        :n      => 400.0,
       },
     ],
   };

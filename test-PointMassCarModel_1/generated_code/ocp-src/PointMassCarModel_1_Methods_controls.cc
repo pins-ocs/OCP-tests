@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -223,7 +223,7 @@ namespace PointMassCarModel_1Define {
     real_type t79  = LimitMinSpeed(-t2);
     real_type result__ = t7 * ModelPars[iM_wT] + t7 * t11 * t2 * LM__[0] + (t7 * t15 - t6) * LM__[1] + (-t21 * ModelPars[iM_kD] + t24) * t7 * LM__[2] + t7 * ModelPars[iM_v__Omega__max] * t28 * LM__[3] + t7 * ModelPars[iM_v__fx__max] * t34 * LM__[4] + t39 * t7 + t41 * t7 + t60 * t7 + t64 * t7 + t68 * t7 + t77 * t7 + t79 * t7;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -566,7 +566,7 @@ namespace PointMassCarModel_1Define {
     real_type t81  = pow(-t5 * ModelPars[iM_v__fx__max] * t6 + V__[4], 2);
     real_type result__ = t10 * t5 + t32 * t5 + t36 * t5 + t40 * t5 + t49 * t5 + t51 * t5 + t7 * t5 + t58 + t62 + t69 + t75 + t81;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

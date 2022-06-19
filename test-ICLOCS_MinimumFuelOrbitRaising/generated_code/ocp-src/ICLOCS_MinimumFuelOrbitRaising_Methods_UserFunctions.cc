@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_UserFunctions.cc        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type result__ = -xo__t * ModelPars[iM_md] + 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_mass( t={} ) return {}\n",
         xo__t, result__
       );
@@ -99,7 +99,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type result__ = -ModelPars[iM_md];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_mass_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -112,7 +112,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_mass_DD( t={} ) return {}\n",
         xo__t, result__
       );

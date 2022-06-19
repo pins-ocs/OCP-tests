@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -266,7 +266,7 @@ namespace UnderwaterDefine {
     result__[ 27  ] = result__[24];
     result__[ 28  ] = result__[25];
     result__[ 29  ] = -t25 * t1;
-    result__[ 30  ] = t26 * t21 * t2 - t25 * UM__[0];
+    result__[ 30  ] = t2 * t21 * t26 - t25 * UM__[0];
     real_type t35  = 1.0 / t23;
     real_type t36  = t35 * t24;
     result__[ 31  ] = -0.5e0 * t36 * t22;
@@ -277,7 +277,7 @@ namespace UnderwaterDefine {
     result__[ 35  ] = __INV_DZETA;
     result__[ 36  ] = result__[33];
     result__[ 37  ] = -t35 * t1;
-    result__[ 38  ] = -t36 * t21 * t6 - t35 * UM__[1];
+    result__[ 38  ] = -t21 * t36 * t6 - t35 * UM__[1];
     real_type t49  = 1.0 / ModelPars[iM_inertia];
     real_type t50  = t49 * (t23 - t24);
     result__[ 39  ] = -0.5e0 * t50 * t28;
@@ -287,7 +287,7 @@ namespace UnderwaterDefine {
     result__[ 43  ] = result__[40];
     result__[ 44  ] = __INV_DZETA;
     result__[ 45  ] = -t49 * t1;
-    result__[ 46  ] = -t50 * t2 * t6 - t49 * UM__[2];
+    result__[ 46  ] = -t2 * t50 * t6 - t49 * UM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 47, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -81,7 +81,7 @@ namespace BertolazziCorsoExample1Define {
     real_type t3   = t2 * t2;
     real_type result__ = t3 * t1 + XM__[1] * t1 * LM__[0] + 1.0 / ModelPars[iM_mass] * t2 * t1 * LM__[1];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -284,7 +284,7 @@ namespace BertolazziCorsoExample1Define {
     real_type t14  = pow(V__[1] - 1.0 / ModelPars[iM_mass] * U__[iU_F] * t1, 2);
     real_type result__ = t6 + t14;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

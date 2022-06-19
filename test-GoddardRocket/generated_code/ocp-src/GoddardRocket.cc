@@ -59,7 +59,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesUvars[numUvars+1] = {
-    "u",
+    "T",
     nullptr
   };
 
@@ -82,12 +82,11 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
-    "uControl",
+    "TControl",
     "massPositive",
     "vPositive",
     "TSPositive",
     "Time",
-    "T",
     "target",
     nullptr
   };
@@ -97,33 +96,29 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
-    "D0",
-    "Hscale",
+    "Dc",
     "Tmax",
-    "Ve",
-    "g",
+    "c",
+    "g0",
     "h_i",
+    "hc",
     "m_f",
     "m_i",
-    "mu",
-    "mu0",
-    "mu1",
     "v_i",
-    "TimeSize_guess",
     "epsi_TS_max",
     "epsi_TS_min",
+    "epsi_T_max",
+    "epsi_T_min",
     "epsi_mass_max",
     "epsi_mass_min",
-    "epsi_u_max",
-    "epsi_u_min",
     "epsi_v_max",
     "epsi_v_min",
     "tol_TS_max",
     "tol_TS_min",
+    "tol_T_max",
+    "tol_T_min",
     "tol_mass_max",
     "tol_mass_min",
-    "tol_u_max",
-    "tol_u_min",
     "tol_v_max",
     "tol_v_min",
     nullptr
@@ -145,7 +140,7 @@ namespace GoddardRocketDefine {
   };
 
   char const *namesConstraintU[numConstraintU+1] = {
-    "uControl",
+    "TControl",
     nullptr
   };
 
@@ -170,7 +165,7 @@ namespace GoddardRocketDefine {
   )
   : Discretized_Indirect_OCP( name, n_threads, console )
   // Controls
-  , uControl("uControl")
+  , TControl("TControl")
   // Constraints LT
   , massPositive("massPositive")
   , vPositive("vPositive")
@@ -179,11 +174,11 @@ namespace GoddardRocketDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = true;
+    m_U_solve_iterative = false;
 
     // continuation
     this->ns_continuation_begin = 0;
-    this->ns_continuation_end   = 2;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -237,7 +232,6 @@ namespace GoddardRocketDefine {
     );
     switch ( phase ) {
       case 0: continuation_step_0( s ); break;
-      case 1: continuation_step_1( s ); break;
       default:
         UTILS_ERROR(
           "GoddardRocket::update_continuation( phase number={}, old_s={}, s={} )"
@@ -363,7 +357,7 @@ namespace GoddardRocketDefine {
       "GoddardRocket::setup_classes: Missing key `Controls` in data\n"
     );
     GenericContainer const & gc = gc_data("Controls");
-    uControl.setup( gc("uControl") );
+    TControl.setup( gc("TControl") );
     // setup iterative solver
     this->setup_control_solver( gc_data );
   }
@@ -406,7 +400,7 @@ namespace GoddardRocketDefine {
     int msg_level = 3;
 
     m_console->message("\nControls\n",msg_level);
-    m_console->message( uControl.info(),msg_level);
+    m_console->message( TControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
     m_console->message( massPositive.info(),msg_level);

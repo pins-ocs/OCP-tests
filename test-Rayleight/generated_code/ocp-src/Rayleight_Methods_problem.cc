@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -103,7 +103,7 @@ namespace RayleightDefine {
     real_type t9   = t6 * t6;
     real_type result__ = t2 + t4 + t6 * L__[iL_lambda1__xo] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * L__[iL_lambda2__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -130,7 +130,7 @@ namespace RayleightDefine {
     real_type t4   = X__[iX_x1] * X__[iX_x1];
     real_type result__ = t2 + t4;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -159,7 +159,7 @@ namespace RayleightDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

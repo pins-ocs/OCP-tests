@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -100,7 +100,7 @@ namespace AlpRiderDefine {
     real_type t41  = Ybound(t39 - t3 - t5 - t7 - t9);
     real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + t13 / 100 + t16 / 100 + (-10 * t2 + t12 + t15) * LM__[0] + (-2 * t4 + t12 + 2 * t15) * LM__[1] + (-3 * t6 + 5 * t8 + t12 - t15) * LM__[2] + (5 * t6 - 3 * t8 + t12 + 3 * t15) * LM__[3] + t41;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -368,7 +368,7 @@ namespace AlpRiderDefine {
     real_type t34  = pow(V__[3] - 5 * t7 + 3 * t9 - t15 - 3 * t16, 2);
     real_type result__ = t12 + t18 + t23 + t28 + t34;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

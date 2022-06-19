@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_AdjointODE.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -166,7 +166,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t42  = g3_D_1(t4, t5);
     real_type t44  = t12 * t42 - 0.464e2;
     real_type t48  = g3_D_1_1(t4, t5);
-    result__[ 0   ] = t15 * t6 * t3 + 2 * t23 * t18 * t3 + (t28 * t8 - 2 * t19) * t27 * t3 + t39 * t6 * t35 + 2 * t44 * t18 * t35 + t12 * t48 * t27 * t35;
+    result__[ 0   ] = t15 * t6 * t3 + 2 * t23 * t18 * t3 + (t8 * t28 - 2 * t19) * t27 * t3 + t39 * t6 * t35 + 2 * t44 * t18 * t35 + t12 * t48 * t27 * t35;
     real_type t52  = g1_D_1_2(t4, t5);
     real_type t55  = g4_D_2(t4, t5);
     real_type t58  = t8 * t55 - 0.928e2 * t4;
@@ -178,14 +178,14 @@ namespace LUUS_DrugDisplacementDefine {
     result__[ 1   ] = t15 * t52 * t3 + t58 * t18 * t3 + t23 * t61 * t3 + (t8 * t64 - t55 - 0.928e2) * t27 * t3 + t39 * t52 * t35 + t74 * t18 * t35 + t44 * t61 * t35 + (t12 * t79 - 2 * t42) * t27 * t35;
     real_type t87  = t27 * t1;
     real_type t91  = t27 * t34;
-    result__[ 2   ] = t1 * t15 * t18 + t18 * t34 * t39 + t23 * t87 + t44 * t91;
+    result__[ 2   ] = t15 * t18 * t1 + t39 * t18 * t34 + t23 * t87 + t44 * t91;
     result__[ 3   ] = 0.464e2 * t4 * t18 * t3 + 0.464e2 * t27 * t3 + t36 * t18 * t35 + t42 * t27 * t35;
     result__[ 4   ] = result__[1];
     real_type t102 = g1_D_2_2(t4, t5);
     real_type t108 = g4_D_2_2(t4, t5);
     real_type t117 = g3_D_2_2(t4, t5);
-    result__[ 5   ] = t15 * t102 * t3 + 2 * t58 * t61 * t3 + t8 * t108 * t27 * t3 + t39 * t102 * t35 + 2 * t74 * t61 * t35 + (t117 * t12 - 4 * t71) * t27 * t35;
-    result__[ 6   ] = t1 * t15 * t61 + t34 * t39 * t61 + t58 * t87 + t74 * t91;
+    result__[ 5   ] = t15 * t102 * t3 + 2 * t58 * t61 * t3 + t8 * t108 * t27 * t3 + t39 * t102 * t35 + 2 * t74 * t61 * t35 + (t12 * t117 - 4 * t71) * t27 * t35;
+    result__[ 6   ] = t15 * t61 * t1 + t39 * t61 * t34 + t58 * t87 + t74 * t91;
     result__[ 7   ] = 0.464e2 * t4 * t61 * t3 + t36 * t61 * t35 + t71 * t27 * t35;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];

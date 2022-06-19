@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -212,12 +212,12 @@ namespace CNOCDefine {
     real_type t38  = ALIAS_theta(X__[iX_s]);
     real_type t39  = cos(t38);
     real_type t41  = sin(t38);
-    real_type t46  = 1.0 / ModelPars[iM_ax_max] * (t39 * t21 - t41 * t29);
+    real_type t46  = 1.0 / ModelPars[iM_ax_max] * (t21 * t39 - t29 * t41);
     real_type t48  = ax_limit_min(-1 - t46);
     result__[ 8   ] = t48 * t1;
     real_type t50  = ax_limit_max(t46 - 1);
     result__[ 9   ] = t50 * t1;
-    real_type t56  = 1.0 / ModelPars[iM_ay_max] * (t41 * t21 + t39 * t29);
+    real_type t56  = 1.0 / ModelPars[iM_ay_max] * (t21 * t41 + t29 * t39);
     real_type t58  = ay_limit_min(-1 - t56);
     result__[ 10  ] = t58 * t1;
     real_type t60  = ay_limit_max(t56 - 1);
@@ -243,7 +243,7 @@ namespace CNOCDefine {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t5   = jsControl(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
-    result__[ 0   ] = t1 * t5;
+    result__[ 0   ] = t5 * t1;
     real_type t7   = ModelPars[iM_jn_max];
     real_type t8   = jnControl(U__[iU_jn], -t7, t7);
     result__[ 1   ] = t8 * t1;
@@ -425,7 +425,7 @@ namespace CNOCDefine {
     real_type t54  = cos(t53);
     real_type t56  = sin(t53);
     real_type t60  = 1.0 / ModelPars[iM_ax_max];
-    real_type t61  = t60 * (t30 * t54 - t41 * t56);
+    real_type t61  = t60 * (t54 * t30 - t56 * t41);
     real_type t62  = -1 - t61;
     real_type t63  = ALIAS_ax_limit_min_D(t62);
     real_type t64  = t63 * t1;
@@ -447,7 +447,7 @@ namespace CNOCDefine {
     result__[ 22  ] = -t75 * t78;
     result__[ 23  ] = ax_limit_max(t76);
     real_type t84  = 1.0 / ModelPars[iM_ay_max];
-    real_type t85  = t84 * (t30 * t56 + t41 * t54);
+    real_type t85  = t84 * (t56 * t30 + t54 * t41);
     real_type t86  = -1 - t85;
     real_type t87  = ALIAS_ay_limit_min_D(t86);
     real_type t88  = t87 * t1;

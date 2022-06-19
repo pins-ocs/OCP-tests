@@ -15,7 +15,6 @@ num. segments = 1
 num. nodes = 401
 Segment N.0: s0 = 0 length = 1 npts = 401 no data set
 END Mesh[mesh]
-
 Model Parameters
 .......................................L = 2.23606797749979
 ......................................L0 = 2.23606797749979
@@ -23,7 +22,7 @@ Model Parameters
 .......................................a = 1
 .......................................b = 3
 ......................................u0 = 2
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -232,7 +231,7 @@ WARNING eval_NewtonDumped FAILED
 Continuation step N.1
 
 Continuation step N.1 s=0.2, ds=0.2, old_s=    0
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 13, 1] ( 0.000439 , 0.000373 ) [  0.374   ,  0.0559  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 14, 1] ( 0.000373 , 5.71e-06 ) [  0.0471  , 0.00043  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
@@ -240,7 +239,7 @@ NewtonDumped --- start iterations ---
 [ 16, 1] ( 9.13e-09 , 3.88e-14 ) [ 3.41e-07 , 1.91e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -296,7 +295,7 @@ WARNING eval_NewtonDumped FAILED
 [ 23, 1] ( 2.75e-08 , 1.18e-12 ) [ 4.45e-06 , 1.65e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95, ds=0.45, old_s=  0.5
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -338,7 +337,7 @@ WARNING eval_NewtonDumped FAILED
 [ 31, 2] ( 2.78e-11 , 1.98e-11 ) [ 4.27e-10 , 9.43e-11 ] 0.743      [1:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.05, old_s=0.9500000000000001
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 32, 1] ( 0.00011  , 1.1e-05  ) [  0.0438  , 0.000263 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 33, 1] ( 1.1e-05  , 4.54e-08 ) [ 0.000229 , 9.74e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
@@ -356,7 +355,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 1607          N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 46.3[ms]      timeout        = 0 [ms]
+Elapsed Time   = 44[ms]        timeout        = 0 [ms]
 iteration      = 34            Memory Used    = 162Kb (+64bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
@@ -373,7 +372,7 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 1.9649e-11    last ||d||_inf = 1.4973e-10
+last ||f||_inf = 1.9649e-11    last ||d||_inf = 1.4974e-10
 last ||f||_1   = 1.1582e-12    last ||d||_1   = 6.8165e-11
 last ||f||_2   = 3.3469e-12    last ||d||_2   = 8.1846e-11
 ----------------------------------------------------------------------

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -160,9 +160,9 @@ namespace FarmerDefine {
     real_type t44  = t43 * t43;
     real_type t48  = -t16 + U__[iU_x4__o];
     real_type t49  = t48 * t48;
-    real_type result__ = t21 * ModelPars[iM_wP] + t2 * t23 + t25 * t6 + t10 * t27 + t14 * t29 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t33 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t38 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t43 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t12 + t16) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t48 * L__[iL_lambda5__xo];
+    real_type result__ = t21 * ModelPars[iM_wP] + t23 * t2 + t25 * t6 + t27 * t10 + t29 * t14 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t33 * L__[iL_lambda1__xo] + 1.0 / ModelPars[iM_tau__2] * t38 * L__[iL_lambda2__xo] + 1.0 / ModelPars[iM_tau__3] * t43 * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tau__4] * (-t12 + t16) * L__[iL_lambda4__xo] + 1.0 / ModelPars[iM_tau__5] * t48 * L__[iL_lambda5__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -203,9 +203,9 @@ namespace FarmerDefine {
     real_type t39  = pow(-t8 + U__[iU_x2__o], 2);
     real_type t44  = pow(-t12 + U__[iU_x3__o], 2);
     real_type t49  = pow(-t16 + U__[iU_x4__o], 2);
-    real_type result__ = t10 * t27 + t14 * t29 + t2 * t23 + t21 * ModelPars[iM_wP] + t25 * t6 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4];
+    real_type result__ = t27 * t10 + t29 * t14 + t23 * t2 + t21 * ModelPars[iM_wP] + t25 * t6 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -234,7 +234,7 @@ namespace FarmerDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

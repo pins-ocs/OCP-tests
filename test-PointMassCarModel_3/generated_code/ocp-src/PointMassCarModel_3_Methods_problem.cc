@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -269,7 +269,7 @@ namespace PointMassCarModel_3Define {
     real_type t28  = t6 * t6;
     real_type result__ = t3 * ModelPars[iM_wT] + t3 * t11 * L__[iL_lambda1__xo] + t3 * t16 * t6 * L__[iL_lambda2__xo] + (-t10 * t11 + X__[iX_Omega]) * t3 * L__[iL_lambda3__xo] + (-t28 * ModelPars[iM_kD] + X__[iX_fx]) * t3 * L__[iL_lambda4__xo] + t3 * ModelPars[iM_v__Omega__max] * L__[iL_lambda5__xo] * U__[iU_v__Omega] + t3 * ModelPars[iM_v__fx__max] * L__[iL_lambda6__xo] * U__[iU_v__fx];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -295,7 +295,7 @@ namespace PointMassCarModel_3Define {
     real_type t3   = X__[iX_sqrt_inv_Vseg] * X__[iX_sqrt_inv_Vseg];
     real_type result__ = t3 * ModelPars[iM_wT];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -324,7 +324,7 @@ namespace PointMassCarModel_3Define {
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

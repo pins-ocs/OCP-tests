@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace PuglieseDefine {
     real_type result__ = ModelPars[iM_e__C] * xo__T / (ModelPars[iM_s__C] + xo__T);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_T_lim( T={} ) return {}\n",
         xo__T, result__
       );
@@ -102,7 +102,7 @@ namespace PuglieseDefine {
     real_type result__ = 1.0 / t3 * t1 - 1.0 / t7 * xo__T * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_T_lim_D( T={} ) return {}\n",
         xo__T, result__
       );
@@ -118,7 +118,7 @@ namespace PuglieseDefine {
     real_type result__ = -2 / t4 * t1 + 2 / t4 / t3 * xo__T * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_T_lim_DD( T={} ) return {}\n",
         xo__T, result__
       );
@@ -131,7 +131,7 @@ namespace PuglieseDefine {
     real_type result__ = ModelPars[iM_e__D] * xo__DD / (ModelPars[iM_s__D] + xo__DD);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_D_lim( DD={} ) return {}\n",
         xo__DD, result__
       );
@@ -147,7 +147,7 @@ namespace PuglieseDefine {
     real_type result__ = 1.0 / t3 * t1 - 1.0 / t7 * xo__DD * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_D_lim_D( DD={} ) return {}\n",
         xo__DD, result__
       );
@@ -163,7 +163,7 @@ namespace PuglieseDefine {
     real_type result__ = -2 / t4 * t1 + 2 / t4 / t3 * xo__DD * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_D_lim_DD( DD={} ) return {}\n",
         xo__DD, result__
       );
@@ -176,7 +176,7 @@ namespace PuglieseDefine {
     real_type result__ = ModelPars[iM_e__IL] * xo__IL / (ModelPars[iM_s__IL] + xo__IL);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_lim( IL={} ) return {}\n",
         xo__IL, result__
       );
@@ -192,7 +192,7 @@ namespace PuglieseDefine {
     real_type result__ = 1.0 / t3 * t1 - 1.0 / t7 * xo__IL * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_lim_D( IL={} ) return {}\n",
         xo__IL, result__
       );
@@ -208,7 +208,7 @@ namespace PuglieseDefine {
     real_type result__ = -2 / t4 * t1 + 2 / t4 / t3 * xo__IL * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_lim_DD( IL={} ) return {}\n",
         xo__IL, result__
       );
@@ -221,7 +221,7 @@ namespace PuglieseDefine {
     real_type result__ = ModelPars[iM_i0] + ModelPars[iM_e] * xo__C * xo__T / (ModelPars[iM_s] + xo__T);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );
@@ -237,7 +237,7 @@ namespace PuglieseDefine {
     real_type result__ = 1.0 / t4 * t2 - 1.0 / t7 * xo__T * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_D_1( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );
@@ -253,7 +253,7 @@ namespace PuglieseDefine {
     real_type result__ = -2 / t5 * t2 + 2 / t5 / t4 * xo__T * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_D_1_1( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );
@@ -269,7 +269,7 @@ namespace PuglieseDefine {
     real_type result__ = 1.0 / t3 * t1 - 1.0 / t7 * xo__T * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_D_1_2( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );
@@ -282,7 +282,7 @@ namespace PuglieseDefine {
     real_type result__ = ModelPars[iM_e] * xo__T / (ModelPars[iM_s] + xo__T);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_D_2( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );
@@ -295,7 +295,7 @@ namespace PuglieseDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_IL_D_2_2( T={}, C={} ) return {}\n",
         xo__T, xo__C, result__
       );

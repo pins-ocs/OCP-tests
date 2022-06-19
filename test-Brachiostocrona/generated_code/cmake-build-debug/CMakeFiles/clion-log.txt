@@ -1,8 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code -B /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/cmake-build-debug
--- CMAKE_FLAGS     = 
--- CMAKE_LINKER    = /Applications/Xcode-13.4.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
--- CMAKE_GENERATOR = Ninja
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/cmake-build-debug
-CMake File API: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/cmake-build-debug: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/tests/OCP/test-Brachiostocrona/generated_code/cmake-build-debug/.cmake/api/v1/reply/target-Brachiostocrona-Debug-9248dbd66fe558ae594b.json (No such file or directory)

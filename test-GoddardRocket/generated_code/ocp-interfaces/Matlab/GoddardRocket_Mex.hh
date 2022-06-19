@@ -324,9 +324,9 @@ public:
   void do_DD_D_1_1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DD_D_1_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DD_D_2_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_T( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_T_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_T_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_gg( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_gg_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_gg_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_explog( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_explog_D_1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_explog_D_2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );

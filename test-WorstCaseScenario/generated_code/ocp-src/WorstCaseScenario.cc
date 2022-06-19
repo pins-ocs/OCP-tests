@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario.cc                                           |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -310,18 +310,13 @@ namespace WorstCaseScenarioDefine {
   void
   WorstCaseScenario::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    uControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( uControl.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

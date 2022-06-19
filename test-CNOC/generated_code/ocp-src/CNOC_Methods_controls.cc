@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -234,7 +234,7 @@ namespace CNOCDefine {
     real_type t126 = t109 * t1 + t112 * t1 + t121 * t1 + t124 * t1 + t70 * t1 + t76 * t1 + t79 * t1 + t85 * t1 + t88 * t1 + t94 * t1 + t97 * t1;
     real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * LM__[0] + t1 * t4 * LM__[1] - t1 * (-t32 * t4 * t2 - t30) * LM__[2] - t1 * (t23 * t20 * t3 - t38) * LM__[3] - t1 * (-t32 * t38 * t2 - t45) * LM__[4] - t1 * (t32 * t30 * t2 - t52) * LM__[5] + t60 * t1 + t63 * t1 + t65 + t126;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -539,13 +539,13 @@ namespace CNOCDefine {
     real_type t98  = t87 * t84;
     real_type t103 = pow(V__[2] + t1 * (-t12 * t14 * t98 - t34), 2);
     real_type t110 = pow(V__[3] + t1 * (t13 * t84 * t87 - t44), 2);
-    real_type t117 = pow(V__[4] + t1 * (-t98 * t44 * t12 - t2), 2);
-    real_type t124 = pow(V__[5] + t1 * (t98 * t34 * t12 - t7), 2);
+    real_type t117 = pow(V__[4] + t1 * (-t12 * t44 * t98 - t2), 2);
+    real_type t124 = pow(V__[5] + t1 * (t12 * t34 * t98 - t7), 2);
     real_type t126 = V__[6] * V__[6];
     real_type t127 = t1 * t66 + t1 * t69 + t1 * t78 + t1 * t81 + t103 + t110 + t117 + t124 + t126 + t91 + t95;
     real_type result__ = t1 * t22 + t1 * t29 + t1 * t32 + t1 * t39 + t1 * t42 + t1 * t49 + t1 * t5 + t1 * t52 + t1 * t9 + t11 + t127;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

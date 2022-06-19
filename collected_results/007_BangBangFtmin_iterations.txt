@@ -14,7 +14,6 @@ Fcontrol = {
   epsilon = 0.001,
   size    = 0.001
 }
-
 User class (pointer)
 
 User function `pMesh`
@@ -22,8 +21,7 @@ BEGIN Mesh[mesh]
 num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 1 npts = 101 no data set
-END Mesh[mesh]
-NewtonDumped --- start iterations ---
+END Mesh[mesh]NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 Failed check on parameter: 0 < T
 fail 0 < -38.57921666249994
 Failed check on parameter: 0 < T
@@ -53,8 +51,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 409           N. System pars = 100
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.92[ms]      timeout        = 0 [ms]
-iteration      = 7             Memory Used    = 70Kb (+60bytes)
+Elapsed Time   = 5[ms]         timeout        = 0 [ms]
+iteration      = 7             Memory Used    = 69Kb (+28bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001

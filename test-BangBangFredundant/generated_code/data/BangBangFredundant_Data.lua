@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-maxAF = 100.0
 h0    = 0.01
+maxAF = 100.0
 
 content = {
 
@@ -271,8 +271,8 @@ content = {
   MappedObjects = {
   -- ClipIntervalWithErf
     clipdelta = 0.0,
-    clipdelta2 = 0.0,
     cliph = h0,
+    clipdelta2 = 0.0,
   },
 
   -- Controls
@@ -322,8 +322,8 @@ content = {
     segments = {
       
       {
-        n      = 100.0,
         length = 1.0,
+        n      = 100.0,
       },
     },
   },

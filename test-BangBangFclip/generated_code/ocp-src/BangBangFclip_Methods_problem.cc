@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_problem.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -133,7 +133,7 @@ namespace BangBangFclipDefine {
     real_type t8   = clip(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     real_type result__ = t8 * L__[iL_lambda2__xo] + L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda3__xo] * U__[iU_vF];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -158,7 +158,7 @@ namespace BangBangFclipDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -187,7 +187,7 @@ namespace BangBangFclipDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = -XR__[iX_x];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t25  = cos(t13);
     real_type result__ = -t1 + t1 * LM__[0] + (t8 * t6 - 1.0 / t10 + t18 * t14 * t12) * LM__[1] + (-t8 * t5 * t1 + t18 * t25 * t12) * LM__[2];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -329,7 +329,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t30  = pow(-t19 * t26 * t13 + t9 * t6 * t2 + V__[2], 2);
     real_type result__ = t4 + t22 + t30;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -405,7 +405,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t20  = sin(t3);
     real_type t22  = 1.0 / t8;
     real_type t28  = t20 * t20;
-    result__[ 0   ] = 2 * t10 * t5 * t2 + 2 * t22 * t20 * t1 * (V__[1] - t16 * t14 + 1.0 / t18 - t22 * t20 * t1) + 2 * t10 * t28 * t2 + 2 * t22 * t4 * t1 * (-t22 * t4 * t1 + t16 * t13 * X__[iX_vr] + V__[2]);
+    result__[ 0   ] = 2 * t10 * t5 * t2 + 2 * t22 * t20 * t1 * (V__[1] - t16 * t14 + 1.0 / t18 - t22 * t20 * t1) + 2 * t10 * t28 * t2 + 2 * t22 * t4 * t1 * (-t1 * t22 * t4 + t13 * t16 * X__[iX_vr] + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

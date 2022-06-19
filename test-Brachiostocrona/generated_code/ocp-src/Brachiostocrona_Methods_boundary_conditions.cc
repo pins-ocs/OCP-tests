@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_boundary_conditions.cc                 |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,7 +22,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 
@@ -42,9 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_penalization_DD(__t1) Pen1D.evaluate_DD( __t1)
-#define ALIAS_penalization_D(__t1) Pen1D.evaluate_D( __t1)
-#define ALIAS_penalization(__t1) Pen1D.evaluate( __t1)
+#define ALIAS_LowBound_DD(__t1) LowBound.DD( __t1)
+#define ALIAS_LowBound_D(__t1) LowBound.D( __t1)
 #define ALIAS_vthetaControl_D_3(__t1, __t2, __t3) vthetaControl.D_3( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_2(__t1, __t2, __t3) vthetaControl.D_2( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_1(__t1, __t2, __t3) vthetaControl.D_1( __t1, __t2, __t3)

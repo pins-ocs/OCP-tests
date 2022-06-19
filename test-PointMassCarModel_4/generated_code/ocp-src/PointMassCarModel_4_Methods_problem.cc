@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -269,7 +269,7 @@ namespace PointMassCarModel_4Define {
     real_type t27  = t7 * t7;
     real_type result__ = t3 * ModelPars[iM_wT] + t12 * t3 * L__[iL_lambda1__xo] + t16 * t7 * t3 * L__[iL_lambda2__xo] - t3 * (t12 * t11 - X__[iX_Omega]) * L__[iL_lambda3__xo] + t3 * (-t27 * ModelPars[iM_kD] + X__[iX_fx]) * L__[iL_lambda4__xo] + U__[iU_v__Omega] * ModelPars[iM_v__Omega__max] * t3 * L__[iL_lambda5__xo] + U__[iU_v__fx] * ModelPars[iM_v__fx__max] * t3 * L__[iL_lambda6__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -295,7 +295,7 @@ namespace PointMassCarModel_4Define {
     real_type t3   = exp(X__[iX_log_inv_Vseg]);
     real_type result__ = t3 * ModelPars[iM_wT];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -324,7 +324,7 @@ namespace PointMassCarModel_4Define {
     Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -119,7 +119,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t55  = u2Control(t6, -1, 1);
     real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * LM__[0] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * LM__[1] + (t20 - t16) * t2 * LM__[2] + t16 * t2 * LM__[3] + t53 * t2 + t55 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -172,7 +172,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 0   ] = t25 * (162 * t7 * t5 * t4 + 81 * t10 * t4 - 224 * t5 * t7 - 112 * t10 + t15 - t19) * t1;
     real_type t26  = UM__[1];
     real_type t30  = ALIAS_u2Control_D_1(t26, -1, 1);
-    result__[ 1   ] = -t25 * (-162 * t7 * t26 * t4 - 54 * t3 * t18 + 224 * t26 * t7 - 81 * t30 * t4 + 84 * t13 + t15 - t19 + 112 * t30) * t1;
+    result__[ 1   ] = t25 * (162 * t7 * t26 * t4 + 54 * t3 * t18 - 224 * t26 * t7 + 81 * t30 * t4 - 84 * t13 - t15 + t19 - 112 * t30) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -249,10 +249,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t32  = 54 * t3 * t15;
     real_type t35  = LM__[0];
     real_type t36  = 48 * t35;
-    real_type t38  = 162 * t20 * t4 * t6 + 81 * t11 * t20 - 224 * t4 * t6 - 112 * t11 + t32 - t36;
+    real_type t38  = 162 * t6 * t4 * t20 + 81 * t11 * t20 - 224 * t4 * t6 - 112 * t11 + t32 - t36;
     real_type t40  = t22 * t22;
     real_type t43  = t7 * t3 / t40;
-    result__[ 0   ] = 0.5e0 * t23 * (-162 * t11 * t3 * t7 - 324 * t3 * t4 * t8 - t17) * t1 + 0.810e2 * t43 * t38 * t1;
+    result__[ 0   ] = 0.5e0 * t23 * (-162 * t7 * t11 * t3 - 324 * t8 * t4 * t3 - t17) * t1 + 0.810e2 * t43 * t38 * t1;
     result__[ 1   ] = -0.240e2 * t23 * t1;
     result__[ 2   ] = 0.270e2 * t23 * t3 * t1;
     result__[ 3   ] = result__[0];
@@ -261,15 +261,15 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     result__[ 6   ] = t23 * t38;
     real_type t50  = UM__[1];
     real_type t54  = ALIAS_u2Control_D_1(t50, -1, 1);
-    real_type t75  = -162 * t20 * t50 * t6 - 81 * t20 * t54 - 54 * t3 * t35 + 224 * t50 * t6 + 84 * t15 + t32 - t36 + 112 * t54;
-    result__[ 7   ] = -0.5e0 * t23 * (324 * t3 * t50 * t8 + 162 * t3 * t54 * t7 + 54 * t35 * t7 - t17) * t1 - 0.810e2 * t43 * t75 * t1;
+    real_type t75  = 162 * t6 * t50 * t20 + 81 * t54 * t20 + 54 * t3 * t35 - 224 * t50 * t6 - 84 * t15 - t32 + t36 - 112 * t54;
+    result__[ 7   ] = 0.5e0 * t23 * (-324 * t8 * t50 * t3 - 162 * t7 * t54 * t3 - 54 * t7 * t35 + t17) * t1 + 0.810e2 * t43 * t75 * t1;
     real_type t79  = 54 * t3;
-    result__[ 8   ] = -0.5e0 * t23 * (-t79 - 48) * t1;
-    result__[ 9   ] = -0.5e0 * t23 * (t79 + 84) * t1;
+    result__[ 8   ] = 0.5e0 * t23 * (t79 + 48) * t1;
+    result__[ 9   ] = 0.5e0 * t23 * (-t79 - 84) * t1;
     result__[ 10  ] = result__[7];
     result__[ 11  ] = result__[8];
     result__[ 12  ] = result__[9];
-    result__[ 13  ] = -t23 * t75;
+    result__[ 13  ] = t23 * t75;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 14, i_segment );
   }
@@ -328,7 +328,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t18  = 1.0 / (81 * t4 - 112);
     result__[ 0   ] = t18 * (81 * t9 * t4 - t12 + t7 - 112 * t9) * t1;
     real_type t20  = ALIAS_u2Control_D_1_1(UM__[1], -1, 1);
-    result__[ 1   ] = -t18 * (-81 * t20 * t4 + t12 + 112 * t20 - t7) * t1;
+    result__[ 1   ] = t18 * (81 * t20 * t4 - t12 - 112 * t20 + t7) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -401,7 +401,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t54  = pow(-t13 * t1 + V__[3], 2);
     real_type result__ = t3 * t1 + t6 * t1 + t32 + t45 + t50 + t54;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

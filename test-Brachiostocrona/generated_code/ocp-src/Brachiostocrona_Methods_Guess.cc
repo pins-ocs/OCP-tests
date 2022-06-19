@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -34,9 +34,8 @@
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_penalization_DD(__t1) Pen1D.evaluate_DD( __t1)
-#define ALIAS_penalization_D(__t1) Pen1D.evaluate_D( __t1)
-#define ALIAS_penalization(__t1) Pen1D.evaluate( __t1)
+#define ALIAS_LowBound_DD(__t1) LowBound.DD( __t1)
+#define ALIAS_LowBound_D(__t1) LowBound.D( __t1)
 #define ALIAS_vthetaControl_D_3(__t1, __t2, __t3) vthetaControl.D_3( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_2(__t1, __t2, __t3) vthetaControl.D_2( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_1(__t1, __t2, __t3) vthetaControl.D_1( __t1, __t2, __t3)
@@ -214,9 +213,6 @@ namespace BrachiostocronaDefine {
   // pars_check_strings
   #define Xoptima__message_pars_check_0 "0 < T"
 
-  // u_check_strings
-  #define Xoptima__message_u_check_0 "0 < sz(zeta)"
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
@@ -256,7 +252,7 @@ namespace BrachiostocronaDefine {
    |   \___/       \____|\__,_|\___||___/___/
   \*/
 
-  integer Brachiostocrona::u_guess_numEqns() const { return 2; }
+  integer Brachiostocrona::u_guess_numEqns() const { return 1; }
 
   void
   Brachiostocrona::u_guess_eval(
@@ -269,11 +265,10 @@ namespace BrachiostocronaDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_vtheta ] = 0;
-    UGUESS__[ iU_sz     ] = 1;
+    std::fill_n( UGUESS__.pointer(), 1, 0 );
+    UGUESS__[ iU_vtheta ] = vthetaControl.solve(-L__[iL_lambda4__xo] / P__[iP_T], -10, 10);
     if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -328,8 +323,6 @@ namespace BrachiostocronaDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    // admissible region
-    Xoptima__check__u__lt(0, U__[iU_sz], Xoptima__message_u_check_0);
     // controls range check
     vthetaControl.check_range(U__[iU_vtheta], -10, 10);
     return ok;

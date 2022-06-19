@@ -16,7 +16,6 @@ jerkControl = {
   epsilon = 0.01,
   size    = 0.01
 }
-
 Constraints LT
 Tpositive = {
   Type      = LESS THAN
@@ -24,29 +23,25 @@ Tpositive = {
   Tolerance = 0.01
   Epsilon   = 0.01
   Active    = YES
-}
-AccBound = {
+}AccBound = {
+  Type      = LESS THAN
+  SubType   = WallRegular, h=0.01, epsilon=0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}VelBound_min = {
+  Type      = LESS THAN
+  SubType   = WallRegular, h=0.01, epsilon=0.01
+  Tolerance = 0.01
+  Epsilon   = 0.01
+  Active    = YES
+}VelBound_max = {
   Type      = LESS THAN
   SubType   = WallRegular, h=0.01, epsilon=0.01
   Tolerance = 0.01
   Epsilon   = 0.01
   Active    = YES
 }
-VelBound_min = {
-  Type      = LESS THAN
-  SubType   = WallRegular, h=0.01, epsilon=0.01
-  Tolerance = 0.01
-  Epsilon   = 0.01
-  Active    = YES
-}
-VelBound_max = {
-  Type      = LESS THAN
-  SubType   = WallRegular, h=0.01, epsilon=0.01
-  Tolerance = 0.01
-  Epsilon   = 0.01
-  Active    = YES
-}
-
 User class (pointer)
 
 User function `pMesh`
@@ -56,7 +51,6 @@ num. nodes = 202
 Segment N.0: s0 = 0 length = 0.5 npts = 101 no data set
 Segment N.1: s0 = 0.5 length = 0.5 npts = 101 no data set
 END Mesh[mesh]
-
 Model Parameters
 .......................................L = 100
 ...................................Vmean = 2
@@ -76,7 +70,7 @@ Model Parameters
 ...............................along_max = 4
 ................................jerk_max = 10
 ................................jerk_min = -10
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -290,7 +284,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 1622          N. System pars = 201
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 113[ms]       timeout        = 0 [ms]
+Elapsed Time   = 106[ms]       timeout        = 0 [ms]
 iteration      = 50            Memory Used    = 180Kb (+69bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

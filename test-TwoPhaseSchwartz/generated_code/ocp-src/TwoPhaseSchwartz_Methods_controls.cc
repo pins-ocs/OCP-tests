@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -111,7 +111,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t43  = bound2(-0.8e0 - t6);
     real_type result__ = t3 * ModelPars[iM_epsilon] + t6 * LM__[0] + (t9 - 0.1e0 * t6 * (2 * t11 + 1)) * LM__[1] + t21 * t19 * LM__[2] + (t2 - 0.1e0 * t21 * (2 * t26 + 1)) * t19 * LM__[3] + t33 + t41 + t43;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -326,7 +326,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t43  = pow(V__[3] - (U__[iU_u2] - 0.1e0 * t27 * (2 * t35 + 1)) * t26, 2);
     real_type result__ = t2 + t12 + t14 + t17 + t25 + t31 + t43;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

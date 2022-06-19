@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -112,7 +112,7 @@ namespace HangGliderDefine {
     real_type t52  = Tbound(-t7);
     real_type result__ = t4 * ModelPars[iM_W] + t9 * t7 * LM__[0] + t13 * t7 * LM__[1] + (-t9 * t29 - t33 * t32) * t21 * t18 * t7 * LM__[2] + ((-t33 * t29 + t9 * t32) * t21 * t18 * t7 - ModelPars[iM_g] * t7) * LM__[3] + t51 + t52;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -163,7 +163,7 @@ namespace HangGliderDefine {
     real_type t23  = Lfun(t11, t12, t13);
     real_type t24  = w(t11, t13);
     real_type t40  = ALIAS_cLControl_D_1(t2, ModelPars[iM_cL_min], ModelPars[iM_cL_max]);
-    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * LM__[2] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * LM__[3] + t40;
+    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t18 * t19 - t23 * t24) * t16 * t7 * LM__[2] + (-2 * t18 * t19 * t24 + t12 * t23) * t16 * t7 * LM__[3] + t40;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -401,7 +401,7 @@ namespace HangGliderDefine {
     real_type t50  = pow(V__[3] - (-t34 * t30 + t7 * t33) * t23 * t20 + ModelPars[iM_g] * t5, 2);
     real_type result__ = t4 + t6 + t11 + t16 + t40 + t50;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -435,13 +435,13 @@ namespace HangGliderDefine {
     real_type t15  = ModelPars[iM_c1];
     real_type t16  = t1 * t1;
     real_type t20  = Dfun(t10, t11, t12);
-    real_type t21  = t20 * (t15 * t16 + ModelPars[iM_c0]);
+    real_type t21  = t20 * (t16 * t15 + ModelPars[iM_c0]);
     real_type t23  = Lfun(t10, t11, t12);
     real_type t24  = t23 * t1;
     real_type t25  = w(t10, t12);
     real_type t32  = t14 * t8;
     real_type t33  = t1 * t15;
-    result__[ 0   ] = t4 - 2 * (-2 * t11 * t20 * t33 - t23 * t25) * t32 * t6 * (V__[2] - (-t11 * t21 - t24 * t25) * t14 * t9) - 2 * (-2 * t20 * t25 * t33 + t11 * t23) * t32 * t6 * (V__[3] - (t11 * t24 - t25 * t21) * t14 * t9 + ModelPars[iM_g] * t6);
+    result__[ 0   ] = t4 - 2 * (-2 * t11 * t20 * t33 - t25 * t23) * t32 * t6 * (V__[2] - (-t11 * t21 - t25 * t24) * t14 * t9) - 2 * (-2 * t25 * t20 * t33 + t11 * t23) * t32 * t6 * (V__[3] - (t11 * t24 - t25 * t21) * t14 * t9 + ModelPars[iM_g] * t6);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

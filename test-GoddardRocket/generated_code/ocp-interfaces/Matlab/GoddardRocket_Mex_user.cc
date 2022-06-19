@@ -142,50 +142,50 @@ ProblemStorage::do_DD_D_2_2(
 }
 
 void
-ProblemStorage::do_T(
+ProblemStorage::do_gg(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('T', obj, xo__u ): "
+  #define CMD MODEL_NAME "_Mex('gg', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
-  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__u" );
+  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
 
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
   for ( mwSize ii = 0; ii < N0*M0; ++ii )
-    res[ii] = this->T(arg0[ii]);
+    res[ii] = this->gg(arg0[ii]);
   #undef CMD
 }
 
 void
-ProblemStorage::do_T_D(
+ProblemStorage::do_gg_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('T_D', obj, xo__u ): "
+  #define CMD MODEL_NAME "_Mex('gg_D', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
-  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__u" );
+  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
 
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
   for ( mwSize ii = 0; ii < N0*M0; ++ii )
-    res[ii] = this->T_D(arg0[ii]);
+    res[ii] = this->gg_D(arg0[ii]);
   #undef CMD
 }
 
 void
-ProblemStorage::do_T_DD(
+ProblemStorage::do_gg_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('T_DD', obj, xo__u ): "
+  #define CMD MODEL_NAME "_Mex('gg_DD', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
-  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__u" );
+  real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
 
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, N0, M0 );
   for ( mwSize ii = 0; ii < N0*M0; ++ii )
-    res[ii] = this->T_DD(arg0[ii]);
+    res[ii] = this->gg_DD(arg0[ii]);
   #undef CMD
 }
 

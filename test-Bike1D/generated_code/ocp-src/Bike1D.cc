@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -356,30 +356,21 @@ namespace Bike1DDefine {
   void
   Bike1D::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    murControl.info(mstr);
-    mufControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( murControl.info(),msg_level);
+    m_console->message( mufControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    vMinLimit.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( vMinLimit.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nUser mapped functions\n",msg_level);
-    mstr.str("");
-    mstr << "User function ``clip'' mapped with: ";
-    clip.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message("User function ``clip'' mapped with: ",msg_level);
+    m_console->message( clip.info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -508,44 +508,35 @@ namespace TyreDynamicDefine {
   void
   TyreDynamic::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    b__oControl.info(mstr);
-    p__oControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( b__oControl.info(),msg_level);
+    m_console->message( p__oControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    OnlyBrakingRear.info(mstr);
-    OnlyTractionRear.info(mstr);
-    LongSlipRear_min.info(mstr);
-    LongSlipRear_max.info(mstr);
-    v_min.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( OnlyBrakingRear.info(),msg_level);
+    m_console->message( OnlyTractionRear.info(),msg_level);
+    m_console->message( LongSlipRear_min.info(),msg_level);
+    m_console->message( LongSlipRear_max.info(),msg_level);
+    m_console->message( v_min.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nUser mapped functions\n",msg_level);
-    mstr.str("");
-    mstr << "User function ``posPart'' mapped with: ";
-    posPart.info(mstr);
-    mstr << "User function ``negPart'' mapped with: ";
-    negPart.info(mstr);
-    mstr << "User function ``clipSup'' mapped with: ";
-    clipSup.info(mstr);
-    mstr << "User function ``clipInt'' mapped with: ";
-    clipInt.info(mstr);
-    mstr << "User function ``sign_reg'' mapped with: ";
-    sign_reg.info(mstr);
-    mstr << "User function ``abs_reg'' mapped with: ";
-    abs_reg.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message("User function ``posPart'' mapped with: ",msg_level);
+    m_console->message( posPart.info(),msg_level);
+    m_console->message("User function ``negPart'' mapped with: ",msg_level);
+    m_console->message( negPart.info(),msg_level);
+    m_console->message("User function ``clipSup'' mapped with: ",msg_level);
+    m_console->message( clipSup.info(),msg_level);
+    m_console->message("User function ``clipInt'' mapped with: ",msg_level);
+    m_console->message( clipInt.info(),msg_level);
+    m_console->message("User function ``sign_reg'' mapped with: ",msg_level);
+    m_console->message( sign_reg.info(),msg_level);
+    m_console->message("User function ``abs_reg'' mapped with: ",msg_level);
+    m_console->message( abs_reg.info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

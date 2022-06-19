@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -121,7 +121,7 @@ namespace TwoStageCSTRDefine {
     real_type t40  = u2Control(t12, -0.5e0, 0.5e0);
     real_type result__ = t2 + t4 + t6 + t8 + (t11 + t13) * ModelPars[iM_W] + t18 * LM__[0] + t24 * LM__[1] + (t1 - t5 - t18 * t27 - t29 + 0.25e0) * LM__[2] + (t3 - 2 * t7 - (t7 + 0.25e0) * t12 - t24 * t27 + t29 - 0.25e0) * LM__[3] + t39 + t40;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -360,7 +360,7 @@ namespace TwoStageCSTRDefine {
     real_type t33  = pow(V__[3] - t7 + 2 * t22 + (t22 + 0.25e0) * t3 + (t8 - t14) * t19 - t23 + 0.25e0, 2);
     real_type result__ = t2 + t4 + t10 + t16 + t25 + t33;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

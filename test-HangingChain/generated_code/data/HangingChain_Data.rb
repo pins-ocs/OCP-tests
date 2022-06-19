@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: HangingChain_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-a  = 1.0
 b  = 3.0
+a  = 1.0
 u0 = b-a
 L0 = (u0**2+1)**(1/2.0)
 L  = L0
@@ -321,8 +321,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 400.0,
         :length => 1.0,
+        :n      => 400.0,
       },
     ],
   };

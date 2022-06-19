@@ -20,24 +20,31 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_v_max     = 0.01
-epsi_TS_max   = 0.025
-epsi_TS       = epsi_TS_max
-tol_TS_max    = 0.0001
-tol_u_max     = 0.01
-tol_u         = tol_u_max
-epsi_u_max    = 0.01
-epsi_u        = epsi_u_max
-tol_v         = tol_v_max
-tol_TS        = tol_TS_max
-tol_mass_max  = 0.01
-tol_mass      = tol_mass_max
+g0            = 1.0
+mc            = 0.6
 epsi_v_max    = 0.1
+tol_mass_max  = 0.01
+tol_v_max     = 0.01
+tol_v         = tol_v_max
+epsi_T_max    = 0.1
+epsi_T        = epsi_T_max
+tol_TS_max    = 0.0001
+tol_TS        = tol_TS_max
+m_i           = 1.0
+Tmax          = 3.5*g0*m_i
+tol_mass      = tol_mass_max
+epsi_TS_max   = 0.025
+m_f           = mc*m_i
+epsi_TS       = epsi_TS_max
+h_i           = 1.0
+c             = 0.5*(g0*h_i)**(1/2.0)
+vc            = 620.0
+Dc            = 0.5*vc*m_i/g0
 epsi_v        = epsi_v_max
+tol_T_max     = 0.01
+tol_T         = tol_T_max
 epsi_mass_max = 0.025
 epsi_mass     = epsi_mass_max
-mu0           = 0.0
-mu            = mu0
 
 mechatronix do |data|
 
@@ -93,7 +100,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => true,
+    :Iterative => false,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
     # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
@@ -240,7 +247,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 2,
+    :ns_continuation_end   => 1,
   }
 
   #                                       _
@@ -273,43 +280,39 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
-    :Hscale => 23800.0,
-    :Ve     => 1580.9425,
-    :g      => 32.174,
-    :mu     => mu,
+    :Tmax => Tmax,
+    :c    => c,
 
     # Guess Parameters
-    :TimeSize_guess => 40.0,
 
     # Boundary Conditions
-    :h_i => 0.0,
-    :m_f => 1.0,
-    :m_i => 3.0,
+    :h_i => h_i,
+    :m_f => m_f,
+    :m_i => m_i,
     :v_i => 0.0,
 
     # Post Processing Parameters
-    :Tmax => 193.0,
 
     # User Function Parameters
-    :D0 => 5.49153485e-05,
+    :Dc => Dc,
+    :g0 => g0,
+    :hc => 500.0,
 
     # Continuation Parameters
-    :mu0           => mu0,
-    :mu1           => 0.0,
     :epsi_TS_max   => epsi_TS_max,
     :epsi_TS_min   => 1e-10,
+    :epsi_T_max    => epsi_T_max,
+    :epsi_T_min    => 1e-07,
     :epsi_mass_max => epsi_mass_max,
     :epsi_mass_min => 0.0001,
-    :epsi_u_max    => epsi_u_max,
-    :epsi_u_min    => 1e-07,
     :epsi_v_max    => epsi_v_max,
     :epsi_v_min    => 0.0001,
     :tol_TS_max    => tol_TS_max,
     :tol_TS_min    => 0.001,
+    :tol_T_max     => tol_T_max,
+    :tol_T_min     => 0.0001,
     :tol_mass_max  => tol_mass_max,
     :tol_mass_min  => 0.0001,
-    :tol_u_max     => tol_u_max,
-    :tol_u_min     => 0.0001,
     :tol_v_max     => tol_v_max,
     :tol_v_min     => 0.0001,
 
@@ -335,10 +338,10 @@ mechatronix do |data|
   # Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
-  data.Controls[:uControl] = {
+  data.Controls[:TControl] = {
     :type      => 'COS_LOGARITHMIC',
-    :epsilon   => epsi_u,
-    :tolerance => tol_u
+    :epsilon   => epsi_T,
+    :tolerance => tol_T
   }
 
 
@@ -392,8 +395,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
+        :n      => 400.0,
         :length => 1.0,
-        :n      => 100.0,
       },
     ],
   };

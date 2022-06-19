@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace ICLOCS_SpeyerDefine {
     real_type t11  = t10 * t10;
     real_type result__ = t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[iM_b] / 2 + t4 * LM__[0] + t10 * LM__[1];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -282,7 +282,7 @@ namespace ICLOCS_SpeyerDefine {
     real_type t8   = pow(V__[1] - U__[iU_u], 2);
     real_type result__ = t4 + t8;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

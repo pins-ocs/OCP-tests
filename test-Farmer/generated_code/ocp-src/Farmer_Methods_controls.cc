@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -153,9 +153,9 @@ namespace FarmerDefine {
     real_type t83  = x3__oControl(t42, -0.1e-2, 100);
     real_type t84  = x4__oControl(t47, -0.1e-2, 100);
     real_type t86  = LimitX2X4(t8 + t16 - 0.12e0);
-    real_type result__ = t21 * ModelPars[iM_wP] + t2 * t23 + t25 * t6 + t10 * t27 + t14 * t29 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t33 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t38 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t43 * LM__[2] - 1.0 / ModelPars[iM_tau__4] * (-t12 + t16) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t48 * LM__[4] + t81 + t82 + t83 + t84 + t86;
+    real_type result__ = t21 * ModelPars[iM_wP] + t23 * t2 + t25 * t6 + t27 * t10 + t29 * t14 + t34 * ModelPars[iM_wJ1] + t39 * ModelPars[iM_wJ2] + t44 * ModelPars[iM_wJ3] + t49 * ModelPars[iM_wJ4] + 1.0 / ModelPars[iM_tau__1] * t33 * LM__[0] + 1.0 / ModelPars[iM_tau__2] * t38 * LM__[1] + 1.0 / ModelPars[iM_tau__3] * t43 * LM__[2] - 1.0 / ModelPars[iM_tau__4] * (-t12 + t16) * LM__[3] + 1.0 / ModelPars[iM_tau__5] * t48 * LM__[4] + t81 + t82 + t83 + t84 + t86;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -418,7 +418,7 @@ namespace FarmerDefine {
     real_type t49  = pow(V__[4] + 1.0 / ModelPars[iM_tau__5] * (t10 - t7), 2);
     real_type result__ = t2 + t4 + t6 + t8 + t12 + t20 + t27 + t35 + t42 + t49;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

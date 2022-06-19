@@ -2,7 +2,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFredundant_pins_run.rb                                 #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #

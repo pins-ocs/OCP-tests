@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -200,14 +200,14 @@ namespace PointMassCarModel_4Define {
     real_type t5   = XM__[2];
     real_type t8   = ALIAS_Kappa(XM__[0]);
     real_type t9   = zeta__dot(t4, t5, XM__[1], t8);
-    result__[ 0   ] = -t3 * t9 + V__[0];
+    result__[ 0   ] = -t9 * t3 + V__[0];
     real_type t13  = sin(t5);
-    result__[ 1   ] = -t13 * t3 * t4 + V__[1];
-    result__[ 2   ] = V__[2] + t3 * (t8 * t9 - XM__[4]);
+    result__[ 1   ] = -t13 * t4 * t3 + V__[1];
+    result__[ 2   ] = V__[2] + t3 * (t9 * t8 - XM__[4]);
     real_type t21  = t4 * t4;
-    result__[ 3   ] = V__[3] - t3 * (-t21 * ModelPars[iM_kD] + XM__[5]);
-    result__[ 4   ] = -t3 * UM__[1] * ModelPars[iM_v__Omega__max] + V__[4];
-    result__[ 5   ] = -t3 * UM__[0] * ModelPars[iM_v__fx__max] + V__[5];
+    result__[ 3   ] = V__[3] - t3 * (-ModelPars[iM_kD] * t21 + XM__[5]);
+    result__[ 4   ] = -ModelPars[iM_v__Omega__max] * UM__[1] * t3 + V__[4];
+    result__[ 5   ] = -ModelPars[iM_v__fx__max] * UM__[0] * t3 + V__[5];
     result__[ 6   ] = V__[6];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 7, i_segment );

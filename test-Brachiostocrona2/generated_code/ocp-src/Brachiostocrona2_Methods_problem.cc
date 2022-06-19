@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -119,7 +119,7 @@ namespace Brachiostocrona2Define {
     real_type t16  = sin(t2);
     real_type result__ = t10 * t11 * t8 * L__[iL_lambda1__xo] + t10 * t16 * t8 * L__[iL_lambda2__xo] - t16 * t8 * L__[iL_lambda3__xo] * ModelPars[iM_g] + t5 * ModelPars[iM_epsi];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -145,7 +145,7 @@ namespace Brachiostocrona2Define {
     real_type t5   = pow(U__[iU_theta] - ModelPars[iM_theta0], 2);
     real_type result__ = t5 * ModelPars[iM_epsi];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -174,7 +174,7 @@ namespace Brachiostocrona2Define {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = P__[iP_T];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

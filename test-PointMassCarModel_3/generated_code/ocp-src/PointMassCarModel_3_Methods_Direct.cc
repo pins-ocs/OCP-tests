@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -315,7 +315,7 @@ namespace PointMassCarModel_3Define {
     real_type t5   = ALIAS_Kappa(t4);
     real_type t6   = zeta__dot_D_4(t1, t2, t3, t5);
     real_type t7   = ALIAS_Kappa_D(t4);
-    real_type t8   = t6 * t7;
+    real_type t8   = t7 * t6;
     real_type t9   = XM__[6];
     real_type t10  = t9 * t9;
     real_type t12  = 0.5e0 * t10 * t8;

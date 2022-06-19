@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TyreDynamic_Data.rb                                            #
 #                                                                       #
-#  version: 1.0   date 4/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,22 +20,22 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-w__t0    = 1.0
-rw       = 0.3
 eps_c0   = 0.1
-eps_c    = eps_c0
+rw       = 0.3
+w__t0    = 1.0
+w__t     = w__t0
 v__0     = 10.0
 omega__0 = 1/rw*v__0
-tol_c0   = 0.1
-tol_c    = tol_c0
-tol_l    = 0.01
-TT__max  = 800.0
-E__pow   = 60*TT__max
 L        = 300.0
 mesh_np  = 2.000000000*L
+TT__max  = 800.0
+E__pow   = 60*TT__max
+tol_l    = 0.01
+eps_c    = eps_c0
 eps_l    = 0.01
+tol_c0   = 0.1
 h__b     = 1.0
-w__t     = w__t0
+tol_c    = tol_c0
 
 mechatronix do |data|
 
@@ -354,7 +354,7 @@ mechatronix do |data|
   data.MappedObjects[:clipSup] = { :h => 0.01 }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clipInt] = { :delta => 0.0, :h => 0.01, :delta2 => 0.0 }
+  data.MappedObjects[:clipInt] = { :delta2 => 0.0, :delta => 0.0, :h => 0.01 }
 
   # SignRegularizedWithErf
   data.MappedObjects[:sign_reg] = { :h => 0.01 }
@@ -449,16 +449,16 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 0.1*L,
         :n      => 0.4*mesh_np,
+        :length => 0.1*L,
       },
       {
-        :length => 0.8*L,
         :n      => 0.8*mesh_np,
+        :length => 0.8*L,
       },
       {
-        :length => 0.1*L,
         :n      => 0.4*mesh_np,
+        :length => 0.1*L,
       },
     ],
   };

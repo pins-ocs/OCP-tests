@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Mex.cc                                         |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -25,7 +25,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 
@@ -138,7 +137,7 @@ class ProblemStorage : public MODEL_CLASS {
 
   // user defined Object instances (external)
 
-  MeshStd                     mesh;
+  MeshStd              mesh;
 
 public:
 

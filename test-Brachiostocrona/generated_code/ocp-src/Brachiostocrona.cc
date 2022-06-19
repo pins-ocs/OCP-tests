@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona.cc                                             |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -62,7 +62,6 @@ namespace BrachiostocronaDefine {
 
   char const *namesUvars[numUvars+1] = {
     "vtheta",
-    "sz",
     nullptr
   };
 
@@ -87,8 +86,8 @@ namespace BrachiostocronaDefine {
 
   char const *namesPostProcess[numPostProcess+1] = {
     "vthetaControl",
+    "LowBound",
     "low",
-    "ARG",
     nullptr
   };
 
@@ -101,19 +100,17 @@ namespace BrachiostocronaDefine {
     "Vf",
     "g",
     "mass",
-    "mu0",
-    "mu1",
-    "w_ARG",
-    "w_ARG0",
-    "w_ARG1",
     "xf",
     "y0_low",
     "yf",
+    "low_tolerance0",
+    "low_tolerance1",
     "slope_low",
     nullptr
   };
 
   char const *namesConstraintLT[numConstraintLT+1] = {
+    "LowBound",
     nullptr
   };
 
@@ -154,12 +151,12 @@ namespace BrachiostocronaDefine {
   // Controls
   , vthetaControl("vthetaControl")
   // Constraints LT
+  , LowBound("LowBound")
   // Constraints 1D
   // Constraints 2D
   // User classes
-  , Pen1D("Pen1D")
   {
-    m_U_solve_iterative = true;
+    m_U_solve_iterative = false;
 
     // continuation
     this->ns_continuation_begin = 0;
@@ -273,6 +270,18 @@ namespace BrachiostocronaDefine {
   */
   void
   Brachiostocrona::setup_classes( GenericContainer const & gc_data ) {
+    UTILS_ASSERT0(
+      gc_data.exists("Constraints"),
+      "Brachiostocrona::setup_classes: Missing key `Parameters` in data\n"
+    );
+    GenericContainer const & gc = gc_data("Constraints");
+    // Initialize Constraints 1D
+    UTILS_ASSERT0(
+      gc.exists("LowBound"),
+      "in Brachiostocrona::setup_classes(gc) missing key: ``LowBound''\n"
+    );
+    LowBound.setup( gc("LowBound") );
+
   }
 
   /* --------------------------------------------------------------------------
@@ -285,14 +294,6 @@ namespace BrachiostocronaDefine {
   */
   void
   Brachiostocrona::setup_user_classes( GenericContainer const & gc ) {
-
-    // Initialize user classes (user mesh oject not initialized here)
-    UTILS_ASSERT0(
-      gc.exists("Pen1D"),
-      "in Brachiostocrona::setup_classes(gc) missing key: ``Pen1D''\n"
-    );
-    Pen1D.setup( gc("Pen1D") );
-
   }
 
   /* --------------------------------------------------------------------------
@@ -371,8 +372,8 @@ namespace BrachiostocronaDefine {
     m_console->message("\nControls\n",msg_level);
     m_console->message( vthetaControl.info(),msg_level);
 
-    m_console->message("\nUser class (local)\n",msg_level);
-    m_console->message( Pen1D.info(),msg_level);
+    m_console->message("\nConstraints LT\n",msg_level);
+    m_console->message( LowBound.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);

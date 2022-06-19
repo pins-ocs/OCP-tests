@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_problem.cc                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -123,9 +123,9 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = X__[iX_x] * X__[iX_x];
-    real_type result__ = (ModelPars[iM_theta] * t1 + t3) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + U__[iU_u] * t1 * L__[iL_lambda3__xo];
+    real_type result__ = (t1 * ModelPars[iM_theta] + t3) * t1 + X__[iX_y] * t1 * L__[iL_lambda1__xo] + X__[iX_z] * t1 * L__[iL_lambda2__xo] + U__[iU_u] * t1 * L__[iL_lambda3__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -152,7 +152,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t3   = X__[iX_x] * X__[iX_x];
     real_type result__ = (ModelPars[iM_theta] * t1 + t3) * t1;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -181,7 +181,7 @@ namespace SingularLuus04_FreeTimeDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -137,7 +137,7 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = L__[iL_lambda1__xo] * X__[iX_v] + L__[iL_lambda2__xo] * (X__[iX_F1] + X__[iX_F2]) + L__[iL_lambda3__xo] * X__[iX_vF1] + L__[iL_lambda4__xo] * X__[iX_vF2] + L__[iL_lambda5__xo] * U__[iU_aF1] + L__[iL_lambda6__xo] * U__[iU_aF2];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -162,7 +162,7 @@ namespace BangBangFredundantDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -193,7 +193,7 @@ namespace BangBangFredundantDefine {
     real_type t9   = Flim(XR__[iX_F1] + XR__[iX_F2]);
     real_type result__ = -XR__[iX_x] + t5 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

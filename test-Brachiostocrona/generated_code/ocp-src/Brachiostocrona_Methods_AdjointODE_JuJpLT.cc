@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,7 +22,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 
@@ -42,9 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_penalization_DD(__t1) Pen1D.evaluate_DD( __t1)
-#define ALIAS_penalization_D(__t1) Pen1D.evaluate_D( __t1)
-#define ALIAS_penalization(__t1) Pen1D.evaluate( __t1)
+#define ALIAS_LowBound_DD(__t1) LowBound.DD( __t1)
+#define ALIAS_LowBound_D(__t1) LowBound.D( __t1)
 #define ALIAS_vthetaControl_D_3(__t1, __t2, __t3) vthetaControl.D_3( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_2(__t1, __t2, __t3) vthetaControl.D_2( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_1(__t1, __t2, __t3) vthetaControl.D_1( __t1, __t2, __t3)
@@ -82,7 +80,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer Brachiostocrona::LT_numEqns() const { return 0; }
+  integer Brachiostocrona::LT_numEqns() const { return 1; }
 
   void
   Brachiostocrona::LT_eval(
@@ -91,7 +89,13 @@ namespace BrachiostocronaDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = LowBound(ModelPars[iM_slope_low] * X__[iX_x] - X__[iX_y] + ModelPars[iM_y0_low]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -117,7 +121,7 @@ namespace BrachiostocronaDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer Brachiostocrona::LTargs_numEqns() const { return 0; }
+  integer Brachiostocrona::LTargs_numEqns() const { return 1; }
 
   void
   Brachiostocrona::LTargs_eval(
@@ -126,13 +130,19 @@ namespace BrachiostocronaDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ModelPars[iM_slope_low] * X__[iX_x] - X__[iX_y] + ModelPars[iM_y0_low];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DJPDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DJPDxpu_numCols() const { return 7; }
+  integer Brachiostocrona::DJPDxpu_numCols() const { return 6; }
   integer Brachiostocrona::DJPDxpu_nnz()     const { return 0; }
 
   void
@@ -152,13 +162,14 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::DLTDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DLTDxpu_numCols() const { return 7; }
-  integer Brachiostocrona::DLTDxpu_nnz()     const { return 0; }
+  integer Brachiostocrona::DLTDxpu_numRows() const { return 1; }
+  integer Brachiostocrona::DLTDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DLTDxpu_nnz()     const { return 2; }
 
   void
   Brachiostocrona::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
   }
 
 
@@ -169,12 +180,21 @@ namespace BrachiostocronaDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_slope_low];
+    real_type t7   = ALIAS_LowBound_D(X__[iX_x] * t1 - X__[iX_y] + ModelPars[iM_y0_low]);
+    result__[ 0   ] = t1 * t7;
+    result__[ 1   ] = -t7;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer Brachiostocrona::DJUDxpu_numRows() const { return 1; }
-  integer Brachiostocrona::DJUDxpu_numCols() const { return 7; }
+  integer Brachiostocrona::DJUDxpu_numCols() const { return 6; }
   integer Brachiostocrona::DJUDxpu_nnz()     const { return 2; }
 
   void
@@ -204,13 +224,14 @@ namespace BrachiostocronaDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::DLTargsDxpu_numRows() const { return 0; }
-  integer Brachiostocrona::DLTargsDxpu_numCols() const { return 7; }
-  integer Brachiostocrona::DLTargsDxpu_nnz()     const { return 0; }
+  integer Brachiostocrona::DLTargsDxpu_numRows() const { return 1; }
+  integer Brachiostocrona::DLTargsDxpu_numCols() const { return 6; }
+  integer Brachiostocrona::DLTargsDxpu_nnz()     const { return 2; }
 
   void
   Brachiostocrona::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
   }
 
 
@@ -221,14 +242,21 @@ namespace BrachiostocronaDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ModelPars[iM_slope_low];
+    result__[ 1   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 2, i_segment );
   }
 
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2JPD2xpu_numRows() const { return 7; }
-  integer Brachiostocrona::D2JPD2xpu_numCols() const { return 7; }
+  integer Brachiostocrona::D2JPD2xpu_numRows() const { return 6; }
+  integer Brachiostocrona::D2JPD2xpu_numCols() const { return 6; }
   integer Brachiostocrona::D2JPD2xpu_nnz()     const { return 0; }
 
   void
@@ -250,13 +278,16 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2LTD2xpu_numRows() const { return 7; }
-  integer Brachiostocrona::D2LTD2xpu_numCols() const { return 7; }
-  integer Brachiostocrona::D2LTD2xpu_nnz()     const { return 0; }
+  integer Brachiostocrona::D2LTD2xpu_numRows() const { return 6; }
+  integer Brachiostocrona::D2LTD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2LTD2xpu_nnz()     const { return 4; }
 
   void
   Brachiostocrona::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
 
@@ -268,13 +299,26 @@ namespace BrachiostocronaDefine {
     real_const_ptr       OMEGA__,
     real_type            result__[]
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_slope_low];
+    real_type t7   = ALIAS_LowBound_DD(X__[iX_x] * t1 - X__[iX_y] + ModelPars[iM_y0_low]);
+    real_type t8   = t1 * t1;
+    real_type t10  = OMEGA__[0];
+    result__[ 0   ] = t10 * t8 * t7;
+    result__[ 1   ] = -t10 * t1 * t7;
+    result__[ 2   ] = result__[1];
+    result__[ 3   ] = t10 * t7;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2JUD2xpu_numRows() const { return 7; }
-  integer Brachiostocrona::D2JUD2xpu_numCols() const { return 7; }
+  integer Brachiostocrona::D2JUD2xpu_numRows() const { return 6; }
+  integer Brachiostocrona::D2JUD2xpu_numCols() const { return 6; }
   integer Brachiostocrona::D2JUD2xpu_nnz()     const { return 3; }
 
   void
@@ -310,8 +354,8 @@ namespace BrachiostocronaDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2LTargsD2xpu_numRows() const { return 7; }
-  integer Brachiostocrona::D2LTargsD2xpu_numCols() const { return 7; }
+  integer Brachiostocrona::D2LTargsD2xpu_numRows() const { return 6; }
+  integer Brachiostocrona::D2LTargsD2xpu_numCols() const { return 6; }
   integer Brachiostocrona::D2LTargsD2xpu_nnz()     const { return 0; }
 
   void

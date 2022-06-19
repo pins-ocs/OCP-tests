@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -160,7 +160,7 @@ namespace Brachiostocrona2Define {
     result__[ 8   ] = __INV_DZETA;
     result__[ 9   ] = result__[7];
     result__[ 10  ] = -t3 * t7;
-    result__[ 11  ] = -t8 * t6;
+    result__[ 11  ] = -t6 * t8;
     real_type t15  = __INV_DZETA * ModelPars[iM_mass];
     result__[ 12  ] = -t15;
     result__[ 13  ] = t15;
@@ -229,7 +229,7 @@ namespace Brachiostocrona2Define {
     real_type t7   = LM__[1];
     real_type t8   = t2 * t7;
     real_type t9   = cos(t4);
-    result__[ 0   ] = t5 * t3 / 2 - t9 * t8 / 2;
+    result__[ 0   ] = t3 * t5 / 2 - t9 * t8 / 2;
     result__[ 1   ] = -t9 * t1 / 2 - t5 * t7 / 2;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];

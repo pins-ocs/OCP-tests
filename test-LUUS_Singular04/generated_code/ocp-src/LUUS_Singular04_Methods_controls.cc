@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -95,7 +95,7 @@ namespace LUUS_Singular04Define {
     real_type t15  = uControl(t10, -1, 1);
     real_type result__ = t2 + LM__[0] * XM__[1] + LM__[1] * XM__[2] + t10 * LM__[2] + t15 * (t2 + t13);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -319,7 +319,7 @@ namespace LUUS_Singular04Define {
     real_type t19  = pow(V__[2] - t6, 2);
     real_type result__ = t7 * (t2 + t4) + t12 + t16 + t19;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -129,7 +129,7 @@ namespace BangBangFredundantDefine {
     real_type t29  = Flim_max(t5 + t6 - 1);
     real_type result__ = LM__[0] * XM__[1] + (t5 + t6) * LM__[1] + LM__[2] * XM__[4] + LM__[3] * XM__[5] + t16 * LM__[4] + t19 * LM__[5] + t22 + t23 + t26 * t24 + t29 * t24;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -386,7 +386,7 @@ namespace BangBangFredundantDefine {
     real_type t35  = pow(V__[5] - t4, 2);
     real_type result__ = t10 * t6 + t13 * t6 + t18 + t21 + t25 + t29 + t3 + t32 + t35 + t5;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

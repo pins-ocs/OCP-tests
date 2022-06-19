@@ -47,15 +47,15 @@ using Mechatronix::MeshStd;
 #define ALIAS_vPositive_D(__t1) vPositive.D( __t1)
 #define ALIAS_massPositive_DD(__t1) massPositive.DD( __t1)
 #define ALIAS_massPositive_D(__t1) massPositive.D( __t1)
-#define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2(__t1, __t2, __t3) uControl.D_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1(__t1, __t2, __t3) uControl.D_1( __t1, __t2, __t3)
-#define ALIAS_uControl_D_3_3(__t1, __t2, __t3) uControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_3(__t1, __t2, __t3) uControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_2(__t1, __t2, __t3) uControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_3(__t1, __t2, __t3) uControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_2(__t1, __t2, __t3) uControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_1(__t1, __t2, __t3) uControl.D_1_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3(__t1, __t2, __t3) TControl.D_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2(__t1, __t2, __t3) TControl.D_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1(__t1, __t2, __t3) TControl.D_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3_3(__t1, __t2, __t3) TControl.D_3_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_3(__t1, __t2, __t3) TControl.D_2_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_2(__t1, __t2, __t3) TControl.D_2_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_3(__t1, __t2, __t3) TControl.D_1_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_2(__t1, __t2, __t3) TControl.D_1_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_1(__t1, __t2, __t3) TControl.D_1_1( __t1, __t2, __t3)
 
 
 namespace GoddardRocketDefine {
@@ -119,7 +119,7 @@ namespace GoddardRocketDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = uControl(U__[iU_u], 0, 1);
+    result__[ 0   ] = TControl(U__[iU_T], 0, ModelPars[iM_Tmax]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
   }
@@ -224,7 +224,7 @@ namespace GoddardRocketDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    result__[ 0   ] = ALIAS_TControl_D_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 1, i_segment );
   }
@@ -344,8 +344,8 @@ namespace GoddardRocketDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
-    result__[ 0   ] = OMEGA__[0] * t2;
+    real_type t3   = ALIAS_TControl_D_1_1(U__[iU_T], 0, ModelPars[iM_Tmax]);
+    result__[ 0   ] = OMEGA__[0] * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 1, i_segment );
   }

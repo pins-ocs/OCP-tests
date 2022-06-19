@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -115,7 +115,7 @@ namespace BangBangFtauDefine {
     real_type t39  = vsTBInterval_max(t2 - t4 - 1);
     real_type result__ = (t3 + t5) * ModelPars[iM_epsiTB] + LM__[0] * XM__[1] + t17 * LM__[1] - 1.0 / ModelPars[iM_tauT] * (t12 - t2) * LM__[2] - 1.0 / ModelPars[iM_tauB] * (t13 - t4) * LM__[3] + t31 + t32 + t35 + t37 + t39;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -347,7 +347,7 @@ namespace BangBangFtauDefine {
     real_type t38  = pow(V__[3] + 1.0 / ModelPars[iM_tauB] * (t18 - t3), 2);
     real_type result__ = t2 + t4 + t7 + t9 + t11 + t15 + t24 + t31 + t38;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

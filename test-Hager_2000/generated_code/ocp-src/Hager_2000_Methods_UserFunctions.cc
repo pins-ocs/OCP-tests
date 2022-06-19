@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace Hager_2000Define {
     real_type result__ = 1.0 / (2 + t4) / t7 * (2 * t2 + t4);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x_exact( t={} ) return {}\n",
         xo__t, result__
       );
@@ -107,7 +107,7 @@ namespace Hager_2000Define {
     real_type result__ = 6 * t9 * t5 * t2 - 3.0 / 2.0 * t9 * t5 * (2 * t2 + t7);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x_exact_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -123,7 +123,7 @@ namespace Hager_2000Define {
     real_type result__ = 9.0 / 4.0 / (2 + t4) / t7 * (2 * t2 + t4);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x_exact_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -139,7 +139,7 @@ namespace Hager_2000Define {
     real_type result__ = 2 / (2 + t3) / t6 * (t2 - t3);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u_exact( t={} ) return {}\n",
         xo__t, result__
       );
@@ -157,7 +157,7 @@ namespace Hager_2000Define {
     real_type result__ = 6 * t9 * t5 * t2 - 3 * t9 * t5 * (t2 - t7);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u_exact_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -173,7 +173,7 @@ namespace Hager_2000Define {
     real_type result__ = 9.0 / 2.0 / (2 + t3) / t6 * (t2 - t3);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u_exact_DD( t={} ) return {}\n",
         xo__t, result__
       );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_Guess.cc                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,9 +97,9 @@ namespace CrossroadDefine {
     V__[3] = __INV_DZETA*(XR__[3]-XL__[3]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = XM__[3];
-    result__[ 0   ] = -t1 * XM__[1] + V__[0];
-    result__[ 1   ] = -t1 * XM__[2] + V__[1];
-    result__[ 2   ] = -t1 * UM__[0] + V__[2];
+    result__[ 0   ] = -XM__[1] * t1 + V__[0];
+    result__[ 1   ] = -XM__[2] * t1 + V__[1];
+    result__[ 2   ] = -UM__[0] * t1 + V__[2];
     result__[ 3   ] = V__[3];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 4, i_segment );

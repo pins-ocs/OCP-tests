@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace SingularMarchalDefine {
     real_type t12  = uControl(t8, -1, 1);
     real_type result__ = t3 + LM__[0] * XM__[1] + t8 * LM__[1] + t12 * (t3 + ModelPars[iM_epsilon]);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -304,7 +304,7 @@ namespace SingularMarchalDefine {
     real_type t15  = pow(V__[1] - t6, 2);
     real_type result__ = t7 * (t2 / 2 + ModelPars[iM_epsilon]) + t12 + t15;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

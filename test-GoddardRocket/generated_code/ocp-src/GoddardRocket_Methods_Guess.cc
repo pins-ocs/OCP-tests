@@ -40,15 +40,15 @@
 #define ALIAS_vPositive_D(__t1) vPositive.D( __t1)
 #define ALIAS_massPositive_DD(__t1) massPositive.DD( __t1)
 #define ALIAS_massPositive_D(__t1) massPositive.D( __t1)
-#define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2(__t1, __t2, __t3) uControl.D_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1(__t1, __t2, __t3) uControl.D_1( __t1, __t2, __t3)
-#define ALIAS_uControl_D_3_3(__t1, __t2, __t3) uControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_3(__t1, __t2, __t3) uControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_2(__t1, __t2, __t3) uControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_3(__t1, __t2, __t3) uControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_2(__t1, __t2, __t3) uControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_1(__t1, __t2, __t3) uControl.D_1_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3(__t1, __t2, __t3) TControl.D_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2(__t1, __t2, __t3) TControl.D_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1(__t1, __t2, __t3) TControl.D_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3_3(__t1, __t2, __t3) TControl.D_3_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_3(__t1, __t2, __t3) TControl.D_2_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_2(__t1, __t2, __t3) TControl.D_2_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_3(__t1, __t2, __t3) TControl.D_1_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_2(__t1, __t2, __t3) TControl.D_1_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_1(__t1, __t2, __t3) TControl.D_1_1( __t1, __t2, __t3)
 
 
 using namespace std;
@@ -65,7 +65,7 @@ namespace GoddardRocketDefine {
 
   void
   GoddardRocket::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_TimeSize ] = ModelPars[iM_TimeSize_guess];
+    P__[ iP_TimeSize ] = ModelPars[iM_Tmax];
     if ( m_debug )
       Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
@@ -266,7 +266,9 @@ namespace GoddardRocketDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = 0.5e0;
+    real_type t3   = ModelPars[iM_c];
+    real_type t5   = X__[iX_m];
+    UGUESS__[ iU_T ] = TControl.solve(-1.0 / t3 / t5 * (t3 * L__[iL_lambda2__xo] - L__[iL_lambda3__xo] * t5) * P__[iP_TimeSize], 0, ModelPars[iM_Tmax]);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
@@ -322,7 +324,7 @@ namespace GoddardRocketDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
-    uControl.check_range(U__[iU_u], 0, 1);
+    TControl.check_range(U__[iU_T], 0, ModelPars[iM_Tmax]);
     return ok;
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace OrbitTransferDefine {
     result__[ 1   ] = V__[3] - (t9 * t7 - 1.0 / t12 * ModelPars[iM_mu] + t20 * t17 * t15) * t2;
     real_type t27  = cos(t16);
     result__[ 2   ] = V__[4] - (-t9 * t1 * t6 + t20 * t27 * t15) * t2;
-    result__[ 3   ] = t2 * ModelPars[iM_mdot] + V__[0];
+    result__[ 3   ] = ModelPars[iM_mdot] * t2 + V__[0];
     result__[ 4   ] = -t9 * t6 * t2 + V__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
@@ -372,7 +372,7 @@ namespace OrbitTransferDefine {
     result__[ 38  ] = result__[21];
     result__[ 39  ] = result__[38];
     real_type t79  = 1.0 / t11;
-    result__[ 40  ] = t79 * t20 * t18 + t79 * t7 * t3;
+    result__[ 40  ] = t18 * t20 * t79 + t3 * t7 * t79;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 41, i_segment );
   }

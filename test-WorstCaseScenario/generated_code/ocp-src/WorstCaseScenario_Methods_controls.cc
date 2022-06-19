@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_controls.cc                          |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace WorstCaseScenarioDefine {
     real_type t8   = uControl(t6, 0, 1);
     real_type result__ = t6 * (1 - 2 * QM__[0]) * LM__[0] + t8;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -281,7 +281,7 @@ namespace WorstCaseScenarioDefine {
     real_type t9   = pow(V__[0] - t1 * (1 - 2 * Q__[iQ_zeta]), 2);
     real_type result__ = t2 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_controls.cc                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -103,7 +103,7 @@ namespace EconomicGrowthModel2Define {
     real_type t24  = Tpositive(-t4);
     real_type result__ = t4 * XM__[2] * LM__[0] + t12 * t7 * LM__[1] + t4 * XM__[3] * LM__[2] + t12 * (1 - t7) * LM__[3] + t22 * t4 + t24;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -361,9 +361,9 @@ namespace EconomicGrowthModel2Define {
     real_type t23  = pow(-t1 * X__[iX_y2] + V__[1], 2);
     real_type t29  = pow(V__[3] - t1 * t14 * (1 - t2), 2);
     real_type t31  = V__[4] * V__[4];
-    real_type result__ = t3 * t1 + t10 + t18 + t23 + t29 + t31 + t5;
+    real_type result__ = t1 * t3 + t10 + t18 + t23 + t29 + t31 + t5;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -388,7 +388,7 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = U__[iU_u];
     real_type t3   = ALIAS_uControl_D_1(t2, 0, 1);
     real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
-    result__[ 0   ] = t3 * t1 - 2 * t1 * t8 * (-t1 * t8 * t2 + V__[2]) + 2 * t1 * t8 * (V__[3] - t1 * t8 * (1 - t2));
+    result__[ 0   ] = t1 * t3 - 2 * t1 * t8 * (-t1 * t8 * t2 + V__[2]) + 2 * t1 * t8 * (V__[3] - t1 * t8 * (1 - t2));
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }
@@ -421,7 +421,7 @@ namespace EconomicGrowthModel2Define {
     real_type t7   = Q(X__[iX_x1], X__[iX_x2]);
     real_type t8   = t7 * t7;
     real_type t9   = t1 * t1;
-    result__[ 0   ] = t3 * t1 + 4 * t9 * t8;
+    result__[ 0   ] = t1 * t3 + 4 * t8 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

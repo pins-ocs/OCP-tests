@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -21,14 +21,14 @@
 
 -- Auxiliary values
 wT0       = 0.01
+p_tol0    = 0.1
+p_epsi0   = 0.1
+up_tol0   = 0.01
+wT        = wT0
+up_epsi0  = 0.1
+road_tol0 = 0.01
 m         = 700.0
 kD        = 0.2500000000/m
-p_epsi0   = 0.1
-p_tol0    = 0.1
-up_epsi0  = 0.1
-wT        = wT0
-up_tol0   = 0.01
-road_tol0 = 0.01
 
 content = {
 
@@ -364,83 +364,83 @@ content = {
     segments = {
       
       {
-        rightWidth = 60.0,
         leftWidth  = 15/2.0,
-        curvature  = 0.0,
-        gridSize   = 1.0,
         length     = 190.0,
+        gridSize   = 1.0,
+        rightWidth = 60.0,
+        curvature  = 0.0,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 60.0,
-        curvature  = 0.003225806452,
-        gridSize   = 1.0,
         length     = 973.8937227,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+        curvature  = 0.003225806452,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
-        curvature  = 0.0,
-        gridSize   = 1.0,
         length     = 180.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        rightWidth = 15.0,
         leftWidth  = 20.0,
+        length     = 235.619449,
+        gridSize   = 1.0,
+        rightWidth = 15.0,
         curvature  = 0.006666666667,
-        gridSize   = 1.0,
-        length     = 235.619449,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
-        curvature  = 0.0,
-        gridSize   = 1.0,
         length     = 240.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
-        curvature  = -1/150.0,
-        gridSize   = 1.0,
         length     = 235.619449,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+        curvature  = -1/150.0,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
-        curvature  = 0.0,
-        gridSize   = 1.0,
         length     = 200.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
-        curvature  = 0.025,
-        gridSize   = 1.0,
         length     = 125.6637062,
-      },
-      
-      {
-        rightWidth = 30.0,
-        leftWidth  = 30.0,
-        curvature  = 0.0,
         gridSize   = 1.0,
-        length     = 480.0,
+        rightWidth = 30.0,
+        curvature  = 0.025,
       },
       
       {
-        rightWidth = 30.0,
         leftWidth  = 30.0,
+        length     = 480.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
         curvature  = 0.0,
-        gridSize   = 0.1,
+      },
+      
+      {
+        leftWidth  = 30.0,
         length     = 10.0,
+        gridSize   = 0.1,
+        rightWidth = 30.0,
+        curvature  = 0.0,
       },
     },
   },

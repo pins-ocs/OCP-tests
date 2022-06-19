@@ -327,10 +327,10 @@ namespace HypersonicProblem3DOFDefine {
     real_type t8   = t2 - 0.314159265358979323846264338328e1;
     real_type t9   = ALIAS_G_bound_max_DD(t8);
     real_type t11  = OMEGA__[1];
-    result__[ 0   ] = t1 * t11 * t9 + t1 * t4 * t6;
+    result__[ 0   ] = t11 * t9 * t1 + t6 * t4 * t1;
     real_type t13  = ALIAS_G_bound_min_D(t3);
     real_type t15  = ALIAS_G_bound_max_D(t8);
-    result__[ 1   ] = t11 * t15 - t13 * t6;
+    result__[ 1   ] = t11 * t15 - t6 * t13;
     result__[ 2   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 3, i_segment );

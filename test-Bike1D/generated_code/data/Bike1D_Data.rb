@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Bike1D_Data.rb                                                 #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -290,7 +290,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithSinAtan
-  data.MappedObjects[:clip] = { :delta2 => 0.0, :delta => 0.0, :h => 0.01 }
+  data.MappedObjects[:clip] = { :delta => 0.0, :delta2 => 0.0, :h => 0.01 }
 
 
   #                  _             _
@@ -351,8 +351,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1000.0,
         :n      => 1000.0,
+        :length => 1000.0,
       },
     ],
   };

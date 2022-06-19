@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -343,12 +343,12 @@ namespace AlpRiderDefine {
     result__[ 7   ] = 4 * t30 * t25;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = 4 * t14 * t8 * t12 - t19;
+    result__[ 10  ] = 4 * t12 * t14 * t8 - t19;
     result__[ 11  ] = 4 * t14 * t7 * t25;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = 4 * t14 * t10 * t12 - t19;
+    result__[ 15  ] = 4 * t10 * t12 * t14 - t19;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 16, i_segment );
   }

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-epsi_ctrl = 1e-05
 tol_ctrl  = 1e-05
+epsi_ctrl = 1e-05
 
 content = {
 

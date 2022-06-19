@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,11 +51,11 @@ main() {
 
     // Auxiliary values
     real_type tol_T = 0.1;
-    real_type epsi_T = 0.01;
     real_type epsi_ctrl0 = 0.01;
-    real_type epsi_ctrl = epsi_ctrl0;
     real_type tol_ctrl0 = 0.01;
     real_type tol_ctrl = tol_ctrl0;
+    real_type epsi_T = 0.01;
+    real_type epsi_ctrl = epsi_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

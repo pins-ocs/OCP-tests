@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -98,7 +98,7 @@ namespace ZermeloDefine {
     real_type t28  = Tpositive(-t2);
     real_type result__ = (XM__[2] + t7) * t2 * LM__[0] + (XM__[3] + t13) * t2 * LM__[1] + t20 * t18 * t2 * LM__[2] + t25 * t18 * t2 * LM__[3] + t28;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -352,7 +352,7 @@ namespace ZermeloDefine {
     real_type t33  = V__[4] * V__[4];
     real_type result__ = t2 + t11 + t18 + t26 + t31 + t33;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

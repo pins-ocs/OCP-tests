@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -116,7 +116,7 @@ namespace Bike1DDefine {
     real_type t21  = vMinLimit(ModelPars[iM_v_min] - t1);
     real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * LM__[0] + t14 * t2 + t17 * t2 + t21 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -358,9 +358,9 @@ namespace Bike1DDefine {
     real_type t12  = mufControl(t10, ModelPars[iM_muf_min], 0);
     real_type t16  = vMinLimit(ModelPars[iM_v_min] - t1);
     real_type t24  = pow(V__[0] * t1 - (t3 + t10) * ModelPars[iM_g], 2);
-    real_type result__ = t12 * t2 + t16 * t2 + t2 * t8 + t24;
+    real_type result__ = t12 * t2 + t16 * t2 + t8 * t2 + t24;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -390,7 +390,7 @@ namespace Bike1DDefine {
     real_type t12  = ModelPars[iM_g];
     real_type t13  = U__[iU_muf];
     real_type t18  = 2 * t12 * (V__[0] * t1 - (t3 + t13) * t12);
-    result__[ 0   ] = t2 * t8 - t18;
+    result__[ 0   ] = t8 * t2 - t18;
     real_type t20  = ALIAS_mufControl_D_1(t13, ModelPars[iM_muf_min], 0);
     result__[ 1   ] = t20 * t2 - t18;
     if ( m_debug )

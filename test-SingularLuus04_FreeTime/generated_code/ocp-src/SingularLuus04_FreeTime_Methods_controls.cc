@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,7 +97,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t20  = uControl(t18, -1, 1);
     real_type result__ = (t1 * ModelPars[iM_theta] + t3) * t1 + XM__[1] * t1 * LM__[0] + XM__[2] * t1 * LM__[1] + t18 * t1 * LM__[2] + t20 * t1;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -324,7 +324,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t20  = V__[3] * V__[3];
     real_type result__ = t3 * t1 + t14 + t18 + t20 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

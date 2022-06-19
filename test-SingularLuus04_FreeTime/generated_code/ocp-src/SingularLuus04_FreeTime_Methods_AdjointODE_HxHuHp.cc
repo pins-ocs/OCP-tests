@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -88,7 +88,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_type t5   = L__[iL_lambda2__xo];
     result__[ 2   ] = t1 * t5;
     real_type t13  = t2 * t2;
-    result__[ 3   ] = 2 * t1 * ModelPars[iM_theta] + t4 * X__[iX_y] + t5 * X__[iX_z] + L__[iL_lambda3__xo] * U__[iU_u] + t13;
+    result__[ 3   ] = 2 * ModelPars[iM_theta] * t1 + X__[iX_y] * t4 + X__[iX_z] * t5 + L__[iL_lambda3__xo] * U__[iU_u] + t13;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 4, i_segment );
   }

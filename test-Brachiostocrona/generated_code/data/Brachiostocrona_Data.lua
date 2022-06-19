@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,17 +20,13 @@
 -- User Header
 
 -- Auxiliary values
-xf     = 5.0
-g      = 9.81
-w_ARG0 = 1.0
-w_ARG  = w_ARG0
-mu0    = 0.1
-epsi1  = 1e-06
-mu     = mu0
-tol1   = 1e-06
-yf     = -2
-Tf     = (-2.0*yf/g)**(1/2.0)
-Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+g              = 9.81
+yf             = -2
+xf             = 5.0
+low_tolerance0 = 0.1
+low_tolerance  = low_tolerance0
+Vf             = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf             = (-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -96,7 +92,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = true,
+    Iterative = false,
     InfoLevel = -1, -- suppress all messages
     -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     initialize_control_solver = 'QuasiNewton',
@@ -262,11 +258,8 @@ content = {
   Parameters = {
 
     -- Model Parameters
-    g         = g,
-    mass      = 1.0,
-    w_ARG     = w_ARG,
-    y0_low    = -0.2,
-    slope_low = -0.375,
+    g    = g,
+    mass = 1.0,
 
     -- Guess Parameters
     Tf = Tf,
@@ -277,14 +270,14 @@ content = {
     yf = yf,
 
     -- Post Processing Parameters
+    y0_low    = -0.2,
+    slope_low = -0.375,
 
     -- User Function Parameters
 
     -- Continuation Parameters
-    mu0    = mu0,
-    mu1    = 1e-06,
-    w_ARG0 = w_ARG0,
-    w_ARG1 = 1000000.0,
+    low_tolerance0 = low_tolerance0,
+    low_tolerance1 = 1e-06,
 
     -- Constraints Parameters
   },
@@ -305,20 +298,23 @@ content = {
   },
 
   Constraints = {
-  -- ConstraintLT: none defined
+  --  _  _____
+  -- | ||_   _|
+  -- | |__| |
+  -- |____|_|
+  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    -- PenaltyBarrier1DLessThan
+    LowBoundsubType   = "PENALTY_REGULAR",
+    LowBoundepsilon   = 0.0,
+    LowBoundtolerance = low_tolerance,
+    LowBoundactive    = true
+
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
 
   -- User defined classes initialization
-  -- User defined classes: P E N 1 D
-  Pen1D = 
-  {
-    epsilon   = epsi1,
-    tolerance = tol1,
-    subType   = "BARRIER_LOG0",
-    active    = true,
-  },
   -- User defined classes: M E S H
   Mesh = 
   {

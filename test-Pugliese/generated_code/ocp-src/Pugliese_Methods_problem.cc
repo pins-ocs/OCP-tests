@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_problem.cc                                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -110,7 +110,7 @@ namespace PuglieseDefine {
     real_type t35  = X__[iX_R];
     real_type result__ = t1 + 1.0 / (t6 + ModelPars[iM_b]) * t6 * ModelPars[iM_w2] * ModelPars[iM_a] + ((1 - 1.0 / ModelPars[iM_K] * t1) * ModelPars[iM_r] - t20 * t19 - t1 * t19 * t5 * ModelPars[iM_kappa__AC]) * L__[iL_lambda1__xo] + (t30 - (t35 * ModelPars[iM_kappa__R] + t33 + ModelPars[iM_mu__C]) * t19) * L__[iL_lambda2__xo] + (t29 * ModelPars[iM_a__R] + t32 * ModelPars[iM_a__IL] - t35 * ModelPars[iM_mu__R]) * L__[iL_lambda3__xo] + (-t29 * ModelPars[iM_mu__D] + ModelPars[iM_rho__D]) * L__[iL_lambda4__xo] - t5 * ModelPars[iM_lambda] * L__[iL_lambda5__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -136,7 +136,7 @@ namespace PuglieseDefine {
     real_type t6   = X__[iX_I__p] * X__[iX_I__p];
     real_type result__ = X__[iX_T] + 1.0 / (t6 + ModelPars[iM_b]) * t6 * ModelPars[iM_w2] * ModelPars[iM_a];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -165,7 +165,7 @@ namespace PuglieseDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

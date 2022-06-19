@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace SingularCalogeroModifiedDefine {
     real_type t16  = uControl(t12, -1, 1);
     real_type result__ = t7 + LM__[0] * XM__[1] + t12 * LM__[1] + t16 * (ModelPars[iM_epsilon] + t7);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -313,7 +313,7 @@ namespace SingularCalogeroModifiedDefine {
     real_type t19  = pow(V__[1] - t10, 2);
     real_type result__ = t11 * (ModelPars[iM_epsilon] + t8) + t16 + t19;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

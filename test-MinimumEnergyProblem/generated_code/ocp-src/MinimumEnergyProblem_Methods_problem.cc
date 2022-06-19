@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_problem.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -118,7 +118,7 @@ namespace MinimumEnergyProblemDefine {
     real_type t6   = X__[iX_x1] * X__[iX_x1];
     real_type result__ = t2 / 2 + t6 * ModelPars[iM_c] / 2 + L__[iL_lambda1__xo] * X__[iX_x2] + t1 * L__[iL_lambda2__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -145,7 +145,7 @@ namespace MinimumEnergyProblemDefine {
     real_type t6   = U__[iU_u] * U__[iU_u];
     real_type result__ = t3 * ModelPars[iM_c] / 2 + t6 / 2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -174,7 +174,7 @@ namespace MinimumEnergyProblemDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

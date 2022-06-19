@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_UserFunctions.cc                                 |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,7 +108,7 @@ namespace TrainDefine {
     real_type result__ = -t3 * ModelPars[iM_gm] - ModelPars[iM_beta] * xo__v + t1 - ModelPars[iM_alpha];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );
@@ -121,7 +121,7 @@ namespace TrainDefine {
     real_type result__ = h_D(xo__x);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc_D_1( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );
@@ -134,7 +134,7 @@ namespace TrainDefine {
     real_type result__ = h_DD(xo__x);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc_D_1_1( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );
@@ -147,7 +147,7 @@ namespace TrainDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc_D_1_2( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );
@@ -160,7 +160,7 @@ namespace TrainDefine {
     real_type result__ = -2 * xo__v * ModelPars[iM_gm] - ModelPars[iM_beta];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc_D_2( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );
@@ -173,7 +173,7 @@ namespace TrainDefine {
     real_type result__ = -2 * ModelPars[iM_gm];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_acc_D_2_2( x={}, v={} ) return {}\n",
         xo__x, xo__v, result__
       );

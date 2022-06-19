@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = xo__x * xo__y;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -112,7 +112,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = xo__y;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q_D_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -125,7 +125,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q_D_1_1( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -138,7 +138,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q_D_1_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -151,7 +151,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = xo__x;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q_D_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -164,7 +164,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Q_D_2_2( x={}, y={} ) return {}\n",
         xo__x, xo__y, result__
       );
@@ -178,7 +178,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t4 * ModelPars[iM_x1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1L( t={} ) return {}\n",
         xo__t, result__
       );
@@ -193,7 +193,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t5 * t2 * ModelPars[iM_x1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1L_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -209,7 +209,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t6 * t3 * ModelPars[iM_x1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1L_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -222,7 +222,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = ModelPars[iM_x2_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2L( t={} ) return {}\n",
         xo__t, result__
       );
@@ -235,7 +235,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2L_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -248,7 +248,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2L_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -262,7 +262,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t4 * ModelPars[iM_l1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1L( t={} ) return {}\n",
         xo__t, result__
       );
@@ -277,7 +277,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = -t5 * t2 * ModelPars[iM_l1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1L_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -293,7 +293,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t6 * t3 * ModelPars[iM_l1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1L_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -306,7 +306,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = -xo__t * ModelPars[iM_l1_i] * ModelPars[iM_x1_i] + ModelPars[iM_l2_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2L( t={} ) return {}\n",
         xo__t, result__
       );
@@ -319,7 +319,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = -ModelPars[iM_l1_i] * ModelPars[iM_x1_i];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2L_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -332,7 +332,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2L_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -346,7 +346,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 1.0 / (1 + (ModelPars[iM_t0] - xo__t) * t1 / 2) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1R( t={} ) return {}\n",
         xo__t, result__
       );
@@ -362,7 +362,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 1.0 / t8 * t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1R_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -379,7 +379,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = 1.0 / t9 / t8 * t2 * t1 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1R_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -392,7 +392,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = x1R(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2R( t={} ) return {}\n",
         xo__t, result__
       );
@@ -405,7 +405,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = x1R_D(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2R_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -418,7 +418,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = x1R_DD(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2R_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -434,7 +434,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t8 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1R( t={} ) return {}\n",
         xo__t, result__
       );
@@ -450,7 +450,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t3 * ((xo__t - t1) * t3 / 2 - 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1R_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -465,7 +465,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = t4 * t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l1R_DD( t={} ) return {}\n",
         xo__t, result__
       );
@@ -478,7 +478,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = l1R(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2R( t={} ) return {}\n",
         xo__t, result__
       );
@@ -491,7 +491,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = l1R_D(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2R_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -504,7 +504,7 @@ namespace EconomicGrowthModelDefine {
     real_type result__ = l1R_DD(xo__t);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_l2R_DD( t={} ) return {}\n",
         xo__t, result__
       );

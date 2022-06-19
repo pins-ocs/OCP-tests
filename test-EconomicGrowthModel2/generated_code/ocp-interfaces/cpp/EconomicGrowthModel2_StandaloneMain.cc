@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -183,8 +183,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 EconomicGrowthModel2_data.Mesh["s0"] = 0;
-EconomicGrowthModel2_data.Mesh["segments"][0]["length"] = 1;
 EconomicGrowthModel2_data.Mesh["segments"][0]["n"] = 5000;
+EconomicGrowthModel2_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

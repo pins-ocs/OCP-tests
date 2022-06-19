@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_UserFunctions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,7 +109,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1bound( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -124,7 +124,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = -t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1bound_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -139,7 +139,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x1bound_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -154,7 +154,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2bound( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -169,7 +169,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = -t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2bound_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -184,7 +184,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_x2bound_DD( _V={} ) return {}\n",
         xo___V, result__
       );

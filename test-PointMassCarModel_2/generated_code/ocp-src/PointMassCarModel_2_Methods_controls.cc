@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -222,9 +222,9 @@ namespace PointMassCarModel_2Define {
     real_type t65  = RoadRightBorder(-t4 - t63);
     real_type t74  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t23 * t2 - 1);
     real_type t76  = LimitMinSpeed(-t2);
-    real_type result__ = t8 * ModelPars[iM_wT] + t12 * t2 * LM__[0] + (-t7 * t6 + t15) * LM__[1] + (-t20 * ModelPars[iM_kD] + t23) * LM__[2] + ModelPars[iM_v__fx__max] * t27 * LM__[3] + ModelPars[iM_v__Omega__max] * t32 * LM__[4] + t36 * t8 + t38 * t8 + t57 * t8 + t61 * t8 + t65 * t8 + t74 * t8 + t76 * t8;
+    real_type result__ = t8 * ModelPars[iM_wT] + t12 * t2 * LM__[0] + (-t6 * t7 + t15) * LM__[1] + (-t20 * ModelPars[iM_kD] + t23) * LM__[2] + ModelPars[iM_v__fx__max] * t27 * LM__[3] + ModelPars[iM_v__Omega__max] * t32 * LM__[4] + t36 * t8 + t38 * t8 + t57 * t8 + t61 * t8 + t65 * t8 + t74 * t8 + t76 * t8;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -572,7 +572,7 @@ namespace PointMassCarModel_2Define {
     real_type t82  = pow(-ModelPars[iM_v__Omega__max] * t10 + V__[3] * t5, 2);
     real_type result__ = t11 * t6 + t33 * t6 + t37 * t6 + t41 * t6 + t50 * t6 + t52 * t6 + t8 * t6 + t59 + t64 + t70 + t76 + t82;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

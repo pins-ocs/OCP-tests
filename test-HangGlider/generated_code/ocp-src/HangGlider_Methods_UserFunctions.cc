@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_UserFunctions.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace HangGliderDefine {
     real_type result__ = pow(xo__x / ModelPars[iM_rc] - 0.25e1, 2);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_r( x={} ) return {}\n",
         xo__x, result__
       );
@@ -113,7 +113,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 * t2 * (t2 * xo__x - 0.25e1);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_r_D( x={} ) return {}\n",
         xo__x, result__
       );
@@ -127,7 +127,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 / t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_r_DD( x={} ) return {}\n",
         xo__x, result__
       );
@@ -142,7 +142,7 @@ namespace HangGliderDefine {
     real_type result__ = t5 * (1 - t2) * ModelPars[iM_uc];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u( x={} ) return {}\n",
         xo__x, result__
       );
@@ -159,7 +159,7 @@ namespace HangGliderDefine {
     real_type result__ = -t5 * t2 * t1 - t5 * t2 * (1 - t4) * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u_D( x={} ) return {}\n",
         xo__x, result__
       );
@@ -179,7 +179,7 @@ namespace HangGliderDefine {
     real_type result__ = -t5 * t2 * t1 + 2 * t5 * t8 * t1 - t5 * t2 * t13 + t5 * t8 * t13;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u_DD( x={} ) return {}\n",
         xo__x, result__
       );
@@ -193,7 +193,7 @@ namespace HangGliderDefine {
     real_type result__ = xo__y1 - t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -207,7 +207,7 @@ namespace HangGliderDefine {
     real_type result__ = -t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w_D_1( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -221,7 +221,7 @@ namespace HangGliderDefine {
     real_type result__ = -t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w_D_1_1( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -234,7 +234,7 @@ namespace HangGliderDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w_D_1_2( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -247,7 +247,7 @@ namespace HangGliderDefine {
     real_type result__ = 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w_D_2( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -260,7 +260,7 @@ namespace HangGliderDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_w_D_2_2( x={}, y1={} ) return {}\n",
         xo__x, xo__y1, result__
       );
@@ -276,7 +276,7 @@ namespace HangGliderDefine {
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -291,7 +291,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -305,10 +305,10 @@ namespace HangGliderDefine {
     real_type t2   = t1 * t1;
     real_type t3   = w(xo__x, xo__y1);
     real_type t4   = w_D_1_1(xo__x, xo__y1);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_1_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -321,7 +321,7 @@ namespace HangGliderDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_1_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -338,7 +338,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_1_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -351,7 +351,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 * xo__x1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -364,7 +364,7 @@ namespace HangGliderDefine {
     real_type result__ = 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_2_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -377,7 +377,7 @@ namespace HangGliderDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_2_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -392,7 +392,7 @@ namespace HangGliderDefine {
     real_type result__ = 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -406,10 +406,10 @@ namespace HangGliderDefine {
     real_type t2   = t1 * t1;
     real_type t3   = w(xo__x, xo__y1);
     real_type t4   = w_D_2_2(xo__x, xo__y1);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v2_D_3_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -423,7 +423,7 @@ namespace HangGliderDefine {
     real_type result__ = sqrt(t1);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -439,7 +439,7 @@ namespace HangGliderDefine {
     real_type result__ = t4 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -457,7 +457,7 @@ namespace HangGliderDefine {
     real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_1_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -475,7 +475,7 @@ namespace HangGliderDefine {
     real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_1_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -493,7 +493,7 @@ namespace HangGliderDefine {
     real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_1_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -509,7 +509,7 @@ namespace HangGliderDefine {
     real_type result__ = t4 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -527,7 +527,7 @@ namespace HangGliderDefine {
     real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_2_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -545,7 +545,7 @@ namespace HangGliderDefine {
     real_type result__ = -t7 * t5 / t2 / t1 / 4 + t11 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_2_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -561,7 +561,7 @@ namespace HangGliderDefine {
     real_type result__ = t4 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -579,7 +579,7 @@ namespace HangGliderDefine {
     real_type result__ = -t6 / t2 / t1 / 4 + t10 / t2 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_v_D_3_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -593,7 +593,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -607,7 +607,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -621,7 +621,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_1_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -635,7 +635,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_1_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -649,7 +649,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_1_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -663,7 +663,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -677,7 +677,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_2_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -691,7 +691,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_2_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -705,7 +705,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -719,7 +719,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Dfun_D_3_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -733,7 +733,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -747,7 +747,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -761,7 +761,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_1_1( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -775,7 +775,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_1_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -789,7 +789,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_1_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -803,7 +803,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -817,7 +817,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_2_2( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -831,7 +831,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_2_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -845,7 +845,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );
@@ -859,7 +859,7 @@ namespace HangGliderDefine {
     real_type result__ = 0.5e0 * t4 * ModelPars[iM_S] * ModelPars[iM_rho];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Lfun_D_3_3( x={}, x1={}, y1={} ) return {}\n",
         xo__x, xo__x1, xo__y1, result__
       );

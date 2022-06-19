@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Main.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type pen_u_tol0 = 0.1;
     real_type pen_u_epsi0 = 0.1;
+    real_type pen_u_tol0 = 0.1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -169,8 +169,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 LUUS_DrugDisplacement_data.Mesh["s0"] = 0;
-LUUS_DrugDisplacement_data.Mesh["segments"][0]["n"] = 200;
 LUUS_DrugDisplacement_data.Mesh["segments"][0]["length"] = 1;
+LUUS_DrugDisplacement_data.Mesh["segments"][0]["n"] = 200;
 
 
     // alias for user object classes passed as pointers

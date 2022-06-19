@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace BangBangFtminDefine {
     real_type t10  = Fcontrol(t8, -1, 1);
     real_type result__ = t8 * t2 * LM__[1] + XM__[1] * t2 * LM__[0] + t10 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -129,7 +129,7 @@ namespace BangBangFtminDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t5   = ALIAS_Fcontrol_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = t5 * t2 + t2 * LM__[1];
+    result__[ 0   ] = t2 * t5 + t2 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -299,7 +299,7 @@ namespace BangBangFtminDefine {
     real_type t13  = pow(-t2 * t1 + V__[1], 2);
     real_type result__ = t3 * t1 + t13 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

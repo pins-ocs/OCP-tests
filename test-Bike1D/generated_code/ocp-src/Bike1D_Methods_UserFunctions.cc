@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_UserFunctions.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -117,7 +117,7 @@ namespace Bike1DDefine {
     real_type result__ = ModelPars[iM_Pmax] / ModelPars[iM_m] / ModelPars[iM_g] * (1 - xo__v / ModelPars[iM_vmax]);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tmax_normalized( v={} ) return {}\n",
         xo__v, result__
       );
@@ -130,7 +130,7 @@ namespace Bike1DDefine {
     real_type result__ = -ModelPars[iM_Pmax] / ModelPars[iM_m] / ModelPars[iM_g] / ModelPars[iM_vmax];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tmax_normalized_D( v={} ) return {}\n",
         xo__v, result__
       );
@@ -143,7 +143,7 @@ namespace Bike1DDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tmax_normalized_DD( v={} ) return {}\n",
         xo__v, result__
       );

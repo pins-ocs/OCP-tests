@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -118,7 +118,7 @@ namespace CrossroadDefine {
     real_type t44  = VelBound_max(t11 - ModelPars[iM_v_max]);
     real_type result__ = t7 * (ModelPars[iM_wJ] * t2 + ModelPars[iM_wT]) + t11 * t7 * LM__[0] + t15 * t7 * LM__[1] + t1 * t7 * LM__[2] + t22 + t23 + t40 + t41 + t44;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -337,7 +337,7 @@ namespace CrossroadDefine {
     real_type t43  = V__[3] * V__[3];
     real_type result__ = t4 + t6 + t25 + t26 + t29 + t33 + t37 + t41 + t43;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

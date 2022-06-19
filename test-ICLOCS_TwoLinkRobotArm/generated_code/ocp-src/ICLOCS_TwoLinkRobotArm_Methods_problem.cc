@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -166,7 +166,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t31  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t28);
     real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * L__[iL_lambda1__xo] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * L__[iL_lambda2__xo] + (t20 - t16) * t2 * L__[iL_lambda3__xo] + t16 * t2 * L__[iL_lambda4__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -193,7 +193,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t7   = U__[iU_u2] * U__[iU_u2];
     real_type result__ = (t5 + t7) * P__[iP_T] * ModelPars[iM_rho];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -227,7 +227,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t11  = t6 * t6;
     real_type result__ = 1.0 / t6 * (-2 * t3 * t2 * t6 + t4 * t2 + t11);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -264,7 +264,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t5   = P__[iP_T];
     real_type t11  = t3 * t3;
     real_type t16  = t5 * t5;
-    result__[ 8   ] = 1.0 / t5 * (2 * t2 * t3 + 2 * t5) - 1.0 / t16 * (2 * t3 * t2 * t5 - t11 * t2 + t16);
+    result__[ 8   ] = 1.0 / t5 * (2 * t3 * t2 + 2 * t5) - 1.0 / t16 * (2 * t3 * t2 * t5 - t11 * t2 + t16);
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 9, i_segment_left, i_segment_right );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -94,7 +94,7 @@ namespace UnderwaterDefine {
     real_type t1   = ModelPars[iM_x_i];
     real_type t2   = Q__[iQ_zeta];
     real_type t4   = ModelPars[iM_x_f] - t1;
-    X__[ iX_x     ] = t4 * t2 + t1;
+    X__[ iX_x     ] = t2 * t4 + t1;
     real_type t6   = ModelPars[iM_z_i];
     X__[ iX_z     ] = t6 + (ModelPars[iM_z_f] - t6) * t2;
     X__[ iX_theta ] = 0;

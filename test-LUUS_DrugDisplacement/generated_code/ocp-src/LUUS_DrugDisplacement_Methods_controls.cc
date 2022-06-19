@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -98,7 +98,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t26  = uControl(t10, 0, 8);
     real_type result__ = ((0.2e-1 - t4) * t7 + 0.464e2 * t12 * t4) * t6 * t2 * LM__[0] + (t12 * t20 + 0.928e0 - 0.464e2 * t4) * t6 * t2 * LM__[1] + t26 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -346,7 +346,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t28  = pow(V__[1] - (t14 * t22 + 0.928e0 - 0.464e2 * t6) * t9, 2);
     real_type result__ = t3 * t1 + t20 + t28;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

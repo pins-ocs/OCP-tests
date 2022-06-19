@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -96,7 +96,7 @@ namespace OrbitTransferDefine {
     real_type t30  = cos(t18);
     real_type result__ = t4 * t2 * LM__[0] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * LM__[1] + (-t11 * t4 * t8 + t17 * t22 * t30) * t2 * LM__[2] - ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t2 * LM__[4];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -354,7 +354,7 @@ namespace OrbitTransferDefine {
     real_type t47  = pow(-t11 * t8 * t1 + V__[1], 2);
     real_type result__ = t6 + t27 + t37 + t42 + t47;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

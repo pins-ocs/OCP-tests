@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -225,9 +225,9 @@ namespace PointMassCarModel_4Define {
     real_type t72  = ALIAS_rightWidth(t10);
     real_type t74  = RoadRightBorder(-t9 - t72);
     real_type t83  = PowerLimit(ModelPars[iM_m] / ModelPars[iM_Pmax] * t29 * t7 - 1);
-    real_type result__ = t3 * ModelPars[iM_wT] + t12 * t3 * LM__[0] + t16 * t7 * t3 * LM__[1] - t3 * (t11 * t12 - t20) * LM__[2] + t3 * (-ModelPars[iM_kD] * t26 + t29) * LM__[3] + ModelPars[iM_v__Omega__max] * t35 * t3 * LM__[4] + ModelPars[iM_v__fx__max] * t41 * t3 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
+    real_type result__ = t3 * ModelPars[iM_wT] + t12 * t3 * LM__[0] + t16 * t7 * t3 * LM__[1] - t3 * (t11 * t12 - t20) * LM__[2] + t3 * (-t26 * ModelPars[iM_kD] + t29) * LM__[3] + ModelPars[iM_v__Omega__max] * t35 * t3 * LM__[4] + ModelPars[iM_v__fx__max] * t41 * t3 * LM__[5] + t45 * t3 + t47 * t3 + t66 * t3 + t70 * t3 + t74 * t3 + t83 * t3;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -346,13 +346,13 @@ namespace PointMassCarModel_4Define {
     real_type t2   = exp(XM__[6]);
     real_type t3   = ModelPars[iM_v__fx__max];
     real_type t7   = ALIAS_v__fxControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.5e0 * (LM__[5] * t3 + t7) * t2;
+    result__[ 0   ] = 0.5e0 * (t3 * LM__[5] + t7) * t2;
     result__[ 1   ] = 0.5e0 * t3 * t2;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
     real_type t11  = ModelPars[iM_v__Omega__max];
     real_type t15  = ALIAS_v__OmegaControl_D_1(UM__[1], -1, 1);
-    result__[ 4   ] = 0.5e0 * (LM__[4] * t11 + t15) * t2;
+    result__[ 4   ] = 0.5e0 * (t11 * LM__[4] + t15) * t2;
     result__[ 5   ] = 0.5e0 * t11 * t2;
     result__[ 6   ] = result__[4];
     result__[ 7   ] = result__[5];
@@ -536,7 +536,7 @@ namespace PointMassCarModel_4Define {
     real_type t90  = V__[6] * V__[6];
     real_type result__ = t30 * t2 + t36 * t2 + t4 * t2 + t40 * t2 + t49 * t2 + t7 * t2 + t57 + t63 + t69 + t76 + t82 + t88 + t90;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -598,7 +598,7 @@ namespace PointMassCarModel_4Define {
     real_type t4   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
     real_type t6   = t2 * t2;
     real_type t8   = ModelPars[iM_v__fx__max] * ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t2 * t4 + 2 * t6 * t8;
+    result__[ 0   ] = t4 * t2 + 2 * t8 * t6;
     real_type t12  = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     real_type t15  = ModelPars[iM_v__Omega__max] * ModelPars[iM_v__Omega__max];
     result__[ 1   ] = t12 * t2 + 2 * t15 * t6;

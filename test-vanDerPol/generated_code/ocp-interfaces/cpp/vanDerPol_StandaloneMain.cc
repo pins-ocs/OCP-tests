@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 vanDerPol_data.Mesh["s0"] = 0;
-vanDerPol_data.Mesh["segments"][0]["n"] = 400;
 vanDerPol_data.Mesh["segments"][0]["length"] = 4;
+vanDerPol_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

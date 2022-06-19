@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 16/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,7 +97,7 @@ namespace SoundingRocketDefine {
     real_type t20  = uControl(t11, 0, 1);
     real_type result__ = t4 * t2 * LM__[0] + (-ModelPars[iM_kappa] * t8 + t13 - ModelPars[iM_g]) * t2 * LM__[1] + t13 * t2 * LM__[2] + t20 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -322,7 +322,7 @@ namespace SoundingRocketDefine {
     real_type t25  = pow(-t14 * t2 * t1 + V__[2], 2);
     real_type result__ = t3 * t1 + t20 + t25 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

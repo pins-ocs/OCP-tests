@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -117,12 +117,12 @@ namespace gtocX_2burnDefine {
     real_type t49  = acceleration_r(t48, t43);
     real_type t50  = sin(t32);
     real_type t57  = cos(t32);
-    real_type t65  = t16 * t57 + t20 * t50 + 1;
+    real_type t65  = t57 * t16 + t50 * t20 + 1;
     real_type t66  = t65 * t65;
     real_type t73  = ray_positive(-t65);
     real_type result__ = (t15 + t19 + t23 + t27 + t31 + t35) * (1 - ModelPars[iM_w_guess]) + t50 * t49 * t47 * t41 * t39 * LM__[1] - t57 * t49 * t47 * t41 * t39 * LM__[2] + t44 / t41 / t3 * t66 * t39 * LM__[5] + t73;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -267,7 +267,7 @@ namespace gtocX_2burnDefine {
     real_type t3   = cos(t2);
     real_type t5   = X__[iX_g];
     real_type t6   = sin(t2);
-    real_type t8   = -t3 * t1 - t6 * t5 - 1;
+    real_type t8   = -t1 * t3 - t5 * t6 - 1;
     real_type t9   = ray_positive(t8);
     real_type t11  = V__[0] * V__[0];
     real_type t15  = ModelPars[iM_time_f] - ModelPars[iM_time_i];
@@ -279,15 +279,15 @@ namespace gtocX_2burnDefine {
     real_type t24  = ray(t16, t1, t5, t2);
     real_type t25  = acceleration_r(t24, t19);
     real_type t26  = t25 * ModelPars[iM_w_nonlin];
-    real_type t30  = pow(-t6 * t26 * t22 + V__[1], 2);
-    real_type t35  = pow(t3 * t26 * t22 + V__[2], 2);
+    real_type t30  = pow(-t22 * t26 * t6 + V__[1], 2);
+    real_type t35  = pow(t22 * t26 * t3 + V__[2], 2);
     real_type t37  = V__[3] * V__[3];
     real_type t39  = V__[4] * V__[4];
     real_type t42  = t8 * t8;
     real_type t49  = pow(V__[5] - t20 / t17 / t16 * t42 * t15, 2);
     real_type result__ = t9 + t11 + t30 + t35 + t37 + t39 + t49;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

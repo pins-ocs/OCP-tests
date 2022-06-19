@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace BangBangFDefine {
     real_type result__ = -ModelPars[iM_v__max] + xo__v;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_C1( v={} ) return {}\n",
         xo__v, result__
       );
@@ -112,7 +112,7 @@ namespace BangBangFDefine {
     real_type result__ = 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_C1_D( v={} ) return {}\n",
         xo__v, result__
       );
@@ -125,7 +125,7 @@ namespace BangBangFDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_C1_DD( v={} ) return {}\n",
         xo__v, result__
       );

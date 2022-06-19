@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-tol  = 0.0001
 epsi = 0.0001
+tol  = 0.0001
 
 content = {
 

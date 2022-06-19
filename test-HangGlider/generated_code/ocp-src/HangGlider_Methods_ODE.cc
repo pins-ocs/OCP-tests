@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_ODE.cc                                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -185,7 +185,7 @@ namespace HangGliderDefine {
     real_type t75  = t74 * t7;
     result__[ 9   ] = -t23 * t75 * t3 + (-t33 * t15 - t19 * t28 + result__[1] * t31) * t26 * t3;
     result__[ 10  ] = -t38 * t75 * t3 + (-t19 * t42 + result__[1] * t45 + t18) * t26 * t3;
-    result__[ 11  ] = -t50 * t75 * t3 + (-t59 * t15 - t19 * t54 + result__[1] * t57) * t26 * t3;
+    result__[ 11  ] = -t50 * t75 * t3 + (-t59 * t15 - t54 * t19 + result__[1] * t57) * t26 * t3;
     result__[ 12  ] = t74 * t64 - ModelPars[iM_g];
     result__[ 13  ] = (-2 * t19 * t14 * t65 + result__[1] * t17) * t26 * t3;
     if ( m_debug )

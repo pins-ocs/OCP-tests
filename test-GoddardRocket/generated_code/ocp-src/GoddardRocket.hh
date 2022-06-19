@@ -108,10 +108,10 @@ namespace GoddardRocketDefine {
   class GoddardRocket : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[29];
+    real_type ModelPars[25];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrierU uControl;
+    Mechatronix::PenaltyBarrierU TControl;
 
     // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrier1DLessThan massPositive;
@@ -135,7 +135,6 @@ namespace GoddardRocketDefine {
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
     void continuation_step_0( real_type s );
-    void continuation_step_1( real_type s );
 
   public:
 
@@ -233,9 +232,9 @@ namespace GoddardRocketDefine {
     GODDARDROCKET_API_DLL real_type DD_D_1_2    ( real_type xo__h, real_type xo__v ) const;
     GODDARDROCKET_API_DLL real_type DD_D_2      ( real_type xo__h, real_type xo__v ) const;
     GODDARDROCKET_API_DLL real_type DD_D_2_2    ( real_type xo__h, real_type xo__v ) const;
-    GODDARDROCKET_API_DLL real_type T           ( real_type xo__u ) const;
-    GODDARDROCKET_API_DLL real_type T_D         ( real_type xo__u ) const;
-    GODDARDROCKET_API_DLL real_type T_DD        ( real_type xo__u ) const;
+    GODDARDROCKET_API_DLL real_type gg          ( real_type xo__h ) const;
+    GODDARDROCKET_API_DLL real_type gg_D        ( real_type xo__h ) const;
+    GODDARDROCKET_API_DLL real_type gg_DD       ( real_type xo__h ) const;
     GODDARDROCKET_API_DLL real_type explog      ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
     GODDARDROCKET_API_DLL real_type explog_D_1  ( real_type xo__s, real_type xo__a, real_type xo__b ) const;
     GODDARDROCKET_API_DLL real_type explog_D_1_1( real_type xo__s, real_type xo__a, real_type xo__b ) const;

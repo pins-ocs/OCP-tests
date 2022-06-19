@@ -17,7 +17,6 @@ uControl = {
   epsilon = 0.01,
   size    = 0.01
 }
-
 Constraints LT
 Tpositive = {
   Type      = LESS THAN
@@ -26,7 +25,6 @@ Tpositive = {
   Epsilon   = 0.001
   Active    = YES
 }
-
 User class (pointer)
 
 User function `pMesh`
@@ -35,7 +33,6 @@ num. segments = 1
 num. nodes = 5001
 Segment N.0: s0 = 0 length = 1 npts = 5001 no data set
 END Mesh[mesh]
-
 Model Parameters
 .................................T_guess = 1
 ......................................Yc = 10
@@ -45,7 +42,7 @@ Model Parameters
 ....................................y2_i = 2
 ................................epsi_max = 0.01
 ................................epsi_min = 1e-09
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 7] ( 0.00048  , 0.000705 ) [   1.81   ,  0.826   ] 0.471      [6:0:0:0:0:0:0:0:0:0:0:0]
 [  2, 9] ( 0.000705 , 0.000762 ) [  0.742   ,  0.918   ] 0.43       [8:0:0:0:0:0:0:0:0:0:0:0]
@@ -64,7 +61,7 @@ NewtonDumped --- start iterations ---
 Continuation step N.1
 
 Continuation step N.1 s=0.2, ds=0.2, old_s=    0
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 14, 3] ( 0.000204 , 0.000166 ) [  0.082   ,  0.0675  ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
 [ 15, 2] ( 0.000166 , 6.6e-05  ) [  0.0605  ,  0.0321  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -74,7 +71,7 @@ NewtonDumped --- start iterations ---
 [ 19, 1] ( 2.61e-09 , 4.49e-14 ) [ 4.19e-07 , 7.06e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.5, ds=0.3, old_s=  0.2
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 20, 3] ( 0.000165 , 0.000193 ) [  0.027   ,  0.0259  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
 [ 21, 4] ( 0.000193 , 0.000177 ) [  0.0484  ,  0.0445  ] 0.0679     [3:0:0:0:0:0:0:0:0:0:0:0]
@@ -89,7 +86,7 @@ NewtonDumped --- start iterations ---
 [ 30, 1] ( 2.86e-08 , 2.72e-13 ) [ 8.04e-07 , 8.92e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.8, ds=0.3, old_s=  0.5
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 31, 3] ( 8.85e-05 , 7.52e-05 ) [ 0.00412  , 0.00296  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
 [ 32, 2] ( 7.52e-05 , 5.1e-05  ) [ 0.00241  , 0.00167  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -101,7 +98,7 @@ NewtonDumped --- start iterations ---
 [ 38, 1] ( 3.31e-12 , 3.16e-13 ) [ 2.48e-09 , 1.45e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.2, old_s=  0.8
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 39, 3] ( 1.71e-05 , 1.25e-05 ) [ 0.00026  , 0.000201 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
 [ 40, 2] ( 1.25e-05 , 7.37e-06 ) [ 0.000149 , 7.78e-05 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -128,7 +125,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 50017         N. System pars = 5000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.01[sec]     timeout        = 0 [ms]
+Elapsed Time   = 0.898[sec]    timeout        = 0 [ms]
 iteration      = 50            Memory Used    = 4Mb (+9Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

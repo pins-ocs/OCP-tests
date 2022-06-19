@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -155,9 +155,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["h"] = 0.1;
     data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["h"] = 0.1;
 
     // Controls: No penalties or barriers constraint defined
 

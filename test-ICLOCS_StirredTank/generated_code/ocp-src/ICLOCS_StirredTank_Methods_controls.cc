@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -116,7 +116,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type t53  = x2bound_max(t7 - 1);
     real_type result__ = (ModelPars[iM_w_time] + t6 + t10 + t14) * t1 + (t21 * t19 - t29) * t1 * LM__[0] + (t21 * (ModelPars[iM_Tf] - t7) + t29 - (t7 - ModelPars[iM_Tc]) * t11 * ModelPars[iM_a]) * t1 * LM__[1] + t44 + t47 + t48 + t50 + t51 + t53;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -325,7 +325,7 @@ namespace ICLOCS_StirredTankDefine {
     real_type t43  = pow(V__[1] - (t18 * (ModelPars[iM_Tf] - t11) + t26 - (t11 - ModelPars[iM_Tc]) * t1 * ModelPars[iM_a]) * t4, 2);
     real_type result__ = t2 + t6 + t8 + t10 + t12 + t14 + t30 + t43;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

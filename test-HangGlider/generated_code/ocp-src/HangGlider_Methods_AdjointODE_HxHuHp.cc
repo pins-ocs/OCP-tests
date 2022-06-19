@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_AdjointODE.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -101,7 +101,7 @@ namespace HangGliderDefine {
     real_type t22  = Lfun(t7, t8, t9);
     real_type t23  = t22 * t14;
     real_type t24  = w(t7, t9);
-    real_type t26  = -t8 * t20 - t24 * t23;
+    real_type t26  = -t8 * t20 - t23 * t24;
     real_type t27  = t26 * t12;
     real_type t28  = v_D_1(t7, t8, t9);
     real_type t31  = 1.0 / t10;
@@ -210,7 +210,7 @@ namespace HangGliderDefine {
     real_type t38  = Lfun_D_1(t7, t8, t9);
     real_type t39  = t38 * t15;
     real_type t41  = w_D_1(t7, t9);
-    real_type t43  = -t24 * t41 - t25 * t39 - t8 * t36;
+    real_type t43  = -t41 * t24 - t25 * t39 - t8 * t36;
     real_type t44  = t43 * t34;
     real_type t48  = t27 * t34;
     real_type t49  = v_D_1_1(t7, t8, t9);
@@ -345,7 +345,7 @@ namespace HangGliderDefine {
     real_type t19  = Dfun(t11, t12, t13);
     real_type t23  = Lfun(t11, t12, t13);
     real_type t24  = w(t11, t13);
-    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t19 * t18 - t24 * t23) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t24 * t19 * t18 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo];
+    result__[ 0   ] = 2 * (t2 - 0.7e0) * ModelPars[iM_W] + (-2 * t12 * t18 * t19 - t23 * t24) * t16 * t7 * L__[iL_lambda3__xo] + (-2 * t18 * t19 * t24 + t12 * t23) * t16 * t7 * L__[iL_lambda4__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

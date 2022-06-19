@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Data.lua                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
+max_tol  = 0.1
 max_epsi = 0.1
 epsi     = max_epsi
-max_tol  = 0.1
 tol      = max_tol
 
 content = {

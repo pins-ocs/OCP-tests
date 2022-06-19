@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace BikeSteeringDefine {
     real_type t23  = minimumTimeSize(-t2);
     real_type result__ = XM__[0] * t2 * LM__[0] + (ModelPars[iM_m] * t10 * ModelPars[iM_g] * t2 * XM__[1] - t10 * t2 * t15) * LM__[1] + t21 * t2 + t23;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -319,13 +319,13 @@ namespace BikeSteeringDefine {
     real_type t3   = ModelPars[iM_Fmax];
     real_type t4   = FyControl(t2, -t3, t3);
     real_type t6   = minimumTimeSize(-t1);
-    real_type t11  = pow(-t1 * X__[iX_omega] + V__[1], 2);
+    real_type t11  = pow(-X__[iX_omega] * t1 + V__[1], 2);
     real_type t15  = ModelPars[iM_h];
-    real_type t26  = pow(-X__[iX_phi] * t15 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t1 * t15 * t2 + V__[0] * ModelPars[iM_Ix], 2);
+    real_type t26  = pow(-X__[iX_phi] * t15 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t2 * t15 * t1 + ModelPars[iM_Ix] * V__[0], 2);
     real_type t28  = V__[2] * V__[2];
-    real_type result__ = t1 * t4 + t11 + t26 + t28 + t6;
+    real_type result__ = t4 * t1 + t11 + t26 + t28 + t6;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -351,7 +351,7 @@ namespace BikeSteeringDefine {
     real_type t3   = ModelPars[iM_Fmax];
     real_type t4   = ALIAS_FyControl_D_1(t2, -t3, t3);
     real_type t9   = ModelPars[iM_h];
-    result__[ 0   ] = t1 * t4 + 2 * t9 * t1 * (-X__[iX_phi] * t9 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t2 * t9 * t1 + V__[0] * ModelPars[iM_Ix]);
+    result__[ 0   ] = t4 * t1 + 2 * t9 * t1 * (-X__[iX_phi] * t9 * ModelPars[iM_g] * ModelPars[iM_m] * t1 + t2 * t9 * t1 + ModelPars[iM_Ix] * V__[0]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

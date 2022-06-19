@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,7 +22,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 
@@ -42,9 +41,8 @@ using Mechatronix::MeshStd;
 #endif
 
 // map user defined functions and objects with macros
-#define ALIAS_penalization_DD(__t1) Pen1D.evaluate_DD( __t1)
-#define ALIAS_penalization_D(__t1) Pen1D.evaluate_D( __t1)
-#define ALIAS_penalization(__t1) Pen1D.evaluate( __t1)
+#define ALIAS_LowBound_DD(__t1) LowBound.DD( __t1)
+#define ALIAS_LowBound_D(__t1) LowBound.D( __t1)
 #define ALIAS_vthetaControl_D_3(__t1, __t2, __t3) vthetaControl.D_3( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_2(__t1, __t2, __t3) vthetaControl.D_2( __t1, __t2, __t3)
 #define ALIAS_vthetaControl_D_1(__t1, __t2, __t3) vthetaControl.D_1( __t1, __t2, __t3)
@@ -66,8 +64,8 @@ namespace BrachiostocronaDefine {
 
   void
   Brachiostocrona::continuation_step_0( real_type s ) {
-    ModelPars[iM_w_ARG] = pow_average__xo(s, ModelPars[iM_w_ARG0], ModelPars[iM_w_ARG1]);
-    real_type mu   = pow_average__xo(s, ModelPars[iM_mu0], ModelPars[iM_mu1]);
+    real_type t3   = pow_average__xo(s, ModelPars[iM_low_tolerance0], ModelPars[iM_low_tolerance1]);
+    LowBound.update_tolerance(t3);
   }
 
   /*\
@@ -101,7 +99,7 @@ namespace BrachiostocronaDefine {
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool res = true;
-
+    res = res && LowBound.check_range(ModelPars[iM_slope_low] * X__[iX_x] - X__[iX_y] + ModelPars[iM_y0_low], m_max_penalty_value);
     return res;
   }
 
@@ -124,17 +122,14 @@ namespace BrachiostocronaDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = U__[iU_sz];
-    real_type t9   = pow(ModelPars[iM_slope_low] * X__[iX_x] + t5 - X__[iX_y] + ModelPars[iM_y0_low], 2);
-    real_type t11  = ALIAS_penalization(t5);
-    real_type t13  = P__[iP_T];
-    real_type t15  = X__[iX_v];
-    real_type t16  = X__[iX_theta];
-    real_type t17  = cos(t16);
-    real_type t22  = sin(t16);
-    real_type result__ = t17 * t15 * t13 * L__[iL_lambda1__xo] + t22 * t15 * t13 * L__[iL_lambda2__xo] - t22 * ModelPars[iM_g] * t13 * L__[iL_lambda3__xo] + t9 * ModelPars[iM_w_ARG] + L__[iL_lambda4__xo] * U__[iU_vtheta] + t11;
+    real_type t2   = P__[iP_T];
+    real_type t4   = X__[iX_v];
+    real_type t5   = X__[iX_theta];
+    real_type t6   = cos(t5);
+    real_type t11  = sin(t5);
+    real_type result__ = t11 * t2 * t4 * L__[iL_lambda2__xo] - t11 * t2 * L__[iL_lambda3__xo] * ModelPars[iM_g] + t2 * t4 * t6 * L__[iL_lambda1__xo] + L__[iL_lambda4__xo] * U__[iU_vtheta];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -157,12 +152,9 @@ namespace BrachiostocronaDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = U__[iU_sz];
-    real_type t9   = pow(ModelPars[iM_slope_low] * X__[iX_x] + t5 - X__[iX_y] + ModelPars[iM_y0_low], 2);
-    real_type t11  = ALIAS_penalization(t5);
-    real_type result__ = t9 * ModelPars[iM_w_ARG] + t11;
+    real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -191,7 +183,7 @@ namespace BrachiostocronaDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = P__[iP_T];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -260,7 +252,7 @@ namespace BrachiostocronaDefine {
    |              |___/                 |___/
   \*/
 
-  integer Brachiostocrona::DlagrangeDxpu_numEqns() const { return 7; }
+  integer Brachiostocrona::DlagrangeDxpu_numEqns() const { return 6; }
 
   void
   Brachiostocrona::DlagrangeDxpu_eval(
@@ -273,38 +265,24 @@ namespace BrachiostocronaDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_slope_low];
-    real_type t5   = U__[iU_sz];
-    real_type t9   = (X__[iX_x] * t2 + t5 - X__[iX_y] + ModelPars[iM_y0_low]) * ModelPars[iM_w_ARG];
-    result__[ 0   ] = 2 * t2 * t9;
-    real_type t11  = 2 * t9;
-    result__[ 1   ] = -t11;
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     result__[ 3   ] = 0;
     result__[ 4   ] = 0;
     result__[ 5   ] = 0;
-    real_type t12  = ALIAS_penalization_D(t5);
-    result__[ 6   ] = t11 + t12;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona::D2lagrangeD2xpu_numRows() const { return 7; }
-  integer Brachiostocrona::D2lagrangeD2xpu_numCols() const { return 7; }
-  integer Brachiostocrona::D2lagrangeD2xpu_nnz()     const { return 9; }
+  integer Brachiostocrona::D2lagrangeD2xpu_numRows() const { return 6; }
+  integer Brachiostocrona::D2lagrangeD2xpu_numCols() const { return 6; }
+  integer Brachiostocrona::D2lagrangeD2xpu_nnz()     const { return 0; }
 
   void
   Brachiostocrona::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 5   ;
-    iIndex[6 ] = 5   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 5   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 5   ; jIndex[8 ] = 5   ;
+    // EMPTY!
   }
 
 
@@ -315,26 +293,7 @@ namespace BrachiostocronaDefine {
     P_const_pointer_type P__,
     real_type            result__[]
   ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_w_ARG];
-    real_type t2   = ModelPars[iM_slope_low];
-    real_type t3   = t2 * t2;
-    result__[ 0   ] = 2 * t3 * t1;
-    real_type t6   = 2 * t2 * t1;
-    result__[ 1   ] = -t6;
-    result__[ 2   ] = t6;
-    result__[ 3   ] = result__[1];
-    result__[ 4   ] = 2 * t1;
-    result__[ 5   ] = -result__[4];
-    result__[ 6   ] = result__[2];
-    result__[ 7   ] = result__[5];
-    real_type t8   = ALIAS_penalization_DD(U__[iU_sz]);
-    result__[ 8   ] = result__[4] + t8;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 9, i_segment );
+    // EMPTY!
   }
 
   /*\
@@ -535,9 +494,9 @@ namespace BrachiostocronaDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = vthetaControl(U__[iU_vtheta], -10, 10);
     real_type t4   = ModelPars[iM_slope_low] * X__[iX_x];
-    real_type t5   = ModelPars[iM_y0_low];
-    result__[ 1   ] = t4 + t5;
-    result__[ 2   ] = -t4 + X__[iX_y] - t5;
+    real_type t6   = ModelPars[iM_y0_low];
+    result__[ 1   ] = LowBound(t4 - X__[iX_y] + t6);
+    result__[ 2   ] = t4 + t6;
     // do not check
     // Mechatronix::check_in_segment( result__, "post_eval", 3, i_segment );
   }

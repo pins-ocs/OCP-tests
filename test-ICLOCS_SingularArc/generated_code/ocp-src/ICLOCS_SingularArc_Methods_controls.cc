@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -98,9 +98,9 @@ namespace ICLOCS_SingularArcDefine {
     real_type t13  = sin(t8);
     real_type t15  = uControl(t4, -2, 2);
     real_type t16  = tfbound(-t2);
-    real_type result__ = t13 * t2 * LM__[2] + t4 * t2 * LM__[0] + t9 * t2 * LM__[1] + t15 + t16;
+    real_type result__ = t13 * t2 * LM__[2] + t2 * t4 * LM__[0] + t2 * t9 * LM__[1] + t15 + t16;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -317,7 +317,7 @@ namespace ICLOCS_SingularArcDefine {
     real_type t19  = pow(-t16 * t3 + V__[2], 2);
     real_type result__ = t2 + t4 + t8 + t14 + t19;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

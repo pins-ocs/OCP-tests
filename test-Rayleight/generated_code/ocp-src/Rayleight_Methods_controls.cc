@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace RayleightDefine {
     real_type t9   = t6 * t6;
     real_type result__ = t2 + t4 + t6 * LM__[0] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * LM__[1];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -284,7 +284,7 @@ namespace RayleightDefine {
     real_type t14  = pow(V__[1] + X__[iX_x1] - t2 * (0.14e1 - 0.14e0 * t7) - 4 * U__[iU_u], 2);
     real_type result__ = t4 + t14;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

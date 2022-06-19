@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -371,46 +371,46 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t73  = L__[iL_lambda35__xo];
     real_type t74  = cos(t71);
     result__[ 14  ] = t73 * t74 + 12 * t71;
-    real_type t76  = X__[iX_x16];
-    real_type t78  = L__[iL_lambda36__xo];
-    real_type t79  = cos(t76);
-    result__[ 15  ] = t78 * t79 + 10 * t76;
-    real_type t81  = X__[iX_x17];
-    real_type t83  = L__[iL_lambda37__xo];
-    real_type t84  = cos(t81);
-    result__[ 16  ] = t83 * t84 + 8 * t81;
-    real_type t86  = X__[iX_x18];
-    real_type t88  = L__[iL_lambda38__xo];
-    real_type t89  = cos(t86);
-    result__[ 17  ] = t88 * t89 + 6 * t86;
-    real_type t91  = X__[iX_x19];
-    real_type t93  = L__[iL_lambda39__xo];
-    real_type t94  = cos(t91);
-    result__[ 18  ] = t93 * t94 + 4 * t91;
-    real_type t96  = X__[iX_x20];
-    real_type t98  = L__[iL_lambda40__xo];
-    real_type t99  = cos(t96);
-    result__[ 19  ] = t98 * t99 + 2 * t96;
-    result__[ 20  ] = 40 * X__[iX_y1] + L__[iL_lambda1__xo];
-    result__[ 21  ] = 38 * X__[iX_y2] + L__[iL_lambda2__xo];
-    result__[ 22  ] = 36 * X__[iX_y3] + L__[iL_lambda3__xo];
-    result__[ 23  ] = 34 * X__[iX_y4] + L__[iL_lambda4__xo];
-    result__[ 24  ] = 32 * X__[iX_y5] + L__[iL_lambda5__xo];
-    result__[ 25  ] = 30 * X__[iX_y6] + L__[iL_lambda6__xo];
-    result__[ 26  ] = 28 * X__[iX_y7] + L__[iL_lambda7__xo];
-    result__[ 27  ] = 26 * X__[iX_y8] + L__[iL_lambda8__xo];
-    result__[ 28  ] = 24 * X__[iX_y9] + L__[iL_lambda9__xo];
-    result__[ 29  ] = 22 * X__[iX_y10] + L__[iL_lambda10__xo];
-    result__[ 30  ] = 20 * X__[iX_y11] + L__[iL_lambda11__xo];
-    result__[ 31  ] = 18 * X__[iX_y12] + L__[iL_lambda12__xo];
-    result__[ 32  ] = 16 * X__[iX_y13] + L__[iL_lambda13__xo];
-    result__[ 33  ] = 14 * X__[iX_y14] + L__[iL_lambda14__xo];
-    result__[ 34  ] = 12 * X__[iX_y15] + L__[iL_lambda15__xo];
-    result__[ 35  ] = 10 * X__[iX_y16] + L__[iL_lambda16__xo];
-    result__[ 36  ] = 8 * X__[iX_y17] + L__[iL_lambda17__xo];
-    result__[ 37  ] = 6 * X__[iX_y18] + L__[iL_lambda18__xo];
-    result__[ 38  ] = 4 * X__[iX_y19] + L__[iL_lambda19__xo];
-    result__[ 39  ] = 2 * X__[iX_y20] + L__[iL_lambda20__xo];
+    real_type t76  = L__[iL_lambda36__xo];
+    real_type t77  = X__[iX_x16];
+    real_type t78  = cos(t77);
+    result__[ 15  ] = t76 * t78 + 10 * t77;
+    real_type t81  = L__[iL_lambda37__xo];
+    real_type t82  = X__[iX_x17];
+    real_type t83  = cos(t82);
+    result__[ 16  ] = t81 * t83 + 8 * t82;
+    real_type t86  = L__[iL_lambda38__xo];
+    real_type t87  = X__[iX_x18];
+    real_type t88  = cos(t87);
+    result__[ 17  ] = t86 * t88 + 6 * t87;
+    real_type t91  = L__[iL_lambda39__xo];
+    real_type t92  = X__[iX_x19];
+    real_type t93  = cos(t92);
+    result__[ 18  ] = t91 * t93 + 4 * t92;
+    real_type t96  = L__[iL_lambda40__xo];
+    real_type t97  = X__[iX_x20];
+    real_type t98  = cos(t97);
+    result__[ 19  ] = t96 * t98 + 2 * t97;
+    result__[ 20  ] = L__[iL_lambda1__xo] + 40 * X__[iX_y1];
+    result__[ 21  ] = L__[iL_lambda2__xo] + 38 * X__[iX_y2];
+    result__[ 22  ] = L__[iL_lambda3__xo] + 36 * X__[iX_y3];
+    result__[ 23  ] = L__[iL_lambda4__xo] + 34 * X__[iX_y4];
+    result__[ 24  ] = L__[iL_lambda5__xo] + 32 * X__[iX_y5];
+    result__[ 25  ] = L__[iL_lambda6__xo] + 30 * X__[iX_y6];
+    result__[ 26  ] = L__[iL_lambda7__xo] + 28 * X__[iX_y7];
+    result__[ 27  ] = L__[iL_lambda8__xo] + 26 * X__[iX_y8];
+    result__[ 28  ] = L__[iL_lambda9__xo] + 24 * X__[iX_y9];
+    result__[ 29  ] = L__[iL_lambda10__xo] + 22 * X__[iX_y10];
+    result__[ 30  ] = L__[iL_lambda11__xo] + 20 * X__[iX_y11];
+    result__[ 31  ] = L__[iL_lambda12__xo] + 18 * X__[iX_y12];
+    result__[ 32  ] = L__[iL_lambda13__xo] + 16 * X__[iX_y13];
+    result__[ 33  ] = L__[iL_lambda14__xo] + 14 * X__[iX_y14];
+    result__[ 34  ] = L__[iL_lambda15__xo] + 12 * X__[iX_y15];
+    result__[ 35  ] = L__[iL_lambda16__xo] + 10 * X__[iX_y16];
+    result__[ 36  ] = L__[iL_lambda17__xo] + 8 * X__[iX_y17];
+    result__[ 37  ] = L__[iL_lambda18__xo] + 6 * X__[iX_y18];
+    result__[ 38  ] = L__[iL_lambda19__xo] + 4 * X__[iX_y19];
+    result__[ 39  ] = L__[iL_lambda20__xo] + 2 * X__[iX_y20];
     real_type t161 = L__[iL_lambda61__xo];
     real_type t163 = cos(X__[iX_xx1]);
     result__[ 40  ] = 0.2e0 * t163 * t161;
@@ -491,26 +491,26 @@ namespace ICLOCS_ContinuousMPDefine {
     result__[ 77  ] = 0.12e1 * L__[iL_lambda58__xo];
     result__[ 78  ] = 0.12e1 * L__[iL_lambda59__xo];
     result__[ 79  ] = 0.12e1 * L__[iL_lambda60__xo];
-    result__[ 80  ] = t3 + t161;
-    result__[ 81  ] = t8 + t165;
-    result__[ 82  ] = t13 + t169;
+    result__[ 80  ] = t161 + t3;
+    result__[ 81  ] = t165 + t8;
+    result__[ 82  ] = t169 + t13;
     result__[ 83  ] = t173 + t18;
     result__[ 84  ] = t177 + t23;
     result__[ 85  ] = t181 + t28;
     result__[ 86  ] = t185 + t33;
     result__[ 87  ] = t189 + t38;
-    result__[ 88  ] = t43 + t193;
+    result__[ 88  ] = t193 + t43;
     result__[ 89  ] = t197 + t48;
     result__[ 90  ] = t201 + t53;
     result__[ 91  ] = t205 + t58;
     result__[ 92  ] = t209 + t63;
     result__[ 93  ] = t213 + t68;
     result__[ 94  ] = t217 + t73;
-    result__[ 95  ] = t221 + t78;
-    result__[ 96  ] = t225 + t83;
-    result__[ 97  ] = t229 + t88;
-    result__[ 98  ] = t233 + t93;
-    result__[ 99  ] = t237 + t98;
+    result__[ 95  ] = t221 + t76;
+    result__[ 96  ] = t225 + t81;
+    result__[ 97  ] = t229 + t86;
+    result__[ 98  ] = t233 + t91;
+    result__[ 99  ] = t237 + t96;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 100, i_segment );
   }

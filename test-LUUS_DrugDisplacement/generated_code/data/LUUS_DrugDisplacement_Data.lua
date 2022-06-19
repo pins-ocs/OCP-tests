@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Data.lua                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-pen_u_tol0  = 0.1
 pen_u_epsi0 = 0.1
+pen_u_tol0  = 0.1
 
 content = {
 
@@ -299,8 +299,8 @@ content = {
     segments = {
       
       {
-        n      = 200.0,
         length = 1.0,
+        n      = 200.0,
       },
     },
   },

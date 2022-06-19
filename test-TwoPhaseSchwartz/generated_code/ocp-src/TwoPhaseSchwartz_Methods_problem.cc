@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -147,7 +147,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t26  = X__[iX_x3] * X__[iX_x3];
     real_type result__ = t3 * ModelPars[iM_epsilon] + t6 * L__[iL_lambda1__xo] + (U__[iU_u1] - 0.1e0 * t6 * (2 * t11 + 1)) * L__[iL_lambda2__xo] + t21 * t19 * L__[iL_lambda3__xo] + (t2 - 0.1e0 * t21 * (2 * t26 + 1)) * t19 * L__[iL_lambda4__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -173,7 +173,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t3   = U__[iU_u2] * U__[iU_u2];
     real_type result__ = t3 * ModelPars[iM_epsilon];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -204,7 +204,7 @@ namespace TwoPhaseSchwartzDefine {
     real_type t4   = XR__[iX_x4] * XR__[iX_x4];
     real_type result__ = 5 * t2 + 5 * t4;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

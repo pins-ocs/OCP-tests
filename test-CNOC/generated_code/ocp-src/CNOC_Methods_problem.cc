@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -245,7 +245,7 @@ namespace CNOCDefine {
     real_type t38  = X__[iX_an];
     real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t32 * t4 * t2 - t30) * L__[iL_lambda3__xo] - t1 * (t23 * t20 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t32 * t38 * t2 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t32 * t30 * t2 - U__[iU_jn]) * L__[iL_lambda6__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -276,7 +276,7 @@ namespace CNOCDefine {
     real_type t13  = ModelPars[iM_deltaFeed] * ModelPars[iM_deltaFeed];
     real_type result__ = 1.0 / t13 * t10 * X__[iX_coV];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -305,7 +305,7 @@ namespace CNOCDefine {
     ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "ICLOCS2_BatchFermentor_Mex"
-DESCRIPTION  'Mex file for ICLOCS2_BatchFermentor'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

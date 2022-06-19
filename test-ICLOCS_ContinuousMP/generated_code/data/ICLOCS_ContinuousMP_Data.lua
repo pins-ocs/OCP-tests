@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
-epsi_ctrl = 0.01
-tol_ctrl  = 0.01
-xy_tol0   = 0.1
-xy_tol    = xy_tol0
 xy_eps0   = 0.1
 xy_eps    = xy_eps0
+xy_tol0   = 0.1
+xy_tol    = xy_tol0
+tol_ctrl  = 0.01
+epsi_ctrl = 0.01
 
 content = {
 
@@ -1096,8 +1096,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 50.0,
+        length = 1.0,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_AdjointODE.cc                                  |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace ZermeloDefine {
     real_type t8   = L__[iL_lambda2__xo];
     real_type t9   = t2 * t8;
     real_type t10  = velY_D_1(t4, t5);
-    result__[ 0   ] = t10 * t9 + t6 * t3;
+    result__[ 0   ] = t10 * t9 + t3 * t6;
     real_type t12  = velX_D_2(t4, t5);
     real_type t14  = velY_D_2(t4, t5);
     result__[ 1   ] = t12 * t3 + t14 * t9;

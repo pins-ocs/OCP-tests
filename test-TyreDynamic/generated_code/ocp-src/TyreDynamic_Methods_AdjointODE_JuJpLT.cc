@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -258,7 +258,7 @@ namespace TyreDynamicDefine {
     real_type t5   = ModelPars[iM_h__b];
     real_type t6   = X__[iX_b] - t5;
     real_type t7   = OnlyBrakingRear(t6);
-    result__[ 0   ] = -t7 * t3;
+    result__[ 0   ] = -t3 * t7;
     real_type t9   = 1.0 / t1;
     real_type t10  = ALIAS_OnlyBrakingRear_D(t6);
     result__[ 1   ] = t10 * t9;

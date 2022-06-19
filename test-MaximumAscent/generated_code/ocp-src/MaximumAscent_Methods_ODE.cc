@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_ODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -129,7 +129,7 @@ namespace MaximumAscentDefine {
     real_type t15  = t14 * t13;
     result__[ 2   ] = 2 * t15;
     real_type t16  = Tbar(t2);
-    real_type t24  = 1.0 / (-t2 * Q__[iQ_zeta] * ModelPars[iM_mdot] + ModelPars[iM_m0]) * t16;
+    real_type t24  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0]) * t16;
     real_type t25  = U__[iU_alpha];
     real_type t26  = cos(t25);
     result__[ 3   ] = t26 * t24;

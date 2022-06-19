@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: OrbitTransfer_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,13 +20,13 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-mu   = 1.0
-m0   = 1.0
 r0   = 1.0
-T    = 0.1405e-1*m0*mu/r0**2
-mdot = 0.533*T*(mu/r0)**(1/2.0)
+m0   = 1.0
+mu   = 1.0
 tf   = 16.60*(r0**3/mu)**(1/2.0)
+T    = 0.1405e-1*m0*mu/r0**2
 v0   = (mu/r0)**(1/2.0)
+mdot = 0.533*T*(mu/r0)**(1/2.0)
 
 mechatronix do |data|
 
@@ -328,8 +328,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 1000.0,
+        :length => 1.0,
       },
     ],
   };

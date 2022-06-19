@@ -1,0 +1,9 @@
+
+; mexFunction.def : Declares the module parameters for the DLL.
+
+LIBRARY      "ForwardBackward_Mex"
+DESCRIPTION  'Mex file for ForwardBackward'
+
+EXPORTS
+    ; Explicit exports can go here
+    mexFunction

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_UserFunctions.cc                                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -192,7 +192,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_PathFollowingTolerance( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -207,7 +207,7 @@ namespace CNOCDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_PathFollowingTolerance_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -222,7 +222,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_PathFollowingTolerance_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -237,7 +237,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_as_limit( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -252,7 +252,7 @@ namespace CNOCDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_as_limit_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -267,7 +267,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_as_limit_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -282,7 +282,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_an_limit( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -297,7 +297,7 @@ namespace CNOCDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_an_limit_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -312,7 +312,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_an_limit_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -327,7 +327,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ax_limit( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -342,7 +342,7 @@ namespace CNOCDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ax_limit_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -357,7 +357,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ax_limit_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -372,7 +372,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ay_limit( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -387,7 +387,7 @@ namespace CNOCDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ay_limit_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -402,7 +402,7 @@ namespace CNOCDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_ay_limit_DD( _V={} ) return {}\n",
         xo___V, result__
       );

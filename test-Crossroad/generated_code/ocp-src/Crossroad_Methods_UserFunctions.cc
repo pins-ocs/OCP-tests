@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,7 +105,7 @@ namespace CrossroadDefine {
     real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * ((ModelPars[iM_L] / 2 - xo__s) * ModelPars[iM_kappa0] + xo__s * ModelPars[iM_kappa1]) / ModelPars[iM_L] : 2 * ((ModelPars[iM_L] - xo__s) * ModelPars[iM_kappa1] + (xo__s - ModelPars[iM_L] / 2) * ModelPars[iM_kappa2]) / ModelPars[iM_L]);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa( s={} ) return {}\n",
         xo__s, result__
       );
@@ -118,7 +118,7 @@ namespace CrossroadDefine {
     real_type result__ = (xo__s < ModelPars[iM_L] / 2 ? 2 * (ModelPars[iM_kappa1] - ModelPars[iM_kappa0]) / ModelPars[iM_L] : 2 * (ModelPars[iM_kappa2] - ModelPars[iM_kappa1]) / ModelPars[iM_L]);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa_D( s={} ) return {}\n",
         xo__s, result__
       );
@@ -131,7 +131,7 @@ namespace CrossroadDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa_DD( s={} ) return {}\n",
         xo__s, result__
       );
@@ -146,7 +146,7 @@ namespace CrossroadDefine {
     real_type result__ = t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_VelBound( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -161,7 +161,7 @@ namespace CrossroadDefine {
     real_type result__ = -t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_VelBound_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -176,7 +176,7 @@ namespace CrossroadDefine {
     real_type result__ = t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_VelBound_DD( _V={} ) return {}\n",
         xo___V, result__
       );

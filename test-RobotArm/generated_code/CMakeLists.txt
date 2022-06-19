@@ -22,11 +22,7 @@ set( CXX_WARN   "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-co
 set( CLANG_WARN "-Wall -Wno-float-equal -Wno-padded -Wno-comment" )
 set( VS_WARN    "" )
 
-if (APPLE)
-  # workaround for Xcode not looking the right SDK
-  set(_CMAKE_OSX_SYSROOT_PATH "")
-  set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
-else()
+if (NOT APPLE)
   set( CMAKE_INSTALL_RPATH $ORIGIN )
 endif()
 
@@ -111,7 +107,7 @@ install(
 )
 
 target_link_libraries( ${TARGET} ${LIBS2} ${LIBS} )
-target_link_libraries( main ${TARGET}_static ${LIBS2} ${LIBS}  )
+target_link_libraries( main $<TARGET_OBJECTS:objlib> ${LIBS2} ${LIBS}  )
 
 message( STATUS "CMAKE_FLAGS     = ${CMAKE_FLAGS}" )
 message( STATUS "CMAKE_LINKER    = ${CMAKE_LINKER}" )

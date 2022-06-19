@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace gtocX_2burn_parsDefine {
     result__[ 0   ] = t18 * t17 * t10;
     real_type t20  = cos(t14);
     result__[ 1   ] = -t20 * t17 * t10;
-    real_type t26  = pow(t20 * t12 + t18 * t13 + 1, 2);
+    real_type t26  = pow(t12 * t20 + t13 * t18 + 1, 2);
     result__[ 2   ] = t8 / t5 / t4 * t26 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );

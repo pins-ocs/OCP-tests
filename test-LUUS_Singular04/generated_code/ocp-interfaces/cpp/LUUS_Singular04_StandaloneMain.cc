@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tolerance0 = 0.01;
     real_type u_epsilon0 = 0.01;
+    real_type u_tolerance0 = 0.01;
     real_type epsi_x0 = 0.01;
     real_type epsi_x = epsi_x0;
     real_type Tf = 6;

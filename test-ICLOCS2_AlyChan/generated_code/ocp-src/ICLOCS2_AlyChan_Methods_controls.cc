@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -96,7 +96,7 @@ namespace ICLOCS2_AlyChanDefine {
     real_type t14  = uControl(t5, -1, 1);
     real_type result__ = t2 * LM__[0] + t5 * LM__[1] + (-t9 / 2 + t10 / 2) * LM__[2] + t14;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -309,7 +309,7 @@ namespace ICLOCS2_AlyChanDefine {
     real_type t17  = pow(V__[2] - t11 / 2 + t14 / 2, 2);
     real_type result__ = t2 + t6 + t9 + t17;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

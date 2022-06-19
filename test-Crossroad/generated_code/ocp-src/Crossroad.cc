@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -388,26 +388,19 @@ namespace CrossroadDefine {
   void
   Crossroad::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    jerkControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( jerkControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    Tpositive.info(mstr);
-    AccBound.info(mstr);
-    VelBound_min.info(mstr);
-    VelBound_max.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( Tpositive.info(),msg_level);
+    m_console->message( AccBound.info(),msg_level);
+    m_console->message( VelBound_min.info(),msg_level);
+    m_console->message( VelBound_max.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

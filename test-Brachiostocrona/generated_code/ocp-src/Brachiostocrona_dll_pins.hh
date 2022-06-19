@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_dll_pins.hh                                    |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -76,7 +76,6 @@ namespace BrachiostocronaDefine {
   using namespace MechatronixLoad;
 
   // user class in namespaces
-  using Mechatronix::PenaltyBarrier1DGreaterThan;
   using Mechatronix::MeshStd;
 
   using namespace BrachiostocronaLoad;
@@ -93,11 +92,11 @@ namespace BrachiostocronaDefine {
 
   class Brachiostocrona_Problem {
 
-    Brachiostocrona             model;
+    Brachiostocrona model;
 
     // user defined Object instances (external)
 
-    MeshStd                     mesh;
+    MeshStd    mesh;
 
     // block copy constructor
     Brachiostocrona_Problem( Brachiostocrona_Problem const & );

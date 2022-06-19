@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace BangBangFworkDefine {
     real_type result__ = t2 * ModelPars[iM_amp1] + t6 * ModelPars[iM_amp2] + 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_fMax( zeta={} ) return {}\n",
         xo__zeta, result__
       );
@@ -114,7 +114,7 @@ namespace BangBangFworkDefine {
     real_type result__ = t2 * ModelPars[iM_amp1] + 10 * t6 * ModelPars[iM_amp2];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_fMax_D( zeta={} ) return {}\n",
         xo__zeta, result__
       );
@@ -129,7 +129,7 @@ namespace BangBangFworkDefine {
     real_type result__ = -t2 * ModelPars[iM_amp1] - 100 * t6 * ModelPars[iM_amp2];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_fMax_DD( zeta={} ) return {}\n",
         xo__zeta, result__
       );

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-epsi0    = 0.1
 tol0     = 0.1
+epsi0    = 0.1
 epsilon0 = 0.001
 epsilon  = epsilon0
 epsi     = epsi0
@@ -324,8 +324,8 @@ content = {
     segments = {
       
       {
-        n      = 100.0,
         length = 1.0,
+        n      = 100.0,
       },
     },
   },

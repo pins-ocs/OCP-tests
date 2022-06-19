@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-tol  = 0.0001
 epsi = 0.0001
+tol  = 0.0001
 
 content = {
 
@@ -297,8 +297,8 @@ content = {
     segments = {
       
       {
-        n      = 400.0,
         length = 1.0,
+        n      = 400.0,
       },
     },
   },

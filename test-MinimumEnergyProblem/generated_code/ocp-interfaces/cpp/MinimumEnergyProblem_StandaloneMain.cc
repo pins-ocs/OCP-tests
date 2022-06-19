@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type max_tol = 0.1;
     real_type max_epsi = 0.1;
     real_type epsi = max_epsi;
-    real_type max_tol = 0.1;
     real_type tol = max_tol;
     integer InfoLevel = 4;
 

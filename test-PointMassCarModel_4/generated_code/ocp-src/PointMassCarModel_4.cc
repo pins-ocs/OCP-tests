@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4.cc                                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -440,27 +440,20 @@ namespace PointMassCarModel_4Define {
   void
   PointMassCarModel_4::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    v__fxControl   .info(mstr);
-    v__OmegaControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( v__fxControl.info(),msg_level);
+    m_console->message( v__OmegaControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    AdherenceEllipse.info(mstr);
-    RoadLeftBorder.info(mstr);
-    RoadRightBorder.info(mstr);
-    PowerLimit.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( AdherenceEllipse.info(),msg_level);
+    m_console->message( RoadLeftBorder.info(),msg_level);
+    m_console->message( RoadRightBorder.info(),msg_level);
+    m_console->message( PowerLimit.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pRoad`\n";
-    pRoad->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pRoad`\n",msg_level);
+    m_console->message( pRoad->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

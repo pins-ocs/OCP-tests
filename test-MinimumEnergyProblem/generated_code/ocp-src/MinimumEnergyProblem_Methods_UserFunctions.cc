@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -109,7 +109,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = -t5 * t3 * t2 + t8 * t5 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_1( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -128,7 +128,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = -2 * t9 * t6 * t3 * t2 + t14 * t6 * t2 + t6 * t4 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_1_1( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -148,7 +148,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = t13 * t7 * t4 * t3 - t7 * t5 * t4 * t3 - t7 * t4 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_1_2( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -167,7 +167,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = -t7 * xo__s * t5 * t3 * t2 + t12 * t7 * xo__s * t10 + t7 * t10;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_1_3( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -183,7 +183,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = t5 / xo__v0 * t1 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_2( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -202,7 +202,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = -t8 * t1 * t2 + t8 * t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_2_2( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -218,7 +218,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = 1.0 / xo__v1 * xo__s * t6 / xo__v0 * t1 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_2_3( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -233,7 +233,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = xo__s / xo__v1 * t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_3( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );
@@ -252,7 +252,7 @@ namespace MinimumEnergyProblemDefine {
     real_type result__ = t7 * t5 * t4 - t7 * xo__s * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_interpLog_D_3_3( s={}, v0={}, v1={} ) return {}\n",
         xo__s, xo__v0, xo__v1, result__
       );

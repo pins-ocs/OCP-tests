@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -80,7 +80,7 @@ namespace Hager_2000Define {
     real_type t4   = t3 * t3;
     real_type result__ = t2 + 2 * t4 + (t3 / 2 + t1) * LM__[0];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -268,7 +268,7 @@ namespace Hager_2000Define {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type result__ = pow(V__[0] - X__[iX_x] / 2 - U__[iU_u], 2);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

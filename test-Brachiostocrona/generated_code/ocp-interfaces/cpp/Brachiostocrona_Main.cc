@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,7 +22,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 using namespace BrachiostocronaLoad;
@@ -40,7 +39,7 @@ main() {
     Brachiostocrona * m_model = new Brachiostocrona("Brachiostocrona",n_threads,&console);
 
     // user defined Object instances (external)
-    MeshStd                     mesh( "mesh" );
+    MeshStd          mesh( "mesh" );
 
     string fname = "./data/Brachiostocrona_Data"; // no .lua or .rb extension
 

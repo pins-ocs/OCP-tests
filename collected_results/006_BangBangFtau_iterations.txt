@@ -16,36 +16,31 @@ vsTpositive = {
   Tolerance = 0.001
   Epsilon   = 0.001
   Active    = YES
-}
-vsBpositive = {
+}vsBpositive = {
+  Type      = LESS THAN
+  SubType   = WallRegular, h=0.001, epsilon=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}vsTmax = {
+  Type      = LESS THAN
+  SubType   = WallRegular, h=0.001, epsilon=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}vsTBInterval_min = {
+  Type      = LESS THAN
+  SubType   = WallRegular, h=0.001, epsilon=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}vsTBInterval_max = {
   Type      = LESS THAN
   SubType   = WallRegular, h=0.001, epsilon=0.001
   Tolerance = 0.001
   Epsilon   = 0.001
   Active    = YES
 }
-vsTmax = {
-  Type      = LESS THAN
-  SubType   = WallRegular, h=0.001, epsilon=0.001
-  Tolerance = 0.001
-  Epsilon   = 0.001
-  Active    = YES
-}
-vsTBInterval_min = {
-  Type      = LESS THAN
-  SubType   = WallRegular, h=0.001, epsilon=0.001
-  Tolerance = 0.001
-  Epsilon   = 0.001
-  Active    = YES
-}
-vsTBInterval_max = {
-  Type      = LESS THAN
-  SubType   = WallRegular, h=0.001, epsilon=0.001
-  Tolerance = 0.001
-  Epsilon   = 0.001
-  Active    = YES
-}
-
 User class (pointer)
 
 User function `pMesh`
@@ -54,10 +49,8 @@ num. segments = 1
 num. nodes = 401
 Segment N.0: s0 = 0 length = 1 npts = 401 no data set
 END Mesh[mesh]
-
 User mapped functions
 User function ``clip'' mapped with: ClipIntervalWithErf, h=0.1, delta=0, delta2=0
-
 Model Parameters
 ..................................epsiTB = 0.001
 .................................maxClip = 1
@@ -65,7 +58,7 @@ Model Parameters
 .................................minClip = -1
 ....................................tauB = 0.001
 ....................................tauT = 0.02
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
 WARNING eval_NewtonDumped FAILED
@@ -78,23 +71,26 @@ WARNING eval_NewtonDumped FAILED
 [  6, 2] (  0.059   ,  0.0579  ) [  0.229   ,  0.161   ] 0.4        [0:0:0:1:0:0:0:0:0:0:0:0]
 [  7, 1] (  0.0579  ,  0.0416  ) [  0.143   ,  0.0467  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  8, 3] (  0.0416  ,  0.0426  ) [  0.0336  ,  0.0361  ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
+[  9, 3] (  0.0426  ,  0.0454  ) [  0.0311  ,  0.0284  ] 0.16       [0:1:0:1:0:0:0:0:0:0:0:0]
+[ 10, 3] (  0.0454  ,  0.0409  ) [  0.029   ,  0.0254  ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
+[ 11, 3] (  0.0409  ,  0.0346  ) [  0.0186  ,  0.0191  ] 0.195      [1:1:0:0:0:0:0:0:0:0:0:0]
 WARNING eval_NewtonDumped FAILED
-[  9, 5] (  0.0426  ,  0.0344  ) [  0.0311  ,  0.0203  ] 0.0882     [0:2:0:0:0:0:0:0:1:0:0:0]
-[ 10, 4] (  0.0344  ,  0.0282  ) [  0.0153  ,  0.011   ] 0.104      [0:1:0:2:0:0:0:0:0:0:0:0]
-[ 11, 3] (  0.0282  ,  0.0247  ) [  0.0153  ,   0.02   ] 0.294      [0:0:0:2:0:0:0:0:0:0:0:0]
-[ 12, 2] (  0.0247  ,   0.02   ) [  0.0157  ,  0.0118  ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
-[ 13, 2] (   0.02   , 0.00848  ) [  0.0115  ,  0.011   ] 0.74       [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 14, 4] ( 0.00848  , 0.00653  ) [ 0.00331  , 0.00385  ] 0.345      [1:0:0:2:0:0:0:0:0:0:0:0]
-[ 15, 1] ( 0.00653  , 0.000301 ) [ 0.00207  , 9.5e-05  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 16, 1] ( 0.000301 , 6.71e-05 ) [ 0.000138 , 1.58e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 17, 1] ( 6.71e-05 , 1.02e-05 ) [ 3.09e-05 , 4.9e-06  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 18, 1] ( 1.02e-05 , 4.3e-07  ) [ 7.28e-06 , 3.31e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 19, 1] ( 4.3e-07  , 1.22e-09 ) [ 3.69e-07 , 1.15e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 20, 1] ( 1.22e-09 , 3.01e-11 ) [ 1.16e-09 , 1.13e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 4] (  0.0346  ,  0.0297  ) [  0.0169  ,  0.0217  ] 0.227      [1:0:0:0:0:0:0:0:1:0:0:0]
+[ 13, 3] (  0.0297  ,  0.0225  ) [  0.0213  ,  0.0156  ] 0.347      [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 3] (  0.0225  ,  0.0179  ) [  0.0183  ,  0.0142  ] 0.319      [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 3] (  0.0179  ,  0.0129  ) [  0.0149  , 0.00962  ] 0.178      [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 2] (  0.0129  , 0.00809  ) [  0.0147  , 0.00475  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 17, 2] ( 0.00809  , 0.00463  ) [ 0.00436  ,  0.0023  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 1] ( 0.00463  , 0.000323 ) [ 0.00159  , 6.08e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 1] ( 0.000323 , 7.17e-05 ) [ 0.000145 , 3.68e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 1] ( 7.17e-05 , 1.07e-05 ) [ 7.81e-05 , 1.18e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 21, 2] ( 3.01e-11 , 2.97e-11 ) [ 1.13e-11 ,  1e-11   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 22, 2] ( 2.97e-11 , 2.97e-11 ) [  1e-11   , 9.36e-12 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 23, 4] ( 2.97e-11 , 2.96e-11 ) [ 9.36e-12 , 9.23e-12 ] 0.0817     [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 21, 1] ( 1.07e-05 , 4.39e-07 ) [ 1.73e-05 , 6.73e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 22, 1] ( 4.39e-07 , 1.05e-09 ) [ 7.39e-07 , 1.76e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] ( 1.05e-09 , 4.33e-11 ) [ 1.77e-09 , 1.08e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 2] ( 4.33e-11 , 4.21e-11 ) [ 1.08e-11 , 9.76e-12 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 2] ( 4.21e-11 , 4.11e-11 ) [ 9.76e-12 , 9.57e-12 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 4] ( 4.11e-11 , 4.08e-11 ) [ 9.57e-12 , 9.43e-12 ] 0.0866     [3:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ---------------------------- NewtonDumped ----------------------------
@@ -108,16 +104,16 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 3213          N. System pars = 800
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 170[ms]       timeout        = 0 [ms]
-iteration      = 23            Memory Used    = 395Kb (+28bytes)
+Elapsed Time   = 162[ms]       timeout        = 0 [ms]
+iteration      = 26            Memory Used    = 395Kb (+28bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 71            Jacobian       = 23
-Factorization  = 23            Inversion      = 93
+Function       = 77            Jacobian       = 26
+Factorization  = 26            Inversion      = 102
 ------------------------- SOLVER PARAMETERS --------------------------
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
@@ -125,9 +121,9 @@ dump_min       = 0.4           dump_max       = 0.9
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 6.0722e-08    last ||d||_inf = 2.2784e-09
-last ||f||_1   = 2.9575e-11    last ||d||_1   = 9.2256e-12
-last ||f||_2   = 1.08e-09      last ||d||_2   = 5.0068e-11
+last ||f||_inf = 6.221e-08     last ||d||_inf = 2.1763e-09
+last ||f||_1   = 4.0834e-11    last ||d||_1   = 9.4317e-12
+last ||f||_2   = 1.1506e-09    last ||d||_2   = 4.9823e-11
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             

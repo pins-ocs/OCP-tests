@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Data.lua                                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -278,8 +278,8 @@ content = {
   -- functions mapped objects
   MappedObjects = {
   -- ClipIntervalWithSinAtan
-    clipdelta2 = 0.0,
     clipdelta = 0.0,
+    clipdelta2 = 0.0,
     cliph = 0.01,
   },
 
@@ -324,8 +324,8 @@ content = {
     segments = {
       
       {
-        length = 1000.0,
         n      = 1000.0,
+        length = 1000.0,
       },
     },
   },

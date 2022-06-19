@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -81,7 +81,7 @@ namespace DidoDefine {
     real_type t8   = sin(t2);
     real_type result__ = t3 * LM__[0] - t3 * XM__[1] + t8 * LM__[1];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -300,7 +300,7 @@ namespace DidoDefine {
     real_type t9   = pow(V__[1] - t7, 2);
     real_type result__ = t5 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

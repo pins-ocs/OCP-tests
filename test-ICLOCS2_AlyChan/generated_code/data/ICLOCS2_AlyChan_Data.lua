@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,8 +22,8 @@
 -- Auxiliary values
 u_tol_max  = 1e-06
 u_epsi_max = 1e-06
-u_epsi     = u_epsi_max
 u_tol      = u_tol_max
+u_epsi     = u_epsi_max
 
 content = {
 
@@ -303,8 +303,8 @@ content = {
     segments = {
       
       {
-        length = 1/2.0*Pi,
         n      = 400.0,
+        length = 1/2.0*Pi,
       },
     },
   },

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -159,8 +159,8 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
+    data_clip["delta2"] = 0;
     data_clip["h"] = 0.01;
 
     // Controls
@@ -196,8 +196,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 Bike1D_data.Mesh["segments"][0]["n"] = 1000;
+Bike1D_data.Mesh["segments"][0]["length"] = 1000;
 
 
     // alias for user object classes passed as pointers

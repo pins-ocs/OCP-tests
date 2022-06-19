@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SoundingRocket_Data.rb                                         #
 #                                                                       #
-#  version: 1.0   date 16/6/2022                                        #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,16 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+W0          = 1.0
+epsi0       = 0.01
 b           = 350.0
 g           = 9.81
-W0          = 1.0
-x3_f        = b
-epsi0       = 0.01
-u_epsi      = epsi0
-W           = W0
 B           = 4*g
+x3_f        = b
 tol0        = 0.01
 u_tolerance = tol0
+u_epsi      = epsi0
+W           = W0
 
 mechatronix do |data|
 

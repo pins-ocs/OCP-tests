@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
+mu   = 1.0
 m    = 250.0
 g    = 9.81
-mu   = 1.0
 Fmax = m*g*mu
 
 content = {

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Underwater_Data.rb                                             #
 #                                                                       #
-#  version: 1.0   date 4/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+tol_penalty  = 0.01
 epsi_penalty = 0.1
 epsi_max     = epsi_penalty
-tol_penalty  = 0.01
 
 mechatronix do |data|
 
@@ -356,8 +356,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 1000.0,
+        :length => 1.0,
       },
     ],
   };

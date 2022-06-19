@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -96,7 +96,7 @@ namespace MaximumAscentDefine {
     real_type t36  = cos(t27);
     real_type result__ = t6 * t4 * LM__[0] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * LM__[1] + (-t34 * t6 * t4 + t36 * t26) * LM__[2] + t34 * t4 * LM__[3];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -336,7 +336,7 @@ namespace MaximumAscentDefine {
     real_type t13  = 1.0 / t12;
     real_type t15  = t12 * t12;
     real_type t19  = Tbar(t3);
-    real_type t27  = 1.0 / (-t3 * Q__[iQ_zeta] * ModelPars[iM_mdot] + ModelPars[iM_m0]) * t19;
+    real_type t27  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]) * t19;
     real_type t28  = U__[iU_alpha];
     real_type t29  = sin(t28);
     real_type t32  = pow(V__[1] - (t13 * t11 - 1.0 / t15) * t4 - t29 * t27, 2);
@@ -345,7 +345,7 @@ namespace MaximumAscentDefine {
     real_type t44  = pow(-t13 * t10 * t4 + V__[3], 2);
     real_type result__ = t8 + t32 + t39 + t44;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -374,7 +374,7 @@ namespace MaximumAscentDefine {
     real_type t8   = 1.0 / t7;
     real_type t10  = t7 * t7;
     real_type t14  = Tbar(t3);
-    real_type t21  = 1.0 / (-t3 * Q__[iQ_zeta] * ModelPars[iM_mdot] + ModelPars[iM_m0]);
+    real_type t21  = 1.0 / (-Q__[iQ_zeta] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
     real_type t22  = t21 * t14;
     real_type t23  = U__[iU_alpha];
     real_type t24  = sin(t23);
@@ -410,7 +410,7 @@ namespace MaximumAscentDefine {
     real_type t2   = tf(ModelPars[iM_days]);
     real_type t3   = Tbar(t2);
     real_type t4   = t3 * t3;
-    real_type t10  = -t2 * Q__[iQ_zeta] * ModelPars[iM_mdot] + ModelPars[iM_m0];
+    real_type t10  = -Q__[iQ_zeta] * ModelPars[iM_mdot] * t2 + ModelPars[iM_m0];
     real_type t11  = t10 * t10;
     real_type t13  = 1.0 / t11 * t4;
     real_type t14  = U__[iU_alpha];
@@ -426,7 +426,7 @@ namespace MaximumAscentDefine {
     real_type t30  = t29 * t3;
     real_type t31  = sin(t14);
     real_type t37  = t31 * t31;
-    result__[ 0   ] = 2 * t16 * t13 + 2 * t31 * t29 * t3 * (V__[1] - (t23 * t21 - 1.0 / t25) * t19 - t31 * t30) + 2 * t37 * t13 + 2 * t15 * t29 * t3 * (t19 * t20 * t23 * X__[iX_u] - t15 * t30 + V__[2]);
+    result__[ 0   ] = 2 * t16 * t13 + 2 * t31 * t29 * t3 * (V__[1] - (t23 * t21 - 1.0 / t25) * t19 - t31 * t30) + 2 * t37 * t13 + 2 * t15 * t29 * t3 * (t23 * t20 * X__[iX_u] * t19 - t15 * t30 + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

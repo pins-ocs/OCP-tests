@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -163,7 +163,7 @@ namespace TyreDynamicDefine {
     real_type t64  = v_min(1 - t10);
     real_type result__ = t11 * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5)) + (t15 - t16) * LM__[0] + (-ModelPars[iM_rw] * t15 + t23 + t26 + t29) * LM__[1] + (t34 - t14) * t10 * LM__[2] + (-t20 + t2) * LM__[3] + (-t24 + t4) * LM__[4] + t43 * t11 + t45 * t11 + t49 * t11 + t52 * t11 + t58 * t11 + t61 * t11 + t64 * t11;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -336,7 +336,7 @@ namespace TyreDynamicDefine {
     real_type t3   = 1.0 / XM__[0];
     real_type t5   = 2 * t3 * ModelPars[iM_w__U];
     real_type t7   = ALIAS_p__oControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t7 * t3 + t5;
+    result__[ 0   ] = t3 * t7 + t5;
     real_type t10  = ALIAS_b__oControl_D_1_1(UM__[1], -1, 1);
     result__[ 1   ] = t10 * t3 + t5;
     if ( m_debug )
@@ -422,7 +422,7 @@ namespace TyreDynamicDefine {
     real_type t73  = pow(V__[4] * ModelPars[iM_tau__b] * t1 - t3 + t9, 2);
     real_type result__ = t12 * t2 + t16 * t2 + t23 * t2 + t26 * t2 + t29 * t2 + t4 * t2 + t7 * t2 + t38 + t52 + t61 + t67 + t73;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -481,9 +481,9 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1.0 / X__[iX_v];
     real_type t4   = ALIAS_p__oControl_D_1_1(U__[iU_p__o], -1, 1);
-    result__[ 0   ] = t2 * t4 + 2;
+    result__[ 0   ] = t4 * t2 + 2;
     real_type t7   = ALIAS_b__oControl_D_1_1(U__[iU_b__o], -1, 1);
-    result__[ 1   ] = t2 * t7 + 2;
+    result__[ 1   ] = t7 * t2 + 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }

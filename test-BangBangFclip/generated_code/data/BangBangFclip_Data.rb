@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFclip_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-vFmax      = 10.0
+h0         = 0.01
 tolerance0 = 0.01
 epsilon0   = 0.1
-h0         = 0.01
+vFmax      = 10.0
 
 mechatronix do |data|
 
@@ -293,7 +293,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :delta => 0.0, :delta2 => 0.0, :h => h0 }
+  data.MappedObjects[:clip] = { :delta => 0.0, :h => h0, :delta2 => 0.0 }
 
 
   #                  _             _

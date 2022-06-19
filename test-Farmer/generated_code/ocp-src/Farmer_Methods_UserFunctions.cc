@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_UserFunctions.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -128,7 +128,7 @@ namespace FarmerDefine {
     real_type result__ = xo__zeta * t8 + t2 - t8;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ptot( zeta={} ) return {}\n",
         xo__zeta, result__
       );
@@ -141,7 +141,7 @@ namespace FarmerDefine {
     real_type result__ = (ModelPars[iM_P2] - ModelPars[iM_P1]) / (ModelPars[iM_t2] - ModelPars[iM_t1]);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ptot_D( zeta={} ) return {}\n",
         xo__zeta, result__
       );
@@ -154,7 +154,7 @@ namespace FarmerDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ptot_DD( zeta={} ) return {}\n",
         xo__zeta, result__
       );

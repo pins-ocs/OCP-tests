@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -87,7 +87,7 @@ namespace GerdtsKunkelDefine {
     real_type t13  = x1Limitation(XM__[0] - 1.0 / 9.0);
     real_type result__ = LM__[0] * XM__[1] + t5 * LM__[1] + t8 * LM__[2] / 2 + t13;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -301,7 +301,7 @@ namespace GerdtsKunkelDefine {
     real_type t16  = pow(V__[2] - t13 / 2, 2);
     real_type result__ = t3 + t7 + t11 + t16;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

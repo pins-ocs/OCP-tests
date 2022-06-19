@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant.cc                                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -368,31 +368,22 @@ namespace BangBangFredundantDefine {
   void
   BangBangFredundant::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    aF1Control.info(mstr);
-    aF2Control.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( aF1Control.info(),msg_level);
+    m_console->message( aF2Control.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    Flim_min.info(mstr);
-    Flim_max.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( Flim_min.info(),msg_level);
+    m_console->message( Flim_max.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pMesh`\n";
-    pMesh->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pMesh`\n",msg_level);
+    m_console->message( pMesh->info(),msg_level);
 
     m_console->message("\nUser mapped functions\n",msg_level);
-    mstr.str("");
-    mstr << "User function ``clip'' mapped with: ";
-    clip.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message("User function ``clip'' mapped with: ",msg_level);
+    m_console->message( clip.info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

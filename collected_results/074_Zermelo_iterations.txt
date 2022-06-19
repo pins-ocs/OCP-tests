@@ -1,0 +1,94 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_vx
+[ 3] initial_vy
+[ 4] final_y
+[ 5] final_vx
+[ 6] final_vy
+
+
+
+Constraints LT
+Tpositive = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
+Segment N.0: s0 = 0 length = 1 npts = 1001 no data set
+END Mesh[mesh]
+Model Parameters
+.......................................S = 50
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] (  0.0258  , 0.00764  ) [   5.77   ,   1.5    ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 2] ( 0.00764  , 0.00661  ) [   2.09   ,   2.34   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 4] ( 0.00661  , 0.00143  ) [   1.74   ,  0.333   ] 0.729      [3:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 0.00143  , 0.00154  ) [  0.347   ,  0.258   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 6] ( 0.00154  , 0.00118  ) [  0.179   ,  0.127   ] 0.216      [5:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 9] ( 0.00118  , 0.000938 ) [  0.0501  ,  0.0359  ] 0.191      [8:0:0:0:0:0:0:0:0:0:0:0]
+[  7,11] ( 0.000938 , 0.000589 ) [ 0.00904  ,  0.0142  ] 0.349      [0:0:0:10:0:0:0:0:0:0:0:0]
+[  8, 1] ( 0.000589 , 0.000114 ) [  0.0408  ,  0.0269  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 0.000114 , 2.03e-06 ) [  0.0167  , 0.000808 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 1] ( 2.03e-06 , 4.15e-10 ) [ 0.000805 , 2.01e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 11, 2] ( 4.15e-10 , 4.15e-11 ) [ 2.01e-07 , 2.01e-08 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 2] ( 4.15e-11 , 4.15e-12 ) [ 2.01e-08 , 2.01e-09 ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 1] ( 4.15e-12 , 1.79e-16 ) [ 2.01e-09 , 2.3e-16  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 4             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+Converged      = YES           tolerance      = 1e-09     
+N. Equations   = 10017         N. System pars = 1000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 48.9[ms]      timeout        = 0 [ms]
+iteration      = 13            Memory Used    = 887Kb (+6bytes)
+max iterations = 300           max acc. iter. = 800
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 43            Jacobian       = 13
+Factorization  = 13            Inversion      = 55
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.9
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
+........................... last residuals ...........................
+last ||f||_inf = 6.6128e-15    last ||d||_inf = 3.6344e-15
+last ||f||_1   = 1.7944e-16    last ||d||_1   = 2.3027e-16
+last ||f||_2   = 6.2524e-16    last ||d||_2   = 5.2095e-16
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin (disabling penalties for check)
+All internal blocks OK
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 0, 0.9032 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

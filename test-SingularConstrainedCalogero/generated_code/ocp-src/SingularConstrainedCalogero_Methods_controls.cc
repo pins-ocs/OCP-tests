@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t10  = uMaxBound(XM__[0] - t2 - t1 + 1);
     real_type result__ = (t2 - 4) * t1 + t1 * LM__[0] + t7 + t10;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -282,7 +282,7 @@ namespace SingularConstrainedCalogeroDefine {
     real_type t9   = pow(V__[0] - t1, 2);
     real_type result__ = t2 + t6 + t9;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

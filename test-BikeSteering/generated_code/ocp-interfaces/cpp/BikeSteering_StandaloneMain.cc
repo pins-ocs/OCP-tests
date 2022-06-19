@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type mu = 1;
     real_type m = 250;
     real_type g = 9.81;
-    real_type mu = 1;
     real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
 

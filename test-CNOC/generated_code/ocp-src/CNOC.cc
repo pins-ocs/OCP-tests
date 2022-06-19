@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -500,35 +500,28 @@ namespace CNOCDefine {
   void
   CNOC::info_classes() const {
     int msg_level = 3;
-    ostringstream mstr;
 
     m_console->message("\nControls\n",msg_level);
-    mstr.str("");
-    jsControl.info(mstr);
-    jnControl.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( jsControl.info(),msg_level);
+    m_console->message( jnControl.info(),msg_level);
 
     m_console->message("\nConstraints LT\n",msg_level);
-    mstr.str("");
-    timePositive.info(mstr);
-    vLimit.info(mstr);
-    PathFollowingTolerance_min.info(mstr);
-    PathFollowingTolerance_max.info(mstr);
-    as_limit_min.info(mstr);
-    as_limit_max.info(mstr);
-    an_limit_min.info(mstr);
-    an_limit_max.info(mstr);
-    ax_limit_min.info(mstr);
-    ax_limit_max.info(mstr);
-    ay_limit_min.info(mstr);
-    ay_limit_max.info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( timePositive.info(),msg_level);
+    m_console->message( vLimit.info(),msg_level);
+    m_console->message( PathFollowingTolerance_min.info(),msg_level);
+    m_console->message( PathFollowingTolerance_max.info(),msg_level);
+    m_console->message( as_limit_min.info(),msg_level);
+    m_console->message( as_limit_max.info(),msg_level);
+    m_console->message( an_limit_min.info(),msg_level);
+    m_console->message( an_limit_max.info(),msg_level);
+    m_console->message( ax_limit_min.info(),msg_level);
+    m_console->message( ax_limit_max.info(),msg_level);
+    m_console->message( ay_limit_min.info(),msg_level);
+    m_console->message( ay_limit_max.info(),msg_level);
 
     m_console->message("\nUser class (pointer)\n",msg_level);
-    mstr.str("");
-    mstr << "\nUser function `pToolPath2D`\n";
-    pToolPath2D->info(mstr);
-    m_console->message(mstr.str(),msg_level);
+    m_console->message( "\nUser function `pToolPath2D`\n",msg_level);
+    m_console->message( pToolPath2D->info(),msg_level);
 
     m_console->message("\nModel Parameters\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {

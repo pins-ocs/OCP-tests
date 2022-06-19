@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 17/6/2022                                        |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -22,7 +22,6 @@ using namespace std;
 using namespace MechatronixLoad;
 
 // user class in namespaces
-using Mechatronix::PenaltyBarrier1DGreaterThan;
 using Mechatronix::MeshStd;
 
 using namespace BrachiostocronaLoad;
@@ -43,25 +42,21 @@ main() {
 
   try {
 
-    Brachiostocrona             model("Brachiostocrona",n_threads,&console);
-    GenericContainer            gc_data;
-    GenericContainer            gc_solution;
+    Brachiostocrona  model("Brachiostocrona",n_threads,&console);
+    GenericContainer gc_data;
+    GenericContainer gc_solution;
 
     // user defined Object instances (external)
-    MeshStd                     mesh( "mesh" );
+    MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type xf = 5;
     real_type g = 9.81;
-    real_type w_ARG0 = 1;
-    real_type w_ARG = w_ARG0;
-    real_type mu0 = 0.1;
-    real_type epsi1 = 1e-06;
-    real_type mu = mu0;
-    real_type tol1 = 1e-06;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type xf = 5;
+    real_type low_tolerance0 = 0.1;
+    real_type low_tolerance = low_tolerance0;
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -72,7 +67,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = true;
+    data_ControlSolver["Iterative"] = false;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -145,9 +140,6 @@ main() {
     // Model Parameters
     data_Parameters["g"] = g;
     data_Parameters["mass"] = 1;
-    data_Parameters["w_ARG"] = w_ARG;
-    data_Parameters["y0_low"] = -0.2;
-    data_Parameters["slope_low"] = -0.375;
 
     // Guess Parameters
     data_Parameters["Tf"] = Tf;
@@ -158,14 +150,14 @@ main() {
     data_Parameters["yf"] = yf;
 
     // Post Processing Parameters
+    data_Parameters["y0_low"] = -0.2;
+    data_Parameters["slope_low"] = -0.375;
 
     // User Function Parameters
 
     // Continuation Parameters
-    data_Parameters["mu0"] = mu0;
-    data_Parameters["mu1"] = 1e-06;
-    data_Parameters["w_ARG0"] = w_ARG0;
-    data_Parameters["w_ARG1"] = 1000000;
+    data_Parameters["low_tolerance0"] = low_tolerance0;
+    data_Parameters["low_tolerance1"] = 1e-06;
 
     // Constraints Parameters
 
@@ -182,16 +174,20 @@ main() {
 
 
 
-    // ConstraintLT: none defined
+    // ConstraintLT
+    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
+    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
+    GenericContainer & data_Constraints = gc_data["Constraints"];
+    // PenaltyBarrier1DLessThan
+    GenericContainer & data_LowBound = data_Constraints["LowBound"];
+    data_LowBound["subType"]   = "PENALTY_REGULAR";
+    data_LowBound["epsilon"]   = 0;
+    data_LowBound["tolerance"] = low_tolerance;
+    data_LowBound["active"]    = true;
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
-    // User defined classes: P E N 1 D
-Brachiostocrona_data.Pen1D["epsilon"] = epsi1;
-Brachiostocrona_data.Pen1D["tolerance"] = tol1;
-Brachiostocrona_data.Pen1D["subType"] = "BARRIER_LOG0";
-Brachiostocrona_data.Pen1D["active"] = true;
     // User defined classes: M E S H
 Brachiostocrona_data.Mesh["s0"] = 0;
 Brachiostocrona_data.Mesh["segments"][0]["length"] = 1;

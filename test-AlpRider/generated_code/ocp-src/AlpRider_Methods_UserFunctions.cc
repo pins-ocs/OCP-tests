@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -91,7 +91,7 @@ namespace AlpRiderDefine {
     real_type result__ = exp(-t2 * xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -107,7 +107,7 @@ namespace AlpRiderDefine {
     real_type result__ = -2 * t5 * t1 * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_1( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -123,7 +123,7 @@ namespace AlpRiderDefine {
     real_type result__ = 4 * t4 * t2 * t7 - 2 * t4 * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_1_1( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -139,7 +139,7 @@ namespace AlpRiderDefine {
     real_type result__ = -4 * t4 * t2 * t7 + 2 * t4 * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_1_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -152,10 +152,10 @@ namespace AlpRiderDefine {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
-    real_type result__ = 2 * t4 * t2 * t1 * xo__b - 2 * t4 * t1;
+    real_type result__ = 2 * t1 * t2 * t4 * xo__b - 2 * t1 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_1_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -171,7 +171,7 @@ namespace AlpRiderDefine {
     real_type result__ = 2 * t5 * t1 * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -187,7 +187,7 @@ namespace AlpRiderDefine {
     real_type result__ = 4 * t4 * t2 * t7 - 2 * t4 * xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_2_2( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -200,10 +200,10 @@ namespace AlpRiderDefine {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
-    real_type result__ = -2 * t4 * t2 * t1 * xo__b + 2 * t4 * t1;
+    real_type result__ = -2 * t1 * t2 * t4 * xo__b + 2 * t1 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_2_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -218,7 +218,7 @@ namespace AlpRiderDefine {
     real_type result__ = -t4 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -234,7 +234,7 @@ namespace AlpRiderDefine {
     real_type result__ = t5 * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p_base_D_3_3( t={}, a={}, b={} ) return {}\n",
         xo__t, xo__a, xo__b, result__
       );
@@ -251,7 +251,7 @@ namespace AlpRiderDefine {
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7 + 0.1e-1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_q_lower( t={} ) return {}\n",
         xo__t, result__
       );
@@ -268,7 +268,7 @@ namespace AlpRiderDefine {
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_q_lower_D( t={} ) return {}\n",
         xo__t, result__
       );
@@ -285,7 +285,7 @@ namespace AlpRiderDefine {
     real_type result__ = 3 * t1 + 3 * t3 + 3 * t5 + 8 * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_q_lower_DD( t={} ) return {}\n",
         xo__t, result__
       );

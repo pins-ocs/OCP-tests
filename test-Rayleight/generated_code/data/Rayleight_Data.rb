@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Rayleight_Data.rb                                              #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -309,8 +309,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 2.5,
         :n      => 1000.0,
+        :length => 2.5,
       },
     ],
   };

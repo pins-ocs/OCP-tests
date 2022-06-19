@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,7 +104,7 @@ namespace HangingChainDefine {
     real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
-    result__[ 0   ] = 1.0 / t4 * t1;
+    result__[ 0   ] = t1 / t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 1, i_segment );
   }

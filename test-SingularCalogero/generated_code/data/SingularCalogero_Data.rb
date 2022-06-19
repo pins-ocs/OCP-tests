@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: SingularCalogero_Data.rb                                       #
 #                                                                       #
-#  version: 1.0   date 3/6/2022                                         #
+#  version: 1.0   date 19/6/2022                                        #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -315,8 +315,8 @@ mechatronix do |data|
     :s0       => -1,
     :segments => [
       {
-        :n      => 100.0,
         :length => 2.0,
+        :n      => 100.0,
       },
     ],
   };

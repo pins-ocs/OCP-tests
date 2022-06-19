@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -329,11 +329,11 @@ namespace MaximumAscentDefine {
     result__[ 30  ] = result__[27];
     result__[ 31  ] = result__[28];
     real_type t55  = Tbar(t3);
-    real_type t63  = 1.0 / (-t3 * QM__[0] * ModelPars[iM_mdot] + ModelPars[iM_m0]);
+    real_type t63  = 1.0 / (-QM__[0] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]);
     real_type t64  = UM__[0];
     real_type t65  = sin(t64);
     real_type t69  = cos(t64);
-    result__[ 32  ] = t1 * t55 * t63 * t65 + t25 * t55 * t63 * t69;
+    result__[ 32  ] = t65 * t63 * t55 * t1 + t69 * t63 * t55 * t25;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 33, i_segment );
   }

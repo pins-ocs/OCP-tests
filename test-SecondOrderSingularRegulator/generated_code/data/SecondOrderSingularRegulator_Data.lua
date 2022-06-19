@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Data.lua                          |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -292,8 +292,8 @@ content = {
     segments = {
       
       {
-        n      = 500.0,
         length = L,
+        n      = 500.0,
       },
     },
   },

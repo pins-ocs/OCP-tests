@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_UserFunctions.cc                          |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -107,7 +107,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t6 * (xo__x1 + 0.5e0);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -120,7 +120,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = exp(25 * xo__x2 / (xo__x2 + 2));
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1_D_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -133,7 +133,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1_D_1_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -150,7 +150,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t10 * (25 * t2 - 25 / t3 * xo__x2);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1_D_1_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -167,7 +167,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t12 * (25 * t3 - 25 / t4 * xo__x2) * (xo__x1 + 0.5e0);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1_D_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -187,7 +187,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t14 * (-50 * t4 + 50 / t3 / t2 * xo__x2) * t1 + t14 * t19 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R1_D_2_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -201,7 +201,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t6 * (xo__x3 + 0.25e0);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );
@@ -214,7 +214,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = exp(25 * xo__x4 / (xo__x4 + 2));
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2_D_1( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );
@@ -227,7 +227,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2_D_1_1( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );
@@ -244,7 +244,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t10 * (25 * t2 - 25 / t3 * xo__x4);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2_D_1_2( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );
@@ -261,7 +261,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t12 * (25 * t3 - 25 / t4 * xo__x4) * (xo__x3 + 0.25e0);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2_D_2( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );
@@ -281,7 +281,7 @@ namespace TwoStageCSTRDefine {
     real_type result__ = t14 * (-50 * t4 + 50 / t3 / t2 * xo__x4) * t1 + t14 * t19 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_R2_D_2_2( x3={}, x4={} ) return {}\n",
         xo__x3, xo__x4, result__
       );

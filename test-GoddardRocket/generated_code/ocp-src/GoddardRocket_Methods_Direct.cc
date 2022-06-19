@@ -40,15 +40,15 @@
 #define ALIAS_vPositive_D(__t1) vPositive.D( __t1)
 #define ALIAS_massPositive_DD(__t1) massPositive.DD( __t1)
 #define ALIAS_massPositive_D(__t1) massPositive.D( __t1)
-#define ALIAS_uControl_D_3(__t1, __t2, __t3) uControl.D_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2(__t1, __t2, __t3) uControl.D_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1(__t1, __t2, __t3) uControl.D_1( __t1, __t2, __t3)
-#define ALIAS_uControl_D_3_3(__t1, __t2, __t3) uControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_3(__t1, __t2, __t3) uControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_2_2(__t1, __t2, __t3) uControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_3(__t1, __t2, __t3) uControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_2(__t1, __t2, __t3) uControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_uControl_D_1_1(__t1, __t2, __t3) uControl.D_1_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3(__t1, __t2, __t3) TControl.D_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2(__t1, __t2, __t3) TControl.D_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1(__t1, __t2, __t3) TControl.D_1( __t1, __t2, __t3)
+#define ALIAS_TControl_D_3_3(__t1, __t2, __t3) TControl.D_3_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_3(__t1, __t2, __t3) TControl.D_2_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_2_2(__t1, __t2, __t3) TControl.D_2_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_3(__t1, __t2, __t3) TControl.D_1_3( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_2(__t1, __t2, __t3) TControl.D_1_2( __t1, __t2, __t3)
+#define ALIAS_TControl_D_1_1(__t1, __t2, __t3) TControl.D_1_1( __t1, __t2, __t3)
 
 
 using namespace std;
@@ -95,10 +95,12 @@ namespace GoddardRocketDefine {
     real_type t1   = P__[iP_TimeSize];
     real_type t2   = XM__[1];
     result__[ 0   ] = -t2 * t1 + V__[0];
-    real_type t7   = T(UM__[0]);
-    real_type t9   = DD(XM__[0], t2);
-    result__[ 1   ] = V__[1] - (1.0 / XM__[2] * (t7 - t9) - ModelPars[iM_g]) * t1;
-    result__[ 2   ] = V__[2] + 1.0 / ModelPars[iM_Ve] * t7 * t1;
+    real_type t6   = UM__[0];
+    real_type t7   = XM__[0];
+    real_type t8   = DD(t7, t2);
+    real_type t13  = gg(t7);
+    result__[ 1   ] = V__[1] - (1.0 / XM__[2] * (t6 - t8) - t13) * t1;
+    result__[ 2   ] = V__[2] + 1.0 / ModelPars[iM_c] * t6 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 3, i_segment );
   }
@@ -165,30 +167,29 @@ namespace GoddardRocketDefine {
     result__[ 4   ] = -t3;
     real_type t4   = XM__[0];
     real_type t5   = DD_D_1(t4, t3);
-    real_type t7   = XM__[2];
-    real_type t8   = 1.0 / t7;
-    result__[ 5   ] = 0.5e0 * t8 * t5 * t1;
-    real_type t10  = DD_D_2(t4, t3);
-    real_type t13  = 0.5e0 * t8 * t10 * t1;
-    result__[ 6   ] = t13 + result__[0];
-    real_type t14  = UM__[0];
-    real_type t15  = T(t14);
-    real_type t16  = DD(t4, t3);
-    real_type t17  = t15 - t16;
-    real_type t19  = t7 * t7;
-    result__[ 7   ] = 0.5e0 / t19 * t17 * t1;
+    real_type t6   = XM__[2];
+    real_type t7   = 1.0 / t6;
+    real_type t9   = gg_D(t4);
+    result__[ 5   ] = -0.5e0 * (-t7 * t5 - t9) * t1;
+    real_type t13  = DD_D_2(t4, t3);
+    real_type t16  = 0.5e0 * t7 * t13 * t1;
+    result__[ 6   ] = t16 + result__[0];
+    real_type t17  = UM__[0];
+    real_type t18  = DD(t4, t3);
+    real_type t19  = t17 - t18;
+    real_type t21  = t6 * t6;
+    result__[ 7   ] = 0.5e0 / t21 * t19 * t1;
     result__[ 8   ] = result__[5];
-    result__[ 9   ] = t13 + __INV_DZETA;
+    result__[ 9   ] = t16 + __INV_DZETA;
     result__[ 10  ] = result__[7];
-    real_type t22  = T_D(t14);
-    real_type t23  = t22 * t1;
-    result__[ 11  ] = -t8 * t23;
-    result__[ 12  ] = -t8 * t17 + ModelPars[iM_g];
+    result__[ 11  ] = -t7 * t1;
+    real_type t26  = gg(t4);
+    result__[ 12  ] = -t7 * t19 + t26;
     result__[ 13  ] = result__[0];
     result__[ 14  ] = __INV_DZETA;
-    real_type t28  = 1.0 / ModelPars[iM_Ve];
-    result__[ 15  ] = t28 * t23;
-    result__[ 16  ] = t28 * t15;
+    real_type t28  = 1.0 / ModelPars[iM_c];
+    result__[ 15  ] = t28 * t1;
+    result__[ 16  ] = t28 * t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 17, i_segment );
   }
@@ -198,7 +199,7 @@ namespace GoddardRocketDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer GoddardRocket::D2fd_odeD2xxpu_numRows() const { return 8; }
   integer GoddardRocket::D2fd_odeD2xxpu_numCols() const { return 8; }
-  integer GoddardRocket::D2fd_odeD2xxpu_nnz()     const { return 55; }
+  integer GoddardRocket::D2fd_odeD2xxpu_nnz()     const { return 54; }
 
   void
   GoddardRocket::D2fd_odeD2xxpu_pattern( integer iIndex[], integer jIndex[] ) const {
@@ -248,15 +249,14 @@ namespace GoddardRocketDefine {
     iIndex[43] = 5   ; jIndex[43] = 7   ;
     iIndex[44] = 6   ; jIndex[44] = 2   ;
     iIndex[45] = 6   ; jIndex[45] = 5   ;
-    iIndex[46] = 6   ; jIndex[46] = 6   ;
-    iIndex[47] = 6   ; jIndex[47] = 7   ;
-    iIndex[48] = 7   ; jIndex[48] = 0   ;
-    iIndex[49] = 7   ; jIndex[49] = 1   ;
-    iIndex[50] = 7   ; jIndex[50] = 2   ;
-    iIndex[51] = 7   ; jIndex[51] = 3   ;
-    iIndex[52] = 7   ; jIndex[52] = 4   ;
-    iIndex[53] = 7   ; jIndex[53] = 5   ;
-    iIndex[54] = 7   ; jIndex[54] = 6   ;
+    iIndex[46] = 6   ; jIndex[46] = 7   ;
+    iIndex[47] = 7   ; jIndex[47] = 0   ;
+    iIndex[48] = 7   ; jIndex[48] = 1   ;
+    iIndex[49] = 7   ; jIndex[49] = 2   ;
+    iIndex[50] = 7   ; jIndex[50] = 3   ;
+    iIndex[51] = 7   ; jIndex[51] = 4   ;
+    iIndex[52] = 7   ; jIndex[52] = 5   ;
+    iIndex[53] = 7   ; jIndex[53] = 6   ;
   }
 
 
@@ -288,46 +288,44 @@ namespace GoddardRocketDefine {
     V__[2] = __INV_DZETA*(XR__[2]-XL__[2]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = LM__[1];
-    real_type t2   = P__[iP_TimeSize];
-    real_type t3   = t2 * t1;
+    real_type t3   = P__[iP_TimeSize] * t1;
     real_type t7   = XR__[iX_h] / 2 + XL__[iX_h] / 2;
     real_type t11  = XR__[iX_v] / 2 + XL__[iX_v] / 2;
     real_type t12  = DD_D_1_1(t7, t11);
     real_type t16  = XR__[iX_m] / 2 + XL__[iX_m] / 2;
     real_type t17  = 1.0 / t16;
-    result__[ 0   ] = t17 * t12 * t3 / 4;
-    real_type t20  = DD_D_1_2(t7, t11);
-    result__[ 1   ] = t17 * t20 * t3 / 4;
-    real_type t23  = DD_D_1(t7, t11);
-    real_type t24  = t16 * t16;
-    real_type t25  = 1.0 / t24;
-    result__[ 2   ] = -t25 * t23 * t3 / 4;
+    real_type t19  = gg_DD(t7);
+    result__[ 0   ] = -(-t17 * t12 / 4 - t19 / 4) * t3;
+    real_type t23  = DD_D_1_2(t7, t11);
+    result__[ 1   ] = t17 * t23 * t3 / 4;
+    real_type t26  = DD_D_1(t7, t11);
+    real_type t27  = t16 * t16;
+    real_type t28  = 1.0 / t27;
+    result__[ 2   ] = -t28 * t26 * t3 / 4;
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
-    result__[ 6   ] = t17 * t23 * t1 / 2;
+    real_type t33  = gg_D(t7);
+    result__[ 6   ] = -(-t17 * t26 / 2 - t33 / 2) * t1;
     result__[ 7   ] = result__[4];
-    real_type t31  = DD_D_2_2(t7, t11);
-    result__[ 8   ] = t17 * t31 * t3 / 4;
-    real_type t34  = DD_D_2(t7, t11);
-    result__[ 9   ] = -t25 * t34 * t3 / 4;
+    real_type t37  = DD_D_2_2(t7, t11);
+    result__[ 8   ] = t17 * t37 * t3 / 4;
+    real_type t40  = DD_D_2(t7, t11);
+    result__[ 9   ] = -t28 * t40 * t3 / 4;
     result__[ 10  ] = result__[7];
     result__[ 11  ] = result__[8];
     result__[ 12  ] = result__[9];
-    result__[ 13  ] = t17 * t34 * t1 / 2 - LM__[0] / 2;
+    result__[ 13  ] = t17 * t40 * t1 / 2 - LM__[0] / 2;
     result__[ 14  ] = result__[5];
     result__[ 15  ] = result__[12];
-    real_type t42  = UM__[0];
-    real_type t43  = T(t42);
-    real_type t44  = DD(t7, t11);
-    real_type t45  = t43 - t44;
-    result__[ 16  ] = -1.0 / t24 / t16 * t45 * t3 / 2;
+    real_type t49  = DD(t7, t11);
+    real_type t50  = UM__[0] - t49;
+    result__[ 16  ] = -1.0 / t27 / t16 * t50 * t3 / 2;
     result__[ 17  ] = result__[14];
     result__[ 18  ] = result__[15];
     result__[ 19  ] = result__[16];
-    real_type t51  = T_D(t42);
-    result__[ 20  ] = t25 * t51 * t3 / 2;
-    result__[ 21  ] = t25 * t45 * t1 / 2;
+    result__[ 20  ] = t28 * t3 / 2;
+    result__[ 21  ] = t28 * t50 * t1 / 2;
     result__[ 22  ] = result__[3];
     result__[ 23  ] = result__[10];
     result__[ 24  ] = result__[17];
@@ -352,20 +350,16 @@ namespace GoddardRocketDefine {
     result__[ 43  ] = result__[21];
     result__[ 44  ] = result__[42];
     result__[ 45  ] = result__[44];
-    real_type t56  = T_DD(t42);
-    real_type t59  = LM__[2];
-    real_type t62  = 1.0 / ModelPars[iM_Ve];
-    result__[ 46  ] = t62 * t56 * t2 * t59 - t17 * t56 * t3;
-    result__[ 47  ] = -t17 * t51 * t1 + t62 * t51 * t59;
-    result__[ 48  ] = result__[28];
-    result__[ 49  ] = result__[35];
-    result__[ 50  ] = result__[43];
+    result__[ 46  ] = -t17 * t1 + LM__[2] / ModelPars[iM_c];
+    result__[ 47  ] = result__[28];
+    result__[ 48  ] = result__[35];
+    result__[ 49  ] = result__[43];
+    result__[ 50  ] = result__[47];
     result__[ 51  ] = result__[48];
     result__[ 52  ] = result__[49];
-    result__[ 53  ] = result__[50];
-    result__[ 54  ] = result__[47];
+    result__[ 53  ] = result__[46];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 55, i_segment );
+      Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 54, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

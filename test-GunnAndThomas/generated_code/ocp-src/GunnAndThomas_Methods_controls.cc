@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace GunnAndThomasDefine {
     real_type t16  = uControl(t2, 0, 1);
     real_type result__ = t7 * t2 * LM__[0] + (-t7 * t2 - t4 * (1 - t2)) * LM__[1] + t16;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -287,7 +287,7 @@ namespace GunnAndThomasDefine {
     real_type t2   = XM__[0];
     real_type t4   = XM__[1];
     real_type t7   = LM__[1];
-    U__[ iU_u ] = uControl.solve(t2 * t1 - 10 * t4 * t1 - t7 * t2 + 9 * t4 * t7, 0, 1);
+    U__[ iU_u ] = uControl.solve(t1 * t2 - 10 * t1 * t4 - t2 * t7 + 9 * t4 * t7, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }
@@ -318,7 +318,7 @@ namespace GunnAndThomasDefine {
     real_type t17  = pow(V__[1] + t7 * t1 + t4 * (1 - t1), 2);
     real_type result__ = t2 + t10 + t17;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -345,7 +345,7 @@ namespace GunnAndThomasDefine {
     real_type t6   = X__[iX_x1];
     real_type t7   = 10 * t4 - t6;
     real_type t10  = -t7;
-    result__[ 0   ] = t2 + 2 * t10 * (-t1 * t7 + V__[0]) + 2 * (-t6 + 9 * t4) * (V__[1] - t10 * t1 + t4 * (1 - t1));
+    result__[ 0   ] = t2 + 2 * t10 * (-t7 * t1 + V__[0]) + 2 * (-t6 + 9 * t4) * (V__[1] - t10 * t1 + t4 * (1 - t1));
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

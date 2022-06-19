@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -205,7 +205,7 @@ namespace TyreDynamicDefine {
     real_type t34  = kappa__w(t10, t22);
     real_type result__ = 1.0 / t10 * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5)) + (t15 - t16) * L__[iL_lambda1__xo] + (-ModelPars[iM_rw] * t15 + t23 + t26 + t29) * L__[iL_lambda2__xo] + (t34 - t14) * t10 * L__[iL_lambda3__xo] + (-t20 + t2) * L__[iL_lambda4__xo] + (-t24 + t4) * L__[iL_lambda5__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -232,7 +232,7 @@ namespace TyreDynamicDefine {
     real_type t5   = U__[iU_b__o] * U__[iU_b__o];
     real_type result__ = 1.0 / X__[iX_v] * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5));
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -261,7 +261,7 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

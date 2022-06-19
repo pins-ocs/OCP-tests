@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_Guess.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -63,7 +63,7 @@ namespace FlowInAchannelDefine {
     real_type t2   = t1 * t1;
     real_type t4   = 3 - 2 * t1;
     X__[ iX_u  ] = t4 * t2;
-    X__[ iX_u1 ] = 2 * t4 * t1 - 2 * t2;
+    X__[ iX_u1 ] = 2 * t1 * t4 - 2 * t2;
     X__[ iX_u2 ] = 6 - 12 * t1;
     X__[ iX_u3 ] = -12;
 

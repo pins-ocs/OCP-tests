@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -95,7 +95,7 @@ namespace BrakeDefine {
     real_type t11  = Tpositive(-t2);
     real_type result__ = t8 * t2 * LM__[1] + XM__[1] * t2 * LM__[0] + t10 + t11;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -300,7 +300,7 @@ namespace BrakeDefine {
     real_type t13  = pow(-t1 * t3 + V__[1], 2);
     real_type result__ = t2 + t4 + t9 + t13;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

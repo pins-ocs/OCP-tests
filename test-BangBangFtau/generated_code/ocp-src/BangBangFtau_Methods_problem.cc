@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -133,7 +133,7 @@ namespace BangBangFtauDefine {
     real_type t17  = clip(t12 - t13, ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     real_type result__ = (t3 + t5) * ModelPars[iM_epsiTB] + L__[iL_lambda1__xo] * X__[iX_v] + t17 * L__[iL_lambda2__xo] - 1.0 / ModelPars[iM_tauT] * (t12 - t2) * L__[iL_lambda3__xo] - 1.0 / ModelPars[iM_tauB] * (t13 - t4) * L__[iL_lambda4__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -160,7 +160,7 @@ namespace BangBangFtauDefine {
     real_type t5   = U__[iU_vsB] * U__[iU_vsB];
     real_type result__ = (t3 + t5) * ModelPars[iM_epsiTB];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -189,7 +189,7 @@ namespace BangBangFtauDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = -XR__[iX_x];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }

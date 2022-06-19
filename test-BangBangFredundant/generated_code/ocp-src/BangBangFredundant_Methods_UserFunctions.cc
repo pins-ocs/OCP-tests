@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_UserFunctions.cc                    |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -121,7 +121,7 @@ namespace BangBangFredundantDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Flim( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -136,7 +136,7 @@ namespace BangBangFredundantDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Flim_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -151,7 +151,7 @@ namespace BangBangFredundantDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Flim_DD( _V={} ) return {}\n",
         xo___V, result__
       );

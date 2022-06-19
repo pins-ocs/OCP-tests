@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -97,7 +97,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 1 + 0.2e0 * xo__x1 + 0.2e0 * xo__x2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -110,7 +110,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 0.2e0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2_D_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -123,7 +123,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2_D_1_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -136,7 +136,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2_D_1_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -149,7 +149,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 0.2e0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2_D_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -162,7 +162,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g2_D_2_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -177,7 +177,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = t2 + 232 + 0.464e2 * xo__x2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -192,7 +192,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3_D_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -209,7 +209,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3_D_1_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -226,7 +226,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3_D_1_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -241,7 +241,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1 + 0.464e2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3_D_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -258,7 +258,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g3_D_2_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -273,7 +273,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = t2 + 232 + 0.464e2 * xo__x1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -288,7 +288,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1 + 0.464e2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4_D_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -302,10 +302,10 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_1_1(xo__x1, xo__x2);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4_D_1_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -322,7 +322,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4_D_1_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -337,7 +337,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4_D_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -351,10 +351,10 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g2(xo__x1, xo__x2);
     real_type t4   = g2_D_2_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t3 * t4 + 2 * t2;
+    real_type result__ = 2 * t4 * t3 + 2 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g4_D_2_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -368,10 +368,10 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type result__ = 1.0 / (t3 * t4 - 0.215296e4 * xo__x1 * xo__x2) * t2;
+    real_type result__ = 1.0 / (t4 * t3 - 0.215296e4 * xo__x1 * xo__x2) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -393,7 +393,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t10 / t7 * t1 - (t3 * t17 + t19 * t2 - 0.215296e4 * xo__x2) / t14 * t13;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1_D_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -407,7 +407,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;
@@ -423,7 +423,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t9 * t2 - 4 * t21 * t1 * t14 * t12 + 2 * t26 * t9 * t12 + 2 * t33 / t13 / t8 * t29 - (2 * t18 * t16 + t41 * t3 + t4 * t37) * t14 * t29;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1_D_1_1( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -456,7 +456,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t10 * t8 * t1 - 2 * t22 * t10 * t16 + 2 * t27 * t8 * t13 - 2 * t1 * t35 * t16 + 2 * t22 * t35 / t14 / t7 * t39 - (t3 * t47 + t19 * t30 + t32 * t17 + t51 * t2 - 0.215296e4) * t15 * t39;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1_D_1_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -478,7 +478,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t10 / t7 * t1 - (t3 * t17 + t19 * t2 - 0.215296e4 * xo__x1) / t14 * t13;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1_D_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );
@@ -492,7 +492,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;
@@ -508,7 +508,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type result__ = 2 * t9 * t2 - 4 * t21 * t1 * t14 * t12 + 2 * t26 * t9 * t12 + 2 * t33 / t13 / t8 * t29 - (2 * t18 * t16 + t41 * t3 + t4 * t37) * t14 * t29;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_g1_D_2_2( x1={}, x2={} ) return {}\n",
         xo__x1, xo__x2, result__
       );

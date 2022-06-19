@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_UserFunctions.cc                         |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace MaximumAscentDefine {
     real_type result__ = ModelPars[iM_v0] * xo__tf / ModelPars[iM_r0];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_eta( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -99,7 +99,7 @@ namespace MaximumAscentDefine {
     real_type result__ = ModelPars[iM_v0] / ModelPars[iM_r0];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_eta_D( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -112,7 +112,7 @@ namespace MaximumAscentDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_eta_DD( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -125,7 +125,7 @@ namespace MaximumAscentDefine {
     real_type result__ = ModelPars[iM_T] * xo__tf / ModelPars[iM_v0];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tbar( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -138,7 +138,7 @@ namespace MaximumAscentDefine {
     real_type result__ = ModelPars[iM_T] / ModelPars[iM_v0];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tbar_D( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -151,7 +151,7 @@ namespace MaximumAscentDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Tbar_DD( tf={} ) return {}\n",
         xo__tf, result__
       );
@@ -164,7 +164,7 @@ namespace MaximumAscentDefine {
     real_type result__ = 86400 * xo__days;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_tf( days={} ) return {}\n",
         xo__days, result__
       );
@@ -177,7 +177,7 @@ namespace MaximumAscentDefine {
     real_type result__ = 86400;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_tf_D( days={} ) return {}\n",
         xo__days, result__
       );
@@ -190,7 +190,7 @@ namespace MaximumAscentDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_tf_DD( days={} ) return {}\n",
         xo__days, result__
       );

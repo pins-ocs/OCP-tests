@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -50,24 +50,24 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type tol_COV = 0.01;
-    real_type tol_ACC = 0.01;
-    real_type tol_PATH = 0.01;
     real_type path_following_tolerance = 1.0e-05;
-    real_type pf_error = path_following_tolerance;
-    real_type js_max = 30;
-    real_type epsi_PATH = 0.01;
-    real_type epsi_COV = 0.01;
     real_type js_min = -50;
-    real_type v_nom = 0.173;
-    real_type deltaFeed = v_nom;
-    real_type tol_CTRL = 0.01;
-    real_type epsi_ACC = 0.01;
-    real_type tol_VMAX = 0.01;
+    real_type tol_ACC = 0.01;
     real_type jn_max = 65;
     real_type epsi_VMAX = 0.01;
-    real_type mesh_segments = 100;
+    real_type epsi_ACC = 0.01;
+    real_type tol_VMAX = 0.01;
+    real_type v_nom = 0.173;
+    real_type deltaFeed = v_nom;
+    real_type pf_error = path_following_tolerance;
+    real_type tol_COV = 0.01;
     real_type epsi_CTRL = 0.01;
+    real_type epsi_COV = 0.01;
+    real_type js_max = 30;
+    real_type mesh_segments = 100;
+    real_type epsi_PATH = 0.01;
+    real_type tol_PATH = 0.01;
+    real_type tol_CTRL = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

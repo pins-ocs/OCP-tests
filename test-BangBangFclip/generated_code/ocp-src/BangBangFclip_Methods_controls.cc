@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -104,7 +104,7 @@ namespace BangBangFclipDefine {
     real_type t14  = controlForce(t11, -t13, t13);
     real_type result__ = t11 * LM__[2] + t8 * LM__[1] + LM__[0] * XM__[1] + t14;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -319,7 +319,7 @@ namespace BangBangFclipDefine {
     real_type t17  = pow(V__[2] - t1, 2);
     real_type result__ = t3 + t7 + t14 + t17;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

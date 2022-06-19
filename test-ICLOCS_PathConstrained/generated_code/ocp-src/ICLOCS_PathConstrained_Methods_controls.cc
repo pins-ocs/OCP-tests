@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -99,7 +99,7 @@ namespace ICLOCS_PathConstrainedDefine {
     real_type t19  = x2bound(0.5e0 - 8 * t16 + t6);
     real_type result__ = 0.5e-2 * t2 + t5 + t7 + t6 * LM__[0] + (-t6 + t1) * LM__[1] + t13 + t19;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -288,7 +288,7 @@ namespace ICLOCS_PathConstrainedDefine {
     real_type t15  = pow(V__[1] + t7 - t1, 2);
     real_type result__ = t2 + t9 + t12 + t15;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

@@ -16,10 +16,9 @@ num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 1 npts = 101 no data set
 END Mesh[mesh]
-
 Model Parameters
 ....................................mass = 1
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 1] (  0.0122  , 0.00717  ) [  0.679   ,  0.392   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  2, 3] ( 0.00717  , 0.00541  ) [   1.52   ,   1.03   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
@@ -45,8 +44,8 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 409           N. System pars = 100
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 9.27[ms]      timeout        = 0 [ms]
-iteration      = 11            Memory Used    = 69Kb (+18bytes)
+Elapsed Time   = 9.32[ms]      timeout        = 0 [ms]
+iteration      = 11            Memory Used    = 69Kb (+41bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001

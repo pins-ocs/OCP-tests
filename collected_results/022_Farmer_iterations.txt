@@ -14,23 +14,19 @@ x1__oControl = {
   type    = COSINE LOGARITHMIC BARRIER,
   epsilon = 0.001,
   size    = 0.001
-}
-x2__oControl = {
+}x2__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}x3__oControl = {
+  type    = COSINE LOGARITHMIC BARRIER,
+  epsilon = 0.001,
+  size    = 0.001
+}x4__oControl = {
   type    = COSINE LOGARITHMIC BARRIER,
   epsilon = 0.001,
   size    = 0.001
 }
-x3__oControl = {
-  type    = COSINE LOGARITHMIC BARRIER,
-  epsilon = 0.001,
-  size    = 0.001
-}
-x4__oControl = {
-  type    = COSINE LOGARITHMIC BARRIER,
-  epsilon = 0.001,
-  size    = 0.001
-}
-
 Constraints LT
 LimitX2X4 = {
   Type      = LESS THAN
@@ -39,7 +35,6 @@ LimitX2X4 = {
   Epsilon   = 0.001
   Active    = YES
 }
-
 User class (pointer)
 
 User function `pMesh`
@@ -48,7 +43,6 @@ num. segments = 1
 num. nodes = 401
 Segment N.0: s0 = 0 length = 2 npts = 401 no data set
 END Mesh[mesh]
-
 Model Parameters
 ......................................P1 = 0.1
 ......................................P2 = 0.1
@@ -73,7 +67,7 @@ Model Parameters
 .....................................x20 = 0.001
 .....................................x30 = 0.001
 .....................................x40 = 0.001
-NewtonDumped --- start iterations ---
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1, 2] ( 0.000372 , 3.4e-05  ) [  0.165   ,  0.0133  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
 [  2, 2] ( 3.4e-05  , 3.38e-06 ) [  0.0129  , 0.00129  ] 0.9        [1:0:0:0:0:0:0:0:0:0:0:0]
@@ -96,7 +90,7 @@ dump_min       = 0.4           dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09     
 N. Equations   = 4015          N. System pars = 1600
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 25.8[ms]      timeout        = 0 [ms]
+Elapsed Time   = 21.9[ms]      timeout        = 0 [ms]
 iteration      = 8             Memory Used    = 690Kb (+3bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------

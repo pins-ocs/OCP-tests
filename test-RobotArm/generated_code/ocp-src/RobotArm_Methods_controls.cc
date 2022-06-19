@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -122,7 +122,7 @@ namespace RobotArmDefine {
     real_type t30  = u_phiControl(t12, -1, 1);
     real_type result__ = t12 * t2 * LM__[2] + t4 * t2 * LM__[0] + t8 * t2 * LM__[1] + XM__[3] * t2 * LM__[3] + XM__[4] * t2 * LM__[4] + XM__[5] * t2 * LM__[5] + t26 * t2 + t28 * t2 + t30 * t2;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -399,7 +399,7 @@ namespace RobotArmDefine {
     real_type t45  = pow(-X__[iX_phi1] * t1 + V__[2], 2);
     real_type result__ = t3 * t1 + t6 * t1 + t9 * t1 + t16 + t24 + t30 + t35 + t40 + t45;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -466,9 +466,9 @@ namespace RobotArmDefine {
     real_type t3   = ALIAS_u_rhoControl_D_1_1(U__[iU_u_rho], -1, 1);
     real_type t5   = t1 * t1;
     real_type t6   = 2 * t5;
-    result__[ 0   ] = t3 * t1 + t6;
+    result__[ 0   ] = t1 * t3 + t6;
     real_type t8   = ALIAS_u_thetaControl_D_1_1(U__[iU_u_theta], -1, 1);
-    result__[ 1   ] = t8 * t1 + t6;
+    result__[ 1   ] = t1 * t8 + t6;
     real_type t11  = ALIAS_u_phiControl_D_1_1(U__[iU_u_phi], -1, 1);
     result__[ 2   ] = t11 * t1 + t6;
     if ( m_debug )

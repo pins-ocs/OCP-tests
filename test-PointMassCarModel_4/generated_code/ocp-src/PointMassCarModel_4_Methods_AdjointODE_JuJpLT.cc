@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -412,7 +412,7 @@ namespace PointMassCarModel_4Define {
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t3   = U__[iU_v__fx];
     real_type t4   = v__fxControl(t3, -1, 1);
-    result__[ 0   ] = t2 * t4;
+    result__[ 0   ] = t4 * t2;
     real_type t5   = ALIAS_v__fxControl_D_1(t3, -1, 1);
     result__[ 1   ] = t5 * t2;
     real_type t6   = U__[iU_v__Omega];
@@ -697,7 +697,7 @@ namespace PointMassCarModel_4Define {
     real_type t8   = U__[iU_v__Omega];
     real_type t9   = v__OmegaControl(t8, -1, 1);
     real_type t11  = OMEGA__[1];
-    result__[ 0   ] = t11 * t2 * t9 + t2 * t4 * t6;
+    result__[ 0   ] = t11 * t9 * t2 + t6 * t4 * t2;
     real_type t13  = ALIAS_v__fxControl_D_1(t3, -1, 1);
     result__[ 1   ] = t6 * t13 * t2;
     real_type t15  = ALIAS_v__OmegaControl_D_1(t8, -1, 1);

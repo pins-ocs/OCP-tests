@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -330,7 +330,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u1Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -345,7 +345,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u1Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -360,7 +360,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u1Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -375,7 +375,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u2Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -390,7 +390,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u2Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -405,7 +405,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u2Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -420,7 +420,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u3Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -435,7 +435,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u3Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -450,7 +450,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u3Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -465,7 +465,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u4Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -480,7 +480,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u4Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -495,7 +495,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u4Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -510,7 +510,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u5Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -525,7 +525,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u5Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -540,7 +540,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u5Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -555,7 +555,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u6Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -570,7 +570,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u6Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -585,7 +585,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u6Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -600,7 +600,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u7Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -615,7 +615,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u7Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -630,7 +630,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u7Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -645,7 +645,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u8Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -660,7 +660,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u8Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -675,7 +675,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u8Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -690,7 +690,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u9Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -705,7 +705,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u9Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -720,7 +720,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u9Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -735,7 +735,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u10Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -750,7 +750,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u10Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -765,7 +765,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u10Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -780,7 +780,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u11Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -795,7 +795,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u11Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -810,7 +810,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u11Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -825,7 +825,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u12Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -840,7 +840,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u12Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -855,7 +855,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u12Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -870,7 +870,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u13Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -885,7 +885,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u13Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -900,7 +900,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u13Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -915,7 +915,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u14Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -930,7 +930,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u14Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -945,7 +945,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u14Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -960,7 +960,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u15Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -975,7 +975,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u15Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -990,7 +990,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u15Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1005,7 +1005,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u16Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1020,7 +1020,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u16Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1035,7 +1035,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u16Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1050,7 +1050,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u17Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1065,7 +1065,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u17Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1080,7 +1080,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u17Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1095,7 +1095,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u18Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1110,7 +1110,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u18Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1125,7 +1125,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u18Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1140,7 +1140,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u19Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1155,7 +1155,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u19Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1170,7 +1170,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u19Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1185,7 +1185,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u20Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1200,7 +1200,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u20Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1215,7 +1215,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_u20Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1231,7 +1231,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx1Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1247,7 +1247,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx1Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1263,7 +1263,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx1Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1279,7 +1279,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy1Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1295,7 +1295,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy1Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1311,7 +1311,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy1Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1327,7 +1327,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx2Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1343,7 +1343,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx2Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1359,7 +1359,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx2Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1375,7 +1375,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy2Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1391,7 +1391,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy2Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1407,7 +1407,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy2Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1423,7 +1423,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx3Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1439,7 +1439,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx3Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1455,7 +1455,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx3Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1471,7 +1471,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy3Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1487,7 +1487,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy3Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1503,7 +1503,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy3Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1519,7 +1519,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx4Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1535,7 +1535,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx4Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1551,7 +1551,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx4Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1567,7 +1567,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy4Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1583,7 +1583,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy4Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1599,7 +1599,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy4Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1615,7 +1615,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx5Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1631,7 +1631,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx5Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1647,7 +1647,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx5Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1663,7 +1663,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy5Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1679,7 +1679,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy5Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1695,7 +1695,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy5Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1711,7 +1711,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx6Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1727,7 +1727,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx6Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1743,7 +1743,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx6Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1759,7 +1759,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy6Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1775,7 +1775,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy6Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1791,7 +1791,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy6Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1807,7 +1807,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx7Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1823,7 +1823,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx7Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1839,7 +1839,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx7Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1855,7 +1855,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy7Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1871,7 +1871,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy7Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1887,7 +1887,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy7Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1903,7 +1903,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx8Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1919,7 +1919,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx8Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1935,7 +1935,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx8Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1951,7 +1951,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy8Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1967,7 +1967,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy8Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1983,7 +1983,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy8Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -1999,7 +1999,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx9Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2015,7 +2015,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx9Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2031,7 +2031,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx9Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2047,7 +2047,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy9Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2063,7 +2063,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy9Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2079,7 +2079,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy9Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2095,7 +2095,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx10Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2111,7 +2111,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx10Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2127,7 +2127,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx10Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2143,7 +2143,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy10Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2159,7 +2159,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy10Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2175,7 +2175,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy10Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2191,7 +2191,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx11Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2207,7 +2207,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx11Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2223,7 +2223,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx11Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2239,7 +2239,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy11Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2255,7 +2255,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy11Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2271,7 +2271,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy11Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2287,7 +2287,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx12Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2303,7 +2303,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx12Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2319,7 +2319,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx12Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2335,7 +2335,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy12Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2351,7 +2351,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy12Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2367,7 +2367,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy12Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2383,7 +2383,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx13Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2399,7 +2399,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx13Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2415,7 +2415,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx13Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2431,7 +2431,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy13Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2447,7 +2447,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy13Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2463,7 +2463,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy13Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2479,7 +2479,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx14Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2495,7 +2495,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx14Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2511,7 +2511,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx14Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2527,7 +2527,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy14Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2543,7 +2543,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy14Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2559,7 +2559,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy14Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2575,7 +2575,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx15Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2591,7 +2591,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx15Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2607,7 +2607,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx15Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2623,7 +2623,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy15Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2639,7 +2639,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy15Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2655,7 +2655,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy15Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2671,7 +2671,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx16Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2687,7 +2687,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx16Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2703,7 +2703,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx16Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2719,7 +2719,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy16Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2735,7 +2735,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy16Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2751,7 +2751,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy16Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2767,7 +2767,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx17Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2783,7 +2783,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx17Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2799,7 +2799,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx17Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2815,7 +2815,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy17Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2831,7 +2831,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy17Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2847,7 +2847,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy17Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2863,7 +2863,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx18Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2879,7 +2879,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx18Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2895,7 +2895,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx18Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2911,7 +2911,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy18Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2927,7 +2927,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy18Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2943,7 +2943,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy18Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2959,7 +2959,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx19Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2975,7 +2975,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx19Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -2991,7 +2991,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx19Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3007,7 +3007,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy19Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3023,7 +3023,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy19Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3039,7 +3039,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy19Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3055,7 +3055,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx20Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3071,7 +3071,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx20Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3087,7 +3087,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_xx20Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3103,7 +3103,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy20Limitation( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3119,7 +3119,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy20Limitation_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -3135,7 +3135,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_yy20Limitation_DD( _V={} ) return {}\n",
         xo___V, result__
       );

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,8 +20,8 @@
 -- User Header
 
 -- Auxiliary values
-u_tolerance0 = 0.01
 u_epsilon0   = 0.01
+u_tolerance0 = 0.01
 epsi_x0      = 0.01
 epsi_x       = epsi_x0
 Tf           = 6.0

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -85,7 +85,7 @@ namespace FlowInAchannelDefine {
     real_type t8   = XM__[3];
     real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t8 * LM__[2] + (t5 * t2 - t8 * XM__[0]) * ModelPars[iM_R] * LM__[3];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "g_fun_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -230,7 +230,7 @@ namespace FlowInAchannelDefine {
     real_type t21  = pow(V__[3] - (-t10 * X__[iX_u] + t6 * t2) * ModelPars[iM_R], 2);
     real_type result__ = t4 + t8 + t12 + t21;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "m_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
     }
     return result__;
   }

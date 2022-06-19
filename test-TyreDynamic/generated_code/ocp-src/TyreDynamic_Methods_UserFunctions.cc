@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_UserFunctions.cc                           |
  |                                                                       |
- |  version: 1.0   date 4/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -140,7 +140,7 @@ namespace TyreDynamicDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_LongSlipRear( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -155,7 +155,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_LongSlipRear_D( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -170,7 +170,7 @@ namespace TyreDynamicDefine {
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_LongSlipRear_DD( _V={} ) return {}\n",
         xo___V, result__
       );
@@ -183,7 +183,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 1.0 / xo__v * ModelPars[iM_rw] * xo__omega - 1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -197,7 +197,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -xo__omega * ModelPars[iM_rw] / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w_D_1( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -211,7 +211,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 2 * xo__omega * ModelPars[iM_rw] / t1 / xo__v;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w_D_1_1( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -225,7 +225,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -ModelPars[iM_rw] / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w_D_1_2( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -238,7 +238,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 1.0 / xo__v * ModelPars[iM_rw];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w_D_2( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -251,7 +251,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_kappa__w_D_2_2( v={}, omega={} ) return {}\n",
         xo__v, xo__omega, result__
       );
@@ -266,7 +266,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_mu__x0] * t9 * ModelPars[iM_g] * ModelPars[iM_m];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_F__x( lambda={} ) return {}\n",
         xo__lambda, result__
       );
@@ -285,7 +285,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_mu__x0] * t16 * t11 / (t7 * t6 + 1) * t4 * ModelPars[iM_m] * ModelPars[iM_g];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_F__x_D( lambda={} ) return {}\n",
         xo__lambda, result__
       );
@@ -311,7 +311,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -2 * xo__lambda * t20 * t18 * t14 * t11 * t5 * t4 * t3 - t20 * t28 * t26 * t11 * t5 * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_F__x_DD( lambda={} ) return {}\n",
         xo__lambda, result__
       );
@@ -324,7 +324,7 @@ namespace TyreDynamicDefine {
     real_type result__ = posPart(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__pos( p={} ) return {}\n",
         xo__p, result__
       );
@@ -337,7 +337,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_posPart_D(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__pos_D( p={} ) return {}\n",
         xo__p, result__
       );
@@ -350,7 +350,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_posPart_DD(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__pos_DD( p={} ) return {}\n",
         xo__p, result__
       );
@@ -363,7 +363,7 @@ namespace TyreDynamicDefine {
     real_type result__ = negPart(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__neg( p={} ) return {}\n",
         xo__p, result__
       );
@@ -376,7 +376,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_negPart_D(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__neg_D( p={} ) return {}\n",
         xo__p, result__
       );
@@ -389,7 +389,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_negPart_DD(xo__p);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_p__neg_DD( p={} ) return {}\n",
         xo__p, result__
       );
@@ -402,7 +402,7 @@ namespace TyreDynamicDefine {
     real_type result__ = posPart(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__pos( b={} ) return {}\n",
         xo__b, result__
       );
@@ -415,7 +415,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_posPart_D(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__pos_D( b={} ) return {}\n",
         xo__b, result__
       );
@@ -428,7 +428,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_posPart_DD(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__pos_DD( b={} ) return {}\n",
         xo__b, result__
       );
@@ -441,7 +441,7 @@ namespace TyreDynamicDefine {
     real_type result__ = negPart(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__neg( b={} ) return {}\n",
         xo__b, result__
       );
@@ -454,7 +454,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_negPart_D(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__neg_D( b={} ) return {}\n",
         xo__b, result__
       );
@@ -467,7 +467,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ALIAS_negPart_DD(xo__b);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_b__neg_DD( b={} ) return {}\n",
         xo__b, result__
       );
@@ -481,7 +481,7 @@ namespace TyreDynamicDefine {
     real_type result__ = clipSup(ModelPars[iM_E__pow] / t1, ModelPars[iM_TT__max]);
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT__env( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -499,7 +499,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t10 * t3 / t7 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT__env_D( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -524,7 +524,7 @@ namespace TyreDynamicDefine {
     real_type result__ = t13 * t11 / t8 * t6 + 2 * t13 * t3 / t7 / t1 * t16 - t25 * t3 / t7 * t16;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT__env_DD( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -539,7 +539,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t6;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_BT__env( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -555,7 +555,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t4 * t2 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_BT__env_D( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -573,7 +573,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t10 / t7 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_BT__env_DD( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -588,7 +588,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__p__pos * (t1 - t2) + t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -603,7 +603,7 @@ namespace TyreDynamicDefine {
     real_type result__ = t1 - t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT_D_1( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -616,7 +616,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT_D_1_1( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -631,7 +631,7 @@ namespace TyreDynamicDefine {
     real_type result__ = t1 - t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT_D_1_2( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -646,7 +646,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__p__pos * (t1 - t2) + t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT_D_2( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -661,7 +661,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__p__pos * (t1 - t2) + t2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TT_D_2_2( p__pos={}, omega={} ) return {}\n",
         xo__p__pos, xo__omega, result__
       );
@@ -675,7 +675,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__b__neg * ModelPars[iM_TB__max] * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -689,7 +689,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_TB__max] * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB_D_1( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -702,7 +702,7 @@ namespace TyreDynamicDefine {
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB_D_1_1( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -716,7 +716,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_TB__max] * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB_D_1_2( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -730,7 +730,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__b__neg * ModelPars[iM_TB__max] * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB_D_2( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -744,7 +744,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__b__neg * ModelPars[iM_TB__max] * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_TB_D_2_2( b__neg={}, omega={} ) return {}\n",
         xo__b__neg, xo__omega, result__
       );
@@ -758,7 +758,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_rho_a] * ModelPars[iM_kD] * t1 / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Fa( v={} ) return {}\n",
         xo__v, result__
       );
@@ -771,7 +771,7 @@ namespace TyreDynamicDefine {
     real_type result__ = xo__v * ModelPars[iM_kD] * ModelPars[iM_rho_a];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Fa_D( v={} ) return {}\n",
         xo__v, result__
       );
@@ -784,7 +784,7 @@ namespace TyreDynamicDefine {
     real_type result__ = ModelPars[iM_kD] * ModelPars[iM_rho_a];
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Fa_DD( v={} ) return {}\n",
         xo__v, result__
       );
@@ -799,7 +799,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -ModelPars[iM_kDo] * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ma( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -816,7 +816,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -2 * t3 * t1 * xo__omega - t3 * t7 * t6;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ma_D( omega={} ) return {}\n",
         xo__omega, result__
       );
@@ -834,7 +834,7 @@ namespace TyreDynamicDefine {
     real_type result__ = -t2 * t10 * t9 - 4 * t2 * t5 * xo__omega - 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
-        isRegular(result__),
+        Utils::is_finite(result__),
         "UserFunctions_Ma_DD( omega={} ) return {}\n",
         xo__omega, result__
       );

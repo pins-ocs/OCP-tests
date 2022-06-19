@@ -40,63 +40,55 @@ module GoddardRocket
   class GoddardRocket_model_params < FFI::Struct
     layout(
 
-      :D0,             :data_t,
+      :Dc,            :data_t,
 
-      :Hscale,         :data_t,
+      :Tmax,          :data_t,
 
-      :Tmax,           :data_t,
+      :c,             :data_t,
 
-      :Ve,             :data_t,
+      :g0,            :data_t,
 
-      :g,              :data_t,
+      :h_i,           :data_t,
 
-      :h_i,            :data_t,
+      :hc,            :data_t,
 
-      :m_f,            :data_t,
+      :m_f,           :data_t,
 
-      :m_i,            :data_t,
+      :m_i,           :data_t,
 
-      :mu,             :data_t,
+      :v_i,           :data_t,
 
-      :mu0,            :data_t,
+      :epsi_TS_max,   :data_t,
 
-      :mu1,            :data_t,
+      :epsi_TS_min,   :data_t,
 
-      :v_i,            :data_t,
+      :epsi_T_max,    :data_t,
 
-      :TimeSize_guess, :data_t,
+      :epsi_T_min,    :data_t,
 
-      :epsi_TS_max,    :data_t,
+      :epsi_mass_max, :data_t,
 
-      :epsi_TS_min,    :data_t,
+      :epsi_mass_min, :data_t,
 
-      :epsi_mass_max,  :data_t,
+      :epsi_v_max,    :data_t,
 
-      :epsi_mass_min,  :data_t,
+      :epsi_v_min,    :data_t,
 
-      :epsi_u_max,     :data_t,
+      :tol_TS_max,    :data_t,
 
-      :epsi_u_min,     :data_t,
+      :tol_TS_min,    :data_t,
 
-      :epsi_v_max,     :data_t,
+      :tol_T_max,     :data_t,
 
-      :epsi_v_min,     :data_t,
+      :tol_T_min,     :data_t,
 
-      :tol_TS_max,     :data_t,
+      :tol_mass_max,  :data_t,
 
-      :tol_TS_min,     :data_t,
+      :tol_mass_min,  :data_t,
 
-      :tol_mass_max,   :data_t,
+      :tol_v_max,     :data_t,
 
-      :tol_mass_min,   :data_t,
-
-      :tol_u_max,      :data_t,
-
-      :tol_u_min,      :data_t,
-
-      :tol_v_max,      :data_t,
-
-      :tol_v_min,      :data_t,
+      :tol_v_min,     :data_t,
 
     )
 
@@ -145,9 +137,9 @@ module GoddardRocket
       # 2D constraints
 
       # Controls
-      :uControlType,      :index_t,
-      :uControlEpsilon,   :data_t,
-      :uControlTolerance, :data_t,
+      :TControlType,      :index_t,
+      :TControlEpsilon,   :data_t,
+      :TControlTolerance, :data_t,
     )
 
     def initialize

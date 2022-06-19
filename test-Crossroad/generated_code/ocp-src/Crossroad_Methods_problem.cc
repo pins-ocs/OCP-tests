@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -132,7 +132,7 @@ namespace CrossroadDefine {
     real_type t7   = X__[iX_Ts];
     real_type result__ = t7 * (t3 * ModelPars[iM_wJ] + ModelPars[iM_wT]) + X__[iX_v] * t7 * L__[iL_lambda1__xo] + X__[iX_a] * t7 * L__[iL_lambda2__xo] + t2 * t7 * L__[iL_lambda3__xo];
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "H_eval(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -158,7 +158,7 @@ namespace CrossroadDefine {
     real_type t3   = U__[iU_jerk] * U__[iU_jerk];
     real_type result__ = X__[iX_Ts] * (t3 * ModelPars[iM_wJ] + ModelPars[iM_wT]);
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "lagrange_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -187,7 +187,7 @@ namespace CrossroadDefine {
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
-      UTILS_ASSERT( isRegular(result__), "mayer_target(...) return {}\n", result__ );
+      UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
     return result__;
   }
@@ -274,7 +274,7 @@ namespace CrossroadDefine {
     real_type t1   = ModelPars[iM_wJ];
     real_type t2   = U__[iU_jerk];
     real_type t3   = t2 * t2;
-    result__[ 3   ] = t1 * t3 + ModelPars[iM_wT];
+    result__[ 3   ] = t3 * t1 + ModelPars[iM_wT];
     result__[ 4   ] = 2 * X__[iX_Ts] * t1 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 5, i_segment );

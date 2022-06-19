@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Methods_Guess.cc                                 |
  |                                                                       |
- |  version: 1.0   date 3/6/2022                                         |
+ |  version: 1.0   date 19/6/2022                                        |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -85,8 +85,8 @@ namespace BangBangFtminDefine {
     V__[1] = __INV_DZETA*(XR__[1]-XL__[1]);
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    result__[ 0   ] = -t1 * XM__[1] + V__[0];
-    result__[ 1   ] = -t1 * UM__[0] + V__[1];
+    result__[ 0   ] = -XM__[1] * t1 + V__[0];
+    result__[ 1   ] = -UM__[0] * t1 + V__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 2, i_segment );
   }
