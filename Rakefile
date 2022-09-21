@@ -113,19 +113,14 @@ task :main do
   dir = ROOT+'/generated_code'
   if File.exist?(dir) then
     cd dir do
-      if OS == :mac then
-        cmd = "rm -rf build; mkdir build; cmake -Bbuild .";
-        puts "Run: #{cmd}".yellow
-        system(cmd);
-        cmd = "cd build; make -j #{Etc.nprocessors}; cd ..";
-        puts "Run: #{cmd}".yellow
-        system(cmd);
-      else
-        cmd = "pins #{MODEL_NAME}_pins_run.rb -f -b -main";
-        puts "Run: #{cmd}".yellow
-        system(cmd);
-      end
-    end
+      FileUtils.rm_rf "build"
+      FileUtils.mkdir "build"
+      cmd = "cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -Bbuild -S .";
+      puts "Run: #{cmd}".yellow
+      system(cmd);
+      cmd = "ninja -C build install";
+      puts "Run: #{cmd}".yellow
+      system(cmd);    end
   else
     puts "Missing: #{dir}".red
   end
