@@ -31,10 +31,10 @@ def do_test(dir,idx,ffile,ffile2)
   FileUtils.cd dir do
     puts "\n\n"
     system("rake clobber maple" );
+    system("rake main" );
     puts "\n\n"
     begin
       FileUtils.cd "generated_code" do
-        system("pins #{name}_pins_run.rb -f -b -main" );
         puts "\n\n"
         if OS == :windows then
           cmd = 'bin\main | ' + "perl -ne \"print \$_; print STDERR \$_;\" 2> iterations.txt" ;

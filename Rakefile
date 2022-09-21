@@ -120,7 +120,8 @@ task :main do
       system(cmd);
       cmd = "ninja -C build install";
       puts "Run: #{cmd}".yellow
-      system(cmd);    end
+      system(cmd);
+    end
   else
     puts "Missing: #{dir}".red
   end
@@ -132,16 +133,14 @@ task :run do
   dir = ROOT+'/generated_code'
   if File.exist?(dir) then
     cd dir do
-      if OS == :mac then
+      if OS != :win then
         cmd = "./build/main";
-        puts "Run: #{cmd}".yellow
-        system(cmd);
       else
-        cmd = "pins #{MODEL_NAME}_pins_run.rb";
-        puts "Run: #{cmd}".yellow
-        system(cmd);
+        cmd = ".\\build\\main.exe";
       end
-    end
+      puts "Run: #{cmd}".yellow
+      system(cmd);
+  end
   else
     puts "Missing: #{dir}".red
   end
@@ -159,7 +158,7 @@ task :matlab do
   cd ROOT+'/generated_code/ocp-interfaces/Matlab'
   FileUtils.mkdir_p "build"
   cd "build"
-  sh "cmake .."
+  sh "cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .."
   sh "cmake --build ."
   cd ".."
   cd ROOT
