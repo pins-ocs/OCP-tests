@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -85,9 +86,9 @@ namespace BikeSteeringDefine {
     X__[1] = (XL__[1]+XR__[1])/2;
     X__[2] = (XL__[2]+XR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && minimumTimeSize.check_range(-X__[iX_TimeSize], m_max_penalty_value);
-    return res;
+    bool ok = true;
+    ok = ok && minimumTimeSize.check_range(-X__[iX_TimeSize], m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -111,7 +112,7 @@ namespace BikeSteeringDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_TimeSize];
     real_type t10  = ModelPars[iM_h];
-    real_type result__ = X__[iX_omega] * t2 * L__[iL_lambda1__xo] + (t10 * t2 * X__[iX_phi] * ModelPars[iM_g] * ModelPars[iM_m] - t10 * t2 * U__[iU_Fy]) * L__[iL_lambda2__xo];
+    real_type result__ = X__[iX_omega] * t2 * L__[iL_lambda1__xo] + (X__[iX_phi] * t10 * ModelPars[iM_g] * ModelPars[iM_m] * t2 - U__[iU_Fy] * t10 * t2) * L__[iL_lambda2__xo];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }

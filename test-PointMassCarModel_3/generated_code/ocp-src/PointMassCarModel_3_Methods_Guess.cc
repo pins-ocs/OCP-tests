@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -170,8 +171,8 @@ namespace PointMassCarModel_3Define {
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     X__[ iX_s             ] = Q__[iQ_zeta];
     X__[ iX_V             ] = ModelPars[iM_Vguess];
-    X__[ iX_Omega         ] = 0.1000000000e-1 * X__[3];
-    X__[ iX_sqrt_inv_Vseg ] = sqrt(1.0 / X__[3]);
+    X__[ iX_Omega         ] = 0.1000000000e-1 * X__[iX_V];
+    X__[ iX_sqrt_inv_Vseg ] = sqrt(1.0 / X__[iX_V]);
 
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 7 );
@@ -342,24 +343,6 @@ namespace PointMassCarModel_3Define {
 
   integer PointMassCarModel_3::u_guess_numEqns() const { return 2; }
 
-  void
-  PointMassCarModel_3::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_v__fx    ] = v__OmegaControl.solve(-L__[iL_lambda6__xo] * ModelPars[iM_v__fx__max], -1, 1);
-    UGUESS__[ iU_v__Omega ] = v__OmegaControl.solve(-L__[iL_lambda5__xo] * ModelPars[iM_v__Omega__max], -1, 1);
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -369,36 +352,45 @@ namespace PointMassCarModel_3Define {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    NodeType2 NODE__;
+    integer i_segment = LEFT__.i_segment;
+
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+
     real_type Q__[4];
     real_type X__[7];
     real_type L__[7];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
-    Q__[1] = (LEFT__.q[1]+RIGHT__.q[1])/2;
-    Q__[2] = (LEFT__.q[2]+RIGHT__.q[2])/2;
-    Q__[3] = (LEFT__.q[3]+RIGHT__.q[3])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
+    Q__[1] = (QL__[1]+QR__[1])/2;
+    Q__[2] = (QL__[2]+QR__[2])/2;
+    Q__[3] = (QL__[3]+QR__[3])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
-    X__[2] = (LEFT__.x[2]+RIGHT__.x[2])/2;
-    X__[3] = (LEFT__.x[3]+RIGHT__.x[3])/2;
-    X__[4] = (LEFT__.x[4]+RIGHT__.x[4])/2;
-    X__[5] = (LEFT__.x[5]+RIGHT__.x[5])/2;
-    X__[6] = (LEFT__.x[6]+RIGHT__.x[6])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
+    X__[2] = (XL__[2]+XR__[2])/2;
+    X__[3] = (XL__[3]+XR__[3])/2;
+    X__[4] = (XL__[4]+XR__[4])/2;
+    X__[5] = (XL__[5]+XR__[5])/2;
+    X__[6] = (XL__[6]+XR__[6])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    L__[2] = (LEFT__.lambda[2]+RIGHT__.lambda[2])/2;
-    L__[3] = (LEFT__.lambda[3]+RIGHT__.lambda[3])/2;
-    L__[4] = (LEFT__.lambda[4]+RIGHT__.lambda[4])/2;
-    L__[5] = (LEFT__.lambda[5]+RIGHT__.lambda[5])/2;
-    L__[6] = (LEFT__.lambda[6]+RIGHT__.lambda[6])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+    L__[0] = (LL__[0]+LR__[0])/2;
+    L__[1] = (LL__[1]+LR__[1])/2;
+    L__[2] = (LL__[2]+LR__[2])/2;
+    L__[3] = (LL__[3]+LR__[3])/2;
+    L__[4] = (LL__[4]+LR__[4])/2;
+    L__[5] = (LL__[5]+LR__[5])/2;
+    L__[6] = (LL__[6]+LR__[6])/2;
+    std::fill_n( UGUESS__.pointer(), 2, 0 );
+    UGUESS__[ iU_v__fx    ] = v__OmegaControl.solve(-L__[iL_lambda6__xo] * ModelPars[iM_v__fx__max], -1, 1);
+    UGUESS__[ iU_v__Omega ] = v__OmegaControl.solve(-L__[iL_lambda5__xo] * ModelPars[iM_v__Omega__max], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   /*\
@@ -422,8 +414,8 @@ namespace PointMassCarModel_3Define {
     real_const_ptr L__ = NODE__.lambda;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     // controls range check
-    v__OmegaControl.check_range(U__[iU_v__Omega], -1, 1);
-    v__fxControl.check_range(U__[iU_v__fx], -1, 1);
+    ok = ok && v__OmegaControl.check_range(U__[iU_v__Omega], -1, 1);
+    ok = ok && v__fxControl.check_range(U__[iU_v__fx], -1, 1);
     return ok;
   }
 

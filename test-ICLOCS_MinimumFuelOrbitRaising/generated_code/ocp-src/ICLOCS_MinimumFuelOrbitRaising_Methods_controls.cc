@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -78,19 +79,32 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[1];
-    real_type t5   = XM__[2];
+    real_type t1   = XL__[iX_vr];
+    real_type t2   = LM__[0];
+    real_type t4   = LM__[1];
+    real_type t5   = XL__[iX_vt];
     real_type t6   = t5 * t5;
-    real_type t7   = XM__[0];
+    real_type t7   = XL__[iX_r];
     real_type t8   = 1.0 / t7;
     real_type t10  = t7 * t7;
     real_type t12  = ModelPars[iM_T];
     real_type t13  = UM__[0];
     real_type t14  = sin(t13);
-    real_type t17  = mass(QM__[0]);
+    real_type t15  = t14 * t12;
+    real_type t17  = mass(QL__[iQ_zeta]);
     real_type t18  = 1.0 / t17;
+    real_type t22  = LM__[2];
     real_type t25  = cos(t13);
-    real_type result__ = -t1 + t1 * LM__[0] + (t8 * t6 - 1.0 / t10 + t18 * t14 * t12) * LM__[1] + (-t8 * t5 * t1 + t18 * t25 * t12) * LM__[2];
+    real_type t26  = t25 * t12;
+    real_type t30  = XR__[iX_vr];
+    real_type t32  = XR__[iX_vt];
+    real_type t33  = t32 * t32;
+    real_type t34  = XR__[iX_r];
+    real_type t35  = 1.0 / t34;
+    real_type t37  = t34 * t34;
+    real_type t40  = mass(QR__[iQ_zeta]);
+    real_type t41  = 1.0 / t40;
+    real_type result__ = -t1 + t1 * t2 + (t8 * t6 - 1.0 / t10 + t18 * t15) * t4 + (-t8 * t5 * t1 + t18 * t26) * t22 - t30 + t30 * t2 + (t35 * t33 - 1.0 / t37 + t41 * t15) * t4 + (-t35 * t32 * t30 + t41 * t26) * t22;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -132,8 +146,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t3   = UM__[0];
     real_type t4   = cos(t3);
     real_type t7   = sin(t3);
-    real_type t12  = mass(QM__[0]);
-    result__[ 0   ] = 1.0 / t12 * (t4 * LM__[1] - t7 * LM__[2]) * ModelPars[iM_T];
+    real_type t10  = (t4 * LM__[1] - t7 * LM__[2]) * ModelPars[iM_T];
+    real_type t12  = mass(QL__[iQ_zeta]);
+    real_type t16  = mass(QR__[iQ_zeta]);
+    result__[ 0   ] = 1.0 / t12 * t10 + 1.0 / t16 * t10;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -185,11 +201,15 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t1   = ModelPars[iM_T];
     real_type t2   = UM__[0];
     real_type t3   = cos(t2);
-    real_type t6   = mass(QM__[0]);
+    real_type t4   = t3 * t1;
+    real_type t6   = mass(QL__[iQ_zeta]);
     real_type t7   = 1.0 / t6;
-    result__[ 0   ] = 0.5e0 * t7 * t3 * t1;
-    real_type t9   = sin(t2);
-    result__[ 1   ] = -0.5e0 * t7 * t9 * t1;
+    real_type t11  = mass(QR__[iQ_zeta]);
+    real_type t12  = 1.0 / t11;
+    result__[ 0   ] = 0.5e0 * t7 * t4 + 0.5e0 * t12 * t4;
+    real_type t15  = sin(t2);
+    real_type t16  = t15 * t1;
+    result__[ 1   ] = -0.5e0 * t7 * t16 - 0.5e0 * t12 * t16;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
     if ( m_debug )
@@ -240,8 +260,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t3   = UM__[0];
     real_type t4   = sin(t3);
     real_type t7   = cos(t3);
-    real_type t12  = mass(QM__[0]);
-    result__[ 0   ] = 1.0 / t12 * (-t4 * LM__[1] - t7 * LM__[2]) * ModelPars[iM_T];
+    real_type t10  = (-t4 * LM__[1] - t7 * LM__[2]) * ModelPars[iM_T];
+    real_type t12  = mass(QL__[iQ_zeta]);
+    real_type t16  = mass(QR__[iQ_zeta]);
+    result__[ 0   ] = 1.0 / t12 * t10 + 1.0 / t16 * t10;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -405,7 +427,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t20  = sin(t3);
     real_type t22  = 1.0 / t8;
     real_type t28  = t20 * t20;
-    result__[ 0   ] = 2 * t10 * t5 * t2 + 2 * t22 * t20 * t1 * (V__[1] - t16 * t14 + 1.0 / t18 - t22 * t20 * t1) + 2 * t10 * t28 * t2 + 2 * t22 * t4 * t1 * (-t1 * t22 * t4 + t13 * t16 * X__[iX_vr] + V__[2]);
+    result__[ 0   ] = 2 * t10 * t5 * t2 + 2 * t22 * t20 * t1 * (V__[1] - t16 * t14 + 1.0 / t18 - t22 * t20 * t1) + 2 * t10 * t28 * t2 + 2 * t22 * t4 * t1 * (-t22 * t4 * t1 + t16 * t13 * X__[iX_vr] + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_dll_ruby.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -59,8 +59,8 @@ namespace PointMassCarModel_3Define {
 
   static map< string, PointMassCarModel_3_Problem * > problems;
 
-  static Console * pConsole  = nullptr;
-  static integer   n_threads = std::thread::hardware_concurrency();
+  static Console * pConsole{nullptr};
+  static ThreadPoolBase * pTP{nullptr};
 
   /*
   ::  ____        _             _____ _____ ___
@@ -81,13 +81,15 @@ namespace PointMassCarModel_3Define {
   bool
   PointMassCarModel_3_ocp_setup( char const id[], GenericContainer & gc_data ) {
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
+    if ( pTP      == nullptr ) pTP      = new ThreadPool1(std::thread::hardware_concurrency());
+
     map< string, PointMassCarModel_3_Problem * >::iterator it = problems.find(id);
     string error;
     integer infoLevel = 1;
     gc_data.get_if_exists( "InfoLevel", infoLevel );
     pConsole->changeLevel( infoLevel );
     if ( it == problems.end() ) {
-      problems[id] = new PointMassCarModel_3_Problem(n_threads,pConsole);
+      problems[id] = new PointMassCarModel_3_Problem(pConsole,pTP);
       return problems[id]->setup(gc_data,error);
     } else {
       return it->second->setup(gc_data,error);

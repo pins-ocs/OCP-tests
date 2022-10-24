@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_UserFunctions.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -1842,8 +1843,8 @@ namespace gtocX_2burnDefine {
     real_type t14  = xo__k * xo__k;
     real_type t16  = 1.0 / (t13 + t14 + 1);
     real_type t17  = t16 / t11;
-    real_type t24  = (-t4 * t1 + t2 * xo__h) * xo__p;
-    real_type result__ = -2 * t4 * t17 * (t2 * t1 + t4 * xo__h) * xo__p + 4 * (-t2 * xo__f + t4 * xo__g) * t4 * t16 / t11 / t10 * t24 + 2 * t2 * t17 * t24;
+    real_type t24  = (-t1 * t4 + t2 * xo__h) * xo__p;
+    real_type result__ = -2 * t4 * t17 * (t1 * t2 + t4 * xo__h) * xo__p + 4 * (-t2 * xo__f + t4 * xo__g) * t4 * t16 / t11 / t10 * t24 + 2 * t2 * t17 * t24;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -1965,8 +1966,8 @@ namespace gtocX_2burnDefine {
     real_type t14  = xo__k * xo__k;
     real_type t16  = 1.0 / (t13 + t14 + 1);
     real_type t17  = t16 / t11;
-    real_type t24  = (-t4 * t1 + t2 * xo__h) * xo__p;
-    real_type result__ = -2 * t2 * t17 * (t2 * t1 + t4 * xo__h) * xo__p + 4 * (-t2 * xo__f + t4 * xo__g) * t2 * t16 / t11 / t10 * t24 - 2 * t4 * t17 * t24;
+    real_type t24  = (-t1 * t4 + t2 * xo__h) * xo__p;
+    real_type result__ = -2 * t2 * t17 * (t1 * t2 + t4 * xo__h) * xo__p + 4 * (-t2 * xo__f + t4 * xo__g) * t2 * t16 / t11 / t10 * t24 - 2 * t4 * t17 * t24;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2296,12 +2297,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t9   = sin(xo__L);
-    real_type t12  = cos(xo__L);
-    real_type result__ = -1.0 / (t6 + t7 + 1) * (t9 * (t6 - t7 + 1) - 2 * t12 * xo__k * xo__retrograde * xo__h - 2 * xo__f * xo__h * xo__k * xo__retrograde + t6 * xo__g - t7 * xo__g + xo__g) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t6   = sin(xo__L);
+    real_type t13  = cos(xo__L);
+    real_type t22  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t22 * (t6 * (t3 - t4 + 1) - 2 * xo__f * xo__h * xo__k * xo__retrograde - 2 * t13 * xo__k * xo__retrograde * xo__h + t3 * xo__g - t4 * xo__g + xo__g) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2315,12 +2316,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type t10  = sin(xo__L);
-    real_type t13  = cos(xo__L);
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (t10 * (t7 - t8 + 1) - 2 * t13 * xo__k * xo__retrograde * xo__h - 2 * xo__f * xo__h * xo__k * xo__retrograde + t7 * xo__g - t8 * xo__g + xo__g) * t5 / t1 / xo__p / 2;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t7   = sin(xo__L);
+    real_type t14  = cos(xo__L);
+    real_type t23  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t23 * (t7 * (t4 - t5 + 1) - 2 * xo__f * xo__h * xo__k * xo__retrograde - 2 * t14 * xo__k * xo__retrograde * xo__h + t4 * xo__g - t5 * xo__g + xo__g) / t1 / xo__p / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2335,12 +2336,12 @@ namespace gtocX_2burnDefine {
   gtocX_2burn::x_velocity_D_1_1( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = xo__p * xo__p;
     real_type t2   = sqrt(xo__p);
-    real_type t6   = sqrt(ModelPars[iM_muS]);
-    real_type t8   = xo__h * xo__h;
-    real_type t9   = xo__k * xo__k;
-    real_type t11  = sin(xo__L);
-    real_type t14  = cos(xo__L);
-    real_type result__ = -3.0 / 4.0 / (t8 + t9 + 1) * (t11 * (t8 - t9 + 1) - 2 * t14 * xo__k * xo__retrograde * xo__h - 2 * xo__f * xo__h * xo__k * xo__retrograde + t8 * xo__g - t9 * xo__g + xo__g) * t6 / t2 / t1;
+    real_type t5   = xo__h * xo__h;
+    real_type t6   = xo__k * xo__k;
+    real_type t8   = sin(xo__L);
+    real_type t15  = cos(xo__L);
+    real_type t24  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -3.0 / 4.0 / (t5 + t6 + 1) * t24 * (t8 * (t5 - t6 + 1) - 2 * xo__f * xo__h * xo__k * xo__retrograde - 2 * t15 * xo__k * xo__retrograde * xo__h + t5 * xo__g - t6 * xo__g + xo__g) / t2 / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2354,10 +2355,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_2( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
+    real_type t7   = sqrt(ModelPars[iM_muS]);
     real_type t9   = xo__h * xo__h;
     real_type t10  = xo__k * xo__k;
-    real_type result__ = -1.0 / (t9 + t10 + 1) * xo__retrograde * xo__k * xo__h * t5 / t1 / xo__p;
+    real_type result__ = -1.0 / (t9 + t10 + 1) * t7 * xo__retrograde * xo__k * xo__h / t1 / xo__p;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2371,10 +2372,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_3( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (t7 - t8 + 1) * t5 / t1 / xo__p / 2;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t9   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t9 * (t4 - t5 + 1) / t1 / xo__p / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2388,16 +2389,16 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = t5 / t1 / xo__p;
-    real_type t7   = sin(xo__L);
-    real_type t9   = xo__k * xo__retrograde;
-    real_type t10  = cos(xo__L);
+    real_type t3   = 1.0 / t1 / xo__p;
+    real_type t4   = sin(xo__L);
+    real_type t8   = xo__k * xo__retrograde;
+    real_type t9   = cos(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
     real_type t17  = xo__h * xo__h;
     real_type t18  = xo__k * xo__k;
     real_type t19  = t17 + t18 + 1;
-    real_type t36  = t19 * t19;
-    real_type result__ = 1.0 / t19 * (-2 * xo__f * xo__k * xo__retrograde - 2 * t10 * t9 + 2 * t7 * xo__h + 2 * xo__g * xo__h) * t6 / 2 - xo__h / t36 * (t7 * (t17 - t18 + 1) - 2 * t10 * xo__k * xo__retrograde * xo__h - 2 * t9 * xo__f * xo__h + t17 * xo__g - t18 * xo__g + xo__g) * t6;
+    real_type t37  = t19 * t19;
+    real_type result__ = 1.0 / t19 * t16 * (-2 * xo__f * xo__k * xo__retrograde + 2 * t4 * xo__h - 2 * t9 * t8 + 2 * xo__g * xo__h) * t3 / 2 - xo__h / t37 * t16 * (t4 * (t17 - t18 + 1) - 2 * t8 * xo__f * xo__h - 2 * t9 * xo__k * xo__retrograde * xo__h + t17 * xo__g - t18 * xo__g + xo__g) * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2411,17 +2412,17 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = t5 / t1 / xo__p;
-    real_type t7   = sin(xo__L);
-    real_type t9   = xo__h * xo__retrograde;
-    real_type t10  = cos(xo__L);
-    real_type t12  = xo__f * xo__h;
+    real_type t3   = 1.0 / t1 / xo__p;
+    real_type t4   = sin(xo__L);
+    real_type t6   = xo__f * xo__h;
+    real_type t8   = xo__h * xo__retrograde;
+    real_type t9   = cos(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
     real_type t17  = xo__h * xo__h;
     real_type t18  = xo__k * xo__k;
     real_type t19  = t17 + t18 + 1;
-    real_type t35  = t19 * t19;
-    real_type result__ = 1.0 / t19 * (-2 * t10 * t9 - 2 * xo__retrograde * t12 - 2 * t7 * xo__k - 2 * xo__g * xo__k) * t6 / 2 - xo__k / t35 * (t7 * (t17 - t18 + 1) - 2 * t10 * xo__k * t9 - 2 * xo__k * xo__retrograde * t12 + t17 * xo__g - t18 * xo__g + xo__g) * t6;
+    real_type t36  = t19 * t19;
+    real_type result__ = 1.0 / t19 * t16 * (-2 * t4 * xo__k - 2 * xo__retrograde * t6 - 2 * t9 * t8 - 2 * xo__g * xo__k) * t3 / 2 - xo__k / t36 * t16 * (t4 * (t17 - t18 + 1) - 2 * xo__k * xo__retrograde * t6 - 2 * t9 * xo__k * t8 + t17 * xo__g - t18 * xo__g + xo__g) * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2435,12 +2436,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type t10  = cos(xo__L);
-    real_type t13  = sin(xo__L);
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (t10 * (t7 - t8 + 1) + 2 * t13 * xo__k * xo__retrograde * xo__h) * t5 / t1 / xo__p / 2;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t7   = cos(xo__L);
+    real_type t10  = sin(xo__L);
+    real_type t17  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t17 * (t7 * (t4 - t5 + 1) + 2 * t10 * xo__k * xo__retrograde * xo__h) / t1 / xo__p / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2454,11 +2455,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_1_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t8   = cos(xo__L);
+    real_type t7   = cos(xo__L);
+    real_type t13  = sqrt(ModelPars[iM_muS]);
     real_type t14  = xo__h * xo__h;
     real_type t15  = xo__k * xo__k;
-    real_type result__ = 1.0 / (t14 + t15 + 1) * (-2 * t8 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) * t5 / t1 / xo__p / 2;
+    real_type result__ = 1.0 / (t14 + t15 + 1) * t13 * (-2 * t7 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) / t1 / xo__p / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2472,10 +2473,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_2( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t6   = sqrt(ModelPars[iM_muS]);
     real_type t8   = xo__h * xo__h;
     real_type t9   = xo__k * xo__k;
-    real_type result__ = 2 / (t8 + t9 + 1) * xo__retrograde * xo__k * xo__h * t4 / t1;
+    real_type result__ = 2 / (t8 + t9 + 1) * t6 * xo__retrograde * xo__k * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2515,14 +2516,14 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_2_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = xo__retrograde * xo__k;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
+    real_type t6   = t5 * xo__retrograde;
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
     real_type t9   = t7 + t8 + 1;
-    real_type t15  = t9 * t9;
-    real_type result__ = 2 / t9 * t6 * t5 - 4 / t15 * t6 * t7 * t5;
+    real_type t16  = t9 * t9;
+    real_type result__ = 2 / t9 * t6 * xo__k * t2 - 4 / t16 * t6 * xo__k * t7 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2536,13 +2537,14 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_2_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t3   = xo__h / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
+    real_type t6   = t5 * xo__retrograde;
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
     real_type t9   = t7 + t8 + 1;
-    real_type t16  = t9 * t9;
-    real_type result__ = 2 / t9 * xo__retrograde * xo__h * t5 - 4 / t16 * xo__retrograde * t8 * xo__h * t5;
+    real_type t15  = t9 * t9;
+    real_type result__ = 2 / t9 * t6 * t3 - 4 / t15 * t6 * t8 * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2569,10 +2571,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_2_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
-    real_type result__ = 2 / (t7 + t8 + 1) * xo__k * xo__h * t4 / t1;
+    real_type result__ = 2 / (t7 + t8 + 1) * t5 * xo__k * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2586,10 +2588,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_3( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type result__ = -1.0 / (t6 + t7 + 1) * (t6 - t7 + 1) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t8   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t8 * (t3 - t4 + 1) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2616,13 +2618,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_3_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
-    real_type t13  = t8 * t8;
-    real_type result__ = -2 / t8 * xo__h * t5 + 2 * xo__h / t13 * (t6 - t7 + 1) * t5;
+    real_type t14  = t8 * t8;
+    real_type result__ = -2 / t8 * t5 * xo__h * t2 + 2 * xo__h / t14 * t5 * (t6 - t7 + 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2636,13 +2638,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_3_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
-    real_type t13  = t8 * t8;
-    real_type result__ = 2 / t8 * xo__k * t5 + 2 * xo__k / t13 * (t6 - t7 + 1) * t5;
+    real_type t14  = t8 * t8;
+    real_type result__ = 2 / t8 * t5 * xo__k * t2 + 2 * xo__k / t14 * t5 * (t6 - t7 + 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2682,16 +2684,16 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = sin(xo__L);
-    real_type t8   = xo__k * xo__retrograde;
-    real_type t9   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = sin(xo__L);
+    real_type t7   = xo__k * xo__retrograde;
+    real_type t8   = cos(xo__L);
+    real_type t15  = sqrt(ModelPars[iM_muS]);
     real_type t16  = xo__h * xo__h;
     real_type t17  = xo__k * xo__k;
     real_type t18  = t16 + t17 + 1;
-    real_type t34  = t18 * t18;
-    real_type result__ = -1.0 / t18 * (-2 * xo__f * xo__k * xo__retrograde + 2 * t6 * xo__h - 2 * t9 * t8 + 2 * xo__g * xo__h) * t5 + 2 * xo__h / t34 * (t6 * (t16 - t17 + 1) - 2 * t9 * xo__k * xo__retrograde * xo__h - 2 * t8 * xo__f * xo__h + t16 * xo__g - t17 * xo__g + xo__g) * t5;
+    real_type t35  = t18 * t18;
+    real_type result__ = -1.0 / t18 * t15 * (-2 * xo__f * xo__k * xo__retrograde + 2 * t3 * xo__h - 2 * t8 * t7 + 2 * xo__g * xo__h) * t2 + 2 * xo__h / t35 * t15 * (t3 * (t16 - t17 + 1) - 2 * t7 * xo__f * xo__h - 2 * t8 * xo__k * xo__retrograde * xo__h + t16 * xo__g - t17 * xo__g + xo__g) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2705,18 +2707,18 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_4_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = sin(xo__L);
+    real_type t8   = sqrt(ModelPars[iM_muS]);
     real_type t9   = xo__h * xo__h;
     real_type t10  = xo__k * xo__k;
     real_type t11  = t9 + t10 + 1;
-    real_type t16  = xo__k * xo__retrograde;
-    real_type t17  = cos(xo__L);
-    real_type t24  = t11 * t11;
-    real_type t25  = 1.0 / t24;
-    real_type t41  = t6 * (t9 - t10 + 1) - 2 * t17 * xo__k * xo__retrograde * xo__h - 2 * t16 * xo__f * xo__h + t9 * xo__g - t10 * xo__g + xo__g;
-    real_type result__ = -1.0 / t11 * (2 * t6 + 2 * xo__g) * t5 + 4 * xo__h * t25 * (-2 * xo__f * xo__k * xo__retrograde - 2 * t17 * t16 + 2 * t6 * xo__h + 2 * xo__g * xo__h) * t5 - 8 * t9 / t24 / t11 * t41 * t5 + 2 * t25 * t41 * t5;
+    real_type t18  = xo__k * xo__retrograde;
+    real_type t19  = cos(xo__L);
+    real_type t25  = t11 * t11;
+    real_type t27  = 1.0 / t25 * t8;
+    real_type t43  = (t3 * (t9 - t10 + 1) - 2 * t18 * xo__f * xo__h - 2 * t19 * xo__k * xo__retrograde * xo__h + t9 * xo__g - t10 * xo__g + xo__g) * t2;
+    real_type result__ = -1.0 / t11 * t8 * (2 * t3 + 2 * xo__g) * t2 + 4 * xo__h * t27 * (-2 * xo__f * xo__k * xo__retrograde - 2 * t19 * t18 + 2 * t3 * xo__h + 2 * xo__g * xo__h) * t2 - 8 * t9 / t25 / t11 * t8 * t43 + 2 * t27 * t43;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2730,19 +2732,19 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_4_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t4   = cos(xo__L);
+    real_type t10  = sqrt(ModelPars[iM_muS]);
     real_type t11  = xo__h * xo__h;
     real_type t12  = xo__k * xo__k;
     real_type t13  = t11 + t12 + 1;
     real_type t17  = sin(xo__L);
-    real_type t19  = xo__k * xo__retrograde;
-    real_type t26  = t13 * t13;
-    real_type t27  = 1.0 / t26;
-    real_type t33  = xo__h * xo__retrograde;
-    real_type t35  = xo__f * xo__h;
-    real_type result__ = -1.0 / t13 * (-2 * t6 * xo__retrograde - 2 * xo__f * xo__retrograde) * t5 + 2 * xo__k * t27 * (-2 * xo__f * xo__k * xo__retrograde + 2 * t17 * xo__h - 2 * t6 * t19 + 2 * xo__g * xo__h) * t5 + 2 * xo__h * t27 * (-2 * t17 * xo__k - 2 * t6 * t33 - 2 * xo__retrograde * t35 - 2 * xo__g * xo__k) * t5 - 8 * xo__k * xo__h / t26 / t13 * (t17 * (t11 - t12 + 1) - 2 * t6 * xo__k * t33 - 2 * t19 * t35 + t11 * xo__g - t12 * xo__g + xo__g) * t5;
+    real_type t21  = xo__k * xo__retrograde;
+    real_type t27  = t13 * t13;
+    real_type t29  = 1.0 / t27 * t10;
+    real_type t34  = xo__f * xo__h;
+    real_type t36  = xo__h * xo__retrograde;
+    real_type result__ = -1.0 / t13 * t10 * (-2 * t4 * xo__retrograde - 2 * xo__f * xo__retrograde) * t2 + 2 * xo__k * t29 * (-2 * xo__f * xo__k * xo__retrograde + 2 * t17 * xo__h - 2 * t4 * t21 + 2 * xo__g * xo__h) * t2 + 2 * xo__h * t29 * (-2 * t17 * xo__k - 2 * xo__retrograde * t34 - 2 * t4 * t36 - 2 * xo__g * xo__k) * t2 - 8 * xo__k * xo__h / t27 / t13 * t10 * (t17 * (t11 - t12 + 1) - 2 * t21 * t34 - 2 * t4 * xo__k * t36 + t11 * xo__g - t12 * xo__g + xo__g) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2756,15 +2758,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_4_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
-    real_type t9   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t6   = sin(xo__L);
+    real_type t12  = sqrt(ModelPars[iM_muS]);
     real_type t13  = xo__h * xo__h;
     real_type t14  = xo__k * xo__k;
     real_type t15  = t13 + t14 + 1;
-    real_type t26  = t15 * t15;
-    real_type result__ = -1.0 / t15 * (2 * t9 * xo__k * xo__retrograde + 2 * t6 * xo__h) * t5 + 2 * xo__h / t26 * (t6 * (t13 - t14 + 1) + 2 * t9 * xo__k * xo__retrograde * xo__h) * t5;
+    real_type t27  = t15 * t15;
+    real_type result__ = -1.0 / t15 * t12 * (2 * t6 * xo__k * xo__retrograde + 2 * t3 * xo__h) * t2 + 2 * xo__h / t27 * t12 * (t3 * (t13 - t14 + 1) + 2 * t6 * xo__k * xo__retrograde * xo__h) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2778,14 +2780,14 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_4_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t4   = cos(xo__L);
+    real_type t10  = sqrt(ModelPars[iM_muS]);
     real_type t11  = xo__h * xo__h;
     real_type t12  = xo__k * xo__k;
     real_type t13  = t11 + t12 + 1;
-    real_type t23  = t13 * t13;
-    real_type result__ = -1.0 / t13 * (-2 * t6 * xo__k - 2 * xo__f * xo__k) * t5 + 2 * xo__h / t23 * (-2 * t6 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) * t5;
+    real_type t24  = t13 * t13;
+    real_type result__ = -1.0 / t13 * t10 * (-2 * t4 * xo__k - 2 * xo__f * xo__k) * t2 + 2 * xo__h / t24 * t10 * (-2 * t4 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2799,17 +2801,17 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = sin(xo__L);
-    real_type t8   = xo__h * xo__retrograde;
-    real_type t9   = cos(xo__L);
-    real_type t11  = xo__f * xo__h;
+    real_type t2   = 1.0 / t1;
+    real_type t3   = sin(xo__L);
+    real_type t5   = xo__f * xo__h;
+    real_type t7   = xo__h * xo__retrograde;
+    real_type t8   = cos(xo__L);
+    real_type t15  = sqrt(ModelPars[iM_muS]);
     real_type t16  = xo__h * xo__h;
     real_type t17  = xo__k * xo__k;
     real_type t18  = t16 + t17 + 1;
-    real_type t33  = t18 * t18;
-    real_type result__ = -1.0 / t18 * (-2 * xo__retrograde * t11 - 2 * t6 * xo__k - 2 * t9 * t8 - 2 * xo__g * xo__k) * t5 + 2 * xo__k / t33 * (t6 * (t16 - t17 + 1) - 2 * t9 * xo__k * t8 - 2 * xo__k * xo__retrograde * t11 + t16 * xo__g - t17 * xo__g + xo__g) * t5;
+    real_type t34  = t18 * t18;
+    real_type result__ = -1.0 / t18 * t15 * (-2 * t3 * xo__k - 2 * xo__retrograde * t5 - 2 * t8 * t7 - 2 * xo__g * xo__k) * t2 + 2 * xo__k / t34 * t15 * (t3 * (t16 - t17 + 1) - 2 * xo__k * xo__retrograde * t5 - 2 * t8 * xo__k * t7 + t16 * xo__g - t17 * xo__g + xo__g) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2823,19 +2825,19 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_5_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = sin(xo__L);
+    real_type t8   = sqrt(ModelPars[iM_muS]);
     real_type t9   = xo__h * xo__h;
     real_type t10  = xo__k * xo__k;
     real_type t11  = t9 + t10 + 1;
-    real_type t16  = xo__h * xo__retrograde;
-    real_type t17  = cos(xo__L);
-    real_type t19  = xo__f * xo__h;
-    real_type t24  = t11 * t11;
-    real_type t25  = 1.0 / t24;
-    real_type t40  = t6 * (t9 - t10 + 1) - 2 * t17 * xo__k * t16 - 2 * xo__k * xo__retrograde * t19 + t9 * xo__g - t10 * xo__g + xo__g;
-    real_type result__ = -1.0 / t11 * (-2 * t6 - 2 * xo__g) * t5 + 4 * xo__k * t25 * (-2 * t16 * t17 - 2 * t19 * xo__retrograde - 2 * t6 * xo__k - 2 * xo__g * xo__k) * t5 - 8 * t10 / t24 / t11 * t40 * t5 + 2 * t25 * t40 * t5;
+    real_type t16  = xo__f * xo__h;
+    real_type t18  = xo__h * xo__retrograde;
+    real_type t19  = cos(xo__L);
+    real_type t25  = t11 * t11;
+    real_type t27  = 1.0 / t25 * t8;
+    real_type t42  = (t3 * (t9 - t10 + 1) - 2 * xo__k * xo__retrograde * t16 - 2 * t19 * xo__k * t18 + t9 * xo__g - t10 * xo__g + xo__g) * t2;
+    real_type result__ = -1.0 / t11 * t8 * (-2 * t3 - 2 * xo__g) * t2 + 4 * xo__k * t27 * (-2 * xo__retrograde * t16 - 2 * t19 * t18 - 2 * t3 * xo__k - 2 * xo__g * xo__k) * t2 - 8 * t10 / t25 / t11 * t8 * t42 + 2 * t27 * t42;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2849,16 +2851,16 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_5_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
-    real_type t8   = xo__h * xo__retrograde;
-    real_type t9   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t5   = xo__h * xo__retrograde;
+    real_type t6   = sin(xo__L);
+    real_type t12  = sqrt(ModelPars[iM_muS]);
     real_type t13  = xo__h * xo__h;
     real_type t14  = xo__k * xo__k;
     real_type t15  = t13 + t14 + 1;
-    real_type t25  = t15 * t15;
-    real_type result__ = -1.0 / t15 * (-2 * t6 * xo__k + 2 * t9 * t8) * t5 + 2 * xo__k / t25 * (t6 * (t13 - t14 + 1) + 2 * t9 * xo__k * t8) * t5;
+    real_type t26  = t15 * t15;
+    real_type result__ = -1.0 / t15 * t12 * (-2 * t3 * xo__k + 2 * t6 * t5) * t2 + 2 * xo__k / t26 * t12 * (t3 * (t13 - t14 + 1) + 2 * t6 * xo__k * t5) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2872,15 +2874,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_5_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
-    real_type t8   = xo__f * xo__h;
+    real_type t2   = 1.0 / t1;
+    real_type t3   = xo__f * xo__h;
+    real_type t4   = cos(xo__L);
+    real_type t10  = sqrt(ModelPars[iM_muS]);
     real_type t11  = xo__h * xo__h;
     real_type t12  = xo__k * xo__k;
     real_type t13  = t11 + t12 + 1;
-    real_type t22  = t13 * t13;
-    real_type result__ = -1.0 / t13 * (-2 * t6 * xo__h - 2 * t8) * t5 + 2 * xo__k / t22 * (-2 * t6 * xo__k * xo__h - 2 * xo__k * t8) * t5;
+    real_type t23  = t13 * t13;
+    real_type result__ = -1.0 / t13 * t10 * (-2 * t4 * xo__h - 2 * t3) * t2 + 2 * xo__k / t23 * t10 * (-2 * t4 * xo__h * xo__k - 2 * t3 * xo__k) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2894,12 +2896,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t9   = cos(xo__L);
-    real_type t12  = sin(xo__L);
-    real_type result__ = -1.0 / (t6 + t7 + 1) * (t9 * (t6 - t7 + 1) + 2 * t12 * xo__k * xo__retrograde * xo__h) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t6   = cos(xo__L);
+    real_type t9   = sin(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t16 * (t6 * (t3 - t4 + 1) + 2 * t9 * xo__k * xo__retrograde * xo__h) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2913,12 +2915,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_6_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t9   = sin(xo__L);
-    real_type t12  = cos(xo__L);
-    real_type result__ = -1.0 / (t6 + t7 + 1) * (-t9 * (t6 - t7 + 1) + 2 * t12 * xo__k * xo__retrograde * xo__h) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t6   = sin(xo__L);
+    real_type t9   = cos(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t16 * (-t6 * (t3 - t4 + 1) + 2 * t9 * xo__k * xo__retrograde * xo__h) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2932,11 +2934,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_6_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = sin(xo__L);
+    real_type t5   = sin(xo__L);
+    real_type t7   = sqrt(ModelPars[iM_muS]);
     real_type t9   = xo__h * xo__h;
     real_type t10  = xo__k * xo__k;
-    real_type result__ = -2 / (t9 + t10 + 1) * t7 * xo__k * xo__h * t4 / t1;
+    real_type result__ = -2 / (t9 + t10 + 1) * t7 * t5 * xo__k * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2950,11 +2952,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::x_velocity_D_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = cos(xo__L);
+    real_type t6   = cos(xo__L);
+    real_type t12  = sqrt(ModelPars[iM_muS]);
     real_type t13  = xo__h * xo__h;
     real_type t14  = xo__k * xo__k;
-    real_type result__ = -1.0 / (t13 + t14 + 1) * (-2 * t7 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) * t4 / t1;
+    real_type result__ = -1.0 / (t13 + t14 + 1) * t12 * (-2 * t6 * xo__k * xo__h - 2 * xo__f * xo__h * xo__k) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -2981,13 +2983,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t8   = t6 - t7 - 1;
-    real_type t10  = cos(xo__L);
-    real_type t14  = sin(xo__L);
-    real_type result__ = -2 / (t6 + t7 + 1) * (t10 * t8 * xo__retrograde / 2 + t14 * xo__k * xo__h + xo__retrograde * t8 * xo__f / 2 + xo__g * xo__h * xo__k) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t5   = t3 - t4 - 1;
+    real_type t7   = cos(xo__L);
+    real_type t11  = sin(xo__L);
+    real_type t21  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -2 / (t3 + t4 + 1) * t21 * (t7 * t5 * xo__retrograde / 2 + t11 * xo__k * xo__h + xo__retrograde * t5 * xo__f / 2 + xo__g * xo__h * xo__k) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3001,13 +3003,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type t9   = t7 - t8 - 1;
-    real_type t11  = cos(xo__L);
-    real_type t15  = sin(xo__L);
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (t11 * t9 * xo__retrograde / 2 + t15 * xo__k * xo__h + xo__retrograde * t9 * xo__f / 2 + xo__g * xo__h * xo__k) * t5 / t1 / xo__p;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t6   = t4 - t5 - 1;
+    real_type t8   = cos(xo__L);
+    real_type t12  = sin(xo__L);
+    real_type t22  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t22 * (t8 * t6 * xo__retrograde / 2 + t12 * xo__k * xo__h + xo__retrograde * t6 * xo__f / 2 + xo__g * xo__h * xo__k) / t1 / xo__p;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3022,13 +3024,13 @@ namespace gtocX_2burnDefine {
   gtocX_2burn::y_velocity_D_1_1( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = xo__p * xo__p;
     real_type t2   = sqrt(xo__p);
-    real_type t6   = sqrt(ModelPars[iM_muS]);
-    real_type t8   = xo__h * xo__h;
-    real_type t9   = xo__k * xo__k;
-    real_type t10  = t8 - t9 - 1;
-    real_type t12  = cos(xo__L);
-    real_type t16  = sin(xo__L);
-    real_type result__ = -3.0 / 2.0 / (t8 + t9 + 1) * (t12 * t10 * xo__retrograde / 2 + t16 * xo__k * xo__h + xo__retrograde * t10 * xo__f / 2 + xo__g * xo__h * xo__k) * t6 / t2 / t1;
+    real_type t5   = xo__h * xo__h;
+    real_type t6   = xo__k * xo__k;
+    real_type t7   = t5 - t6 - 1;
+    real_type t9   = cos(xo__L);
+    real_type t13  = sin(xo__L);
+    real_type t23  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -3.0 / 2.0 / (t5 + t6 + 1) * t23 * (t9 * t7 * xo__retrograde / 2 + t13 * xo__k * xo__h + xo__retrograde * t7 * xo__f / 2 + xo__g * xo__h * xo__k) / t2 / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3042,10 +3044,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_2( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type result__ = 1.0 / (t7 + t8 + 1) * xo__retrograde * (t7 - t8 - 1) * t5 / t1 / xo__p / 2;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t9   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t9 * xo__retrograde * (t4 - t5 - 1) / t1 / xo__p / 2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3059,10 +3061,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_3( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
+    real_type t6   = sqrt(ModelPars[iM_muS]);
     real_type t8   = xo__h * xo__h;
     real_type t9   = xo__k * xo__k;
-    real_type result__ = 1.0 / (t8 + t9 + 1) * xo__k * xo__h * t5 / t1 / xo__p;
+    real_type result__ = 1.0 / (t8 + t9 + 1) * t6 * xo__k * xo__h / t1 / xo__p;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3076,16 +3078,16 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = t5 / t1 / xo__p;
-    real_type t8   = cos(xo__L);
-    real_type t10  = sin(xo__L);
+    real_type t3   = 1.0 / t1 / xo__p;
+    real_type t5   = cos(xo__L);
+    real_type t7   = sin(xo__L);
+    real_type t15  = sqrt(ModelPars[iM_muS]);
     real_type t16  = xo__h * xo__h;
     real_type t17  = xo__k * xo__k;
     real_type t18  = t16 + t17 + 1;
     real_type t22  = t16 - t17 - 1;
-    real_type t34  = t18 * t18;
-    real_type result__ = 1.0 / t18 * (t8 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t10 * xo__k + xo__g * xo__k) * t6 - 2 * xo__h / t34 * (t8 * t22 * xo__retrograde / 2 + t10 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__g * xo__h * xo__k) * t6;
+    real_type t35  = t18 * t18;
+    real_type result__ = 1.0 / t18 * t15 * (t5 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t7 * xo__k + xo__g * xo__k) * t3 - 2 * xo__h / t35 * t15 * (t5 * t22 * xo__retrograde / 2 + t7 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__g * xo__h * xo__k) * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3099,17 +3101,17 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = t5 / t1 / xo__p;
-    real_type t8   = cos(xo__L);
-    real_type t10  = sin(xo__L);
-    real_type t14  = xo__g * xo__h;
+    real_type t3   = 1.0 / t1 / xo__p;
+    real_type t5   = cos(xo__L);
+    real_type t7   = sin(xo__L);
+    real_type t11  = xo__g * xo__h;
+    real_type t15  = sqrt(ModelPars[iM_muS]);
     real_type t16  = xo__h * xo__h;
     real_type t17  = xo__k * xo__k;
     real_type t18  = t16 + t17 + 1;
     real_type t22  = t16 - t17 - 1;
-    real_type t33  = t18 * t18;
-    real_type result__ = 1.0 / t18 * (-t8 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t10 * xo__h + t14) * t6 - 2 * xo__k / t33 * (t8 * t22 * xo__retrograde / 2 + t10 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__k * t14) * t6;
+    real_type t34  = t18 * t18;
+    real_type result__ = 1.0 / t18 * t15 * (-t5 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t7 * xo__h + t11) * t3 - 2 * xo__k / t34 * t15 * (t5 * t22 * xo__retrograde / 2 + t7 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__k * t11) * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3123,12 +3125,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type t11  = sin(xo__L);
-    real_type t15  = cos(xo__L);
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (-t11 * (t7 - t8 - 1) * xo__retrograde / 2 + t15 * xo__k * xo__h) * t5 / t1 / xo__p;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t8   = sin(xo__L);
+    real_type t12  = cos(xo__L);
+    real_type t17  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t17 * (-t8 * (t4 - t5 - 1) * xo__retrograde / 2 + t12 * xo__k * xo__h) / t1 / xo__p;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3142,12 +3144,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_1_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t5   = sqrt(ModelPars[iM_muS]);
-    real_type t7   = xo__h * xo__h;
-    real_type t8   = xo__k * xo__k;
-    real_type t9   = t7 - t8 - 1;
-    real_type t10  = cos(xo__L);
-    real_type result__ = 1.0 / (t7 + t8 + 1) * (t10 * t9 / 2 + t9 * xo__f / 2) * t5 / t1 / xo__p;
+    real_type t4   = xo__h * xo__h;
+    real_type t5   = xo__k * xo__k;
+    real_type t6   = t4 - t5 - 1;
+    real_type t7   = cos(xo__L);
+    real_type t14  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t4 + t5 + 1) * t14 * (t7 * t6 / 2 + t6 * xo__f / 2) / t1 / xo__p;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3161,10 +3163,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_2( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type result__ = -1.0 / (t6 + t7 + 1) * xo__retrograde * (t6 - t7 - 1) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t8   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t8 * xo__retrograde * (t3 - t4 - 1) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3204,13 +3206,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_2_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
     real_type t9   = t7 + t8 + 1;
-    real_type t15  = t9 * t9;
-    real_type result__ = -2 / t9 * xo__retrograde * xo__h * t5 + 2 * xo__h / t15 * xo__retrograde * (t7 - t8 - 1) * t5;
+    real_type t16  = t9 * t9;
+    real_type result__ = -2 / t9 * t5 * xo__retrograde * xo__h * t2 + 2 * xo__h / t16 * t5 * xo__retrograde * (t7 - t8 - 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3224,13 +3226,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_2_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
     real_type t9   = t7 + t8 + 1;
-    real_type t15  = t9 * t9;
-    real_type result__ = 2 / t9 * xo__retrograde * xo__k * t5 + 2 * xo__k / t15 * xo__retrograde * (t7 - t8 - 1) * t5;
+    real_type t16  = t9 * t9;
+    real_type result__ = 2 / t9 * t5 * xo__retrograde * xo__k * t2 + 2 * xo__k / t16 * t5 * xo__retrograde * (t7 - t8 - 1) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3257,10 +3259,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_2_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type result__ = -1.0 / (t6 + t7 + 1) * (t6 - t7 - 1) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t8   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -1.0 / (t3 + t4 + 1) * t8 * (t3 - t4 - 1) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3274,10 +3276,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_3( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
-    real_type result__ = -2 / (t7 + t8 + 1) * xo__k * xo__h * t4 / t1;
+    real_type result__ = -2 / (t7 + t8 + 1) * t5 * xo__k * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3304,13 +3306,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_3_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
-    real_type t14  = t8 * t8;
-    real_type result__ = -2 / t8 * xo__k * t5 + 4 / t14 * xo__k * t6 * t5;
+    real_type t15  = t8 * t8;
+    real_type result__ = -2 / t8 * t5 * xo__k * t2 + 4 / t15 * t5 * xo__k * t6 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3324,13 +3326,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_3_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t3   = xo__h / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
     real_type t14  = t8 * t8;
-    real_type result__ = -2 / t8 * xo__h * t5 + 4 / t14 * t7 * xo__h * t5;
+    real_type result__ = -2 / t8 * t5 * t3 + 4 / t14 * t5 * t7 * t3;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3370,16 +3372,16 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t7   = cos(xo__L);
-    real_type t9   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t4   = cos(xo__L);
+    real_type t6   = sin(xo__L);
+    real_type t14  = sqrt(ModelPars[iM_muS]);
     real_type t15  = xo__h * xo__h;
     real_type t16  = xo__k * xo__k;
     real_type t17  = t15 + t16 + 1;
     real_type t22  = t15 - t16 - 1;
-    real_type t34  = t17 * t17;
-    real_type result__ = -2 / t17 * (t7 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t9 * xo__k + xo__g * xo__k) * t5 + 4 * xo__h / t34 * (t7 * t22 * xo__retrograde / 2 + t9 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__g * xo__h * xo__k) * t5;
+    real_type t35  = t17 * t17;
+    real_type result__ = -2 / t17 * t14 * (t4 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t6 * xo__k + xo__g * xo__k) * t2 + 4 * xo__h / t35 * t14 * (t4 * t22 * xo__retrograde / 2 + t6 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__g * xo__h * xo__k) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3393,18 +3395,18 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_4_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t9   = sqrt(ModelPars[iM_muS]);
     real_type t10  = xo__h * xo__h;
     real_type t11  = xo__k * xo__k;
     real_type t12  = t10 + t11 + 1;
     real_type t19  = sin(xo__L);
-    real_type t25  = t12 * t12;
-    real_type t26  = 1.0 / t25;
-    real_type t31  = t10 - t11 - 1;
-    real_type t42  = t6 * t31 * xo__retrograde / 2 + t19 * xo__k * xo__h + xo__retrograde * t31 * xo__f / 2 + xo__g * xo__h * xo__k;
-    real_type result__ = -2 / t12 * (t6 * xo__retrograde + xo__f * xo__retrograde) * t5 + 8 * xo__h * t26 * (t6 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t19 * xo__k + xo__g * xo__k) * t5 - 16 * t10 / t25 / t12 * t42 * t5 + 4 * t26 * t42 * t5;
+    real_type t26  = t12 * t12;
+    real_type t28  = 1.0 / t26 * t9;
+    real_type t32  = t10 - t11 - 1;
+    real_type t44  = (t3 * t32 * xo__retrograde / 2 + t19 * xo__k * xo__h + xo__retrograde * t32 * xo__f / 2 + xo__g * xo__h * xo__k) * t2;
+    real_type result__ = -2 / t12 * t9 * (t3 * xo__retrograde + xo__f * xo__retrograde) * t2 + 8 * xo__h * t28 * (t3 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t19 * xo__k + xo__g * xo__k) * t2 - 16 * t10 / t26 / t12 * t9 * t44 + 4 * t28 * t44;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3418,18 +3420,18 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_4_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = sin(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = sin(xo__L);
+    real_type t7   = sqrt(ModelPars[iM_muS]);
     real_type t8   = xo__h * xo__h;
     real_type t9   = xo__k * xo__k;
     real_type t10  = t8 + t9 + 1;
     real_type t16  = cos(xo__L);
-    real_type t23  = t10 * t10;
-    real_type t24  = 1.0 / t23;
-    real_type t34  = xo__g * xo__h;
-    real_type t40  = t8 - t9 - 1;
-    real_type result__ = -2 / t10 * (t6 + xo__g) * t5 + 4 * xo__k * t24 * (t16 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t6 * xo__k + xo__g * xo__k) * t5 + 4 * xo__h * t24 * (-t16 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t6 * xo__h + t34) * t5 - 16 * xo__k * xo__h / t23 / t10 * (t16 * t40 * xo__retrograde / 2 + t6 * xo__k * xo__h + xo__retrograde * t40 * xo__f / 2 + xo__k * t34) * t5;
+    real_type t24  = t10 * t10;
+    real_type t26  = 1.0 / t24 * t7;
+    real_type t35  = xo__g * xo__h;
+    real_type t41  = t8 - t9 - 1;
+    real_type result__ = -2 / t10 * t7 * (t3 + xo__g) * t2 + 4 * xo__k * t26 * (t16 * xo__h * xo__retrograde + xo__f * xo__h * xo__retrograde + t3 * xo__k + xo__g * xo__k) * t2 + 4 * xo__h * t26 * (-t16 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t3 * xo__h + t35) * t2 - 16 * xo__k * xo__h / t24 / t10 * t7 * (t16 * t41 * xo__retrograde / 2 + t3 * xo__k * xo__h + xo__retrograde * t41 * xo__f / 2 + xo__k * t35) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3443,15 +3445,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_4_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t7   = sin(xo__L);
-    real_type t9   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t4   = sin(xo__L);
+    real_type t6   = cos(xo__L);
+    real_type t11  = sqrt(ModelPars[iM_muS]);
     real_type t12  = xo__h * xo__h;
     real_type t13  = xo__k * xo__k;
     real_type t14  = t12 + t13 + 1;
-    real_type t26  = t14 * t14;
-    real_type result__ = -2 / t14 * (-t7 * xo__h * xo__retrograde + t9 * xo__k) * t5 + 4 * xo__h / t26 * (-t7 * (t12 - t13 - 1) * xo__retrograde / 2 + t9 * xo__k * xo__h) * t5;
+    real_type t27  = t14 * t14;
+    real_type result__ = -2 / t14 * t11 * (-t4 * xo__h * xo__retrograde + t6 * xo__k) * t2 + 4 * xo__h / t27 * t11 * (-t4 * (t12 - t13 - 1) * xo__retrograde / 2 + t6 * xo__k * xo__h) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3465,15 +3467,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_4_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t9   = sqrt(ModelPars[iM_muS]);
     real_type t10  = xo__h * xo__h;
     real_type t11  = xo__k * xo__k;
     real_type t12  = t10 + t11 + 1;
     real_type t17  = t10 - t11 - 1;
-    real_type t22  = t12 * t12;
-    real_type result__ = -2 / t12 * (t6 * xo__h + xo__f * xo__h) * t5 + 4 * xo__h / t22 * (t6 * t17 / 2 + t17 * xo__f / 2) * t5;
+    real_type t23  = t12 * t12;
+    real_type result__ = -2 / t12 * t9 * (t3 * xo__h + xo__f * xo__h) * t2 + 4 * xo__h / t23 * t9 * (t3 * t17 / 2 + t17 * xo__f / 2) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3487,17 +3489,17 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t7   = cos(xo__L);
-    real_type t9   = sin(xo__L);
-    real_type t13  = xo__g * xo__h;
+    real_type t2   = 1.0 / t1;
+    real_type t4   = cos(xo__L);
+    real_type t6   = sin(xo__L);
+    real_type t10  = xo__g * xo__h;
+    real_type t14  = sqrt(ModelPars[iM_muS]);
     real_type t15  = xo__h * xo__h;
     real_type t16  = xo__k * xo__k;
     real_type t17  = t15 + t16 + 1;
     real_type t22  = t15 - t16 - 1;
-    real_type t33  = t17 * t17;
-    real_type result__ = -2 / t17 * (-t7 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t9 * xo__h + t13) * t5 + 4 * xo__k / t33 * (t7 * t22 * xo__retrograde / 2 + t9 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__k * t13) * t5;
+    real_type t34  = t17 * t17;
+    real_type result__ = -2 / t17 * t14 * (-t4 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t6 * xo__h + t10) * t2 + 4 * xo__k / t34 * t14 * (t4 * t22 * xo__retrograde / 2 + t6 * xo__k * xo__h + xo__retrograde * t22 * xo__f / 2 + xo__k * t10) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3511,19 +3513,19 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_5_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t9   = sqrt(ModelPars[iM_muS]);
     real_type t10  = xo__h * xo__h;
     real_type t11  = xo__k * xo__k;
     real_type t12  = t10 + t11 + 1;
     real_type t19  = sin(xo__L);
     real_type t23  = xo__g * xo__h;
-    real_type t25  = t12 * t12;
-    real_type t26  = 1.0 / t25;
-    real_type t31  = t10 - t11 - 1;
-    real_type t41  = t6 * t31 * xo__retrograde / 2 + t19 * xo__k * xo__h + xo__retrograde * t31 * xo__f / 2 + xo__k * t23;
-    real_type result__ = -2 / t12 * (-t6 * xo__retrograde - xo__f * xo__retrograde) * t5 + 8 * xo__k * t26 * (-t6 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t19 * xo__h + t23) * t5 - 16 * t11 / t25 / t12 * t41 * t5 + 4 * t26 * t41 * t5;
+    real_type t26  = t12 * t12;
+    real_type t28  = 1.0 / t26 * t9;
+    real_type t32  = t10 - t11 - 1;
+    real_type t43  = (t3 * t32 * xo__retrograde / 2 + t19 * xo__k * xo__h + xo__retrograde * t32 * xo__f / 2 + xo__k * t23) * t2;
+    real_type result__ = -2 / t12 * t9 * (-t3 * xo__retrograde - xo__f * xo__retrograde) * t2 + 8 * xo__k * t28 * (-t3 * xo__k * xo__retrograde - xo__f * xo__k * xo__retrograde + t19 * xo__h + t23) * t2 - 16 * t11 / t26 / t12 * t9 * t43 + 4 * t28 * t43;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3537,15 +3539,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_5_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t7   = sin(xo__L);
-    real_type t9   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t4   = sin(xo__L);
+    real_type t6   = cos(xo__L);
+    real_type t11  = sqrt(ModelPars[iM_muS]);
     real_type t12  = xo__h * xo__h;
     real_type t13  = xo__k * xo__k;
     real_type t14  = t12 + t13 + 1;
-    real_type t26  = t14 * t14;
-    real_type result__ = -2 / t14 * (t7 * xo__k * xo__retrograde + t9 * xo__h) * t5 + 4 * xo__k / t26 * (-t7 * (t12 - t13 - 1) * xo__retrograde / 2 + t9 * xo__k * xo__h) * t5;
+    real_type t27  = t14 * t14;
+    real_type result__ = -2 / t14 * t11 * (t4 * xo__k * xo__retrograde + t6 * xo__h) * t2 + 4 * xo__k / t27 * t11 * (-t4 * (t12 - t13 - 1) * xo__retrograde / 2 + t6 * xo__k * xo__h) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3559,15 +3561,15 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_5_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
-    real_type t6   = cos(xo__L);
+    real_type t2   = 1.0 / t1;
+    real_type t3   = cos(xo__L);
+    real_type t9   = sqrt(ModelPars[iM_muS]);
     real_type t10  = xo__h * xo__h;
     real_type t11  = xo__k * xo__k;
     real_type t12  = t10 + t11 + 1;
     real_type t17  = t10 - t11 - 1;
-    real_type t22  = t12 * t12;
-    real_type result__ = -2 / t12 * (-t6 * xo__k - xo__f * xo__k) * t5 + 4 * xo__k / t22 * (t6 * t17 / 2 + t17 * xo__f / 2) * t5;
+    real_type t23  = t12 * t12;
+    real_type result__ = -2 / t12 * t9 * (-t3 * xo__k - xo__f * xo__k) * t2 + 4 * xo__k / t23 * t9 * (t3 * t17 / 2 + t17 * xo__f / 2) * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3581,12 +3583,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t10  = sin(xo__L);
-    real_type t14  = cos(xo__L);
-    real_type result__ = -2 / (t6 + t7 + 1) * (-t10 * (t6 - t7 - 1) * xo__retrograde / 2 + t14 * xo__k * xo__h) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t7   = sin(xo__L);
+    real_type t11  = cos(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -2 / (t3 + t4 + 1) * t16 * (-t7 * (t3 - t4 - 1) * xo__retrograde / 2 + t11 * xo__k * xo__h) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3600,12 +3602,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_6_6( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t10  = cos(xo__L);
-    real_type t14  = sin(xo__L);
-    real_type result__ = -2 / (t6 + t7 + 1) * (-t10 * (t6 - t7 - 1) * xo__retrograde / 2 - t14 * xo__k * xo__h) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t7   = cos(xo__L);
+    real_type t11  = sin(xo__L);
+    real_type t16  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -2 / (t3 + t4 + 1) * t16 * (-t7 * (t3 - t4 - 1) * xo__retrograde / 2 - t11 * xo__k * xo__h) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3619,11 +3621,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_6_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t9   = sin(xo__L);
-    real_type result__ = 1.0 / (t6 + t7 + 1) * t9 * (t6 - t7 - 1) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t7   = sin(xo__L);
+    real_type t9   = sqrt(ModelPars[iM_muS]);
+    real_type result__ = 1.0 / (t3 + t4 + 1) * t9 * t7 * (t3 - t4 - 1) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3637,12 +3639,12 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::y_velocity_D_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = xo__h * xo__h;
-    real_type t7   = xo__k * xo__k;
-    real_type t8   = t6 - t7 - 1;
-    real_type t9   = cos(xo__L);
-    real_type result__ = -2 / (t6 + t7 + 1) * (t9 * t8 / 2 + t8 * xo__f / 2) * t4 / t1;
+    real_type t3   = xo__h * xo__h;
+    real_type t4   = xo__k * xo__k;
+    real_type t5   = t3 - t4 - 1;
+    real_type t6   = cos(xo__L);
+    real_type t13  = sqrt(ModelPars[iM_muS]);
+    real_type result__ = -2 / (t3 + t4 + 1) * t13 * (t6 * t5 / 2 + t5 * xo__f / 2) / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3842,10 +3844,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_2( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
-    real_type result__ = 2 / (t6 + t7 + 1) * xo__h * t4 / t1;
+    real_type result__ = 2 / (t6 + t7 + 1) * t5 * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3885,13 +3887,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_2_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
+    real_type t2   = 1.0 / t1;
     real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
-    real_type t12  = t8 * t8;
-    real_type result__ = 2 / t8 * t5 - 4 / t12 * t6 * t5;
+    real_type t13  = t8 * t8;
+    real_type result__ = 2 / t8 * t4 * t2 - 4 / t13 * t4 * t6 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3905,11 +3907,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_2_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t9   = pow(t6 + t7 + 1, 2);
-    real_type result__ = -4 * xo__k / t9 * xo__h * t4 / t1;
+    real_type result__ = -4 * xo__k / t9 * t5 * xo__h / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3949,10 +3951,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_3( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
-    real_type result__ = 2 / (t7 + t8 + 1) * xo__retrograde * xo__k * t4 / t1;
+    real_type result__ = 2 / (t7 + t8 + 1) * t5 * xo__retrograde * xo__k / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3979,11 +3981,11 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_3_4( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t6   = sqrt(ModelPars[iM_muS]);
     real_type t7   = xo__h * xo__h;
     real_type t8   = xo__k * xo__k;
     real_type t10  = pow(t7 + t8 + 1, 2);
-    real_type result__ = -4 * xo__h / t10 * xo__retrograde * xo__k * t4 / t1;
+    real_type result__ = -4 * xo__h / t10 * t6 * xo__retrograde * xo__k / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -3997,13 +3999,13 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_3_5( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t5   = t4 / t1;
+    real_type t2   = 1.0 / t1;
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
     real_type t8   = t6 + t7 + 1;
-    real_type t14  = t8 * t8;
-    real_type result__ = 2 / t8 * xo__retrograde * t5 - 4 / t14 * xo__retrograde * t7 * t5;
+    real_type t15  = t8 * t8;
+    real_type result__ = 2 / t8 * t5 * xo__retrograde * t2 - 4 / t15 * t5 * xo__retrograde * t7 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -4030,10 +4032,10 @@ namespace gtocX_2burnDefine {
   real_type
   gtocX_2burn::z_velocity_D_3_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
-    real_type t4   = sqrt(ModelPars[iM_muS]);
+    real_type t5   = sqrt(ModelPars[iM_muS]);
     real_type t6   = xo__h * xo__h;
     real_type t7   = xo__k * xo__k;
-    real_type result__ = 2 / (t6 + t7 + 1) * xo__k * t4 / t1;
+    real_type result__ = 2 / (t6 + t7 + 1) * t5 * xo__k / t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -4226,13 +4228,13 @@ namespace gtocX_2burnDefine {
   gtocX_2burn::z_velocity_D_5_7( real_type xo__p, real_type xo__f, real_type xo__g, real_type xo__h, real_type xo__k, real_type xo__L, real_type xo__retrograde ) const {
     real_type t1   = sqrt(xo__p);
     real_type t2   = 1.0 / t1;
-    real_type t4   = sqrt(ModelPars[iM_muS]);
-    real_type t6   = sin(xo__L);
+    real_type t3   = sin(xo__L);
+    real_type t7   = sqrt(ModelPars[iM_muS]);
     real_type t8   = xo__h * xo__h;
     real_type t9   = xo__k * xo__k;
     real_type t10  = t8 + t9 + 1;
     real_type t19  = t10 * t10;
-    real_type result__ = 2 / t10 * (t6 + xo__g) * t4 * t2 - 4 * xo__k / t19 * t2 * (t6 * xo__k + xo__g * xo__k) * t4;
+    real_type result__ = 2 / t10 * t7 * (t3 + xo__g) * t2 - 4 * xo__k / t19 * t2 * (t3 * xo__k + xo__g * xo__k) * t7;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),

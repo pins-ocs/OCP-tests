@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -82,17 +83,44 @@ namespace PuglieseDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t5   = XM__[4];
+    real_type t1   = XL__[iX_T];
+    real_type t4   = ModelPars[iM_w2] * ModelPars[iM_a];
+    real_type t5   = XL__[iX_I__p];
     real_type t6   = t5 * t5;
-    real_type t19  = XM__[1];
+    real_type t7   = ModelPars[iM_b];
+    real_type t12  = LM__[0];
+    real_type t13  = ModelPars[iM_r];
+    real_type t15  = 1.0 / ModelPars[iM_K];
+    real_type t19  = XL__[iX_C];
     real_type t20  = T_lim(t1);
-    real_type t29  = XM__[3];
+    real_type t22  = ModelPars[iM_kappa__AC];
+    real_type t28  = LM__[1];
+    real_type t29  = XL__[iX_DD];
     real_type t30  = D_lim(t29);
+    real_type t31  = ModelPars[iM_mu__C];
     real_type t32  = IL(t1, t19);
     real_type t33  = IL_lim(t32);
-    real_type t35  = XM__[2];
-    real_type result__ = t1 + 1.0 / (t6 + ModelPars[iM_b]) * t6 * ModelPars[iM_w2] * ModelPars[iM_a] + ((1 - 1.0 / ModelPars[iM_K] * t1) * ModelPars[iM_r] - t20 * t19 - t1 * t19 * t5 * ModelPars[iM_kappa__AC]) * LM__[0] + (t30 - (t35 * ModelPars[iM_kappa__R] + t33 + ModelPars[iM_mu__C]) * t19) * LM__[1] + (t29 * ModelPars[iM_a__R] + t32 * ModelPars[iM_a__IL] - t35 * ModelPars[iM_mu__R]) * LM__[2] + (-t29 * ModelPars[iM_mu__D] + ModelPars[iM_rho__D]) * LM__[3] - t5 * ModelPars[iM_lambda] * LM__[4];
+    real_type t34  = ModelPars[iM_kappa__R];
+    real_type t35  = XL__[iX_R];
+    real_type t41  = LM__[2];
+    real_type t42  = ModelPars[iM_a__R];
+    real_type t44  = ModelPars[iM_mu__R];
+    real_type t46  = ModelPars[iM_a__IL];
+    real_type t50  = LM__[3];
+    real_type t51  = ModelPars[iM_mu__D];
+    real_type t53  = ModelPars[iM_rho__D];
+    real_type t58  = ModelPars[iM_lambda] * LM__[4];
+    real_type t60  = XR__[iX_T];
+    real_type t61  = XR__[iX_I__p];
+    real_type t62  = t61 * t61;
+    real_type t70  = XR__[iX_C];
+    real_type t71  = T_lim(t60);
+    real_type t78  = XR__[iX_DD];
+    real_type t79  = D_lim(t78);
+    real_type t80  = IL(t60, t70);
+    real_type t81  = IL_lim(t80);
+    real_type t82  = XR__[iX_R];
+    real_type result__ = t1 + 1.0 / (t6 + t7) * t6 * t4 + ((-t15 * t1 + 1) * t13 - t20 * t19 - t1 * t19 * t5 * t22) * t12 + (t30 - (t35 * t34 + t31 + t33) * t19) * t28 + (t29 * t42 + t32 * t46 - t35 * t44) * t41 + (-t51 * t29 + t53) * t50 - t5 * t58 + t60 + 1.0 / (t62 + t7) * t62 * t4 + ((-t15 * t60 + 1) * t13 - t71 * t70 - t60 * t70 * t61 * t22) * t12 + (t79 - (t82 * t34 + t31 + t81) * t70) * t28 + (t78 * t42 - t82 * t44 + t80 * t46) * t41 + (-t51 * t78 + t53) * t50 - t61 * t58;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }

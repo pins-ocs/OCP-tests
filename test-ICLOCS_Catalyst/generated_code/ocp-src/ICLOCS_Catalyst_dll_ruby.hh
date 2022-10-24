@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_dll_ruby.hh                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace ICLOCS_CatalystDefine {
   public:
 
     ICLOCS_CATALYST_API_DLL
-    ICLOCS_Catalyst_Problem( integer n_threads, Console const * console )
-    : model("ICLOCS_Catalyst",n_threads,console)
+    ICLOCS_Catalyst_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("ICLOCS_Catalyst",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

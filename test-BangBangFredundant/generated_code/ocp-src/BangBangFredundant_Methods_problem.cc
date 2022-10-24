@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFredundant_Methods_problem.cc                          |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -108,12 +109,12 @@ namespace BangBangFredundantDefine {
     X__[4] = (XL__[4]+XR__[4])/2;
     X__[5] = (XL__[5]+XR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t1   = X__[iX_F1];
     real_type t2   = X__[iX_F2];
-    res = res && Flim_min.check_range(-1 - t1 - t2, m_max_penalty_value);
-    res = res && Flim_max.check_range(t1 + t2 - 1, m_max_penalty_value);
-    return res;
+    ok = ok && Flim_min.check_range(-1 - t1 - t2, m_max_penalty_value);
+    ok = ok && Flim_max.check_range(t1 + t2 - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_controls.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -87,11 +88,16 @@ namespace SingularCalogeroModifiedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = QM__[0] * QM__[0];
-    real_type t7   = pow(t2 * ModelPars[iM_C] + XM__[0] - 1, 2);
+    real_type t2   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t3   = ModelPars[iM_C];
+    real_type t7   = pow(t2 * t3 + XL__[iX_x] - 1, 2);
+    real_type t8   = LM__[0];
     real_type t12  = UM__[0];
-    real_type t16  = uControl(t12, -1, 1);
-    real_type result__ = t7 + LM__[0] * XM__[1] + t12 * LM__[1] + t16 * (ModelPars[iM_epsilon] + t7);
+    real_type t15  = ModelPars[iM_epsilon];
+    real_type t17  = uControl(t12, -1, 1);
+    real_type t20  = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t24  = pow(t20 * t3 + XR__[iX_x] - 1, 2);
+    real_type result__ = t7 + XL__[iX_y] * t8 + 2 * t12 * LM__[1] + t17 * (t15 + t7) + t24 + XR__[iX_y] * t8 + t17 * (t15 + t24);
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -128,10 +134,14 @@ namespace SingularCalogeroModifiedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = QM__[0] * QM__[0];
-    real_type t9   = pow(ModelPars[iM_C] * t4 + XM__[0] - 1, 2);
-    real_type t12  = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t12 * (ModelPars[iM_epsilon] + t9);
+    real_type t3   = ModelPars[iM_epsilon];
+    real_type t5   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t6   = ModelPars[iM_C];
+    real_type t10  = pow(t6 * t5 + XL__[iX_x] - 1, 2);
+    real_type t13  = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    real_type t16  = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t20  = pow(t6 * t16 + XR__[iX_x] - 1, 2);
+    result__[ 0   ] = 2 * LM__[1] + t13 * (t3 + t10) + t13 * (t3 + t20);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -178,12 +188,14 @@ namespace SingularCalogeroModifiedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = QM__[0] * QM__[0];
+    real_type t2   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t3   = ModelPars[iM_C];
     real_type t9   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.5e0 * t9 * (2 * ModelPars[iM_C] * t2 + 2 * XM__[0] - 2);
-    result__[ 1   ] = 0.5e0;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = 0.5e0;
+    result__[ 0   ] = t9 * (2 * t3 * t2 + 2 * XL__[iX_x] - 2);
+    result__[ 1   ] = 1.0;
+    real_type t11  = QR__[iQ_zeta] * QR__[iQ_zeta];
+    result__[ 2   ] = t9 * (2 * t3 * t11 + 2 * XR__[iX_x] - 2);
+    result__[ 3   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
   }
@@ -227,10 +239,14 @@ namespace SingularCalogeroModifiedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = QM__[0] * QM__[0];
-    real_type t8   = pow(ModelPars[iM_C] * t3 + XM__[0] - 1, 2);
+    real_type t1   = ModelPars[iM_epsilon];
+    real_type t3   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t4   = ModelPars[iM_C];
+    real_type t8   = pow(t4 * t3 + XL__[iX_x] - 1, 2);
     real_type t11  = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t11 * (ModelPars[iM_epsilon] + t8);
+    real_type t14  = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t18  = pow(t4 * t14 + XR__[iX_x] - 1, 2);
+    result__[ 0   ] = t11 * (t1 + t8) + t11 * (t1 + t18);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -276,13 +292,18 @@ namespace SingularCalogeroModifiedDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = QM__[0] * QM__[0];
+    real_type t3   = QL__[iQ_zeta] * QL__[iQ_zeta];
     real_type t4   = t3 * t3;
     real_type t5   = ModelPars[iM_C];
     real_type t6   = t5 * t5;
-    real_type t8   = XM__[0];
-    real_type t14  = t8 * t8;
-    U__[ iU_u ] = uControl.solve(-1.0 / (2 * t5 * t8 * t3 - 2 * t5 * t3 + t6 * t4 + t14 - 2 * t8 + ModelPars[iM_epsilon] + 1) * LM__[1], -1, 1);
+    real_type t9   = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t10  = t9 * t9;
+    real_type t12  = XL__[iX_x];
+    real_type t16  = XR__[iX_x];
+    real_type t24  = t12 * t12;
+    real_type t25  = t16 * t16;
+    real_type t30  = 2 * t5 * t12 * t3 + 2 * t5 * t16 * t9 + t6 * t10 - 2 * t5 * t3 + t6 * t4 - 2 * t5 * t9 - 2 * t12 - 2 * t16 + t24 + t25 + 2 * ModelPars[iM_epsilon] + 2;
+    U__[ iU_u ] = uControl.solve(-2 / t30 * LM__[1], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

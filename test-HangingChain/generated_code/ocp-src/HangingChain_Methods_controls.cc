@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -79,7 +80,7 @@ namespace HangingChainDefine {
     real_type t2   = UM__[0];
     real_type t3   = t2 * t2;
     real_type t5   = sqrt(t3 + 1);
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t5 * XM__[0];
+    real_type result__ = 2 * t2 * LM__[0] + 2 * t5 * LM__[1] + t5 * XL__[iX_x] + t5 * XR__[iX_x];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -119,7 +120,10 @@ namespace HangingChainDefine {
     real_type t2   = UM__[0];
     real_type t3   = t2 * t2;
     real_type t5   = sqrt(t3 + 1);
-    result__[ 0   ] = 1.0 / t5 * (t2 * LM__[1] + t2 * XM__[0] + t5 * LM__[0]);
+    real_type t6   = t5 * LM__[0];
+    real_type t8   = t2 * LM__[1];
+    real_type t12  = 1.0 / t5;
+    result__[ 0   ] = t12 * (t2 * XL__[iX_x] + t6 + t8) + t12 * (t2 * XR__[iX_x] + t6 + t8);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -171,12 +175,12 @@ namespace HangingChainDefine {
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
-    result__[ 0   ] = 0.5e0 / t4 * t1;
-    result__[ 1   ] = 0.5e0;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = result__[2];
-    result__[ 4   ] = 0.5e0;
-    result__[ 5   ] = result__[3];
+    result__[ 0   ] = 1.0 / t4 * t1;
+    result__[ 1   ] = 0.10e1;
+    result__[ 2   ] = 0.10e1 * result__[0];
+    result__[ 3   ] = result__[0];
+    result__[ 4   ] = 0.10e1;
+    result__[ 5   ] = result__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
@@ -226,9 +230,14 @@ namespace HangingChainDefine {
     real_type t4   = t3 + 1;
     real_type t5   = sqrt(t4);
     real_type t6   = 1.0 / t5;
+    real_type t8   = t2 * t6 * t1;
     real_type t9   = LM__[1];
-    real_type t10  = XM__[0];
-    result__[ 0   ] = t6 * (t2 * t6 * t1 + t10 + t9) - t2 / t5 / t4 * (t5 * t1 + t2 * t10 + t2 * t9);
+    real_type t10  = XL__[iX_x];
+    real_type t13  = t5 * t1;
+    real_type t14  = t2 * t9;
+    real_type t18  = 1.0 / t5 / t4;
+    real_type t21  = XR__[iX_x];
+    result__[ 0   ] = t6 * (t8 + t9 + t10) - t2 * t18 * (t2 * t10 + t13 + t14) + t6 * (t8 + t9 + t21) - t2 * t18 * (t2 * t21 + t13 + t14);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

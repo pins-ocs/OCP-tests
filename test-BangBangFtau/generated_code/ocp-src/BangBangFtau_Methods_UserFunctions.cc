@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_UserFunctions.cc                          |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -105,7 +106,7 @@ namespace BangBangFtauDefine {
   real_type
   BangBangFtau::vsTBInterval( real_type xo___V ) const {
     real_type t2   = vsTBInterval_min(-1 - xo___V);
-    real_type t4   = vsTBInterval_min(xo___V - 1);
+    real_type t4   = vsTBInterval_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -120,7 +121,7 @@ namespace BangBangFtauDefine {
   real_type
   BangBangFtau::vsTBInterval_D( real_type xo___V ) const {
     real_type t2   = ALIAS_vsTBInterval_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_vsTBInterval_min_D(xo___V - 1);
+    real_type t4   = ALIAS_vsTBInterval_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -135,7 +136,7 @@ namespace BangBangFtauDefine {
   real_type
   BangBangFtau::vsTBInterval_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_vsTBInterval_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_vsTBInterval_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_vsTBInterval_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(

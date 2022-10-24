@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_dll_ruby.hh                                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace RobotArmDefine {
   public:
 
     ROBOTARM_API_DLL
-    RobotArm_Problem( integer n_threads, Console const * console )
-    : model("RobotArm",n_threads,console)
+    RobotArm_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("RobotArm",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

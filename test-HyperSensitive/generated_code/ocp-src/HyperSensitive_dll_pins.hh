@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_dll_pins.hh                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace HyperSensitiveDefine {
   public:
 
     HYPERSENSITIVE_API_DLL
-    HyperSensitive_Problem( integer n_threads, Console const * console )
-    : model("HyperSensitive",n_threads,console)
+    HyperSensitive_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("HyperSensitive",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

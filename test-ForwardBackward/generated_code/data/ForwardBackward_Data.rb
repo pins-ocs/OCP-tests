@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ForwardBackward_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 27/6/2022                                        #
+#  version: 1.0   date 10/11/2022                                       #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,20 +20,20 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-c0_0     = 0.0
-epsilon0 = 0.1
-a_epsi   = 0.01
-v_tol    = 0.01
-E_tol0   = 0.25
+v_epsi   = 0.01
 c1_0     = 0.0
-a_tol    = 0.01
-E_tol    = E_tol0
+c1       = c1_0
+epsilon0 = 0.1
+epsilon  = epsilon0
 E_epsi0  = 0.25
 E_epsi   = E_epsi0
+a_epsi   = 0.01
+a_tol    = 0.01
+E_tol0   = 0.25
+E_tol    = E_tol0
+v_tol    = 0.01
+c0_0     = 0.0
 c0       = c0_0
-c1       = c1_0
-v_epsi   = 0.01
-epsilon  = epsilon0
 
 mechatronix do |data|
 
@@ -100,45 +100,45 @@ mechatronix do |data|
       # "MERIT_D2", "MERIT_F2"
       # "MERIT_LOG_D2", "MERIT_LOG_F2"
       # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
-      :merit                => "MERIT_D2",
+      :merit                => "MERIT_F2_and_D2",
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1e-10, # tolerance for stopping criteria
-      :c1                   => 0.01,  # Constant for Armijo step acceptance criteria
-      :lambda_min           => 1e-10, # minimum lambda for linesearch
-      :dump_min             => 0.4,   # (0,0.5)  dumping factor for linesearch
-      :dump_max             => 0.9,   # (0.5,0.99)
+      :tolerance            => 1.0e-10, # tolerance for stopping criteria
+      :c1                   => 0.01, # Constant for Armijo step acceptance criteria
+      :lambda_min           => 1.0e-10, # minimum lambda for linesearch
+      :dump_min             => 0.25, # (0,0.5)  dumping factor for linesearch
+      :dump_max             => 0.9, # (0.5,0.99)
       # Potenza `n` della funzione di interpolazione per minimizzazione
       # f(x) = f0 * exp( (f0'/f0) * x ) + C * x^n
-      :merit_power          => 4, # (2..100)
+      :merit_power          => 6, # (2..100)
       # check that search direction and new estimated search direction have an angle less than check_angle
       # if check_angle == 0 no check is done
       :check_angle            => 120,
-      :check_ratio_norm_two_f => 1.4,  # check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_two_d => 1.4,  # check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      :check_ratio_norm_one_f => 1.4,  # check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      :check_ratio_norm_one_d => 1.4,  # check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
+      :check_ratio_norm_two_f => 2,  # check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
+      :check_ratio_norm_two_d => 2,  # check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
+      :check_ratio_norm_one_f => 2,  # check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
+      :check_ratio_norm_one_d => 2,  # check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
     },
 
     :Hyness => {
       :max_iter  => 50,
-      :tolerance => 1e-9
+      :tolerance => 1.0e-10
     },
 
     :LevenbergMarquardt => {
       :max_iter  => 50,
-      :tolerance => 1e-9
+      :tolerance => 1.0e-10
     },
 
     :YixunShi => {
       :max_iter  => 50,
-      :tolerance => 1e-9
+      :tolerance => 1.0e-10
     },
 
     :QuasiNewton => {
       :max_iter  => 50,
-      :tolerance => 1e-9,
+      :tolerance => 1.0e-10,
       # 'BFGS', 'DFP', 'SR1' for Quasi Newton
       :update => 'BFGS',
       # 'EXACT', 'ARMIJO'
@@ -173,10 +173,9 @@ mechatronix do |data|
 
     # solver parameters
     :NewtonDumped => {
-      # "MERIT_D2", "MERIT_F2"
-      # "MERIT_LOG_D2", "MERIT_LOG_F2"
+      # "MERIT_D2", "MERIT_F2", "MERIT_LOG_D2", "MERIT_LOG_F2"
       # "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
-      :merit                => "MERIT_LOG_F2_and_D2",
+      :merit                => "MERIT_F2_and_D2",
       :max_iter             => 300,
       :max_step_iter        => 40,
       :max_accumulated_iter => 800,
@@ -200,7 +199,7 @@ mechatronix do |data|
 
       # dumping factor for linesearch
       :dump_min => 0.4, # (0,0.5)
-      :dump_max => 0.9, # (0.5,0.99)
+      :dump_max => 0.95, # (0.5,0.99)
 
       # Potenza `n` della funzione di interpolazione per minimizzazione
       # f(x) = f0 * exp( (f0'/f0) * x ) + C * x^n
@@ -268,7 +267,7 @@ mechatronix do |data|
 
     # Model Parameters
     :E_max   => 5.0,
-    :WA      => 1.0,
+    :WA      => 0.0,
     :a_max   => 5.0,
     :a_min   => -5,
     :c0      => c0,

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Path2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -103,6 +104,7 @@ namespace ForwardBackwardDefine {
     real_type t3   = 1.0 / t2;
     real_type t6   = UM__[0];
     real_type t7   = t6 * t6;
+    real_type t10  = LM__[0];
     real_type t12  = ModelPars[iM_c0];
     real_type t13  = ModelPars[iM_c1];
     real_type t17  = ModelPars[iM_v_min];
@@ -119,25 +121,16 @@ namespace ForwardBackwardDefine {
     real_type t41  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
     real_type t42  = 1.0 / t41;
     real_type t45  = LimitE(t42 * (t37 * t35 + t32) - 1);
-    real_type t46  = XM__[0];
+    real_type t46  = XR__[iX_v];
     real_type t47  = 1.0 / t46;
-    real_type t57  = LimitV_min(t17 - t46);
-    real_type t60  = LimitV_max(t46 - t20);
-    real_type t63  = ALIAS_kappa(QM__[0]);
-    real_type t64  = t63 * t63;
-    real_type t65  = t46 * t46;
-    real_type t66  = t65 * t65;
-    real_type t71  = LimitE(t42 * (t66 * t64 + t32) - 1);
-    real_type t73  = XR__[iX_v];
-    real_type t74  = 1.0 / t73;
-    real_type t82  = LimitV_min(t17 - t73);
-    real_type t84  = LimitV_max(t73 - t20);
-    real_type t86  = ALIAS_kappa(QR__[iQ_zeta]);
-    real_type t87  = t86 * t86;
-    real_type t88  = t73 * t73;
-    real_type t89  = t88 * t88;
-    real_type t94  = LimitE(t42 * (t89 * t87 + t32) - 1);
-    real_type result__ = t3 * t1 + 6 * t7 * ModelPars[iM_epsilon] + (-t2 * t13 + t3 * t6 - t12) * LL__[iL_lambda1__xo] + t19 + t22 + 6 * t25 + 6 * t29 + t45 + 4 * t47 * t1 + 4 * (-t46 * t13 + t47 * t6 - t12) * LM__[0] + 4 * t57 + 4 * t60 + 4 * t71 + t74 * t1 + (-t73 * t13 + t74 * t6 - t12) * LR__[iL_lambda1__xo] + t82 + t84 + t94;
+    real_type t54  = LimitV_min(t17 - t46);
+    real_type t56  = LimitV_max(t46 - t20);
+    real_type t58  = ALIAS_kappa(QR__[iQ_zeta]);
+    real_type t59  = t58 * t58;
+    real_type t60  = t46 * t46;
+    real_type t61  = t60 * t60;
+    real_type t66  = LimitE(t42 * (t61 * t59 + t32) - 1);
+    real_type result__ = t3 * t1 + 2 * t7 * ModelPars[iM_epsilon] + (-t2 * t13 + t3 * t6 - t12) * t10 + t19 + t22 + 2 * t25 + 2 * t29 + t45 + t47 * t1 + (-t46 * t13 + t47 * t6 - t12) * t10 + t54 + t56 + t66;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -173,6 +166,7 @@ namespace ForwardBackwardDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
+    real_type t5   = LM__[0];
     real_type t6   = XL__[iX_v];
     real_type t11  = ALIAS_LimitA_min_D(ModelPars[iM_a_min] - t2);
     real_type t15  = ALIAS_LimitA_max_D(t2 - ModelPars[iM_a_max]);
@@ -187,19 +181,13 @@ namespace ForwardBackwardDefine {
     real_type t29  = 1.0 / t28;
     real_type t32  = ALIAS_LimitE_D(t29 * (t22 * t24 + t19) - 1);
     real_type t34  = t29 * t2;
-    real_type t38  = XM__[0];
-    real_type t43  = ALIAS_kappa(QM__[0]);
+    real_type t37  = XR__[iX_v];
+    real_type t41  = ALIAS_kappa(QR__[iQ_zeta]);
+    real_type t42  = t41 * t41;
+    real_type t43  = t37 * t37;
     real_type t44  = t43 * t43;
-    real_type t45  = t38 * t38;
-    real_type t46  = t45 * t45;
-    real_type t51  = ALIAS_LimitE_D(t29 * (t44 * t46 + t19) - 1);
-    real_type t56  = XR__[iX_v];
-    real_type t60  = ALIAS_kappa(QR__[iQ_zeta]);
-    real_type t61  = t60 * t60;
-    real_type t62  = t56 * t56;
-    real_type t63  = t62 * t62;
-    real_type t68  = ALIAS_LimitE_D(t29 * (t63 * t61 + t19) - 1);
-    result__[ 0   ] = 12 * t2 * ModelPars[iM_epsilon] + 1.0 / t6 * LL__[iL_lambda1__xo] - 6 * t11 + 6 * t15 + 2 * t34 * t17 * t32 + 4 / t38 * LM__[0] + 8 * t34 * t17 * t51 + 1.0 / t56 * LR__[iL_lambda1__xo] + 2 * t34 * t17 * t68;
+    real_type t49  = ALIAS_LimitE_D(t29 * (t42 * t44 + t19) - 1);
+    result__[ 0   ] = 4 * t2 * ModelPars[iM_epsilon] + 1.0 / t6 * t5 - 2 * t11 + 2 * t15 + 2 * t34 * t17 * t32 + 1.0 / t37 * t5 + 2 * t34 * t17 * t49;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -244,6 +232,7 @@ namespace ForwardBackwardDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    real_type t1   = LM__[0];
     real_type t2   = XL__[iX_v];
     real_type t3   = t2 * t2;
     real_type t6   = ModelPars[iM_WA];
@@ -258,25 +247,16 @@ namespace ForwardBackwardDefine {
     real_type t21  = ALIAS_LimitE_DD(t18 * (t13 * t12 + t9) - 1);
     real_type t25  = t17 * t17;
     real_type t28  = t7 * t6 / t25;
-    real_type t32  = XM__[0];
-    real_type t33  = t32 * t32;
-    real_type t36  = 0.20e1 / t33 * LM__[0];
-    real_type t38  = ALIAS_kappa(QM__[0]);
-    real_type t39  = t38 * t38;
-    real_type t40  = t33 * t33;
-    real_type t45  = ALIAS_LimitE_DD(t18 * (t40 * t39 + t9) - 1);
-    real_type t50  = 0.160e2 * t28 * t33 * t32 * t39 * t45;
-    result__[ 0   ] = -1.0 / t3 * LL__[iL_lambda1__xo] + 8 * t28 * t3 * t2 * t12 * t21 - t36 + t50;
-    real_type t53  = 0.20e1 / t32;
-    result__[ 1   ] = 1.0 / t2 + t53;
-    real_type t55  = XR__[iX_v];
-    real_type t56  = t55 * t55;
-    real_type t60  = ALIAS_kappa(QR__[iQ_zeta]);
-    real_type t61  = t60 * t60;
-    real_type t62  = t56 * t56;
-    real_type t67  = ALIAS_LimitE_DD(t18 * (t62 * t61 + t9) - 1);
-    result__[ 2   ] = -1.0 / t56 * LR__[iL_lambda1__xo] + 8 * t28 * t56 * t55 * t61 * t67 - t36 + t50;
-    result__[ 3   ] = 1.0 / t55 + t53;
+    result__[ 0   ] = -1.0 / t3 * t1 + 8 * t28 * t3 * t2 * t12 * t21;
+    real_type t33  = XR__[iX_v];
+    result__[ 1   ] = 0.5e0 / t2 + 0.5e0 / t33;
+    real_type t36  = t33 * t33;
+    real_type t40  = ALIAS_kappa(QR__[iQ_zeta]);
+    real_type t41  = t40 * t40;
+    real_type t42  = t36 * t36;
+    real_type t47  = ALIAS_LimitE_DD(t18 * (t42 * t41 + t9) - 1);
+    result__[ 2   ] = -1.0 / t36 * t1 + 8 * t28 * t36 * t33 * t41 * t47;
+    result__[ 3   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
   }
@@ -336,21 +316,14 @@ namespace ForwardBackwardDefine {
     real_type t31  = t24 * t24;
     real_type t33  = 1.0 / t31 * t13;
     real_type t36  = ALIAS_LimitE_D(t27);
-    real_type t41  = ALIAS_kappa(QM__[0]);
+    real_type t41  = ALIAS_kappa(QR__[iQ_zeta]);
     real_type t42  = t41 * t41;
-    real_type t44  = XM__[0] * XM__[0];
+    real_type t44  = XR__[iX_v] * XR__[iX_v];
     real_type t45  = t44 * t44;
     real_type t49  = t25 * (t45 * t42 + t14) - 1;
     real_type t50  = ALIAS_LimitE_DD(t49);
     real_type t54  = ALIAS_LimitE_D(t49);
-    real_type t59  = ALIAS_kappa(QR__[iQ_zeta]);
-    real_type t60  = t59 * t59;
-    real_type t62  = XR__[iX_v] * XR__[iX_v];
-    real_type t63  = t62 * t62;
-    real_type t67  = t25 * (t63 * t60 + t14) - 1;
-    real_type t68  = ALIAS_LimitE_DD(t67);
-    real_type t72  = ALIAS_LimitE_D(t67);
-    result__[ 0   ] = 2 * t25 * t12 * t36 + 8 * t25 * t12 * t54 + 2 * t25 * t12 * t72 + 4 * t33 * t29 * t28 + 16 * t33 * t29 * t50 + 4 * t33 * t29 * t68 + 6 * t10 + 6 * t6 + 12 * ModelPars[iM_epsilon];
+    result__[ 0   ] = 2 * t25 * t12 * t36 + 2 * t25 * t12 * t54 + 4 * t33 * t29 * t28 + 4 * t33 * t29 * t50 + 2 * t10 + 2 * t6 + 4 * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

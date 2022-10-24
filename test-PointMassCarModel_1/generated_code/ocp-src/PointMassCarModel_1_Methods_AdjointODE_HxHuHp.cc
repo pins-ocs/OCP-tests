@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Road2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -185,19 +186,19 @@ namespace PointMassCarModel_1Define {
     real_type t17  = L__[iL_lambda3__xo];
     real_type t19  = ModelPars[iM_kD];
     real_type t20  = t2 * t2;
-    real_type t23  = -t20 * t19 + X__[iX_fx];
+    real_type t23  = -t19 * t20 + X__[iX_fx];
     real_type t27  = L__[iL_lambda4__xo] * U__[iU_v__Omega];
     real_type t28  = ModelPars[iM_v__Omega__max];
     real_type t33  = L__[iL_lambda5__xo] * U__[iU_v__fx];
     real_type t34  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t6 * t10 * t9 + t23 * t6 * t17 + t6 * t28 * t27 + t6 * t34 * t33 + t6 * t1 + t6 * t15;
+    result__[ 0   ] = t10 * t6 * t9 + t17 * t23 * t6 + t27 * t28 * t6 + t33 * t34 * t6 + t1 * t6 + t15 * t6;
     real_type t37  = inv_zeta__dot_D_2(t2, t3, t4, t5);
     real_type t39  = cos(t3);
     real_type t40  = inv_zeta__dot(t2, t3, t4, t5);
-    result__[ 1   ] = t37 * t10 * t9 + t23 * t37 * t17 + t37 * t28 * t27 + t37 * t34 * t33 + t40 * t39 * t9 + t37 * t1 + t37 * t15;
+    result__[ 1   ] = t10 * t37 * t9 + t17 * t23 * t37 + t27 * t28 * t37 + t33 * t34 * t37 + t39 * t40 * t9 + t1 * t37 + t15 * t37;
     real_type t52  = inv_zeta__dot_D_1(t2, t3, t4, t5);
     real_type t61  = t40 * t17;
-    result__[ 2   ] = t40 * t10 * t8 + t52 * t10 * t9 + t23 * t52 * t17 - 2 * t2 * t19 * t61 + t52 * t28 * t27 + t52 * t34 * t33 + t52 * t1 + t52 * t15;
+    result__[ 2   ] = t10 * t40 * t8 + t10 * t52 * t9 + t17 * t23 * t52 - 2 * t19 * t2 * t61 + t27 * t28 * t52 + t33 * t34 * t52 + t1 * t52 + t15 * t52;
     result__[ 3   ] = t40 * t13;
     result__[ 4   ] = t61;
     if ( m_debug )

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -313,14 +314,14 @@ namespace gtocX_2burnDefine {
     result__[ 0   ] = t12 * t10 * t9;
     real_type t14  = t12 * t3;
     result__[ 1   ] = t14 * t6 * t9;
-    real_type t17  = t6 * t1 - t3 * t5;
+    real_type t17  = t1 * t6 - t3 * t5;
     real_type t18  = t17 * t9;
     real_type t20  = ALIAS_ray_positive_D(t8);
-    result__[ 2   ] = t12 * t6 * t20 - t14 * t18;
+    result__[ 2   ] = t12 * t20 * t6 - t14 * t18;
     result__[ 3   ] = result__[1];
     real_type t23  = t6 * t6;
     result__[ 4   ] = t12 * t23 * t9;
-    result__[ 5   ] = -t12 * t6 * t18 - t12 * t3 * t20;
+    result__[ 5   ] = -t12 * t18 * t6 - t12 * t20 * t3;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t29  = t17 * t17;

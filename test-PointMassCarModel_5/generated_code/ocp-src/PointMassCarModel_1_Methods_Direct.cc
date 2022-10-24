@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -199,7 +200,7 @@ namespace PointMassCarModel_1Define {
     result__[ 0   ] = -t2 * t4 * t9 + V__[0];
     result__[ 1   ] = -t9 * XM__[3] + t8 + V__[1];
     real_type t15  = t2 * t2;
-    result__[ 2   ] = V__[2] - (-ModelPars[iM_kD] * t15 + XM__[4]) * t9;
+    result__[ 2   ] = V__[2] - (-t15 * ModelPars[iM_kD] + XM__[4]) * t9;
     result__[ 3   ] = -t9 * UM__[1] * ModelPars[iM_v__Omega__max] + V__[3];
     result__[ 4   ] = -t9 * UM__[0] * ModelPars[iM_v__fx__max] + V__[4];
     if ( m_debug )

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_problem.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -92,8 +93,8 @@ namespace CrossroadDefine {
     X__[2] = (XL__[2]+XR__[2])/2;
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && Tpositive.check_range(-X__[iX_Ts], m_max_penalty_value);
+    bool ok = true;
+    ok = ok && Tpositive.check_range(-X__[iX_Ts], m_max_penalty_value);
     real_type t3   = X__[iX_a] * X__[iX_a];
     real_type t5   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
     real_type t8   = X__[iX_v];
@@ -102,10 +103,10 @@ namespace CrossroadDefine {
     real_type t12  = kappa(X__[iX_s]);
     real_type t13  = t12 * t12;
     real_type t16  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
-    res = res && AccBound.check_range(1.0 / t5 * t3 + 1.0 / t16 * t13 * t10 - 1, m_max_penalty_value);
-    res = res && VelBound_min.check_range(-t8, m_max_penalty_value);
-    res = res && VelBound_max.check_range(t8 - ModelPars[iM_v_max], m_max_penalty_value);
-    return res;
+    ok = ok && AccBound.check_range(1.0 / t5 * t3 + 1.0 / t16 * t13 * t10 - 1, m_max_penalty_value);
+    ok = ok && VelBound_min.check_range(-t8, m_max_penalty_value);
+    ok = ok && VelBound_max.check_range(t8 - ModelPars[iM_v_max], m_max_penalty_value);
+    return ok;
   }
 
   /*\

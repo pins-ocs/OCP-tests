@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -98,9 +99,9 @@ namespace BrachiostocronaDefine {
     X__[2] = (XL__[2]+XR__[2])/2;
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && LowBound.check_range(ModelPars[iM_slope_low] * X__[iX_x] - X__[iX_y] + ModelPars[iM_y0_low], m_max_penalty_value);
-    return res;
+    bool ok = true;
+    ok = ok && LowBound.check_range(ModelPars[iM_slope_low] * X__[iX_x] - X__[iX_y] + ModelPars[iM_y0_low], m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -127,7 +128,7 @@ namespace BrachiostocronaDefine {
     real_type t5   = X__[iX_theta];
     real_type t6   = cos(t5);
     real_type t11  = sin(t5);
-    real_type result__ = t11 * t2 * t4 * L__[iL_lambda2__xo] - t11 * t2 * L__[iL_lambda3__xo] * ModelPars[iM_g] + t2 * t4 * t6 * L__[iL_lambda1__xo] + L__[iL_lambda4__xo] * U__[iU_vtheta];
+    real_type result__ = t11 * t4 * t2 * L__[iL_lambda2__xo] - t11 * ModelPars[iM_g] * t2 * L__[iL_lambda3__xo] + t6 * t4 * t2 * L__[iL_lambda1__xo] + L__[iL_lambda4__xo] * U__[iU_vtheta];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_UserFunctions.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -136,7 +137,7 @@ namespace TyreDynamicDefine {
   real_type
   TyreDynamic::LongSlipRear( real_type xo___V ) const {
     real_type t2   = LongSlipRear_min(-1 - xo___V);
-    real_type t4   = LongSlipRear_min(xo___V - 1);
+    real_type t4   = LongSlipRear_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -151,7 +152,7 @@ namespace TyreDynamicDefine {
   real_type
   TyreDynamic::LongSlipRear_D( real_type xo___V ) const {
     real_type t2   = ALIAS_LongSlipRear_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_LongSlipRear_min_D(xo___V - 1);
+    real_type t4   = ALIAS_LongSlipRear_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -166,7 +167,7 @@ namespace TyreDynamicDefine {
   real_type
   TyreDynamic::LongSlipRear_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_LongSlipRear_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_LongSlipRear_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_LongSlipRear_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(

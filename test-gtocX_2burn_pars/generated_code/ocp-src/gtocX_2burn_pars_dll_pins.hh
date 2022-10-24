@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_dll_pins.hh                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace gtocX_2burn_parsDefine {
   public:
 
     GTOCX_2BURN_PARS_API_DLL
-    gtocX_2burn_pars_Problem( integer n_threads, Console const * console )
-    : model("gtocX_2burn_pars",n_threads,console)
+    gtocX_2burn_pars_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("gtocX_2burn_pars",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

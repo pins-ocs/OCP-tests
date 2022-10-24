@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_AdjointODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -85,7 +86,7 @@ namespace BrakeDefine {
     result__[ 0   ] = 0;
     real_type t1   = L__[iL_lambda1__xo];
     result__[ 1   ] = P__[iP_T] * t1;
-    result__[ 2   ] = t1 * X__[iX_v] + L__[iL_lambda2__xo] * U__[iU_a];
+    result__[ 2   ] = X__[iX_v] * t1 + L__[iL_lambda2__xo] * U__[iU_a];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 3, i_segment );
   }

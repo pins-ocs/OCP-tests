@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_dll_ruby.hh                                       |
  |                                                                       |
- |  version: 1.0   date 24/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace BangBangForkDefine {
   public:
 
     BANGBANGFORK_API_DLL
-    BangBangFork_Problem( integer n_threads, Console const * console )
-    : model("BangBangFork",n_threads,console)
+    BangBangFork_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("BangBangFork",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

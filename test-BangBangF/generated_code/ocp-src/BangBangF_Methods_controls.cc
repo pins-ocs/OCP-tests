@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -89,12 +90,16 @@ namespace BangBangFDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[1];
+    real_type t1   = LM__[0];
+    real_type t2   = XL__[iX_v];
     real_type t5   = UM__[0];
-    real_type t7   = FControl(t5, -1, 1);
-    real_type t8   = C1(t2);
-    real_type t9   = C1_constr(t8);
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t7 + t9;
+    real_type t8   = FControl(t5, -1, 1);
+    real_type t10  = C1(t2);
+    real_type t11  = C1_constr(t10);
+    real_type t12  = XR__[iX_v];
+    real_type t14  = C1(t12);
+    real_type t15  = C1_constr(t14);
+    real_type result__ = t1 * t12 + t1 * t2 + 2 * t5 * LM__[1] + t11 + t15 + 2 * t8;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -132,7 +137,7 @@ namespace BangBangFDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_FControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t3;
+    result__[ 0   ] = 2 * LM__[1] + 2 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -177,8 +182,8 @@ namespace BangBangFDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -222,7 +227,8 @@ namespace BangBangFDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_FControl_D_1_1(UM__[0], -1, 1);
+    real_type t2   = ALIAS_FControl_D_1_1(UM__[0], -1, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

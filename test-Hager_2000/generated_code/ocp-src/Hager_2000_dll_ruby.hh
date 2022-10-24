@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_dll_ruby.hh                                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace Hager_2000Define {
   public:
 
     HAGER_2000_API_DLL
-    Hager_2000_Problem( integer n_threads, Console const * console )
-    : model("Hager_2000",n_threads,console)
+    Hager_2000_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Hager_2000",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

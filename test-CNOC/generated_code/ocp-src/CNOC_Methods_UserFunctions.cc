@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_UserFunctions.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::ToolPath2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -188,7 +189,7 @@ namespace CNOCDefine {
   real_type
   CNOC::PathFollowingTolerance( real_type xo___V ) const {
     real_type t2   = PathFollowingTolerance_min(-1 - xo___V);
-    real_type t4   = PathFollowingTolerance_min(xo___V - 1);
+    real_type t4   = PathFollowingTolerance_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -203,7 +204,7 @@ namespace CNOCDefine {
   real_type
   CNOC::PathFollowingTolerance_D( real_type xo___V ) const {
     real_type t2   = ALIAS_PathFollowingTolerance_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_PathFollowingTolerance_min_D(xo___V - 1);
+    real_type t4   = ALIAS_PathFollowingTolerance_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -218,7 +219,7 @@ namespace CNOCDefine {
   real_type
   CNOC::PathFollowingTolerance_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_PathFollowingTolerance_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_PathFollowingTolerance_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_PathFollowingTolerance_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -233,7 +234,7 @@ namespace CNOCDefine {
   real_type
   CNOC::as_limit( real_type xo___V ) const {
     real_type t2   = as_limit_min(-1 - xo___V);
-    real_type t4   = as_limit_min(xo___V - 1);
+    real_type t4   = as_limit_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -248,7 +249,7 @@ namespace CNOCDefine {
   real_type
   CNOC::as_limit_D( real_type xo___V ) const {
     real_type t2   = ALIAS_as_limit_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_as_limit_min_D(xo___V - 1);
+    real_type t4   = ALIAS_as_limit_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -263,7 +264,7 @@ namespace CNOCDefine {
   real_type
   CNOC::as_limit_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_as_limit_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_as_limit_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_as_limit_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -278,7 +279,7 @@ namespace CNOCDefine {
   real_type
   CNOC::an_limit( real_type xo___V ) const {
     real_type t2   = an_limit_min(-1 - xo___V);
-    real_type t4   = an_limit_min(xo___V - 1);
+    real_type t4   = an_limit_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -293,7 +294,7 @@ namespace CNOCDefine {
   real_type
   CNOC::an_limit_D( real_type xo___V ) const {
     real_type t2   = ALIAS_an_limit_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_an_limit_min_D(xo___V - 1);
+    real_type t4   = ALIAS_an_limit_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -308,7 +309,7 @@ namespace CNOCDefine {
   real_type
   CNOC::an_limit_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_an_limit_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_an_limit_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_an_limit_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -323,7 +324,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ax_limit( real_type xo___V ) const {
     real_type t2   = ax_limit_min(-1 - xo___V);
-    real_type t4   = ax_limit_min(xo___V - 1);
+    real_type t4   = ax_limit_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -338,7 +339,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ax_limit_D( real_type xo___V ) const {
     real_type t2   = ALIAS_ax_limit_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_ax_limit_min_D(xo___V - 1);
+    real_type t4   = ALIAS_ax_limit_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -353,7 +354,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ax_limit_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_ax_limit_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_ax_limit_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_ax_limit_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -368,7 +369,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ay_limit( real_type xo___V ) const {
     real_type t2   = ay_limit_min(-1 - xo___V);
-    real_type t4   = ay_limit_min(xo___V - 1);
+    real_type t4   = ay_limit_max(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -383,7 +384,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ay_limit_D( real_type xo___V ) const {
     real_type t2   = ALIAS_ay_limit_min_D(-1 - xo___V);
-    real_type t4   = ALIAS_ay_limit_min_D(xo___V - 1);
+    real_type t4   = ALIAS_ay_limit_max_D(xo___V - 1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -398,7 +399,7 @@ namespace CNOCDefine {
   real_type
   CNOC::ay_limit_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_ay_limit_min_DD(-1 - xo___V);
-    real_type t4   = ALIAS_ay_limit_min_DD(xo___V - 1);
+    real_type t4   = ALIAS_ay_limit_max_DD(xo___V - 1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(

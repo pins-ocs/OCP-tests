@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    SoundingRocket   model("SoundingRocket",n_threads,&console);
+    SoundingRocket   model("SoundingRocket",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,15 +50,15 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type W0 = 1;
-    real_type epsi0 = 0.01;
     real_type b = 350;
-    real_type g = 9.81;
-    real_type B = 4*g;
+    real_type epsi0 = 0.01;
     real_type x3_f = b;
     real_type tol0 = 0.01;
+    real_type g = 9.81;
     real_type u_tolerance = tol0;
     real_type u_epsi = epsi0;
+    real_type B = 4*g;
+    real_type W0 = 1;
     real_type W = W0;
     integer InfoLevel = 4;
 
@@ -168,7 +168,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_dll_ruby.hh                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace PointMassCarModel_3Define {
   public:
 
     POINTMASSCARMODEL_3_API_DLL
-    PointMassCarModel_3_Problem( integer n_threads, Console const * console )
-    : model("PointMassCarModel_3",n_threads,console)
+    PointMassCarModel_3_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("PointMassCarModel_3",console,TP)
     , road( "road" )
     {
       Mechatronix::activate_ctrlC();

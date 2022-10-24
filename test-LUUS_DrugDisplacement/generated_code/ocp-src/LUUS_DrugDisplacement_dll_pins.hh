@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_dll_pins.hh                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace LUUS_DrugDisplacementDefine {
   public:
 
     LUUS_DRUGDISPLACEMENT_API_DLL
-    LUUS_DrugDisplacement_Problem( integer n_threads, Console const * console )
-    : model("LUUS_DrugDisplacement",n_threads,console)
+    LUUS_DrugDisplacement_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("LUUS_DrugDisplacement",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

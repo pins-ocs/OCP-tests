@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_dll_pins.hh                                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace Dadebo1Define {
   public:
 
     DADEBO1_API_DLL
-    Dadebo1_Problem( integer n_threads, Console const * console )
-    : model("Dadebo1",n_threads,console)
+    Dadebo1_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Dadebo1",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -93,12 +94,17 @@ namespace ICLOCS_SingularArcDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t4   = UM__[0];
-    real_type t8   = XM__[0];
-    real_type t9   = cos(t8);
-    real_type t13  = sin(t8);
-    real_type t15  = uControl(t4, -2, 2);
-    real_type t16  = tfbound(-t2);
-    real_type result__ = t13 * t2 * LM__[2] + t2 * t4 * LM__[0] + t2 * t9 * LM__[1] + t15 + t16;
+    real_type t8   = t2 * LM__[1];
+    real_type t9   = XL__[iX_x1];
+    real_type t10  = cos(t9);
+    real_type t13  = t2 * LM__[2];
+    real_type t14  = sin(t9);
+    real_type t16  = uControl(t4, -2, 2);
+    real_type t18  = tfbound(-t2);
+    real_type t20  = XR__[iX_x1];
+    real_type t21  = cos(t20);
+    real_type t23  = sin(t20);
+    real_type result__ = 2 * t4 * t2 * LM__[0] + t10 * t8 + t14 * t13 + t23 * t13 + t21 * t8 + 2 * t16 + 2 * t18;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -138,7 +144,7 @@ namespace ICLOCS_SingularArcDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_uControl_D_1(UM__[0], -2, 2);
-    result__[ 0   ] = LM__[0] * P__[iP_T] + t5;
+    result__[ 0   ] = 2 * LM__[0] * P__[iP_T] + 2 * t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -186,9 +192,9 @@ namespace ICLOCS_SingularArcDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.5e0 * P__[iP_T];
+    result__[ 0   ] = 0.10e1 * P__[iP_T];
     result__[ 1   ] = result__[0];
-    result__[ 2   ] = LM__[0];
+    result__[ 2   ] = 2 * LM__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 3, i_segment );
   }
@@ -234,7 +240,8 @@ namespace ICLOCS_SingularArcDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], -2, 2);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -2, 2);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

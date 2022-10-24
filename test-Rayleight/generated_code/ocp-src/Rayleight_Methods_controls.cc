@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -76,13 +77,20 @@ namespace RayleightDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = XL__[iX_x1];
     real_type t2   = t1 * t1;
     real_type t3   = UM__[0];
     real_type t4   = t3 * t3;
-    real_type t6   = XM__[1];
-    real_type t9   = t6 * t6;
-    real_type result__ = t2 + t4 + t6 * LM__[0] + (-t1 + t6 * (0.14e1 - 0.14e0 * t9) + 4 * t3) * LM__[1];
+    real_type t6   = LM__[0];
+    real_type t7   = XL__[iX_x2];
+    real_type t9   = LM__[1];
+    real_type t10  = t7 * t7;
+    real_type t14  = 4 * t3;
+    real_type t17  = XR__[iX_x1];
+    real_type t18  = t17 * t17;
+    real_type t19  = XR__[iX_x2];
+    real_type t21  = t19 * t19;
+    real_type result__ = t2 + 2 * t4 + t7 * t6 + (-t1 + t7 * (0.14e1 - 0.14e0 * t10) + t14) * t9 + t18 + t19 * t6 + (-t17 + t19 * (0.14e1 - 0.14e0 * t21) + t14) * t9;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -119,7 +127,7 @@ namespace RayleightDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * UM__[0] + 4 * LM__[1];
+    result__[ 0   ] = 4 * UM__[0] + 8 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -164,8 +172,8 @@ namespace RayleightDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2.0;
-    result__[ 1   ] = 2.0;
+    result__[ 0   ] = 4.0;
+    result__[ 1   ] = 4.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -209,7 +217,7 @@ namespace RayleightDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2;
+    result__[ 0   ] = 4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

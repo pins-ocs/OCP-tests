@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -156,15 +157,15 @@ namespace TyreDynamicDefine {
     X__[3] = (XL__[3]+XR__[3])/2;
     X__[4] = (XL__[4]+XR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t2   = ModelPars[iM_h__b];
-    res = res && OnlyBrakingRear.check_range(X__[iX_b] - t2, m_max_penalty_value);
-    res = res && OnlyTractionRear.check_range(-t2 - X__[iX_p], m_max_penalty_value);
+    ok = ok && OnlyBrakingRear.check_range(X__[iX_b] - t2, m_max_penalty_value);
+    ok = ok && OnlyTractionRear.check_range(-t2 - X__[iX_p], m_max_penalty_value);
     real_type t9   = 1.0 / ModelPars[iM_lambda__max] * X__[iX_lambda];
-    res = res && LongSlipRear_min.check_range(-1 - t9, m_max_penalty_value);
-    res = res && LongSlipRear_max.check_range(t9 - 1, m_max_penalty_value);
-    res = res && v_min.check_range(1 - X__[iX_v], m_max_penalty_value);
-    return res;
+    ok = ok && LongSlipRear_min.check_range(-1 - t9, m_max_penalty_value);
+    ok = ok && LongSlipRear_max.check_range(t9 - 1, m_max_penalty_value);
+    ok = ok && v_min.check_range(1 - X__[iX_v], m_max_penalty_value);
+    return ok;
   }
 
   /*\

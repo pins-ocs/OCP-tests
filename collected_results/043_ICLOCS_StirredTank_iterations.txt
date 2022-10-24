@@ -1,0 +1,1103 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+[ 2] final_x1
+[ 3] final_x2
+
+
+
+Controls
+uControl = {
+  type    = LOGARITHMIC BARRIER,
+  epsilon = 0.09999999999999998,
+  size    = 0.09999999999999998
+}
+
+Constraints LT
+tfbound = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=1
+  Tolerance = 1
+  Epsilon   = 0.009999999999999995
+  Active    = YES
+}
+x1bound_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.01
+  Tolerance = 0.009999999999999995
+  Epsilon   = 0.009999999999999995
+  Active    = YES
+}
+x1bound_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.01
+  Tolerance = 0.009999999999999995
+  Epsilon   = 0.009999999999999995
+  Active    = YES
+}
+x2bound_min = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.01
+  Tolerance = 0.009999999999999995
+  Epsilon   = 0.009999999999999995
+  Active    = YES
+}
+x2bound_max = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.01
+  Tolerance = 0.009999999999999995
+  Epsilon   = 0.009999999999999995
+  Active    = YES
+}
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 401
+Segment N.0: s0 = 0 length = 1 npts = 401 no data set
+END Mesh[mesh]
+Model Parameters
+......................................En = 5
+.................................T_guess = 90
+...................................T_min = 10
+......................................Tc = 0.38158000000000003
+......................................Tf = 0.39469999999999983
+.......................................a = 0.11699999999999999
+.......................................k = 300
+...................................theta = 20
+.....................................u_f = 0.7599999999999998
+..................................w_time = 1
+....................................x1_f = 0.2631999999999999
+....................................x1_i = 0.98
+....................................x2_f = 0.6518999999999999
+....................................x2_i = 0.3899999999999999
+..............................epsi_ctrl0 = 0.09999999999999998
+..............................epsi_ctrl1 = 0.001
+...............................tol_ctrl0 = 0.09999999999999998
+...............................tol_ctrl1 = 0.001
+..............................w_time_max = 1
+..............................w_time_min = 0.009999999999999995
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 8] ( 0.00123  , 0.00128  ) [ 1.82e+04 , 1.82e+04 ] 3.81e-06   [0:0:0:0:0:0:0:0:6:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[  2, 7] ( 0.00128  ,  0.0013  ) [ 5.71e+03 , 5.71e+03 ] 7.63e-06   [0:0:0:0:0:0:0:0:5:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[  3, 6] (  0.0013  ,  0.0013  ) [   52.3   ,    52    ] 0.000977   [0:0:0:0:0:0:0:0:4:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[  4, 7] (  0.0013  , 0.00136  ) [   41.2   ,   40.9   ] 0.00781    [0:0:0:0:0:0:0:0:5:0:0:0]
+[  5, 5] ( 0.00136  , 0.00138  ) [   47.1   ,   45.6   ] 0.0312     [0:0:0:0:0:0:0:0:3:0:0:0]
+[  6,18] ( 0.00138  , 0.00212  ) [   46.5   ,   44.1   ] 0.0513     [0:0:0:0:14:0:0:0:2:0:0:0]
+[  7,40] ( 0.00212  , 0.00658  ) [   43.7   ,   37.7   ] 0.135      [0:0:22:0:17:0:0:0:0:0:0:0]
+[  8,27] ( 0.00658  ,  0.0155  ) [   37.4   ,   28.8   ] 0.233      [0:0:21:0:5:0:0:0:0:0:0:0]
+[  9,15] (  0.0155  ,  0.0249  ) [   21.5   ,   17.1   ] 0.27       [0:0:12:0:0:0:0:0:1:0:0:0]
+[ 10,16] (  0.0249  ,  0.0476  ) [   36.1   ,   29.5   ] 0.257      [0:0:13:0:0:0:0:0:1:0:0:0]
+[ 11,15] (  0.0476  ,  0.0927  ) [   60.8   ,   46.8   ] 0.27       [0:0:11:0:1:0:0:0:1:0:0:0]
+[ 12, 4] (  0.0927  ,  0.118   ) [   84.8   ,   69.1   ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 13, 4] (  0.118   ,  0.148   ) [   105    ,   84.6   ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 14, 4] (  0.148   ,   0.18   ) [   121    ,   95.6   ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 15, 4] (   0.18   ,  0.209   ) [   130    ,   101    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 16, 4] (  0.209   ,  0.233   ) [   132    ,   103    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 17, 4] (  0.233   ,   0.25   ) [   133    ,   103    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 18, 4] (   0.25   ,  0.259   ) [   135    ,   105    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 19, 4] (  0.259   ,  0.261   ) [   139    ,   109    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[ 20, 4] (  0.261   ,  0.255   ) [   146    ,   116    ] 0.2        [0:0:1:0:0:0:0:0:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 21, 3] (  0.255   ,  0.368   ) [   151    ,   34.6   ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+[ 22, 2] (  0.368   ,  0.267   ) [   94.3   ,   28.6   ] 0.616      [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 23, 1] (  0.267   ,  0.258   ) [   124    ,   38.4   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 2] (  0.258   ,  0.171   ) [   63.4   ,   44.2   ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 25, 4] (  0.171   ,  0.166   ) [   133    ,   129    ] 0.064      [1:1:1:0:0:0:0:0:0:0:0:0]
+[ 26, 4] (  0.166   ,  0.164   ) [   143    ,   137    ] 0.064      [1:0:1:1:0:0:0:0:0:0:0:0]
+[ 27, 2] (  0.164   ,  0.0166  ) [   14.2   ,    25    ] 0.95       [0:0:0:1:0:0:0:0:0:0:0:0]
+[ 28, 2] (  0.0166  , 0.00512  ) [   5.4    ,  0.301   ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 2] ( 0.00512  , 0.000274 ) [  0.595   ,  0.0164  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 30, 1] ( 0.000274 , 2.46e-08 ) [  0.0162  , 2.38e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 31, 1] ( 2.46e-08 , 7.55e-14 ) [ 2.37e-05 , 1.07e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 32,22] ( 0.000123 , 0.00256  ) [   51.6   ,    34    ] 0.341      [0:0:19:0:2:0:0:0:0:0:0:0]
+[ 33, 9] ( 0.00256  ,  0.0056  ) [   34.1   ,   11.5   ] 0.663      [0:0:8:0:0:0:0:0:0:0:0:0]
+[ 34, 1] (  0.0056  , 0.00163  ) [   11.6   ,   0.13   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 35, 2] ( 0.00163  , 8.5e-05  ) [  0.175   , 0.00557  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 36, 2] ( 8.5e-05  , 4.25e-06 ) [ 0.00529  , 0.00026  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 37, 2] ( 4.25e-06 , 2.13e-07 ) [ 0.000259 , 1.29e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 38, 1] ( 2.13e-07 , 4.16e-14 ) [ 1.29e-05 , 3.79e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=0.19999999999999996
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 39,33] ( 0.000185 , 0.00271  ) [   78.1   ,    63    ] 0.194      [0:0:28:0:4:0:0:0:0:0:0:0]
+[ 40,25] ( 0.00271  , 0.00638  ) [   63.2   ,   44.8   ] 0.292      [0:0:24:0:0:0:0:0:0:0:0:0]
+[ 41,13] ( 0.00638  ,  0.0132  ) [    45    ,   20.8   ] 0.54       [0:0:12:0:0:0:0:0:0:0:0:0]
+[ 42, 1] (  0.0132  ,  0.0103  ) [   21.1   ,  0.176   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 43, 4] (  0.0103  , 0.00167  ) [   1.26   ,  0.0356  ] 0.857      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 44, 2] ( 0.00167  , 8.36e-05 ) [  0.0489  , 0.00196  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 45, 1] ( 8.36e-05 , 1.09e-09 ) [ 0.00198  , 1.63e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 46, 1] ( 1.09e-09 , 2.01e-14 ) [ 1.63e-06 , 1.48e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.8, ds=0.3, old_s=0.4999999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 47,23] ( 0.000185 , 0.00276  ) [   80.4   ,   69.5   ] 0.136      [0:0:19:0:3:0:0:0:0:0:0:0]
+[ 48,17] ( 0.00276  , 0.00684  ) [   70.1   ,   57.2   ] 0.185      [0:0:16:0:0:0:0:0:0:0:0:0]
+[ 49,10] ( 0.00684  ,  0.0138  ) [    58    ,   42.8   ] 0.265      [0:0:9:0:0:0:0:0:0:0:0:0]
+[ 50, 2] (  0.0138  ,  0.026   ) [    44    ,   27.2   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[ 51, 2] (  0.026   ,  0.0333  ) [   29.1   ,    19    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[ 52, 1] (  0.0333  , 0.00919  ) [   16.4   ,   17.6   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 53, 1] ( 0.00919  , 0.00707  ) [   4.42   ,  0.359   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 54, 5] ( 0.00707  , 0.00175  ) [   1.39   ,  0.0604  ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
+[ 55, 2] ( 0.00175  , 9.01e-05 ) [  0.111   ,  0.0034  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 56, 2] ( 9.01e-05 , 4.51e-06 ) [ 0.00347  , 0.000173 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 57, 2] ( 4.51e-06 , 2.25e-07 ) [ 0.000173 , 8.65e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 58, 1] ( 2.25e-07 , 2.83e-14 ) [ 8.65e-06 , 3.04e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.2, old_s=0.7999999999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 59,30] ( 0.000123 , 0.00236  ) [   60.2   ,   54.6   ] 0.0951     [0:0:29:0:0:0:0:0:0:0:0:0]
+[ 60,22] ( 0.00236  , 0.00531  ) [   56.2   ,   50.4   ] 0.108      [0:0:21:0:0:0:0:0:0:0:0:0]
+[ 61, 6] ( 0.00531  ,  0.0108  ) [   52.8   ,   46.1   ] 0.137      [0:0:5:0:0:0:0:0:0:0:0:0]
+[ 62, 4] (  0.0108  ,  0.0154  ) [   52.5   ,   48.3   ] 0.0954     [0:0:3:0:0:0:0:0:0:0:0:0]
+[ 63, 4] (  0.0154  ,  0.0205  ) [   60.4   ,   58.4   ] 0.064      [0:0:3:0:0:0:0:0:0:0:0:0]
+[ 64, 9] (  0.0205  ,  0.022   ) [   573    ,   576    ] 0.0032     [1:1:2:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 65, 6] (  0.022   ,  0.0425  ) [   565    ,   266    ] 0.0125     [1:0:0:0:0:0:0:0:3:0:0:0]
+[ 66, 2] (  0.0425  ,  0.0496  ) [   39.3   ,    23    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 67, 2] (  0.0496  ,  0.0749  ) [    39    ,   16.9   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 68, 2] (  0.0749  ,  0.102   ) [   41.9   ,   17.9   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 69, 5] (  0.102   ,   0.11   ) [   63.4   ,   51.6   ] 0.19       [2:0:0:0:0:0:0:0:1:0:0:0]
+[ 70, 5] (   0.11   ,  0.151   ) [   185    ,   150    ] 0.1        [1:0:0:0:0:0:0:0:2:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 71, 9] (  0.151   ,  0.152   ) [   936    ,   935    ] 0.004      [0:2:1:0:0:0:0:0:4:0:0:0]
+[ 72, 9] (  0.152   ,  0.153   ) [ 1.25e+03 , 1.25e+03 ] 0.0032     [1:2:1:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 73, 8] (  0.153   ,  0.156   ) [   639    ,   638    ] 0.01       [0:1:0:0:1:0:0:0:4:0:0:0]
+[ 74, 7] (  0.156   ,  0.157   ) [   490    ,   490    ] 0.0128     [1:2:1:0:0:0:0:0:1:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 75, 7] (  0.157   ,  0.163   ) [   448    ,   449    ] 0.02       [0:1:1:0:0:0:0:0:3:0:0:0]
+[ 76, 5] (  0.163   ,  0.162   ) [   248    ,   246    ] 0.0262     [1:2:1:0:0:0:0:0:0:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 77, 9] (  0.162   ,  0.163   ) [   972    ,   973    ] 0.004      [0:2:1:0:0:0:0:0:4:0:0:0]
+[ 78, 7] (  0.163   ,  0.164   ) [   480    ,   481    ] 0.0128     [1:2:1:0:0:0:0:0:1:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 79, 7] (  0.164   ,  0.168   ) [   385    ,   385    ] 0.02       [0:1:1:0:0:0:0:0:3:0:0:0]
+[ 80, 5] (  0.168   ,  0.168   ) [   286    ,   285    ] 0.0256     [1:2:1:0:0:0:0:0:0:0:0:0]
+[ 81, 8] (  0.168   ,  0.168   ) [   414    ,   412    ] 0.00801    [0:2:1:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 82,12] (  0.168   ,  0.169   ) [ 2.42e+04 , 2.43e+04 ] 0.000125   [0:2:1:0:0:0:0:0:7:0:0:0]
+[ 83, 5] (  0.169   ,  0.172   ) [   350    ,   352    ] 0.0256     [1:1:2:0:0:0:0:0:0:0:0:0]
+[ 84, 6] (  0.172   ,  0.177   ) [   235    ,   233    ] 0.0435     [0:1:1:0:0:0:0:0:2:0:0:0]
+[ 85, 5] (  0.177   ,  0.177   ) [   262    ,   260    ] 0.0256     [1:2:1:0:0:0:0:0:0:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 86, 8] (  0.177   ,  0.177   ) [   493    ,   493    ] 0.008      [0:2:1:0:0:0:0:0:3:0:0:0]
+[ 87, 7] (  0.177   ,  0.179   ) [   498    ,   501    ] 0.0128     [1:2:1:0:0:0:0:0:1:0:0:0]
+[ 88, 7] (  0.179   ,   0.18   ) [   281    ,   280    ] 0.0249     [0:2:0:0:0:0:0:0:3:0:0:0]
+[ 89, 6] (   0.18   ,   0.18   ) [   387    ,   386    ] 0.0102     [1:2:2:0:0:0:0:0:0:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[ 90,10] (   0.18   ,   0.18   ) [   772    ,   772    ] 0.00233    [0:3:1:0:0:0:0:0:4:0:0:0]
+[ 91, 9] (   0.18   ,   0.18   ) [ 1.38e+03 , 1.38e+03 ] 0.00256    [1:2:2:0:0:0:0:0:2:0:0:0]
+[ 92, 7] (   0.18   ,  0.362   ) [   390    ,   375    ] 0.113      [0:0:2:0:0:0:0:0:3:0:0:0]
+[ 93, 2] (  0.362   ,  0.503   ) [   190    ,   167    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[ 94, 4] (  0.503   ,  0.517   ) [   177    ,   143    ] 0.25       [0:0:0:0:0:0:0:0:2:0:0:0]
+[ 95, 3] (  0.517   ,  0.488   ) [   232    ,   231    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[ 96, 4] (  0.488   ,  0.446   ) [   151    ,   147    ] 0.231      [0:1:0:0:0:0:0:0:1:0:0:0]
+[ 97, 3] (  0.446   ,  0.441   ) [   237    ,   239    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[ 98, 4] (  0.441   ,  0.402   ) [   144    ,   137    ] 0.222      [0:1:0:0:0:0:0:0:1:0:0:0]
+solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1e-09
+||d||_inf = 900.76, ||f||_inf = 9.5518
+
+
+Continuation step N.1 s=0.9, ds=0.1, old_s=0.7999999999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[100,21] ( 6.15e-05 , 0.00146  ) [   30.1   ,   25.6   ] 0.151      [0:0:20:0:0:0:0:0:0:0:0:0]
+[101,15] ( 0.00146  , 0.00348  ) [   26.1   ,   20.9   ] 0.205      [0:0:14:0:0:0:0:0:0:0:0:0]
+[102, 6] ( 0.00348  , 0.00737  ) [   21.6   ,   14.9   ] 0.326      [0:0:5:0:0:0:0:0:0:0:0:0]
+[103, 2] ( 0.00737  ,  0.0104  ) [   15.7   ,   9.93   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[104, 1] (  0.0104  ,  0.0158  ) [   9.88   ,   4.78   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[105, 4] (  0.0158  ,  0.0157  ) [   22.6   ,   21.2   ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[106, 3] (  0.0157  ,  0.0144  ) [   10.9   ,   8.14   ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[107,16] (  0.0144  ,  0.0119  ) [   3.88   ,   2.41   ] 0.195      [15:0:0:0:0:0:0:0:0:0:0:0]
+[108,11] (  0.0119  , 0.00477  ) [  0.399   ,  0.236   ] 0.599      [10:0:0:0:0:0:0:0:0:0:0:0]
+[109, 4] ( 0.00477  , 0.000692 ) [   0.23   ,  0.0261  ] 0.857      [3:0:0:0:0:0:0:0:0:0:0:0]
+[110, 2] ( 0.000692 , 3.47e-05 ) [  0.0264  , 0.00095  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[111, 1] ( 3.47e-05 , 3.39e-10 ) [ 0.000958 , 4.85e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[112, 1] ( 3.39e-10 , 1.84e-14 ) [ 4.84e-07 , 4.15e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.1, old_s=0.8999999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[113,22] ( 6.15e-05 ,  0.0014  ) [    35    ,    32    ] 0.0903     [0:0:21:0:0:0:0:0:0:0:0:0]
+[114,11] (  0.0014  , 0.00338  ) [   33.7   ,   30.3   ] 0.106      [0:0:10:0:0:0:0:0:0:0:0:0]
+[115, 7] ( 0.00338  , 0.00703  ) [   32.9   ,   29.2   ] 0.13       [0:0:6:0:0:0:0:0:0:0:0:0]
+[116, 4] ( 0.00703  , 0.00866  ) [   36.4   ,   34.4   ] 0.064      [0:0:3:0:0:0:0:0:0:0:0:0]
+[117, 4] ( 0.00866  ,  0.0116  ) [   41.3   ,   40.1   ] 0.064      [0:0:3:0:0:0:0:0:0:0:0:0]
+[118, 7] (  0.0116  ,  0.0123  ) [   101    ,   100    ] 0.0128     [0:1:3:0:0:0:0:0:1:0:0:0]
+[119, 9] (  0.0123  ,  0.0125  ) [   252    ,   252    ] 0.00256    [1:2:2:0:0:0:0:0:2:0:0:0]
+[120, 8] (  0.0125  ,  0.0129  ) [   169    ,   169    ] 0.00512    [1:1:3:0:0:0:0:0:1:0:0:0]
+[121, 8] (  0.0129  ,  0.0137  ) [   200    ,   201    ] 0.0064     [0:1:3:0:0:0:0:0:2:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[122, 8] (  0.0137  ,  0.0232  ) [   432    ,   269    ] 0.01       [2:0:0:0:0:0:0:0:4:0:0:0]
+[123, 2] (  0.0232  ,  0.0314  ) [    23    ,   11.1   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[124, 2] (  0.0314  ,  0.0341  ) [   18.9   ,   11.1   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[125, 2] (  0.0341  ,  0.0554  ) [   25.3   ,   6.24   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[126, 2] (  0.0554  ,  0.0614  ) [   23.3   ,   12.6   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[127, 6] (  0.0614  ,  0.0666  ) [    41    ,   33.2   ] 0.18       [3:0:0:0:0:0:0:0:1:0:0:0]
+[128, 4] (  0.0666  ,   0.12   ) [   83.3   ,   31.2   ] 0.2        [1:0:0:0:0:0:0:0:1:0:0:0]
+[129, 5] (   0.12   ,   0.13   ) [   75.7   ,   63.1   ] 0.168      [2:0:0:0:0:0:0:0:1:0:0:0]
+[130, 6] (   0.13   ,  0.156   ) [   311    ,   292    ] 0.05       [0:0:1:0:0:0:0:0:3:0:0:0]
+[131, 7] (  0.156   ,  0.159   ) [   567    ,   569    ] 0.0128     [1:1:1:1:0:0:0:0:1:0:0:0]
+[132, 7] (  0.159   ,  0.162   ) [   334    ,   331    ] 0.0216     [0:1:0:0:1:0:0:0:3:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[133, 8] (  0.162   ,  0.163   ) [   745    ,   746    ] 0.0064     [1:2:1:0:0:0:0:0:2:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[134, 8] (  0.163   ,  0.163   ) [   496    ,   494    ] 0.008      [0:2:1:0:0:0:0:0:3:0:0:0]
+[135,10] (  0.163   ,  0.164   ) [ 1.81e+03 , 1.81e+03 ] 0.00128    [1:3:1:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[136, 9] (  0.164   ,  0.165   ) [   977    ,   978    ] 0.004      [0:2:1:0:0:0:0:0:4:0:0:0]
+[137, 7] (  0.165   ,  0.167   ) [   513    ,   515    ] 0.0128     [1:2:1:0:0:0:0:0:1:0:0:0]
+[138, 6] (  0.167   ,   0.33   ) [   336    ,   306    ] 0.119      [0:0:0:0:1:0:0:0:3:0:0:0]
+[139, 2] (   0.33   ,  0.429   ) [   165    ,   140    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[140, 5] (  0.429   ,  0.508   ) [   316    ,   256    ] 0.125      [0:0:0:0:0:0:0:0:3:0:0:0]
+[141, 3] (  0.508   ,  0.473   ) [   212    ,   206    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[142, 5] (  0.473   ,  0.447   ) [   185    ,   178    ] 0.115      [0:1:0:0:0:0:0:0:2:0:0:0]
+[143, 4] (  0.447   ,  0.441   ) [   310    ,   314    ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[144, 5] (  0.441   ,  0.422   ) [   191    ,   187    ] 0.1        [0:1:0:0:0:0:0:0:2:0:0:0]
+[145, 4] (  0.422   ,  0.418   ) [   311    ,   315    ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[146, 3] (  0.418   ,  0.738   ) [   186    ,   182    ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+[147, 3] (  0.738   ,  0.876   ) [   476    ,   372    ] 0.16       [0:0:1:0:1:0:0:0:0:0:0:0]
+[148, 3] (  0.876   ,  0.845   ) [   480    ,   646    ] 0.16       [0:0:1:1:0:0:0:0:0:0:0:0]
+[149, 1] (  0.845   ,  0.465   ) [   125    ,   117    ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[150, 3] (  0.465   ,  0.481   ) [   332    ,   277    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[151, 3] (  0.481   ,  0.451   ) [   258    ,   252    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[152, 3] (  0.451   ,  0.723   ) [   199    ,   180    ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1e-09
+||d||_inf = 1248.1, ||f||_inf = 9.2817
+
+
+Continuation step N.1 s=0.95, ds=0.05, old_s=0.8999999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[154,21] ( 3.08e-05 , 0.000964 ) [   17.5   ,   14.9   ] 0.151      [0:0:20:0:0:0:0:0:0:0:0:0]
+[155,14] ( 0.000964 ,  0.0025  ) [   15.5   ,   12.3   ] 0.216      [0:0:13:0:0:0:0:0:0:0:0:0]
+[156, 5] (  0.0025  , 0.00547  ) [   12.9   ,    9     ] 0.343      [0:0:4:0:0:0:0:0:0:0:0:0]
+[157, 2] ( 0.00547  , 0.00782  ) [   9.91   ,   6.65   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[158, 2] ( 0.00782  , 0.00666  ) [   6.36   ,   3.72   ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[159, 1] ( 0.00666  , 0.000139 ) [   2.37   ,  0.323   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[160, 2] ( 0.000139 , 1.77e-05 ) [  0.158   , 0.00775  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[161, 2] ( 1.77e-05 , 9.11e-07 ) [ 0.00756  , 0.000371 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[162, 2] ( 9.11e-07 , 4.56e-08 ) [ 0.00037  , 1.85e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[163, 1] ( 4.56e-08 , 1.85e-13 ) [ 1.85e-05 , 5.64e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s= 0.95
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[164,14] ( 3.08e-05 , 0.000908 ) [   21.5   ,   19.7   ] 0.091      [0:0:13:0:0:0:0:0:0:0:0:0]
+[165,10] ( 0.000908 , 0.00229  ) [    21    ,   18.9   ] 0.112      [0:0:9:0:0:0:0:0:0:0:0:0]
+[166, 6] ( 0.00229  ,  0.0049  ) [   21.2   ,    19    ] 0.137      [0:0:5:0:0:0:0:0:0:0:0:0]
+[167, 4] (  0.0049  , 0.00628  ) [   27.4   ,   26.3   ] 0.064      [0:0:3:0:0:0:0:0:0:0:0:0]
+[168, 5] ( 0.00628  ,  0.0067  ) [   38.9   ,   38.2   ] 0.0256     [0:1:3:0:0:0:0:0:0:0:0:0]
+[169, 5] (  0.0067  ,  0.0074  ) [   47.3   ,   46.7   ] 0.0256     [0:1:3:0:0:0:0:0:0:0:0:0]
+[170, 8] (  0.0074  , 0.00754  ) [   108    ,   108    ] 0.00512    [1:2:2:0:0:0:0:0:1:0:0:0]
+[171, 6] ( 0.00754  , 0.00783  ) [   75.8   ,   75.5   ] 0.0102     [1:1:3:0:0:0:0:0:0:0:0:0]
+[172, 8] ( 0.00783  , 0.00798  ) [   109    ,   109    ] 0.00512    [1:2:2:0:0:0:0:0:1:0:0:0]
+[173,10] ( 0.00798  , 0.00818  ) [   467    ,   467    ] 0.00128    [1:2:2:0:0:0:0:0:3:0:0:0]
+[174, 8] ( 0.00818  , 0.00856  ) [   163    ,   164    ] 0.00512    [1:1:3:0:0:0:0:0:1:0:0:0]
+[175,11] ( 0.00856  , 0.00861  ) [ 2.38e+03 , 2.38e+03 ] 0.000128   [1:2:3:0:0:0:0:0:3:0:0:0]
+[176, 8] ( 0.00861  ,  0.0117  ) [   234    ,   193    ] 0.01       [2:0:0:0:0:0:0:0:4:0:0:0]
+[177, 3] (  0.0117  ,  0.0142  ) [   19.9   ,   14.6   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[178, 2] (  0.0142  ,  0.0224  ) [    15    ,   4.67   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[179, 2] (  0.0224  ,  0.0216  ) [   11.3   ,   7.19   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[180, 2] (  0.0216  ,  0.0365  ) [   18.1   ,   2.89   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[181, 2] (  0.0365  ,  0.0368  ) [   14.6   ,   8.8    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[182, 2] (  0.0368  ,  0.066   ) [   26.5   ,   1.9    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[183, 2] (  0.066   ,  0.0669  ) [   21.8   ,   12.8   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[184, 4] (  0.0669  ,   0.08   ) [   48.2   ,   35.6   ] 0.2        [1:0:0:0:0:0:0:0:1:0:0:0]
+[185, 5] (   0.08   ,  0.092   ) [    94    ,   82.8   ] 0.1        [0:0:1:0:0:0:0:0:2:0:0:0]
+[186, 6] (  0.092   ,   0.12   ) [   274    ,   243    ] 0.05       [1:0:0:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[187, 6] (   0.12   ,  0.167   ) [ 1.55e+03 , 1.45e+03 ] 0.0125     [0:0:1:0:0:0:0:0:3:0:0:0]
+[188, 4] (  0.167   ,  0.174   ) [   233    ,   234    ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[189, 5] (  0.174   ,  0.195   ) [   168    ,   161    ] 0.1        [0:0:1:0:0:0:0:0:2:0:0:0]
+[190, 4] (  0.195   ,  0.192   ) [   181    ,   177    ] 0.064      [0:1:1:0:1:0:0:0:0:0:0:0]
+[191, 5] (  0.192   ,  0.373   ) [   347    ,   339    ] 0.125      [0:0:0:0:0:0:0:0:3:0:0:0]
+[192, 2] (  0.373   ,  0.509   ) [   184    ,   154    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[193, 4] (  0.509   ,  0.694   ) [   258    ,   146    ] 0.25       [0:0:0:0:0:0:0:0:2:0:0:0]
+[194, 2] (  0.694   ,  0.806   ) [   270    ,   301    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[195, 1] (  0.806   ,  0.472   ) [   116    ,   101    ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[196, 3] (  0.472   ,  0.474   ) [   305    ,   255    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[197, 3] (  0.474   ,  0.459   ) [   270    ,   292    ] 0.16       [0:0:1:1:0:0:0:0:0:0:0:0]
+[198, 3] (  0.459   ,  0.465   ) [   135    ,   128    ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+[199, 3] (  0.465   ,  0.467   ) [   304    ,   275    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[200, 6] (  0.467   ,  0.457   ) [   324    ,   322    ] 0.0442     [0:2:0:0:0:0:0:0:2:0:0:0]
+[201, 5] (  0.457   ,  0.452   ) [   503    ,   503    ] 0.0256     [1:2:1:0:0:0:0:0:0:0:0:0]
+[202, 6] (  0.452   ,  0.445   ) [   370    ,   372    ] 0.04       [0:2:0:0:0:0:0:0:2:0:0:0]
+[203, 5] (  0.445   ,  0.439   ) [   431    ,   426    ] 0.0266     [1:2:1:0:0:0:0:0:0:0:0:0]
+solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1e-09
+||d||_inf = 2745.2, ||f||_inf = 12.079
+
+
+Continuation step N.1 s=0.975, ds=0.025, old_s= 0.95
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[205,20] ( 1.54e-05 , 0.000683 ) [   10.8   ,   9.13   ] 0.159      [0:0:19:0:0:0:0:0:0:0:0:0]
+[206,12] ( 0.000683 , 0.00189  ) [   9.57   ,   7.47   ] 0.239      [0:0:11:0:0:0:0:0:0:0:0:0]
+[207, 4] ( 0.00189  , 0.00416  ) [   8.25   ,   5.83   ] 0.361      [0:0:3:0:0:0:0:0:0:0:0:0]
+[208, 2] ( 0.00416  , 0.00554  ) [   6.53   ,   4.63   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[209, 1] ( 0.00554  , 0.00703  ) [   4.01   ,   3.59   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[210, 8] ( 0.00703  , 0.00794  ) [   199    ,   181    ] 0.0064     [4:0:0:0:0:0:0:0:2:0:0:0]
+[211, 3] ( 0.00794  ,  0.0133  ) [   20.6   ,   1.43   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[212, 2] (  0.0133  ,  0.0131  ) [   7.19   ,    4     ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[213, 2] (  0.0131  ,  0.0173  ) [   9.58   ,   2.1    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[214, 2] (  0.0173  ,  0.0157  ) [   7.12   ,   4.41   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[215, 2] (  0.0157  ,  0.0191  ) [   9.42   ,   3.38   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[216, 2] (  0.0191  ,  0.0178  ) [   7.6    ,   4.47   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[217, 2] (  0.0178  ,  0.0193  ) [   8.68   ,   4.2    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[218, 2] (  0.0193  ,  0.0194  ) [   8.16   ,   4.37   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[219, 2] (  0.0194  ,  0.0195  ) [   8.09   ,   4.41   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[220, 2] (  0.0195  ,  0.0197  ) [   8.07   ,   4.41   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[221, 2] (  0.0197  ,  0.0208  ) [   8.4    ,   4.13   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[222, 2] (  0.0208  ,  0.0196  ) [   7.39   ,   4.44   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[223, 2] (  0.0196  ,  0.0205  ) [   8.09   ,   4.29   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[224, 2] (  0.0205  ,  0.0215  ) [   8.16   ,   4.05   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[225, 2] (  0.0215  ,  0.0203  ) [   7.24   ,   4.33   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[226, 2] (  0.0203  ,  0.0213  ) [   7.91   ,   4.16   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[227, 2] (  0.0213  ,  0.0212  ) [   7.5    ,   4.21   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[228, 2] (  0.0212  ,  0.0222  ) [   7.83   ,   4.03   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[229, 2] (  0.0222  ,  0.023   ) [   7.8    ,   3.87   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[230, 2] (  0.023   ,  0.0221  ) [   7.13   ,   4.1    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[231, 2] (  0.0221  ,  0.0236  ) [   7.83   ,   3.78   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[232, 2] (  0.0236  ,  0.0218  ) [   6.68   ,   4.15   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[233, 2] (  0.0218  ,  0.0253  ) [   8.26   ,   3.31   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[234, 2] (  0.0253  ,  0.0223  ) [   6.29   ,   4.03   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[235, 2] (  0.0223  ,  0.0261  ) [   8.19   ,   3.17   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[236, 2] (  0.0261  ,  0.0227  ) [   6.07   ,   3.95   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[237, 2] (  0.0227  ,  0.0283  ) [   8.5    ,   2.55   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[238, 2] (  0.0283  ,  0.0233  ) [   5.6    ,   3.78   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[239, 2] (  0.0233  ,  0.0274  ) [   7.92   ,   3.13   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[240, 2] (  0.0274  ,  0.026   ) [   6.6    ,   3.6    ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[241, 2] (  0.026   ,  0.0262  ) [   6.86   ,   3.59   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[242, 2] (  0.0262  ,  0.0248  ) [   6.29   ,   3.83   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[243, 2] (  0.0248  ,  0.0297  ) [   7.81   ,   2.72   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[244, 2] (  0.0297  ,  0.0246  ) [   5.32   ,   3.64   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1e-09
+||d||_inf = 102.42, ||f||_inf = 2.4242
+
+
+Continuation step N.1 s=0.9625, ds=0.0125, old_s= 0.95
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[246,25] ( 7.69e-06 , 0.000553 ) [   5.38   ,   3.89   ] 0.287      [0:0:24:0:0:0:0:0:0:0:0:0]
+[247,12] ( 0.000553 ,  0.0016  ) [   4.04   ,   1.91   ] 0.569      [0:0:11:0:0:0:0:0:0:0:0:0]
+[248, 2] (  0.0016  , 0.00115  ) [   1.95   ,  0.0789  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[249, 3] ( 0.00115  , 0.000127 ) [  0.207   , 0.00882  ] 0.902      [2:0:0:0:0:0:0:0:0:0:0:0]
+[250, 2] ( 0.000127 , 6.37e-06 ) [   0.01   , 0.000476 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[251, 2] ( 6.37e-06 , 3.18e-07 ) [ 0.000474 , 2.37e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[252, 2] ( 3.18e-07 , 1.59e-08 ) [ 2.36e-05 , 1.18e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[253, 1] ( 1.59e-08 , 1.45e-14 ) [ 1.18e-06 , 2.05e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.975, ds=0.0125, old_s=0.9624999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[254,12] ( 7.69e-06 , 0.000569 ) [   5.96   ,   4.59   ] 0.239      [0:0:11:0:0:0:0:0:0:0:0:0]
+[255, 9] ( 0.000569 , 0.00156  ) [   4.83   ,   3.01   ] 0.412      [0:0:8:0:0:0:0:0:0:0:0:0]
+[256, 2] ( 0.00156  , 0.00355  ) [   3.2    ,   1.1    ] 0.95       [0:0:1:0:0:0:0:0:0:0:0:0]
+[257,10] ( 0.00355  , 0.00262  ) [  0.617   ,  0.416   ] 0.265      [9:0:0:0:0:0:0:0:0:0:0:0]
+[258, 7] ( 0.00262  , 0.000711 ) [  0.255   ,  0.0346  ] 0.735      [6:0:0:0:0:0:0:0:0:0:0:0]
+[259, 2] ( 0.000711 , 3.6e-05  ) [  0.0452  , 0.00177  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[260, 2] ( 3.6e-05  , 1.8e-06  ) [ 0.00177  , 8.42e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[261, 1] ( 1.8e-06  , 2.1e-12  ) [ 8.38e-05 , 1.62e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[262, 1] ( 2.1e-12  , 1.88e-14 ) [ 1.62e-08 , 1.55e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.9875, ds=0.0125, old_s=0.9749999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[263,18] ( 7.69e-06 , 0.000523 ) [   6.94   ,   5.77   ] 0.176      [0:0:17:0:0:0:0:0:0:0:0:0]
+[264,10] ( 0.000523 , 0.00144  ) [   6.2    ,   4.72   ] 0.265      [0:0:9:0:0:0:0:0:0:0:0:0]
+[265, 2] ( 0.00144  , 0.00268  ) [   5.07   ,   3.49   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[266, 2] ( 0.00268  , 0.00285  ) [   3.79   ,   2.43   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[267, 7] ( 0.00285  , 0.00137  ) [   1.74   ,  0.281   ] 0.735      [6:0:0:0:0:0:0:0:0:0:0:0]
+[268, 5] ( 0.00137  , 0.000347 ) [  0.533   ,  0.0674  ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
+[269, 2] ( 0.000347 , 1.92e-05 ) [  0.0814  ,  0.0021  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[270, 1] ( 1.92e-05 , 5.77e-10 ) [ 0.00214  , 3.61e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[271, 1] ( 5.77e-10 , 1.86e-14 ) [ 3.6e-06  , 2.22e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.0125, old_s=0.9874999999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[272,12] ( 7.69e-06 , 0.000504 ) [   8.5    ,   7.54   ] 0.126      [0:0:11:0:0:0:0:0:0:0:0:0]
+[273, 3] ( 0.000504 ,  0.0013  ) [   8.36   ,   7.25   ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
+[274, 3] (  0.0013  , 0.00228  ) [   8.89   ,   7.94   ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
+[275, 4] ( 0.00228  , 0.00251  ) [    12    ,   11.3   ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[276, 4] ( 0.00251  , 0.00287  ) [    14    ,   13.3   ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
+[277, 4] ( 0.00287  , 0.00358  ) [   18.1   ,   17.9   ] 0.064      [0:0:3:0:0:0:0:0:0:0:0:0]
+[278, 6] ( 0.00358  , 0.00375  ) [   55.2   ,    55    ] 0.0102     [1:1:3:0:0:0:0:0:0:0:0:0]
+[279, 6] ( 0.00375  , 0.00529  ) [    50    ,   35.4   ] 0.032      [3:0:0:0:0:0:0:0:1:0:0:0]
+[280, 4] ( 0.00529  , 0.00563  ) [   9.15   ,   7.49   ] 0.15       [3:0:0:0:0:0:0:0:0:0:0:0]
+[281, 4] ( 0.00563  , 0.00621  ) [   10.1   ,   8.35   ] 0.152      [3:0:0:0:0:0:0:0:0:0:0:0]
+[282, 3] ( 0.00621  , 0.00781  ) [   12.9   ,   9.48   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[283, 3] ( 0.00781  , 0.00864  ) [   11.7   ,   9.52   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[284, 3] ( 0.00864  ,  0.0106  ) [   14.9   ,   11.3   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[285, 4] (  0.0106  ,  0.0117  ) [   14.4   ,   11.9   ] 0.152      [3:0:0:0:0:0:0:0:0:0:0:0]
+[286, 3] (  0.0117  ,  0.0148  ) [   18.5   ,   13.7   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[287, 4] (  0.0148  ,  0.0165  ) [   17.7   ,   14.4   ] 0.152      [3:0:0:0:0:0:0:0:0:0:0:0]
+[288, 3] (  0.0165  ,  0.0233  ) [    21    ,   12.4   ] 0.211      [2:0:0:0:0:0:0:0:0:0:0:0]
+[289, 2] (  0.0233  ,  0.039   ) [   17.9   ,   1.09   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[290, 2] (  0.039   ,  0.0382  ) [    14    ,   8.48   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[291, 2] (  0.0382  ,  0.0668  ) [   26.2   ,   1.41   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[292, 2] (  0.0668  ,   0.07   ) [   22.7   ,   12.6   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[293, 4] (   0.07   ,  0.0826  ) [   48.8   ,   36.4   ] 0.2        [1:0:0:0:0:0:0:0:1:0:0:0]
+[294, 5] (  0.0826  ,  0.0968  ) [   101    ,   88.6   ] 0.1        [1:0:0:0:0:0:0:0:2:0:0:0]
+[295, 6] (  0.0968  ,  0.129   ) [   301    ,   265    ] 0.05       [1:0:0:0:0:0:0:0:3:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[296, 8] (  0.129   ,   0.19   ) [ 7.23e+03 , 6.99e+03 ] 0.00312    [0:0:1:0:0:0:0:0:5:0:0:0]
+[297, 3] (   0.19   ,  0.195   ) [   146    ,   136    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[298, 5] (  0.195   ,  0.356   ) [   317    ,   259    ] 0.125      [0:0:0:0:0:0:0:0:3:0:0:0]
+[299, 2] (  0.356   ,  0.446   ) [   170    ,   156    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[300, 3] (  0.446   ,  0.645   ) [   147    ,   80.9   ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
+[301, 3] (  0.645   ,  0.619   ) [   289    ,   251    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[302, 6] (  0.619   ,  0.619   ) [ 1.2e+03  , 1.22e+03 ] 0.0102     [2:2:1:0:0:0:0:0:0:0:0:0]
+[303, 4] (  0.619   ,  0.587   ) [   216    ,   232    ] 0.2        [0:1:0:0:0:0:0:0:1:0:0:0]
+[304, 3] (  0.587   ,  0.562   ) [   267    ,   242    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[305, 5] (  0.562   ,   0.56   ) [   311    ,   327    ] 0.1        [0:1:0:0:0:0:0:0:2:0:0:0]
+[306, 3] (   0.56   ,  0.547   ) [   273    ,   267    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[307, 4] (  0.547   ,  0.506   ) [   187    ,   185    ] 0.2        [0:1:0:0:0:0:0:0:1:0:0:0]
+[308, 4] (  0.506   ,  0.487   ) [   287    ,   273    ] 0.0746     [0:2:1:0:0:0:0:0:0:0:0:0]
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+NOT CONVERGED
+[309, 9] (  0.487   ,  0.488   ) [ 5.12e+03 , 5.14e+03 ] 0.001      [0:3:0:0:0:0:0:0:4:0:0:0]
+[310, 5] (  0.488   ,  0.489   ) [   646    ,   664    ] 0.0256     [1:1:1:1:0:0:0:0:0:0:0:0]
+[311, 5] (  0.489   ,  0.466   ) [   219    ,   214    ] 0.0816     [0:2:0:0:0:0:0:0:1:0:0:0]
+solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+Iter = 41, maxIter = 40, tolerance = 1e-09
+||d||_inf = 1368.5, ||f||_inf = 10.833
+
+
+Continuation step N.1 s=0.99375, ds=0.00625, old_s=0.9874999999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[313,12] ( 3.85e-06 , 0.000452 ) [   4.25   ,   3.33   ] 0.239      [0:0:11:0:0:0:0:0:0:0:0:0]
+[314, 2] ( 0.000452 , 0.00131  ) [   3.64   ,   2.45   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[315, 2] ( 0.00131  , 0.00153  ) [   2.82   ,   1.8    ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[316, 2] ( 0.00153  , 0.00136  ) [   1.6    ,  0.0447  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[317, 6] ( 0.00136  , 0.000516 ) [  0.737   ,  0.0327  ] 0.774      [5:0:0:0:0:0:0:0:0:0:0:0]
+[318, 4] ( 0.000516 , 7.57e-05 ) [  0.0701  , 0.00354  ] 0.857      [3:0:0:0:0:0:0:0:0:0:0:0]
+[319, 2] ( 7.57e-05 , 3.78e-06 ) [ 0.00269  , 0.00013  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[320, 2] ( 3.78e-06 , 1.89e-07 ) [ 0.00013  , 6.5e-06  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[321, 1] ( 1.89e-07 , 2.48e-14 ) [ 6.5e-06  , 6.32e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.00625, old_s=0.9937499999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[322,13] ( 3.85e-06 , 0.000482 ) [   5.39   ,   4.53   ] 0.176      [0:0:12:0:0:0:0:0:0:0:0:0]
+[323, 3] ( 0.000482 , 0.00135  ) [   5.12   ,   4.17   ] 0.254      [0:0:2:0:0:0:0:0:0:0:0:0]
+[324, 3] ( 0.00135  , 0.00169  ) [   5.76   ,   4.99   ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
+[325, 3] ( 0.00169  , 0.00196  ) [   5.64   ,   4.89   ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
+[326, 3] ( 0.00196  , 0.00213  ) [   5.27   ,   4.5    ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[327, 3] ( 0.00213  , 0.00208  ) [   4.18   ,   3.25   ] 0.16       [0:1:1:0:0:0:0:0:0:0:0:0]
+[328,10] ( 0.00208  , 0.000999 ) [   1.25   ,  0.323   ] 0.63       [9:0:0:0:0:0:0:0:0:0:0:0]
+[329, 5] ( 0.000999 , 0.000257 ) [   0.45   ,  0.047   ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
+[330, 2] ( 0.000257 , 1.43e-05 ) [  0.0751  , 0.00294  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[331, 2] ( 1.43e-05 , 7.16e-07 ) [ 0.00296  , 0.000138 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[332, 2] ( 7.16e-07 , 3.58e-08 ) [ 0.000137 , 6.83e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[333, 2] ( 3.58e-08 , 2.15e-08 ) [ 6.82e-06 , 4.09e-06 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[334, 1] ( 2.15e-08 , 1.78e-14 ) [ 4.09e-06 , 3.59e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=2.2204e-16, old_s=0.9999999999999998
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+
+Continuation step N.2
+
+Continuation step N.2 s=0.2, ds=0.2, old_s=    0
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[348, 1] ( 0.000674 , 0.000378 ) [  0.723   ,  0.0145  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[349, 5] ( 0.000378 , 7.64e-05 ) [  0.121   , 0.00537  ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
+[350, 2] ( 7.64e-05 , 3.82e-06 ) [ 0.00232  , 9.83e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[351, 2] ( 3.82e-06 , 1.91e-07 ) [ 9.72e-05 , 4.84e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[352, 1] ( 1.91e-07 , 1.87e-14 ) [ 4.84e-06 , 3.98e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.5, ds=0.3, old_s=0.19999999999999996
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[353, 1] ( 0.000861 , 0.000336 ) [  0.687   ,  0.199   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[354, 3] ( 0.000336 , 4.05e-05 ) [  0.117   , 0.000788 ] 0.902      [2:0:0:0:0:0:0:0:0:0:0:0]
+[355, 2] ( 4.05e-05 , 2.02e-06 ) [ 0.00116  , 5.54e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[356, 2] ( 2.02e-06 , 1.01e-07 ) [ 5.52e-05 , 2.76e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[357, 1] ( 1.01e-07 , 1.3e-14  ) [ 2.76e-06 , 1.15e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.95, ds=0.45, old_s=0.4999999999999999
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[358, 1] ( 0.000933 , 0.000151 ) [  0.478   ,  0.272   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[359,14] ( 0.000151 , 0.000152 ) [ 3.97e+03 , 3.98e+03 ] 1.02e-05   [3:2:2:1:0:0:0:0:4:0:0:0]
+[360, 4] ( 0.000152 , 0.000248 ) [   5.84   ,   1.47   ] 0.064      [1:0:2:0:0:0:0:0:0:0:0:0]
+[361, 2] ( 0.000248 , 1.3e-05  ) [  0.033   , 0.00119  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[362, 2] ( 1.3e-05  , 6.52e-07 ) [ 0.00114  , 5.61e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[363, 2] ( 6.52e-07 , 3.26e-08 ) [ 5.6e-05  , 2.8e-06  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[364, 1] ( 3.26e-08 , 1.63e-14 ) [ 2.8e-06  , 1.41e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=1, ds=0.05, old_s=0.9499999999999997
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[365, 1] ( 6.39e-05 ,  5e-07   ) [  0.0276  , 0.000821 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[366, 1] (  5e-07   , 4.57e-10 ) [ 0.000869 , 7.35e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[367, 1] ( 4.57e-10 , 1.44e-14 ) [ 7.36e-07 , 8.94e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 6             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.25          dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+Converged      = YES           tolerance      = 1e-09
+N. Equations   = 1609          N. System pars = 400
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 1.45[sec]     timeout        = 0 [ms]
+iteration      = 367           Memory Used    = 206Kb (+8bytes)
+max iterations = 300           max acc. iter. = 800
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 1626          Jacobian       = 355
+Factorization  = 355           Inversion      = 1960
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.95
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
+........................... last residuals ...........................
+last ||f||_inf = 3.3236e-12    last ||d||_inf = 1.1062e-10
+last ||f||_1   = 1.437e-14     last ||d||_1   = 8.9415e-12
+last ||f||_2   = 9.0788e-14    last ||d||_2   = 2.5576e-11
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin (disabling penalties for check)
+All internal blocks OK
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 107.7, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0.001477 ]
+Optimization parameters:
+TimeSize: 133.319140195011499
+All Done Folks!

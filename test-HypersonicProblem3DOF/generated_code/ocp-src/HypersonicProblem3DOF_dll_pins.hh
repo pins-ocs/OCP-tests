@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_dll_pins.hh                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace HypersonicProblem3DOFDefine {
   public:
 
     HYPERSONICPROBLEM3DOF_API_DLL
-    HypersonicProblem3DOF_Problem( integer n_threads, Console const * console )
-    : model("HypersonicProblem3DOF",n_threads,console)
+    HypersonicProblem3DOF_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("HypersonicProblem3DOF",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -31,7 +31,7 @@ addBoundaryConditions(
 infoBoundaryConditions() ;
 addControlBound(
   cL,
-  controlType = "QUADRATIC2", 
+  controlType = "LOGARITHMIC2", # altre penalizzazioni non funzionano
   min         = cL_min,
   max         = cL_max,
   tolerance   = tol_max,
@@ -106,8 +106,10 @@ GUESS := [
 PGUESS := [
   T = Tguess
 ];
+project_dir  := "../generated_code";
+project_name := "HangGlider";
 generateOCProblem(
-  "HangGlider",
+  project_name,
   post_processing         = POST,
   parameters              = PARS,
   continuation            = CONT,
@@ -121,9 +123,10 @@ generateOCProblem(
   states_guess            = GUESS,
   optimization_parameters = PGUESS
 );
-ocp := getOCProblem();
-eval(ocp["controls"]);
-CF1 := simplify(epsilon/log(cos(m_pi_2*(1-h))));
-P   := CF1*log(cos(m_pi_2*x));
-simplify(diff(P,x))/CF1;
+#ocp := getOCProblem();
+#eval(ocp["controls"]);
+#CF1 := simplify(epsilon/log(cos(m_pi_2*(1-h))));
+#P   := CF1*log(cos(m_pi_2*x));
+#simplify(diff(P,x))/CF1;
 ;
+# if used in batch mode use the comment to quit;

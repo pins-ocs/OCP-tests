@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Road2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -697,7 +698,7 @@ namespace PointMassCarModel_4Define {
     real_type t8   = U__[iU_v__Omega];
     real_type t9   = v__OmegaControl(t8, -1, 1);
     real_type t11  = OMEGA__[1];
-    result__[ 0   ] = t11 * t9 * t2 + t6 * t4 * t2;
+    result__[ 0   ] = t11 * t2 * t9 + t2 * t4 * t6;
     real_type t13  = ALIAS_v__fxControl_D_1(t3, -1, 1);
     result__[ 1   ] = t6 * t13 * t2;
     real_type t15  = ALIAS_v__OmegaControl_D_1(t8, -1, 1);

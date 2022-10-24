@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork.hh                                                |
  |                                                                       |
- |  version: 1.0   date 24/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -170,9 +170,9 @@ namespace BangBangForkDefine {
     BANGBANGFORK_API_DLL
     explicit
     BangBangFork(
-      string const   & name,
-      integer          n_threads,
-      Console const  * console
+      string  const  & name,
+      Console const  * console,
+      ThreadPoolBase * TP
     );
 
     ~BangBangFork() override;

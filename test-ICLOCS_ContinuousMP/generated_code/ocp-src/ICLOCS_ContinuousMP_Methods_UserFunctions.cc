@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_UserFunctions.cc                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -326,7 +327,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u1Limitation( real_type xo___V ) const {
     real_type t2   = u1Limitation_min(-10 - xo___V);
-    real_type t4   = u1Limitation_min(xo___V - 10);
+    real_type t4   = u1Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -341,7 +342,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u1Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u1Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u1Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u1Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -356,7 +357,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u1Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u1Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u1Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u1Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -371,7 +372,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u2Limitation( real_type xo___V ) const {
     real_type t2   = u2Limitation_min(-10 - xo___V);
-    real_type t4   = u2Limitation_min(xo___V - 10);
+    real_type t4   = u2Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -386,7 +387,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u2Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u2Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u2Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u2Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -401,7 +402,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u2Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u2Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u2Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u2Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -416,7 +417,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u3Limitation( real_type xo___V ) const {
     real_type t2   = u3Limitation_min(-10 - xo___V);
-    real_type t4   = u3Limitation_min(xo___V - 10);
+    real_type t4   = u3Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -431,7 +432,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u3Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u3Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u3Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u3Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -446,7 +447,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u3Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u3Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u3Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u3Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -461,7 +462,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u4Limitation( real_type xo___V ) const {
     real_type t2   = u4Limitation_min(-10 - xo___V);
-    real_type t4   = u4Limitation_min(xo___V - 10);
+    real_type t4   = u4Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -476,7 +477,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u4Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u4Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u4Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u4Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -491,7 +492,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u4Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u4Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u4Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u4Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -506,7 +507,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u5Limitation( real_type xo___V ) const {
     real_type t2   = u5Limitation_min(-10 - xo___V);
-    real_type t4   = u5Limitation_min(xo___V - 10);
+    real_type t4   = u5Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -521,7 +522,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u5Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u5Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u5Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u5Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -536,7 +537,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u5Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u5Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u5Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u5Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -551,7 +552,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u6Limitation( real_type xo___V ) const {
     real_type t2   = u6Limitation_min(-10 - xo___V);
-    real_type t4   = u6Limitation_min(xo___V - 10);
+    real_type t4   = u6Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -566,7 +567,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u6Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u6Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u6Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u6Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -581,7 +582,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u6Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u6Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u6Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u6Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -596,7 +597,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u7Limitation( real_type xo___V ) const {
     real_type t2   = u7Limitation_min(-10 - xo___V);
-    real_type t4   = u7Limitation_min(xo___V - 10);
+    real_type t4   = u7Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -611,7 +612,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u7Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u7Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u7Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u7Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -626,7 +627,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u7Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u7Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u7Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u7Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -641,7 +642,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u8Limitation( real_type xo___V ) const {
     real_type t2   = u8Limitation_min(-10 - xo___V);
-    real_type t4   = u8Limitation_min(xo___V - 10);
+    real_type t4   = u8Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -656,7 +657,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u8Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u8Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u8Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u8Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -671,7 +672,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u8Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u8Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u8Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u8Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -686,7 +687,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u9Limitation( real_type xo___V ) const {
     real_type t2   = u9Limitation_min(-10 - xo___V);
-    real_type t4   = u9Limitation_min(xo___V - 10);
+    real_type t4   = u9Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -701,7 +702,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u9Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u9Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u9Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u9Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -716,7 +717,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u9Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u9Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u9Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u9Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -731,7 +732,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u10Limitation( real_type xo___V ) const {
     real_type t2   = u10Limitation_min(-10 - xo___V);
-    real_type t4   = u10Limitation_min(xo___V - 10);
+    real_type t4   = u10Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -746,7 +747,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u10Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u10Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u10Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u10Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -761,7 +762,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u10Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u10Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u10Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u10Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -776,7 +777,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u11Limitation( real_type xo___V ) const {
     real_type t2   = u11Limitation_min(-10 - xo___V);
-    real_type t4   = u11Limitation_min(xo___V - 10);
+    real_type t4   = u11Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -791,7 +792,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u11Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u11Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u11Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u11Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -806,7 +807,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u11Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u11Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u11Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u11Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -821,7 +822,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u12Limitation( real_type xo___V ) const {
     real_type t2   = u12Limitation_min(-10 - xo___V);
-    real_type t4   = u12Limitation_min(xo___V - 10);
+    real_type t4   = u12Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -836,7 +837,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u12Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u12Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u12Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u12Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -851,7 +852,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u12Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u12Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u12Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u12Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -866,7 +867,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u13Limitation( real_type xo___V ) const {
     real_type t2   = u13Limitation_min(-10 - xo___V);
-    real_type t4   = u13Limitation_min(xo___V - 10);
+    real_type t4   = u13Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -881,7 +882,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u13Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u13Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u13Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u13Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -896,7 +897,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u13Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u13Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u13Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u13Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -911,7 +912,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u14Limitation( real_type xo___V ) const {
     real_type t2   = u14Limitation_min(-10 - xo___V);
-    real_type t4   = u14Limitation_min(xo___V - 10);
+    real_type t4   = u14Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -926,7 +927,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u14Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u14Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u14Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u14Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -941,7 +942,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u14Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u14Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u14Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u14Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -956,7 +957,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u15Limitation( real_type xo___V ) const {
     real_type t2   = u15Limitation_min(-10 - xo___V);
-    real_type t4   = u15Limitation_min(xo___V - 10);
+    real_type t4   = u15Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -971,7 +972,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u15Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u15Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u15Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u15Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -986,7 +987,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u15Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u15Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u15Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u15Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1001,7 +1002,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u16Limitation( real_type xo___V ) const {
     real_type t2   = u16Limitation_min(-10 - xo___V);
-    real_type t4   = u16Limitation_min(xo___V - 10);
+    real_type t4   = u16Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1016,7 +1017,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u16Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u16Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u16Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u16Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1031,7 +1032,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u16Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u16Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u16Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u16Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1046,7 +1047,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u17Limitation( real_type xo___V ) const {
     real_type t2   = u17Limitation_min(-10 - xo___V);
-    real_type t4   = u17Limitation_min(xo___V - 10);
+    real_type t4   = u17Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1061,7 +1062,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u17Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u17Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u17Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u17Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1076,7 +1077,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u17Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u17Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u17Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u17Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1091,7 +1092,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u18Limitation( real_type xo___V ) const {
     real_type t2   = u18Limitation_min(-10 - xo___V);
-    real_type t4   = u18Limitation_min(xo___V - 10);
+    real_type t4   = u18Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1106,7 +1107,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u18Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u18Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u18Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u18Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1121,7 +1122,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u18Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u18Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u18Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u18Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1136,7 +1137,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u19Limitation( real_type xo___V ) const {
     real_type t2   = u19Limitation_min(-10 - xo___V);
-    real_type t4   = u19Limitation_min(xo___V - 10);
+    real_type t4   = u19Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1151,7 +1152,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u19Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u19Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u19Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u19Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1166,7 +1167,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u19Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u19Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u19Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u19Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1181,7 +1182,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u20Limitation( real_type xo___V ) const {
     real_type t2   = u20Limitation_min(-10 - xo___V);
-    real_type t4   = u20Limitation_min(xo___V - 10);
+    real_type t4   = u20Limitation_max(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1196,7 +1197,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u20Limitation_D( real_type xo___V ) const {
     real_type t2   = ALIAS_u20Limitation_min_D(-10 - xo___V);
-    real_type t4   = ALIAS_u20Limitation_min_D(xo___V - 10);
+    real_type t4   = ALIAS_u20Limitation_max_D(xo___V - 10);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1211,7 +1212,7 @@ namespace ICLOCS_ContinuousMPDefine {
   real_type
   ICLOCS_ContinuousMP::u20Limitation_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_u20Limitation_min_DD(-10 - xo___V);
-    real_type t4   = ALIAS_u20Limitation_min_DD(xo___V - 10);
+    real_type t4   = ALIAS_u20Limitation_max_DD(xo___V - 10);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1227,7 +1228,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx1Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx1Limitation_min(-t1 - xo___V);
-    real_type t5   = xx1Limitation_min(xo___V - t1);
+    real_type t5   = xx1Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1243,7 +1244,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx1Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx1Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx1Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx1Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1259,7 +1260,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx1Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx1Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx1Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx1Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1275,7 +1276,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy1Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy1Limitation_min(-t1 - xo___V);
-    real_type t5   = yy1Limitation_min(xo___V - t1);
+    real_type t5   = yy1Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1291,7 +1292,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy1Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy1Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy1Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy1Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1307,7 +1308,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy1Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy1Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy1Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy1Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1323,7 +1324,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx2Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx2Limitation_min(-t1 - xo___V);
-    real_type t5   = xx2Limitation_min(xo___V - t1);
+    real_type t5   = xx2Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1339,7 +1340,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx2Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx2Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx2Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx2Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1355,7 +1356,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx2Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx2Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx2Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx2Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1371,7 +1372,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy2Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy2Limitation_min(-t1 - xo___V);
-    real_type t5   = yy2Limitation_min(xo___V - t1);
+    real_type t5   = yy2Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1387,7 +1388,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy2Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy2Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy2Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy2Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1403,7 +1404,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy2Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy2Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy2Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy2Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1419,7 +1420,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx3Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx3Limitation_min(-t1 - xo___V);
-    real_type t5   = xx3Limitation_min(xo___V - t1);
+    real_type t5   = xx3Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1435,7 +1436,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx3Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx3Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx3Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx3Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1451,7 +1452,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx3Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx3Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx3Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx3Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1467,7 +1468,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy3Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy3Limitation_min(-t1 - xo___V);
-    real_type t5   = yy3Limitation_min(xo___V - t1);
+    real_type t5   = yy3Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1483,7 +1484,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy3Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy3Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy3Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy3Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1499,7 +1500,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy3Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy3Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy3Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy3Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1515,7 +1516,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx4Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx4Limitation_min(-t1 - xo___V);
-    real_type t5   = xx4Limitation_min(xo___V - t1);
+    real_type t5   = xx4Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1531,7 +1532,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx4Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx4Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx4Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx4Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1547,7 +1548,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx4Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx4Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx4Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx4Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1563,7 +1564,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy4Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy4Limitation_min(-t1 - xo___V);
-    real_type t5   = yy4Limitation_min(xo___V - t1);
+    real_type t5   = yy4Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1579,7 +1580,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy4Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy4Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy4Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy4Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1595,7 +1596,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy4Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy4Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy4Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy4Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1611,7 +1612,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx5Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx5Limitation_min(-t1 - xo___V);
-    real_type t5   = xx5Limitation_min(xo___V - t1);
+    real_type t5   = xx5Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1627,7 +1628,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx5Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx5Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx5Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx5Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1643,7 +1644,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx5Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx5Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx5Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx5Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1659,7 +1660,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy5Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy5Limitation_min(-t1 - xo___V);
-    real_type t5   = yy5Limitation_min(xo___V - t1);
+    real_type t5   = yy5Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1675,7 +1676,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy5Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy5Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy5Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy5Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1691,7 +1692,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy5Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy5Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy5Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy5Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1707,7 +1708,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx6Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx6Limitation_min(-t1 - xo___V);
-    real_type t5   = xx6Limitation_min(xo___V - t1);
+    real_type t5   = xx6Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1723,7 +1724,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx6Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx6Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx6Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx6Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1739,7 +1740,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx6Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx6Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx6Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx6Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1755,7 +1756,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy6Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy6Limitation_min(-t1 - xo___V);
-    real_type t5   = yy6Limitation_min(xo___V - t1);
+    real_type t5   = yy6Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1771,7 +1772,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy6Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy6Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy6Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy6Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1787,7 +1788,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy6Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy6Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy6Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy6Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1803,7 +1804,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx7Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx7Limitation_min(-t1 - xo___V);
-    real_type t5   = xx7Limitation_min(xo___V - t1);
+    real_type t5   = xx7Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1819,7 +1820,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx7Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx7Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx7Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx7Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1835,7 +1836,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx7Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx7Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx7Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx7Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1851,7 +1852,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy7Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy7Limitation_min(-t1 - xo___V);
-    real_type t5   = yy7Limitation_min(xo___V - t1);
+    real_type t5   = yy7Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1867,7 +1868,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy7Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy7Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy7Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy7Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1883,7 +1884,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy7Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy7Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy7Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy7Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1899,7 +1900,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx8Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx8Limitation_min(-t1 - xo___V);
-    real_type t5   = xx8Limitation_min(xo___V - t1);
+    real_type t5   = xx8Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1915,7 +1916,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx8Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx8Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx8Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx8Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1931,7 +1932,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx8Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx8Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx8Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx8Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1947,7 +1948,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy8Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy8Limitation_min(-t1 - xo___V);
-    real_type t5   = yy8Limitation_min(xo___V - t1);
+    real_type t5   = yy8Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1963,7 +1964,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy8Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy8Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy8Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy8Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1979,7 +1980,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy8Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy8Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy8Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy8Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -1995,7 +1996,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx9Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx9Limitation_min(-t1 - xo___V);
-    real_type t5   = xx9Limitation_min(xo___V - t1);
+    real_type t5   = xx9Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2011,7 +2012,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx9Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx9Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx9Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx9Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2027,7 +2028,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx9Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx9Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx9Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx9Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2043,7 +2044,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy9Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy9Limitation_min(-t1 - xo___V);
-    real_type t5   = yy9Limitation_min(xo___V - t1);
+    real_type t5   = yy9Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2059,7 +2060,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy9Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy9Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy9Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy9Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2075,7 +2076,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy9Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy9Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy9Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy9Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2091,7 +2092,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx10Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx10Limitation_min(-t1 - xo___V);
-    real_type t5   = xx10Limitation_min(xo___V - t1);
+    real_type t5   = xx10Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2107,7 +2108,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx10Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx10Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx10Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx10Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2123,7 +2124,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx10Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx10Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx10Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx10Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2139,7 +2140,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy10Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy10Limitation_min(-t1 - xo___V);
-    real_type t5   = yy10Limitation_min(xo___V - t1);
+    real_type t5   = yy10Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2155,7 +2156,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy10Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy10Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy10Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy10Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2171,7 +2172,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy10Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy10Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy10Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy10Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2187,7 +2188,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx11Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx11Limitation_min(-t1 - xo___V);
-    real_type t5   = xx11Limitation_min(xo___V - t1);
+    real_type t5   = xx11Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2203,7 +2204,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx11Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx11Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx11Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx11Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2219,7 +2220,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx11Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx11Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx11Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx11Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2235,7 +2236,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy11Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy11Limitation_min(-t1 - xo___V);
-    real_type t5   = yy11Limitation_min(xo___V - t1);
+    real_type t5   = yy11Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2251,7 +2252,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy11Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy11Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy11Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy11Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2267,7 +2268,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy11Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy11Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy11Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy11Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2283,7 +2284,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx12Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx12Limitation_min(-t1 - xo___V);
-    real_type t5   = xx12Limitation_min(xo___V - t1);
+    real_type t5   = xx12Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2299,7 +2300,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx12Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx12Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx12Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx12Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2315,7 +2316,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx12Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx12Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx12Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx12Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2331,7 +2332,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy12Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy12Limitation_min(-t1 - xo___V);
-    real_type t5   = yy12Limitation_min(xo___V - t1);
+    real_type t5   = yy12Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2347,7 +2348,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy12Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy12Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy12Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy12Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2363,7 +2364,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy12Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy12Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy12Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy12Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2379,7 +2380,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx13Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx13Limitation_min(-t1 - xo___V);
-    real_type t5   = xx13Limitation_min(xo___V - t1);
+    real_type t5   = xx13Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2395,7 +2396,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx13Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx13Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx13Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx13Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2411,7 +2412,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx13Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx13Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx13Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx13Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2427,7 +2428,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy13Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy13Limitation_min(-t1 - xo___V);
-    real_type t5   = yy13Limitation_min(xo___V - t1);
+    real_type t5   = yy13Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2443,7 +2444,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy13Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy13Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy13Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy13Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2459,7 +2460,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy13Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy13Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy13Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy13Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2475,7 +2476,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx14Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx14Limitation_min(-t1 - xo___V);
-    real_type t5   = xx14Limitation_min(xo___V - t1);
+    real_type t5   = xx14Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2491,7 +2492,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx14Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx14Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx14Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx14Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2507,7 +2508,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx14Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx14Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx14Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx14Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2523,7 +2524,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy14Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy14Limitation_min(-t1 - xo___V);
-    real_type t5   = yy14Limitation_min(xo___V - t1);
+    real_type t5   = yy14Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2539,7 +2540,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy14Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy14Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy14Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy14Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2555,7 +2556,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy14Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy14Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy14Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy14Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2571,7 +2572,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx15Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx15Limitation_min(-t1 - xo___V);
-    real_type t5   = xx15Limitation_min(xo___V - t1);
+    real_type t5   = xx15Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2587,7 +2588,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx15Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx15Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx15Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx15Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2603,7 +2604,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx15Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx15Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx15Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx15Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2619,7 +2620,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy15Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy15Limitation_min(-t1 - xo___V);
-    real_type t5   = yy15Limitation_min(xo___V - t1);
+    real_type t5   = yy15Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2635,7 +2636,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy15Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy15Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy15Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy15Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2651,7 +2652,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy15Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy15Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy15Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy15Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2667,7 +2668,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx16Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx16Limitation_min(-t1 - xo___V);
-    real_type t5   = xx16Limitation_min(xo___V - t1);
+    real_type t5   = xx16Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2683,7 +2684,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx16Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx16Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx16Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx16Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2699,7 +2700,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx16Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx16Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx16Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx16Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2715,7 +2716,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy16Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy16Limitation_min(-t1 - xo___V);
-    real_type t5   = yy16Limitation_min(xo___V - t1);
+    real_type t5   = yy16Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2731,7 +2732,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy16Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy16Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy16Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy16Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2747,7 +2748,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy16Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy16Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy16Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy16Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2763,7 +2764,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx17Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx17Limitation_min(-t1 - xo___V);
-    real_type t5   = xx17Limitation_min(xo___V - t1);
+    real_type t5   = xx17Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2779,7 +2780,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx17Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx17Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx17Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx17Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2795,7 +2796,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx17Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx17Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx17Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx17Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2811,7 +2812,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy17Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy17Limitation_min(-t1 - xo___V);
-    real_type t5   = yy17Limitation_min(xo___V - t1);
+    real_type t5   = yy17Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2827,7 +2828,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy17Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy17Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy17Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy17Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2843,7 +2844,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy17Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy17Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy17Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy17Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2859,7 +2860,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx18Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx18Limitation_min(-t1 - xo___V);
-    real_type t5   = xx18Limitation_min(xo___V - t1);
+    real_type t5   = xx18Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2875,7 +2876,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx18Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx18Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx18Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx18Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2891,7 +2892,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx18Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx18Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx18Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx18Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2907,7 +2908,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy18Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy18Limitation_min(-t1 - xo___V);
-    real_type t5   = yy18Limitation_min(xo___V - t1);
+    real_type t5   = yy18Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2923,7 +2924,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy18Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy18Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy18Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy18Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2939,7 +2940,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy18Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy18Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy18Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy18Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2955,7 +2956,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx19Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx19Limitation_min(-t1 - xo___V);
-    real_type t5   = xx19Limitation_min(xo___V - t1);
+    real_type t5   = xx19Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2971,7 +2972,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx19Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx19Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx19Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx19Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -2987,7 +2988,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx19Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx19Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx19Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx19Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3003,7 +3004,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy19Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy19Limitation_min(-t1 - xo___V);
-    real_type t5   = yy19Limitation_min(xo___V - t1);
+    real_type t5   = yy19Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3019,7 +3020,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy19Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy19Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy19Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy19Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3035,7 +3036,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy19Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy19Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy19Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy19Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3051,7 +3052,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx20Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = xx20Limitation_min(-t1 - xo___V);
-    real_type t5   = xx20Limitation_min(xo___V - t1);
+    real_type t5   = xx20Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3067,7 +3068,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx20Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx20Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_xx20Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_xx20Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3083,7 +3084,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::xx20Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_xx20Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_xx20Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_xx20Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3099,7 +3100,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy20Limitation( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = yy20Limitation_min(-t1 - xo___V);
-    real_type t5   = yy20Limitation_min(xo___V - t1);
+    real_type t5   = yy20Limitation_max(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3115,7 +3116,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy20Limitation_D( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy20Limitation_min_D(-t1 - xo___V);
-    real_type t5   = ALIAS_yy20Limitation_min_D(xo___V - t1);
+    real_type t5   = ALIAS_yy20Limitation_max_D(xo___V - t1);
     real_type result__ = -t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -3131,7 +3132,7 @@ namespace ICLOCS_ContinuousMPDefine {
   ICLOCS_ContinuousMP::yy20Limitation_DD( real_type xo___V ) const {
     real_type t1   = ModelPars[iM_xy_bound];
     real_type t3   = ALIAS_yy20Limitation_min_DD(-t1 - xo___V);
-    real_type t5   = ALIAS_yy20Limitation_min_DD(xo___V - t1);
+    real_type t5   = ALIAS_yy20Limitation_max_DD(xo___V - t1);
     real_type result__ = t3 + t5;
     if ( m_debug ) {
       UTILS_ASSERT(

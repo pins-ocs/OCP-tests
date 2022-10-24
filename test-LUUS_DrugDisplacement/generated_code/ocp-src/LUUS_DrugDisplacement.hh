@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement.hh                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -167,9 +167,9 @@ namespace LUUS_DrugDisplacementDefine {
     LUUS_DRUGDISPLACEMENT_API_DLL
     explicit
     LUUS_DrugDisplacement(
-      string const   & name,
-      integer          n_threads,
-      Console const  * console
+      string  const  & name,
+      Console const  * console,
+      ThreadPoolBase * TP
     );
 
     ~LUUS_DrugDisplacement() override;

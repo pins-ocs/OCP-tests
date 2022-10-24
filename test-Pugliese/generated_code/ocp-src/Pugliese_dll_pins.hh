@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_dll_pins.hh                                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace PuglieseDefine {
   public:
 
     PUGLIESE_API_DLL
-    Pugliese_Problem( integer n_threads, Console const * console )
-    : model("Pugliese",n_threads,console)
+    Pugliese_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Pugliese",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    SingularCalogero model("SingularCalogero",n_threads,&console);
+    SingularCalogero model("SingularCalogero",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -142,7 +142,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];

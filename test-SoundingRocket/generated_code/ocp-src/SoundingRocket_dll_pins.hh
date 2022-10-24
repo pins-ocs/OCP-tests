@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_dll_pins.hh                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace SoundingRocketDefine {
   public:
 
     SOUNDINGROCKET_API_DLL
-    SoundingRocket_Problem( integer n_threads, Console const * console )
-    : model("SoundingRocket",n_threads,console)
+    SoundingRocket_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("SoundingRocket",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

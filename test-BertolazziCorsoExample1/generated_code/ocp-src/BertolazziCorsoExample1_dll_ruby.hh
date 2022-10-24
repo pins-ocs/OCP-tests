@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_dll_ruby.hh                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace BertolazziCorsoExample1Define {
   public:
 
     BERTOLAZZICORSOEXAMPLE1_API_DLL
-    BertolazziCorsoExample1_Problem( integer n_threads, Console const * console )
-    : model("BertolazziCorsoExample1",n_threads,console)
+    BertolazziCorsoExample1_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("BertolazziCorsoExample1",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

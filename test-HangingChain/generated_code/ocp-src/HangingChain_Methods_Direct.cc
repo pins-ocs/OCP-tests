@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -130,7 +131,7 @@ namespace HangingChainDefine {
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
     real_type t4   = sqrt(t2 + 1);
-    result__[ 5   ] = -t1 / t4;
+    result__[ 5   ] = -1.0 / t4 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Dfd_odeDxxpu_eval", 6, i_segment );
   }

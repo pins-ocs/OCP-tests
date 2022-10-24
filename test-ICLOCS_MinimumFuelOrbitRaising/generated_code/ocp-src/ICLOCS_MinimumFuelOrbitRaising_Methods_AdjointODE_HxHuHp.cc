@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_AdjointODE.cc           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -171,7 +172,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t7   = mass(Q__[iQ_zeta]);
     real_type t8   = 1.0 / t7;
     real_type t13  = sin(t4);
-    result__[ 0   ] = -t8 * t13 * t2 * L__[iL_lambda3__xo] + t8 * t5 * t2 * L__[iL_lambda2__xo];
+    result__[ 0   ] = -t13 * t2 * t8 * L__[iL_lambda3__xo] + t2 * t5 * t8 * L__[iL_lambda2__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

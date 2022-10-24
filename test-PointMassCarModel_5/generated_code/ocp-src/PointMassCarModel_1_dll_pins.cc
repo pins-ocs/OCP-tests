@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_dll_pins.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -53,8 +53,8 @@
 #include "PointMassCarModel_1_dll_pins.hh"
 #include <map>
 
-static Mechatronix::Console * pConsole  = nullptr;
-static Mechatronix::integer   n_threads = std::thread::hardware_concurrency();
+static Mechatronix::Console        * pConsole{nullptr};
+static Mechatronix::ThreadPoolBase * pTP{nullptr};
 
 /*
 ::         _             _       _             __
@@ -83,6 +83,7 @@ namespace PointMassCarModel_1Define {
   mrb_value
   mrb_PointMassCarModel_1_ocp_setup( mrb_state *mrb, mrb_value self ) {
     if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
+    if ( pTP      == nullptr ) pTP      = new ThreadPool1( std::thread::hardware_concurrency());
 
     mrb_sym m_sym_id   = mrb_intern_lit( mrb,"@id" );
     mrb_sym m_sym_data = mrb_intern_lit( mrb,"@data" );
@@ -124,7 +125,7 @@ namespace PointMassCarModel_1Define {
     string error;
     MAP_PROBLEM::iterator it = problems.find( id.c_str() );
     if ( it == problems.end() ) {
-      problems[id] = new PointMassCarModel_1_Problem( n_threads, pConsole );
+      problems[id] = new PointMassCarModel_1_Problem( pConsole, pTP );
       ok           = problems[id]->setup( gc_data, error );
     } else {
       ok = it->second->setup( gc_data, error );

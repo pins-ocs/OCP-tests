@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -105,16 +106,20 @@ namespace Bike1DDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = XL__[iX_v];
     real_type t2   = 1.0 / t1;
     real_type t6   = UM__[0];
     real_type t7   = UM__[1];
-    real_type t11  = Tmax_normalized(t1);
-    real_type t13  = clip(t11, 0, ModelPars[iM_mur_max]);
-    real_type t14  = murControl(t6, ModelPars[iM_mur_min], t13);
-    real_type t17  = mufControl(t7, ModelPars[iM_muf_min], 0);
-    real_type t21  = vMinLimit(ModelPars[iM_v_min] - t1);
-    real_type result__ = t2 + (t6 + t7) * ModelPars[iM_g] * LM__[0] + t14 * t2 + t17 * t2 + t21 * t2;
+    real_type t13  = Tmax_normalized(XM__[0]);
+    real_type t15  = clip(t13, 0, ModelPars[iM_mur_max]);
+    real_type t16  = murControl(t6, ModelPars[iM_mur_min], t15);
+    real_type t19  = mufControl(t7, ModelPars[iM_muf_min], 0);
+    real_type t21  = ModelPars[iM_v_min];
+    real_type t23  = vMinLimit(t21 - t1);
+    real_type t25  = XR__[iX_v];
+    real_type t26  = 1.0 / t25;
+    real_type t30  = vMinLimit(t21 - t25);
+    real_type result__ = t2 + 2 * (t6 + t7) * ModelPars[iM_g] * LM__[0] + t16 * t2 + t19 * t2 + t23 * t2 + t26 + t16 * t26 + t19 * t26 + t30 * t26;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -149,15 +154,15 @@ namespace Bike1DDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = LM__[0] * ModelPars[iM_g];
-    real_type t4   = XM__[0];
-    real_type t5   = 1.0 / t4;
-    real_type t8   = Tmax_normalized(t4);
-    real_type t10  = clip(t8, 0, ModelPars[iM_mur_max]);
-    real_type t11  = ALIAS_murControl_D_1(UM__[0], ModelPars[iM_mur_min], t10);
-    result__[ 0   ] = t11 * t5 + t3;
-    real_type t15  = ALIAS_mufControl_D_1(UM__[1], ModelPars[iM_muf_min], 0);
-    result__[ 1   ] = t15 * t5 + t3;
+    real_type t4   = 2 * LM__[0] * ModelPars[iM_g];
+    real_type t6   = 1.0 / XL__[iX_v];
+    real_type t10  = Tmax_normalized(XM__[0]);
+    real_type t12  = clip(t10, 0, ModelPars[iM_mur_max]);
+    real_type t13  = ALIAS_murControl_D_1(UM__[0], ModelPars[iM_mur_min], t12);
+    real_type t16  = 1.0 / XR__[iX_v];
+    result__[ 0   ] = t13 * t16 + t13 * t6 + t4;
+    real_type t20  = ALIAS_mufControl_D_1(UM__[1], ModelPars[iM_muf_min], 0);
+    result__[ 1   ] = t20 * t16 + t20 * t6 + t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -206,26 +211,33 @@ namespace Bike1DDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = XL__[iX_v];
     real_type t2   = t1 * t1;
     real_type t3   = 1.0 / t2;
     real_type t4   = UM__[0];
     real_type t5   = ModelPars[iM_mur_min];
-    real_type t6   = Tmax_normalized(t1);
-    real_type t7   = ModelPars[iM_mur_max];
-    real_type t8   = clip(t6, 0, t7);
-    real_type t9   = ALIAS_murControl_D_1(t4, t5, t8);
-    real_type t13  = ALIAS_murControl_D_1_3(t4, t5, t8);
-    real_type t15  = ALIAS_clip_D_1(t6, 0, t7);
-    real_type t16  = Tmax_normalized_D(t1);
-    result__[ 0   ] = -0.5e0 * t9 * t3 + 0.5e0 * t16 * t15 * t13 / t1;
-    result__[ 1   ] = 0.5e0 * ModelPars[iM_g];
-    result__[ 2   ] = result__[0];
+    real_type t6   = XM__[0];
+    real_type t7   = Tmax_normalized(t6);
+    real_type t8   = ModelPars[iM_mur_max];
+    real_type t9   = clip(t7, 0, t8);
+    real_type t10  = ALIAS_murControl_D_1(t4, t5, t9);
+    real_type t13  = ALIAS_murControl_D_1_3(t4, t5, t9);
+    real_type t15  = ALIAS_clip_D_1(t7, 0, t8);
+    real_type t16  = Tmax_normalized_D(t6);
+    real_type t17  = t16 * t15;
+    real_type t19  = 0.5e0 * t17 * t13 / t1;
+    real_type t20  = XR__[iX_v];
+    real_type t24  = 0.5e0 * t17 * t13 / t20;
+    result__[ 0   ] = -t10 * t3 + t19 + t24;
+    result__[ 1   ] = 0.10e1 * ModelPars[iM_g];
+    real_type t26  = t20 * t20;
+    real_type t27  = 1.0 / t26;
+    result__[ 2   ] = -t10 * t27 + t19 + t24;
     result__[ 3   ] = result__[1];
-    real_type t23  = ALIAS_mufControl_D_1(UM__[1], ModelPars[iM_muf_min], 0);
-    result__[ 4   ] = -0.5e0 * t23 * t3;
+    real_type t31  = ALIAS_mufControl_D_1(UM__[1], ModelPars[iM_muf_min], 0);
+    result__[ 4   ] = -t31 * t3;
     result__[ 5   ] = result__[3];
-    result__[ 6   ] = result__[4];
+    result__[ 6   ] = -t31 * t27;
     result__[ 7   ] = result__[5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 8, i_segment );
@@ -269,14 +281,14 @@ namespace Bike1DDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t2   = 1.0 / t1;
-    real_type t5   = Tmax_normalized(t1);
-    real_type t7   = clip(t5, 0, ModelPars[iM_mur_max]);
-    real_type t8   = ALIAS_murControl_D_1_1(UM__[0], ModelPars[iM_mur_min], t7);
-    result__[ 0   ] = t8 * t2;
-    real_type t11  = ALIAS_mufControl_D_1_1(UM__[1], ModelPars[iM_muf_min], 0);
-    result__[ 1   ] = t11 * t2;
+    real_type t2   = 1.0 / XL__[iX_v];
+    real_type t6   = Tmax_normalized(XM__[0]);
+    real_type t8   = clip(t6, 0, ModelPars[iM_mur_max]);
+    real_type t9   = ALIAS_murControl_D_1_1(UM__[0], ModelPars[iM_mur_min], t8);
+    real_type t12  = 1.0 / XR__[iX_v];
+    result__[ 0   ] = t9 * t12 + t9 * t2;
+    real_type t16  = ALIAS_mufControl_D_1_1(UM__[1], ModelPars[iM_muf_min], 0);
+    result__[ 1   ] = t16 * t12 + t16 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -320,12 +332,13 @@ namespace Bike1DDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = XM__[0];
-    real_type t5   = t4 * ModelPars[iM_g] * LM__[0];
-    real_type t7   = Tmax_normalized(t4);
-    real_type t9   = clip(t7, 0, ModelPars[iM_mur_max]);
-    U__[ iU_mur ] = mufControl.solve(-t5, ModelPars[iM_mur_min], t9);
-    U__[ iU_muf ] = mufControl.solve(-t5, ModelPars[iM_muf_min], 0);
+    real_type t1   = XL__[iX_v];
+    real_type t2   = XR__[iX_v];
+    real_type t11  = 2 * t2 * t1 * ModelPars[iM_g] * LM__[0] / (t1 + t2);
+    real_type t14  = Tmax_normalized(XM__[0]);
+    real_type t16  = clip(t14, 0, ModelPars[iM_mur_max]);
+    U__[ iU_mur ] = mufControl.solve(-t11, ModelPars[iM_mur_min], t16);
+    U__[ iU_muf ] = mufControl.solve(-t11, ModelPars[iM_muf_min], 0);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }

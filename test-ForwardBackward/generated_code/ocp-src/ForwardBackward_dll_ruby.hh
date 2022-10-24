@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_dll_ruby.hh                                    |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace ForwardBackwardDefine {
   public:
 
     FORWARDBACKWARD_API_DLL
-    ForwardBackward_Problem( integer n_threads, Console const * console )
-    : model("ForwardBackward",n_threads,console)
+    ForwardBackward_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("ForwardBackward",console,TP)
     , trajectory( "trajectory" )
     {
       Mechatronix::activate_ctrlC();

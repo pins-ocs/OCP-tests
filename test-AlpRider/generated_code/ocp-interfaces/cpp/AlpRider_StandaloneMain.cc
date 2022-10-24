@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    AlpRider         model("AlpRider",n_threads,&console);
+    AlpRider         model("AlpRider",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi0 = 0.1;
-    real_type W0 = 0;
-    real_type epsi = epsi0;
-    real_type W = W0;
     real_type tol0 = 0.1;
+    real_type epsi0 = 0.1;
+    real_type epsi = epsi0;
+    real_type W0 = 0;
+    real_type W = W0;
     real_type tol = tol0;
     integer InfoLevel = 4;
 

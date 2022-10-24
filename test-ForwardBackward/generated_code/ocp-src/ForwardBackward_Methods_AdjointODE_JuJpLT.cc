@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Path2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -232,7 +233,7 @@ namespace ForwardBackwardDefine {
     real_type t20  = t19 * t19;
     real_type t24  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
     real_type t25  = 1.0 / t24;
-    real_type t28  = ALIAS_LimitE_D(t25 * (t13 * t14 + t18 * t20) - 1);
+    real_type t28  = ALIAS_LimitE_D(t25 * (t14 * t13 + t20 * t18) - 1);
     result__[ 4   ] = 4 * t25 * t19 * t2 * t18 * t28;
     result__[ 5   ] = 2 * t25 * t8 * t13 * t28;
     if ( m_debug )
@@ -366,20 +367,20 @@ namespace ForwardBackwardDefine {
     real_type t20  = t19 * t19;
     real_type t24  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
     real_type t25  = 1.0 / t24;
-    real_type t27  = t25 * (t14 * t12 + t18 * t20) - 1;
+    real_type t27  = t25 * (t12 * t14 + t18 * t20) - 1;
     real_type t28  = ALIAS_LimitE_DD(t27);
     real_type t29  = t18 * t18;
     real_type t32  = t24 * t24;
     real_type t33  = 1.0 / t32;
     real_type t35  = OMEGA__[4];
     real_type t39  = ALIAS_LimitE_D(t27);
-    result__[ 0   ] = 16 * t35 * t33 * t20 * t19 * t29 * t28 + 12 * t35 * t25 * t19 * t18 * t39 + OMEGA__[0] * t4 + OMEGA__[1] * t9;
+    result__[ 0   ] = 16 * t19 * t20 * t28 * t29 * t33 * t35 + 12 * t18 * t19 * t25 * t35 * t39 + t4 * OMEGA__[0] + t9 * OMEGA__[1];
     result__[ 1   ] = 8 * t35 * t19 * t2 * t18 * t33 * t13 * t12 * t28;
     result__[ 2   ] = result__[1];
     real_type t54  = ALIAS_LimitA_min_DD(ModelPars[iM_a_min] - t13);
     real_type t59  = ALIAS_LimitA_max_DD(t13 - ModelPars[iM_a_max]);
     real_type t62  = t12 * t12;
-    result__[ 3   ] = 4 * t35 * t33 * t14 * t62 * t28 + 2 * t35 * t25 * t12 * t39 + OMEGA__[2] * t54 + OMEGA__[3] * t59;
+    result__[ 3   ] = 4 * t14 * t28 * t33 * t35 * t62 + 2 * t12 * t25 * t35 * t39 + t54 * OMEGA__[2] + t59 * OMEGA__[3];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
   }

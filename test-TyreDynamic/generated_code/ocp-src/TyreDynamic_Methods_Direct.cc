@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_Guess.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -135,7 +136,7 @@ namespace TyreDynamicDefine {
     real_type t6   = XM__[2];
     real_type t7   = F__x(t6);
     real_type t8   = Fa(t1);
-    result__[ 0   ] = V__[0] * ModelPars[iM_m] * t1 - t7 + t8;
+    result__[ 0   ] = t1 * V__[0] * ModelPars[iM_m] - t7 + t8;
     real_type t13  = XM__[3];
     real_type t14  = p__pos(t13);
     real_type t15  = XM__[1];
@@ -144,11 +145,11 @@ namespace TyreDynamicDefine {
     real_type t18  = b__neg(t17);
     real_type t19  = TB(t18, t15);
     real_type t22  = Ma(t15);
-    result__[ 1   ] = V__[1] * t1 * ModelPars[iM_Iw] + ModelPars[iM_rw] * t7 - t16 - t19 - t22;
+    result__[ 1   ] = t1 * V__[1] * ModelPars[iM_Iw] + t7 * ModelPars[iM_rw] - t16 - t19 - t22;
     real_type t27  = kappa__w(t1, t15);
     result__[ 2   ] = V__[2] * ModelPars[iM_l__x] * t1 - (t27 - t6) * t1;
-    result__[ 3   ] = V__[3] * ModelPars[iM_tau__p] * t1 + t13 - UM__[0];
-    result__[ 4   ] = V__[4] * ModelPars[iM_tau__b] * t1 + t17 - UM__[1];
+    result__[ 3   ] = t1 * V__[3] * ModelPars[iM_tau__p] + t13 - UM__[0];
+    result__[ 4   ] = t1 * V__[4] * ModelPars[iM_tau__b] + t17 - UM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "fd_ode_eval", 5, i_segment );
   }

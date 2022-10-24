@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -94,14 +95,25 @@ namespace BrachiostocronaDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = XM__[2];
-    real_type t5   = XM__[3];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_v];
+    real_type t5   = XL__[iX_theta];
     real_type t6   = cos(t5);
+    real_type t10  = t2 * LM__[1];
     real_type t11  = sin(t5);
+    real_type t15  = t2 * LM__[2];
+    real_type t16  = ModelPars[iM_g];
     real_type t20  = UM__[0];
-    real_type t22  = vthetaControl(t20, -10, 10);
-    real_type t30  = LowBound(XM__[0] * ModelPars[iM_slope_low] - XM__[1] + ModelPars[iM_y0_low]);
-    real_type result__ = t11 * t4 * t2 * LM__[1] - t11 * ModelPars[iM_g] * t2 * LM__[2] + t6 * t4 * t2 * LM__[0] + t22 * t2 + t20 * LM__[3] + t30;
+    real_type t23  = vthetaControl(t20, -10, 10);
+    real_type t27  = ModelPars[iM_slope_low];
+    real_type t30  = ModelPars[iM_y0_low];
+    real_type t32  = LowBound(t27 * XL__[iX_x] + t30 - XL__[iX_y]);
+    real_type t33  = XR__[iX_v];
+    real_type t34  = XR__[iX_theta];
+    real_type t35  = cos(t34);
+    real_type t38  = sin(t34);
+    real_type t47  = LowBound(t27 * XR__[iX_x] + t30 - XR__[iX_y]);
+    real_type result__ = t11 * t4 * t10 + t38 * t33 * t10 - t11 * t16 * t15 - t38 * t16 * t15 + t35 * t33 * t3 + t6 * t4 * t3 + 2 * t23 * t2 + 2 * t20 * LM__[3] + t32 + t47;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -143,7 +155,7 @@ namespace BrachiostocronaDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t4   = ALIAS_vthetaControl_D_1(UM__[0], -10, 10);
-    result__[ 0   ] = t4 * P__[iP_T] + LM__[3];
+    result__[ 0   ] = 2 * t4 * P__[iP_T] + 2 * LM__[3];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -193,9 +205,10 @@ namespace BrachiostocronaDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
-    result__[ 2   ] = ALIAS_vthetaControl_D_1(UM__[0], -10, 10);
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
+    real_type t2   = ALIAS_vthetaControl_D_1(UM__[0], -10, 10);
+    result__[ 2   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 3, i_segment );
   }
@@ -244,7 +257,7 @@ namespace BrachiostocronaDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_vthetaControl_D_1_1(UM__[0], -10, 10);
-    result__[ 0   ] = t3 * P__[iP_T];
+    result__[ 0   ] = 2 * t3 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::ToolPath2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -180,34 +181,34 @@ namespace CNOCDefine {
     X__[5] = (XL__[5]+XR__[5])/2;
     X__[6] = (XL__[6]+XR__[6])/2;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && timePositive.check_range(-X__[iX_coV], m_max_penalty_value);
+    bool ok = true;
+    ok = ok && timePositive.check_range(-X__[iX_coV], m_max_penalty_value);
     real_type t3   = X__[iX_vs] * X__[iX_vs];
     real_type t5   = X__[iX_vn] * X__[iX_vn];
     real_type t7   = sqrt(t3 + t5);
     real_type t8   = ALIAS_nominalFeed();
-    res = res && vLimit.check_range(1.0 / t8 * t7 - 0.101e1, m_max_penalty_value);
+    ok = ok && vLimit.check_range(1.0 / t8 * t7 - 0.101e1, m_max_penalty_value);
     real_type t15  = X__[iX_n] / ModelPars[iM_path_following_tolerance];
-    res = res && PathFollowingTolerance_min.check_range(-1 - t15, m_max_penalty_value);
-    res = res && PathFollowingTolerance_max.check_range(t15 - 1, m_max_penalty_value);
+    ok = ok && PathFollowingTolerance_min.check_range(-1 - t15, m_max_penalty_value);
+    ok = ok && PathFollowingTolerance_max.check_range(t15 - 1, m_max_penalty_value);
     real_type t18  = X__[iX_as];
     real_type t21  = 1.0 / ModelPars[iM_as_max] * t18;
-    res = res && as_limit_min.check_range(-1 - t21, m_max_penalty_value);
-    res = res && as_limit_max.check_range(t21 - 1, m_max_penalty_value);
+    ok = ok && as_limit_min.check_range(-1 - t21, m_max_penalty_value);
+    ok = ok && as_limit_max.check_range(t21 - 1, m_max_penalty_value);
     real_type t24  = X__[iX_an];
     real_type t27  = 1.0 / ModelPars[iM_an_max] * t24;
-    res = res && an_limit_min.check_range(-1 - t27, m_max_penalty_value);
-    res = res && an_limit_max.check_range(t27 - 1, m_max_penalty_value);
+    ok = ok && an_limit_min.check_range(-1 - t27, m_max_penalty_value);
+    ok = ok && an_limit_max.check_range(t27 - 1, m_max_penalty_value);
     real_type t31  = ALIAS_theta(X__[iX_s]);
     real_type t32  = cos(t31);
     real_type t34  = sin(t31);
     real_type t39  = 1.0 / ModelPars[iM_ax_max] * (t32 * t18 - t34 * t24);
-    res = res && ax_limit_min.check_range(-1 - t39, m_max_penalty_value);
-    res = res && ax_limit_max.check_range(t39 - 1, m_max_penalty_value);
+    ok = ok && ax_limit_min.check_range(-1 - t39, m_max_penalty_value);
+    ok = ok && ax_limit_max.check_range(t39 - 1, m_max_penalty_value);
     real_type t47  = 1.0 / ModelPars[iM_ay_max] * (t34 * t18 + t32 * t24);
-    res = res && ay_limit_min.check_range(-1 - t47, m_max_penalty_value);
-    res = res && ay_limit_max.check_range(t47 - 1, m_max_penalty_value);
-    return res;
+    ok = ok && ay_limit_min.check_range(-1 - t47, m_max_penalty_value);
+    ok = ok && ay_limit_max.check_range(t47 - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -243,7 +244,7 @@ namespace CNOCDefine {
     real_type t30  = X__[iX_as];
     real_type t32  = t23 * t20;
     real_type t38  = X__[iX_an];
-    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t32 * t4 * t2 - t30) * L__[iL_lambda3__xo] - t1 * (t23 * t20 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t32 * t38 * t2 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t32 * t30 * t2 - U__[iU_jn]) * L__[iL_lambda6__xo];
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t2 * t32 * t4 - t30) * L__[iL_lambda3__xo] - t1 * (t20 * t23 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t2 * t32 * t38 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t2 * t30 * t32 - U__[iU_jn]) * L__[iL_lambda6__xo];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }

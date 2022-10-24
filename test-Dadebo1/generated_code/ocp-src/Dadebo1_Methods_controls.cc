@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -77,9 +78,11 @@ namespace Dadebo1Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
-    real_type t5   = t2 * t2;
-    real_type t7   = XM__[0] * XM__[0];
-    real_type result__ = t2 * LM__[0] + (t5 + t7) * LM__[1];
+    real_type t5   = LM__[1];
+    real_type t6   = t2 * t2;
+    real_type t8   = XL__[iX_x] * XL__[iX_x];
+    real_type t12  = XR__[iX_x] * XR__[iX_x];
+    real_type result__ = 2 * t2 * LM__[0] + (t6 + t8) * t5 + (t6 + t12) * t5;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -116,7 +119,7 @@ namespace Dadebo1Define {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * LM__[1] * UM__[0] + LM__[0];
+    result__[ 0   ] = 4 * LM__[1] * UM__[0] + 2 * LM__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -163,9 +166,9 @@ namespace Dadebo1Define {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.5e0;
-    result__[ 1   ] = 0.10e1 * UM__[0];
-    result__[ 2   ] = 0.5e0;
+    result__[ 0   ] = 0.10e1;
+    result__[ 1   ] = 0.20e1 * UM__[0];
+    result__[ 2   ] = 0.10e1;
     result__[ 3   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
@@ -210,7 +213,7 @@ namespace Dadebo1Define {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * LM__[1];
+    result__[ 0   ] = 4 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

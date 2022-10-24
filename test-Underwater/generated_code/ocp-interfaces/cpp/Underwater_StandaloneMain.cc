@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    Underwater       model("Underwater",n_threads,&console);
+    Underwater       model("Underwater",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_penalty = 0.01;
     real_type epsi_penalty = 0.1;
     real_type epsi_max = epsi_penalty;
+    real_type tol_penalty = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -171,7 +171,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];

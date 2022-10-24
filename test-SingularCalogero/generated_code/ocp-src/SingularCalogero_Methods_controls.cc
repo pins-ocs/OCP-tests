@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -85,11 +86,13 @@ namespace SingularCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = QM__[0] * QM__[0];
-    real_type t5   = pow(t2 + XM__[0] - 1, 2);
+    real_type t2   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t5   = pow(t2 + XL__[iX_x] - 1, 2);
     real_type t7   = UM__[0];
-    real_type t9   = uControl(t7, -1, 1);
-    real_type result__ = t7 * LM__[0] + t5 + t9;
+    real_type t10  = uControl(t7, -1, 1);
+    real_type t13  = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t16  = pow(t13 + XR__[iX_x] - 1, 2);
+    real_type result__ = 2 * t7 * LM__[0] + 2 * t10 + t16 + t5;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -125,7 +128,7 @@ namespace SingularCalogeroDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[0] + t3;
+    result__[ 0   ] = 2 * LM__[0] + 2 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -168,8 +171,8 @@ namespace SingularCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -211,7 +214,8 @@ namespace SingularCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 24/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -283,8 +284,8 @@ namespace BangBangForkDefine {
     L__[1] = (LL__[1]+LR__[1])/2;
     L__[2] = (LL__[2]+LR__[2])/2;
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_u  ] = uControl.solve(-LL__[iL_lambda3__xo] / 6 - 2.0 / 3.0 * L__[iL_lambda3__xo] - LR__[iL_lambda3__xo] / 6, -1, 1);
-    UGUESS__[ iU_u2 ] = -ModelPars[iM_WU2] * (LL__[iL_lambda2__xo] + 4 * L__[iL_lambda2__xo] + LR__[iL_lambda2__xo]) / ModelPars[iM_WC] / 12;
+    UGUESS__[ iU_u  ] = uControl.solve(-L__[iL_lambda3__xo], -1, 1);
+    UGUESS__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * L__[iL_lambda2__xo] * ModelPars[iM_WU2] / 2;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
@@ -310,7 +311,7 @@ namespace BangBangForkDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
-    uControl.check_range(U__[iU_u], -1, 1);
+    ok = ok && uControl.check_range(U__[iU_u], -1, 1);
     return ok;
   }
 

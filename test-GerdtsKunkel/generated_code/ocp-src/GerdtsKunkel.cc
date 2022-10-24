@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel.cc                                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -133,10 +133,10 @@ namespace GerdtsKunkelDefine {
   */
   GerdtsKunkel::GerdtsKunkel(
     string const   & name,
-    integer          n_threads,
-    Console const  * console
+    Console const  * console,
+    ThreadPoolBase * TP
   )
-  : Discretized_Indirect_OCP( name, n_threads, console )
+  : Discretized_Indirect_OCP( name, console, TP )
   // Controls
   // Constraints LT
   , x1Limitation("x1Limitation")

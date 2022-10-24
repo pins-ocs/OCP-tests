@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    LUUS_Singular04  model("LUUS_Singular04",n_threads,&console);
+    LUUS_Singular04  model("LUUS_Singular04",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon0 = 0.01;
-    real_type u_tolerance0 = 0.01;
     real_type epsi_x0 = 0.01;
-    real_type epsi_x = epsi_x0;
+    real_type u_tolerance0 = 0.01;
     real_type Tf = 6;
+    real_type epsi_x = epsi_x0;
+    real_type u_epsilon0 = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -160,7 +160,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -177,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 LUUS_Singular04_data.Mesh["s0"] = 0;
-LUUS_Singular04_data.Mesh["segments"][0]["length"] = Tf;
 LUUS_Singular04_data.Mesh["segments"][0]["n"] = 1000;
+LUUS_Singular04_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers

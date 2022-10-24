@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    ICLOCS_ContinuousMP model("ICLOCS_ContinuousMP",n_threads,&console);
+    ICLOCS_ContinuousMP model("ICLOCS_ContinuousMP",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -54,8 +54,8 @@ main() {
     real_type xy_eps = xy_eps0;
     real_type xy_tol0 = 0.1;
     real_type xy_tol = xy_tol0;
-    real_type tol_ctrl = 0.01;
     real_type epsi_ctrl = 0.01;
+    real_type tol_ctrl = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_dll_pins.hh                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace PointMassCarModel_4Define {
   public:
 
     POINTMASSCARMODEL_4_API_DLL
-    PointMassCarModel_4_Problem( integer n_threads, Console const * console )
-    : model("PointMassCarModel_4",n_threads,console)
+    PointMassCarModel_4_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("PointMassCarModel_4",console,TP)
     , road( "road" )
     {
       Mechatronix::activate_ctrlC();

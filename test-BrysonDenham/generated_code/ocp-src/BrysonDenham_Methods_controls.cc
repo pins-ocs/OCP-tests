@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -82,8 +83,10 @@ namespace BrysonDenhamDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
-    real_type t11  = X1bound(XM__[0] - 1.0 / 9.0);
-    real_type result__ = t2 / 2 + LM__[0] * XM__[1] + t1 * LM__[1] + t11;
+    real_type t3   = LM__[0];
+    real_type t11  = X1bound(XL__[iX_x] - 1.0 / 9.0);
+    real_type t16  = X1bound(XR__[iX_x] - 1.0 / 9.0);
+    real_type result__ = 2 * t1 * LM__[1] + XL__[iX_v] * t3 + XR__[iX_v] * t3 + t11 + t16 + t2;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -120,7 +123,7 @@ namespace BrysonDenhamDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = UM__[0] + LM__[1];
+    result__[ 0   ] = 2 * UM__[0] + 2 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -165,8 +168,8 @@ namespace BrysonDenhamDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -210,7 +213,7 @@ namespace BrysonDenhamDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1;
+    result__[ 0   ] = 2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_dll_ruby.hh                                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace Bike1DDefine {
   public:
 
     BIKE1D_API_DLL
-    Bike1D_Problem( integer n_threads, Console const * console )
-    : model("Bike1D",n_threads,console)
+    Bike1D_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Bike1D",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

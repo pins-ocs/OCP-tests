@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -88,15 +89,23 @@ namespace LUUS_DrugDisplacementDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = XM__[0];
-    real_type t5   = XM__[1];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_x1];
+    real_type t5   = XL__[iX_x2];
     real_type t6   = g1(t4, t5);
     real_type t7   = g4(t4, t5);
     real_type t10  = UM__[0];
     real_type t12  = t10 - 2 * t5;
+    real_type t19  = t2 * LM__[1];
     real_type t20  = g3(t4, t5);
     real_type t26  = uControl(t10, 0, 8);
-    real_type result__ = ((0.2e-1 - t4) * t7 + 0.464e2 * t12 * t4) * t6 * t2 * LM__[0] + (t12 * t20 + 0.928e0 - 0.464e2 * t4) * t6 * t2 * LM__[1] + t26 * t2;
+    real_type t29  = XR__[iX_x1];
+    real_type t30  = XR__[iX_x2];
+    real_type t31  = g1(t29, t30);
+    real_type t32  = g4(t29, t30);
+    real_type t36  = t10 - 2 * t30;
+    real_type t42  = g3(t29, t30);
+    real_type result__ = ((0.2e-1 - t4) * t7 + 0.464e2 * t12 * t4) * t6 * t3 + (t12 * t20 + 0.928e0 - 0.464e2 * t4) * t6 * t19 + 2 * t26 * t2 + ((0.2e-1 - t29) * t32 + 0.464e2 * t36 * t29) * t31 * t3 + (t36 * t42 + 0.928e0 - 0.464e2 * t29) * t31 * t19;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -134,12 +143,18 @@ namespace LUUS_DrugDisplacementDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = XM__[0];
-    real_type t5   = XM__[1];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_x1];
+    real_type t5   = XL__[iX_x2];
     real_type t6   = g1(t4, t5);
+    real_type t11  = t2 * LM__[1];
     real_type t12  = g3(t4, t5);
     real_type t16  = ALIAS_uControl_D_1(UM__[0], 0, 8);
-    result__[ 0   ] = 0.464e2 * t4 * t6 * t2 * LM__[0] + t12 * t6 * t2 * LM__[1] + t16 * t2;
+    real_type t19  = XR__[iX_x1];
+    real_type t20  = XR__[iX_x2];
+    real_type t21  = g1(t19, t20);
+    real_type t25  = g3(t19, t20);
+    result__[ 0   ] = 0.464e2 * t4 * t6 * t3 + t12 * t6 * t11 + 2 * t16 * t2 + 0.464e2 * t19 * t21 * t3 + t25 * t21 * t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -194,27 +209,36 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t1   = LM__[0];
     real_type t2   = P__[iP_T];
     real_type t3   = t2 * t1;
-    real_type t4   = XM__[0];
-    real_type t5   = XM__[1];
+    real_type t4   = XL__[iX_x1];
+    real_type t5   = XL__[iX_x2];
     real_type t6   = g1_D_1(t4, t5);
     real_type t10  = g1(t4, t5);
     real_type t13  = LM__[1];
     real_type t14  = t2 * t13;
     real_type t15  = g3(t4, t5);
-    real_type t19  = g3_D_1(t4, t5);
-    result__[ 0   ] = 0.2320e2 * t4 * t6 * t3 + 0.2320e2 * t10 * t3 + 0.5e0 * t15 * t6 * t14 + 0.5e0 * t19 * t10 * t14;
-    real_type t23  = g1_D_2(t4, t5);
-    real_type t30  = g3_D_2(t4, t5);
-    result__[ 1   ] = 0.2320e2 * t4 * t23 * t3 + 0.5e0 * t15 * t23 * t14 + 0.5e0 * t30 * t10 * t14;
-    real_type t34  = t10 * t2;
-    result__[ 2   ] = 0.2320e2 * t4 * t34;
-    result__[ 3   ] = 0.5e0 * t15 * t34;
-    result__[ 4   ] = result__[0];
-    result__[ 5   ] = result__[1];
+    real_type t18  = g3_D_1(t4, t5);
+    result__[ 0   ] = 0.464e2 * t4 * t6 * t3 + 0.464e2 * t10 * t3 + t15 * t6 * t14 + t18 * t10 * t14;
+    real_type t21  = g1_D_2(t4, t5);
+    real_type t27  = g3_D_2(t4, t5);
+    result__[ 1   ] = 0.464e2 * t4 * t21 * t3 + t15 * t21 * t14 + t27 * t10 * t14;
+    real_type t30  = t10 * t2;
+    real_type t33  = XR__[iX_x1];
+    real_type t34  = XR__[iX_x2];
+    real_type t35  = g1(t33, t34);
+    real_type t36  = t35 * t2;
+    result__[ 2   ] = 0.2320e2 * t4 * t30 + 0.2320e2 * t33 * t36;
+    real_type t41  = g3(t33, t34);
+    result__[ 3   ] = 0.5e0 * t15 * t30 + 0.5e0 * t41 * t36;
+    real_type t44  = g1_D_1(t33, t34);
+    real_type t52  = g3_D_1(t33, t34);
+    result__[ 4   ] = 0.464e2 * t33 * t44 * t3 + 0.464e2 * t35 * t3 + t41 * t44 * t14 + t52 * t35 * t14;
+    real_type t55  = g1_D_2(t33, t34);
+    real_type t61  = g3_D_2(t33, t34);
+    result__[ 5   ] = 0.464e2 * t33 * t55 * t3 + t41 * t55 * t14 + t61 * t35 * t14;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[3];
-    real_type t43  = ALIAS_uControl_D_1(UM__[0], 0, 8);
-    result__[ 8   ] = 0.464e2 * t4 * t10 * t1 + t15 * t10 * t13 + t43;
+    real_type t70  = ALIAS_uControl_D_1(UM__[0], 0, 8);
+    result__[ 8   ] = 0.464e2 * t4 * t10 * t1 + t15 * t10 * t13 + 2 * t70 + 0.464e2 * t33 * t35 * t1 + t41 * t35 * t13;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }
@@ -259,7 +283,7 @@ namespace LUUS_DrugDisplacementDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(UM__[0], 0, 8);
-    result__[ 0   ] = t3 * P__[iP_T];
+    result__[ 0   ] = 2 * t3 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -305,11 +329,17 @@ namespace LUUS_DrugDisplacementDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
-    real_type t2   = XM__[1];
-    real_type t3   = g1(t1, t2);
-    real_type t8   = g3(t1, t2);
-    U__[ iU_u ] = uControl.solve(-0.2000000000e0 * (0.232e3 * t1 * LM__[0] + 5.0 * t8 * LM__[1]) * t3, 0, 8);
+    real_type t1   = LM__[0];
+    real_type t2   = XL__[iX_x1];
+    real_type t3   = XL__[iX_x2];
+    real_type t4   = g1(t2, t3);
+    real_type t8   = XR__[iX_x1];
+    real_type t9   = XR__[iX_x2];
+    real_type t10  = g1(t8, t9);
+    real_type t14  = LM__[1];
+    real_type t16  = g3(t2, t3);
+    real_type t20  = g3(t8, t9);
+    U__[ iU_u ] = uControl.solve(-0.2320000000e2 * t2 * t4 * t1 - 0.2320000000e2 * t8 * t10 * t1 - 0.5000000000e0 * t16 * t4 * t14 - 0.5000000000e0 * t20 * t10 * t14, 0, 8);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

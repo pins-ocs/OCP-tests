@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    MinimumEnergyProblem model("MinimumEnergyProblem",n_threads,&console);
+    MinimumEnergyProblem model("MinimumEnergyProblem",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type max_tol = 0.1;
     real_type max_epsi = 0.1;
     real_type epsi = max_epsi;
+    real_type max_tol = 0.1;
     real_type tol = max_tol;
     integer InfoLevel = 4;
 
@@ -176,8 +176,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MinimumEnergyProblem_data.Mesh["s0"] = 0;
-MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
 MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 1000;
+MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

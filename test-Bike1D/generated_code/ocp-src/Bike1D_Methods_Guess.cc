@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -261,28 +262,6 @@ namespace Bike1DDefine {
 
   integer Bike1D::u_guess_numEqns() const { return 2; }
 
-  void
-  Bike1D::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 2, 0 );
-    real_type t4   = X__[iX_v];
-    real_type t5   = t4 * ModelPars[iM_g] * L__[iL_lambda1__xo];
-    real_type t7   = Tmax_normalized(t4);
-    real_type t9   = clip(t7, 0, ModelPars[iM_mur_max]);
-    UGUESS__[ iU_mur ] = mufControl.solve(-t5, ModelPars[iM_mur_min], t9);
-    UGUESS__[ iU_muf ] = mufControl.solve(-t5, ModelPars[iM_muf_min], 0);
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -292,21 +271,35 @@ namespace Bike1DDefine {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    NodeType2 NODE__;
+    integer i_segment = LEFT__.i_segment;
+
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+
     real_type Q__[1];
     real_type X__[1];
     real_type L__[1];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+    L__[0] = (LL__[0]+LR__[0])/2;
+    std::fill_n( UGUESS__.pointer(), 2, 0 );
+    real_type t1   = XL__[iX_v];
+    real_type t2   = XR__[iX_v];
+    real_type t11  = 2 * t2 * t1 * ModelPars[iM_g] * L__[iL_lambda1__xo] / (t1 + t2);
+    real_type t14  = Tmax_normalized(X__[iX_v]);
+    real_type t16  = clip(t14, 0, ModelPars[iM_mur_max]);
+    UGUESS__[ iU_mur ] = mufControl.solve(-t11, ModelPars[iM_mur_min], t16);
+    UGUESS__[ iU_muf ] = mufControl.solve(-t11, ModelPars[iM_muf_min], 0);
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
 
   /*\
@@ -330,10 +323,10 @@ namespace Bike1DDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
-    mufControl.check_range(U__[iU_muf], ModelPars[iM_muf_min], 0);
+    ok = ok && mufControl.check_range(U__[iU_muf], ModelPars[iM_muf_min], 0);
     real_type t6   = Tmax_normalized(X__[iX_v]);
     real_type t8   = clip(t6, 0, ModelPars[iM_mur_max]);
-    murControl.check_range(U__[iU_mur], ModelPars[iM_mur_min], t8);
+    ok = ok && murControl.check_range(U__[iU_mur], ModelPars[iM_mur_min], t8);
     return ok;
   }
 

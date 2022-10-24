@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Methods_problem.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -114,9 +115,9 @@ namespace HangGliderDefine {
     X__[2] = (XL__[2]+XR__[2])/2;
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && Tbound.check_range(-P__[iP_T], m_max_penalty_value);
-    return res;
+    bool ok = true;
+    ok = ok && Tbound.check_range(-P__[iP_T], m_max_penalty_value);
+    return ok;
   }
 
   /*\

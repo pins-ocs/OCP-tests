@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -79,7 +80,8 @@ namespace BertolazziCorsoExample1Define {
     real_type t1   = P__[iP_T];
     real_type t2   = UM__[0];
     real_type t3   = t2 * t2;
-    real_type result__ = t3 * t1 + XM__[1] * t1 * LM__[0] + 1.0 / ModelPars[iM_mass] * t2 * t1 * LM__[1];
+    real_type t7   = t1 * LM__[0];
+    real_type result__ = 2 * t3 * t1 + XL__[iX_v] * t7 + 2 / ModelPars[iM_mass] * t2 * t1 * LM__[1] + XR__[iX_v] * t7;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -117,7 +119,7 @@ namespace BertolazziCorsoExample1Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    result__[ 0   ] = 2 * UM__[0] * t1 + 1.0 / ModelPars[iM_mass] * t1 * LM__[1];
+    result__[ 0   ] = 4 * UM__[0] * t1 + 2 / ModelPars[iM_mass] * t1 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -164,9 +166,9 @@ namespace BertolazziCorsoExample1Define {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = 1.0 / ModelPars[iM_mass];
-    result__[ 0   ] = 0.5e0 * t3 * P__[iP_T];
+    result__[ 0   ] = 0.10e1 * t3 * P__[iP_T];
     result__[ 1   ] = result__[0];
-    result__[ 2   ] = t3 * LM__[1] + 2 * UM__[0];
+    result__[ 2   ] = 2 * t3 * LM__[1] + 4 * UM__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 3, i_segment );
   }
@@ -210,7 +212,7 @@ namespace BertolazziCorsoExample1Define {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * P__[iP_T];
+    result__[ 0   ] = 4 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

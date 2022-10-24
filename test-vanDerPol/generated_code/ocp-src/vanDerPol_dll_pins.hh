@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_dll_pins.hh                                          |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace vanDerPolDefine {
   public:
 
     VANDERPOL_API_DLL
-    vanDerPol_Problem( integer n_threads, Console const * console )
-    : model("vanDerPol",n_threads,console)
+    vanDerPol_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("vanDerPol",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic.hh                                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -180,9 +180,9 @@ namespace TyreDynamicDefine {
     TYREDYNAMIC_API_DLL
     explicit
     TyreDynamic(
-      string const   & name,
-      integer          n_threads,
-      Console const  * console
+      string  const  & name,
+      Console const  * console,
+      ThreadPoolBase * TP
     );
 
     ~TyreDynamic() override;

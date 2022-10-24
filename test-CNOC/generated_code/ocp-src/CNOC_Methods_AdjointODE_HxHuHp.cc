@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::ToolPath2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -179,7 +180,7 @@ namespace CNOCDefine {
     real_type t4   = X__[iX_n];
     real_type t5   = X__[iX_s];
     real_type t6   = ALIAS_kappa(t5);
-    real_type t8   = -t4 * t6 + 1;
+    real_type t8   = -t6 * t4 + 1;
     real_type t9   = t8 * t8;
     real_type t10  = 1.0 / t9;
     real_type t12  = X__[iX_coV];
@@ -199,13 +200,13 @@ namespace CNOCDefine {
     real_type t48  = L__[iL_lambda6__xo];
     real_type t49  = X__[iX_as];
     real_type t50  = t49 * t2;
-    result__[ 0   ] = t14 * t4 * t12 * t10 * t3 - t12 * (-t19 * t25 * t6 - t19 * t21) * t17 - t12 * (t14 * t20 * t31 + t25 * t34) * t30 - t12 * (-t25 * t41 * t6 - t21 * t41) * t39 - t12 * (t25 * t50 * t6 + t21 * t50) * t48;
+    result__[ 0   ] = t14 * t4 * t12 * t10 * t3 - t12 * (-t25 * t6 * t19 - t21 * t19) * t17 - t12 * (t20 * t14 * t31 + t25 * t34) * t30 - t12 * (-t25 * t6 * t41 - t21 * t41) * t39 - t12 * (t25 * t6 * t50 + t21 * t50) * t48;
     real_type t60  = t2 * t17;
     real_type t62  = t6 * t6;
     real_type t64  = t12 * t10 * t62;
     real_type t68  = t2 * t39;
     real_type t71  = t2 * t48;
-    result__[ 1   ] = t10 * t12 * t3 * t6 + t18 * t60 * t64 - t30 * t31 * t64 + t40 * t64 * t68 - t49 * t64 * t71;
+    result__[ 1   ] = t6 * t12 * t10 * t3 + t64 * t18 * t60 - t64 * t31 * t30 + t64 * t40 * t68 - t64 * t49 * t71;
     real_type t74  = t18 * t18;
     real_type t76  = sqrt(t31 + t74);
     real_type t77  = ALIAS_nominalFeed();
@@ -216,13 +217,13 @@ namespace CNOCDefine {
     real_type t84  = 1.0 / t76 * t82;
     real_type t91  = t20 * t6;
     real_type t92  = t12 * t91;
-    result__[ 2   ] = t1 * t12 * t20 + t17 * t18 * t92 - 2 * t2 * t30 * t92 + 2 * t2 * t79 * t84 + t39 * t40 * t92 - t48 * t49 * t92;
+    result__[ 2   ] = t12 * t20 * t1 + t92 * t18 * t17 - 2 * t92 * t2 * t30 + 2 * t2 * t84 * t79 + t92 * t40 * t39 - t92 * t49 * t48;
     real_type t104 = L__[iL_lambda2__xo];
-    result__[ 3   ] = 2 * t18 * t79 * t84 + t104 * t12 + t60 * t92;
-    result__[ 4   ] = t12 * t17 - t71 * t92;
-    result__[ 5   ] = t12 * t30 + t68 * t92;
+    result__[ 3   ] = 2 * t18 * t84 * t79 + t12 * t104 + t92 * t60;
+    result__[ 4   ] = t12 * t17 - t92 * t71;
+    result__[ 5   ] = t12 * t30 + t92 * t68;
     real_type t111 = t78 * t78;
-    result__[ 6   ] = t82 * t111 + t20 * t3 + t18 * t104 - (-t19 * t91 - t49) * t17 - (t20 * t34 - t40) * t30 - (-t41 * t91 - U__[iU_js]) * t39 - (t50 * t91 - U__[iU_jn]) * t48;
+    result__[ 6   ] = t82 * t111 + t20 * t3 + t18 * t104 - (-t91 * t19 - t49) * t17 - (t20 * t34 - t40) * t30 - (-t91 * t41 - U__[iU_js]) * t39 - (t91 * t50 - U__[iU_jn]) * t48;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 7, i_segment );
   }
@@ -383,7 +384,7 @@ namespace CNOCDefine {
     result__[ 13  ] = t21 * t194 * t188 + t21 * t212 * t208 - t21 * t220 * t216 + t108 * t3 - t237 * t201;
     real_type t256 = t13 * t171;
     real_type t259 = t197 * t92;
-    result__[ 14  ] = t259 * t6 * t236 - 2 * t259 * t6 * t240 + t259 * t6 * t243 - t259 * t6 * t245 + t256 * t236 - 2 * t256 * t240 + t256 * t243 - t256 * t245 + t132;
+    result__[ 14  ] = t236 * t259 * t6 - 2 * t240 * t259 * t6 + t243 * t259 * t6 - t245 * t259 * t6 + t236 * t256 - 2 * t240 * t256 + t243 * t256 - t245 * t256 + t132;
     result__[ 15  ] = result__[9];
     real_type t272 = t28 * t28;
     real_type t273 = t49 + t272;
@@ -399,18 +400,18 @@ namespace CNOCDefine {
     real_type t290 = 1.0 / t281;
     real_type t292 = t290 * t278 * t284;
     real_type t294 = t13 * t30;
-    result__[ 16  ] = 2 * t278 * t49 * t275 - 2 * t49 * t287 * t284 - 2 * t294 * t6 * t48 + 2 * t292;
-    result__[ 17  ] = -2 * t28 * t2 * t286 * t278 * t284 + 2 * t2 * t278 * t28 * t275 + t294 * t6 * t27;
+    result__[ 16  ] = 2 * t275 * t278 * t49 - 2 * t284 * t287 * t49 - 2 * t294 * t48 * t6 + 2 * t292;
+    result__[ 17  ] = -2 * t2 * t278 * t28 * t284 * t286 + 2 * t2 * t275 * t278 * t28 + t27 * t294 * t6;
     result__[ 18  ] = -t294 * t6 * t75;
     result__[ 19  ] = t294 * t6 * t62;
     real_type t311 = t278 * t283;
     real_type t316 = t30 * t6;
-    result__[ 20  ] = 2 * t2 * t290 * t311 + t30 * t1 + t316 * t236 - 2 * t316 * t240 + t316 * t243 - t316 * t245;
-    result__[ 21  ] = t259 * t6 * t188 + t256 * t188;
+    result__[ 20  ] = 2 * t2 * t290 * t311 + t1 * t30 + t236 * t316 - 2 * t240 * t316 + t243 * t316 - t245 * t316;
+    result__[ 21  ] = t188 * t259 * t6 + t188 * t256;
     result__[ 22  ] = result__[10];
     result__[ 23  ] = result__[17];
-    result__[ 24  ] = 2 * t278 * t272 * t275 - 2 * t272 * t287 * t284 + 2 * t292;
-    result__[ 25  ] = 2 * t28 * t290 * t311 + t316 * t188 + L__[iL_lambda2__xo];
+    result__[ 24  ] = 2 * t272 * t275 * t278 - 2 * t272 * t284 * t287 + 2 * t292;
+    result__[ 25  ] = 2 * t28 * t290 * t311 + t188 * t316 + L__[iL_lambda2__xo];
     result__[ 26  ] = -t216 * t259 * t6 - t216 * t256;
     result__[ 27  ] = result__[11];
     result__[ 28  ] = result__[18];

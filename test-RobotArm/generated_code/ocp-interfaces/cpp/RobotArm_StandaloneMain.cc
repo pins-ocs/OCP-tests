@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Main.cc                                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    RobotArm         model("RobotArm",n_threads,&console);
+    RobotArm         model("RobotArm",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon0 = 0.01;
     real_type u_tolerance0 = 0.01;
-    real_type u_tolerance = u_tolerance0;
+    real_type u_epsilon0 = 0.01;
     real_type u_epsilon = u_epsilon0;
+    real_type u_tolerance = u_tolerance0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -165,7 +165,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u_rhoControl = data_Controls["u_rhoControl"];
@@ -194,8 +194,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 RobotArm_data.Mesh["s0"] = 0;
-RobotArm_data.Mesh["segments"][0]["n"] = 400;
 RobotArm_data.Mesh["segments"][0]["length"] = 1;
+RobotArm_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -333,7 +334,7 @@ namespace HypersonicProblem3DOFDefine {
   real_type
   HypersonicProblem3DOF::G_bound( real_type xo___V ) const {
     real_type t2   = G_bound_min(-0.314159265358979323846264338328e1 - xo___V);
-    real_type t4   = G_bound_min(xo___V - 0.314159265358979323846264338328e1);
+    real_type t4   = G_bound_max(xo___V - 0.314159265358979323846264338328e1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -348,7 +349,7 @@ namespace HypersonicProblem3DOFDefine {
   real_type
   HypersonicProblem3DOF::G_bound_D( real_type xo___V ) const {
     real_type t2   = ALIAS_G_bound_min_D(-0.314159265358979323846264338328e1 - xo___V);
-    real_type t4   = ALIAS_G_bound_min_D(xo___V - 0.314159265358979323846264338328e1);
+    real_type t4   = ALIAS_G_bound_max_D(xo___V - 0.314159265358979323846264338328e1);
     real_type result__ = -t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -363,7 +364,7 @@ namespace HypersonicProblem3DOFDefine {
   real_type
   HypersonicProblem3DOF::G_bound_DD( real_type xo___V ) const {
     real_type t2   = ALIAS_G_bound_min_DD(-0.314159265358979323846264338328e1 - xo___V);
-    real_type t4   = ALIAS_G_bound_min_DD(xo___V - 0.314159265358979323846264338328e1);
+    real_type t4   = ALIAS_G_bound_max_DD(xo___V - 0.314159265358979323846264338328e1);
     real_type result__ = t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(

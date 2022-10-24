@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -76,13 +77,18 @@ namespace ICLOCS_SpeyerDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[0] * XM__[0];
-    real_type t4   = XM__[1];
+    real_type t2   = XL__[iX_x1] * XL__[iX_x1];
+    real_type t4   = XL__[iX_x2];
     real_type t5   = t4 * t4;
     real_type t6   = t5 * t5;
     real_type t10  = UM__[0];
     real_type t11  = t10 * t10;
-    real_type result__ = t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[iM_b] / 2 + t4 * LM__[0] + t10 * LM__[1];
+    real_type t13  = LM__[0];
+    real_type t19  = XR__[iX_x1] * XR__[iX_x1];
+    real_type t21  = XR__[iX_x2];
+    real_type t22  = t21 * t21;
+    real_type t23  = t22 * t22;
+    real_type result__ = t2 / 4 + t6 / 4 - t5 / 2 + t11 * ModelPars[iM_b] + t4 * t13 + 2 * t10 * LM__[1] + t19 / 4 + t23 / 4 - t22 / 2 + t21 * t13;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -119,7 +125,7 @@ namespace ICLOCS_SpeyerDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = UM__[0] * ModelPars[iM_b] + LM__[1];
+    result__[ 0   ] = 2 * UM__[0] * ModelPars[iM_b] + 2 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -164,8 +170,8 @@ namespace ICLOCS_SpeyerDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -209,7 +215,7 @@ namespace ICLOCS_SpeyerDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ModelPars[iM_b];
+    result__[ 0   ] = 2 * ModelPars[iM_b];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

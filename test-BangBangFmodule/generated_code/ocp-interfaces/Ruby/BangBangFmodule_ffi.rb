@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFmodule_run.rb                                         #
 #                                                                       #
-#  version: 1.0   date 19/6/2022                                        #
+#  version: 1.0   date 10/11/2022                                       #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -23,6 +23,9 @@ when /mac|darwin/
   DYLIB_EXT = 'dylib';
 when /linux|cygwin|bsd/
   OS        = :linux;
+  DYLIB_EXT = 'so';
+when /msys/
+  OS        = :mingw;
   DYLIB_EXT = 'so';
 when /mswin|win|mingw/
   OS        = :win;

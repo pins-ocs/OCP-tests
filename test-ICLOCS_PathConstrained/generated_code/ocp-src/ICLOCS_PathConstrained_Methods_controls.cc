@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -91,13 +92,20 @@ namespace ICLOCS_PathConstrainedDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = t1 * t1;
-    real_type t5   = XM__[0] * XM__[0];
-    real_type t6   = XM__[1];
+    real_type t5   = XL__[iX_x1] * XL__[iX_x1];
+    real_type t6   = XL__[iX_x2];
     real_type t7   = t6 * t6;
+    real_type t8   = LM__[0];
+    real_type t10  = LM__[1];
     real_type t13  = uControl(t1, -20, 20);
-    real_type t16  = pow(QM__[0] - 0.5e0, 2);
-    real_type t19  = x2bound(0.5e0 - 8 * t16 + t6);
-    real_type result__ = 0.5e-2 * t2 + t5 + t7 + t6 * LM__[0] + (-t6 + t1) * LM__[1] + t13 + t19;
+    real_type t17  = pow(QL__[iQ_zeta] - 0.5e0, 2);
+    real_type t20  = x2bound(0.5e0 - 8 * t17 + t6);
+    real_type t22  = XR__[iX_x1] * XR__[iX_x1];
+    real_type t23  = XR__[iX_x2];
+    real_type t24  = t23 * t23;
+    real_type t30  = pow(QR__[iQ_zeta] - 0.5e0, 2);
+    real_type t33  = x2bound(0.5e0 - 8 * t30 + t23);
+    real_type result__ = 0.10e-1 * t2 + t5 + t7 + t6 * t8 + (-t6 + t1) * t10 + 2 * t13 + t20 + t22 + t24 + t23 * t8 + (-t23 + t1) * t10 + t33;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -135,8 +143,8 @@ namespace ICLOCS_PathConstrainedDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t4   = ALIAS_uControl_D_1(t1, -20, 20);
-    result__[ 0   ] = 0.10e-1 * t1 + LM__[1] + t4;
+    real_type t5   = ALIAS_uControl_D_1(t1, -20, 20);
+    result__[ 0   ] = 0.20e-1 * t1 + 2 * LM__[1] + 2 * t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -181,8 +189,8 @@ namespace ICLOCS_PathConstrainedDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -227,7 +235,7 @@ namespace ICLOCS_PathConstrainedDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -20, 20);
-    result__[ 0   ] = 0.10e-1 + t2;
+    result__[ 0   ] = 0.20e-1 + 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Mex_class.cc                                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -17,8 +17,12 @@
 
 #include "Dadebo1_Mex.hh"
 
-ProblemStorage::ProblemStorage( std::string const & cname, integer n_threads, Console const * console )
-: MODEL_CLASS(cname,n_threads,console)
+ProblemStorage::ProblemStorage(
+  std::string const & cname,
+  Console const     * console,
+  ThreadPoolBase    * TP
+)
+: MODEL_CLASS(cname,console,TP)
 // user defined Object instances (external)
 , mesh( "mesh" )
 {}

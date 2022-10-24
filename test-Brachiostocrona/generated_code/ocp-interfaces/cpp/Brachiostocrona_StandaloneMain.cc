@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    Brachiostocrona  model("Brachiostocrona",n_threads,&console);
+    Brachiostocrona  model("Brachiostocrona",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,13 +50,13 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
     real_type yf = -2;
     real_type xf = 5;
+    real_type g = 9.81;
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
+    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     real_type low_tolerance0 = 0.1;
     real_type low_tolerance = low_tolerance0;
-    real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -164,7 +164,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_vthetaControl = data_Controls["vthetaControl"];

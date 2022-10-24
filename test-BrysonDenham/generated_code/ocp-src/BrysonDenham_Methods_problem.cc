@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -75,9 +76,9 @@ namespace BrysonDenhamDefine {
     X__[0] = (XL__[0]+XR__[0])/2;
     X__[1] = (XL__[1]+XR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
-    res = res && X1bound.check_range(X__[iX_x] - 1.0 / 9.0, m_max_penalty_value);
-    return res;
+    bool ok = true;
+    ok = ok && X1bound.check_range(X__[iX_x] - 1.0 / 9.0, m_max_penalty_value);
+    return ok;
   }
 
   /*\

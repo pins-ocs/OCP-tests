@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -95,10 +96,10 @@ namespace GoddardRocketDefine {
     real_type t7   = X__[iX_m];
     real_type t8   = 1.0 / t7;
     real_type t10  = gg_D(t4);
-    result__[ 0   ] = (-t8 * t6 - t10) * t3;
+    result__[ 0   ] = (-t6 * t8 - t10) * t3;
     real_type t12  = L__[iL_lambda1__xo];
     real_type t14  = DD_D_2(t4, t5);
-    result__[ 1   ] = -t8 * t14 * t3 + t2 * t12;
+    result__[ 1   ] = -t14 * t3 * t8 + t12 * t2;
     real_type t17  = U__[iU_T];
     real_type t18  = DD(t4, t5);
     real_type t19  = t17 - t18;

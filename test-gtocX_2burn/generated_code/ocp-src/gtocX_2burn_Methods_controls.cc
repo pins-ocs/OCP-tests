@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -88,27 +89,29 @@ namespace gtocX_2burnDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = XM__[0];
-    real_type t4   = QM__[0];
+    real_type t2   = 1 - ModelPars[iM_w_guess];
+    real_type t3   = XL__[iX_p];
+    real_type t4   = QL__[iQ_zeta];
     real_type t6   = ModelPars[iM_time_i];
     real_type t8   = ModelPars[iM_time_f];
     real_type t10  = t6 * (1 - t4) + t8 * t4;
     real_type t11  = p_guess(t10);
     real_type t15  = pow(1.0 / t11 * t3 - 1, 2);
-    real_type t16  = XM__[1];
+    real_type t16  = XL__[iX_f];
     real_type t17  = f_guess(t10);
     real_type t19  = pow(t16 - t17, 2);
-    real_type t20  = XM__[2];
+    real_type t20  = XL__[iX_g];
     real_type t21  = g_guess(t10);
     real_type t23  = pow(t20 - t21, 2);
     real_type t25  = h_guess(t10);
-    real_type t27  = pow(XM__[3] - t25, 2);
+    real_type t27  = pow(XL__[iX_h] - t25, 2);
     real_type t29  = k_guess(t10);
-    real_type t31  = pow(XM__[4] - t29, 2);
-    real_type t32  = XM__[5];
+    real_type t31  = pow(XL__[iX_k] - t29, 2);
+    real_type t32  = XL__[iX_L];
     real_type t33  = L_guess(t10, t6);
     real_type t35  = pow(t32 - t33, 2);
     real_type t39  = t8 - t6;
+    real_type t40  = t39 * LM__[1];
     real_type t41  = sqrt(t3);
     real_type t43  = ModelPars[iM_muS];
     real_type t44  = sqrt(t43);
@@ -116,11 +119,39 @@ namespace gtocX_2burnDefine {
     real_type t48  = ray(t3, t16, t20, t32);
     real_type t49  = acceleration_r(t48, t43);
     real_type t50  = sin(t32);
+    real_type t55  = t39 * LM__[2];
     real_type t57  = cos(t32);
+    real_type t62  = t39 * LM__[5];
     real_type t65  = t57 * t16 + t50 * t20 + 1;
     real_type t66  = t65 * t65;
     real_type t73  = ray_positive(-t65);
-    real_type result__ = (t15 + t19 + t23 + t27 + t31 + t35) * (1 - ModelPars[iM_w_guess]) + t50 * t49 * t47 * t41 * t39 * LM__[1] - t57 * t49 * t47 * t41 * t39 * LM__[2] + t44 / t41 / t3 * t66 * t39 * LM__[5] + t73;
+    real_type t74  = XR__[iX_p];
+    real_type t75  = QR__[iQ_zeta];
+    real_type t79  = t6 * (1 - t75) + t8 * t75;
+    real_type t80  = p_guess(t79);
+    real_type t84  = pow(1.0 / t80 * t74 - 1, 2);
+    real_type t85  = XR__[iX_f];
+    real_type t86  = f_guess(t79);
+    real_type t88  = pow(t85 - t86, 2);
+    real_type t89  = XR__[iX_g];
+    real_type t90  = g_guess(t79);
+    real_type t92  = pow(t89 - t90, 2);
+    real_type t94  = h_guess(t79);
+    real_type t96  = pow(XR__[iX_h] - t94, 2);
+    real_type t98  = k_guess(t79);
+    real_type t100 = pow(XR__[iX_k] - t98, 2);
+    real_type t101 = XR__[iX_L];
+    real_type t102 = L_guess(t79, t6);
+    real_type t104 = pow(t101 - t102, 2);
+    real_type t107 = sqrt(t74);
+    real_type t109 = ray(t74, t85, t89, t101);
+    real_type t110 = acceleration_r(t109, t43);
+    real_type t111 = sin(t101);
+    real_type t116 = cos(t101);
+    real_type t122 = t111 * t89 + t116 * t85 + 1;
+    real_type t123 = t122 * t122;
+    real_type t130 = ray_positive(-t122);
+    real_type result__ = (t15 + t19 + t23 + t27 + t31 + t35) * t2 + t50 * t49 * t47 * t41 * t40 - t57 * t49 * t47 * t41 * t55 + t44 / t41 / t3 * t66 * t62 + t73 + (t84 + t88 + t92 + t96 + t100 + t104) * t2 + t111 * t110 * t47 * t107 * t40 - t116 * t110 * t47 * t107 * t55 + t44 / t107 / t74 * t123 * t62 + t130;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }

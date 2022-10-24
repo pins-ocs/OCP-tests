@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -74,11 +75,14 @@ namespace HyperSensitiveDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = XL__[iX_y];
     real_type t2   = t1 * t1;
     real_type t3   = UM__[0];
     real_type t4   = t3 * t3;
-    real_type result__ = t2 + t4 + (-t2 * t1 + t3) * LM__[0];
+    real_type t6   = LM__[0];
+    real_type t10  = XR__[iX_y];
+    real_type t11  = t10 * t10;
+    real_type result__ = t2 + 2 * t4 + (-t2 * t1 + t3) * t6 + t11 + (-t11 * t10 + t3) * t6;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -113,7 +117,7 @@ namespace HyperSensitiveDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * UM__[0] + LM__[0];
+    result__[ 0   ] = 4 * UM__[0] + 2 * LM__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -156,8 +160,8 @@ namespace HyperSensitiveDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -199,7 +203,7 @@ namespace HyperSensitiveDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2;
+    result__[ 0   ] = 4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

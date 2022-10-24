@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: OrbitTransfer_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -83,18 +84,32 @@ namespace OrbitTransferDefine {
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_tf];
-    real_type t4   = XM__[3];
-    real_type t8   = XM__[4];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_u];
+    real_type t7   = t2 * LM__[1];
+    real_type t8   = XL__[iX_v];
     real_type t9   = t8 * t8;
-    real_type t10  = XM__[2];
+    real_type t10  = XL__[iX_r];
     real_type t11  = 1.0 / t10;
+    real_type t13  = ModelPars[iM_mu];
     real_type t14  = t10 * t10;
     real_type t17  = ModelPars[iM_T];
     real_type t18  = UM__[0];
     real_type t19  = sin(t18);
-    real_type t22  = 1.0 / XM__[0];
+    real_type t20  = t19 * t17;
+    real_type t22  = 1.0 / XL__[iX_m];
+    real_type t27  = t2 * LM__[2];
     real_type t30  = cos(t18);
-    real_type result__ = t4 * t2 * LM__[0] + (t11 * t9 - 1.0 / t14 * ModelPars[iM_mu] + t22 * t19 * t17) * t2 * LM__[1] + (-t11 * t4 * t8 + t17 * t22 * t30) * t2 * LM__[2] - ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t2 * LM__[4];
+    real_type t31  = t30 * t17;
+    real_type t41  = t2 * LM__[4];
+    real_type t44  = XR__[iX_u];
+    real_type t46  = XR__[iX_v];
+    real_type t47  = t46 * t46;
+    real_type t48  = XR__[iX_r];
+    real_type t49  = 1.0 / t48;
+    real_type t51  = t48 * t48;
+    real_type t55  = 1.0 / XR__[iX_m];
+    real_type result__ = t4 * t3 + (t11 * t9 - 1.0 / t14 * t13 + t22 * t20) * t7 + (-t11 * t4 * t8 + t22 * t31) * t27 - 2 * ModelPars[iM_mdot] * t2 * LM__[3] + t11 * t8 * t41 + t44 * t3 + (t49 * t47 - 1.0 / t51 * t13 + t55 * t20) * t7 + (-t49 * t44 * t46 + t55 * t31) * t27 + t49 * t46 * t41;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -137,10 +152,12 @@ namespace OrbitTransferDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = ModelPars[iM_T] * ModelPars[iM_tf];
     real_type t5   = UM__[0];
     real_type t6   = cos(t5);
     real_type t9   = sin(t5);
-    result__[ 0   ] = 1.0 / XM__[0] * (t6 * LM__[1] - t9 * LM__[2]) * ModelPars[iM_T] * ModelPars[iM_tf];
+    real_type t11  = t6 * LM__[1] - t9 * LM__[2];
+    result__[ 0   ] = 1.0 / XL__[iX_m] * t11 * t3 + 1.0 / XR__[iX_m] * t11 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -199,13 +216,17 @@ namespace OrbitTransferDefine {
     real_type t5   = UM__[0];
     real_type t6   = cos(t5);
     real_type t9   = sin(t5);
-    real_type t12  = XM__[0];
+    real_type t11  = t6 * LM__[1] - t9 * LM__[2];
+    real_type t12  = XL__[iX_m];
     real_type t13  = t12 * t12;
-    result__[ 0   ] = -0.5e0 / t13 * (t6 * LM__[1] - t9 * LM__[2]) * t3;
-    real_type t18  = 1.0 / t12;
-    result__[ 1   ] = 0.5e0 * t18 * t6 * t3;
-    result__[ 2   ] = -0.5e0 * t18 * t9 * t3;
-    result__[ 3   ] = result__[0];
+    result__[ 0   ] = -1.0 / t13 * t11 * t3;
+    real_type t17  = 1.0 / t12;
+    real_type t21  = XR__[iX_m];
+    real_type t22  = 1.0 / t21;
+    result__[ 1   ] = 0.5e0 * t17 * t6 * t3 + 0.5e0 * t22 * t6 * t3;
+    result__[ 2   ] = -0.5e0 * t17 * t9 * t3 - 0.5e0 * t22 * t9 * t3;
+    real_type t32  = t21 * t21;
+    result__[ 3   ] = -1.0 / t32 * t11 * t3;
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
     if ( m_debug )
@@ -257,10 +278,12 @@ namespace OrbitTransferDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = ModelPars[iM_T] * ModelPars[iM_tf];
     real_type t5   = UM__[0];
     real_type t6   = sin(t5);
     real_type t9   = cos(t5);
-    result__[ 0   ] = 1.0 / XM__[0] * (-t6 * LM__[1] - t9 * LM__[2]) * ModelPars[iM_T] * ModelPars[iM_tf];
+    real_type t11  = -t6 * LM__[1] - t9 * LM__[2];
+    result__[ 0   ] = 1.0 / XL__[iX_m] * t11 * t3 + 1.0 / XR__[iX_m] * t11 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -437,7 +460,7 @@ namespace OrbitTransferDefine {
     real_type t27  = t26 * t24 * t3;
     real_type t33  = t24 * t24;
     real_type t41  = t26 * t7 * t3;
-    result__[ 0   ] = 2 * t11 * t8 * t5 + 2 * t27 * t1 * (V__[3] - (t18 * t16 - 1.0 / t21 * ModelPars[iM_mu] + t27) * t1) + 2 * t11 * t33 * t5 + 2 * t41 * t1 * (V__[4] - (-t18 * X__[iX_u] * t15 + t41) * t1);
+    result__[ 0   ] = 2 * t11 * t8 * t5 + 2 * t27 * t1 * (V__[3] - (t18 * t16 - 1.0 / t21 * ModelPars[iM_mu] + t27) * t1) + 2 * t11 * t33 * t5 + 2 * t41 * t1 * (V__[4] - (-t15 * t18 * X__[iX_u] + t41) * t1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }

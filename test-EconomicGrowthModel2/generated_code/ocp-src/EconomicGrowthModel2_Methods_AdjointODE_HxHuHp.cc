@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -174,7 +175,7 @@ namespace EconomicGrowthModel2Define {
     result__[ 12  ] = result__[8];
     result__[ 13  ] = result__[9];
     real_type t36  = Q(t4, t5);
-    result__[ 14  ] = t36 * t1 - t10 * t36;
+    result__[ 14  ] = t36 * t1 - t36 * t10;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 15, i_segment );
   }

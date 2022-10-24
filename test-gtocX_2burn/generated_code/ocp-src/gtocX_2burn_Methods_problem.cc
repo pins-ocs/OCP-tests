@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -101,12 +102,12 @@ namespace gtocX_2burnDefine {
     X__[4] = (XL__[4]+XR__[4])/2;
     X__[5] = (XL__[5]+XR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    res = res && ray_positive.check_range(-t3 * X__[iX_f] - t6 * X__[iX_g] - 1, m_max_penalty_value);
-    return res;
+    ok = ok && ray_positive.check_range(-t3 * X__[iX_f] - t6 * X__[iX_g] - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\

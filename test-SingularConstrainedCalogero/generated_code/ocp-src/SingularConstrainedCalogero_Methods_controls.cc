@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -88,10 +89,12 @@ namespace SingularConstrainedCalogeroDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = QM__[0];
-    real_type t7   = uControl(t1, 0, 2);
-    real_type t10  = uMaxBound(XM__[0] - t2 - t1 + 1);
-    real_type result__ = (t2 - 4) * t1 + t1 * LM__[0] + t7 + t10;
+    real_type t2   = QL__[iQ_zeta];
+    real_type t8   = uControl(t1, 0, 2);
+    real_type t12  = uMaxBound(XL__[iX_x] - t2 - t1 + 1);
+    real_type t13  = QR__[iQ_zeta];
+    real_type t18  = uMaxBound(XR__[iX_x] - t13 - t1 + 1);
+    real_type result__ = (t2 - 4) * t1 + 2 * t1 * LM__[0] + 2 * t8 + t12 + (t13 - 4) * t1 + t18;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -126,11 +129,13 @@ namespace SingularConstrainedCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = QM__[0];
-    real_type t3   = UM__[0];
-    real_type t4   = ALIAS_uControl_D_1(t3, 0, 2);
-    real_type t7   = ALIAS_uMaxBound_D(XM__[0] - t1 - t3 + 1);
-    result__[ 0   ] = t1 - 4 + LM__[0] + t4 - t7;
+    real_type t1   = QL__[iQ_zeta];
+    real_type t4   = UM__[0];
+    real_type t5   = ALIAS_uControl_D_1(t4, 0, 2);
+    real_type t9   = ALIAS_uMaxBound_D(XL__[iX_x] - t1 - t4 + 1);
+    real_type t10  = QR__[iQ_zeta];
+    real_type t13  = ALIAS_uMaxBound_D(XR__[iX_x] - t10 - t4 + 1);
+    result__[ 0   ] = t1 - 8 + 2 * LM__[0] + 2 * t5 - t9 + t10 - t13;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -175,11 +180,13 @@ namespace SingularConstrainedCalogeroDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t5   = ALIAS_uMaxBound_DD(XM__[0] - QM__[0] - UM__[0] + 1);
-    result__[ 0   ] = -0.5e0 * t5;
-    result__[ 1   ] = 0.5e0;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = 0.5e0;
+    real_type t3   = UM__[0];
+    real_type t5   = ALIAS_uMaxBound_DD(XL__[iX_x] - QL__[iQ_zeta] - t3 + 1);
+    result__[ 0   ] = -t5;
+    result__[ 1   ] = 1.0;
+    real_type t9   = ALIAS_uMaxBound_DD(XR__[iX_x] - QR__[iQ_zeta] - t3 + 1);
+    result__[ 2   ] = -t9;
+    result__[ 3   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
   }
@@ -223,8 +230,9 @@ namespace SingularConstrainedCalogeroDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = ALIAS_uControl_D_1_1(t1, 0, 2);
-    real_type t6   = ALIAS_uMaxBound_DD(XM__[0] - QM__[0] - t1 + 1);
-    result__[ 0   ] = t2 + t6;
+    real_type t7   = ALIAS_uMaxBound_DD(XL__[iX_x] - QL__[iQ_zeta] - t1 + 1);
+    real_type t11  = ALIAS_uMaxBound_DD(XR__[iX_x] - QR__[iQ_zeta] - t1 + 1);
+    result__[ 0   ] = 2 * t2 + t7 + t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

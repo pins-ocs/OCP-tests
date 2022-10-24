@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -230,23 +231,6 @@ namespace Hager_2000Define {
 
   integer Hager_2000::u_guess_numEqns() const { return 1; }
 
-  void
-  Hager_2000::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = -L__[iL_lambda1__xo] / 2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -256,21 +240,29 @@ namespace Hager_2000Define {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    NodeType2 NODE__;
+    integer i_segment = LEFT__.i_segment;
+
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+
     real_type Q__[1];
     real_type X__[1];
     real_type L__[1];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+    L__[0] = (LL__[0]+LR__[0])/2;
+    std::fill_n( UGUESS__.pointer(), 1, 0 );
+    UGUESS__[ iU_u ] = -L__[iL_lambda1__xo] / 2;
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   /*\
@@ -292,9 +284,7 @@ namespace Hager_2000Define {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    // controls range check
-
+    // no controls to check
     return ok;
   }
 

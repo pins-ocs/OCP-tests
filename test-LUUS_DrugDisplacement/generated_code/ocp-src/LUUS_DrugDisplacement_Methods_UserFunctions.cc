@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -223,7 +224,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = g2_D_1(xo__x1, xo__x2);
     real_type t4   = g2(xo__x1, xo__x2);
     real_type t5   = g2_D_1_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
+    real_type result__ = 2 * t1 * t2 + 2 * t4 * t5;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -238,7 +239,7 @@ namespace LUUS_DrugDisplacementDefine {
   LUUS_DrugDisplacement::g3_D_2( real_type xo__x1, real_type xo__x2 ) const {
     real_type t1   = g2(xo__x1, xo__x2);
     real_type t2   = g2_D_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t2 * t1 + 0.464e2;
+    real_type result__ = 2 * t1 * t2 + 0.464e2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -285,7 +286,7 @@ namespace LUUS_DrugDisplacementDefine {
   LUUS_DrugDisplacement::g4_D_1( real_type xo__x1, real_type xo__x2 ) const {
     real_type t1   = g2(xo__x1, xo__x2);
     real_type t2   = g2_D_1(xo__x1, xo__x2);
-    real_type result__ = 2 * t2 * t1 + 0.464e2;
+    real_type result__ = 2 * t1 * t2 + 0.464e2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -319,7 +320,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = g2_D_1(xo__x1, xo__x2);
     real_type t4   = g2(xo__x1, xo__x2);
     real_type t5   = g2_D_1_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t2 * t1 + 2 * t5 * t4;
+    real_type result__ = 2 * t1 * t2 + 2 * t4 * t5;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -334,7 +335,7 @@ namespace LUUS_DrugDisplacementDefine {
   LUUS_DrugDisplacement::g4_D_2( real_type xo__x1, real_type xo__x2 ) const {
     real_type t1   = g2(xo__x1, xo__x2);
     real_type t2   = g2_D_2(xo__x1, xo__x2);
-    real_type result__ = 2 * t2 * t1;
+    real_type result__ = 2 * t1 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),

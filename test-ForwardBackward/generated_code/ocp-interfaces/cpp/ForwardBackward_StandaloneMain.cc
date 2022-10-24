@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    ForwardBackward  model("ForwardBackward",n_threads,&console);
+    ForwardBackward  model("ForwardBackward",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,20 +50,20 @@ main() {
     Path2D           trajectory( "trajectory" );
 
     // Auxiliary values
-    real_type c0_0 = 0;
-    real_type epsilon0 = 0.1;
-    real_type a_epsi = 0.01;
-    real_type v_tol = 0.01;
-    real_type E_tol0 = 0.25;
+    real_type v_epsi = 0.01;
     real_type c1_0 = 0;
-    real_type a_tol = 0.01;
-    real_type E_tol = E_tol0;
+    real_type c1 = c1_0;
+    real_type epsilon0 = 0.1;
+    real_type epsilon = epsilon0;
     real_type E_epsi0 = 0.25;
     real_type E_epsi = E_epsi0;
+    real_type a_epsi = 0.01;
+    real_type a_tol = 0.01;
+    real_type E_tol0 = 0.25;
+    real_type E_tol = E_tol0;
+    real_type v_tol = 0.01;
+    real_type c0_0 = 0;
     real_type c0 = c0_0;
-    real_type c1 = c1_0;
-    real_type v_epsi = 0.01;
-    real_type epsilon = epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];

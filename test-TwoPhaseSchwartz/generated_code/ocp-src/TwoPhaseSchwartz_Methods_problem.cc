@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_problem.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -110,13 +111,13 @@ namespace TwoPhaseSchwartzDefine {
     X__[2] = (XL__[2]+XR__[2])/2;
     X__[3] = (XL__[3]+XR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t3   = pow(X__[iX_x1] - 1, 2);
     real_type t5   = X__[iX_x2];
     real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    res = res && bound1.check_range(1 - 9 * t3 - t8, m_max_penalty_value);
-    res = res && bound2.check_range(-0.8e0 - t5, m_max_penalty_value);
-    return res;
+    ok = ok && bound1.check_range(1 - 9 * t3 - t8, m_max_penalty_value);
+    ok = ok && bound2.check_range(-0.8e0 - t5, m_max_penalty_value);
+    return ok;
   }
 
   /*\

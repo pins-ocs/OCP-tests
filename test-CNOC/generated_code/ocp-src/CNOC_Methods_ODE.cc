@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::ToolPath2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -284,7 +285,7 @@ namespace CNOCDefine {
     result__[ 20  ] = result__[9];
     result__[ 21  ] = t31 * t46 + U__[iU_js];
     result__[ 22  ] = result__[15];
-    real_type t55  = t30 * t1;
+    real_type t55  = t1 * t30;
     result__[ 23  ] = -result__[22] * (t21 * t4 * t55 + t17 * t55);
     result__[ 24  ] = -t27 * t55;
     result__[ 25  ] = -result__[2] * t4 * t30;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -90,12 +91,18 @@ namespace SoundingRocketDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_Tf];
-    real_type t4   = XM__[1];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_x2];
+    real_type t7   = t2 * LM__[1];
     real_type t8   = t4 * t4;
+    real_type t9   = ModelPars[iM_kappa];
     real_type t11  = UM__[0];
     real_type t13  = ModelPars[iM_B] * t11;
-    real_type t20  = uControl(t11, 0, 1);
-    real_type result__ = t4 * t2 * LM__[0] + (-ModelPars[iM_kappa] * t8 + t13 - ModelPars[iM_g]) * t2 * LM__[1] + t13 * t2 * LM__[2] + t20 * t2;
+    real_type t14  = ModelPars[iM_g];
+    real_type t21  = uControl(t11, 0, 1);
+    real_type t24  = XR__[iX_x2];
+    real_type t26  = t24 * t24;
+    real_type result__ = t4 * t3 + (-t9 * t8 + t13 - t14) * t7 + 2 * t13 * t2 * LM__[2] + 2 * t21 * t2 + t24 * t3 + (-t9 * t26 + t13 - t14) * t7;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -137,7 +144,7 @@ namespace SoundingRocketDefine {
     real_type t2   = P__[iP_Tf];
     real_type t4   = ModelPars[iM_B];
     real_type t10  = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 0   ] = t4 * t2 * LM__[1] + t4 * t2 * LM__[2] + t10 * t2;
+    result__[ 0   ] = 2 * t4 * t2 * LM__[1] + 2 * t4 * t2 * LM__[2] + 2 * t10 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -188,12 +195,12 @@ namespace SoundingRocketDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_B];
-    result__[ 0   ] = 0.5e0 * P__[iP_Tf] * t1;
+    result__[ 0   ] = 0.10e1 * P__[iP_Tf] * t1;
     result__[ 1   ] = result__[0];
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[2];
     real_type t9   = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 4   ] = t1 * LM__[1] + t1 * LM__[2] + t9;
+    result__[ 4   ] = 2 * t1 * LM__[1] + 2 * t1 * LM__[2] + 2 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 5, i_segment );
   }
@@ -240,7 +247,7 @@ namespace SoundingRocketDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
-    result__[ 0   ] = t3 * P__[iP_Tf];
+    result__[ 0   ] = 2 * t3 * P__[iP_Tf];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -348,7 +355,7 @@ namespace SoundingRocketDefine {
     real_type t3   = ALIAS_uControl_D_1(t2, 0, 1);
     real_type t8   = X__[iX_x2] * X__[iX_x2];
     real_type t10  = ModelPars[iM_B];
-    result__[ 0   ] = t3 * t1 - 2 * t1 * t10 * (V__[1] - (t10 * t2 - ModelPars[iM_kappa] * t8 - ModelPars[iM_g]) * t1) - 2 * t1 * t10 * (-t10 * t2 * t1 + V__[2]);
+    result__[ 0   ] = t3 * t1 - 2 * t1 * t10 * (V__[1] - (t10 * t2 - t8 * ModelPars[iM_kappa] - ModelPars[iM_g]) * t1) - 2 * t1 * t10 * (-t10 * t2 * t1 + V__[2]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
   }

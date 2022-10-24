@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    HyperSensitive   model("HyperSensitive",n_threads,&console);
+    HyperSensitive   model("HyperSensitive",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -154,9 +154,9 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HyperSensitive_data.Mesh["s0"] = 0;
-HyperSensitive_data.Mesh["segments"][0]["length"] = 10000;
 HyperSensitive_data.Mesh["segments"][0]["density_function"]["C"] = 50;
 HyperSensitive_data.Mesh["segments"][0]["density_function"]["rho"] = 0.8;
+HyperSensitive_data.Mesh["segments"][0]["length"] = 10000;
 
 
     // alias for user object classes passed as pointers

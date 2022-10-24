@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: SingularCalogeroModified_fsolve_main.m                         %
 %                                                                       %
-%  version: 1.0   date 19/6/2022                                        %
+%  version: 1.0   date 10/11/2022                                       %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %

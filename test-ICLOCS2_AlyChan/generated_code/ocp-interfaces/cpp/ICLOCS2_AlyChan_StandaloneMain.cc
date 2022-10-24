@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    ICLOCS2_AlyChan  model("ICLOCS2_AlyChan",n_threads,&console);
+    ICLOCS2_AlyChan  model("ICLOCS2_AlyChan",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type u_tol_max = 1e-06;
-    real_type u_epsi_max = 1e-06;
     real_type u_tol = u_tol_max;
+    real_type u_epsi_max = 1e-06;
     real_type u_epsi = u_epsi_max;
     integer InfoLevel = 4;
 
@@ -156,7 +156,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS2_AlyChan_data.Mesh["s0"] = 0;
-ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS2_AlyChan_data.Mesh["segments"][0]["length"] = 1/2*Pi;
+ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

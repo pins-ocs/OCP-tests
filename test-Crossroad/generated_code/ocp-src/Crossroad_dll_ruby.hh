@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_dll_ruby.hh                                          |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace CrossroadDefine {
   public:
 
     CROSSROAD_API_DLL
-    Crossroad_Problem( integer n_threads, Console const * console )
-    : model("Crossroad",n_threads,console)
+    Crossroad_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Crossroad",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

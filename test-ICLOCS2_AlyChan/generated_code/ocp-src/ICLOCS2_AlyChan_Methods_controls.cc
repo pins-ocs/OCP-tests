@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -89,12 +90,17 @@ namespace ICLOCS2_AlyChanDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[1];
+    real_type t1   = LM__[0];
+    real_type t2   = XL__[iX_x2];
     real_type t5   = UM__[0];
-    real_type t9   = XM__[0] * XM__[0];
-    real_type t10  = t2 * t2;
-    real_type t14  = uControl(t5, -1, 1);
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + (-t9 / 2 + t10 / 2) * LM__[2] + t14;
+    real_type t8   = LM__[2];
+    real_type t10  = XL__[iX_x1] * XL__[iX_x1];
+    real_type t11  = t2 * t2;
+    real_type t15  = uControl(t5, -1, 1);
+    real_type t17  = XR__[iX_x2];
+    real_type t20  = XR__[iX_x1] * XR__[iX_x1];
+    real_type t21  = t17 * t17;
+    real_type result__ = t2 * t1 + 2 * t5 * LM__[1] + (-t10 / 2 + t11 / 2) * t8 + 2 * t15 + t17 * t1 + (-t20 / 2 + t21 / 2) * t8;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -134,7 +140,7 @@ namespace ICLOCS2_AlyChanDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t3;
+    result__[ 0   ] = 2 * LM__[1] + 2 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -181,8 +187,8 @@ namespace ICLOCS2_AlyChanDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -228,7 +234,8 @@ namespace ICLOCS2_AlyChanDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

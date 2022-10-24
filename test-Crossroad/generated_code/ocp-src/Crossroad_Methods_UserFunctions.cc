@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_UserFunctions.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -142,7 +143,7 @@ namespace CrossroadDefine {
   real_type
   Crossroad::VelBound( real_type xo___V ) const {
     real_type t1   = VelBound_min(-xo___V);
-    real_type t4   = VelBound_min(xo___V - ModelPars[iM_v_max]);
+    real_type t4   = VelBound_max(xo___V - ModelPars[iM_v_max]);
     real_type result__ = t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -157,7 +158,7 @@ namespace CrossroadDefine {
   real_type
   Crossroad::VelBound_D( real_type xo___V ) const {
     real_type t1   = ALIAS_VelBound_min_D(-xo___V);
-    real_type t4   = ALIAS_VelBound_min_D(xo___V - ModelPars[iM_v_max]);
+    real_type t4   = ALIAS_VelBound_max_D(xo___V - ModelPars[iM_v_max]);
     real_type result__ = -t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -172,7 +173,7 @@ namespace CrossroadDefine {
   real_type
   Crossroad::VelBound_DD( real_type xo___V ) const {
     real_type t1   = ALIAS_VelBound_min_DD(-xo___V);
-    real_type t4   = ALIAS_VelBound_min_DD(xo___V - ModelPars[iM_v_max]);
+    real_type t4   = ALIAS_VelBound_max_DD(xo___V - ModelPars[iM_v_max]);
     real_type result__ = t1 + t4;
     if ( m_debug ) {
       UTILS_ASSERT(

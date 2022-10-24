@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SecondOrderSingularRegulator_Methods_controls.cc               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -87,12 +88,16 @@ namespace SecondOrderSingularRegulatorDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[1];
+    real_type t1   = XL__[iX_y2];
     real_type t2   = t1 * t1;
-    real_type t4   = XM__[0] * XM__[0];
+    real_type t4   = XL__[iX_y1] * XL__[iX_y1];
+    real_type t5   = LM__[0];
     real_type t8   = UM__[0];
-    real_type t10  = uControl(t8, -1, 1);
-    real_type result__ = t1 * LM__[0] + t8 * LM__[1] + t10 + t2 + t4;
+    real_type t11  = uControl(t8, -1, 1);
+    real_type t13  = XR__[iX_y2];
+    real_type t14  = t13 * t13;
+    real_type t16  = XR__[iX_y1] * XR__[iX_y1];
+    real_type result__ = t1 * t5 + t13 * t5 + 2 * t8 * LM__[1] + 2 * t11 + t14 + t16 + t2 + t4;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -130,7 +135,7 @@ namespace SecondOrderSingularRegulatorDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t3;
+    result__[ 0   ] = 2 * LM__[1] + 2 * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -175,8 +180,8 @@ namespace SecondOrderSingularRegulatorDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
   }
@@ -220,7 +225,8 @@ namespace SecondOrderSingularRegulatorDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

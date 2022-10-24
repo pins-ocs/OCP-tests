@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_Guess.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -98,7 +99,7 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 1   ] = V__[1] - UM__[0] + 0.1e0 * t2 * (2 * t6 + 1);
     real_type t11  = XM__[3];
     real_type t12  = ModelPars[iM_T2];
-    result__[ 2   ] = -t12 * t11 + V__[2];
+    result__[ 2   ] = -t11 * t12 + V__[2];
     real_type t18  = XM__[2] * XM__[2];
     result__[ 3   ] = V__[3] - (UM__[1] - 0.1e0 * t11 * (2 * t18 + 1)) * t12;
     if ( m_debug )

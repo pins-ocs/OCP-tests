@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Road2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -284,9 +285,9 @@ namespace PointMassCarModel_1Define {
     real_type t52  = inv_zeta__dot_D_1_3(t2, t3, t4, t5);
     real_type t54  = t10 * t8;
     real_type t61  = t40 * t17;
-    real_type t62  = t2 * t19;
+    real_type t62  = t19 * t2;
     result__[ 2   ] = t52 * t10 * t9 + t23 * t52 * t17 + t52 * t28 * t27 + t52 * t34 * t33 + t52 * t1 + t52 * t15 + t40 * t54 - 2 * t62 * t61;
-    result__[ 3   ] = t40 * t13;
+    result__[ 3   ] = t13 * t40;
     result__[ 4   ] = t61;
     real_type t69  = t34 * t31;
     result__[ 5   ] = t40 * t69;

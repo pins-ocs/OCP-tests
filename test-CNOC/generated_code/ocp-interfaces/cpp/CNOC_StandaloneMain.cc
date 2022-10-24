@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    CNOC             model("CNOC",n_threads,&console);
+    CNOC             model("CNOC",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,24 +50,24 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type path_following_tolerance = 1.0e-05;
-    real_type js_min = -50;
-    real_type tol_ACC = 0.01;
-    real_type jn_max = 65;
-    real_type epsi_VMAX = 0.01;
+    real_type tol_PATH = 0.01;
     real_type epsi_ACC = 0.01;
+    real_type tol_ACC = 0.01;
+    real_type path_following_tolerance = 1.0e-05;
+    real_type tol_CTRL = 0.01;
+    real_type tol_COV = 0.01;
+    real_type epsi_COV = 0.01;
+    real_type epsi_PATH = 0.01;
+    real_type epsi_VMAX = 0.01;
     real_type tol_VMAX = 0.01;
+    real_type jn_max = 65;
+    real_type epsi_CTRL = 0.01;
+    real_type js_min = -50;
+    real_type js_max = 30;
+    real_type mesh_segments = 100;
     real_type v_nom = 0.173;
     real_type deltaFeed = v_nom;
     real_type pf_error = path_following_tolerance;
-    real_type tol_COV = 0.01;
-    real_type epsi_CTRL = 0.01;
-    real_type epsi_COV = 0.01;
-    real_type js_max = 30;
-    real_type mesh_segments = 100;
-    real_type epsi_PATH = 0.01;
-    real_type tol_PATH = 0.01;
-    real_type tol_CTRL = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -192,7 +192,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_jsControl = data_Controls["jsControl"];

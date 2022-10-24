@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Main.cc                                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    Zermelo          model("Zermelo",n_threads,&console);
+    Zermelo          model("Zermelo",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -167,8 +167,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Zermelo_data.Mesh["s0"] = 0;
-Zermelo_data.Mesh["segments"][0]["length"] = 1;
 Zermelo_data.Mesh["segments"][0]["n"] = 1000;
+Zermelo_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

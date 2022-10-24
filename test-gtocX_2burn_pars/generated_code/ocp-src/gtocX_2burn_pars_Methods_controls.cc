@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -82,39 +83,62 @@ namespace gtocX_2burn_parsDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = 1 - ModelPars[iM_w_guess];
     real_type t3   = P__[iP_p];
     real_type t4   = p_guess(0);
     real_type t8   = pow(1.0 / t4 * t3 - 1, 2);
-    real_type t9   = XM__[0];
-    real_type t10  = QM__[0];
+    real_type t9   = XL__[iX_f];
+    real_type t10  = QL__[iQ_zeta];
     real_type t12  = ModelPars[iM_time_i];
     real_type t14  = ModelPars[iM_time_f];
     real_type t16  = t12 * (1 - t10) + t14 * t10;
     real_type t17  = f_guess(t16);
     real_type t19  = pow(t9 - t17, 2);
-    real_type t20  = XM__[1];
+    real_type t20  = XL__[iX_g];
     real_type t21  = g_guess(t16);
     real_type t23  = pow(t20 - t21, 2);
     real_type t25  = h_guess(0);
     real_type t27  = pow(P__[iP_h] - t25, 2);
     real_type t29  = k_guess(0);
     real_type t31  = pow(P__[iP_k] - t29, 2);
-    real_type t32  = XM__[2];
+    real_type t32  = XL__[iX_L];
     real_type t33  = L_guess(t16, t12);
     real_type t35  = pow(t32 - t33, 2);
     real_type t39  = t14 - t12;
     real_type t41  = sqrt(t3);
+    real_type t42  = t41 * t39 * LM__[0];
     real_type t43  = ModelPars[iM_muS];
     real_type t44  = sqrt(t43);
     real_type t47  = ModelPars[iM_w_nonlin] / t44;
     real_type t48  = ray(t3, t9, t20, t32);
     real_type t49  = acceleration_r(t48, t43);
     real_type t50  = sin(t32);
+    real_type t56  = t41 * t39 * LM__[1];
     real_type t57  = cos(t32);
+    real_type t62  = t39 * LM__[2];
     real_type t65  = t50 * t20 + t57 * t9 + 1;
     real_type t66  = t65 * t65;
+    real_type t68  = 1.0 / t41 / t3;
     real_type t73  = ray_positive(-t65);
-    real_type result__ = (t8 + t19 + t23 + t27 + t31 + t35) * (1 - ModelPars[iM_w_guess]) + t50 * t49 * t47 * t41 * t39 * LM__[0] - t57 * t49 * t47 * t41 * t39 * LM__[1] + t44 / t41 / t3 * t66 * t39 * LM__[2] + t73;
+    real_type t74  = XR__[iX_f];
+    real_type t75  = QR__[iQ_zeta];
+    real_type t79  = t12 * (1 - t75) + t14 * t75;
+    real_type t80  = f_guess(t79);
+    real_type t82  = pow(t74 - t80, 2);
+    real_type t83  = XR__[iX_g];
+    real_type t84  = g_guess(t79);
+    real_type t86  = pow(t83 - t84, 2);
+    real_type t87  = XR__[iX_L];
+    real_type t88  = L_guess(t79, t12);
+    real_type t90  = pow(t87 - t88, 2);
+    real_type t93  = ray(t3, t74, t83, t87);
+    real_type t94  = acceleration_r(t93, t43);
+    real_type t95  = sin(t87);
+    real_type t99  = cos(t87);
+    real_type t105 = t99 * t74 + t95 * t83 + 1;
+    real_type t106 = t105 * t105;
+    real_type t111 = ray_positive(-t105);
+    real_type result__ = (t8 + t19 + t23 + t27 + t31 + t35) * t2 + t50 * t49 * t47 * t42 - t57 * t49 * t47 * t56 + t44 * t68 * t66 * t62 + t73 + (t8 + t82 + t86 + t27 + t31 + t90) * t2 + t95 * t94 * t47 * t42 - t99 * t94 * t47 * t56 + t44 * t68 * t106 * t62 + t111;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }

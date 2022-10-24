@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_dll_ruby.hh                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace MinimumEnergyProblemDefine {
   public:
 
     MINIMUMENERGYPROBLEM_API_DLL
-    MinimumEnergyProblem_Problem( integer n_threads, Console const * console )
-    : model("MinimumEnergyProblem",n_threads,console)
+    MinimumEnergyProblem_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("MinimumEnergyProblem",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

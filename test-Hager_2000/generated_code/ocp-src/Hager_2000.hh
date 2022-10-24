@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -164,9 +164,9 @@ namespace Hager_2000Define {
     HAGER_2000_API_DLL
     explicit
     Hager_2000(
-      string const   & name,
-      integer          n_threads,
-      Console const  * console
+      string  const  & name,
+      Console const  * console,
+      ThreadPoolBase * TP
     );
 
     ~Hager_2000() override;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -192,7 +193,7 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = 1 - xo__s;
     real_type t4   = log(xo__a);
     real_type t6   = log(xo__b);
-    real_type t9   = exp(t2 * t4 + xo__s * t6);
+    real_type t9   = exp(t2 * t4 + t6 * xo__s);
     real_type result__ = t9 * t2 / xo__a;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -211,9 +212,9 @@ namespace EconomicGrowthModel2Define {
     real_type t3   = 1 - xo__s;
     real_type t5   = log(xo__a);
     real_type t7   = log(xo__b);
-    real_type t10  = exp(t3 * t5 + t7 * xo__s);
+    real_type t10  = exp(t3 * t5 + xo__s * t7);
     real_type t12  = t3 * t3;
-    real_type result__ = t10 * t12 * t2 - t10 * t2 * t3;
+    real_type result__ = t10 * t12 * t2 - t10 * t3 * t2;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -263,7 +264,7 @@ namespace EconomicGrowthModel2Define {
   EconomicGrowthModel2::explog_D_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
     real_type t3   = log(xo__a);
     real_type t6   = log(xo__b);
-    real_type t9   = exp((1 - xo__s) * t3 + xo__s * t6);
+    real_type t9   = exp((1 - xo__s) * t3 + t6 * xo__s);
     real_type result__ = t9 * xo__s / xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -281,7 +282,7 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = 1.0 / t1;
     real_type t4   = log(xo__a);
     real_type t7   = log(xo__b);
-    real_type t10  = exp((1 - xo__s) * t4 + t7 * xo__s);
+    real_type t10  = exp((1 - xo__s) * t4 + xo__s * t7);
     real_type t12  = xo__s * xo__s;
     real_type result__ = t10 * t12 * t2 - t10 * xo__s * t2;
     if ( m_debug ) {

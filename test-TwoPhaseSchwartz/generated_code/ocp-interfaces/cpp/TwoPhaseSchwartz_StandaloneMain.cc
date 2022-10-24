@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    TwoPhaseSchwartz model("TwoPhaseSchwartz",n_threads,&console);
+    TwoPhaseSchwartz model("TwoPhaseSchwartz",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol0 = 0.1;
     real_type epsi0 = 0.1;
     real_type epsilon0 = 0.001;
     real_type epsilon = epsilon0;
-    real_type epsi = epsi0;
+    real_type tol0 = 0.1;
     real_type tol = tol0;
+    real_type epsi = epsi0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -160,7 +160,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u1Control = data_Controls["u1Control"];
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TwoPhaseSchwartz_data.Mesh["s0"] = 0;
-TwoPhaseSchwartz_data.Mesh["segments"][0]["length"] = 1;
 TwoPhaseSchwartz_data.Mesh["segments"][0]["n"] = 100;
+TwoPhaseSchwartz_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

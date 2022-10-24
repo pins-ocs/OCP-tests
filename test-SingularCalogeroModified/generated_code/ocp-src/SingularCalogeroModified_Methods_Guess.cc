@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_Guess.cc                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -242,29 +243,6 @@ namespace SingularCalogeroModifiedDefine {
 
   integer SingularCalogeroModified::u_guess_numEqns() const { return 1; }
 
-  void
-  SingularCalogeroModified::u_guess_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    std::fill_n( UGUESS__.pointer(), 1, 0 );
-    real_type t3   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    real_type t4   = t3 * t3;
-    real_type t5   = ModelPars[iM_C];
-    real_type t6   = t5 * t5;
-    real_type t8   = X__[iX_x];
-    real_type t14  = t8 * t8;
-    UGUESS__[ iU_u ] = uControl.solve(-1.0 / (2 * t5 * t8 * t3 - 2 * t5 * t3 + t6 * t4 + t14 - 2 * t8 + ModelPars[iM_epsilon] + 1) * L__[iL_lambda2__xo], -1, 1);
-    if ( m_debug )
-      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
@@ -274,23 +252,42 @@ namespace SingularCalogeroModifiedDefine {
     P_const_pointer_type P__,
     U_pointer_type       UGUESS__
   ) const {
-    NodeType2 NODE__;
+    integer i_segment = LEFT__.i_segment;
+
+    real_type const * QL__ = LEFT__.q;
+    real_type const * XL__ = LEFT__.x;
+    real_type const * LL__ = LEFT__.lambda;
+
+    real_type const * QR__ = RIGHT__.q;
+    real_type const * XR__ = RIGHT__.x;
+    real_type const * LR__ = RIGHT__.lambda;
+
     real_type Q__[1];
     real_type X__[2];
     real_type L__[2];
-    NODE__.i_segment = LEFT__.i_segment;
-    NODE__.q      = Q__;
-    NODE__.x      = X__;
-    NODE__.lambda = L__;
     // Qvars
-    Q__[0] = (LEFT__.q[0]+RIGHT__.q[0])/2;
+    Q__[0] = (QL__[0]+QR__[0])/2;
     // Xvars
-    X__[0] = (LEFT__.x[0]+RIGHT__.x[0])/2;
-    X__[1] = (LEFT__.x[1]+RIGHT__.x[1])/2;
+    X__[0] = (XL__[0]+XR__[0])/2;
+    X__[1] = (XL__[1]+XR__[1])/2;
     // Lvars
-    L__[0] = (LEFT__.lambda[0]+RIGHT__.lambda[0])/2;
-    L__[1] = (LEFT__.lambda[1]+RIGHT__.lambda[1])/2;
-    this->u_guess_eval( NODE__, P__, UGUESS__ );
+    L__[0] = (LL__[0]+LR__[0])/2;
+    L__[1] = (LL__[1]+LR__[1])/2;
+    std::fill_n( UGUESS__.pointer(), 1, 0 );
+    real_type t3   = QL__[iQ_zeta] * QL__[iQ_zeta];
+    real_type t4   = t3 * t3;
+    real_type t5   = ModelPars[iM_C];
+    real_type t6   = t5 * t5;
+    real_type t9   = QR__[iQ_zeta] * QR__[iQ_zeta];
+    real_type t10  = t9 * t9;
+    real_type t12  = XL__[iX_x];
+    real_type t16  = XR__[iX_x];
+    real_type t24  = t12 * t12;
+    real_type t25  = t16 * t16;
+    real_type t30  = 2 * t5 * t12 * t3 + 2 * t5 * t16 * t9 + t6 * t10 - 2 * t5 * t3 + t6 * t4 - 2 * t5 * t9 - 2 * t12 - 2 * t16 + t24 + t25 + 2 * ModelPars[iM_epsilon] + 2;
+    UGUESS__[ iU_u ] = uControl.solve(-2 / t30 * L__[iL_lambda2__xo], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
 
   /*\
@@ -314,7 +311,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
-    uControl.check_range(U__[iU_u], -1, 1);
+    ok = ok && uControl.check_range(U__[iU_u], -1, 1);
     return ok;
   }
 

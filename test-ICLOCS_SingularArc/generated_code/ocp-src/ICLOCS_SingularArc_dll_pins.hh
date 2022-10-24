@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_SingularArc_dll_pins.hh                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace ICLOCS_SingularArcDefine {
   public:
 
     ICLOCS_SINGULARARC_API_DLL
-    ICLOCS_SingularArc_Problem( integer n_threads, Console const * console )
-    : model("ICLOCS_SingularArc",n_threads,console)
+    ICLOCS_SingularArc_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("ICLOCS_SingularArc",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_AdjointODE.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::ToolPath2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -698,7 +699,7 @@ namespace CNOCDefine {
     real_type t26  = t25 * t23;
     real_type t27  = OMEGA__[8];
     real_type t30  = ALIAS_ax_limit_min_D(t14);
-    real_type t31  = t30 * t1;
+    real_type t31  = t1 * t30;
     real_type t32  = ALIAS_theta_DD(t3);
     real_type t33  = t32 * t2;
     real_type t35  = t17 * t17;

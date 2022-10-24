@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -329,7 +330,7 @@ namespace AlpRiderDefine {
     real_type t14  = OMEGA__[0];
     real_type t17  = ALIAS_Ybound_D(t11);
     real_type t19  = 2 * t14 * t17;
-    result__[ 0   ] = 4 * t14 * t4 * t12 - t19;
+    result__[ 0   ] = 4 * t12 * t14 * t4 - t19;
     real_type t21  = t14 * t3;
     result__[ 1   ] = 4 * t21 * t5 * t12;
     real_type t23  = t7 * t12;
@@ -337,7 +338,7 @@ namespace AlpRiderDefine {
     real_type t25  = t9 * t12;
     result__[ 3   ] = 4 * t21 * t25;
     result__[ 4   ] = result__[1];
-    result__[ 5   ] = 4 * t14 * t6 * t12 - t19;
+    result__[ 5   ] = 4 * t12 * t14 * t6 - t19;
     real_type t30  = t14 * t5;
     result__[ 6   ] = 4 * t30 * t23;
     result__[ 7   ] = 4 * t30 * t25;

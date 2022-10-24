@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_dll_ruby.hh                                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace DidoDefine {
   public:
 
     DIDO_API_DLL
-    Dido_Problem( integer n_threads, Console const * console )
-    : model("Dido",n_threads,console)
+    Dido_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Dido",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

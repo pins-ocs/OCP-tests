@@ -1,0 +1,81 @@
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] initial_v
+[ 2] final_x
+[ 3] final_v
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 101
+Segment N.0: s0 = 0 length = 1 npts = 101 no data set
+END Mesh[mesh]
+Model Parameters
+....................................mass = 1
+NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] (  0.0122  , 0.00717  ) [  0.679   ,  0.392   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 3] ( 0.00717  , 0.00541  ) [   1.52   ,   1.03   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 7] ( 0.00541  , 0.00237  ) [  0.391   ,  0.362   ] 0.735      [6:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] ( 0.00237  , 0.000607 ) [  0.118   , 0.00954  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 2] ( 0.000607 , 3.06e-05 ) [ 0.00945  , 0.000353 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 2] ( 3.06e-05 , 1.53e-06 ) [ 0.000341 , 1.68e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 2] ( 1.53e-06 , 9.21e-07 ) [ 1.67e-05 ,  1e-05   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 2] ( 9.21e-07 , 5.53e-07 ) [  1e-05   , 6.03e-06 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 5.53e-07 , 2.42e-12 ) [ 6.03e-06 , 1.09e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+---------------------------- NewtonDumped ----------------------------
+n_power        = 6             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.25          dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+Converged      = YES           tolerance      = 1e-09
+N. Equations   = 409           N. System pars = 100
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 11[ms]        timeout        = 0 [ms]
+iteration      = 9             Memory Used    = 68Kb (+2bytes)
+max iterations = 300           max acc. iter. = 800
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 22            Jacobian       = 9
+Factorization  = 9             Inversion      = 30
+------------------------- SOLVER PARAMETERS --------------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.95
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
+........................... last residuals ...........................
+last ||f||_inf = 7.4773e-11    last ||d||_inf = 5.5858e-10
+last ||f||_1   = 2.4233e-12    last ||d||_1   = 1.0878e-10
+last ||f||_2   = 4.9023e-12    last ||d||_2   = 1.6107e-10
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin (disabling penalties for check)
+All internal blocks OK
+Last block: OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 0.8165, 2.45 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+Optimization parameters:
+T: 2.44955098329577359
+All Done Folks!

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    EconomicGrowthModel model("EconomicGrowthModel",n_threads,&console);
+    EconomicGrowthModel model("EconomicGrowthModel",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,15 +50,15 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type x2_i = 2;
+    real_type u_epsi0 = 0.1;
     real_type x1_i = 1;
+    real_type u_epsi = u_epsi0;
+    real_type u_tol0 = 0.1;
+    real_type u_tol = u_tol0;
+    real_type x2_i = 2;
     real_type t0 = -ln(x1_i/x2_i)/x2_i;
     real_type l1_i = -1/x1_i/x2_i;
     real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
-    real_type u_tol0 = 0.1;
-    real_type u_tol = u_tol0;
-    real_type u_epsi0 = 0.1;
-    real_type u_epsi = u_epsi0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -164,7 +164,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -190,8 +190,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 EconomicGrowthModel_data.Mesh["s0"] = 0;
-EconomicGrowthModel_data.Mesh["segments"][0]["n"] = 1000;
 EconomicGrowthModel_data.Mesh["segments"][0]["length"] = 1;
+EconomicGrowthModel_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

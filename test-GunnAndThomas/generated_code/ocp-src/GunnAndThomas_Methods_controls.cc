@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -88,10 +89,15 @@ namespace GunnAndThomasDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
-    real_type t4   = XM__[1];
-    real_type t7   = 10 * t4 - XM__[0];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_x2];
+    real_type t7   = 10 * t4 - XL__[iX_x1];
+    real_type t9   = LM__[1];
+    real_type t12  = 1 - t2;
     real_type t16  = uControl(t2, 0, 1);
-    real_type result__ = t7 * t2 * LM__[0] + (-t7 * t2 - t4 * (1 - t2)) * LM__[1] + t16;
+    real_type t18  = XR__[iX_x2];
+    real_type t21  = 10 * t18 - XR__[iX_x1];
+    real_type result__ = t7 * t3 + (-t4 * t12 - t7 * t2) * t9 + 2 * t16 + t21 * t3 + (-t18 * t12 - t21 * t2) * t9;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -128,10 +134,14 @@ namespace GunnAndThomasDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[1];
-    real_type t4   = XM__[0];
+    real_type t1   = LM__[0];
+    real_type t2   = XL__[iX_x2];
+    real_type t4   = XL__[iX_x1];
+    real_type t7   = LM__[1];
     real_type t12  = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 0   ] = (10 * t2 - t4) * LM__[0] + (t4 - 9 * t2) * LM__[1] + t12;
+    real_type t14  = XR__[iX_x2];
+    real_type t16  = XR__[iX_x1];
+    result__[ 0   ] = (10 * t2 - t4) * t1 + (t4 - 9 * t2) * t7 + 2 * t12 + (10 * t14 - t16) * t1 + (t16 - 9 * t14) * t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -183,13 +193,15 @@ namespace GunnAndThomasDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = LM__[0];
-    real_type t3   = LM__[1];
-    result__[ 0   ] = -0.5e0 * t1 + 0.5e0 * t3;
-    result__[ 1   ] = 0.50e1 * t1 - 0.45e1 * t3;
-    real_type t7   = XM__[1];
-    real_type t10  = 0.5e0 * XM__[0];
-    result__[ 2   ] = 0.50e1 * t7 - t10;
-    result__[ 3   ] = t10 - 0.45e1 * t7;
+    real_type t2   = LM__[1];
+    result__[ 0   ] = -t1 + t2;
+    result__[ 1   ] = 10 * t1 - 9 * t2;
+    real_type t5   = XL__[iX_x2];
+    real_type t8   = 0.5e0 * XL__[iX_x1];
+    real_type t9   = XR__[iX_x2];
+    real_type t12  = 0.5e0 * XR__[iX_x1];
+    result__[ 2   ] = 0.50e1 * t5 - t8 + 0.50e1 * t9 - t12;
+    result__[ 3   ] = t8 - 0.45e1 * t5 + t12 - 0.45e1 * t9;
     result__[ 4   ] = result__[0];
     result__[ 5   ] = result__[1];
     result__[ 6   ] = result__[2];
@@ -237,7 +249,8 @@ namespace GunnAndThomasDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -284,10 +297,12 @@ namespace GunnAndThomasDefine {
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = LM__[0];
-    real_type t2   = XM__[0];
-    real_type t4   = XM__[1];
-    real_type t7   = LM__[1];
-    U__[ iU_u ] = uControl.solve(t1 * t2 - 10 * t1 * t4 - t2 * t7 + 9 * t4 * t7, 0, 1);
+    real_type t2   = XL__[iX_x2];
+    real_type t5   = XL__[iX_x1];
+    real_type t8   = XR__[iX_x1];
+    real_type t11  = XR__[iX_x2];
+    real_type t14  = LM__[1];
+    U__[ iU_u ] = uControl.solve(-5 * t2 * t1 + t5 * t1 / 2 + t8 * t1 / 2 - 5 * t11 * t1 + 9.0 / 2.0 * t2 * t14 - t5 * t14 / 2 - t8 * t14 / 2 + 9.0 / 2.0 * t11 * t14, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

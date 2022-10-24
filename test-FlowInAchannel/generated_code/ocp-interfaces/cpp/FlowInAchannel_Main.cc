@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -30,13 +30,16 @@ using GenericContainerNamespace::GenericContainer;
 int
 main() {
 
+  using Console     = Mechatronix::Console;
+  using ThreadPool1 = Mechatronix::ThreadPool1;
+
   // model cen be large and do not fit in stack, use new
-  GenericContainer     gc_data, gc_solution;
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  GenericContainer gc_data, gc_solution;
+  Console          console(&std::cout,4);
+  ThreadPool1      TP(std::thread::hardware_concurrency());
 
   try {
-    FlowInAchannel * m_model = new FlowInAchannel("FlowInAchannel",n_threads,&console);
+    FlowInAchannel * m_model = new FlowInAchannel("FlowInAchannel",&console,&TP);
 
     // user defined Object instances (external)
     MeshStd          mesh( "mesh" );

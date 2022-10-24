@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -114,24 +115,42 @@ namespace UnderwaterDefine {
     LM__[5] = (LL__[5]+LR__[5])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = XM__[3];
-    real_type t5   = XM__[2];
+    real_type t3   = t2 * LM__[0];
+    real_type t4   = XL__[iX_vx];
+    real_type t5   = XL__[iX_theta];
     real_type t6   = cos(t5);
-    real_type t8   = XM__[4];
+    real_type t8   = XL__[iX_vz];
     real_type t9   = sin(t5);
-    real_type t21  = XM__[5];
+    real_type t14  = t2 * LM__[1];
+    real_type t20  = t2 * LM__[2];
+    real_type t21  = XL__[iX_Omega];
+    real_type t24  = t2 * LM__[3];
     real_type t25  = UM__[0];
     real_type t26  = ModelPars[iM_m1];
     real_type t27  = 1.0 / t26;
+    real_type t28  = t27 * t25;
     real_type t30  = ModelPars[iM_m3];
+    real_type t31  = t27 * t30;
+    real_type t36  = t2 * LM__[4];
     real_type t37  = UM__[1];
     real_type t38  = 1.0 / t30;
+    real_type t39  = t38 * t37;
+    real_type t41  = t38 * t26;
+    real_type t46  = t2 * LM__[5];
     real_type t47  = UM__[2];
     real_type t49  = 1.0 / ModelPars[iM_inertia];
+    real_type t50  = t49 * t47;
+    real_type t53  = t49 * (t30 - t26);
     real_type t57  = u1Control(t25, -1, 1);
-    real_type t59  = u2Control(t37, -1, 1);
-    real_type t61  = u3Control(t47, -1, 1);
-    real_type result__ = (t6 * t4 + t9 * t8) * t2 * LM__[0] + (-t9 * t4 + t6 * t8) * t2 * LM__[1] + t21 * t2 * LM__[2] + (-t27 * t30 * t21 * t8 + t27 * t25) * t2 * LM__[3] + (t38 * t26 * t21 * t4 + t38 * t37) * t2 * LM__[4] + (t49 * t47 + t49 * (t30 - t26) * t8 * t4) * t2 * LM__[5] + t57 * t2 + t59 * t2 + t61 * t2;
+    real_type t60  = u2Control(t37, -1, 1);
+    real_type t63  = u3Control(t47, -1, 1);
+    real_type t66  = XR__[iX_vx];
+    real_type t67  = XR__[iX_theta];
+    real_type t68  = cos(t67);
+    real_type t70  = XR__[iX_vz];
+    real_type t71  = sin(t67);
+    real_type t79  = XR__[iX_Omega];
+    real_type result__ = (t6 * t4 + t9 * t8) * t3 + (-t9 * t4 + t6 * t8) * t14 + t21 * t20 + (-t31 * t21 * t8 + t28) * t24 + (t41 * t21 * t4 + t39) * t36 + (t53 * t8 * t4 + t50) * t46 + 2 * t57 * t2 + 2 * t60 * t2 + 2 * t63 * t2 + (t68 * t66 + t71 * t70) * t3 + (-t71 * t66 + t68 * t70) * t14 + t79 * t20 + (-t31 * t79 * t70 + t28) * t24 + (t41 * t79 * t66 + t39) * t36 + (t53 * t70 * t66 + t50) * t46;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -178,11 +197,11 @@ namespace UnderwaterDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t8   = ALIAS_u1Control_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 1.0 / ModelPars[iM_m1] * t2 * LM__[3] + t8 * t2;
-    real_type t16  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
-    result__[ 1   ] = 1.0 / ModelPars[iM_m3] * t2 * LM__[4] + t16 * t2;
-    real_type t24  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
-    result__[ 2   ] = 1.0 / ModelPars[iM_inertia] * t2 * LM__[5] + t24 * t2;
+    result__[ 0   ] = 2 / ModelPars[iM_m1] * t2 * LM__[3] + 2 * t8 * t2;
+    real_type t17  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
+    result__[ 1   ] = 2 / ModelPars[iM_m3] * t2 * LM__[4] + 2 * t17 * t2;
+    real_type t26  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
+    result__[ 2   ] = 2 / ModelPars[iM_inertia] * t2 * LM__[5] + 2 * t26 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 3, i_segment );
   }
@@ -244,20 +263,20 @@ namespace UnderwaterDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = 1.0 / ModelPars[iM_m1];
-    result__[ 0   ] = 0.5e0 * t3 * t1;
+    result__[ 0   ] = 0.10e1 * t3 * t1;
     result__[ 1   ] = result__[0];
     real_type t8   = ALIAS_u1Control_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = LM__[3] * t3 + t8;
-    real_type t10  = 1.0 / ModelPars[iM_m3];
-    result__[ 3   ] = 0.5e0 * t10 * t1;
+    result__[ 2   ] = 2 * LM__[3] * t3 + 2 * t8;
+    real_type t11  = 1.0 / ModelPars[iM_m3];
+    result__[ 3   ] = 0.10e1 * t11 * t1;
     result__[ 4   ] = result__[3];
-    real_type t15  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
-    result__[ 5   ] = LM__[4] * t10 + t15;
-    real_type t17  = 1.0 / ModelPars[iM_inertia];
-    result__[ 6   ] = 0.5e0 * t17 * t1;
+    real_type t16  = ALIAS_u2Control_D_1(UM__[1], -1, 1);
+    result__[ 5   ] = 2 * LM__[4] * t11 + 2 * t16;
+    real_type t19  = 1.0 / ModelPars[iM_inertia];
+    result__[ 6   ] = 0.10e1 * t19 * t1;
     result__[ 7   ] = result__[6];
-    real_type t22  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
-    result__[ 8   ] = LM__[5] * t17 + t22;
+    real_type t24  = ALIAS_u3Control_D_1(UM__[2], -1, 1);
+    result__[ 8   ] = 2 * LM__[5] * t19 + 2 * t24;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 9, i_segment );
   }
@@ -313,11 +332,11 @@ namespace UnderwaterDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u1Control_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t3 * t1;
-    real_type t5   = ALIAS_u2Control_D_1_1(UM__[1], -1, 1);
-    result__[ 1   ] = t5 * t1;
-    real_type t7   = ALIAS_u3Control_D_1_1(UM__[2], -1, 1);
-    result__[ 2   ] = t7 * t1;
+    result__[ 0   ] = 2 * t3 * t1;
+    real_type t6   = ALIAS_u2Control_D_1_1(UM__[1], -1, 1);
+    result__[ 1   ] = 2 * t6 * t1;
+    real_type t9   = ALIAS_u3Control_D_1_1(UM__[2], -1, 1);
+    result__[ 2   ] = 2 * t9 * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 3, i_segment );
   }

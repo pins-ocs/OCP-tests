@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Main.cc                                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    ICLOCS_StirredTank model("ICLOCS_StirredTank",n_threads,&console);
+    ICLOCS_StirredTank model("ICLOCS_StirredTank",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type epsi_T = 0.01;
+    real_type tol_T = 1;
     real_type epsi_ctrl0 = 0.1;
     real_type epsi_ctrl = epsi_ctrl0;
-    real_type tol_T = 1;
-    real_type w_time_max = 1;
-    real_type w_time = w_time_max;
-    real_type x_tol = 0.01;
-    real_type epsi_T = 0.01;
     real_type x_epsi = 0.01;
     real_type tol_ctrl0 = 0.1;
     real_type tol_ctrl = tol_ctrl0;
+    real_type x_tol = 0.01;
+    real_type w_time_max = 1;
+    real_type w_time = w_time_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -176,7 +176,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uControl = data_Controls["uControl"];
@@ -226,8 +226,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_StirredTank_data.Mesh["s0"] = 0;
-ICLOCS_StirredTank_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_StirredTank_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_StirredTank_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

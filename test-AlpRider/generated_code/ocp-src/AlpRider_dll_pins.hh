@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_dll_pins.hh                                           |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace AlpRiderDefine {
   public:
 
     ALPRIDER_API_DLL
-    AlpRider_Problem( integer n_threads, Console const * console )
-    : model("AlpRider",n_threads,console)
+    AlpRider_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("AlpRider",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

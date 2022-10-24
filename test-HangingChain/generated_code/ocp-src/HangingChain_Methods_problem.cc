@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -82,9 +83,9 @@ namespace HangingChainDefine {
     X__[0] = (XL__[0]+XR__[0])/2;
     X__[1] = (XL__[1]+XR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
 
-    return res;
+    return ok;
   }
 
   /*\
@@ -292,7 +293,7 @@ namespace HangingChainDefine {
     real_type t3   = t2 + 1;
     real_type t4   = sqrt(t3);
     real_type t5   = 1.0 / t4;
-    result__[ 0   ] = t1 * t5;
+    result__[ 0   ] = t5 * t1;
     result__[ 1   ] = result__[0];
     real_type t6   = X__[iX_x];
     result__[ 2   ] = -t2 / t4 / t3 * t6 + t5 * t6;

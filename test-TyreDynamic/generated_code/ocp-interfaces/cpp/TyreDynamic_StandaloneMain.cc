@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    TyreDynamic      model("TyreDynamic",n_threads,&console);
+    TyreDynamic      model("TyreDynamic",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -51,21 +51,21 @@ main() {
 
     // Auxiliary values
     real_type eps_c0 = 0.1;
+    real_type L = 300;
     real_type rw = 0.3;
-    real_type w__t0 = 1;
-    real_type w__t = w__t0;
     real_type v__0 = 10;
     real_type omega__0 = 1/rw*v__0;
-    real_type L = 300;
-    real_type mesh_np = 2.000000000*L;
+    real_type tol_c0 = 0.1;
+    real_type eps_l = 0.01;
+    real_type tol_c = tol_c0;
     real_type TT__max = 800;
-    real_type E__pow = 60*TT__max;
     real_type tol_l = 0.01;
     real_type eps_c = eps_c0;
-    real_type eps_l = 0.01;
-    real_type tol_c0 = 0.1;
     real_type h__b = 1;
-    real_type tol_c = tol_c0;
+    real_type E__pow = 60*TT__max;
+    real_type mesh_np = 2.000000000*L;
+    real_type w__t0 = 1;
+    real_type w__t = w__t0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -226,9 +226,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clipInt = gc_MappedObjects["clipInt"];
-    data_clipInt["delta2"] = 0;
     data_clipInt["delta"] = 0;
     data_clipInt["h"] = 0.01;
+    data_clipInt["delta2"] = 0;
 
     // SignRegularizedWithErf
     GenericContainer & data_sign_reg = gc_MappedObjects["sign_reg"];
@@ -239,7 +239,7 @@ main() {
     data_abs_reg["h"] = 0.01;
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_b__oControl = data_Controls["b__oControl"];
@@ -295,12 +295,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TyreDynamic_data.Mesh["s0"] = 0;
-TyreDynamic_data.Mesh["segments"][0]["n"] = .4*mesh_np;
 TyreDynamic_data.Mesh["segments"][0]["length"] = .1*L;
-TyreDynamic_data.Mesh["segments"][1]["n"] = .8*mesh_np;
+TyreDynamic_data.Mesh["segments"][0]["n"] = round(.4*mesh_np);
 TyreDynamic_data.Mesh["segments"][1]["length"] = .8*L;
-TyreDynamic_data.Mesh["segments"][2]["n"] = .4*mesh_np;
+TyreDynamic_data.Mesh["segments"][1]["n"] = round(.8*mesh_np);
 TyreDynamic_data.Mesh["segments"][2]["length"] = .1*L;
+TyreDynamic_data.Mesh["segments"][2]["n"] = round(.4*mesh_np);
 
 
     // alias for user object classes passed as pointers

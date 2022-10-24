@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_controls.cc                             |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -80,10 +81,17 @@ namespace FlowInAchannelDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[1];
-    real_type t5   = XM__[2];
-    real_type t8   = XM__[3];
-    real_type result__ = t2 * LM__[0] + t5 * LM__[1] + t8 * LM__[2] + (t5 * t2 - t8 * XM__[0]) * ModelPars[iM_R] * LM__[3];
+    real_type t1   = LM__[0];
+    real_type t2   = XL__[iX_u1];
+    real_type t4   = LM__[1];
+    real_type t5   = XL__[iX_u2];
+    real_type t7   = LM__[2];
+    real_type t8   = XL__[iX_u3];
+    real_type t12  = ModelPars[iM_R] * LM__[3];
+    real_type t18  = XR__[iX_u1];
+    real_type t20  = XR__[iX_u2];
+    real_type t22  = XR__[iX_u3];
+    real_type result__ = t2 * t1 + t5 * t4 + t8 * t7 + (t5 * t2 - t8 * XL__[iX_u]) * t12 + t18 * t1 + t20 * t4 + t22 * t7 + (t20 * t18 - t22 * XR__[iX_u]) * t12;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }

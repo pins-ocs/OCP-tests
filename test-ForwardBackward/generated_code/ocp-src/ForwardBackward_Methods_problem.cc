@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Path2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -131,21 +132,21 @@ namespace ForwardBackwardDefine {
     // Xvars
     X__[0] = (XL__[0]+XR__[0])/2;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t2   = X__[iX_v];
-    res = res && LimitV_min.check_range(ModelPars[iM_v_min] - t2, m_max_penalty_value);
-    res = res && LimitV_max.check_range(t2 - ModelPars[iM_v_max], m_max_penalty_value);
+    ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2, m_max_penalty_value);
+    ok = ok && LimitV_max.check_range(t2 - ModelPars[iM_v_max], m_max_penalty_value);
     real_type t7   = U__[iU_a];
-    res = res && LimitA_min.check_range(ModelPars[iM_a_min] - t7, m_max_penalty_value);
-    res = res && LimitA_max.check_range(t7 - ModelPars[iM_a_max], m_max_penalty_value);
+    ok = ok && LimitA_min.check_range(ModelPars[iM_a_min] - t7, m_max_penalty_value);
+    ok = ok && LimitA_max.check_range(t7 - ModelPars[iM_a_max], m_max_penalty_value);
     real_type t12  = t7 * t7;
     real_type t15  = ALIAS_kappa(Q__[iQ_zeta]);
     real_type t16  = t15 * t15;
     real_type t17  = t2 * t2;
     real_type t18  = t17 * t17;
     real_type t22  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    res = res && LimitE.check_range(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1, m_max_penalty_value);
-    return res;
+    ok = ok && LimitE.check_range(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -517,7 +518,7 @@ namespace ForwardBackwardDefine {
     real_type t16  = t15 * t15;
     real_type t17  = t2 * t2;
     real_type t18  = t17 * t17;
-    real_type t20  = t12 * ModelPars[iM_WA] + t18 * t16;
+    real_type t20  = t12 * ModelPars[iM_WA] + t16 * t18;
     real_type t21  = ModelPars[iM_E_max];
     real_type t22  = t21 * t21;
     result__[ 4   ] = LimitE(1.0 / t22 * t20 - 1);

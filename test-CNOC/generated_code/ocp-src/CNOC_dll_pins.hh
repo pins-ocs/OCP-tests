@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_dll_pins.hh                                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace CNOCDefine {
   public:
 
     CNOC_API_DLL
-    CNOC_Problem( integer n_threads, Console const * console )
-    : model("CNOC",n_threads,console)
+    CNOC_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("CNOC",console,TP)
     , toolPath2D( "toolPath2D" )
     {
       Mechatronix::activate_ctrlC();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -143,7 +144,7 @@ namespace TyreDynamicDefine {
     real_type t15  = LongSlipRear_min(-1 - t13);
     result__[ 2   ] = t15 * t2;
     real_type t17  = LongSlipRear_max(t13 - 1);
-    result__[ 3   ] = t17 * t2;
+    result__[ 3   ] = t2 * t17;
     real_type t19  = v_min(1 - t1);
     result__[ 4   ] = t19 * t2;
     if ( m_debug )
@@ -258,7 +259,7 @@ namespace TyreDynamicDefine {
     real_type t5   = ModelPars[iM_h__b];
     real_type t6   = X__[iX_b] - t5;
     real_type t7   = OnlyBrakingRear(t6);
-    result__[ 0   ] = -t3 * t7;
+    result__[ 0   ] = -t7 * t3;
     real_type t9   = 1.0 / t1;
     real_type t10  = ALIAS_OnlyBrakingRear_D(t6);
     result__[ 1   ] = t10 * t9;
@@ -320,7 +321,7 @@ namespace TyreDynamicDefine {
     result__[ 0   ] = -t5 * t3;
     real_type t7   = 1.0 / t1;
     real_type t8   = ALIAS_b__oControl_D_1(t4, -1, 1);
-    result__[ 1   ] = t7 * t8;
+    result__[ 1   ] = t8 * t7;
     real_type t9   = U__[iU_p__o];
     real_type t10  = p__oControl(t9, -1, 1);
     result__[ 2   ] = -t10 * t3;
@@ -452,7 +453,7 @@ namespace TyreDynamicDefine {
     result__[ 0   ] = 2 * t10 * t8 * t4 + 2 * t17 * t15 * t4 + 2 * t27 * t25 * t4 + 2 * t33 * t31 * t4 + 2 * t39 * t37 * t4 + 2 * t39 * t43 * t42 + t39 * t48 * t47;
     real_type t51  = ALIAS_LongSlipRear_min_D(t24);
     real_type t55  = ALIAS_LongSlipRear_max_D(t30);
-    result__[ 1   ] = t27 * t21 * t51 * t42 - t33 * t21 * t55 * t42;
+    result__[ 1   ] = t21 * t27 * t42 * t51 - t21 * t33 * t42 * t55;
     real_type t59  = ALIAS_OnlyTractionRear_D(t14);
     result__[ 2   ] = t17 * t59 * t42;
     real_type t61  = ALIAS_OnlyBrakingRear_D(t7);
@@ -462,7 +463,7 @@ namespace TyreDynamicDefine {
     real_type t66  = t20 * t20;
     real_type t67  = 1.0 / t66;
     real_type t70  = ALIAS_LongSlipRear_max_DD(t30);
-    result__[ 5   ] = t27 * t67 * t64 * t47 + t33 * t67 * t70 * t47;
+    result__[ 5   ] = t27 * t47 * t64 * t67 + t33 * t47 * t67 * t70;
     result__[ 6   ] = result__[2];
     real_type t74  = ALIAS_OnlyTractionRear_DD(t14);
     result__[ 7   ] = t17 * t74 * t47;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -87,13 +88,20 @@ namespace vanDerPolDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[0];
+    real_type t1   = XL__[iX_x1];
     real_type t2   = t1 * t1;
-    real_type t3   = XM__[1];
+    real_type t3   = XL__[iX_x2];
     real_type t4   = t3 * t3;
+    real_type t5   = LM__[0];
+    real_type t7   = LM__[1];
     real_type t10  = UM__[0];
+    real_type t13  = ModelPars[iM_epsilon];
     real_type t15  = uControl(t10, -1, 1);
-    real_type result__ = t2 + t4 + t3 * LM__[0] + (t3 * (-t2 + 1) - t1 + t10) * LM__[1] + t15 * (t2 + t4 + ModelPars[iM_epsilon]);
+    real_type t17  = XR__[iX_x1];
+    real_type t18  = t17 * t17;
+    real_type t19  = XR__[iX_x2];
+    real_type t20  = t19 * t19;
+    real_type result__ = t2 + t4 + t3 * t5 + (t3 * (-t2 + 1) - t1 + t10) * t7 + t15 * (t2 + t4 + t13) + t18 + t20 + t19 * t5 + (t19 * (-t18 + 1) - t17 + t10) * t7 + t15 * (t18 + t20 + t13);
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -130,10 +138,13 @@ namespace vanDerPolDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = XM__[0] * XM__[0];
-    real_type t5   = XM__[1] * XM__[1];
-    real_type t9   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[1] + t9 * (t3 + t5 + ModelPars[iM_epsilon]);
+    real_type t4   = XL__[iX_x1] * XL__[iX_x1];
+    real_type t6   = XL__[iX_x2] * XL__[iX_x2];
+    real_type t7   = ModelPars[iM_epsilon];
+    real_type t10  = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    real_type t13  = XR__[iX_x1] * XR__[iX_x1];
+    real_type t15  = XR__[iX_x2] * XR__[iX_x2];
+    result__[ 0   ] = 2 * LM__[1] + t10 * (t4 + t6 + t7) + t10 * (t13 + t15 + t7);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -183,12 +194,12 @@ namespace vanDerPolDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.10e1 * t3 * XM__[0];
-    result__[ 1   ] = 0.10e1 * t3 * XM__[1];
-    result__[ 2   ] = 0.5e0;
-    result__[ 3   ] = result__[0];
-    result__[ 4   ] = result__[1];
-    result__[ 5   ] = 0.5e0;
+    result__[ 0   ] = 2 * t3 * XL__[iX_x1];
+    result__[ 1   ] = 2 * t3 * XL__[iX_x2];
+    result__[ 2   ] = 1.0;
+    result__[ 3   ] = 2 * t3 * XR__[iX_x1];
+    result__[ 4   ] = 2 * t3 * XR__[iX_x2];
+    result__[ 5   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
@@ -232,10 +243,13 @@ namespace vanDerPolDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[0] * XM__[0];
-    real_type t4   = XM__[1] * XM__[1];
+    real_type t2   = XL__[iX_x1] * XL__[iX_x1];
+    real_type t4   = XL__[iX_x2] * XL__[iX_x2];
+    real_type t5   = ModelPars[iM_epsilon];
     real_type t8   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t8 * (t2 + t4 + ModelPars[iM_epsilon]);
+    real_type t11  = XR__[iX_x1] * XR__[iX_x1];
+    real_type t13  = XR__[iX_x2] * XR__[iX_x2];
+    result__[ 0   ] = t8 * (t2 + t4 + t5) + t8 * (t11 + t13 + t5);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -281,9 +295,11 @@ namespace vanDerPolDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = XM__[0] * XM__[0];
-    real_type t5   = XM__[1] * XM__[1];
-    U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5 + ModelPars[iM_epsilon]) * LM__[1], -1, 1);
+    real_type t3   = XL__[iX_x1] * XL__[iX_x1];
+    real_type t5   = XL__[iX_x2] * XL__[iX_x2];
+    real_type t7   = XR__[iX_x1] * XR__[iX_x1];
+    real_type t9   = XR__[iX_x2] * XR__[iX_x2];
+    U__[ iU_u ] = uControl.solve(-2 / (t3 + t5 + t7 + t9 + 2 * ModelPars[iM_epsilon]) * LM__[1], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_dll_ruby.hh                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace BikeSteeringDefine {
   public:
 
     BIKESTEERING_API_DLL
-    BikeSteering_Problem( integer n_threads, Console const * console )
-    : model("BikeSteering",n_threads,console)
+    BikeSteering_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("BikeSteering",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

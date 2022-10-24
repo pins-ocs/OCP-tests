@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 27/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -319,9 +320,7 @@ namespace ForwardBackwardDefine {
     real_type t9   = X__[iX_v] * X__[iX_v];
     real_type t10  = t9 * t9;
     real_type t14  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    Xoptima__check__u__lt(t10 * t7 + t3 * ModelPars[iM_WA], t14, Xoptima__message_u_check_0);
-    // controls range check
-
+    /* REMOVED */ Xoptima__check__u__lt(t10 * t7 + t3 * ModelPars[iM_WA], t14, Xoptima__message_u_check_0);
     return ok;
   }
 

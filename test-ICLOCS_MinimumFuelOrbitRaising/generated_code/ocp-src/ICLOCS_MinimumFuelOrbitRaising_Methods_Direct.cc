@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -306,7 +307,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t48  = mass(QM__[0]);
     real_type t49  = 1.0 / t48;
     real_type t53  = cos(t45);
-    result__[ 32  ] = t49 * t46 * t43 * t1 + t49 * t53 * t43 * t21;
+    result__[ 32  ] = t1 * t43 * t46 * t49 + t21 * t43 * t49 * t53;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2fd_odeD2xxpu_eval", 33, i_segment );
   }

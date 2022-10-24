@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogeroModified_Methods_problem.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -96,9 +97,9 @@ namespace SingularCalogeroModifiedDefine {
     X__[0] = (XL__[0]+XR__[0])/2;
     X__[1] = (XL__[1]+XR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
 
-    return res;
+    return ok;
   }
 
   /*\
@@ -257,7 +258,7 @@ namespace SingularCalogeroModifiedDefine {
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = Q__[iQ_zeta] * Q__[iQ_zeta];
-    result__[ 0   ] = 2 * t2 * ModelPars[iM_C] + 2 * X__[iX_x] - 2;
+    result__[ 0   ] = 2 * ModelPars[iM_C] * t2 + 2 * X__[iX_x] - 2;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
     if ( m_debug )

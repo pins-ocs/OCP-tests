@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: WorstCaseScenario_Methods_controls.cc                          |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -85,9 +86,10 @@ namespace WorstCaseScenarioDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = LM__[0];
     real_type t6   = UM__[0];
     real_type t8   = uControl(t6, 0, 1);
-    real_type result__ = t6 * (1 - 2 * QM__[0]) * LM__[0] + t8;
+    real_type result__ = t6 * (1 - 2 * QL__[iQ_zeta]) * t1 + 2 * t8 + t6 * (1 - 2 * QR__[iQ_zeta]) * t1;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -122,8 +124,9 @@ namespace WorstCaseScenarioDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = LM__[0];
     real_type t7   = ALIAS_uControl_D_1(UM__[0], 0, 1);
-    result__[ 0   ] = LM__[0] * (1 - 2 * QM__[0]) + t7;
+    result__[ 0   ] = (1 - 2 * QL__[iQ_zeta]) * t1 + 2 * t7 + (1 - 2 * QR__[iQ_zeta]) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -166,7 +169,7 @@ namespace WorstCaseScenarioDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.5e0 - 0.10e1 * QM__[0];
+    result__[ 0   ] = 0.10e1 - 0.10e1 * QL__[iQ_zeta] - 0.10e1 * QR__[iQ_zeta];
     result__[ 1   ] = result__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
@@ -209,7 +212,8 @@ namespace WorstCaseScenarioDefine {
     // Lvars
     LM__[0] = (LL__[0]+LR__[0])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], 0, 1);
+    result__[ 0   ] = 2 * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -253,7 +257,8 @@ namespace WorstCaseScenarioDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    U__[ iU_u ] = uControl.solve(LM__[0] * (-1 + 2 * QM__[0]), 0, 1);
+    real_type t1   = LM__[0];
+    U__[ iU_u ] = uControl.solve(QL__[iQ_zeta] * t1 + QR__[iQ_zeta] * t1 - t1, 0, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

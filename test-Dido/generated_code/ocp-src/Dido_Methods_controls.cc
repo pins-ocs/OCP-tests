@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dido_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -78,8 +79,8 @@ namespace DidoDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
     real_type t3   = cos(t2);
-    real_type t8   = sin(t2);
-    real_type result__ = t3 * LM__[0] - t3 * XM__[1] + t8 * LM__[1];
+    real_type t9   = sin(t2);
+    real_type result__ = 2 * t3 * LM__[0] - t3 * XL__[iX_y] - t3 * XR__[iX_y] + 2 * t9 * LM__[1];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -118,8 +119,8 @@ namespace DidoDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
     real_type t3   = sin(t2);
-    real_type t8   = cos(t2);
-    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] + t8 * LM__[1];
+    real_type t9   = cos(t2);
+    result__[ 0   ] = -2 * t3 * LM__[0] + t3 * XL__[iX_y] + t3 * XR__[iX_y] + 2 * t9 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -169,11 +170,10 @@ namespace DidoDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = sin(t1);
-    result__[ 0   ] = 0.5e0 * t2;
-    result__[ 1   ] = -result__[0];
+    result__[ 0   ] = sin(t1);
+    result__[ 1   ] = -0.10e1 * result__[0];
     real_type t3   = cos(t1);
-    result__[ 2   ] = 0.5e0 * t3;
+    result__[ 2   ] = 0.10e1 * t3;
     result__[ 3   ] = result__[0];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
@@ -222,8 +222,8 @@ namespace DidoDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = UM__[0];
     real_type t3   = cos(t2);
-    real_type t8   = sin(t2);
-    result__[ 0   ] = -t3 * LM__[0] + t3 * XM__[1] - t8 * LM__[1];
+    real_type t9   = sin(t2);
+    result__[ 0   ] = -2 * t3 * LM__[0] + t3 * XL__[iX_y] + t3 * XR__[iX_y] - 2 * t9 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -269,8 +269,8 @@ namespace DidoDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t7   = atan(LM__[1] / (XM__[1] - LM__[0]));
-    U__[ iU_theta ] = -t7;
+    real_type t10  = atan(2 * LM__[1] / (XL__[iX_y] - 2 * LM__[0] + XR__[iX_y]));
+    U__[ iU_theta ] = -t10;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
   }

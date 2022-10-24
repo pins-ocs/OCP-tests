@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_dll_ruby.hh                     |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   public:
 
     ICLOCS_MINIMUMFUELORBITRAISING_API_DLL
-    ICLOCS_MinimumFuelOrbitRaising_Problem( integer n_threads, Console const * console )
-    : model("ICLOCS_MinimumFuelOrbitRaising",n_threads,console)
+    ICLOCS_MinimumFuelOrbitRaising_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("ICLOCS_MinimumFuelOrbitRaising",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

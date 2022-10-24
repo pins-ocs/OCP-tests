@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_UserFunctions.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -39,6 +39,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -105,7 +106,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x1bound( real_type xo___V ) const {
     real_type t1   = x1bound_min(-xo___V);
-    real_type t3   = x1bound_min(xo___V - 1);
+    real_type t3   = x1bound_max(xo___V - 1);
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -120,7 +121,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x1bound_D( real_type xo___V ) const {
     real_type t1   = ALIAS_x1bound_min_D(-xo___V);
-    real_type t3   = ALIAS_x1bound_min_D(xo___V - 1);
+    real_type t3   = ALIAS_x1bound_max_D(xo___V - 1);
     real_type result__ = -t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -135,7 +136,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x1bound_DD( real_type xo___V ) const {
     real_type t1   = ALIAS_x1bound_min_DD(-xo___V);
-    real_type t3   = ALIAS_x1bound_min_DD(xo___V - 1);
+    real_type t3   = ALIAS_x1bound_max_DD(xo___V - 1);
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -150,7 +151,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x2bound( real_type xo___V ) const {
     real_type t1   = x2bound_min(-xo___V);
-    real_type t3   = x2bound_min(xo___V - 1);
+    real_type t3   = x2bound_max(xo___V - 1);
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -165,7 +166,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x2bound_D( real_type xo___V ) const {
     real_type t1   = ALIAS_x2bound_min_D(-xo___V);
-    real_type t3   = ALIAS_x2bound_min_D(xo___V - 1);
+    real_type t3   = ALIAS_x2bound_max_D(xo___V - 1);
     real_type result__ = -t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -180,7 +181,7 @@ namespace ICLOCS_StirredTankDefine {
   real_type
   ICLOCS_StirredTank::x2bound_DD( real_type xo___V ) const {
     real_type t1   = ALIAS_x2bound_min_DD(-xo___V);
-    real_type t3   = ALIAS_x2bound_min_DD(xo___V - 1);
+    real_type t3   = ALIAS_x2bound_max_DD(xo___V - 1);
     real_type result__ = t1 + t3;
     if ( m_debug ) {
       UTILS_ASSERT(

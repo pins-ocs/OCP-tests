@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MaximumAscent_Methods_controls.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 
@@ -82,19 +83,33 @@ namespace MaximumAscentDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = tf(ModelPars[iM_days]);
     real_type t4   = eta(t3);
-    real_type t6   = XM__[1];
-    real_type t9   = XM__[2];
+    real_type t5   = t4 * LM__[0];
+    real_type t6   = XL__[iX_u];
+    real_type t8   = LM__[1];
+    real_type t9   = XL__[iX_v];
     real_type t10  = t9 * t9;
-    real_type t11  = XM__[0];
+    real_type t11  = XL__[iX_r];
     real_type t12  = 1.0 / t11;
     real_type t14  = t11 * t11;
     real_type t18  = Tbar(t3);
-    real_type t26  = 1.0 / (-QM__[0] * ModelPars[iM_mdot] * t3 + ModelPars[iM_m0]) * t18;
+    real_type t20  = ModelPars[iM_mdot] * t3;
+    real_type t23  = ModelPars[iM_m0];
+    real_type t26  = 1.0 / (-QL__[iQ_zeta] * t20 + t23) * t18;
     real_type t27  = UM__[0];
     real_type t28  = sin(t27);
+    real_type t32  = LM__[2];
     real_type t34  = t12 * t9;
     real_type t36  = cos(t27);
-    real_type result__ = t6 * t4 * LM__[0] + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * LM__[1] + (-t34 * t6 * t4 + t36 * t26) * LM__[2] + t34 * t4 * LM__[3];
+    real_type t41  = t4 * LM__[3];
+    real_type t43  = XR__[iX_u];
+    real_type t45  = XR__[iX_v];
+    real_type t46  = t45 * t45;
+    real_type t47  = XR__[iX_r];
+    real_type t48  = 1.0 / t47;
+    real_type t50  = t47 * t47;
+    real_type t58  = 1.0 / (-QR__[iQ_zeta] * t20 + t23) * t18;
+    real_type t63  = t48 * t45;
+    real_type result__ = t6 * t5 + ((t12 * t10 - 1.0 / t14) * t4 + t28 * t26) * t8 + (-t34 * t6 * t4 + t36 * t26) * t32 + t34 * t41 + t43 * t5 + ((t48 * t46 - 1.0 / t50) * t4 + t28 * t58) * t8 + (-t63 * t43 * t4 + t36 * t58) * t32 + t63 * t41;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -140,7 +155,10 @@ namespace MaximumAscentDefine {
     real_type t5   = UM__[0];
     real_type t6   = sin(t5);
     real_type t9   = cos(t5);
-    result__[ 0   ] = 1.0 / (QM__[0] * ModelPars[iM_mdot] * t2 - ModelPars[iM_m0]) * (t6 * LM__[2] - t9 * LM__[1]) * t3;
+    real_type t12  = (t6 * LM__[2] - t9 * LM__[1]) * t3;
+    real_type t14  = ModelPars[iM_mdot] * t2;
+    real_type t17  = ModelPars[iM_m0];
+    result__[ 0   ] = 1.0 / (QL__[iQ_zeta] * t14 - t17) * t12 + 1.0 / (QR__[iQ_zeta] * t14 - t17) * t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -195,10 +213,15 @@ namespace MaximumAscentDefine {
     real_type t3   = Tbar(t2);
     real_type t4   = UM__[0];
     real_type t5   = cos(t4);
-    real_type t13  = 1.0 / (QM__[0] * ModelPars[iM_mdot] * t2 - ModelPars[iM_m0]);
-    result__[ 0   ] = -0.5e0 * t13 * t5 * t3;
-    real_type t16  = sin(t4);
-    result__[ 1   ] = 0.5e0 * t13 * t16 * t3;
+    real_type t6   = t5 * t3;
+    real_type t8   = ModelPars[iM_mdot] * t2;
+    real_type t11  = ModelPars[iM_m0];
+    real_type t13  = 1.0 / (QL__[iQ_zeta] * t8 - t11);
+    real_type t19  = 1.0 / (QR__[iQ_zeta] * t8 - t11);
+    result__[ 0   ] = -0.5e0 * t13 * t6 - 0.5e0 * t19 * t6;
+    real_type t22  = sin(t4);
+    real_type t23  = t22 * t3;
+    result__[ 1   ] = 0.5e0 * t13 * t23 + 0.5e0 * t19 * t23;
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
     if ( m_debug )
@@ -253,7 +276,10 @@ namespace MaximumAscentDefine {
     real_type t5   = UM__[0];
     real_type t6   = cos(t5);
     real_type t9   = sin(t5);
-    result__[ 0   ] = 1.0 / (QM__[0] * ModelPars[iM_mdot] * t2 - ModelPars[iM_m0]) * (t6 * LM__[2] + t9 * LM__[1]) * t3;
+    real_type t12  = (t6 * LM__[2] + t9 * LM__[1]) * t3;
+    real_type t14  = ModelPars[iM_mdot] * t2;
+    real_type t17  = ModelPars[iM_m0];
+    result__[ 0   ] = 1.0 / (QL__[iQ_zeta] * t14 - t17) * t12 + 1.0 / (QR__[iQ_zeta] * t14 - t17) * t12;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_problem.cc                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -124,11 +125,11 @@ namespace HypersonicProblem3DOFDefine {
     X__[5] = (XL__[5]+XR__[5])/2;
     X__[6] = (XL__[6]+XR__[6])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t1   = X__[iX_G];
-    res = res && G_bound_min.check_range(-0.314159265358979323846264338328e1 - t1, m_max_penalty_value);
-    res = res && G_bound_max.check_range(t1 - 0.314159265358979323846264338328e1, m_max_penalty_value);
-    return res;
+    ok = ok && G_bound_min.check_range(-0.314159265358979323846264338328e1 - t1, m_max_penalty_value);
+    ok = ok && G_bound_max.check_range(t1 - 0.314159265358979323846264338328e1, m_max_penalty_value);
+    return ok;
   }
 
   /*\

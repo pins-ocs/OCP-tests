@@ -1,0 +1,22 @@
+set( FRAMEWORK_DIRS /Library/Frameworks /System/Library/Frameworks )
+include_directories( /usr/local/include )
+find_library( FRAMEWORK_ODE  NAMES MechatronixODE HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Solver  NAMES MechatronixSolver HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Vehicle  NAMES MechatronixVehicle HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Manufacturing  NAMES MechatronixManufacturing HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Road  NAMES MechatronixRoad HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_InterfaceMruby  NAMES MechatronixInterfaceMruby HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_NLSolver  NAMES MechatronixNLSolver HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Core  NAMES MechatronixCore HINTS ${FRAMEWORK_DIRS} PATH_SUFFIXES Frameworks )
+find_library( FRAMEWORK_Accelerate NAMES Accelerate PATH_SUFFIXES Frameworks)
+set( PINS_LIBS
+  ${FRAMEWORK_ODE}
+  ${FRAMEWORK_Solver}
+  ${FRAMEWORK_Vehicle}
+  ${FRAMEWORK_Manufacturing}
+  ${FRAMEWORK_Road}
+  ${FRAMEWORK_InterfaceMruby}
+  ${FRAMEWORK_NLSolver}
+  ${FRAMEWORK_Core}
+  ${FRAMEWORK_Accelerate}
+)

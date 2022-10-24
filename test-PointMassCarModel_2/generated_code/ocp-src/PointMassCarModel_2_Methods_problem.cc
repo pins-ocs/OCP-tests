@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::Road2D;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -218,7 +219,7 @@ namespace PointMassCarModel_2Define {
     X__[3] = (XL__[3]+XR__[3])/2;
     X__[4] = (XL__[4]+XR__[4])/2;
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    bool res = true;
+    bool ok = true;
     real_type t1   = X__[iX_fx];
     real_type t2   = t1 * t1;
     real_type t4   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
@@ -228,13 +229,13 @@ namespace PointMassCarModel_2Define {
     real_type t13  = X__[iX_V];
     real_type t14  = t13 * t13;
     real_type t17  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    res = res && AdherenceEllipse.check_range(t9 / t4 * t2 + t9 / t17 * t14 * t12 - 1, m_max_penalty_value);
+    ok = ok && AdherenceEllipse.check_range(t9 / t4 * t2 + t9 / t17 * t14 * t12 - 1, m_max_penalty_value);
     real_type t22  = X__[iX_n];
-    res = res && RoadLeftBorder.check_range(t22 - Q__[iQ_leftWidth], m_max_penalty_value);
-    res = res && RoadRightBorder.check_range(-t22 - Q__[iQ_rightWidth], m_max_penalty_value);
-    res = res && PowerLimit.check_range(ModelPars[iM_m] / ModelPars[iM_Pmax] * t1 * t13 - 1, m_max_penalty_value);
-    res = res && LimitMinSpeed.check_range(-t13, m_max_penalty_value);
-    return res;
+    ok = ok && RoadLeftBorder.check_range(t22 - Q__[iQ_leftWidth], m_max_penalty_value);
+    ok = ok && RoadRightBorder.check_range(-t22 - Q__[iQ_rightWidth], m_max_penalty_value);
+    ok = ok && PowerLimit.check_range(ModelPars[iM_m] / ModelPars[iM_Pmax] * t1 * t13 - 1, m_max_penalty_value);
+    ok = ok && LimitMinSpeed.check_range(-t13, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -715,7 +716,7 @@ namespace PointMassCarModel_2Define {
     real_type t9   = zeta__dot_D_2(t1, t2, t3, t5);
     result__[ 11  ] = -t9 * t7;
     real_type t11  = zeta__dot_D_1(t1, t2, t3, t5);
-    result__[ 12  ] = -t11 * t7;
+    result__[ 12  ] = -t7 * t11;
     real_type t13  = zeta__dot(t1, t2, t3, t5);
     result__[ 13  ] = -t13;
     real_type t14  = XR__[iX_V];

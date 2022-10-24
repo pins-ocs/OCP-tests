@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    Train            model("Train",n_threads,&console);
+    Train            model("Train",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type ubMax = 2;
-    real_type epsi_max = 0.01;
-    real_type uaMax = 10;
     real_type tol_max = 0.01;
+    real_type uaMax = 10;
+    real_type epsi_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -163,7 +163,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_uaControl = data_Controls["uaControl"];
@@ -186,12 +186,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Train_data.Mesh["s0"] = 0;
-Train_data.Mesh["segments"][0]["length"] = 0.25;
 Train_data.Mesh["segments"][0]["n"] = 25;
-Train_data.Mesh["segments"][1]["length"] = 0.75;
+Train_data.Mesh["segments"][0]["length"] = 0.25;
 Train_data.Mesh["segments"][1]["n"] = 3000;
-Train_data.Mesh["segments"][2]["length"] = 3.8;
+Train_data.Mesh["segments"][1]["length"] = 0.75;
 Train_data.Mesh["segments"][2]["n"] = 100;
+Train_data.Mesh["segments"][2]["length"] = 3.8;
 
 
     // alias for user object classes passed as pointers

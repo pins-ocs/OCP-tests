@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_dll_pins.hh                                       |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace HangingChainDefine {
   public:
 
     HANGINGCHAIN_API_DLL
-    HangingChain_Problem( integer n_threads, Console const * console )
-    : model("HangingChain",n_threads,console)
+    HangingChain_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("HangingChain",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

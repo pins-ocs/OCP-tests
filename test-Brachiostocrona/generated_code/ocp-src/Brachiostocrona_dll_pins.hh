@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_dll_pins.hh                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -109,8 +109,11 @@ namespace BrachiostocronaDefine {
   public:
 
     BRACHIOSTOCRONA_API_DLL
-    Brachiostocrona_Problem( integer n_threads, Console const * console )
-    : model("Brachiostocrona",n_threads,console)
+    Brachiostocrona_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("Brachiostocrona",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

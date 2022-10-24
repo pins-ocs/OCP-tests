@@ -36,8 +36,10 @@ CONT := [
 ];
 #addUserFunction(x_guess(x));
 #Describe(generateOCProblem);
+project_dir  := "../generated_code";
+project_name := "HangingChain";
 generateOCProblem(
-  "HangingChain", clean=true,
+  project_name, clean=true,
   parameters         = PARS,
   mesh               = [ length=1, n=400 ],
   controls_guess     = [ u=2*u0 ],
@@ -58,4 +60,4 @@ generateOCProblem(
 #RES := solve( gg, {u} );
 #simplify(subs(RES[1],Dgg)) assuming x::real, lambda1::real, lambda2::real;
 #simplify(subs(RES[2],Dgg)) assuming x::real, lambda1::real, lambda2::real;
-;
+# if used in batch mode use the comment to quit;

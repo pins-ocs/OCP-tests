@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: SingularLuus04_FreeTime_ffi_structs.rb                            #
 #                                                                          #
-#  version: 1.0   date 19/6/2022                                           #
+#  version: 1.0   date 10/11/2022                                          #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -282,8 +283,8 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w__U];
     real_type t5   = 1.0 / X__[iX_v];
-    result__[ 0   ] = 2 * t2 * t5 * U__[iU_p__o] + L__[iL_lambda4__xo];
-    result__[ 1   ] = 2 * t2 * t5 * U__[iU_b__o] + L__[iL_lambda5__xo];
+    result__[ 0   ] = 2 * t5 * t2 * U__[iU_p__o] + L__[iL_lambda4__xo];
+    result__[ 1   ] = 2 * t5 * t2 * U__[iU_b__o] + L__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
   }

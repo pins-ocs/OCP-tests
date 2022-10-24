@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -31,6 +31,7 @@
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -123,9 +124,9 @@ namespace UnderwaterDefine {
     real_type t22  = ModelPars[iM_m1];
     real_type t23  = 1.0 / t22;
     real_type t26  = ModelPars[iM_m3];
-    result__[ 3   ] = V__[3] - (-t23 * t26 * t17 * t7 + t23 * UM__[0]) * t2;
+    result__[ 3   ] = V__[3] - (-t17 * t23 * t26 * t7 + t23 * UM__[0]) * t2;
     real_type t33  = 1.0 / t26;
-    result__[ 4   ] = V__[4] - (t33 * t22 * t17 * t3 + t33 * UM__[1]) * t2;
+    result__[ 4   ] = V__[4] - (t17 * t22 * t3 * t33 + t33 * UM__[1]) * t2;
     real_type t43  = 1.0 / ModelPars[iM_inertia];
     result__[ 5   ] = V__[5] - (t43 * UM__[2] + t43 * (t26 - t22) * t7 * t3) * t2;
     if ( m_debug )
@@ -228,7 +229,7 @@ namespace UnderwaterDefine {
     real_type t4   = cos(t3);
     real_type t6   = XM__[3];
     real_type t7   = sin(t3);
-    real_type t9   = t4 * t2 - t7 * t6;
+    real_type t9   = t2 * t4 - t6 * t7;
     result__[ 1   ] = -0.5e0 * t9 * t1;
     result__[ 2   ] = -0.5e0 * t4 * t1;
     real_type t15  = 0.5e0 * t7 * t1;
@@ -237,7 +238,7 @@ namespace UnderwaterDefine {
     result__[ 5   ] = result__[1];
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[3];
-    result__[ 8   ] = -t7 * t2 - t6 * t4;
+    result__[ 8   ] = -t2 * t7 - t4 * t6;
     result__[ 9   ] = result__[0];
     result__[ 10  ] = -0.5e0 * result__[8] * t1;
     result__[ 11  ] = t15;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    BangBangFmodule  model("BangBangFmodule",n_threads,&console);
+    BangBangFmodule  model("BangBangFmodule",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -150,7 +150,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_controlP = data_Controls["controlP"];
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFmodule_data.Mesh["s0"] = 0;
-BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 BangBangFmodule_data.Mesh["segments"][0]["length"] = 1;
+BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

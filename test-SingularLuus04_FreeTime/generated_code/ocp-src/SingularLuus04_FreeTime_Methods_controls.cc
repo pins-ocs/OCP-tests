@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -91,11 +92,17 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XM__[3];
-    real_type t3   = XM__[0] * XM__[0];
+    real_type t1   = XL__[iX_T];
+    real_type t3   = XL__[iX_x] * XL__[iX_x];
+    real_type t4   = ModelPars[iM_theta];
+    real_type t8   = LM__[0];
+    real_type t12  = LM__[1];
+    real_type t16  = LM__[2];
     real_type t18  = UM__[0];
     real_type t20  = uControl(t18, -1, 1);
-    real_type result__ = (t1 * ModelPars[iM_theta] + t3) * t1 + XM__[1] * t1 * LM__[0] + XM__[2] * t1 * LM__[1] + t18 * t1 * LM__[2] + t20 * t1;
+    real_type t22  = XR__[iX_T];
+    real_type t24  = XR__[iX_x] * XR__[iX_x];
+    real_type result__ = (t4 * t1 + t3) * t1 + XL__[iX_y] * t1 * t8 + XL__[iX_z] * t1 * t12 + t18 * t1 * t16 + t20 * t1 + (t4 * t22 + t24) * t22 + XR__[iX_y] * t22 * t8 + XR__[iX_z] * t22 * t12 + t18 * t22 * t16 + t20 * t22;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -136,9 +143,11 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[3];
+    real_type t1   = LM__[2];
+    real_type t2   = XL__[iX_T];
     real_type t5   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = t5 * t2 + t2 * LM__[2];
+    real_type t7   = XR__[iX_T];
+    result__[ 0   ] = t2 * t1 + t7 * t1 + t5 * t2 + t5 * t7;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -189,9 +198,9 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 0.5e0 * LM__[2] + 0.5e0 * t4;
-    result__[ 1   ] = 0.5e0 * XM__[3];
+    real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
+    result__[ 0   ] = LM__[2] + t3;
+    result__[ 1   ] = 0.5e0 * XL__[iX_T] + 0.5e0 * XR__[iX_T];
     result__[ 2   ] = result__[0];
     result__[ 3   ] = result__[1];
     if ( m_debug )
@@ -242,7 +251,7 @@ namespace SingularLuus04_FreeTimeDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t3 * XM__[3];
+    result__[ 0   ] = t3 * XL__[iX_T] + t3 * XR__[iX_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

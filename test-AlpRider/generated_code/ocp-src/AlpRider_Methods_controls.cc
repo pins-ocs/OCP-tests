@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_controls.cc                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -84,21 +85,38 @@ namespace AlpRiderDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = XM__[0];
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = XL__[iX_y1];
     real_type t3   = t2 * t2;
-    real_type t4   = XM__[1];
+    real_type t4   = XL__[iX_y2];
     real_type t5   = t4 * t4;
-    real_type t6   = XM__[2];
+    real_type t6   = XL__[iX_y3];
     real_type t7   = t6 * t6;
-    real_type t8   = XM__[3];
+    real_type t8   = XL__[iX_y4];
     real_type t9   = t8 * t8;
     real_type t12  = UM__[0];
     real_type t13  = t12 * t12;
     real_type t15  = UM__[1];
     real_type t16  = t15 * t15;
-    real_type t39  = q_lower(QM__[0]);
+    real_type t18  = LM__[0];
+    real_type t22  = LM__[1];
+    real_type t24  = 2 * t15;
+    real_type t27  = LM__[2];
+    real_type t32  = LM__[3];
+    real_type t35  = 3 * t15;
+    real_type t39  = q_lower(QL__[iQ_zeta]);
     real_type t41  = Ybound(t39 - t3 - t5 - t7 - t9);
-    real_type result__ = (t3 + t5 + t7 + t9) * ModelPars[iM_W] + t13 / 100 + t16 / 100 + (-10 * t2 + t12 + t15) * LM__[0] + (-2 * t4 + t12 + 2 * t15) * LM__[1] + (-3 * t6 + 5 * t8 + t12 - t15) * LM__[2] + (5 * t6 - 3 * t8 + t12 + 3 * t15) * LM__[3] + t41;
+    real_type t42  = XR__[iX_y1];
+    real_type t43  = t42 * t42;
+    real_type t44  = XR__[iX_y2];
+    real_type t45  = t44 * t44;
+    real_type t46  = XR__[iX_y3];
+    real_type t47  = t46 * t46;
+    real_type t48  = XR__[iX_y4];
+    real_type t49  = t48 * t48;
+    real_type t67  = q_lower(QR__[iQ_zeta]);
+    real_type t69  = Ybound(t67 - t43 - t45 - t47 - t49);
+    real_type result__ = (t3 + t5 + t7 + t9) * t1 + t13 / 50 + t16 / 50 + (-10 * t2 + t12 + t15) * t18 + (-2 * t4 + t12 + t24) * t22 + (-3 * t6 + 5 * t8 + t12 - t15) * t27 + (5 * t6 - 3 * t8 + t12 + t35) * t32 + t41 + (t43 + t45 + t47 + t49) * t1 + (-10 * t42 + t12 + t15) * t18 + (-2 * t44 + t12 + t24) * t22 + (-3 * t46 + 5 * t48 + t12 - t15) * t27 + (5 * t46 - 3 * t48 + t12 + t35) * t32 + t69;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -139,12 +157,12 @@ namespace AlpRiderDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = LM__[0];
-    real_type t4   = LM__[1];
-    real_type t5   = LM__[2];
-    real_type t6   = LM__[3];
-    result__[ 0   ] = UM__[0] / 50 + t3 + t4 + t5 + t6;
-    result__[ 1   ] = UM__[1] / 50 + t3 + 2 * t4 - t5 + 3 * t6;
+    real_type t4   = 2 * LM__[0];
+    real_type t5   = LM__[1];
+    real_type t8   = 2 * LM__[2];
+    real_type t9   = LM__[3];
+    result__[ 0   ] = UM__[0] / 25 + t4 + 2 * t5 + t8 + 2 * t9;
+    result__[ 1   ] = UM__[1] / 25 + t4 + 4 * t5 - t8 + 6 * t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -207,22 +225,22 @@ namespace AlpRiderDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
-    result__[ 2   ] = 0.500000000000000000e0;
-    result__[ 3   ] = 0.500000000000000000e0;
-    result__[ 4   ] = 0.500000000000000000e0;
-    result__[ 5   ] = 0.500000000000000000e0;
-    result__[ 6   ] = 0.500000000000000000e0;
-    result__[ 7   ] = 0.500000000000000000e0;
-    result__[ 8   ] = 0.500000000000000000e0;
-    result__[ 9   ] = 1.0;
-    result__[ 10  ] = -0.500000000000000000e0;
-    result__[ 11  ] = 0.150000000000000000e1;
-    result__[ 12  ] = 0.500000000000000000e0;
-    result__[ 13  ] = 1.0;
-    result__[ 14  ] = -0.500000000000000000e0;
-    result__[ 15  ] = 0.150000000000000000e1;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
+    result__[ 2   ] = 1.0;
+    result__[ 3   ] = 1.0;
+    result__[ 4   ] = 1.0;
+    result__[ 5   ] = 1.0;
+    result__[ 6   ] = 1.0;
+    result__[ 7   ] = 1.0;
+    result__[ 8   ] = 1.0;
+    result__[ 9   ] = 2.0;
+    result__[ 10  ] = -1.0;
+    result__[ 11  ] = 3.0;
+    result__[ 12  ] = 1.0;
+    result__[ 13  ] = 2.0;
+    result__[ 14  ] = -1.0;
+    result__[ 15  ] = 3.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 16, i_segment );
   }
@@ -271,8 +289,8 @@ namespace AlpRiderDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     LM__[3] = (LL__[3]+LR__[3])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1.0 / 0.50e2;
-    result__[ 1   ] = 1.0 / 0.50e2;
+    result__[ 0   ] = 1.0 / 0.25e2;
+    result__[ 1   ] = 1.0 / 0.25e2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_controls.cc                                      |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -97,12 +98,16 @@ namespace TrainDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
-    real_type t2   = XM__[1];
-    real_type t8   = acc(XM__[0], t2);
+    real_type t2   = XL__[iX_v];
+    real_type t4   = LM__[0];
+    real_type t6   = LM__[1];
+    real_type t8   = acc(XL__[iX_x], t2);
     real_type t9   = UM__[1];
     real_type t13  = uaControl(t1, 0, ModelPars[iM_uaMax]);
-    real_type t15  = ubControl(t9, 0, ModelPars[iM_ubMax]);
-    real_type result__ = t2 * t1 + t2 * LM__[0] + (t8 + t1 - t9) * LM__[1] + t13 + t15;
+    real_type t16  = ubControl(t9, 0, ModelPars[iM_ubMax]);
+    real_type t18  = XR__[iX_v];
+    real_type t22  = acc(XR__[iX_x], t18);
+    real_type result__ = t2 * t1 + t2 * t4 + (t8 + t1 - t9) * t6 + 2 * t13 + 2 * t16 + t18 * t1 + t18 * t4 + (t22 + t1 - t9) * t6;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -140,10 +145,10 @@ namespace TrainDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = LM__[1];
-    real_type t5   = ALIAS_uaControl_D_1(UM__[0], 0, ModelPars[iM_uaMax]);
-    result__[ 0   ] = XM__[1] + t2 + t5;
-    real_type t8   = ALIAS_ubControl_D_1(UM__[1], 0, ModelPars[iM_ubMax]);
-    result__[ 1   ] = -t2 + t8;
+    real_type t6   = ALIAS_uaControl_D_1(UM__[0], 0, ModelPars[iM_uaMax]);
+    result__[ 0   ] = XL__[iX_v] + 2 * t2 + 2 * t6 + XR__[iX_v];
+    real_type t11  = ALIAS_ubControl_D_1(UM__[1], 0, ModelPars[iM_ubMax]);
+    result__[ 1   ] = -2 * t2 + 2 * t11;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -192,12 +197,12 @@ namespace TrainDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.500000000000000000e0;
-    result__[ 1   ] = 0.500000000000000000e0;
-    result__[ 2   ] = 0.500000000000000000e0;
-    result__[ 3   ] = 0.500000000000000000e0;
-    result__[ 4   ] = -0.500000000000000000e0;
-    result__[ 5   ] = -0.500000000000000000e0;
+    result__[ 0   ] = 1.0;
+    result__[ 1   ] = 1.0;
+    result__[ 2   ] = 1.0;
+    result__[ 3   ] = 1.0;
+    result__[ 4   ] = -1.0;
+    result__[ 5   ] = -1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
@@ -242,8 +247,10 @@ namespace TrainDefine {
     LM__[0] = (LL__[0]+LR__[0])/2;
     LM__[1] = (LL__[1]+LR__[1])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uaControl_D_1_1(UM__[0], 0, ModelPars[iM_uaMax]);
-    result__[ 1   ] = ALIAS_ubControl_D_1_1(UM__[1], 0, ModelPars[iM_ubMax]);
+    real_type t3   = ALIAS_uaControl_D_1_1(UM__[0], 0, ModelPars[iM_uaMax]);
+    result__[ 0   ] = 2 * t3;
+    real_type t6   = ALIAS_ubControl_D_1_1(UM__[1], 0, ModelPars[iM_ubMax]);
+    result__[ 1   ] = 2 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -289,9 +296,9 @@ namespace TrainDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = LM__[1];
-    U__[ iU_ua ] = ubControl.solve(-XM__[1] - t2, 0, ModelPars[iM_uaMax]);
-    U__[ iU_ub ] = ubControl.solve(t2, 0, ModelPars[iM_ubMax]);
+    real_type t3   = LM__[1];
+    U__[ iU_ua ] = ubControl.solve(-XL__[iX_v] / 2 - t3 - XR__[iX_v] / 2, 0, ModelPars[iM_uaMax]);
+    U__[ iU_ub ] = ubControl.solve(t3, 0, ModelPars[iM_ubMax]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }

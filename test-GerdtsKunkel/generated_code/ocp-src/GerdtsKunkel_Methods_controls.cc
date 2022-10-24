@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -82,10 +83,12 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = LM__[0];
     real_type t5   = UM__[0];
-    real_type t8   = t5 * t5;
-    real_type t13  = x1Limitation(XM__[0] - 1.0 / 9.0);
-    real_type result__ = LM__[0] * XM__[1] + t5 * LM__[1] + t8 * LM__[2] / 2 + t13;
+    real_type t9   = t5 * t5;
+    real_type t13  = x1Limitation(XL__[iX_x1] - 1.0 / 9.0);
+    real_type t18  = x1Limitation(XR__[iX_x1] - 1.0 / 9.0);
+    real_type result__ = XL__[iX_x2] * t1 + XR__[iX_x2] * t1 + 2 * t5 * LM__[1] + t9 * LM__[2] + t13 + t18;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -124,7 +127,7 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = LM__[2] * UM__[0] + LM__[1];
+    result__[ 0   ] = 2 * LM__[2] * UM__[0] + 2 * LM__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -173,9 +176,9 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 0.5e0;
-    result__[ 1   ] = 0.5e0 * UM__[0];
-    result__[ 2   ] = 0.5e0;
+    result__[ 0   ] = 0.10e1;
+    result__[ 1   ] = 0.10e1 * UM__[0];
+    result__[ 2   ] = 0.10e1;
     result__[ 3   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
@@ -222,7 +225,7 @@ namespace GerdtsKunkelDefine {
     LM__[1] = (LL__[1]+LR__[1])/2;
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = LM__[2];
+    result__[ 0   ] = 2 * LM__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

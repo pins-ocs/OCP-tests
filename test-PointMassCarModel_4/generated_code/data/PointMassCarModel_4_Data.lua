@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-p_tol0    = 0.1
-p_epsi0   = 0.1
 road_tol0 = 0.01
-wT0       = 0.01
 up_tol0   = 0.01
 up_epsi0  = 0.1
+wT0       = 0.01
+wT        = wT0
+p_epsi0   = 0.1
+p_tol0    = 0.1
 m         = 700.0
 kD        = 0.2500000000/m
-wT        = wT0
 
 content = {
 
@@ -101,37 +101,36 @@ content = {
 
     -- solver parameters
     NewtonDumped = {
-      -- "MERIT_D2", "MERIT_F2"
-      -- "MERIT_LOG_D2", "MERIT_LOG_F2"
+      -- "MERIT_D2", "MERIT_F2", "MERIT_LOG_D2", "MERIT_LOG_F2"
       -- "MERIT_F2_and_D2", "MERIT_LOG_F2_and_D2", "MERIT_LOG_F2_and_LOG_D2"
-      merit                = "MERIT_LOG_F2_and_D2",
+      merit                = "MERIT_LOG_F2_and_LOG_D2",
       max_iter             = 50,
       max_step_iter        = 10,
       max_accumulated_iter = 150,
-      tolerance            = 1e-9,  -- tolerance for stopping criteria
-      c1                   = 0.01,  -- Constant for Armijo step acceptance criteria
-      lambda_min           = 1e-10, -- minimum lambda for linesearch
-      dump_min             = 0.4,   -- (0,0.5)  dumping factor for linesearch
-      dump_max             = 0.8,   -- (0.5,0.99)
+      tolerance            = 1.0e-10, -- tolerance for stopping criteria
+      c1                   = 0.01, -- Constant for Armijo step acceptance criteria
+      lambda_min           = 1.0e-10, -- minimum lambda for linesearch
+      dump_min             = 0.25, -- (0,0.5)  dumping factor for linesearch
+      dump_max             = 0.9, -- (0.5,0.99)
       -- Potenza `n` della funzione di interpolazione per minimizzazione
       -- f(x) = f0 * exp( (f0'/f0) * x ) + C * x^n
-      merit_power          = 4, -- (2..100)
+      merit_power          = 6, -- (2..100)
       -- check that search direction and new estimated search direction have an angle less than check_angle
       -- if check_angle == 0 no check is done
       check_angle            = 120,
-      check_ratio_norm_two_f = 1.4,  -- check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
-      check_ratio_norm_two_d = 1.4,  -- check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
-      check_ratio_norm_one_f = 1.4,  -- check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
-      check_ratio_norm_one_d = 1.4,  -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
+      check_ratio_norm_two_f = 2,  -- check that ratio of ||f(x_{k+1})||_2/||f(x_{k})||_2 <= NUMBER
+      check_ratio_norm_two_d = 2,  -- check that ratio of ||d(x_{k+1})||_2/||d(x_{k})||_2 <= NUMBER
+      check_ratio_norm_one_f = 2,  -- check that ratio of ||f(x_{k+1})||_1/||f(x_{k})||_1 <= NUMBER
+      check_ratio_norm_one_d = 2,  -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
     },
 
-    Hyness = { max_iter = 50, tolerance = 1e-9 },
+    Hyness = { max_iter = 50, tolerance = 1.0e-10 },
 
-    LevenbergMarquardt = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
-    YixunShi           = { max_iter = 50, tolerance = 1e-9, low_tolerance = 1e-6 },
+    LevenbergMarquardt = { max_iter = 50, tolerance = 1.0e-10, low_tolerance = 1e-6 },
+    YixunShi           = { max_iter = 50, tolerance = 1.0e-10, low_tolerance = 1e-6 },
     QuasiNewton = {
       max_iter      = 50,
-      tolerance     = 1e-9,
+      tolerance     = 1.0e-10,
       low_tolerance = 1e-6,
       update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
       linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
@@ -188,11 +187,11 @@ content = {
 
       -- dumping factor for linesearch
       dump_min = 0.4, -- (0,0.5)
-      dump_max = 0.9, -- (0.5,0.99)
+      dump_max = 0.95, -- (0.5,0.99)
 
       -- Potenza `n` della funzione di interpolazione per minimizzazione
       -- f(x) = f0 * exp( (f0'/f0) * x ) + C * x^n
-      merit_power = 3, -- (2..100)
+      merit_power = 2, -- (2..100)
 
       -- check that search direction and new estimated search direction have an angle less than check_angle
       -- if check_angle == 0 no check is done
@@ -299,7 +298,7 @@ content = {
   },
 
   -- Controls
-  -- Penalty subtype: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+  -- Penalty subtype: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
   -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   Controls = {
     v__fxControl = {
@@ -361,83 +360,83 @@ content = {
     segments = {
       
       {
-        curvature  = 0.0,
-        gridSize   = 1.0,
-        rightWidth = 60.0,
         length     = 190.0,
+        rightWidth = 60.0,
+        gridSize   = 1.0,
         leftWidth  = 15/2.0,
+        curvature  = 0.0,
       },
       
       {
-        curvature  = 0.003225806452,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 973.8937227,
+        rightWidth = 30.0,
+        gridSize   = 1.0,
         leftWidth  = 60.0,
+        curvature  = 0.003225806452,
       },
       
       {
-        curvature  = 0.0,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 180.0,
+        rightWidth = 30.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        curvature  = 0.006666666667,
-        gridSize   = 1.0,
+        length     = 235.619449,
         rightWidth = 15.0,
-        length     = 235.619449,
+        gridSize   = 1.0,
         leftWidth  = 20.0,
+        curvature  = 0.006666666667,
       },
       
       {
-        curvature  = 0.0,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 240.0,
+        rightWidth = 30.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        curvature  = -1/150.0,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 235.619449,
+        rightWidth = 30.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
+        curvature  = -1/150.0,
       },
       
       {
-        curvature  = 0.0,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 200.0,
+        rightWidth = 30.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
+        curvature  = 0.0,
       },
       
       {
-        curvature  = 0.025,
-        gridSize   = 1.0,
-        rightWidth = 30.0,
         length     = 125.6637062,
-        leftWidth  = 30.0,
-      },
-      
-      {
-        curvature  = 0.0,
+        rightWidth = 30.0,
         gridSize   = 1.0,
-        rightWidth = 30.0,
-        length     = 480.0,
         leftWidth  = 30.0,
+        curvature  = 0.025,
       },
       
       {
-        curvature  = 0.0,
-        gridSize   = 0.1,
+        length     = 480.0,
         rightWidth = 30.0,
-        length     = 10.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
+        curvature  = 0.0,
+      },
+      
+      {
+        length     = 10.0,
+        rightWidth = 30.0,
+        gridSize   = 0.1,
+        leftWidth  = 30.0,
+        curvature  = 0.0,
       },
     },
   },

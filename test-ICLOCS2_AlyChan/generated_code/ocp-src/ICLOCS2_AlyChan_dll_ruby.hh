@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_dll_ruby.hh                                    |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -105,8 +105,11 @@ namespace ICLOCS2_AlyChanDefine {
   public:
 
     ICLOCS2_ALYCHAN_API_DLL
-    ICLOCS2_AlyChan_Problem( integer n_threads, Console const * console )
-    : model("ICLOCS2_AlyChan",n_threads,console)
+    ICLOCS2_AlyChan_Problem(
+      Console const  * console,
+      ThreadPoolBase * TP
+    )
+    : model("ICLOCS2_AlyChan",console,TP)
     , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();

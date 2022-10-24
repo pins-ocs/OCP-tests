@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 24/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -94,21 +95,21 @@ namespace BangBangForkDefine {
     real_type t2   = P__[iP_T];
     real_type t4   = UM__[1];
     real_type t5   = t4 * t4;
+    real_type t9   = t2 * LM__[0];
     real_type t10  = XL__[iX_x2];
+    real_type t13  = t2 * LM__[1];
     real_type t15  = t4 * ModelPars[iM_WU2];
+    real_type t20  = t2 * LM__[2];
     real_type t21  = t10 * t10;
     real_type t22  = t21 * t21;
     real_type t24  = ModelPars[iM_kappa];
     real_type t26  = UM__[0];
     real_type t29  = uControl(t26, -1, 1);
     real_type t32  = Tbarrier(-t2);
-    real_type t36  = XM__[1];
-    real_type t47  = t36 * t36;
-    real_type t48  = t47 * t47;
-    real_type t56  = XR__[iX_x2];
-    real_type t65  = t56 * t56;
-    real_type t66  = t65 * t65;
-    real_type result__ = 6 * t5 * t2 * ModelPars[iM_WC] - t10 * t2 * LL__[iL_lambda1__xo] + (t15 + XL__[iX_x3]) * t2 * LL__[iL_lambda2__xo] + (-t24 * t22 * t10 + t26) * t2 * LL__[iL_lambda3__xo] + 6 * t29 * t2 + 6 * t32 - 4 * t36 * t2 * LM__[0] + 4 * (t15 + XM__[2]) * t2 * LM__[1] + 4 * (-t24 * t48 * t36 + t26) * t2 * LM__[2] - t56 * t2 * LR__[iL_lambda1__xo] + (t15 + XR__[iX_x3]) * t2 * LR__[iL_lambda2__xo] + (-t24 * t66 * t56 + t26) * t2 * LR__[iL_lambda3__xo];
+    real_type t34  = XR__[iX_x2];
+    real_type t39  = t34 * t34;
+    real_type t40  = t39 * t39;
+    real_type result__ = 2 * t5 * t2 * ModelPars[iM_WC] - t10 * t9 + (t15 + XL__[iX_x3]) * t13 + (-t24 * t22 * t10 + t26) * t20 + 2 * t29 * t2 + 2 * t32 - t34 * t9 + (t15 + XR__[iX_x3]) * t13 + (-t24 * t40 * t34 + t26) * t20;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -149,9 +150,8 @@ namespace BangBangForkDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
     real_type t5   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 6 * t5 * t2 + t2 * LL__[iL_lambda3__xo] + 4 * t2 * LM__[2] + t2 * LR__[iL_lambda3__xo];
-    real_type t15  = ModelPars[iM_WU2];
-    result__[ 1   ] = t15 * t2 * LL__[iL_lambda2__xo] + 4 * t15 * t2 * LM__[1] + t15 * t2 * LR__[iL_lambda2__xo] + 12 * ModelPars[iM_WC] * UM__[1] * t2;
+    result__[ 0   ] = 2 * t5 * t2 + 2 * t2 * LM__[2];
+    result__[ 1   ] = 2 * ModelPars[iM_WU2] * t2 * LM__[1] + 4 * ModelPars[iM_WC] * UM__[1] * t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -203,14 +203,14 @@ namespace BangBangForkDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    result__[ 0   ] = 0.30e1 * t1;
+    result__[ 0   ] = 0.10e1 * t1;
     result__[ 1   ] = result__[0];
     real_type t4   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = LL__[iL_lambda3__xo] + 6 * t4 + 4 * LM__[2] + LR__[iL_lambda3__xo];
-    real_type t9   = ModelPars[iM_WU2];
-    result__[ 3   ] = 0.30e1 * t9 * t1;
+    result__[ 2   ] = 2 * LM__[2] + 2 * t4;
+    real_type t6   = ModelPars[iM_WU2];
+    result__[ 3   ] = 0.10e1 * t6 * t1;
     result__[ 4   ] = result__[3];
-    result__[ 5   ] = t9 * LL__[iL_lambda2__xo] + 4 * t9 * LM__[1] + t9 * LR__[iL_lambda2__xo] + 12 * UM__[1] * ModelPars[iM_WC];
+    result__[ 5   ] = 2 * t6 * LM__[1] + 4 * UM__[1] * ModelPars[iM_WC];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
   }
@@ -259,8 +259,8 @@ namespace BangBangForkDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = 6 * t3 * t1;
-    result__[ 1   ] = 12 * ModelPars[iM_WC] * t1;
+    result__[ 0   ] = 2 * t3 * t1;
+    result__[ 1   ] = 4 * ModelPars[iM_WC] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -308,8 +308,8 @@ namespace BangBangForkDefine {
     LM__[2] = (LL__[2]+LR__[2])/2;
     integer i_segment = LEFT__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    U__[ iU_u  ] = uControl.solve(-LL__[iL_lambda3__xo] / 6 - 2.0 / 3.0 * LM__[2] - LR__[iL_lambda3__xo] / 6, -1, 1);
-    U__[ iU_u2 ] = -ModelPars[iM_WU2] * (LL__[iL_lambda2__xo] + 4 * LM__[1] + LR__[iL_lambda2__xo]) / ModelPars[iM_WC] / 12;
+    U__[ iU_u  ] = uControl.solve(-LM__[2], -1, 1);
+    U__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * LM__[1] * ModelPars[iM_WU2] / 2;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
   }

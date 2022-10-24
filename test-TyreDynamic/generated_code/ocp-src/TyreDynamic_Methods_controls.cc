@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 11/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -38,6 +38,7 @@ using Mechatronix::MeshStd;
 #elif defined(_MSC_VER)
 #pragma warning( disable : 4100 )
 #pragma warning( disable : 4101 )
+#pragma warning( disable : 4189 )
 #endif
 
 // map user defined functions and objects with macros
@@ -134,34 +135,64 @@ namespace TyreDynamicDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = UM__[0];
-    real_type t3   = t2 * t2;
-    real_type t4   = UM__[1];
-    real_type t5   = t4 * t4;
-    real_type t10  = XM__[0];
-    real_type t11  = 1.0 / t10;
-    real_type t14  = XM__[2];
-    real_type t15  = F__x(t14);
-    real_type t16  = Fa(t10);
-    real_type t20  = XM__[3];
-    real_type t21  = p__pos(t20);
-    real_type t22  = XM__[1];
-    real_type t23  = TT(t21, t22);
-    real_type t24  = XM__[4];
-    real_type t25  = b__neg(t24);
-    real_type t26  = TB(t25, t22);
-    real_type t29  = Ma(t22);
-    real_type t34  = kappa__w(t10, t22);
-    real_type t43  = b__oControl(t4, -1, 1);
-    real_type t45  = p__oControl(t2, -1, 1);
-    real_type t47  = ModelPars[iM_h__b];
-    real_type t49  = OnlyBrakingRear(t24 - t47);
-    real_type t52  = OnlyTractionRear(-t47 - t20);
-    real_type t56  = t14 / ModelPars[iM_lambda__max];
-    real_type t58  = LongSlipRear_min(-1 - t56);
-    real_type t61  = LongSlipRear_max(t56 - 1);
-    real_type t64  = v_min(1 - t10);
-    real_type result__ = t11 * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5)) + (t15 - t16) * LM__[0] + (-ModelPars[iM_rw] * t15 + t23 + t26 + t29) * LM__[1] + (t34 - t14) * t10 * LM__[2] + (-t20 + t2) * LM__[3] + (-t24 + t4) * LM__[4] + t43 * t11 + t45 * t11 + t49 * t11 + t52 * t11 + t58 * t11 + t61 * t11 + t64 * t11;
+    real_type t1   = XR__[iX_v];
+    real_type t2   = 1.0 / t1;
+    real_type t3   = UM__[0];
+    real_type t4   = p__oControl(t3, -1, 1);
+    real_type t6   = LM__[3];
+    real_type t7   = XL__[iX_p];
+    real_type t10  = XR__[iX_p];
+    real_type t13  = XL__[iX_v];
+    real_type t14  = 1.0 / t13;
+    real_type t15  = UM__[1];
+    real_type t16  = b__oControl(t15, -1, 1);
+    real_type t19  = LM__[4];
+    real_type t20  = XL__[iX_b];
+    real_type t23  = XR__[iX_b];
+    real_type t26  = ModelPars[iM_h__b];
+    real_type t28  = OnlyTractionRear(-t26 - t7);
+    real_type t31  = OnlyBrakingRear(t20 - t26);
+    real_type t34  = OnlyTractionRear(-t26 - t10);
+    real_type t37  = OnlyBrakingRear(t23 - t26);
+    real_type t39  = LM__[1];
+    real_type t40  = p__pos(t7);
+    real_type t41  = XL__[iX_omega];
+    real_type t42  = TT(t40, t41);
+    real_type t43  = b__neg(t20);
+    real_type t44  = TB(t43, t41);
+    real_type t45  = XL__[iX_lambda];
+    real_type t46  = F__x(t45);
+    real_type t47  = ModelPars[iM_rw];
+    real_type t49  = Ma(t41);
+    real_type t52  = p__pos(t10);
+    real_type t53  = XR__[iX_omega];
+    real_type t54  = TT(t52, t53);
+    real_type t55  = b__neg(t23);
+    real_type t56  = TB(t55, t53);
+    real_type t57  = XR__[iX_lambda];
+    real_type t58  = F__x(t57);
+    real_type t60  = Ma(t53);
+    real_type t63  = t4 * t2 + (-t7 + t3) * t6 + (-t10 + t3) * t6 + t16 * t14 + t16 * t2 + (-t20 + t15) * t19 + (-t23 + t15) * t19 + t28 * t14 + t31 * t14 + t34 * t2 + t37 * t2 + (-t47 * t46 + t42 + t44 + t49) * t39 + (-t47 * t58 + t54 + t56 + t60) * t39;
+    real_type t65  = v_min(1 - t13);
+    real_type t68  = v_min(1 - t1);
+    real_type t70  = LM__[0];
+    real_type t71  = Fa(t13);
+    real_type t74  = Fa(t1);
+    real_type t79  = t3 * t3;
+    real_type t80  = t15 * t15;
+    real_type t84  = ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t79 + t80);
+    real_type t88  = 1.0 / ModelPars[iM_lambda__max];
+    real_type t89  = t45 * t88;
+    real_type t91  = LongSlipRear_min(-1 - t89);
+    real_type t94  = LongSlipRear_max(t89 - 1);
+    real_type t96  = t57 * t88;
+    real_type t98  = LongSlipRear_min(-1 - t96);
+    real_type t101 = LongSlipRear_max(t96 - 1);
+    real_type t103 = LM__[2];
+    real_type t105 = kappa__w(t1, t53);
+    real_type t109 = kappa__w(t13, t41);
+    real_type t112 = t65 * t14 + t68 * t2 + (t46 - t71) * t70 + (t58 - t74) * t70 + t4 * t14 + t14 * t84 + t2 * t84 + t91 * t14 + t94 * t14 + t98 * t2 + t101 * t2 + (t105 - t57) * t1 * t103 + (t109 - t45) * t13 * t103;
+    real_type result__ = t63 + t112;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -206,12 +237,15 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = ModelPars[iM_w__U];
-    real_type t5   = 1.0 / XM__[0];
-    real_type t9   = ALIAS_p__oControl_D_1(t1, -1, 1);
-    result__[ 0   ] = 2 * t5 * t2 * t1 + t9 * t5 + LM__[3];
-    real_type t11  = UM__[1];
-    real_type t16  = ALIAS_b__oControl_D_1(t11, -1, 1);
-    result__[ 1   ] = 2 * t5 * t2 * t11 + t16 * t5 + LM__[4];
+    real_type t3   = t2 * t1;
+    real_type t5   = 1.0 / XL__[iX_v];
+    real_type t10  = ALIAS_p__oControl_D_1(t1, -1, 1);
+    real_type t13  = 1.0 / XR__[iX_v];
+    result__[ 0   ] = t10 * t13 + t10 * t5 + 2 * t13 * t3 + 2 * t5 * t3 + 2 * LM__[3];
+    real_type t17  = UM__[1];
+    real_type t18  = t2 * t17;
+    real_type t23  = ALIAS_b__oControl_D_1(t17, -1, 1);
+    result__[ 1   ] = 2 * t13 * t18 + t23 * t13 + 2 * t5 * t18 + t23 * t5 + 2 * LM__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
@@ -270,19 +304,23 @@ namespace TyreDynamicDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = UM__[0];
     real_type t2   = ModelPars[iM_w__U];
-    real_type t5   = XM__[0] * XM__[0];
+    real_type t3   = t2 * t1;
+    real_type t5   = XL__[iX_v] * XL__[iX_v];
     real_type t6   = 1.0 / t5;
     real_type t9   = ALIAS_p__oControl_D_1(t1, -1, 1);
-    result__[ 0   ] = -0.10e1 * t6 * t2 * t1 - 0.5e0 * t9 * t6;
-    result__[ 1   ] = 0.5e0;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = 0.5e0;
-    real_type t12  = UM__[1];
-    real_type t16  = ALIAS_b__oControl_D_1(t12, -1, 1);
-    result__[ 4   ] = -0.10e1 * t6 * t2 * t12 - 0.5e0 * t16 * t6;
-    result__[ 5   ] = 0.5e0;
-    result__[ 6   ] = result__[4];
-    result__[ 7   ] = 0.5e0;
+    result__[ 0   ] = -2 * t6 * t3 - t9 * t6;
+    result__[ 1   ] = 1.0;
+    real_type t12  = XR__[iX_v] * XR__[iX_v];
+    real_type t13  = 1.0 / t12;
+    result__[ 2   ] = -2 * t13 * t3 - t9 * t13;
+    result__[ 3   ] = 1.0;
+    real_type t17  = UM__[1];
+    real_type t18  = t2 * t17;
+    real_type t21  = ALIAS_b__oControl_D_1(t17, -1, 1);
+    result__[ 4   ] = -2 * t6 * t18 - t21 * t6;
+    result__[ 5   ] = 1.0;
+    result__[ 6   ] = -2 * t13 * t18 - t21 * t13;
+    result__[ 7   ] = 1.0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 8, i_segment );
   }
@@ -333,12 +371,15 @@ namespace TyreDynamicDefine {
     LM__[3] = (LL__[3]+LR__[3])/2;
     LM__[4] = (LL__[4]+LR__[4])/2;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = 1.0 / XM__[0];
-    real_type t5   = 2 * t3 * ModelPars[iM_w__U];
+    real_type t1   = ModelPars[iM_w__U];
+    real_type t3   = 1.0 / XL__[iX_v];
+    real_type t5   = 2 * t3 * t1;
     real_type t7   = ALIAS_p__oControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t3 * t7 + t5;
-    real_type t10  = ALIAS_b__oControl_D_1_1(UM__[1], -1, 1);
-    result__[ 1   ] = t10 * t3 + t5;
+    real_type t10  = 1.0 / XR__[iX_v];
+    real_type t12  = 2 * t10 * t1;
+    result__[ 0   ] = t7 * t10 + t7 * t3 + t12 + t5;
+    real_type t15  = ALIAS_b__oControl_D_1_1(UM__[1], -1, 1);
+    result__[ 1   ] = t15 * t10 + t15 * t3 + t12 + t5;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -418,8 +459,8 @@ namespace TyreDynamicDefine {
     real_type t52  = pow(V__[1] * t1 * ModelPars[iM_Iw] + ModelPars[iM_rw] * t35 - t45 - t47 - t50, 2);
     real_type t57  = kappa__w(t1, t44);
     real_type t61  = pow(V__[2] * ModelPars[iM_l__x] * t1 - (t57 - t20) * t1, 2);
-    real_type t67  = pow(V__[3] * ModelPars[iM_tau__p] * t1 + t14 - t6, 2);
-    real_type t73  = pow(V__[4] * ModelPars[iM_tau__b] * t1 - t3 + t9, 2);
+    real_type t67  = pow(ModelPars[iM_tau__p] * t1 * V__[3] + t14 - t6, 2);
+    real_type t73  = pow(ModelPars[iM_tau__b] * t1 * V__[4] - t3 + t9, 2);
     real_type result__ = t12 * t2 + t16 * t2 + t23 * t2 + t26 * t2 + t29 * t2 + t4 * t2 + t7 * t2 + t38 + t52 + t61 + t67 + t73;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
@@ -447,10 +488,10 @@ namespace TyreDynamicDefine {
     real_type t2   = 1.0 / t1;
     real_type t3   = U__[iU_p__o];
     real_type t4   = ALIAS_p__oControl_D_1(t3, -1, 1);
-    result__[ 0   ] = -2 * V__[3] * ModelPars[iM_tau__p] * t1 + t4 * t2 + 2 * t3 - 2 * X__[iX_p];
+    result__[ 0   ] = -2 * ModelPars[iM_tau__p] * t1 * V__[3] + t4 * t2 + 2 * t3 - 2 * X__[iX_p];
     real_type t14  = U__[iU_b__o];
     real_type t15  = ALIAS_b__oControl_D_1(t14, -1, 1);
-    result__[ 1   ] = -2 * V__[4] * ModelPars[iM_tau__b] * t1 + t15 * t2 + 2 * t14 - 2 * X__[iX_b];
+    result__[ 1   ] = -2 * ModelPars[iM_tau__b] * t1 * V__[4] + t15 * t2 + 2 * t14 - 2 * X__[iX_b];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
   }

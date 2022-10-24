@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    Bike1D           model("Bike1D",n_threads,&console);
+    Bike1D           model("Bike1D",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type mur_min = -1;
     real_type muf_min = -1;
     real_type mur_max = 1;
-    real_type mur_min = -1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -159,12 +159,12 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
     data_clip["delta2"] = 0;
+    data_clip["delta"] = 0;
     data_clip["h"] = 0.01;
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_murControl = data_Controls["murControl"];
@@ -196,8 +196,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Bike1D_data.Mesh["s0"] = 0;
-Bike1D_data.Mesh["segments"][0]["n"] = 1000;
 Bike1D_data.Mesh["segments"][0]["length"] = 1000;
+Bike1D_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers

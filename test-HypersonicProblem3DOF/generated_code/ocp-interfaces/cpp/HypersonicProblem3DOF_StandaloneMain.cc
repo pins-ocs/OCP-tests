@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Main.cc                                  |
  |                                                                       |
- |  version: 1.0   date 19/6/2022                                        |
+ |  version: 1.0   date 10/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -37,12 +37,12 @@ main() {
   __try {
   #endif
 
-  Mechatronix::Console console(&std::cout,4);
-  Mechatronix::integer n_threads = std::thread::hardware_concurrency();
+  Mechatronix::Console     console(&std::cout,4);
+  Mechatronix::ThreadPool1 TP(std::thread::hardware_concurrency());
 
   try {
 
-    HypersonicProblem3DOF model("HypersonicProblem3DOF",n_threads,&console);
+    HypersonicProblem3DOF model("HypersonicProblem3DOF",&console,&TP);
     GenericContainer gc_data;
     GenericContainer gc_solution;
 
@@ -50,26 +50,26 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type ODE0 = 0;
-    real_type u_tolerance = 0.1;
-    real_type WTF0 = 1;
-    real_type WTF = WTF0;
-    real_type to_rad = 0.01745329252;
-    real_type G_i = -15*to_rad;
     real_type u_epsilon = 0.1;
-    real_type phi_f = 0.5*to_rad;
-    real_type G_f = -15*to_rad;
+    real_type WTF0 = 1;
     real_type one_km = 1000;
     real_type re = 6378*one_km;
-    real_type theta_f = 2*to_rad;
+    real_type V_f = 2*one_km;
     real_type V_i = 2*one_km;
-    real_type sigma_dot_max = 10*to_rad;
     real_type h_i = 40*one_km;
     real_type S = 7500*one_km;
-    real_type V_f = 2*one_km;
+    real_type u_tolerance = 0.1;
+    real_type WTF = WTF0;
     real_type CTRL0 = 1;
     real_type CTRL = CTRL0;
+    real_type ODE0 = 0;
     real_type ODE = ODE0;
+    real_type to_rad = 0.01745329252;
+    real_type theta_f = 2*to_rad;
+    real_type G_i = -15*to_rad;
+    real_type sigma_dot_max = 10*to_rad;
+    real_type G_f = -15*to_rad;
+    real_type phi_f = 0.5*to_rad;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -208,7 +208,7 @@ main() {
     // functions mapped on objects
 
     // Controls
-    // Control Penalty type: QUADRATIC, QUADRATIC2, PARABOLA, CUBIC, QUARTIC, BIPOWER
+    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
     // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
     GenericContainer & data_Controls = gc_data["Controls"];
     GenericContainer & data_u2Control = data_Controls["u2Control"];
@@ -240,8 +240,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HypersonicProblem3DOF_data.Mesh["s0"] = 0;
-HypersonicProblem3DOF_data.Mesh["segments"][0]["length"] = 1;
 HypersonicProblem3DOF_data.Mesh["segments"][0]["n"] = 400;
+HypersonicProblem3DOF_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
