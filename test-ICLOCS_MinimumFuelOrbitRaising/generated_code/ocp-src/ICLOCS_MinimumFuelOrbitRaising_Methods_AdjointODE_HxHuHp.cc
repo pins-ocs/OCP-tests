@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_AdjointODE.cc           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 15/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -166,13 +166,13 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_T];
-    real_type t4   = U__[iU_theta];
-    real_type t5   = cos(t4);
-    real_type t7   = mass(Q__[iQ_zeta]);
-    real_type t8   = 1.0 / t7;
-    real_type t13  = sin(t4);
-    result__[ 0   ] = -t13 * t2 * t8 * L__[iL_lambda3__xo] + t2 * t5 * t8 * L__[iL_lambda2__xo];
+    real_type t2   = U__[iU_theta];
+    real_type t6   = ModelPars[iM_T];
+    real_type t8   = cos(t2);
+    real_type t10  = mass(Q__[iQ_zeta]);
+    real_type t11  = 1.0 / t10;
+    real_type t16  = sin(t2);
+    result__[ 0   ] = -t11 * t16 * t6 * L__[iL_lambda3__xo] + t11 * t8 * t6 * L__[iL_lambda2__xo] + 2 * t2 * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
   }

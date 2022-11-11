@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_MinimumFuelOrbitRaising_Data.rb                         #
 #                                                                       #
-#  version: 1.0   date 10/11/2022                                       #
+#  version: 1.0   date 15/11/2022                                       #
 #                                                                       #
 #  Copyright (C) 2022                                                   #
 #                                                                       #
@@ -20,7 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tf = 3.32
+tf          = 3.32
+epsilon_max = 1.0
+epsilon     = epsilon_max
 
 mechatronix do |data|
 
@@ -76,7 +78,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
     # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
@@ -222,7 +224,7 @@ mechatronix do |data|
 
     # continuation parameters
     :ns_continuation_begin => 0,
-    :ns_continuation_end   => 0,
+    :ns_continuation_end   => 1,
   }
 
   #                                       _
@@ -257,6 +259,7 @@ mechatronix do |data|
 
     # Model Parameters
     :T         => 0.1405,
+    :epsilon   => epsilon,
     :theta_max => Math::PI,
 
     # Guess Parameters
@@ -269,6 +272,8 @@ mechatronix do |data|
     :md => 0.0749,
 
     # Continuation Parameters
+    :epsilon_max => epsilon_max,
+    :epsilon_min => 0.0,
 
     # Constraints Parameters
   }
@@ -315,8 +320,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => tf,
         :n      => 400.0,
+        :length => tf,
       },
     ],
   };

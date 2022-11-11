@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_Guess.cc                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 15/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -63,7 +63,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     X__[ iX_r  ] = 1;
     X__[ iX_vr ] = 0;
     X__[ iX_vt ] = 1;
-    L__[ iL_lambda3__xo ] = -0.1e-9;
+
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 3 );
@@ -270,7 +270,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     L__[1] = (LL__[1]+LR__[1])/2;
     L__[2] = (LL__[2]+LR__[2])/2;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_theta ] = atan2(-L__[iL_lambda2__xo], -L__[iL_lambda3__xo]);
+    UGUESS__[ iU_theta ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }

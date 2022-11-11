@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: ICLOCS_MinimumFuelOrbitRaising_ffi_structs.rb                     #
 #                                                                          #
-#  version: 1.0   date 10/11/2022                                          #
+#  version: 1.0   date 15/11/2022                                          #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
@@ -40,11 +40,17 @@ module ICLOCS_MinimumFuelOrbitRaising
   class ICLOCS_MinimumFuelOrbitRaising_model_params < FFI::Struct
     layout(
 
-      :T,         :data_t,
+      :T,           :data_t,
 
-      :md,        :data_t,
+      :epsilon,     :data_t,
 
-      :theta_max, :data_t,
+      :md,          :data_t,
+
+      :epsilon_max, :data_t,
+
+      :epsilon_min, :data_t,
+
+      :theta_max,   :data_t,
 
     )
 

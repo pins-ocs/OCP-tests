@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising.hh                              |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 15/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -108,7 +108,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   class ICLOCS_MinimumFuelOrbitRaising : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[3];
+    real_type ModelPars[6];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -130,6 +130,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     ICLOCS_MinimumFuelOrbitRaising const & operator = ( ICLOCS_MinimumFuelOrbitRaising const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuation_step_0( real_type s );
 
   public:
 

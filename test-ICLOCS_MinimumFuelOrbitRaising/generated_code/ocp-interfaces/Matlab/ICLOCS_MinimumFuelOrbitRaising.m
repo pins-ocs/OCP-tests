@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_MinimumFuelOrbitRaising.m                               %
 %                                                                       %
-%  version: 1.0   date 10/11/2022                                       %
+%  version: 1.0   date 15/11/2022                                       %
 %                                                                       %
 %  Copyright (C) 2022                                                   %
 %                                                                       %
@@ -562,11 +562,35 @@ classdef ICLOCS_MinimumFuelOrbitRaising < handle
       %
       res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'THETA' );
     end
+    function res = post_processing_THETA_max( self )
+      %
+      % Return the solution for the post processing variable: THETA_max
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'THETA_max' );
+    end
+    function res = post_processing_THETA_min( self )
+      %
+      % Return the solution for the post processing variable: THETA_min
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'THETA_min' );
+    end
     function res = post_processing_MASS( self )
       %
       % Return the solution for the post processing variable: MASS
       %
       res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'MASS' );
+    end
+    function res = post_processing_COSTHETA( self )
+      %
+      % Return the solution for the post processing variable: COSTHETA
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'COSTHETA' );
+    end
+    function res = post_processing_SINTHETA( self )
+      %
+      % Return the solution for the post processing variable: SINTHETA
+      %
+      res = ICLOCS_MinimumFuelOrbitRaising_Mex( 'get_solution', self.objectHandle, 'SINTHETA' );
     end
 
     % ---------------------------------------------------------------------

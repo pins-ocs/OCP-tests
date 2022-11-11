@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 15/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -51,6 +51,8 @@ main() {
 
     // Auxiliary values
     real_type tf = 3.32;
+    real_type epsilon_max = 1;
+    real_type epsilon = epsilon_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -61,7 +63,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -106,7 +108,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 0;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -133,6 +135,7 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["T"] = 0.1405;
+    data_Parameters["epsilon"] = epsilon;
     data_Parameters["theta_max"] = Mechatronix::m_pi;
 
     // Guess Parameters
@@ -145,6 +148,8 @@ main() {
     data_Parameters["md"] = 0.0749;
 
     // Continuation Parameters
+    data_Parameters["epsilon_max"] = epsilon_max;
+    data_Parameters["epsilon_min"] = 0;
 
     // Constraints Parameters
 
@@ -159,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["s0"] = 0;
-ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
+ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
 
 
     // alias for user object classes passed as pointers

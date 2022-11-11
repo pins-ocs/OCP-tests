@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 15/11/2022                                       |
  |                                                                       |
  |  Copyright (C) 2022                                                   |
  |                                                                       |
@@ -83,7 +83,11 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   char const *namesPostProcess[numPostProcess+1] = {
     "THETA",
+    "THETA_max",
+    "THETA_min",
     "MASS",
+    "COSTHETA",
+    "SINTHETA",
     nullptr
   };
 
@@ -93,7 +97,10 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   char const *namesModelPars[numModelPars+1] = {
     "T",
+    "epsilon",
     "md",
+    "epsilon_max",
+    "epsilon_min",
     "theta_max",
     nullptr
   };
@@ -141,8 +148,11 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
+    // continuation
+    this->ns_continuation_begin = 0;
+    this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
 
@@ -188,6 +198,21 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
       ),
       msg_level
     );
+    UTILS_ASSERT(
+      0 <= old_s && old_s < s && s <= 1,
+      "ICLOCS_MinimumFuelOrbitRaising::update_continuation( phase number={}, old_s={}, s={} ) "
+      "must be 0 <= old_s < s <= 1\n",
+      phase, old_s, s
+    );
+    switch ( phase ) {
+      case 0: continuation_step_0( s ); break;
+      default:
+        UTILS_ERROR(
+          "ICLOCS_MinimumFuelOrbitRaising::update_continuation( phase number={}, old_s={}, s={} )"
+          " phase N.{} is not defined\n",
+          phase, old_s, s, phase
+        );
+    }
   }
 
   /* --------------------------------------------------------------------------
