@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: ICLOCS_MinimumFuelOrbitRaising_ffi_structs.rb                     #
 #                                                                          #
-#  version: 1.0   date 15/11/2022                                          #
+#  version: 1.0   date 21/11/2022                                          #
 #                                                                          #
 #  Copyright (C) 2022                                                      #
 #                                                                          #
