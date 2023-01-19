@@ -1,0 +1,316 @@
+/*-----------------------------------------------------------------------*\
+ |  file: stirred_tank_Mex_class.cc                                      |
+ |                                                                       |
+ |  version: 1.0   date 20/1/2023                                        |
+ |                                                                       |
+ |  Copyright (C) 2023                                                   |
+ |                                                                       |
+ |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
+ |      Dipartimento di Ingegneria Industriale                           |
+ |      Universita` degli Studi di Trento                                |
+ |      Via Sommarive 9, I-38123, Trento, Italy                          |
+ |      email: enrico.bertolazzi@unitn.it                                |
+ |             francesco.biral@unitn.it                                  |
+ |             paolo.bosetti@unitn.it                                    |
+\*-----------------------------------------------------------------------*/
+
+
+#include "stirred_tank_Mex.hh"
+
+ProblemStorage::ProblemStorage(
+  std::string const & cname,
+  Console const     * console,
+  ThreadPoolBase    * TP
+)
+: MODEL_CLASS(cname,console,TP)
+// user defined Object instances (external)
+, mesh( "mesh" )
+{}
+
+ProblemStorage::~ProblemStorage() {}
+
+void
+ProblemStorage::done_setup() {
+  setup_ok     = true;
+  guess_ok     = false;
+  solve_ok     = false;
+  solution1_ok = false;
+  solution2_ok = false;
+  solution3_ok = false;
+}
+
+void
+ProblemStorage::done_guess() {
+  setup_ok     = true;
+  guess_ok     = true;
+  solve_ok     = false;
+  solution1_ok = false;
+  solution2_ok = false;
+  solution3_ok = false;
+}
+
+void
+ProblemStorage::done_solve() {
+  setup_ok     = true;
+  guess_ok     = true;
+  solve_ok     = true;
+  solution1_ok = false;
+  solution2_ok = false;
+  solution3_ok = false;
+}
+
+integer
+ProblemStorage::nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
+
+void
+ProblemStorage::read( string const & fname, GenericContainer & gc ) {
+  // redirect output
+  Mechatronix::STDOUT_redirect rd;
+  rd.start();
+  bool ok = Mechatronix::load_script( fname, gc );
+  if ( !ok ) mexPrintf( "Mechatronix::load_script file not found\n" );
+  rd.stop();
+  if ( rd.str().length() > 0 )
+    mexPrintf( "Mechatronix::load_script return:\n%s\n", rd.str().c_str() );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get(
+  char const    * msg,
+  mxArray const * prhs,
+  NodeQXL       & S
+) {
+
+  mwSize nQ, nX, nL;
+
+  mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
+  mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
+  mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
+  mxArray const * mx_L       = mxGetField( prhs, 0, "lambda"    );
+
+  // -------------------
+  S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
+  UTILS_ASSERT(
+    S.i_segment >= 0 && S.i_segment < this->num_segments(),
+    "{} i_segment = {} expected to be in [0,{})\n",
+    msg, S.i_segment, this->num_segments()
+  );
+
+  // -------------------
+  S.q = Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "{} S.q", msg ) );
+  UTILS_ASSERT(
+    nQ == this->dim_Q(),
+    "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
+    msg, nQ, this->dim_Q()
+  );
+
+  // -------------------
+  S.x = Utils::mex_vector_pointer( mx_X, nX, fmt::format( "{} S.x", msg ) );
+  UTILS_ASSERT(
+    nX == this->dim_X(),
+    "{} |x_L| = {} expected to be {}\n",
+    msg, nX, this->dim_X()
+  );
+
+  // -------------------
+  S.lambda = Utils::mex_vector_pointer( mx_L, nL, fmt::format( "{} S.lambda", msg ) );
+  UTILS_ASSERT(
+    nL == this->dim_X(),
+    "{} |lambda_L| = {} expected to be {}\n",
+    msg, nL, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get(
+  char const    * msg,
+  mxArray const * prhs,
+  NodeQX        & S
+) {
+
+  mwSize nQ, nX, nL;
+
+  mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
+  mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
+  mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
+
+  // -------------------
+  S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
+  UTILS_ASSERT(
+    S.i_segment >= 0 && S.i_segment < this->num_segments(),
+    "{} i_segment = {} expected to be in [0,{})\n",
+    msg, S.i_segment, this->num_segments()
+  );
+
+  // -------------------
+  S.q = Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "{} S.q", msg ) );
+  UTILS_ASSERT(
+    nQ == this->dim_Q(),
+    "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
+    msg, nQ, this->dim_Q()
+  );
+
+  // -------------------
+  S.x = Utils::mex_vector_pointer( mx_X, nX, fmt::format( "{} S.x", msg ) );
+  UTILS_ASSERT(
+    nX == this->dim_X(),
+    "{} |x_L| = {} expected to be {}\n",
+    msg, nX, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_Q(
+  char const       msg[],
+  mxArray const  * mx_q,
+  Q_const_p_type & Q
+) {
+  mwSize nQ;
+  Q.set( Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "get_Q {}", msg ) ) );
+  UTILS_ASSERT(
+    nQ == this->dim_Q(),
+    "{} |q| = {} expected to be {}\n",
+    msg, nQ, this->dim_Q()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_X(
+  char const       msg[],
+  mxArray const  * mx_X,
+  X_const_p_type & X
+) {
+  mwSize nX;
+  X.set( Utils::mex_vector_pointer( mx_X, nX, fmt::format( "get_X {}", msg ) ) );
+  UTILS_ASSERT(
+    nX == this->dim_X(),
+    "{} |x| = {} expected to be {}\n",
+    msg, nX, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_L(
+  char const       msg[],
+  mxArray const  * mx_L,
+  L_const_p_type & L
+) {
+  mwSize nL;
+  L.set( Utils::mex_vector_pointer( mx_L, nL, fmt::format( "get_L {}", msg ) ) );
+  UTILS_ASSERT(
+    nL == this->dim_X(),
+    "{} |lambda| = {} expected to be {}\n",
+    msg, nL, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_U(
+  char const       msg[],
+  mxArray const  * mx_U,
+  U_const_p_type & U
+) {
+  mwSize nU;
+  U.set( Utils::mex_vector_pointer( mx_U, nU, fmt::format( "get_U {}", msg ) ) );
+  UTILS_ASSERT(
+    nU == this->dim_U(),
+    "{} |U| = {} expected to be {}\n",
+    msg, nU, this->dim_U()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_P(
+  char const       msg[],
+  mxArray const  * mx_P,
+  P_const_p_type & P
+) {
+  mwSize nP;
+  P.set( Utils::mex_vector_pointer( mx_P, nP, fmt::format( "get_P {}", msg ) ) );
+  UTILS_ASSERT(
+    nP == this->dim_Pars(),
+    "{} |P| = {} expected to be {}\n",
+    msg, nP, this->dim_Pars()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_V(
+  char const       msg[],
+  mxArray const  * mx_V,
+  V_const_p_type & V
+) {
+  mwSize nV;
+  V.set( Utils::mex_vector_pointer( mx_V, nV, fmt::format( "get_V {}", msg ) ) );
+  UTILS_ASSERT(
+    nV == this->dim_X(),
+    "{} |V| = {} expected to be {}\n",
+    msg, nV, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_OMEGA(
+  char const           msg[],
+  mxArray const      * mx_OMEGA,
+  OMEGA_const_p_type & OMEGA
+) {
+  mwSize nOMEGA;
+  OMEGA.set( Utils::mex_vector_pointer( mx_OMEGA, nOMEGA, fmt::format( "get_OMEGA {}", msg ) ) );
+  UTILS_ASSERT(
+    nOMEGA == this->dim_BC(),
+    "{} |OMEGA| = {} expected to be {}\n",
+    msg, nOMEGA, this->dim_BC()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_OMEGA_full(
+  char const                msg[],
+  mxArray const           * mx_OMEGA_full,
+  OMEGA_full_const_p_type & OMEGA_full
+) {
+  mwSize nOMEGA_full;
+  OMEGA_full.set( Utils::mex_vector_pointer( mx_OMEGA_full, nOMEGA_full, fmt::format( "get_OMEGA_full {}", msg ) ) );
+  UTILS_ASSERT(
+    nOMEGA_full == this->dim_BC(),
+    "{} |OMEGA_full| = {} expected to be {}\n",
+    msg, nOMEGA_full, this->dim_BC()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_ptr(
+  char const       msg[],
+  mxArray const  * mx_ptr,
+  real_const_ptr & ptr
+) {
+  mwSize n;
+  ptr = Utils::mex_vector_pointer( mx_ptr, n, fmt::format( "get_ptr {}", msg ) );
+}
+
+// --------------------------------------------------------------------------
+
+// EOF: stirred_tank_Mex_class.cc
