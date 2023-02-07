@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_UserFunctions.cc                                 |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -42,19 +42,6 @@ using Mechatronix::MeshStd;
 #pragma warning( disable : 4189 )
 #endif
 
-// map user defined functions and objects with macros
-#define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
-#define ALIAS_Tpositive_D(__t1) Tpositive.D( __t1)
-#define ALIAS_aControl_D_3(__t1, __t2, __t3) aControl.D_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2(__t1, __t2, __t3) aControl.D_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1(__t1, __t2, __t3) aControl.D_1( __t1, __t2, __t3)
-#define ALIAS_aControl_D_3_3(__t1, __t2, __t3) aControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_3(__t1, __t2, __t3) aControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_2(__t1, __t2, __t3) aControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_3(__t1, __t2, __t3) aControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_2(__t1, __t2, __t3) aControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_1(__t1, __t2, __t3) aControl.D_1_1( __t1, __t2, __t3)
-
 
 namespace BrakeDefine {
   using std::acos;
@@ -88,6 +75,208 @@ namespace BrakeDefine {
   using std::tan;
   using std::tanh;
   using std::trunc;
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  real_type
+  Brake::guess_x( real_type xo__s ) const {
+    real_type result__ = ModelPars[iM_Tguess] * xo__s;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_x( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_x_D( real_type xo__s ) const {
+    real_type result__ = ModelPars[iM_Tguess];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_x_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_x_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_x_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_v( real_type xo__s ) const {
+    real_type result__ = ModelPars[iM_v_i];
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_v( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_v_D( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_v_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_v_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_v_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda1( real_type xo__s ) const {
+    real_type result__ = 1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda1( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda1_D( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda1_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda1_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda1_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda2( real_type xo__s ) const {
+    real_type result__ = 1 - xo__s;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda2( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda2_D( real_type xo__s ) const {
+    real_type result__ = -1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda2_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_lambda2_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_lambda2_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_u( real_type xo__s ) const {
+    real_type result__ = -1;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_u( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_u_D( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_u_D( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
+  real_type
+  Brake::guess_u_DD( real_type xo__s ) const {
+    real_type result__ = 0;
+    if ( m_debug ) {
+      UTILS_ASSERT(
+        Utils::is_finite(result__),
+        "UserFunctions_guess_u_DD( s={} ) return {}\n",
+        xo__s, result__
+      );
+    }
+    return result__;
+  }
+
 }
 
 // EOF: Brake_Methods_UserFunctions.cc

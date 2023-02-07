@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Mex.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -49,7 +49,7 @@ using namespace MechatronixLoad;
 #define GET_ARG_P(ARG)                                                          \
   mwSize nP;                                                                    \
   string msg_nP = fmt::format( "{} argument pars", CMD );                       \
-  P_const_pointer_type P(Utils::mex_vector_pointer( ARG, nP, msg_nP.c_str() )); \
+  P_const_p_type P(Utils::mex_vector_pointer( ARG, nP, msg_nP.c_str() ));       \
   UTILS_MEX_ASSERT(                                                             \
     nP == this->dim_Pars(),                                                     \
     "{} |pars| = {} expected to be {}\n", CMD, nP, this->dim_Pars()             \
@@ -58,7 +58,7 @@ using namespace MechatronixLoad;
 #define GET_ARG_U(ARG)                                                          \
   mwSize nU;                                                                    \
   string msg_nU = fmt::format( "{} argument pars", CMD );                       \
-  U_const_pointer_type U(Utils::mex_vector_pointer( ARG, nU, msg_nU.c_str() )); \
+  U_const_p_type U(Utils::mex_vector_pointer( ARG, nU, msg_nU.c_str() ));       \
   UTILS_MEX_ASSERT(                                                             \
     nU == this->dim_U(),                                                        \
     "{} |U| = {} expected to be {}\n", CMD, nU, this->dim_U()                   \
@@ -67,7 +67,7 @@ using namespace MechatronixLoad;
 #define GET_ARG_OMEGA(ARG)                                                              \
   mwSize nO;                                                                            \
   string msg_nO = fmt::format( "{} argument pars", CMD );                               \
-  OMEGA_const_pointer_type Omega(Utils::mex_vector_pointer( ARG, nO, msg_nO.c_str() )); \
+  OMEGA_const_p_type Omega(Utils::mex_vector_pointer( ARG, nO, msg_nO.c_str() )); \
   UTILS_MEX_ASSERT(                                                                     \
     nO == this->num_active_BC(),                                                        \
     "{} |Omega| = {} expected to be {}\n", CMD, nO, this->num_active_BC()               \
@@ -76,7 +76,7 @@ using namespace MechatronixLoad;
 #define GET_ARG_OMEGA_FULL(ARG)                                        \
   mwSize nOmega;                                                       \
   string msg_Omega = fmt::format( "{} argument pars", CMD );           \
-  OMEGA_full_const_pointer_type Omega( Utils::mex_vector_pointer(      \
+  OMEGA_full_const_p_type Omega( Utils::mex_vector_pointer(      \
     ARG, nOmega,  msg_Omega.c_str()                                    \
   ));                                                                  \
   UTILS_MEX_ASSERT(                                                    \
@@ -84,13 +84,13 @@ using namespace MechatronixLoad;
     "{} |Omega| = {} expected to be {}\n", CMD, nOmega, this->dim_BC() \
   );
 
-#define GET_ARG_V(ARG)                                                          \
-  mwSize nV;                                                                    \
-  string msg_nV = fmt::format( "{} argument pars", CMD );                       \
-  V_const_pointer_type V(Utils::mex_vector_pointer( ARG, nV, msg_nV.c_str() )); \
-  UTILS_MEX_ASSERT(                                                             \
-    nV == this->dim_X(),                                                        \
-    "{} |V| = {} expected to be {}\n", CMD, nV, this->dim_X()                   \
+#define GET_ARG_V(ARG)                                                    \
+  mwSize nV;                                                              \
+  string msg_nV = fmt::format( "{} argument pars", CMD );                 \
+  V_const_p_type V(Utils::mex_vector_pointer( ARG, nV, msg_nV.c_str() )); \
+  UTILS_MEX_ASSERT(                                                       \
+    nV == this->dim_X(),                                                  \
+    "{} |V| = {} expected to be {}\n", CMD, nV, this->dim_X()             \
   );
 
 #define RETURN_SPARSE(MATNAME,...)                                    \
@@ -145,8 +145,8 @@ public:
 
   ProblemStorage(
     std::string const & cname,
-    integer             n_threads,
-    Console const *     console
+    Console const     * console,
+    ThreadPoolBase    * TP
   );
 
   ~ProblemStorage();
@@ -188,7 +188,7 @@ public:
   void do_get_solution2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_solution3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_ocp_data( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_init_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_F( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_JF( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
@@ -198,29 +198,34 @@ public:
   void do_unpack( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_unpack_for_direct( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_estimate_multipliers( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_ac( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_abc( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_hc( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_u( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_rhs_ode( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eta( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_nu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_Hxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_Hu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_LT( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_JP( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_JU( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_LTargs( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Jx( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Ju( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Jp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_bc( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_jump( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_lagrange_target( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DlagrangeDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_mayer_target( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DmayerDxxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_fd_BC( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_fd_ode( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_fd_ode2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_fd_int( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_mesh_functions( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_nodes( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_node_to_segment( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DacDxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DabcDxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DhcDxlxlop( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DuDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
@@ -232,85 +237,170 @@ public:
   void do_DetaDxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DnuDxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DnuDxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DHxpDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DHxpDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DHxpDxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DHxpDxlpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DjumpDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DjumpDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DLTargsDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DLTargsDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DJPDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DJPDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DLTDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DLTDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DJUDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DJUDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTargsD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTargsD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DJPDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DJPDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JPD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JPD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DLTDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DLTDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DJUDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DJUDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JUD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JUD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DbcDxxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DbcDxxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2bcD2xxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2bcD2xxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DjumpDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DjumpDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2lagrangeD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2lagrangeD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2mayerD2xxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2mayerD2xxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_BCDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_BCDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_Dfd_odeDxxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_Dfd_odeDxxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2fd_odeD2xxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2fd_odeD2xxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_ode2Dxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_ode2Dxlxlpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_intDxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_intDxlxlpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
   void read( string const & fname, GenericContainer & gc );
 
   // --------------------------------------------------------------------------
 
   void
-  get_LR2(
+  get(
     char const      msg[],
-    int             nrhs,
-    mxArray const * prhs[],
-    NodeType2     & L,
-    NodeType2     & R
+    mxArray const * prhs,
+    NodeQX        & N
   );
 
   // --------------------------------------------------------------------------
 
   void
-  get_N(
+  get(
     char const      msg[],
-    int             nrhs,
-    mxArray const * prhs[],
-    NodeType2     & N
+    mxArray const * prhs,
+    NodeQXL       & N
   );
 
   // --------------------------------------------------------------------------
 
   void
-  get_qx(
-    char const      msg[],
-    int             nrhs,
-    mxArray const * prhs[],
-    NodeType      & N
+  get_Q(
+    char const       msg[],
+    mxArray const  * prhs,
+    Q_const_p_type & Q
   );
 
   // --------------------------------------------------------------------------
 
   void
-  get_LR(
-    char const      msg[],
-    int             nrhs,
-    mxArray const * prhs[],
-    NodeType      & L,
-    NodeType      & R
+  get_X(
+    char const       msg[],
+    mxArray const  * prhs,
+    X_const_p_type & X
   );
 
   // --------------------------------------------------------------------------
 
+  void
+  get_L(
+    char const       msg[],
+    mxArray const  * prhs,
+    L_const_p_type & L
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_U(
+    char const       msg[],
+    mxArray const  * prhs,
+    U_const_p_type & U
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_P(
+    char const       msg[],
+    mxArray const  * prhs,
+    P_const_p_type & P
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_V(
+    char const       msg[],
+    mxArray const  * prhs,
+    V_const_p_type & V
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_OMEGA(
+    char const           msg[],
+    mxArray const      * prhs,
+    OMEGA_const_p_type & OMEGA
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_OMEGA_full(
+    char const                msg[],
+    mxArray const           * prhs,
+    OMEGA_full_const_p_type & OMEGA_full
+  );
+
+  // --------------------------------------------------------------------------
+
+  void
+  get_ptr(
+    char const       msg[],
+    mxArray const  * prhs,
+    real_const_ptr & ptr
+  );
+
+  // --------------------------------------------------------------------------
+
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  void do_guess_x( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_x_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_x_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_v( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_v_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_v_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda1( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda1_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda1_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda2_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_lambda2_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_u( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_u_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_u_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
 };
 

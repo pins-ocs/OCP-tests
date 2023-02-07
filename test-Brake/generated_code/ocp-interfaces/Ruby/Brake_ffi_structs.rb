@@ -3,9 +3,9 @@
 #                                                                          #
 #  file: Brake_ffi_structs.rb                                              #
 #                                                                          #
-#  version: 1.0   date 11/11/2022                                          #
+#  version: 1.0   date 8/2/2023                                            #
 #                                                                          #
-#  Copyright (C) 2022                                                      #
+#  Copyright (C) 2023                                                      #
 #                                                                          #
 #      Enrico Bertolazzi and Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                              #
@@ -40,11 +40,17 @@ module Brake
   class Brake_model_params < FFI::Struct
     layout(
 
-      :v_f, :data_t,
+      :Tguess,   :data_t,
 
-      :v_i, :data_t,
+      :epsilon,  :data_t,
 
-      :x_i, :data_t,
+      :v_f,      :data_t,
+
+      :v_i,      :data_t,
+
+      :x_i,      :data_t,
+
+      :epsilon2, :data_t,
 
     )
 
@@ -76,18 +82,12 @@ module Brake
   class Brake_constraints_params < FFI::Struct
     layout(
       # LT constraints
-      :TpositiveSubType, :index_t,
-      :TpositiveEpsilon, :data_t,
-      :TpositiveTolerance, :data_t,
 
       # 1D constraints
 
       # 2D constraints
 
       # Controls
-      :aControlType,      :index_t,
-      :aControlEpsilon,   :data_t,
-      :aControlTolerance, :data_t,
     )
 
     def initialize

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -129,8 +129,11 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
+    data_Parameters["epsilon"] = 0.1;
+    data_Parameters["epsilon2"] = 0;
 
     // Guess Parameters
+    data_Parameters["Tguess"] = 1;
 
     // Boundary Conditions
     data_Parameters["v_f"] = 0;
@@ -147,35 +150,17 @@ main() {
 
     // functions mapped on objects
 
-    // Controls
-    // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
-    // Control Barrier type: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
-    GenericContainer & data_Controls = gc_data["Controls"];
-    GenericContainer & data_aControl = data_Controls["aControl"];
-    data_aControl["type"]      = "LOGARITHMIC";
-    data_aControl["epsilon"]   = 0.01;
-    data_aControl["tolerance"] = 0.01;
+    // Controls: No penalties or barriers constraint defined
 
-
-
-    // ConstraintLT
-    // Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-    // Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    GenericContainer & data_Constraints = gc_data["Constraints"];
-    // PenaltyBarrier1DLessThan
-    GenericContainer & data_Tpositive = data_Constraints["Tpositive"];
-    data_Tpositive["subType"]   = "PENALTY_REGULAR";
-    data_Tpositive["epsilon"]   = 0.01;
-    data_Tpositive["tolerance"] = 0.01;
-    data_Tpositive["active"]    = true;
+    // ConstraintLT: none defined
     // Constraint1D: none defined
     // Constraint2D: none defined
 
     // User defined classes initialization
     // User defined classes: M E S H
 Brake_data.Mesh["s0"] = 0;
+Brake_data.Mesh["segments"][0]["n"] = 10;
 Brake_data.Mesh["segments"][0]["length"] = 1;
-Brake_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -237,7 +222,7 @@ Brake_data.Mesh["segments"][0]["n"] = 400;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

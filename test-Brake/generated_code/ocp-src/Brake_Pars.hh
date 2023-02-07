@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Pars.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -19,18 +19,18 @@
 #define BRAKEPARS_DOT_HH
 
 #define numBc                    3
-#define numModelPars             3
-#define numConstraintLT          1
+#define numModelPars             6
+#define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
-#define numConstraintU           1
+#define numConstraintU           0
 #define numXvars                 2
 #define numLvars                 2
 #define numUvars                 1
 #define numOMEGAvars             3
 #define numQvars                 1
 #define numPvars                 1
-#define numPostProcess           2
+#define numPostProcess           0
 #define numIntegratedPostProcess 0
 #define numContinuationSteps     0
 
@@ -52,9 +52,12 @@
 #define iP_T           0
 
 // ModelPars Maps
-#define iM_v_f         0
-#define iM_v_i         1
-#define iM_x_i         2
+#define iM_Tguess      0
+#define iM_epsilon     1
+#define iM_v_f         2
+#define iM_v_i         3
+#define iM_x_i         4
+#define iM_epsilon2    5
 
 #endif
 

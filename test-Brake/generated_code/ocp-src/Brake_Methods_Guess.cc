@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_Guess.cc                                         |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -34,19 +34,6 @@
 #pragma warning( disable : 4189 )
 #endif
 
-// map user defined functions and objects with macros
-#define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
-#define ALIAS_Tpositive_D(__t1) Tpositive.D( __t1)
-#define ALIAS_aControl_D_3(__t1, __t2, __t3) aControl.D_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2(__t1, __t2, __t3) aControl.D_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1(__t1, __t2, __t3) aControl.D_1( __t1, __t2, __t3)
-#define ALIAS_aControl_D_3_3(__t1, __t2, __t3) aControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_3(__t1, __t2, __t3) aControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_2(__t1, __t2, __t3) aControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_3(__t1, __t2, __t3) aControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_2(__t1, __t2, __t3) aControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_1(__t1, __t2, __t3) aControl.D_1_1( __t1, __t2, __t3)
-
 
 using namespace std;
 
@@ -61,24 +48,31 @@ namespace BrakeDefine {
   \*/
 
   void
-  Brake::p_guess_eval( P_pointer_type P__ ) const {
-    P__[ iP_T ] = 1;
+  Brake::p_guess_eval( P_p_type P__ ) const {
+    P__[ iP_T ] = ModelPars[iM_Tguess];
     if ( m_debug )
       Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
   }
 
   void
   Brake::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    X__[ iX_x ] = 0;
-    X__[ iX_v ] = 1;
-
+    { // open block to avoid temporary clash
+      real_type t1   = Q__[iQ_zeta];
+      X__[ iX_x ] = guess_x(t1);
+      X__[ iX_v ] = guess_v(t1);
+    }
+    { // open block to avoid temporary clash
+      real_type t1   = Q__[iQ_zeta];
+      L__[ iL_lambda1__xo ] = guess_lambda1(t1);
+      L__[ iL_lambda2__xo ] = guess_lambda2(t1);
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 2 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 2 );
@@ -211,7 +205,7 @@ namespace BrakeDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  Brake::p_check( P_const_pointer_type P__ ) const {
+  Brake::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -219,23 +213,34 @@ namespace BrakeDefine {
 
   bool
   Brake::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  Brake::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  Brake::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool ok = true;
+
+    return ok;
   }
 
   /*\
@@ -252,34 +257,26 @@ namespace BrakeDefine {
 
   void
   Brake::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    U_p_type        UGUESS__
   ) const {
     integer i_segment = LEFT__.i_segment;
-
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-
-    real_type Q__[1];
-    real_type X__[2];
-    real_type L__[2];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type QM__[1], XM__[2], LM__[2];
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_a ] = aControl.solve(-L__[iL_lambda2__xo] * P__[iP_T], -1, 1);
+    UGUESS__[ iU_a ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
@@ -294,18 +291,26 @@ namespace BrakeDefine {
 
   bool
   Brake::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    U_const_p_type  UM__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    // controls range check
-    ok = ok && aControl.check_range(U__[iU_a], -1, 1);
+    integer i_segment = LEFT__.i_segment;
+    real_const_ptr QL__ = LEFT__.q;
+    real_const_ptr XL__ = LEFT__.x;
+    real_const_ptr LL__ = LEFT__.lambda;
+    real_const_ptr QR__ = RIGHT__.q;
+    real_const_ptr XR__ = RIGHT__.x;
+    real_const_ptr LR__ = RIGHT__.lambda;
+    real_type QM__[1], XM__[2], LM__[2];
+    QM__[0] = (QL__[0]+QR__[0])/2;
+    XM__[0] = (XL__[0]+XR__[0])/2;
+    XM__[1] = (XL__[1]+XR__[1])/2;
+    LM__[0] = (LL__[0]+LR__[0])/2;
+    LM__[1] = (LL__[1]+LR__[1])/2;
+    // no controls to check
     return ok;
   }
 

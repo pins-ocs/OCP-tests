@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_ODE.cc                                           |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -41,19 +41,6 @@ using Mechatronix::MeshStd;
 #pragma warning( disable : 4189 )
 #endif
 
-// map user defined functions and objects with macros
-#define ALIAS_Tpositive_DD(__t1) Tpositive.DD( __t1)
-#define ALIAS_Tpositive_D(__t1) Tpositive.D( __t1)
-#define ALIAS_aControl_D_3(__t1, __t2, __t3) aControl.D_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2(__t1, __t2, __t3) aControl.D_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1(__t1, __t2, __t3) aControl.D_1( __t1, __t2, __t3)
-#define ALIAS_aControl_D_3_3(__t1, __t2, __t3) aControl.D_3_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_3(__t1, __t2, __t3) aControl.D_2_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_2_2(__t1, __t2, __t3) aControl.D_2_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_3(__t1, __t2, __t3) aControl.D_1_3( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_2(__t1, __t2, __t3) aControl.D_1_2( __t1, __t2, __t3)
-#define ALIAS_aControl_D_1_1(__t1, __t2, __t3) aControl.D_1_1( __t1, __t2, __t3)
-
 
 namespace BrakeDefine {
 
@@ -68,10 +55,10 @@ namespace BrakeDefine {
 
   void
   Brake::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -102,10 +89,10 @@ namespace BrakeDefine {
 
   void
   Brake::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -142,9 +129,9 @@ namespace BrakeDefine {
 
   void
   Brake::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -170,9 +157,9 @@ namespace BrakeDefine {
 
   void
   Brake::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -198,9 +185,9 @@ namespace BrakeDefine {
 
   void
   Brake::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     // EMPTY!
   }
@@ -218,10 +205,10 @@ namespace BrakeDefine {
 
   void
   Brake::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -246,10 +233,10 @@ namespace BrakeDefine {
 
   void
   Brake::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

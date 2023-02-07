@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake.cc                                                       |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -79,8 +79,6 @@ namespace BrakeDefine {
   };
 
   char const *namesPostProcess[numPostProcess+1] = {
-    "aControl",
-    "Tpositive",
     nullptr
   };
 
@@ -89,14 +87,16 @@ namespace BrakeDefine {
   };
 
   char const *namesModelPars[numModelPars+1] = {
+    "Tguess",
+    "epsilon",
     "v_f",
     "v_i",
     "x_i",
+    "epsilon2",
     nullptr
   };
 
   char const *namesConstraintLT[numConstraintLT+1] = {
-    "Tpositive",
     nullptr
   };
 
@@ -109,7 +109,6 @@ namespace BrakeDefine {
   };
 
   char const *namesConstraintU[numConstraintU+1] = {
-    "aControl",
     nullptr
   };
 
@@ -133,9 +132,7 @@ namespace BrakeDefine {
   )
   : Discretized_Indirect_OCP( name, console, TP )
   // Controls
-  , aControl("aControl")
   // Constraints LT
-  , Tpositive("Tpositive")
   // Constraints 1D
   // Constraints 2D
   // User classes
@@ -222,7 +219,7 @@ namespace BrakeDefine {
   }
 
   void
-  Brake::setup_parameters( real_type const Pars[] ) {
+  Brake::setup_parameters( real_const_ptr Pars ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -236,18 +233,6 @@ namespace BrakeDefine {
   */
   void
   Brake::setup_classes( GenericContainer const & gc_data ) {
-    UTILS_ASSERT0(
-      gc_data.exists("Constraints"),
-      "Brake::setup_classes: Missing key `Parameters` in data\n"
-    );
-    GenericContainer const & gc = gc_data("Constraints");
-    // Initialize Constraints 1D
-    UTILS_ASSERT0(
-      gc.exists("Tpositive"),
-      "in Brake::setup_classes(gc) missing key: ``Tpositive''\n"
-    );
-    Tpositive.setup( gc("Tpositive") );
-
   }
 
   /* --------------------------------------------------------------------------
@@ -287,14 +272,7 @@ namespace BrakeDefine {
   */
   void
   Brake::setup_controls( GenericContainer const & gc_data ) {
-    // initialize Control penalties
-    UTILS_ASSERT0(
-      gc_data.exists("Controls"),
-      "Brake::setup_classes: Missing key `Controls` in data\n"
-    );
-    GenericContainer const & gc = gc_data("Controls");
-    aControl.setup( gc("aControl") );
-    // setup iterative solver
+    // no Control penalties, setup only iterative solver
     this->setup_control_solver( gc_data );
   }
 
@@ -335,23 +313,18 @@ namespace BrakeDefine {
   Brake::info_classes() const {
     int msg_level = 3;
 
-    m_console->message("\nControls\n",msg_level);
-    m_console->message( aControl.info(),msg_level);
-
-    m_console->message("\nConstraints LT\n",msg_level);
-    m_console->message( Tpositive.info(),msg_level);
-
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);
     m_console->message( pMesh->info(),msg_level);
 
-    m_console->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
       m_console->message(
-        fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
+        fmt::format("  {:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
     }
+    m_console->message("MODEL PARAMETERS END\n",msg_level);
 
   }
 
@@ -384,9 +357,11 @@ namespace BrakeDefine {
     // Begin: User Setup Code
     // End: User Setup Code
 
+    int msg_level = 2;
+    m_console->message( this->info(), msg_level );
+
     this->info_BC();
     this->info_classes();
-    // this->info(); stampato dopo GUESS
   }
 
   /* --------------------------------------------------------------------------

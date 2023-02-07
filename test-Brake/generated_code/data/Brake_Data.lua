@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,8 +32,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -45,11 +43,14 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
   ControlsCheck         = true,
@@ -58,7 +59,7 @@ content = {
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -248,8 +249,11 @@ content = {
   Parameters = {
 
     -- Model Parameters
+    epsilon  = 0.1,
+    epsilon2 = 0.0,
 
     -- Guess Parameters
+    Tguess = 1.0,
 
     -- Boundary Conditions
     v_f = 0.0,
@@ -269,30 +273,10 @@ content = {
   MappedObjects = {
   },
 
-  -- Controls
-  -- Penalty subtype: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
-  -- Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
-  Controls = {
-    aControl = {
-      type      = "LOGARITHMIC",
-      epsilon   = 0.01,
-      tolerance = 0.01,
-    },
-  },
+  -- Controls: No penalties or barriers constraint defined
 
   Constraints = {
-  --  _  _____
-  -- | ||_   _|
-  -- | |__| |
-  -- |____|_|
-  -- Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  -- Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-    -- PenaltyBarrier1DLessThan
-    TpositivesubType   = "PENALTY_REGULAR",
-    Tpositiveepsilon   = 0.01,
-    Tpositivetolerance = 0.01,
-    Tpositiveactive    = true
-
+  -- ConstraintLT: none defined
   -- Constraint1D: none defined
   -- Constraint2D: none defined
   },
@@ -305,8 +289,8 @@ content = {
     segments = {
       
       {
+        n      = 10.0,
         length = 1.0,
-        n      = 400.0,
       },
     },
   },

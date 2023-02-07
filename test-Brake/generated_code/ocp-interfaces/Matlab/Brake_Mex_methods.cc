@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Mex.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -42,7 +42,7 @@ ProblemStorage::do_read(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('read',obj,filename): "
+  #define CMD MODEL_NAME "_Mex( 'read', obj, filename ): "
   CHECK_IN_OUT(3,1);
   UTILS_MEX_ASSERT(
     mxIsChar(arg_in_2),
@@ -68,7 +68,7 @@ ProblemStorage::do_setup(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('setup',obj,struct_or_filename): "
+  #define CMD MODEL_NAME "_Mex( 'setup', obj, struct_or_filename ): "
   CHECK_IN_OUT(3,0);
   gc_data.clear(); // clear data for rewrite it
   if ( mxIsStruct(arg_in_2) ) { // read from file
@@ -109,7 +109,7 @@ ProblemStorage::do_remesh(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('remesh',obj,new_mesh): "
+  #define CMD MODEL_NAME "_Mex( 'remesh', obj, new_mesh ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'remesh'" );
   CHECK_IN_OUT( 3, 0 );
   GenericContainer & gc_mesh = gc_data["Mesh"];
@@ -147,7 +147,7 @@ ProblemStorage::do_set_guess(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('set_guess',obj[,userguess]): "
+  #define CMD MODEL_NAME "_Mex( 'set_guess', obj[,userguess] ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'set_guess'" );
   UTILS_MEX_ASSERT( nrhs == 2 || nrhs == 3, CMD "Expected 2 or 3 input argument(s), nrhs = {}\n", nrhs );
   CHECK_OUT( 0 );
@@ -188,7 +188,7 @@ ProblemStorage::do_get_guess(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_guess',obj): "
+  #define CMD MODEL_NAME "_Mex( 'get_guess', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'get_guess'" );
   CHECK_IN_OUT(2,1);
   GenericContainer_to_mxArray( gc_data("Guess"), arg_out_0 );
@@ -223,7 +223,7 @@ ProblemStorage::do_solve(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('solve',obj[,timeout]): "
+  #define CMD MODEL_NAME "_Mex( 'solve', obj[,timeout] ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'solve'" );
   UTILS_MEX_ASSERT( nrhs == 2 || nrhs == 3, CMD "Expected 2 or 3 argument(s), nrhs = {}", nrhs );
   CHECK_OUT( 1 );
@@ -250,24 +250,24 @@ ProblemStorage::do_dims(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dims',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dims', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dims'" );
   CHECK_IN_OUT( 2, 1 );
   GenericContainer gc;
-  gc["dim_q"]             = MODEL_CLASS::dim_Q();
-  gc["dim_x"]             = MODEL_CLASS::dim_X();
-  gc["dim_u"]             = MODEL_CLASS::dim_U();
-  gc["dim_pars"]          = MODEL_CLASS::dim_Pars();
-  gc["num_defined_bc"]    = MODEL_CLASS::dim_BC();
-  gc["num_active_BC"]     = MODEL_CLASS::num_active_BC();
-  gc["dim_full_bc"]       = 2*MODEL_CLASS::dim_X()+MODEL_CLASS::num_active_BC();
-  gc["num_nodes"]         = MODEL_CLASS::num_nodes();
-  gc["neq"]               = MODEL_CLASS::num_equations();
-  gc["num_equations"]     = MODEL_CLASS::num_equations();
-  gc["num_segments"]      = MODEL_CLASS::num_segments();
-  gc["dim_post"]          = MODEL_CLASS::dim_Post();
-  gc["dim_Ipost"]         = MODEL_CLASS::dim_Ipost();
-  gc["dim_ineq"]          = MODEL_CLASS::LTargs_numEqns();
+  gc["dim_q"]          = MODEL_CLASS::dim_Q();
+  gc["dim_x"]          = MODEL_CLASS::dim_X();
+  gc["dim_u"]          = MODEL_CLASS::dim_U();
+  gc["dim_pars"]       = MODEL_CLASS::dim_Pars();
+  gc["num_defined_bc"] = MODEL_CLASS::dim_BC();
+  gc["num_active_BC"]  = MODEL_CLASS::num_active_BC();
+  gc["dim_full_bc"]    = 2*MODEL_CLASS::dim_X()+MODEL_CLASS::num_active_BC();
+  gc["num_nodes"]      = MODEL_CLASS::num_nodes();
+  gc["neq"]            = MODEL_CLASS::num_equations();
+  gc["num_equations"]  = MODEL_CLASS::num_equations();
+  gc["num_segments"]   = MODEL_CLASS::num_segments();
+  gc["dim_post"]       = MODEL_CLASS::dim_Post();
+  gc["dim_Ipost"]      = MODEL_CLASS::dim_Ipost();
+  gc["dim_ineq"]       = MODEL_CLASS::LTargs_numEqns();
 
   GenericContainer_to_mxArray( gc, arg_out_0 );
   #undef CMD
@@ -279,7 +279,7 @@ ProblemStorage::do_dim_Q(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_Q',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_Q', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_Q'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_Q() );
@@ -292,7 +292,7 @@ ProblemStorage::do_dim_X(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_X',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_X', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_X'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_X() );
@@ -305,7 +305,7 @@ ProblemStorage::do_dim_Pars(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_Pars',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_Pars', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_Pars'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_Pars() );
@@ -318,7 +318,7 @@ ProblemStorage::do_dim_BC(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_BC',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_BC', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_BC'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_BC() );
@@ -331,7 +331,7 @@ ProblemStorage::do_dim_Post(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_Post',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_Post', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_Post'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_Post() );
@@ -344,7 +344,7 @@ ProblemStorage::do_dim_Ipost(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_Ipost',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_Ipost', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_Ipost'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::dim_Ipost() );
@@ -357,7 +357,7 @@ ProblemStorage::do_num_active_BC(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('num_active_BC',obj): "
+  #define CMD MODEL_NAME "_Mex( 'num_active_BC', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'num_active_BC'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::num_active_BC() );
@@ -370,7 +370,7 @@ ProblemStorage::do_num_nodes(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('num_nodes',obj): "
+  #define CMD MODEL_NAME "_Mex( 'num_nodes', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'num_nodes'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::num_nodes() );
@@ -383,7 +383,7 @@ ProblemStorage::do_num_equations(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('num_equations',obj): "
+  #define CMD MODEL_NAME "_Mex( 'num_equations', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'num_equations'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::num_equations() );
@@ -396,7 +396,7 @@ ProblemStorage::do_num_segments(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('num_segments',obj): "
+  #define CMD MODEL_NAME "_Mex( 'num_segments', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'num_segments'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::num_segments() );
@@ -410,7 +410,7 @@ ProblemStorage::do_dim_full_bc(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_full_bc',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_full_bc', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_full_bc'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, 2*MODEL_CLASS::dim_X()+MODEL_CLASS::num_active_BC() );
@@ -423,7 +423,7 @@ ProblemStorage::do_dim_ineq(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('dim_ineq',obj): "
+  #define CMD MODEL_NAME "_Mex( 'dim_ineq', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'dim_ineq'" );
   CHECK_IN_OUT( 2, 1 );
   Utils::mex_set_scalar_value( arg_out_0, MODEL_CLASS::LTargs_numEqns() );
@@ -442,7 +442,7 @@ ProblemStorage::do_names(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('names',obj): "
+  #define CMD MODEL_NAME "_Mex( 'names', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'names'" );
   CHECK_IN_OUT( 2, 1 );
   GenericContainer gc;
@@ -464,7 +464,7 @@ ProblemStorage::do_update_continuation(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('update_continuation',obj,nphase,old_s,s): "
+  #define CMD MODEL_NAME "_Mex( 'update_continuation', obj, nphase, old_s, s ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'update_continuation'" );
   CHECK_IN_OUT( 5, 0 );
   int64_t nphase  = Utils::mex_get_int64( arg_in_2, CMD " nphase number" );
@@ -487,7 +487,7 @@ ProblemStorage::do_get_raw_solution(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_raw_solution',obj): "
+  #define CMD MODEL_NAME "_Mex( 'get_raw_solution', obj ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'get_raw_solution'" );
   CHECK_IN_OUT( 2, 2 );
   real_ptr x = Utils::mex_create_matrix_value( arg_out_0, this->num_equations(), 1 );
@@ -509,7 +509,7 @@ ProblemStorage::do_set_raw_solution(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('set_raw_solution',obj,x,u): "
+  #define CMD MODEL_NAME "_Mex( 'set_raw_solution', obj, x, u ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'set_raw_solution'" );
   CHECK_IN_OUT( 4, 0 );
   mwSize dimx,dimu;
@@ -545,7 +545,7 @@ ProblemStorage::do_check_raw_solution(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('check_raw_solution',obj,x): "
+  #define CMD MODEL_NAME "_Mex( 'check_raw_solution', obj, x ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'check_raw_solution'" );
   CHECK_IN_OUT( 3, 1 );
   mwSize dimx, dimp;
@@ -573,7 +573,7 @@ ProblemStorage::do_check_jacobian(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('check_jacobian',obj,x,u,epsi): "
+  #define CMD MODEL_NAME "_Mex( 'check_jacobian', obj, x, u, epsi ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'check_jacobian'" );
   CHECK_IN_OUT( 5, 0 );
   mwSize dimx, dimu;
@@ -609,7 +609,7 @@ ProblemStorage::do_get_solution(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_solution',obj[,column_name]): "
+  #define CMD MODEL_NAME "_Mex( 'get_solution', obj[,column_name] ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'get_solution'" );
   CHECK_OUT( 1 );
   if ( !solution1_ok ) {
@@ -640,7 +640,7 @@ ProblemStorage::do_get_solution2(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_solution2',obj): "
+  #define CMD MODEL_NAME "_Mex( 'get_solution2', obj ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'get_solution2'" );
   CHECK_IN_OUT( 2, 1 );
   if ( !solution2_ok ) {
@@ -658,7 +658,7 @@ ProblemStorage::do_get_solution3(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_solution3',obj): "
+  #define CMD MODEL_NAME "_Mex( 'get_solution3', obj ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'get_solution3'" );
   CHECK_IN_OUT( 2, 1 );
   if ( !solution3_ok ) {
@@ -683,7 +683,7 @@ ProblemStorage::do_get_ocp_data(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('get_ocp_data',obj): "
+  #define CMD MODEL_NAME "_Mex( 'get_ocp_data', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'get_ocp_data'" );
   CHECK_IN_OUT( 2, 1 );
   GenericContainer_to_mxArray( gc_data, arg_out_0 );
@@ -700,14 +700,14 @@ ProblemStorage::do_get_ocp_data(
 \*/
 
 void
-ProblemStorage::do_init_U(
+ProblemStorage::do_guess_U(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('init_U',obj,x,do_minimize): "
-  UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'init_U'" );
-  CHECK_IN_OUT( 4, 1 );
+  #define CMD MODEL_NAME "_Mex( 'guess_U', obj, x ): "
+  UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'guess_U'" );
+  CHECK_IN_OUT( 3, 1 );
   mwSize dimx;
   real_const_ptr x = Utils::mex_vector_pointer( arg_in_2, dimx, CMD );
   mwSize neq = this->num_equations();
@@ -716,9 +716,8 @@ ProblemStorage::do_init_U(
     CMD " size(x) = {} must be equal to neq = {}\n",
     dimx, neq
   );
-  bool do_minimize = Utils::mex_get_bool( arg_in_3, CMD );
   real_ptr u = Utils::mex_create_matrix_value( arg_out_0, this->num_parameters(), 1 );
-  MODEL_CLASS::UC_initialize( x, u, do_minimize );
+  MODEL_CLASS::UC_guess( x, u );
   #undef CMD
 }
 
@@ -737,7 +736,7 @@ ProblemStorage::do_eval_U(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('eval_U',obj,Z,u_guess): "
+  #define CMD MODEL_NAME "_Mex( 'eval_U', obj, Z, u_guess ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_U'" );
   CHECK_IN_OUT( 4, 1 );
   mwSize dimZ, dimU;
@@ -774,7 +773,7 @@ ProblemStorage::do_eval_F(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('eval_F',obj,Z,U): "
+  #define CMD MODEL_NAME "_Mex( 'eval_F', obj, Z, U ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_F'" );
   CHECK_IN_OUT( 4, 2 );
   mwSize dimZ, dimU;
@@ -821,7 +820,7 @@ ProblemStorage::do_eval_JF(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('eval_JF',obj,Z,U): "
+  #define CMD MODEL_NAME "_Mex( 'eval_JF', obj, Z, U ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'eval_JF'" );
   CHECK_IN_OUT( 4, 2 );
   mwSize dimZ, dimU;
@@ -892,7 +891,7 @@ ProblemStorage::do_eval_JF_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('eval_JF_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'eval_JF_pattern', obj ): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'eval_JF_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -937,15 +936,15 @@ ProblemStorage::do_pack(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('pack',obj,x,lambda,pars,omega): "
+  #define CMD MODEL_NAME "_Mex( 'pack', obj, x, lambda, pars, omega ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'pack'" );
   CHECK_IN_OUT( 6, 1 );
 
   mwSize nrX, ncX, nrL, ncL, nP, nO;
-  X_const_pointer_type     X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument x" ));
-  L_const_pointer_type     L(Utils::mex_matrix_pointer( arg_in_3, nrL, ncL, CMD "argument lambda" ));
-  P_const_pointer_type     P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument pars" ));
-  OMEGA_const_pointer_type O(Utils::mex_vector_pointer( arg_in_5, nO,       CMD "argument omega" ));
+  X_const_p_type     X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument x" ));
+  L_const_p_type     L(Utils::mex_matrix_pointer( arg_in_3, nrL, ncL, CMD "argument lambda" ));
+  P_const_p_type     P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument pars" ));
+  OMEGA_const_p_type O(Utils::mex_vector_pointer( arg_in_5, nO,       CMD "argument omega" ));
   integer nn = this->num_nodes();
   UTILS_ASSERT(
     nrX == mwSize(this->dim_X()) && ncX == nn,
@@ -978,14 +977,14 @@ ProblemStorage::do_pack_for_direct(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('pack_for_direct',obj,X,U,Pars): "
+  #define CMD MODEL_NAME "_Mex( 'pack_for_direct', obj, X, U, Pars ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'pack_for_direct'" );
   CHECK_IN_OUT( 5, 1 );
 
   mwSize nrX, ncX, nrU, ncU, nP;
-  X_const_pointer_type X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument X" ));
-  U_const_pointer_type U(Utils::mex_matrix_pointer( arg_in_3, nrU, ncU, CMD "argument U" ));
-  P_const_pointer_type P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument Pars" ));
+  X_const_p_type X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument X" ));
+  U_const_p_type U(Utils::mex_matrix_pointer( arg_in_3, nrU, ncU, CMD "argument U" ));
+  P_const_p_type P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument Pars" ));
   mwSize nn = mwSize(this->num_nodes());
   UTILS_ASSERT(
     nrX == mwSize(this->dim_X()) && ncX == nn,
@@ -1021,7 +1020,7 @@ ProblemStorage::do_unpack(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('unpack',obj,Z): "
+  #define CMD MODEL_NAME "_Mex( 'unpack', obj, Z ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'unpack'" );
   CHECK_IN_OUT( 3, 4 );
 
@@ -1034,10 +1033,10 @@ ProblemStorage::do_unpack(
     CMD, nZ, this->num_equations()
   );
 
-  X_pointer_type     X(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
-  L_pointer_type     L(Utils::mex_create_matrix_value( arg_out_1, this->dim_X(), nn ));
-  P_pointer_type     P(Utils::mex_create_matrix_value( arg_out_2, 1, this->dim_Pars() ));
-  OMEGA_pointer_type O(Utils::mex_create_matrix_value( arg_out_3, 1, this->num_active_BC() ));
+  X_p_type     X(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
+  L_p_type     L(Utils::mex_create_matrix_value( arg_out_1, this->dim_X(), nn ));
+  P_p_type     P(Utils::mex_create_matrix_value( arg_out_2, 1, this->dim_Pars() ));
+  OMEGA_p_type O(Utils::mex_create_matrix_value( arg_out_3, 1, this->num_active_BC() ));
 
   this->unpack( Z, X, L, P, O );
   #undef CMD
@@ -1049,7 +1048,7 @@ ProblemStorage::do_unpack_for_direct(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('unpack_for_direct',obj,Z): "
+  #define CMD MODEL_NAME "_Mex( 'unpack_for_direct', obj, Z ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'unpack_for_direct'" );
   CHECK_IN_OUT( 3, 3 );
 
@@ -1064,9 +1063,9 @@ ProblemStorage::do_unpack_for_direct(
     CMD, nZ, dimZ
   );
 
-  X_pointer_type X(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
-  U_pointer_type U(Utils::mex_create_matrix_value( arg_out_1, this->dim_U(), nn-1 ));
-  P_pointer_type P(Utils::mex_create_matrix_value( arg_out_2, 1, this->dim_Pars() ));
+  X_p_type X(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
+  U_p_type U(Utils::mex_create_matrix_value( arg_out_1, this->dim_U(), nn-1 ));
+  P_p_type P(Utils::mex_create_matrix_value( arg_out_2, 1, this->dim_Pars() ));
 
   this->unpack_for_direct( Z, X, U, P );
   #undef CMD
@@ -1085,14 +1084,14 @@ ProblemStorage::do_estimate_multipliers(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('estimate_multipliers', obj, X, U, Pars, method): "
+  #define CMD MODEL_NAME "_Mex('estimate_multipliers', obj, X, U, Pars, method ): "
   UTILS_MEX_ASSERT0( guess_ok, CMD "use 'set_guess' before to use 'estimate_multipliers'" );
   CHECK_IN_OUT( 6, 2 );
 
   mwSize nrX, ncX, nrU, ncU, nP;
-  X_const_pointer_type X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument X" ));
-  U_const_pointer_type U(Utils::mex_matrix_pointer( arg_in_3, nrU, ncU, CMD "argument U" ));
-  P_const_pointer_type P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument Pars" ));
+  X_const_p_type X(Utils::mex_matrix_pointer( arg_in_2, nrX, ncX, CMD "argument X" ));
+  U_const_p_type U(Utils::mex_matrix_pointer( arg_in_3, nrU, ncU, CMD "argument U" ));
+  P_const_p_type P(Utils::mex_vector_pointer( arg_in_4, nP,       CMD "argument Pars" ));
   mwSize nn = mwSize(this->num_nodes());
   UTILS_ASSERT(
     nrX == mwSize(this->dim_X()) && ncX == nn,
@@ -1110,8 +1109,8 @@ ProblemStorage::do_estimate_multipliers(
     CMD, nP, this->dim_Pars()
   );
 
-  L_pointer_type     L(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
-  OMEGA_pointer_type OMEGA(Utils::mex_create_matrix_value( arg_out_1, this->num_active_BC(), 1 ));
+  L_p_type     L(Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), nn ));
+  OMEGA_p_type OMEGA(Utils::mex_create_matrix_value( arg_out_1, this->num_active_BC(), 1 ));
 
   this->estimate_multipliers( X, U, P, L, OMEGA );
 
@@ -1125,24 +1124,26 @@ ProblemStorage::do_estimate_multipliers(
  |               |___|
 \*/
 void
-ProblemStorage::do_ac(
+ProblemStorage::do_abc(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('ac', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
+  #define CMD MODEL_NAME "_Mex( 'abc', obj, L, R, pars, U ): "
 
-  CHECK_IN_OUT( 12, 1 );
-
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-  GET_ARG_U( arg_in_11 );
+  CHECK_IN_OUT( 6, 1 );
+  NodeQXL        L, R;
+  U_const_p_type U(nullptr);
+  P_const_p_type P(nullptr);
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
 
   integer n_thread = 0;
-  real_ptr ac = Utils::mex_create_matrix_value( arg_out_0, 2*this->dim_X()+this->dim_Pars(), 1 );
-  this->ac_eval( n_thread, L, R, P, U, ac );
+  integer dim_xlp  = 2*this->dim_X()+this->dim_Pars();
+  real_ptr abc = Utils::mex_create_matrix_value( arg_out_0, dim_xlp, 1 );
+  this->abc_eval( L, R, P, U, abc );
 
   #undef CMD
 }
@@ -1155,46 +1156,37 @@ ProblemStorage::do_ac(
  |               |___|__/                            |___|
 \*/
 void
-ProblemStorage::do_DacDxlxlpu(
+ProblemStorage::do_DabcDxlxlpu(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('DacDxlxlpu', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
+  #define CMD MODEL_NAME "_Mex( 'DabcDxlxlpu', obj, L, R, pars, U ): "
 
-  CHECK_IN_OUT( 12, 2 );
+  CHECK_IN_OUT( 6, 2 );
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-  GET_ARG_U( arg_in_11 );
+  NodeQXL        L, R;
+  U_const_p_type U(nullptr);
+  P_const_p_type P(nullptr);
 
-  mwSize nXLP;
-  real_const_ptr DuDxlxlp_ptr = Utils::mex_matrix_pointer( arg_in_12, nU, nXLP,
-    fmt::format( "{} argument DuDxlxlp", CMD )
-  );
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
 
   integer dim_X = this->dim_X();
   integer dim_U = this->dim_U();
   integer dim_P = this->dim_Pars();
+  integer nCOL  = 4*dim_X+dim_U+dim_P;
 
-  UTILS_ASSERT(
-    nU == dim_U && nXLP == 4*dim_X+dim_P,
-    "{} size(DuDxlxlp) = {} x {} expected to be {} x {}\n",
-    CMD, nU, nXLP, dim_U, 4*dim_X+dim_P
-  );
+  integer  n_thread       = 0;
+  integer  nR             = 2*dim_X+dim_P;
+  real_ptr DabcDxlxlp_mem = Utils::mex_create_matrix_value( arg_out_0, nR, nCOL  );
+  real_ptr DabcDu_mem     = Utils::mex_create_matrix_value( arg_out_1, nR, dim_U );
 
-  integer  n_thread      = 0;
-  integer  nCOL          = 4*dim_X+dim_P;
-  integer  nR            = 2*dim_X+dim_P;
-  real_ptr DacDxlxlp_mem = Utils::mex_create_matrix_value( arg_out_0, nR, nCOL  );
-  real_ptr DacDu_mem     = Utils::mex_create_matrix_value( arg_out_1, nR, dim_U );
+  MatrixWrapper<real_type> DabcDxlxlpu( DabcDxlxlp_mem, nR, nCOL, nR );
 
-  MatrixWrapper<real_type> DacDxlxlp( DacDxlxlp_mem, nR, nCOL,  nR );
-  MatrixWrapper<real_type> DacDu    ( DacDu_mem,     nR, dim_U, nR );
-
-  this->DacDxlxlp_eval( n_thread, L, R, P, U, DacDxlxlp, DacDu );
+  this->DabcDxlxlpu_eval( n_thread, L, R, P, U, DabcDxlxlpu );
 
   #undef CMD
 }
@@ -1212,20 +1204,26 @@ ProblemStorage::do_hc(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('hc', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'hc', obj, L, R, omega, pars ): "
 
-  CHECK_IN_OUT( 12, 2 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-  GET_ARG_OMEGA( arg_in_11 );
+  NodeQXL            L, R;
+  P_const_p_type     P(nullptr);
+  OMEGA_const_p_type OMEGA(nullptr);
 
-  real_ptr h = Utils::mex_create_matrix_value( arg_out_0, 2*this->dim_X(), 1 );
-  real_ptr c = Utils::mex_create_matrix_value( arg_out_1, this->dim_Pars(), 1 );
+  get      ( CMD, arg_in_2, L );
+  get      ( CMD, arg_in_3, R );
+  get_OMEGA( CMD, arg_in_4, OMEGA );
+  get_P    ( CMD, arg_in_5, P );
 
-  this->hc_eval( L, R, Omega, P, h, c );
+  integer dim_X = this->dim_X();
+  integer dim_U = this->dim_U();
+  integer dim_P = this->dim_Pars();
+
+  real_ptr hc = Utils::mex_create_matrix_value( arg_out_0, 2*dim_X+dim_P, 1 );
+
+  this->hc_eval( L, R, OMEGA, P, hc );
 
   #undef CMD
 }
@@ -1243,15 +1241,18 @@ ProblemStorage::do_DhcDxlxlop(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('DhcDxlxlop', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'DhcDxlxlop', obj, L, R, omega, pars ): "
 
-  CHECK_IN_OUT( 12, 2 );
+  CHECK_IN_OUT( 6, 2 );
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-  GET_ARG_OMEGA( arg_in_11 );
+  NodeQXL            L, R;
+  P_const_p_type     P(nullptr);
+  OMEGA_const_p_type OMEGA(nullptr);
+
+  get      ( CMD, arg_in_2, L );
+  get      ( CMD, arg_in_3, R );
+  get_OMEGA( CMD, arg_in_4, OMEGA );
+  get_P    ( CMD, arg_in_5, P );
 
   mwSize nCOL = 4*this->dim_X()+this->dim_Pars();
   mwSize nR   = 2*this->dim_X();
@@ -1261,7 +1262,7 @@ ProblemStorage::do_DhcDxlxlop(
   MatrixWrapper<real_type> DhDxlop( h, nR, nCOL, nR );
   MatrixWrapper<real_type> DcDxlop( c, this->dim_Pars(), nCOL, this->dim_Pars() );
 
-  this->DhcDxlxlop_eval( L, R, Omega, P, DhDxlop, DcDxlop );
+  this->DhcDxlxlop_eval( L, R, OMEGA, P, DhDxlop, DcDxlop );
 
   #undef CMD
 }
@@ -1278,22 +1279,29 @@ ProblemStorage::do_u(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('u', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'u', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 11, 1 );
+  CHECK_IN_OUT( 5, 1 );
+
+  NodeQXL        L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+
+  integer dim_X = this->dim_X();
+  integer dim_U = this->dim_U();
+  integer dim_P = this->dim_Pars();
 
   mwSize nCOL;
-  Mechatronix::U_solver & US = this->m_U_control_solver[0];
+  using Mechatronix::U_solver ;
+  std::shared_ptr<U_solver> US(m_U_control_solver[0]);
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-
-  U_pointer_type U( Utils::mex_create_matrix_value( arg_out_0, this->dim_U(), 1 ) );
+  U_p_type U( Utils::mex_create_matrix_value( arg_out_0, dim_U, 1 ) );
   if ( m_U_solve_iterative ) {
     this->u_guess_eval( L, R, P, U );
-    US.u_eval( m_console, L, R, P, U );
+    US->u_eval( m_console, L, R, P, U );
   } else {
     this->u_eval_analytic( L, R, P, U );
   }
@@ -1314,24 +1322,30 @@ ProblemStorage::do_DuDxlxlp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('DuDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ): "
+  #define CMD MODEL_NAME "_Mex( 'DuDxlxlp', obj, L, R, pars, U ): "
 
-  CHECK_IN_OUT( 11, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  mwSize nCOL;
-  Mechatronix::U_solver & US = this->m_U_control_solver[0];
+  integer dim_X = this->dim_X();
+  integer dim_U = this->dim_U();
+  integer dim_P = this->dim_Pars();
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
-  GET_ARG_U( arg_in_11 );
+  NodeQXL        L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  nCOL = 4*this->dim_X() + this->dim_Pars();
-  real_ptr DuDxlxlp_ptr = Utils::mex_create_matrix_value( arg_out_0, this->dim_U(), nCOL );
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
 
-  MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, this->dim_U(), nCOL, this->dim_U() );
-  US.u_eval_DuDxlxlp( L, R, P, U, DuDxlxlp );
+  Mechatronix::integer n_thread = 0;
+  mwSize nCOL = 2*dim_X + dim_P;
+
+  real_ptr DuDxlxlp_ptr = Utils::mex_create_matrix_value( arg_out_0, dim_U, nCOL );
+
+  MatrixWrapper<real_type> DuDxlxlp( DuDxlxlp_ptr, dim_U, nCOL, dim_U );
+  this->u_eval_DuDxlxlp( n_thread, L, R, P, U, DuDxlxlp );
 
   #undef CMD
 }
@@ -1348,18 +1362,20 @@ ProblemStorage::do_rhs_ode(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('rhs_ode', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex('rhs_ode', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->rhs_ode_numEqns(), 1 );
-  this->rhs_ode_eval( N, U, P, rhs );
+  this->rhs_ode_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1372,17 +1388,19 @@ ProblemStorage::do_Drhs_odeDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('Drhs_odeDxpu', i_seg, obj, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'Drhs_odeDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( Drhs_odeDxpu, N, U, P );
+  RETURN_SPARSE( Drhs_odeDxpu, S, P, U );
   #undef CMD
 }
 
@@ -1398,16 +1416,17 @@ ProblemStorage::do_A(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('A', obj, i_seg, q, x, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'A', obj, S, pars ): "
 
-  CHECK_IN_OUT( 6, 1 );
+  CHECK_IN_OUT( 4, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
 
-  GET_ARG_P( arg_in_5 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
 
-  RETURN_SPARSE( A, N, P );
+  RETURN_SPARSE( A, S, P );
 
   #undef CMD
 }
@@ -1424,17 +1443,18 @@ ProblemStorage::do_eta(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('eta', obj, i_seg, q, x, lambda, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'eta', obj, S, pars ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 4, 1 );
 
-  NodeType2 N;
-  get_N( CMD, nrhs, prhs, N );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
 
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->eta_numEqns(), 1 );
-  this->eta_eval( N, P, rhs );
+  this->eta_eval( S, P, rhs );
 
   #undef CMD
 }
@@ -1447,16 +1467,17 @@ ProblemStorage::do_DetaDxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DetaDxp', obj, i_seg, q, x, lambda, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DetaDxp', obj, S, pars ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 4, 1 );
 
-  NodeType2 N;
-  get_N( CMD, nrhs, prhs, N );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
 
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
 
-  RETURN_SPARSE( DetaDxp, N, P );
+  RETURN_SPARSE( DetaDxp, S, P );
 
   #undef CMD
 }
@@ -1472,18 +1493,19 @@ ProblemStorage::do_nu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('nu', obj, i_seg, q, x, V, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'nu', obj, S, pars, V ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
-
-  GET_ARG_V( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
+  V_const_p_type V(nullptr);
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_V( CMD, arg_in_4, V );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->nu_numEqns(), 1 );
-  this->nu_eval( N, V, P, rhs );
+  this->nu_eval( S, P, V, rhs );
 
   #undef CMD
 }
@@ -1496,17 +1518,18 @@ ProblemStorage::do_DnuDxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DnuDxp', obj, i_seg, q, x, V, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DnuDxp', obj, S, pars, V ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
+  V_const_p_type V(nullptr);
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_V( CMD, arg_in_4, V );
 
-  GET_ARG_V( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
-
-  RETURN_SPARSE( DnuDxp, N, V, P );
+  RETURN_SPARSE( DnuDxp, S, P, V );
 
   #undef CMD
 }
@@ -1519,11 +1542,12 @@ ProblemStorage::do_DnuDxp(
  |            |__/
 \*/
 /*\
- |   _  _
- |  | || |_ ___ __
- |  | __ \ \ / '_ \
- |  |_||_/_\_\ .__/
- |           |_|
+ |   _   _
+ |  | | | |_  ___ __
+ |  | |_| \ \/ / '_ \
+ |  |  _  |>  <| |_) |
+ |  |_| |_/_/\_\ .__/
+ |             |_|
 \*/
 
 void
@@ -1532,19 +1556,19 @@ ProblemStorage::do_Hxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('Hxp', obj, i_seg, q, x, lambda, V, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'Hxp', obj, S, P, U ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType2 N;
-  get_N( CMD, nrhs, prhs, N );
-
-  GET_ARG_V( arg_in_6 );
-  GET_ARG_U( arg_in_7 );
-  GET_ARG_P( arg_in_8 );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->Hxp_numEqns(), 1 );
-  this->Hxp_eval( N, V, U, P, rhs );
+  this->Hxp_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1552,51 +1576,23 @@ ProblemStorage::do_Hxp(
 // --------------------------------------------------------------------------
 
 void
-ProblemStorage::do_DHxpDxpu(
+ProblemStorage::do_DHxpDxlpu(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DHxpDxpu', obj, i_seg, q, x, lambda, V, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DHxpDxlpu', obj, obj, S, P, U ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType2 N;
-  get_N( CMD, nrhs, prhs, N );
+  NodeQXL S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  GET_ARG_V( arg_in_6 );
-  GET_ARG_U( arg_in_7 );
-  GET_ARG_P( arg_in_8 );
-
-  RETURN_SPARSE( DHxpDxpu, N, V, U, P );
-
-  #undef CMD
-}
-
-/*\
- |   _  _
- |  | || |_  _
- |  | __ | || |
- |  |_||_|\_,_|
-\*/
-void
-ProblemStorage::do_Hu(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('Hu', obj, i_seg, q, x, lambda, u, pars ): "
-
-  CHECK_IN_OUT( 8, 1 );
-
-  NodeType2 N;
-  get_N( CMD, nrhs, prhs, N );
-
-  GET_ARG_U( arg_in_6 );
-  GET_ARG_P( arg_in_7 );
-
-  real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->Hu_numEqns(), 1 );
-  this->Hu_eval( N, U, P, rhs );
+  RETURN_SPARSE( DHxpDxlpu, S, P, U );
 
   #undef CMD
 }
@@ -1614,17 +1610,20 @@ ProblemStorage::do_LT(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('LT', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'LT', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->LT_numEqns(), 1 );
-  this->LT_eval( N, U, P, rhs );
+  this->LT_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1637,17 +1636,20 @@ ProblemStorage::do_JP(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('JP', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'JP', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->JP_numEqns(), 1 );
-  this->JP_eval( N, U, P, rhs );
+  this->JP_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1660,17 +1662,20 @@ ProblemStorage::do_JU(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('JU', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'JU', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->JU_numEqns(), 1 );
-  this->JU_eval( N, U, P, rhs );
+  this->JU_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1683,17 +1688,20 @@ ProblemStorage::do_LTargs(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('LTargs', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'LTargs', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   real_ptr rhs = Utils::mex_create_matrix_value( arg_out_0, this->LTargs_numEqns(), 1 );
-  this->LTargs_eval( N, U, P, rhs );
+  this->LTargs_eval( S, P, U, rhs );
 
   #undef CMD
 }
@@ -1709,17 +1717,19 @@ ProblemStorage::do_DLTargsDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DLTargsDxpu', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DLTargsDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( DLTargsDxpu, N, U, P );
+  RETURN_SPARSE( DLTargsDxpu, S, P, U );
 
   #undef CMD
 }
@@ -1732,17 +1742,19 @@ ProblemStorage::do_DJPDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DJPDxpu', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DJPDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( DJPDxpu, N, U, P );
+  RETURN_SPARSE( DJPDxpu, S, P, U );
 
   #undef CMD
 }
@@ -1755,17 +1767,19 @@ ProblemStorage::do_DLTDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DLTDxpu', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DLTDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( DLTDxpu, N, U, P );
+  RETURN_SPARSE( DLTDxpu, S, P, U );
 
   #undef CMD
 }
@@ -1778,17 +1792,19 @@ ProblemStorage::do_DJUDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DJUDxpu', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DJUDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( DJUDxpu, N, U, P );
+  RETURN_SPARSE( DJUDxpu, S, P, U );
 
   #undef CMD
 }
@@ -1802,22 +1818,21 @@ ProblemStorage::do_D2LTargsD2xpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2LTargsD2xpu', obj, i_seg, q, x, u, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'D2LTargsD2xpu', obj, S, pars, u, omega ): "
 
-  CHECK_IN_OUT( 8, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  real_const_ptr OMEGA;
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get    ( CMD, arg_in_2, S     );
+  get_P  ( CMD, arg_in_3, P     );
+  get_U  ( CMD, arg_in_4, U     );
+  get_ptr( CMD, arg_in_5, OMEGA );
 
-  mwSize nO;
-  real_const_ptr OMEGA = Utils::mex_vector_pointer(
-    arg_in_7, nO, CMD " argument omega"
-  );
-
-  RETURN_SPARSE( D2LTargsD2xpu, N, U, P, OMEGA );
+  RETURN_SPARSE( D2LTargsD2xpu, S, P, U, OMEGA );
 
   #undef CMD
 }
@@ -1830,22 +1845,21 @@ ProblemStorage::do_D2JPD2xpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2JPD2xpu', obj, i_seg, q, x, u, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'D2JPD2xpu', obj, S, pars, u, omega ): "
 
-  CHECK_IN_OUT( 8, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  real_const_ptr OMEGA;
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get    ( CMD, arg_in_2, S     );
+  get_P  ( CMD, arg_in_3, P     );
+  get_U  ( CMD, arg_in_4, U     );
+  get_ptr( CMD, arg_in_5, OMEGA );
 
-  mwSize nO;
-  real_const_ptr OMEGA = Utils::mex_vector_pointer(
-    arg_in_7, nO, CMD " argument omega"
-  );
-
-  RETURN_SPARSE( D2JPD2xpu, N, U, P, OMEGA );
+  RETURN_SPARSE( D2JPD2xpu, S, P, U, OMEGA );
 
   #undef CMD
 }
@@ -1858,22 +1872,21 @@ ProblemStorage::do_D2LTD2xpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2LTD2xpu', obj, i_seg, q, x, u, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'D2LTD2xpu', obj, S, pars, u, omega ): "
 
-  CHECK_IN_OUT( 8, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  real_const_ptr OMEGA;
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get    ( CMD, arg_in_2, S     );
+  get_P  ( CMD, arg_in_3, P     );
+  get_U  ( CMD, arg_in_4, U     );
+  get_ptr( CMD, arg_in_5, OMEGA );
 
-  mwSize nO;
-  real_const_ptr OMEGA = Utils::mex_vector_pointer(
-    arg_in_7, nO, CMD " argument omega"
-  );
-
-  RETURN_SPARSE( D2LTD2xpu, N, U, P, OMEGA );
+  RETURN_SPARSE( D2LTD2xpu, S, P, U, OMEGA );
 
   #undef CMD
 }
@@ -1886,22 +1899,21 @@ ProblemStorage::do_D2JUD2xpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2JUD2xpu', obj, i_seg, q, x, u, pars, omega ): "
+  #define CMD MODEL_NAME "_Mex( 'D2JUD2xpu', obj, S, pars, u, omega ): "
 
-  CHECK_IN_OUT( 8, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  real_const_ptr OMEGA;
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get    ( CMD, arg_in_2, S     );
+  get_P  ( CMD, arg_in_3, P     );
+  get_U  ( CMD, arg_in_4, U     );
+  get_ptr( CMD, arg_in_5, OMEGA );
 
-  mwSize nO;
-  real_const_ptr OMEGA = Utils::mex_vector_pointer(
-    arg_in_7, nO, CMD " argument omega"
-  );
-
-  RETURN_SPARSE( D2JUD2xpu, N, U, P, OMEGA );
+  RETURN_SPARSE( D2JUD2xpu, S, P, U, OMEGA );
 
   #undef CMD
 }
@@ -1923,14 +1935,16 @@ ProblemStorage::do_bc(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('bc', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'bc', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
+  NodeQX L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   real_ptr bc = Utils::mex_create_matrix_value( arg_out_0, this->dim_BC(), 1 );
 
@@ -1947,13 +1961,16 @@ ProblemStorage::do_DbcDxxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DbcDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DbcDxxp', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   RETURN_SPARSE( DbcDxxp, L, R, P );
 
@@ -1968,19 +1985,79 @@ ProblemStorage::do_D2bcD2xxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2bcD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ): "
+  #define CMD MODEL_NAME "_Mex( 'D2bcD2xxp', obj, L, R, pars, omega_full ): "
 
-  CHECK_IN_OUT( 10, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
-  GET_ARG_OMEGA_FULL( arg_in_9 );
+  NodeQXL L, R;
+  P_const_p_type          P(nullptr);
+  OMEGA_full_const_p_type OMEGA_full(nullptr);
 
-  RETURN_SPARSE( D2bcD2xxp, L, R, P, Omega );
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_OMEGA_full( CMD, arg_in_4, OMEGA_full );
+
+  RETURN_SPARSE( D2bcD2xxp, L, R, P, OMEGA_full );
 
   #undef CMD
 }
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::do_fd_BC(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'fd_BC', obj, L, R, pars, omega_full ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type          P(nullptr);
+  OMEGA_full_const_p_type OMEGA_full(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_OMEGA_full( CMD, arg_in_5, OMEGA_full );
+
+  real_ptr bc = Utils::mex_create_matrix_value( arg_out_0, 2*this->dim_X(), 1 );
+
+  this->fd_BC_eval( L, R, P, OMEGA_full, bc );
+
+  #undef CMD
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::do_Dfd_BCDxlxlp(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'Dfd_BCDxlxlp', obj, L, R, pars, omega_full ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type          P(nullptr);
+  OMEGA_full_const_p_type OMEGA_full(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_OMEGA_full( CMD, arg_in_4, OMEGA_full );
+
+  RETURN_SPARSE( Dfd_BCDxlxlp, L, R, P, OMEGA_full );
+
+  #undef CMD
+}
+
+// --------------------------------------------------------------------------
 
 /*\
  |     _
@@ -1995,14 +2072,16 @@ ProblemStorage::do_jump(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('jump', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'jump', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 11, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->jump_numEqns(), 1 );
   this->jump_eval( L, R, P, res );
@@ -2023,14 +2102,16 @@ ProblemStorage::do_DjumpDxlxlp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('DjumpDxlxlp', obj, iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DjumpDxlxlp', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 11, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType2 L, R;
-  get_LR2( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_10 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   RETURN_SPARSE( DjumpDxlxlp, L, R, P );
 
@@ -2050,17 +2131,19 @@ ProblemStorage::do_lagrange_target(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('lagrange_target', obj, i_seg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'lagrange_target', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  Utils::mex_set_scalar_value( arg_out_0, this->lagrange_target( N, U, P ) );
+  Utils::mex_set_scalar_value( arg_out_0, this->lagrange_target( S, P, U ) );
 
   #undef CMD
 }
@@ -2073,19 +2156,21 @@ ProblemStorage::do_DlagrangeDxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DlagrangeDxpu', obj, iseg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DlagrangeDxpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
   // Gradient is a row vector
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, 1, this->DlagrangeDxpu_numEqns() );
-  this->DlagrangeDxpu_eval( N, U, P , res );
+  this->DlagrangeDxpu_eval( S, P, U, res );
 
   #undef CMD
 }
@@ -2098,17 +2183,19 @@ ProblemStorage::do_D2lagrangeD2xpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2lagrangeD2xpu', obj, iseg, q, x, u, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'D2lagrangeD2xpu', obj, S, pars, U ): "
 
-  CHECK_IN_OUT( 7, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType N;
-  get_qx( CMD, nrhs, prhs, N );
+  NodeQX S;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
 
-  GET_ARG_U( arg_in_5 );
-  GET_ARG_P( arg_in_6 );
+  get  ( CMD, arg_in_2, S );
+  get_P( CMD, arg_in_3, P );
+  get_U( CMD, arg_in_4, U );
 
-  RETURN_SPARSE( D2lagrangeD2xpu, N, U, P );
+  RETURN_SPARSE( D2lagrangeD2xpu, S, P, U );
 
   #undef CMD
 }
@@ -2121,13 +2208,16 @@ ProblemStorage::do_mayer_target(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('mayer_target', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'mayer_target', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   Utils::mex_set_scalar_value( arg_out_0, this->mayer_target( L, R, P ) );
 
@@ -2142,17 +2232,20 @@ ProblemStorage::do_DmayerDxxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DmayerDxxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'DmayerDxxp', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   // Gradient is a row vector
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, 1, this->DmayerDxxp_numEqns() );
-  this->DmayerDxxp_eval( L, R, P , res );
+  this->DmayerDxxp_eval( L, R, P, res );
 
   #undef CMD
 }
@@ -2165,13 +2258,16 @@ ProblemStorage::do_D2mayerD2xxp(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2mayerD2xxp', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'D2mayerD2xxp', obj, L, R, pars ): "
 
-  CHECK_IN_OUT( 9, 1 );
+  CHECK_IN_OUT( 5, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_P( arg_in_8 );
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
 
   RETURN_SPARSE( D2mayerD2xxp, L, R, P );
 
@@ -2185,21 +2281,25 @@ ProblemStorage::do_D2mayerD2xxp(
 :|:  | |_| | | | |  __/ (__| |_
 :|:  |____/|_|_|  \___|\___|\__|
 \*/
+
 void
 ProblemStorage::do_fd_ode(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('fd_ode', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'fd_ode', obj, L, R, pars, U ): "
 
-  CHECK_IN_OUT( 10, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_U( arg_in_8 );
-  GET_ARG_P( arg_in_9 );
+  NodeQX L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
 
   real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), 1 );
 
@@ -2216,15 +2316,18 @@ ProblemStorage::do_Dfd_odeDxxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('Dfd_odeDxxpu', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ): "
+  #define CMD MODEL_NAME "_Mex( 'Dfd_odeDxxpu', obj, L, R, pars, U ): "
 
-  CHECK_IN_OUT( 10, 1 );
+  CHECK_IN_OUT( 6, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_U( arg_in_8 );
-  GET_ARG_P( arg_in_9 );
+  NodeQX L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
 
   RETURN_SPARSE( Dfd_odeDxxpu, L, R, P, U );
 
@@ -2239,24 +2342,134 @@ ProblemStorage::do_D2fd_odeD2xxpu(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME \
-  "_Mex('D2fd_odeD2xxpu', obj, iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ): "
+  #define CMD MODEL_NAME "_Mex( 'D2fd_odeD2xxpu', obj, L, R, pars, U, omega ): "
 
-  CHECK_IN_OUT( 11, 1 );
+  CHECK_IN_OUT( 7, 1 );
 
-  NodeType L, R;
-  get_LR( CMD, nrhs, prhs, L, R );
-  GET_ARG_U( arg_in_8 );
-  GET_ARG_P( arg_in_9 );
+  NodeQX L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+  real_const_ptr omega{nullptr};
 
-  mwSize nL;
-  L_const_pointer_type lambda(Utils::mex_vector_pointer( arg_in_10, nL, CMD " argument lambda" ));
-  UTILS_MEX_ASSERT(
-    nL == this->dim_X(),
-    "{} |lambda| = {} expected to be {}\n", CMD, nL, this->dim_X()
-  );
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
+  get_ptr( CMD, arg_in_6, omega );
 
-  RETURN_SPARSE( D2fd_odeD2xxpu, L, R, P, U, lambda );
+  RETURN_SPARSE( D2fd_odeD2xxpu, L, R, P, U, omega );
+
+  #undef CMD
+}
+
+/*\
+:|:  ___           _ _               _
+:|: |_ _|_ __   __| (_)_ __ ___  ___| |_
+:|:  | || '_ \ / _` | | '__/ _ \/ __| __|
+:|:  | || | | | (_| | | | |  __/ (__| |_
+:|: |___|_| |_|\__,_|_|_|  \___|\___|\__|
+\*/
+
+void
+ProblemStorage::do_fd_ode2(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'fd_ode2', obj, L, R, pars, U ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_U( CMD, arg_in_4, U );
+  get_P( CMD, arg_in_5, P );
+
+  real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->dim_X(), 1 );
+
+  this->fd_ode2_eval( L, R, P, U, res );
+
+  #undef CMD
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::do_Dfd_ode2Dxlxlpu(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'Dfd_ode2Dxlxlpu', obj, L, R, pars, U ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
+
+  RETURN_SPARSE( Dfd_ode2Dxlxlpu, L, R, P, U );
+
+  #undef CMD
+}
+
+void
+ProblemStorage::do_fd_int(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'fd_int', obj, L, R, pars, U ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_U( CMD, arg_in_4, U );
+  get_P( CMD, arg_in_5, P );
+
+  real_ptr res = Utils::mex_create_matrix_value( arg_out_0, this->dim_Pars(), 1 );
+
+  this->fd_int_eval( L, R, P, U, res );
+
+  #undef CMD
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::do_Dfd_intDxlxlpu(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'Dfd_intDxlxlpu', obj, L, R, pars, U ): "
+
+  CHECK_IN_OUT( 6, 1 );
+
+  NodeQXL L, R;
+  P_const_p_type P(nullptr);
+  U_const_p_type U(nullptr);
+
+  get  ( CMD, arg_in_2, L );
+  get  ( CMD, arg_in_3, R );
+  get_P( CMD, arg_in_4, P );
+  get_U( CMD, arg_in_5, U );
+
+  RETURN_SPARSE( Dfd_intDxlxlpu, L, R, P, U );
 
   #undef CMD
 }
@@ -2269,7 +2482,7 @@ ProblemStorage::do_mesh_functions(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('mesh_functions', obj, i_segment, s ): "
+  #define CMD MODEL_NAME "_Mex( 'mesh_functions', obj, i_segment, s ): "
 
   CHECK_IN_OUT( 4, 1 );
 
@@ -2284,7 +2497,7 @@ ProblemStorage::do_mesh_functions(
   // -------------------
   real_type s = Utils::mex_get_scalar_value( arg_in_3, fmt::format( "{} s", CMD ) );
 
-  Q_pointer_type rhs( Utils::mex_create_matrix_value( arg_out_0, this->dim_Q(), 1 ) );
+  Q_p_type rhs( Utils::mex_create_matrix_value( arg_out_0, this->dim_Q(), 1 ) );
   this->q_eval( i_segment, s, rhs );
   #undef CMD
 }
@@ -2297,7 +2510,7 @@ ProblemStorage::do_nodes(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('nodes', obj ): "
+  #define CMD MODEL_NAME "_Mex( 'nodes', obj ): "
 
   CHECK_IN_OUT( 2, 1 );
 
@@ -2317,7 +2530,7 @@ ProblemStorage::do_node_to_segment(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('node_to_segment', obj ): "
+  #define CMD MODEL_NAME "_Mex( 'node_to_segment', obj ): "
 
   CHECK_IN_OUT( 2, 1 );
 
@@ -2338,18 +2551,18 @@ ProblemStorage::do_node_to_segment(
  |  |_|   \__,_|\__|\__\___|_|  |_| |_|
 \*/
 void
-ProblemStorage::do_D2mayerD2xxp_pattern(
+ProblemStorage::do_Dfd_BCDxlxlp_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2mayerD2xxp_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2mayerD2xxp_pattern'" );
+  #define CMD MODEL_NAME "_Mex( 'Dfd_BCDxlxlp_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'Dfd_BCDxlxlp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
-  integer nnz = D2mayerD2xxp_nnz();
-  integer nr  = D2mayerD2xxp_numRows();
-  integer nc  = D2mayerD2xxp_numCols();
+  integer nnz = Dfd_BCDxlxlp_nnz();
+  integer nr  = Dfd_BCDxlxlp_numRows();
+  integer nc  = Dfd_BCDxlxlp_numCols();
   mxArray *args[5];
   real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
   real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
@@ -2357,11 +2570,11 @@ ProblemStorage::do_D2mayerD2xxp_pattern(
   Utils::mex_set_scalar_value( args[3], nr );
   Utils::mex_set_scalar_value( args[4], nc );
 
-  Mechatronix::Malloc<integer> mem("mex_D2mayerD2xxp");
-  mem.allocate( 2*nnz, "D2mayerD2xxp" );
+  Mechatronix::Malloc<integer> mem("mex_Dfd_BCDxlxlp");
+  mem.allocate( 2*nnz, "Dfd_BCDxlxlp" );
   integer_ptr i_row = mem( nnz );
   integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::D2mayerD2xxp_pattern( i_row, j_col );
+  MODEL_CLASS::Dfd_BCDxlxlp_pattern( i_row, j_col );
   for ( integer i = 0; i < nnz; ++i ) {
     I[i] = i_row[i]+1;
     J[i] = j_col[i]+1;
@@ -2379,7 +2592,7 @@ ProblemStorage::do_Dfd_odeDxxpu_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('Dfd_odeDxxpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'Dfd_odeDxxpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'Dfd_odeDxxpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2415,7 +2628,7 @@ ProblemStorage::do_D2fd_odeD2xxpu_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2fd_odeD2xxpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'D2fd_odeD2xxpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2fd_odeD2xxpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2446,12 +2659,84 @@ ProblemStorage::do_D2fd_odeD2xxpu_pattern(
 //---------------------------------------------------------------------
 
 void
+ProblemStorage::do_Dfd_ode2Dxlxlpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'Dfd_ode2Dxlxlpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'Dfd_ode2Dxlxlpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = Dfd_ode2Dxlxlpu_nnz();
+  integer nr  = Dfd_ode2Dxlxlpu_numRows();
+  integer nc  = Dfd_ode2Dxlxlpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_Dfd_ode2Dxlxlpu");
+  mem.allocate( 2*nnz, "Dfd_ode2Dxlxlpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::Dfd_ode2Dxlxlpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_Dfd_intDxlxlpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'Dfd_intDxlxlpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'Dfd_intDxlxlpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = Dfd_intDxlxlpu_nnz();
+  integer nr  = Dfd_intDxlxlpu_numRows();
+  integer nc  = Dfd_intDxlxlpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_Dfd_intDxlxlpu");
+  mem.allocate( 2*nnz, "Dfd_intDxlxlpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::Dfd_intDxlxlpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
 ProblemStorage::do_D2lagrangeD2xpu_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2lagrangeD2xpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'D2lagrangeD2xpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2lagrangeD2xpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2482,18 +2767,18 @@ ProblemStorage::do_D2lagrangeD2xpu_pattern(
 //---------------------------------------------------------------------
 
 void
-ProblemStorage::do_A_pattern(
+ProblemStorage::do_D2mayerD2xxp_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('A_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'A_pattern'" );
+  #define CMD MODEL_NAME "_Mex( 'D2mayerD2xxp_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2mayerD2xxp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
-  integer nnz = A_nnz();
-  integer nr  = A_numRows();
-  integer nc  = A_numCols();
+  integer nnz = D2mayerD2xxp_nnz();
+  integer nr  = D2mayerD2xxp_numRows();
+  integer nc  = D2mayerD2xxp_numCols();
   mxArray *args[5];
   real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
   real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
@@ -2501,11 +2786,11 @@ ProblemStorage::do_A_pattern(
   Utils::mex_set_scalar_value( args[3], nr );
   Utils::mex_set_scalar_value( args[4], nc );
 
-  Mechatronix::Malloc<integer> mem("mex_A");
-  mem.allocate( 2*nnz, "A" );
+  Mechatronix::Malloc<integer> mem("mex_D2mayerD2xxp");
+  mem.allocate( 2*nnz, "D2mayerD2xxp" );
   integer_ptr i_row = mem( nnz );
   integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::A_pattern( i_row, j_col );
+  MODEL_CLASS::D2mayerD2xxp_pattern( i_row, j_col );
   for ( integer i = 0; i < nnz; ++i ) {
     I[i] = i_row[i]+1;
     J[i] = j_col[i]+1;
@@ -2523,7 +2808,7 @@ ProblemStorage::do_DbcDxxp_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DbcDxxp_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'DbcDxxp_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DbcDxxp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2559,7 +2844,7 @@ ProblemStorage::do_D2bcD2xxp_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2bcD2xxp_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'D2bcD2xxp_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2bcD2xxp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2590,12 +2875,48 @@ ProblemStorage::do_D2bcD2xxp_pattern(
 //---------------------------------------------------------------------
 
 void
+ProblemStorage::do_A_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'A_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'A_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = A_nnz();
+  integer nr  = A_numRows();
+  integer nc  = A_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_A");
+  mem.allocate( 2*nnz, "A" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::A_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
 ProblemStorage::do_Drhs_odeDxpu_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('Drhs_odeDxpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'Drhs_odeDxpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'Drhs_odeDxpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2631,7 +2952,7 @@ ProblemStorage::do_DjumpDxlxlp_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DjumpDxlxlp_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'DjumpDxlxlp_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DjumpDxlxlp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2662,18 +2983,18 @@ ProblemStorage::do_DjumpDxlxlp_pattern(
 //---------------------------------------------------------------------
 
 void
-ProblemStorage::do_DHxpDxpu_pattern(
+ProblemStorage::do_DHxpDxlpu_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DHxpDxpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DHxpDxpu_pattern'" );
+  #define CMD MODEL_NAME "_Mex( 'DHxpDxlpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DHxpDxlpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
-  integer nnz = DHxpDxpu_nnz();
-  integer nr  = DHxpDxpu_numRows();
-  integer nc  = DHxpDxpu_numCols();
+  integer nnz = DHxpDxlpu_nnz();
+  integer nr  = DHxpDxlpu_numRows();
+  integer nc  = DHxpDxlpu_numCols();
   mxArray *args[5];
   real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
   real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
@@ -2681,227 +3002,11 @@ ProblemStorage::do_DHxpDxpu_pattern(
   Utils::mex_set_scalar_value( args[3], nr );
   Utils::mex_set_scalar_value( args[4], nc );
 
-  Mechatronix::Malloc<integer> mem("mex_DHxpDxpu");
-  mem.allocate( 2*nnz, "DHxpDxpu" );
+  Mechatronix::Malloc<integer> mem("mex_DHxpDxlpu");
+  mem.allocate( 2*nnz, "DHxpDxlpu" );
   integer_ptr i_row = mem( nnz );
   integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::DHxpDxpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_DJPDxpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('DJPDxpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DJPDxpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = DJPDxpu_nnz();
-  integer nr  = DJPDxpu_numRows();
-  integer nc  = DJPDxpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_DJPDxpu");
-  mem.allocate( 2*nnz, "DJPDxpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::DJPDxpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_DLTDxpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('DLTDxpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DLTDxpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = DLTDxpu_nnz();
-  integer nr  = DLTDxpu_numRows();
-  integer nc  = DLTDxpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_DLTDxpu");
-  mem.allocate( 2*nnz, "DLTDxpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::DLTDxpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_DJUDxpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('DJUDxpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DJUDxpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = DJUDxpu_nnz();
-  integer nr  = DJUDxpu_numRows();
-  integer nc  = DJUDxpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_DJUDxpu");
-  mem.allocate( 2*nnz, "DJUDxpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::DJUDxpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_D2JPD2xpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('D2JPD2xpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2JPD2xpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = D2JPD2xpu_nnz();
-  integer nr  = D2JPD2xpu_numRows();
-  integer nc  = D2JPD2xpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_D2JPD2xpu");
-  mem.allocate( 2*nnz, "D2JPD2xpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::D2JPD2xpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_D2LTD2xpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('D2LTD2xpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2LTD2xpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = D2LTD2xpu_nnz();
-  integer nr  = D2LTD2xpu_numRows();
-  integer nc  = D2LTD2xpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_D2LTD2xpu");
-  mem.allocate( 2*nnz, "D2LTD2xpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::D2LTD2xpu_pattern( i_row, j_col );
-  for ( integer i = 0; i < nnz; ++i ) {
-    I[i] = i_row[i]+1;
-    J[i] = j_col[i]+1;
-  }
-  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
-  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-  #undef CMD
-}
-
-//---------------------------------------------------------------------
-
-void
-ProblemStorage::do_D2JUD2xpu_pattern(
-  int nlhs, mxArray       *plhs[],
-  int nrhs, mxArray const *prhs[]
-)
-{
-  #define CMD MODEL_NAME "_Mex('D2JUD2xpu_pattern',obj): "
-  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2JUD2xpu_pattern'" );
-  CHECK_IN_OUT( 2, 1 );
-
-  integer nnz = D2JUD2xpu_nnz();
-  integer nr  = D2JUD2xpu_numRows();
-  integer nc  = D2JUD2xpu_numCols();
-  mxArray *args[5];
-  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-  Utils::mex_set_scalar_value( args[2], 1  );
-  Utils::mex_set_scalar_value( args[3], nr );
-  Utils::mex_set_scalar_value( args[4], nc );
-
-  Mechatronix::Malloc<integer> mem("mex_D2JUD2xpu");
-  mem.allocate( 2*nnz, "D2JUD2xpu" );
-  integer_ptr i_row = mem( nnz );
-  integer_ptr j_col = mem( nnz );
-  MODEL_CLASS::D2JUD2xpu_pattern( i_row, j_col );
+  MODEL_CLASS::DHxpDxlpu_pattern( i_row, j_col );
   for ( integer i = 0; i < nnz; ++i ) {
     I[i] = i_row[i]+1;
     J[i] = j_col[i]+1;
@@ -2919,7 +3024,7 @@ ProblemStorage::do_DLTargsDxpu_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DLTargsDxpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'DLTargsDxpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DLTargsDxpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2955,7 +3060,7 @@ ProblemStorage::do_D2LTargsD2xpu_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('D2LTargsD2xpu_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'D2LTargsD2xpu_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2LTargsD2xpu_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -2986,12 +3091,228 @@ ProblemStorage::do_D2LTargsD2xpu_pattern(
 //---------------------------------------------------------------------
 
 void
+ProblemStorage::do_DJPDxpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'DJPDxpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DJPDxpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = DJPDxpu_nnz();
+  integer nr  = DJPDxpu_numRows();
+  integer nc  = DJPDxpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_DJPDxpu");
+  mem.allocate( 2*nnz, "DJPDxpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::DJPDxpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_D2JPD2xpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'D2JPD2xpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2JPD2xpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = D2JPD2xpu_nnz();
+  integer nr  = D2JPD2xpu_numRows();
+  integer nc  = D2JPD2xpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_D2JPD2xpu");
+  mem.allocate( 2*nnz, "D2JPD2xpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::D2JPD2xpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_DLTDxpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'DLTDxpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DLTDxpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = DLTDxpu_nnz();
+  integer nr  = DLTDxpu_numRows();
+  integer nc  = DLTDxpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_DLTDxpu");
+  mem.allocate( 2*nnz, "DLTDxpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::DLTDxpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_D2LTD2xpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'D2LTD2xpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2LTD2xpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = D2LTD2xpu_nnz();
+  integer nr  = D2LTD2xpu_numRows();
+  integer nc  = D2LTD2xpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_D2LTD2xpu");
+  mem.allocate( 2*nnz, "D2LTD2xpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::D2LTD2xpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_DJUDxpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'DJUDxpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DJUDxpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = DJUDxpu_nnz();
+  integer nr  = DJUDxpu_numRows();
+  integer nc  = DJUDxpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_DJUDxpu");
+  mem.allocate( 2*nnz, "DJUDxpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::DJUDxpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
+ProblemStorage::do_D2JUD2xpu_pattern(
+  int nlhs, mxArray       *plhs[],
+  int nrhs, mxArray const *prhs[]
+)
+{
+  #define CMD MODEL_NAME "_Mex( 'D2JUD2xpu_pattern',obj): "
+  UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'D2JUD2xpu_pattern'" );
+  CHECK_IN_OUT( 2, 1 );
+
+  integer nnz = D2JUD2xpu_nnz();
+  integer nr  = D2JUD2xpu_numRows();
+  integer nc  = D2JUD2xpu_numCols();
+  mxArray *args[5];
+  real_ptr I = Utils::mex_create_matrix_value( args[0], 1, nnz );
+  real_ptr J = Utils::mex_create_matrix_value( args[1], 1, nnz );
+  Utils::mex_set_scalar_value( args[2], 1  );
+  Utils::mex_set_scalar_value( args[3], nr );
+  Utils::mex_set_scalar_value( args[4], nc );
+
+  Mechatronix::Malloc<integer> mem("mex_D2JUD2xpu");
+  mem.allocate( 2*nnz, "D2JUD2xpu" );
+  integer_ptr i_row = mem( nnz );
+  integer_ptr j_col = mem( nnz );
+  MODEL_CLASS::D2JUD2xpu_pattern( i_row, j_col );
+  for ( integer i = 0; i < nnz; ++i ) {
+    I[i] = i_row[i]+1;
+    J[i] = j_col[i]+1;
+  }
+  int ok = mexCallMATLAB( 1, &arg_out_0, 5, args, "sparse" );
+  UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+  #undef CMD
+}
+
+//---------------------------------------------------------------------
+
+void
 ProblemStorage::do_DnuDxp_pattern(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DnuDxp_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'DnuDxp_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DnuDxp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 
@@ -3027,7 +3348,7 @@ ProblemStorage::do_DetaDxp_pattern(
   int nrhs, mxArray const *prhs[]
 )
 {
-  #define CMD MODEL_NAME "_Mex('DetaDxp_pattern',obj): "
+  #define CMD MODEL_NAME "_Mex( 'DetaDxp_pattern',obj): "
   UTILS_MEX_ASSERT0( setup_ok, CMD "use 'setup' before to use 'DetaDxp_pattern'" );
   CHECK_IN_OUT( 2, 1 );
 

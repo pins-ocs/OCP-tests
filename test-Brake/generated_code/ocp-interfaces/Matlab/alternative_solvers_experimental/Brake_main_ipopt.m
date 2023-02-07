@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: Brake_fsolve_main.m                                            %
 %                                                                       %
-%  version: 1.0   date 11/11/2022                                       %
+%  version: 1.0   date 8/2/2023                                         %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -35,15 +35,14 @@ ocp = Brake( 'Brake' );
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
 ocp.setup('../../data/Brake_Data'); % automatically try extension .rb and .lua
-ocp.infoLevel(infolevel);
+ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);
 
 solver = nlsys_solver_ipopt(ocp);
 x = solver.solve();
 
-do_minimization = false;
-u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
+u = ocp.eval_U(x,ocp.guess_U(x));
 ocp.set_raw_solution(x,u);
 
 % -------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake.hh                                                       |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,25 +81,28 @@ namespace BrakeDefine {
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
 
-  using Mechatronix::X_pointer_type;
-  using Mechatronix::L_pointer_type;
-  using Mechatronix::Z_pointer_type;
-  using Mechatronix::U_pointer_type;
-  using Mechatronix::V_pointer_type;
-  using Mechatronix::Q_pointer_type;
-  using Mechatronix::P_pointer_type;
-  using Mechatronix::OMEGA_pointer_type;
-  using Mechatronix::OMEGA_full_pointer_type;
+  using Mechatronix::X_p_type;
+  using Mechatronix::L_p_type;
+  using Mechatronix::Z_p_type;
+  using Mechatronix::U_p_type;
+  using Mechatronix::V_p_type;
+  using Mechatronix::Q_p_type;
+  using Mechatronix::P_p_type;
+  using Mechatronix::OMEGA_p_type;
+  using Mechatronix::OMEGA_full_p_type;
 
-  using Mechatronix::X_const_pointer_type;
-  using Mechatronix::L_const_pointer_type;
-  using Mechatronix::Z_const_pointer_type;
-  using Mechatronix::U_const_pointer_type;
-  using Mechatronix::V_const_pointer_type;
-  using Mechatronix::Q_const_pointer_type;
-  using Mechatronix::P_const_pointer_type;
-  using Mechatronix::OMEGA_const_pointer_type;
-  using Mechatronix::OMEGA_full_const_pointer_type;
+  using Mechatronix::X_const_p_type;
+  using Mechatronix::L_const_p_type;
+  using Mechatronix::Z_const_p_type;
+  using Mechatronix::U_const_p_type;
+  using Mechatronix::V_const_p_type;
+  using Mechatronix::Q_const_p_type;
+  using Mechatronix::P_const_p_type;
+  using Mechatronix::OMEGA_const_p_type;
+  using Mechatronix::OMEGA_full_const_p_type;
+
+  using Mechatronix::NodeQX;
+  using Mechatronix::NodeQXL;
 
   using Mechatronix::MatrixWrapper;
 
@@ -108,13 +111,11 @@ namespace BrakeDefine {
   class Brake : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[3];
+    real_type ModelPars[6];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrierU aControl;
 
     // Constraints LT  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::PenaltyBarrier1DLessThan Tpositive;
 
     // Constraints 1D  - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -223,6 +224,21 @@ namespace BrakeDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    BRAKE_API_DLL real_type guess_x            ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_x_D          ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_x_DD         ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_v            ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_v_D          ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_v_DD         ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda1      ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda1_D    ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda1_DD   ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda2      ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda2_D    ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_lambda2_DD   ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_u            ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_u_D          ( real_type xo__s ) const;
+    BRAKE_API_DLL real_type guess_u_DD         ( real_type xo__s ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

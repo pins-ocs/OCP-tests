@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: Brake_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 11/11/2022                                       #
+#  version: 1.0   date 8/2/2023                                         #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -23,10 +23,9 @@ include Mechatronix
 
 mechatronix do |data|
 
-  data.Debug     = false  # activate run time debug
-  data.Doctor    = false  # Enable doctor
-  data.InfoLevel = 4      # Level of message
-  data.Use_control_penalties_in_adjoint_equations = false
+  data.Debug             = false  # activate run time debug
+  data.Doctor            = false  # Enable doctor
+  data.InfoLevel         = 4      # Level of message
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -36,11 +35,15 @@ mechatronix do |data|
   #  \__|_| |_|_|  \___|\__,_|\__,_|___/
 
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
-  data.U_threaded  = true
-  data.F_threaded  = true
-  data.JF_threaded = true
-  data.LU_threaded = true
+  data.N_threads             = 1
+  data.U_threaded            = false
+  data.JU_threaded           = false
+  data.F_threaded            = false
+  data.JF_threaded           = false
+  data.LU_threaded           = false
+  data.LU_factorize_threaded = false
+  data.LU_solve_threaded     = false
+
 
   # Enable check jacobian and controls
   data.ControlsCheck         = true
@@ -49,7 +52,7 @@ mechatronix do |data|
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
-  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  # jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
 
   # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -253,8 +256,11 @@ mechatronix do |data|
   data.Parameters = {
 
     # Model Parameters
+    :epsilon  => 0.1,
+    :epsilon2 => 0.0,
 
     # Guess Parameters
+    :Tguess => 1.0,
 
     # Boundary Conditions
     :v_f => 0.0,
@@ -285,16 +291,8 @@ mechatronix do |data|
   #  / __/ _ \| '_ \| __| '__/ _ \| / __|
   # | (_| (_) | | | | |_| | | (_) | \__ \
   #  \___\___/|_| |_|\__|_|  \___/|_|___/
-  # Controls
-  # Penalty subtype: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
-  # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
+  # Controls: No penalties or barriers constraint defined
   data.Controls = {}
-  data.Controls[:aControl] = {
-    :type      => 'LOGARITHMIC',
-    :epsilon   => 0.01,
-    :tolerance => 0.01
-  }
-
 
 
   #                      _             _       _
@@ -303,19 +301,7 @@ mechatronix do |data|
   # | (_| (_) | | | \__ \ |_| | | (_| | | | | | |_\__ \
   #  \___\___/|_| |_|___/\__|_|  \__,_|_|_| |_|\__|___/
   data.Constraints = {}
-  #  _  _____
-  # | ||_   _|
-  # | |__| |
-  # |____|_|
-  # Penalty subtype: WALL_ERF_POWER1, WALL_ERF_POWER2, WALL_ERF_POWER3, WALL_TANH_POWER1, WALL_TANH_POWER2, WALL_TANH_POWER3, WALL_PIECEWISE_POWER1, WALL_PIECEWISE_POWER2, WALL_PIECEWISE_POWER3, PENALTY_REGULAR, PENALTY_SMOOTH, PENALTY_PIECEWISE
-  # Barrier subtype: BARRIER_1X, BARRIER_LOG, BARRIER_LOG_EXP, BARRIER_LOG0
-  # PenaltyBarrier1DLessThan
-  data.Constraints[:Tpositive] = {
-    :subType   => "PENALTY_REGULAR",
-    :epsilon   => 0.01,
-    :tolerance => 0.01,
-    :active    => true
-  }
+  # ConstraintLT: none defined
   # Constraint1D: none defined
   # Constraint2D: none defined
 
@@ -332,8 +318,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
+        :n      => 500.0,
         :length => 1.0,
-        :n      => 400.0,
       },
     ],
   };

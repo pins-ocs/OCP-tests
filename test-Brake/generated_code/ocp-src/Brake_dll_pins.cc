@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_dll_pins.cc                                              |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -49,6 +49,10 @@
 #pragma warning( disable : 4200 )
 #endif
 
+
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wdeprecated"
+#endif
 
 #include "Brake_dll_pins.hh"
 #include <map>

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Mex.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 8/2/2023                                         |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -34,8 +34,8 @@ static char const help_msg[] =
  |
 \*/
 
-static Console * pConsole  = nullptr;
-static integer   n_threads = std::thread::hardware_concurrency();
+static Mechatronix::Console        * pConsole{nullptr};
+static Mechatronix::ThreadPoolBase * pTP{nullptr};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //   _ __   _____      __
@@ -52,7 +52,7 @@ do_new(
   #define CMD MODEL_NAME "_Mex('new',name): "
   CHECK_IN_OUT( 2, 1 );
   UTILS_MEX_ASSERT0( mxIsChar(arg_in_1), CMD "second argument must be a string" );
-  ProblemStorage * ptr = new ProblemStorage( mxArrayToString(arg_in_1), n_threads, pConsole );
+  ProblemStorage * ptr = new ProblemStorage( mxArrayToString(arg_in_1), pConsole, pTP );
   arg_out_0 = Utils::mex_convert_ptr_to_mx<ProblemStorage>(ptr);
   #undef CMD
 }
@@ -186,7 +186,7 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"get_solution2",&ProblemStorage::do_get_solution2},
   {"get_solution3",&ProblemStorage::do_get_solution3},
   {"get_ocp_data",&ProblemStorage::do_get_ocp_data},
-  {"init_U",&ProblemStorage::do_init_U},
+  {"guess_U",&ProblemStorage::do_guess_U},
   {"eval_U",&ProblemStorage::do_eval_U},
   {"eval_F",&ProblemStorage::do_eval_F},
   {"eval_JF",&ProblemStorage::do_eval_JF},
@@ -196,14 +196,13 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"unpack",&ProblemStorage::do_unpack},
   {"unpack_for_direct",&ProblemStorage::do_unpack_for_direct},
   {"estimate_multipliers",&ProblemStorage::do_estimate_multipliers},
-  {"ac",&ProblemStorage::do_ac},
+  {"abc",&ProblemStorage::do_abc},
   {"hc",&ProblemStorage::do_hc},
   {"u",&ProblemStorage::do_u},
   {"rhs_ode",&ProblemStorage::do_rhs_ode},
   {"eta",&ProblemStorage::do_eta},
   {"nu",&ProblemStorage::do_nu},
   {"Hxp",&ProblemStorage::do_Hxp},
-  {"Hu",&ProblemStorage::do_Hu},
   {"LT",&ProblemStorage::do_LT},
   {"JP",&ProblemStorage::do_JP},
   {"JU",&ProblemStorage::do_JU},
@@ -214,11 +213,14 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DlagrangeDxpu",&ProblemStorage::do_DlagrangeDxpu},
   {"mayer_target",&ProblemStorage::do_mayer_target},
   {"DmayerDxxp",&ProblemStorage::do_DmayerDxxp},
+  {"fd_BC",&ProblemStorage::do_fd_BC},
   {"fd_ode",&ProblemStorage::do_fd_ode},
+  {"fd_ode2",&ProblemStorage::do_fd_ode2},
+  {"fd_int",&ProblemStorage::do_fd_int},
   {"mesh_functions",&ProblemStorage::do_mesh_functions},
   {"nodes",&ProblemStorage::do_nodes},
   {"node_to_segment",&ProblemStorage::do_node_to_segment},
-  {"DacDxlxlpu",&ProblemStorage::do_DacDxlxlpu},
+  {"DabcDxlxlpu",&ProblemStorage::do_DabcDxlxlpu},
   {"DhcDxlxlop",&ProblemStorage::do_DhcDxlxlop},
   {"DuDxlxlp",&ProblemStorage::do_DuDxlxlp},
   {"Drhs_odeDxpu",&ProblemStorage::do_Drhs_odeDxpu},
@@ -229,38 +231,54 @@ static std::map<std::string,DO_CMD> cmd_to_fun = {
   {"DetaDxp_pattern",&ProblemStorage::do_DetaDxp_pattern},
   {"DnuDxp",&ProblemStorage::do_DnuDxp},
   {"DnuDxp_pattern",&ProblemStorage::do_DnuDxp_pattern},
-  {"DHxpDxpu",&ProblemStorage::do_DHxpDxpu},
-  {"DHxpDxpu_pattern",&ProblemStorage::do_DHxpDxpu_pattern},
+  {"DHxpDxlpu",&ProblemStorage::do_DHxpDxlpu},
+  {"DHxpDxlpu_pattern",&ProblemStorage::do_DHxpDxlpu_pattern},
+  {"DjumpDxlxlp",&ProblemStorage::do_DjumpDxlxlp},
+  {"DjumpDxlxlp_pattern",&ProblemStorage::do_DjumpDxlxlp_pattern},
   {"DLTargsDxpu",&ProblemStorage::do_DLTargsDxpu},
   {"DLTargsDxpu_pattern",&ProblemStorage::do_DLTargsDxpu_pattern},
-  {"DJPDxpu",&ProblemStorage::do_DJPDxpu},
-  {"DJPDxpu_pattern",&ProblemStorage::do_DJPDxpu_pattern},
-  {"DLTDxpu",&ProblemStorage::do_DLTDxpu},
-  {"DLTDxpu_pattern",&ProblemStorage::do_DLTDxpu_pattern},
-  {"DJUDxpu",&ProblemStorage::do_DJUDxpu},
-  {"DJUDxpu_pattern",&ProblemStorage::do_DJUDxpu_pattern},
   {"D2LTargsD2xpu",&ProblemStorage::do_D2LTargsD2xpu},
   {"D2LTargsD2xpu_pattern",&ProblemStorage::do_D2LTargsD2xpu_pattern},
+  {"DJPDxpu",&ProblemStorage::do_DJPDxpu},
+  {"DJPDxpu_pattern",&ProblemStorage::do_DJPDxpu_pattern},
   {"D2JPD2xpu",&ProblemStorage::do_D2JPD2xpu},
   {"D2JPD2xpu_pattern",&ProblemStorage::do_D2JPD2xpu_pattern},
+  {"DLTDxpu",&ProblemStorage::do_DLTDxpu},
+  {"DLTDxpu_pattern",&ProblemStorage::do_DLTDxpu_pattern},
   {"D2LTD2xpu",&ProblemStorage::do_D2LTD2xpu},
   {"D2LTD2xpu_pattern",&ProblemStorage::do_D2LTD2xpu_pattern},
+  {"DJUDxpu",&ProblemStorage::do_DJUDxpu},
+  {"DJUDxpu_pattern",&ProblemStorage::do_DJUDxpu_pattern},
   {"D2JUD2xpu",&ProblemStorage::do_D2JUD2xpu},
   {"D2JUD2xpu_pattern",&ProblemStorage::do_D2JUD2xpu_pattern},
   {"DbcDxxp",&ProblemStorage::do_DbcDxxp},
   {"DbcDxxp_pattern",&ProblemStorage::do_DbcDxxp_pattern},
   {"D2bcD2xxp",&ProblemStorage::do_D2bcD2xxp},
   {"D2bcD2xxp_pattern",&ProblemStorage::do_D2bcD2xxp_pattern},
-  {"DjumpDxlxlp",&ProblemStorage::do_DjumpDxlxlp},
-  {"DjumpDxlxlp_pattern",&ProblemStorage::do_DjumpDxlxlp_pattern},
   {"D2lagrangeD2xpu",&ProblemStorage::do_D2lagrangeD2xpu},
   {"D2lagrangeD2xpu_pattern",&ProblemStorage::do_D2lagrangeD2xpu_pattern},
   {"D2mayerD2xxp",&ProblemStorage::do_D2mayerD2xxp},
   {"D2mayerD2xxp_pattern",&ProblemStorage::do_D2mayerD2xxp_pattern},
+  {"Dfd_BCDxlxlp",&ProblemStorage::do_Dfd_BCDxlxlp},
+  {"Dfd_BCDxlxlp_pattern",&ProblemStorage::do_Dfd_BCDxlxlp_pattern},
   {"Dfd_odeDxxpu",&ProblemStorage::do_Dfd_odeDxxpu},
   {"Dfd_odeDxxpu_pattern",&ProblemStorage::do_Dfd_odeDxxpu_pattern},
   {"D2fd_odeD2xxpu",&ProblemStorage::do_D2fd_odeD2xxpu},
-  {"D2fd_odeD2xxpu_pattern",&ProblemStorage::do_D2fd_odeD2xxpu_pattern}
+  {"D2fd_odeD2xxpu_pattern",&ProblemStorage::do_D2fd_odeD2xxpu_pattern},
+  {"Dfd_ode2Dxlxlpu",&ProblemStorage::do_Dfd_ode2Dxlxlpu},
+  {"Dfd_ode2Dxlxlpu_pattern",&ProblemStorage::do_Dfd_ode2Dxlxlpu_pattern},
+  {"Dfd_intDxlxlpu",&ProblemStorage::do_Dfd_intDxlxlpu},
+  {"Dfd_intDxlxlpu_pattern",&ProblemStorage::do_Dfd_intDxlxlpu_pattern},
+  {"guess_x",&ProblemStorage::do_guess_x},
+  {"guess_x_D",&ProblemStorage::do_guess_x_D},
+  {"guess_v",&ProblemStorage::do_guess_v},
+  {"guess_v_D",&ProblemStorage::do_guess_v_D},
+  {"guess_lambda1",&ProblemStorage::do_guess_lambda1},
+  {"guess_lambda1_D",&ProblemStorage::do_guess_lambda1_D},
+  {"guess_lambda2",&ProblemStorage::do_guess_lambda2},
+  {"guess_lambda2_D",&ProblemStorage::do_guess_lambda2_D},
+  {"guess_u",&ProblemStorage::do_guess_u},
+  {"guess_u_D",&ProblemStorage::do_guess_u_D}
 };
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -307,6 +325,7 @@ mexFunction(
   if ( outbuf   == nullptr ) outbuf   = std::cout.rdbuf(&mout1); // Redirect COUT
   if ( errbuf   == nullptr ) errbuf   = std::cerr.rdbuf(&mout2); // Redirect COUT
   if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
+  if ( pTP      == nullptr ) pTP      = new ThreadPool1( std::thread::hardware_concurrency());
 
   try {
     pConsole->setOff(); // do not colorize
