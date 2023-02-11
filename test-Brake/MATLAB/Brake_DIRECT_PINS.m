@@ -4,7 +4,7 @@ global OCP;
 % epsilon  = 0.1
 % epsilon2 = 0
 % mu       = 0
-% 
+%
 %                                          Norm of      First-order   Trust-region
 %  Iteration  Func-count     f(x)          step         optimality    radius
 %      0        609         87.1358                           135               1
@@ -59,7 +59,7 @@ opts1 = optimoptions(...
   'MaxFunctionEvaluations', 500000, ...
   'CheckGradients',false, ...
   'Display','iter', ...
-  'SpecifyObjectiveGradient',true ...
+  'SpecifyObjectiveGradient',false ...
 );
 
 x0_pins = guess();
@@ -161,10 +161,10 @@ end
 %
 % ========================================================================
 %
-function [F,JF] = sys( Z )
+function F = sys( Z )
   global OCP;
   UG  = OCP.guess_U( Z );
   ACC = OCP.eval_U( Z, UG );
   F   = OCP.eval_F( Z, ACC );
-  JF  = OCP.eval_JF( Z, ACC );
+  %JF  = OCP.eval_JF( Z, ACC );
 end

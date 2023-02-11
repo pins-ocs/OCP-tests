@@ -2,9 +2,9 @@ global N epsilon epsilon2;
 
 close all;
 
-N        = 500;
+N        = 400;
 epsilon  = 0.1;
-epsilon2 = 0;
+epsilon2 = 0.0;
 
 [lb,ub] = bounds();
 
