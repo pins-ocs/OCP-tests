@@ -13,6 +13,10 @@ EQNS_T := [ EQ||(1..6)]: <%>;
 qvars := [rho(t),theta(t),phi(t),rho1(t),theta1(t),phi1(t)];
 cvars := [u_rho(t),u_theta(t),u_phi(t)];
 pars := [T]; # optimization parameter;
+EXPLICIT := false:
+if EXPLICIT then
+  EQNS_T := op(solve( EQNS_T, diff(qvars,t) ));
+end:;
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -97,14 +101,18 @@ CONT := [
   ]
 ];
 #Describe(generateOCProblem);
+project_dir  := "../generated_code";
+project_name := "RobotArm";
 generateOCProblem(
-  "RobotArm",
+  project_name,
   parameters              = pars,
   mesh                    = [[length=1,n=400]],
   continuation            = CONT,
   states_guess            = GUESS,
   optimization_parameters = PGUESS
 );
-#ocp := getOCProblem();
-#eval(ocp);
-;
+ocp := getOCProblem();
+eval(ocp["FD"]);
+eval(ocp["ode"]);
+eval(ocp["controls"]["u"]);
+# if used in batch mode use the comment to quit;
