@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Mex_user.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_h_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('h_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('h_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -48,7 +48,7 @@ ProblemStorage::do_h_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('h_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('h_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -64,7 +64,7 @@ ProblemStorage::do_h_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('h_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('h_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -80,7 +80,7 @@ ProblemStorage::do_theta_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('theta_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('theta_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -96,7 +96,7 @@ ProblemStorage::do_theta_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('theta_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('theta_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -112,7 +112,7 @@ ProblemStorage::do_theta_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('theta_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('theta_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -128,7 +128,7 @@ ProblemStorage::do_phi_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('phi_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('phi_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -144,7 +144,7 @@ ProblemStorage::do_phi_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('phi_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('phi_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -160,7 +160,7 @@ ProblemStorage::do_phi_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('phi_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('phi_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -176,7 +176,7 @@ ProblemStorage::do_V_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('V_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('V_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -192,7 +192,7 @@ ProblemStorage::do_V_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('V_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('V_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -208,7 +208,7 @@ ProblemStorage::do_V_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('V_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('V_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -224,7 +224,7 @@ ProblemStorage::do_G_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -240,7 +240,7 @@ ProblemStorage::do_G_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -256,7 +256,7 @@ ProblemStorage::do_G_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -272,7 +272,7 @@ ProblemStorage::do_psi_guess(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('psi_guess', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('psi_guess', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -288,7 +288,7 @@ ProblemStorage::do_psi_guess_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('psi_guess_D', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('psi_guess_D', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -304,7 +304,7 @@ ProblemStorage::do_psi_guess_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('psi_guess_DD', obj, xo__s ): "
+  #define CMD "res = " MODEL_NAME "_Mex('psi_guess_DD', obj, xo__s ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -320,7 +320,7 @@ ProblemStorage::do_G_bound(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_bound', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_bound', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -336,7 +336,7 @@ ProblemStorage::do_G_bound_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_bound_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_bound_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -352,7 +352,7 @@ ProblemStorage::do_G_bound_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('G_bound_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('G_bound_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );

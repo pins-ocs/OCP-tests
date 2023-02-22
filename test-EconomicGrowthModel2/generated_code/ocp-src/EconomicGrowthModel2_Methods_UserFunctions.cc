@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_UserFunctions.cc                  |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -193,7 +193,7 @@ namespace EconomicGrowthModel2Define {
     real_type t2   = 1 - xo__s;
     real_type t4   = log(xo__a);
     real_type t6   = log(xo__b);
-    real_type t9   = exp(t2 * t4 + t6 * xo__s);
+    real_type t9   = exp(t2 * t4 + xo__s * t6);
     real_type result__ = t9 * t2 / xo__a;
     if ( m_debug ) {
       UTILS_ASSERT(
@@ -264,7 +264,7 @@ namespace EconomicGrowthModel2Define {
   EconomicGrowthModel2::explog_D_2( real_type xo__a, real_type xo__b, real_type xo__s ) const {
     real_type t3   = log(xo__a);
     real_type t6   = log(xo__b);
-    real_type t9   = exp((1 - xo__s) * t3 + t6 * xo__s);
+    real_type t9   = exp((1 - xo__s) * t3 + xo__s * t6);
     real_type result__ = t9 * xo__s / xo__b;
     if ( m_debug ) {
       UTILS_ASSERT(

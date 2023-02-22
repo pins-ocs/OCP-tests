@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: stirred_tank_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 20/1/2023                                        #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_max  = 0.1
 tf       = 0.2
 epsi_max = 0.1
+tol_max  = 0.1
 
 mechatronix do |data|
 
@@ -49,6 +49,8 @@ mechatronix do |data|
 
 
   # Enable check jacobian and controls
+  data.MuCheck_epsilon       = 1e-6
+  data.MuCheck               = false
   data.ControlsCheck         = true
   data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
@@ -302,25 +304,25 @@ mechatronix do |data|
   # Barrier subtype: LOGARITHMIC, LOGARITHMIC2, COS_LOGARITHMIC, TAN2, HYPERBOLIC
   data.Controls = {}
   data.Controls[:u1Control] = {
-    :type      => 'CUBIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => epsi_max,
     :tolerance => tol_max
   }
 
   data.Controls[:u2Control] = {
-    :type      => 'CUBIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => epsi_max,
     :tolerance => tol_max
   }
 
   data.Controls[:u3Control] = {
-    :type      => 'CUBIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => epsi_max,
     :tolerance => tol_max
   }
 
   data.Controls[:u4Control] = {
-    :type      => 'CUBIC',
+    :type      => 'COS_LOGARITHMIC',
     :epsilon   => epsi_max,
     :tolerance => tol_max
   }
@@ -350,8 +352,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
+        :n      => 1000.0,
         :length => tf,
-        :n      => 10000.0,
       },
     ],
   };

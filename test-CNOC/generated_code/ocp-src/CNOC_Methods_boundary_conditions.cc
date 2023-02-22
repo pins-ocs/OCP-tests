@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_boundary_conditions.cc                            |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -163,10 +163,10 @@ namespace CNOCDefine {
 
   void
   CNOC::bc_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -216,10 +216,10 @@ namespace CNOCDefine {
 
   void
   CNOC::DbcDxxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -260,13 +260,115 @@ namespace CNOCDefine {
 
   void
   CNOC::D2bcD2xxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    NodeQX const &          LEFT__,
+    NodeQX const &          RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
   ) const {
     // EMPTY
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer CNOC::fd_BC_numEqns() const { return 14; }
+
+  void
+  CNOC::fd_BC_eval(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = OMEGA__[10] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[0] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[1] + LL__[iL_lambda3__xo];
+    result__[ 3   ] = OMEGA__[2] + LL__[iL_lambda4__xo];
+    result__[ 4   ] = OMEGA__[3] + LL__[iL_lambda5__xo];
+    result__[ 5   ] = OMEGA__[4] + LL__[iL_lambda6__xo];
+    result__[ 6   ] = LL__[iL_lambda7__xo];
+    result__[ 7   ] = OMEGA__[11] - LR__[iL_lambda1__xo];
+    result__[ 8   ] = OMEGA__[5] - LR__[iL_lambda2__xo];
+    result__[ 9   ] = OMEGA__[6] - LR__[iL_lambda3__xo];
+    result__[ 10  ] = OMEGA__[7] - LR__[iL_lambda4__xo];
+    result__[ 11  ] = OMEGA__[8] - LR__[iL_lambda5__xo];
+    result__[ 12  ] = OMEGA__[9] - LR__[iL_lambda6__xo];
+    result__[ 13  ] = -LR__[iL_lambda7__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 12, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer CNOC::Dfd_BCDxlxlp_numRows() const { return 14; }
+  integer CNOC::Dfd_BCDxlxlp_numCols() const { return 28; }
+  integer CNOC::Dfd_BCDxlxlp_nnz()     const { return 14; }
+
+  void
+  CNOC::Dfd_BCDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 7   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 8   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 9   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 10  ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 11  ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 12  ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 13  ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 21  ;
+    iIndex[8 ] = 8   ; jIndex[8 ] = 22  ;
+    iIndex[9 ] = 9   ; jIndex[9 ] = 23  ;
+    iIndex[10] = 10  ; jIndex[10] = 24  ;
+    iIndex[11] = 11  ; jIndex[11] = 25  ;
+    iIndex[12] = 12  ; jIndex[12] = 26  ;
+    iIndex[13] = 13  ; jIndex[13] = 27  ;
+  }
+
+
+  void
+  CNOC::Dfd_BCDxlxlp_sparse(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = 1;
+    result__[ 6   ] = 1;
+    result__[ 7   ] = -1;
+    result__[ 8   ] = -1;
+    result__[ 9   ] = -1;
+    result__[ 10  ] = -1;
+    result__[ 11  ] = -1;
+    result__[ 12  ] = -1;
+    result__[ 13  ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "Dfd_BCDxlxlp_sparse", 14, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

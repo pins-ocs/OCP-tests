@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Main.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type max_epsi = 0.1;
-    real_type epsi = max_epsi;
     real_type max_tol = 0.1;
     real_type tol = max_tol;
+    real_type max_epsi = 0.1;
+    real_type epsi = max_epsi;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -176,8 +176,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 MinimumEnergyProblem_data.Mesh["s0"] = 0;
-MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 1000;
 MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
+MinimumEnergyProblem_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers
@@ -239,7 +239,7 @@ MinimumEnergyProblem_data.Mesh["segments"][0]["length"] = 1;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

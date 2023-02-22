@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Mex_user.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_LimitV(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitV', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitV', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -48,7 +48,7 @@ ProblemStorage::do_LimitV_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitV_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitV_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -64,7 +64,7 @@ ProblemStorage::do_LimitV_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitV_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitV_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -80,7 +80,7 @@ ProblemStorage::do_LimitA(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitA', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitA', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -96,7 +96,7 @@ ProblemStorage::do_LimitA_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitA_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitA_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -112,7 +112,7 @@ ProblemStorage::do_LimitA_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('LimitA_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('LimitA_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );

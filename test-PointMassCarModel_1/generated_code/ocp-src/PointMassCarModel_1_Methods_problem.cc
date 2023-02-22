@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -179,66 +179,6 @@ namespace PointMassCarModel_1Define {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  PointMassCarModel_1::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[11], X__[5];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    Q__[1] = (QL__[1]+QR__[1])/2;
-    Q__[2] = (QL__[2]+QR__[2])/2;
-    Q__[3] = (QL__[3]+QR__[3])/2;
-    Q__[4] = (QL__[4]+QR__[4])/2;
-    Q__[5] = (QL__[5]+QR__[5])/2;
-    Q__[6] = (QL__[6]+QR__[6])/2;
-    Q__[7] = (QL__[7]+QR__[7])/2;
-    Q__[8] = (QL__[8]+QR__[8])/2;
-    Q__[9] = (QL__[9]+QR__[9])/2;
-    Q__[10] = (QL__[10]+QR__[10])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
-    bool ok = true;
-    real_type t1   = X__[iX_fx];
-    real_type t2   = t1 * t1;
-    real_type t4   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
-    real_type t8   = ModelPars[iM_g] * ModelPars[iM_g];
-    real_type t9   = 1.0 / t8;
-    real_type t12  = X__[iX_Omega] * X__[iX_Omega];
-    real_type t13  = X__[iX_V];
-    real_type t14  = t13 * t13;
-    real_type t17  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    ok = ok && AdherenceEllipse.check_range(t9 / t4 * t2 + t9 / t17 * t14 * t12 - 1, m_max_penalty_value);
-    real_type t22  = X__[iX_n];
-    ok = ok && RoadLeftBorder.check_range(t22 - Q__[iQ_leftWidth], m_max_penalty_value);
-    ok = ok && RoadRightBorder.check_range(-t22 - Q__[iQ_rightWidth], m_max_penalty_value);
-    ok = ok && PowerLimit.check_range(ModelPars[iM_m] / ModelPars[iM_Pmax] * t1 * t13 - 1, m_max_penalty_value);
-    ok = ok && LimitMinSpeed.check_range(-t13, m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -248,9 +188,10 @@ namespace PointMassCarModel_1Define {
 
   real_type
   PointMassCarModel_1::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -263,7 +204,7 @@ namespace PointMassCarModel_1Define {
     real_type t6   = inv_zeta__dot(t2, t3, X__[iX_n], t5);
     real_type t10  = sin(t3);
     real_type t21  = t2 * t2;
-    real_type result__ = t6 * ModelPars[iM_wT] + t6 * t10 * t2 * L__[iL_lambda1__xo] + (t6 * X__[iX_Omega] - t5) * L__[iL_lambda2__xo] + (-t21 * ModelPars[iM_kD] + X__[iX_fx]) * t6 * L__[iL_lambda3__xo] + t6 * ModelPars[iM_v__Omega__max] * L__[iL_lambda4__xo] * U__[iU_v__Omega] + t6 * ModelPars[iM_v__fx__max] * L__[iL_lambda5__xo] * U__[iU_v__fx];
+    real_type result__ = t6 * ModelPars[iM_wT] + t6 * t10 * t2 * MU__[0] + (t6 * X__[iX_Omega] - t5) * MU__[1] + (-t21 * ModelPars[iM_kD] + X__[iX_fx]) * t6 * MU__[2] + t6 * ModelPars[iM_v__Omega__max] * MU__[3] * U__[iU_v__Omega] + t6 * ModelPars[iM_v__fx__max] * MU__[4] * U__[iU_v__fx];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -280,9 +221,9 @@ namespace PointMassCarModel_1Define {
 
   real_type
   PointMassCarModel_1::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -306,9 +247,9 @@ namespace PointMassCarModel_1Define {
 
   real_type
   PointMassCarModel_1::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -331,10 +272,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -373,10 +314,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -394,10 +335,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -443,10 +384,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -489,9 +430,9 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -520,22 +461,22 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer PointMassCarModel_1::DsegmentLinkDxp_numRows() const { return 0; }
-  integer PointMassCarModel_1::DsegmentLinkDxp_numCols() const { return 0; }
-  integer PointMassCarModel_1::DsegmentLinkDxp_nnz() const { return 0; }
+  integer PointMassCarModel_1::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer PointMassCarModel_1::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer PointMassCarModel_1::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  PointMassCarModel_1::DsegmentLinkDxp_pattern(
+  PointMassCarModel_1::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -545,11 +486,11 @@ namespace PointMassCarModel_1Define {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PointMassCarModel_1::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  PointMassCarModel_1::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -566,10 +507,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -629,10 +570,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -680,10 +621,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -730,10 +671,10 @@ namespace PointMassCarModel_1Define {
 
   void
   PointMassCarModel_1::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

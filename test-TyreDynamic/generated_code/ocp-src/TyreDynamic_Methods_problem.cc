@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_problem.cc                                 |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -127,48 +127,6 @@ namespace TyreDynamicDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  TyreDynamic::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[5];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool ok = true;
-    real_type t2   = ModelPars[iM_h__b];
-    ok = ok && OnlyBrakingRear.check_range(X__[iX_b] - t2, m_max_penalty_value);
-    ok = ok && OnlyTractionRear.check_range(-t2 - X__[iX_p], m_max_penalty_value);
-    real_type t9   = 1.0 / ModelPars[iM_lambda__max] * X__[iX_lambda];
-    ok = ok && LongSlipRear_min.check_range(-1 - t9, m_max_penalty_value);
-    ok = ok && LongSlipRear_max.check_range(t9 - 1, m_max_penalty_value);
-    ok = ok && v_min.check_range(1 - X__[iX_v], m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -178,9 +136,10 @@ namespace TyreDynamicDefine {
 
   real_type
   TyreDynamic::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -204,7 +163,7 @@ namespace TyreDynamicDefine {
     real_type t26  = TB(t25, t22);
     real_type t29  = Ma(t22);
     real_type t34  = kappa__w(t10, t22);
-    real_type result__ = 1.0 / t10 * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5)) + (t15 - t16) * L__[iL_lambda1__xo] + (-ModelPars[iM_rw] * t15 + t23 + t26 + t29) * L__[iL_lambda2__xo] + (t34 - t14) * t10 * L__[iL_lambda3__xo] + (-t20 + t2) * L__[iL_lambda4__xo] + (-t24 + t4) * L__[iL_lambda5__xo];
+    real_type result__ = 1.0 / t10 * (ModelPars[iM_w__t] + ModelPars[iM_w__U] * (t3 + t5)) + (t15 - t16) * MU__[0] + (-ModelPars[iM_rw] * t15 + t23 + t26 + t29) * MU__[1] + (t34 - t14) * t10 * MU__[2] + (-t20 + t2) * MU__[3] + (-t24 + t4) * MU__[4];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -221,9 +180,9 @@ namespace TyreDynamicDefine {
 
   real_type
   TyreDynamic::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -248,9 +207,9 @@ namespace TyreDynamicDefine {
 
   real_type
   TyreDynamic::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -273,10 +232,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -315,10 +274,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -336,10 +295,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -383,10 +342,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -424,9 +383,9 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -445,22 +404,22 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer TyreDynamic::DsegmentLinkDxp_numRows() const { return 0; }
-  integer TyreDynamic::DsegmentLinkDxp_numCols() const { return 0; }
-  integer TyreDynamic::DsegmentLinkDxp_nnz() const { return 0; }
+  integer TyreDynamic::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer TyreDynamic::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer TyreDynamic::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  TyreDynamic::DsegmentLinkDxp_pattern(
+  TyreDynamic::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -470,11 +429,11 @@ namespace TyreDynamicDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TyreDynamic::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  TyreDynamic::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -491,10 +450,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -506,23 +465,16 @@ namespace TyreDynamicDefine {
     real_const_ptr     LR__ = RIGHT__.lambda;
     MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
     MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
-    real_type t1   = XR__[iX_v];
-    real_type t2   = XL__[iX_v];
-    result__[ 0   ] = t1 - t2;
+    result__[ 0   ] = XR__[iX_v] - XL__[iX_v];
     result__[ 1   ] = XR__[iX_omega] - XL__[iX_omega];
     result__[ 2   ] = XR__[iX_lambda] - XL__[iX_lambda];
     result__[ 3   ] = XR__[iX_p] - XL__[iX_p];
     result__[ 4   ] = XR__[iX_b] - XL__[iX_b];
-    real_type t13  = ModelPars[iM_m];
-    result__[ 5   ] = t13 * t1 * LR__[iL_lambda1__xo] - t13 * t2 * LL__[iL_lambda1__xo];
-    real_type t20  = ModelPars[iM_Iw];
-    result__[ 6   ] = t20 * t1 * LR__[iL_lambda2__xo] - t20 * t2 * LL__[iL_lambda2__xo];
-    real_type t27  = ModelPars[iM_l__x];
-    result__[ 7   ] = t27 * t1 * LR__[iL_lambda3__xo] - t27 * t2 * LL__[iL_lambda3__xo];
-    real_type t34  = ModelPars[iM_tau__p];
-    result__[ 8   ] = t34 * t1 * LR__[iL_lambda4__xo] - t34 * t2 * LL__[iL_lambda4__xo];
-    real_type t41  = ModelPars[iM_tau__b];
-    result__[ 9   ] = t41 * t1 * LR__[iL_lambda5__xo] - t41 * t2 * LL__[iL_lambda5__xo];
+    result__[ 5   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
+    result__[ 6   ] = LR__[iL_lambda2__xo] - LL__[iL_lambda2__xo];
+    result__[ 7   ] = LR__[iL_lambda3__xo] - LL__[iL_lambda3__xo];
+    result__[ 8   ] = LR__[iL_lambda4__xo] - LL__[iL_lambda4__xo];
+    result__[ 9   ] = LR__[iL_lambda5__xo] - LL__[iL_lambda5__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 10, i_segment_left, i_segment_right );
   }
@@ -530,7 +482,7 @@ namespace TyreDynamicDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer TyreDynamic::DjumpDxlxlp_numRows() const { return 10; }
   integer TyreDynamic::DjumpDxlxlp_numCols() const { return 20; }
-  integer TyreDynamic::DjumpDxlxlp_nnz()     const { return 30; }
+  integer TyreDynamic::DjumpDxlxlp_nnz()     const { return 20; }
 
   void
   TyreDynamic::DjumpDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
@@ -544,26 +496,16 @@ namespace TyreDynamicDefine {
     iIndex[7 ] = 3   ; jIndex[7 ] = 13  ;
     iIndex[8 ] = 4   ; jIndex[8 ] = 4   ;
     iIndex[9 ] = 4   ; jIndex[9 ] = 14  ;
-    iIndex[10] = 5   ; jIndex[10] = 0   ;
-    iIndex[11] = 5   ; jIndex[11] = 5   ;
-    iIndex[12] = 5   ; jIndex[12] = 10  ;
-    iIndex[13] = 5   ; jIndex[13] = 15  ;
-    iIndex[14] = 6   ; jIndex[14] = 0   ;
-    iIndex[15] = 6   ; jIndex[15] = 6   ;
-    iIndex[16] = 6   ; jIndex[16] = 10  ;
-    iIndex[17] = 6   ; jIndex[17] = 16  ;
-    iIndex[18] = 7   ; jIndex[18] = 0   ;
-    iIndex[19] = 7   ; jIndex[19] = 7   ;
-    iIndex[20] = 7   ; jIndex[20] = 10  ;
-    iIndex[21] = 7   ; jIndex[21] = 17  ;
-    iIndex[22] = 8   ; jIndex[22] = 0   ;
-    iIndex[23] = 8   ; jIndex[23] = 8   ;
-    iIndex[24] = 8   ; jIndex[24] = 10  ;
-    iIndex[25] = 8   ; jIndex[25] = 18  ;
-    iIndex[26] = 9   ; jIndex[26] = 0   ;
-    iIndex[27] = 9   ; jIndex[27] = 9   ;
-    iIndex[28] = 9   ; jIndex[28] = 10  ;
-    iIndex[29] = 9   ; jIndex[29] = 19  ;
+    iIndex[10] = 5   ; jIndex[10] = 5   ;
+    iIndex[11] = 5   ; jIndex[11] = 15  ;
+    iIndex[12] = 6   ; jIndex[12] = 6   ;
+    iIndex[13] = 6   ; jIndex[13] = 16  ;
+    iIndex[14] = 7   ; jIndex[14] = 7   ;
+    iIndex[15] = 7   ; jIndex[15] = 17  ;
+    iIndex[16] = 8   ; jIndex[16] = 8   ;
+    iIndex[17] = 8   ; jIndex[17] = 18  ;
+    iIndex[18] = 9   ; jIndex[18] = 9   ;
+    iIndex[19] = 9   ; jIndex[19] = 19  ;
   }
 
 
@@ -571,10 +513,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -596,35 +538,18 @@ namespace TyreDynamicDefine {
     result__[ 7   ] = 1;
     result__[ 8   ] = -1;
     result__[ 9   ] = 1;
-    real_type t1   = ModelPars[iM_m];
-    result__[ 10  ] = -LL__[iL_lambda1__xo] * t1;
-    real_type t4   = XL__[iX_v];
-    result__[ 11  ] = -t1 * t4;
-    result__[ 12  ] = LR__[iL_lambda1__xo] * t1;
-    real_type t7   = XR__[iX_v];
-    result__[ 13  ] = t1 * t7;
-    real_type t8   = ModelPars[iM_Iw];
-    result__[ 14  ] = -LL__[iL_lambda2__xo] * t8;
-    result__[ 15  ] = -t4 * t8;
-    result__[ 16  ] = LR__[iL_lambda2__xo] * t8;
-    result__[ 17  ] = t7 * t8;
-    real_type t13  = ModelPars[iM_l__x];
-    result__[ 18  ] = -LL__[iL_lambda3__xo] * t13;
-    result__[ 19  ] = -t13 * t4;
-    result__[ 20  ] = LR__[iL_lambda3__xo] * t13;
-    result__[ 21  ] = t13 * t7;
-    real_type t18  = ModelPars[iM_tau__p];
-    result__[ 22  ] = -LL__[iL_lambda4__xo] * t18;
-    result__[ 23  ] = -t18 * t4;
-    result__[ 24  ] = LR__[iL_lambda4__xo] * t18;
-    result__[ 25  ] = t18 * t7;
-    real_type t23  = ModelPars[iM_tau__b];
-    result__[ 26  ] = -LL__[iL_lambda5__xo] * t23;
-    result__[ 27  ] = -t23 * t4;
-    result__[ 28  ] = LR__[iL_lambda5__xo] * t23;
-    result__[ 29  ] = t23 * t7;
+    result__[ 10  ] = -1;
+    result__[ 11  ] = 1;
+    result__[ 12  ] = -1;
+    result__[ 13  ] = 1;
+    result__[ 14  ] = -1;
+    result__[ 15  ] = 1;
+    result__[ 16  ] = -1;
+    result__[ 17  ] = 1;
+    result__[ 18  ] = -1;
+    result__[ 19  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 30, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DjumpDxlxlp_sparse", 20, i_segment_left, i_segment_right );
   }
 
   /*\
@@ -639,10 +564,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -687,10 +612,10 @@ namespace TyreDynamicDefine {
 
   void
   TyreDynamic::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,22 +20,22 @@
 -- User Header
 
 -- Auxiliary values
-eps_c0   = 0.1
-L        = 300.0
-rw       = 0.3
-v__0     = 10.0
-omega__0 = 1/rw*v__0
 tol_c0   = 0.1
-eps_l    = 0.01
-tol_c    = tol_c0
-TT__max  = 800.0
+v__0     = 10.0
 tol_l    = 0.01
-eps_c    = eps_c0
+tol_c    = tol_c0
 h__b     = 1.0
-E__pow   = 60*TT__max
-mesh_np  = 2.000000000*L
 w__t0    = 1.0
 w__t     = w__t0
+rw       = 0.3
+omega__0 = 1/rw*v__0
+L        = 300.0
+mesh_np  = 2.000000000*L
+TT__max  = 800.0
+eps_l    = 0.01
+eps_c0   = 0.1
+eps_c    = eps_c0
+E__pow   = 60*TT__max
 
 content = {
 
@@ -48,8 +48,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -61,20 +59,25 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -339,8 +342,8 @@ content = {
     clipSuph = 0.01,
   -- ClipIntervalWithErf
     clipIntdelta = 0.0,
-    clipInth = 0.01,
     clipIntdelta2 = 0.0,
+    clipInth = 0.01,
   -- SignRegularizedWithErf
     sign_regh = 0.01,
   -- AbsoluteValueRegularizedWithErf

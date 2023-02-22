@@ -1,3 +1,45 @@
+MODEL:GoddardRocket
+BEGIN DIMS
+  dim         = u=1, q=1, x=3, p=1, bc(active/total)=(4/4)
+  total       = nZ=2411, nP=1600, nU=400, Q=401
+  index start = omega=2406, p=2410
+  post proc.  = n_post=6, n_Ipost=0
+END DIMS
+BEGIN MESH
+ num_nodes    = 401
+ num_segments = 1
+END MESH
+BEGIN THREADS
+  Used threads: 15
+  U/JU/F/JF/LU: true/true/true/true/true
+END THREADS
+BEGIN PARAMS
+  m_debug:                 false
+  m_max_penalty_value:     1000
+  Solver Controls:         Newton
+  Jacobian evaluation:     ANALYTIC
+  Jacobian BC evaluation:  ANALYTIC
+  Initializer Controls:    not selected
+  Initialize Multipliers:  false
+  Initialize Guess:        not selected + not selected
+  Continuation interval:   [0,1)
+  mesh class pointer:      0x7ff7b5fd55c0
+  solver class pointer:    0x7fb31f80e5c0
+END PARAMS
+BEGIN LINEAR ALGEBRA
+  rows   = 2411
+  cols   = 2411
+  nblock = 400
+  n      = 6
+  qr     = 4
+  qx     = 4
+  nr     = 1
+  nx     = 1
+  treads = 16/nblk:15/factorize:true/solve:true
+  intern = CyclicReduction+LU
+  last   = LastBlock LUPQ
+END PARAMS
+
 Boundary Conditions activation status
 [xx] = activated, [  ] = NOT activated
 
@@ -46,175 +88,578 @@ num. segments = 1
 num. nodes = 401
 Segment N.0: s0 = 0 length = 1 npts = 401 no data set
 END Mesh[mesh]
-Model Parameters
-......................................Dc = 310
-....................................Tmax = 3.5
-.......................................c = 0.5
-......................................g0 = 1
-.....................................h_i = 1
-......................................hc = 500
-.....................................m_f = 0.6000000000000001
-.....................................m_i = 1
-.....................................v_i = 0
-.............................epsi_TS_max = 0.024999999999999994
-.............................epsi_TS_min = 9.999999999999996e-11
-..............................epsi_T_max = 0.09999999999999998
-..............................epsi_T_min = 1e-07
-...........................epsi_mass_max = 0.024999999999999994
-...........................epsi_mass_min = 9.999999999999999e-05
-..............................epsi_v_max = 0.09999999999999998
-..............................epsi_v_min = 9.999999999999999e-05
-..............................tol_TS_max = 9.999999999999999e-05
-..............................tol_TS_min = 0.001
-...............................tol_T_max = 0.009999999999999995
-...............................tol_T_min = 9.999999999999999e-05
-............................tol_mass_max = 0.009999999999999995
-............................tol_mass_min = 9.999999999999999e-05
-...............................tol_v_max = 0.009999999999999995
-...............................tol_v_min = 9.999999999999999e-05
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+MODEL PARAMETERS BEGIN
+  ......................................Dc = 310
+  ....................................Tmax = 3.5
+  .......................................c = 0.5
+  ......................................g0 = 1
+  .....................................h_i = 1
+  ......................................hc = 500
+  .....................................m_f = 0.6000000000000001
+  .....................................m_i = 1
+  .....................................v_i = 0
+  .............................epsi_TS_max = 0.024999999999999994
+  .............................epsi_TS_min = 9.999999999999996e-11
+  ..............................epsi_T_max = 0.09999999999999998
+  ..............................epsi_T_min = 1e-07
+  ...........................epsi_mass_max = 0.024999999999999994
+  ...........................epsi_mass_min = 9.999999999999999e-05
+  ..............................epsi_v_max = 0.09999999999999998
+  ..............................epsi_v_min = 9.999999999999999e-05
+  ..............................tol_TS_max = 9.999999999999999e-05
+  ..............................tol_TS_min = 0.001
+  ...............................tol_T_max = 0.009999999999999995
+  ...............................tol_T_min = 9.999999999999999e-05
+  ............................tol_mass_max = 0.009999999999999995
+  ............................tol_mass_min = 9.999999999999999e-05
+  ...............................tol_v_max = 0.009999999999999995
+  ...............................tol_v_min = 9.999999999999999e-05
+MODEL PARAMETERS END
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #0
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.05657717439968862) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1, 3] (  0.0234  ,  0.0138  ) [  0.0998  ,  0.0501  ] 0.5        [0:0:0:0:0:0:0:0:1:0:0:0]
-[  2, 5] (  0.0138  ,  0.0134  ) [  0.156   ,  0.144   ] 0.0312     [0:0:0:0:0:0:0:0:3:0:0:0]
-[  3, 6] (  0.0134  ,  0.0126  ) [  0.0657  ,  0.0613  ] 0.0625     [0:0:0:0:0:0:0:0:4:0:0:0]
-[  4, 6] (  0.0126  ,  0.0126  ) [  0.0618  ,  0.0608  ] 0.0125     [0:1:0:0:0:0:0:0:3:0:0:0]
-[  5, 5] (  0.0126  ,  0.0113  ) [  0.0548  ,  0.0506  ] 0.103      [0:1:0:0:0:0:0:0:2:0:0:0]
-[  6, 6] (  0.0113  ,  0.0108  ) [  0.0801  ,  0.0743  ] 0.05       [0:0:1:0:0:0:0:0:3:0:0:0]
-[  7, 5] (  0.0108  , 0.00981  ) [  0.0807  ,  0.0741  ] 0.1        [0:0:1:0:0:0:0:0:2:0:0:0]
-[  8, 5] ( 0.00981  , 0.00885  ) [  0.121   ,  0.112   ] 0.1        [0:0:1:0:0:0:0:0:2:0:0:0]
-[  9, 9] ( 0.00885  , 0.00882  ) [  0.368   ,  0.367   ] 0.004      [0:0:3:0:0:0:0:0:4:0:0:0]
-[ 10, 5] ( 0.00882  , 0.00937  ) [  0.526   ,  0.512   ] 0.0312     [0:0:0:0:0:0:0:0:3:0:0:0]
-[ 11, 5] ( 0.00937  , 0.00576  ) [   1.71   ,   1.94   ] 0.0312     [0:0:0:0:0:0:0:0:3:0:0:0]
-[ 12, 9] ( 0.00576  , 0.00556  ) [    11    ,   11.1   ] 0.00156    [0:1:0:0:0:0:0:0:6:0:0:0]
-[ 13, 7] ( 0.00556  , 0.00613  ) [  0.519   ,  0.515   ] 0.0334     [0:0:1:0:0:0:0:0:4:0:0:0]
-[ 14, 6] ( 0.00613  , 0.00604  ) [  0.839   ,  0.819   ] 0.0156     [0:0:0:0:0:0:0:0:4:0:0:0]
-[ 15, 7] ( 0.00604  , 0.00603  ) [  0.364   ,  0.363   ] 0.005      [0:2:0:0:0:0:0:0:3:0:0:0]
-[ 16, 7] ( 0.00603  , 0.00602  ) [  0.386   ,  0.385   ] 0.005      [0:2:0:0:0:0:0:0:3:0:0:0]
-[ 17, 8] ( 0.00602  , 0.00601  ) [  0.747   ,  0.746   ] 0.0025     [0:2:0:0:0:0:0:0:4:0:0:0]
-[ 18, 9] ( 0.00601  , 0.00606  ) [   3.5    ,   3.5    ] 0.00156    [0:1:0:0:0:0:0:0:6:0:0:0]
-[ 19, 7] ( 0.00606  , 0.00613  ) [   1.4    ,   1.39   ] 0.00625    [0:1:0:0:0:0:0:0:4:0:0:0]
-[ 20, 7] ( 0.00613  , 0.00607  ) [  0.346   ,   0.34   ] 0.025      [0:1:0:0:0:0:0:0:4:0:0:0]
+[  1, 3] (   9.19   ,   5.42   ) [  0.0998  ,   0.05   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #1
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.005006501208984753) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #11
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.06374861198520657) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #2
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.0006318675540567392) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  2, 5] (   5.42   ,   5.26   ) [  0.155   ,  0.143   ] 0.0312     [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.011848587791226158) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #0
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.00608450889923938) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.02859222744472375) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.001772443904753309) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  3, 6] (   5.26   ,   4.97   ) [  0.0661  ,  0.0616  ] 0.0625     [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #1
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.1379840438290561) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #4
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.17145921885351978) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #0
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.030741108842830378) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  4, 6] (   4.97   ,   4.94   ) [  0.0594  ,  0.0588  ] 0.0125     [0:1:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #3
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.026388524967153465) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.4542088804559613) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.11220047473877667) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  5, 5] (   4.94   ,   4.49   ) [  0.0518  ,  0.0476  ] 0.125      [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #1
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.8698270503848613) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.4349853139010915) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #2
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.08409462984440069) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  6, 5] (   4.49   ,   4.12   ) [  0.0363  ,  0.0339  ] 0.125      [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.07010759232820396) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.04483481249222493) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  7, 4] (   4.12   ,   3.18   ) [  0.068   ,  0.0503  ] 0.25       [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #3
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.05757665292645665) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #0
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.07515254534501865) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #3
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.022945150520421786) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #4
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.023669899732536) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  8, 6] (   3.18   ,   3.13   ) [   1.32   ,   1.4    ] 0.0156     [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.008412508319626137) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[  9, 3] (   3.13   ,   2.14   ) [  0.0992  ,  0.0803  ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.12039820223710018) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
+
+PenaltyBarrier1DLessThan[massPositive]::D(0.0026900117944271412) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 10, 5] (   2.14   ,    2     ) [   0.19   ,  0.173   ] 0.1        [0:1:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #2
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.007318787181573833) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 11, 4] (    2     ,   2.04   ) [  0.301   ,  0.278   ] 0.2        [0:0:1:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #1
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.003933987129232977) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #1
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.004322834173572515) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 12, 4] (   2.04   ,   2.19   ) [  0.695   ,  0.646   ] 0.25       [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #5
+
+PenaltyBarrier1DLessThan[TSPositive]::D(4.128103640824872) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #3
+
+PenaltyBarrier1DLessThan[TSPositive]::D(1.6192200507558492) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.005360926051438605) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 13, 5] (   2.19   ,   2.15   ) [  0.906   ,   1.42   ] 0.0312     [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #5
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.009510827083316256) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.0035971003159875285) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 14, 4] (   2.15   ,   2.44   ) [   1.37   ,   1.17   ] 0.25       [0:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.9640180926108914) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.10676640869292953) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 15, 5] (   2.44   ,   2.28   ) [   1.24   ,   1.22   ] 0.1        [0:0:1:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
+
+PenaltyBarrier1DLessThan[TSPositive]::D(9.148731264718155) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
+
+PenaltyBarrier1DLessThan[TSPositive]::D(4.284848164507476) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.028950451823131496) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 16, 6] (   2.28   ,   2.38   ) [   13.7   ,   11.7   ] 0.0125     [0:0:1:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #5
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.3285007356730792) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 17, 4] (   2.38   ,   2.21   ) [  0.887   ,  0.506   ] 0.2        [1:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.13911131734487775) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 18, 4] (   2.21   ,    2     ) [  0.978   ,  0.784   ] 0.219      [1:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
+
+PenaltyBarrier1DLessThan[TSPositive]::D(0.029885275949799284) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 19, 3] (    2     ,   2.5    ) [   1.49   ,   0.6    ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 20, 2] (   2.5    ,   3.07   ) [   4.74   ,   4.65   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 21, 5] ( 0.00607  , 0.00584  ) [  0.193   ,  0.147   ] 0.125      [0:0:0:0:0:0:0:0:3:0:0:0]
-[ 22, 1] ( 0.00584  , 0.00248  ) [  0.0453  ,  0.0418  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 23, 4] ( 0.00248  , 0.00273  ) [   4.12   ,   4.16   ] 0.2        [0:0:0:0:1:0:0:0:1:0:0:0]
-[ 24, 5] ( 0.00273  , 0.00364  ) [   25.6   ,   24.5   ] 0.1        [0:0:1:0:0:0:0:0:2:0:0:0]
-[ 25, 4] ( 0.00364  , 0.00455  ) [   29.7   ,   25.9   ] 0.0872     [1:0:2:0:0:0:0:0:0:0:0:0]
-[ 26, 3] ( 0.00455  , 0.00499  ) [   3.65   ,   2.51   ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 27, 2] ( 0.00499  , 0.00604  ) [   4.63   ,   5.24   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
-[ 28,10] ( 0.00604  , 0.00795  ) [   9.56   ,   3.11   ] 0.63       [1:0:8:0:0:0:0:0:0:0:0:0]
-[ 29,11] ( 0.00795  , 0.00519  ) [  0.958   ,  0.554   ] 0.379      [10:0:0:0:0:0:0:0:0:0:0:0]
-[ 30, 1] ( 0.00519  , 0.00186  ) [   0.36   ,  0.448   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 31, 1] ( 0.00186  , 0.000131 ) [  0.446   ,  0.0114  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 32, 4] ( 0.000131 , 2.52e-05 ) [  0.0148  , 0.000886 ] 0.857      [3:0:0:0:0:0:0:0:0:0:0:0]
-[ 33, 1] ( 2.52e-05 , 4.53e-07 ) [ 0.000865 , 3.26e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 34, 1] ( 4.53e-07 , 4.2e-11  ) [ 3.2e-05  , 1.15e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 35, 1] ( 4.2e-11  , 6.09e-17 ) [ 1.16e-08 , 1.85e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 21, 3] (   3.07   ,   2.69   ) [  0.783   ,  0.949   ] 0.231      [0:0:0:2:0:0:0:0:0:0:0:0]
+[ 22, 1] (   2.69   ,   3.48   ) [   5.39   ,   1.18   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 23,10] (   3.48   ,   1.36   ) [   1.68   ,  0.354   ] 0.63       [9:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 2] (   1.36   ,  0.109   ) [  0.696   ,  0.021   ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 25, 1] (  0.109   ,  0.063   ) [  0.0357  ,  0.0117  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 26, 1] (  0.063   , 0.00947  ) [  0.0169  , 0.00132  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 27, 1] ( 0.00947  , 7.59e-05 ) [ 0.00152  , 1.61e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 28, 1] ( 7.59e-05 , 6.56e-09 ) [ 1.63e-05 , 1.33e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 1] ( 6.56e-09 , 2.46e-14 ) [ 1.33e-09 , 3.09e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
 Continuation step N.1 s=0.2, ds=0.2, old_s=    0
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 36,11] ( 0.000878 , 0.000535 ) [   0.11   ,  0.0485  ] 0.599      [10:0:0:0:0:0:0:0:0:0:0:0]
-[ 37,12] ( 0.000535 , 0.00041  ) [  0.121   ,  0.0848  ] 0.239      [11:0:0:0:0:0:0:0:0:0:0:0]
-[ 38,17] ( 0.00041  , 0.000333 ) [  0.0297  ,  0.0217  ] 0.185      [16:0:0:0:0:0:0:0:0:0:0:0]
-[ 39,11] ( 0.000333 , 0.000132 ) [  0.0109  ,  0.0129  ] 0.599      [0:0:0:10:0:0:0:0:0:0:0:0]
-[ 40, 1] ( 0.000132 , 1.08e-05 ) [  0.0141  , 0.00225  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 41, 1] ( 1.08e-05 , 4.68e-07 ) [ 0.00184  , 5.79e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 42, 1] ( 4.68e-07 , 7.87e-10 ) [ 6.27e-05 , 1.22e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 43, 1] ( 7.87e-10 , 3.8e-15  ) [ 1.22e-07 , 5.56e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 30,11] (  0.337   ,  0.205   ) [   0.11   ,  0.0485  ] 0.599      [10:0:0:0:0:0:0:0:0:0:0:0]
+[ 31,13] (  0.205   ,  0.111   ) [  0.121   , 0.00961  ] 0.54       [12:0:0:0:0:0:0:0:0:0:0:0]
+[ 32, 5] (  0.111   ,  0.0367  ) [  0.0511  , 0.00322  ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
+[ 33, 1] (  0.0367  ,  0.0027  ) [  0.0039  , 0.000966 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 34, 1] (  0.0027  , 3.14e-05 ) [ 0.000752 , 1.62e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 35, 1] ( 3.14e-05 , 1.13e-08 ) [ 1.7e-05  , 1.02e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 36, 1] ( 1.13e-08 , 3.54e-14 ) [ 1.02e-08 , 5.41e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.4, ds=0.2, old_s=0.19999999999999996
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+Continuation step N.1 s=0.5, ds=0.3, old_s=0.19999999999999996
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 44,13] ( 0.000218 , 0.000157 ) [   0.04   ,  0.0239  ] 0.228      [12:0:0:0:0:0:0:0:0:0:0:0]
-[ 45, 1] ( 0.000157 , 0.000127 ) [  0.0226  ,  0.0346  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 46, 2] ( 0.000127 , 6.01e-05 ) [ 0.00512  , 0.00244  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 47, 1] ( 6.01e-05 , 1.08e-05 ) [ 0.00252  , 0.000414 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 48, 1] ( 1.08e-05 , 1.01e-06 ) [ 0.000924 , 0.000161 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 49, 1] ( 1.01e-06 , 4.33e-08 ) [ 0.00024  , 1.18e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 50, 1] ( 4.33e-08 , 1.07e-10 ) [ 1.3e-05  , 3.7e-08  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 51, 1] ( 1.07e-10 , 8.35e-16 ) [ 3.72e-08 , 2.87e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 37,27] (  0.0979  ,  0.106   ) [  0.0511  ,  0.0214  ] 0.264      [26:0:0:0:0:0:0:0:0:0:0:0]
+[ 38,32] (  0.106   ,  0.0728  ) [  0.0191  ,  0.0204  ] 0.114      [31:0:0:0:0:0:0:0:0:0:0:0]
+[ 39, 1] (  0.0728  ,  0.0786  ) [  0.025   ,  0.0215  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 40,21] (  0.0786  ,  0.0497  ) [  0.0144  , 0.00424  ] 0.151      [20:0:0:0:0:0:0:0:0:0:0:0]
+[ 41, 2] (  0.0497  ,  0.0262  ) [ 0.00274  , 0.00143  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 42, 1] (  0.0262  , 0.00434  ) [ 0.00144  , 0.000398 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 43, 1] ( 0.00434  , 0.000452 ) [ 0.000611 , 0.000107 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 44, 1] ( 0.000452 , 1.85e-05 ) [ 0.000168 , 1.04e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 45, 1] ( 1.85e-05 , 6.9e-08  ) [ 1.18e-05 , 5.11e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 46, 1] ( 6.9e-08  , 1.19e-12 ) [ 5.15e-08 , 9.35e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
-Continuation step N.1 s=0.6, ds=0.2, old_s=0.3999999999999999
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+Continuation step N.1 s=0.95, ds=0.45, old_s=0.4999999999999999
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 52, 3] ( 0.000103 , 0.00014  ) [ 0.00847  , 0.00509  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 53, 2] ( 0.00014  , 9.42e-05 ) [  0.0034  , 0.00121  ] 0.669      [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 54, 4] ( 9.42e-05 , 8.61e-05 ) [ 0.00317  ,  0.0029  ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
-[ 55, 3] ( 8.61e-05 , 8.58e-05 ) [ 0.00196  , 0.00126  ] 0.239      [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 56, 1] ( 8.58e-05 , 3.33e-05 ) [ 0.00066  , 0.000366 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 57, 3] ( 3.33e-05 , 2.96e-05 ) [  0.0013  , 0.00094  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 58, 3] ( 2.96e-05 , 2.3e-05  ) [ 0.000512 , 0.000398 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 59, 3] ( 2.3e-05  , 1.38e-05 ) [ 0.000225 , 0.000136 ] 0.242      [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 60, 1] ( 1.38e-05 , 5.69e-06 ) [ 9.06e-05 , 1.25e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 61, 1] ( 5.69e-06 , 3.81e-07 ) [  4e-06   , 2.86e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 62, 1] ( 3.81e-07 , 6.41e-09 ) [ 3.52e-07 , 5.89e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 63, 1] ( 6.41e-09 , 2.46e-12 ) [ 6.12e-09 , 2.46e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 47, 8] (  0.0385  ,  0.0384  ) [ 0.00797  , 0.00796  ] 0.00164    [6:1:0:0:0:0:0:0:0:0:0:0]
+[ 48, 7] (  0.0384  ,  0.0381  ) [  0.0062  ,  0.0049  ] 0.0041     [6:0:0:0:0:0:0:0:0:0:0:0]
+[ 49, 6] (  0.0381  ,  0.0381  ) [ 0.00335  , 0.00278  ] 0.0102     [5:0:0:0:0:0:0:0:0:0:0:0]
+[ 50, 6] (  0.0381  ,  0.0375  ) [  0.0029  , 0.00287  ] 0.0118     [0:4:0:1:0:0:0:0:0:0:0:0]
+[ 51, 6] (  0.0375  ,  0.037   ) [ 0.00273  , 0.00271  ] 0.0113     [0:2:0:3:0:0:0:0:0:0:0:0]
+[ 52, 2] (  0.037   ,  0.0677  ) [ 0.00294  , 0.00182  ] 0.51       [1:0:0:0:0:0:0:0:0:0:0:0]
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
 
-Continuation step N.1 s=0.8, ds=0.2, old_s=0.5999999999999999
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 64, 4] ( 7.93e-05 , 6.66e-05 ) [ 0.00184  , 0.00171  ] 0.064      [1:2:0:0:0:0:0:0:0:0:0:0]
-[ 65, 2] ( 6.66e-05 , 0.000104 ) [  0.0015  , 0.000829 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 66, 8] ( 0.000104 , 3.42e-05 ) [ 0.000717 , 0.00133  ] 0.516      [7:0:0:0:0:0:0:0:0:0:0:0]
-[ 67, 4] ( 3.42e-05 , 3.15e-05 ) [ 0.00477  , 0.00335  ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
-[ 68, 3] ( 3.15e-05 , 2.87e-05 ) [ 0.000926 , 0.000484 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 69, 5] ( 2.87e-05 , 2.65e-05 ) [ 0.000949 , 0.000868 ] 0.0608     [4:0:0:0:0:0:0:0:0:0:0:0]
-[ 70, 3] ( 2.65e-05 , 2.05e-05 ) [ 0.000134 , 0.000186 ] 0.16       [0:2:0:0:0:0:0:0:0:0:0:0]
-[ 71, 3] ( 2.05e-05 , 1.73e-05 ) [ 6.41e-05 , 0.000231 ] 0.16       [0:1:0:1:0:0:0:0:0:0:0:0]
-[ 72, 6] ( 1.73e-05 , 1.34e-05 ) [ 0.000206 , 3.03e-05 ] 0.774      [5:0:0:0:0:0:0:0:0:0:0:0]
-[ 73, 1] ( 1.34e-05 , 5.93e-06 ) [ 1.45e-05 , 5.78e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 74, 3] ( 5.93e-06 , 4.22e-06 ) [ 5.43e-05 , 4.06e-05 ] 0.201      [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 75, 6] ( 4.22e-06 , 3.17e-06 ) [ 3.17e-05 , 2.3e-05  ] 0.24       [5:0:0:0:0:0:0:0:0:0:0:0]
-[ 76, 8] ( 3.17e-06 , 2.17e-06 ) [ 1.77e-05 , 1.14e-05 ] 0.294      [7:0:0:0:0:0:0:0:0:0:0:0]
-[ 77, 2] ( 2.17e-06 , 1.26e-06 ) [ 8.21e-06 , 4.57e-06 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 78, 2] ( 1.26e-06 , 7.6e-07  ) [ 3.81e-06 , 2.22e-06 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 79, 1] ( 7.6e-07  , 7.91e-08 ) [ 2.04e-06 , 1.59e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 80, 1] ( 7.91e-08 , 1.18e-09 ) [ 1.78e-07 , 1.58e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 81, 1] ( 1.18e-09 , 5.69e-13 ) [ 1.65e-09 , 8.05e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+PenaltyBarrier1DLessThan[vPositive]::D(0.0004770486356685784) argument must be < 0
 
-Continuation step N.1 s=1, ds=0.2, old_s=0.7999999999999998
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[ 82, 3] ( 7.34e-05 , 0.000146 ) [ 0.000577 , 0.000516 ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
-[ 83, 8] ( 0.000146 , 6.05e-05 ) [ 0.000592 , 8.27e-05 ] 0.698      [7:0:0:0:0:0:0:0:0:0:0:0]
-[ 84, 6] ( 6.05e-05 , 7.14e-05 ) [ 0.00196  , 0.000647 ] 0.0102     [5:0:0:0:0:0:0:0:0:0:0:0]
-[ 85, 6] ( 7.14e-05 , 6.9e-05  ) [ 0.000653 , 0.00047  ] 0.023      [5:0:0:0:0:0:0:0:0:0:0:0]
-[ 86, 4] ( 6.9e-05  , 6.42e-05 ) [ 0.000357 , 0.000169 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
-[ 87, 3] ( 6.42e-05 , 4.62e-05 ) [ 0.000121 , 0.00019  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 88, 3] ( 4.62e-05 , 5.43e-05 ) [ 0.000159 , 0.000102 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 89, 2] ( 5.43e-05 , 3.83e-05 ) [ 6.71e-05 , 5.85e-05 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 90, 4] ( 3.83e-05 , 3.35e-05 ) [ 7.16e-05 , 7.56e-05 ] 0.0869     [3:0:0:0:0:0:0:0:0:0:0:0]
-[ 91, 3] ( 3.35e-05 , 2.74e-05 ) [ 6.08e-05 , 5.18e-05 ] 0.16       [0:2:0:0:0:0:0:0:0:0:0:0]
-[ 92, 3] ( 2.74e-05 , 2.26e-05 ) [ 5.61e-05 , 4.81e-05 ] 0.16       [0:2:0:0:0:0:0:0:0:0:0:0]
-[ 93, 3] ( 2.26e-05 , 1.92e-05 ) [ 5.01e-05 , 4.35e-05 ] 0.181      [1:1:0:0:0:0:0:0:0:0:0:0]
-[ 94, 2] ( 1.92e-05 , 1.7e-05  ) [ 3.73e-05 , 2.54e-05 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 95, 6] ( 1.7e-05  , 9.21e-06 ) [ 2.63e-05 , 1.66e-05 ] 0.198      [5:0:0:0:0:0:0:0:0:0:0:0]
-[ 96, 3] ( 9.21e-06 , 8.25e-06 ) [ 2.18e-05 , 1.86e-05 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 97, 3] ( 8.25e-06 , 6.58e-06 ) [ 1.77e-05 , 1.42e-05 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
-[ 98, 1] ( 6.58e-06 , 7.39e-06 ) [ 1.03e-05 , 9.77e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 99, 7] ( 7.39e-06 , 7.02e-06 ) [ 1.94e-05 , 1.84e-05 ] 0.0312     [6:0:0:0:0:0:0:0:0:0:0:0]
-[100,13] ( 7.02e-06 , 6.41e-06 ) [ 4.87e-06 , 4.53e-06 ] 0.0403     [12:0:0:0:0:0:0:0:0:0:0:0]
-[101,12] ( 6.41e-06 , 4.77e-06 ) [ 3.34e-06 , 3.03e-06 ] 0.101      [11:0:0:0:0:0:0:0:0:0:0:0]
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[102, 8] ( 4.77e-06 , 2.56e-06 ) [ 1.53e-06 , 2.57e-07 ] 0.294      [7:0:0:0:0:0:0:0:0:0:0:0]
-[103, 1] ( 2.56e-06 , 4.57e-07 ) [ 8.52e-07 , 8.53e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[104, 1] ( 4.57e-07 , 5.31e-08 ) [ 1.37e-07 , 5.74e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[105, 2] ( 5.31e-08 , 3.21e-08 ) [ 5.31e-09 , 3.15e-09 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[106, 2] ( 3.21e-08 , 1.93e-08 ) [ 3.04e-09 , 1.81e-09 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[107, 2] ( 1.93e-08 , 1.16e-08 ) [ 1.78e-09 , 1.07e-09 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[108, 2] ( 1.16e-08 , 6.99e-09 ) [ 1.06e-09 , 6.33e-10 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[109, 2] ( 6.99e-09 , 4.2e-09  ) [ 6.29e-10 , 3.77e-10 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
-[110, 1] ( 4.2e-09  , 9.17e-12 ) [ 3.76e-10 , 1.76e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[111, 1] ( 9.17e-12 , 2.01e-14 ) [ 1.77e-12 , 7.4e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+On File:PenaltyBarrier1D.cc:456
 
-Continuation step N.1 s=1, ds=2.2204e-16, old_s=0.9999999999999998
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
+Discretized_Indirect_OCP::evaluate_function_thread, at thread #11
+
+PenaltyBarrier1DLessThan[vPositive]::D(0.0003637894089787905) argument must be < 0
+
+On File:PenaltyBarrier1D.cc:456
+
+On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
+
+Should not happen here!
+[ 53,55] (  0.0677  ,  0.0436  ) [ 0.00874  ,  0.0016  ] 0.0183     [51:0:0:0:0:0:0:0:0:0:0:0]
+[ 54, 4] (  0.0436  ,  0.0492  ) [ 0.00155  ,  0.0016  ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 55,75] (  0.0492  ,  0.0391  ) [  0.0034  , 0.00144  ] 0.00651    [74:0:0:0:0:0:0:0:0:0:0:0]
+[ 56, 4] (  0.0391  ,  0.0365  ) [ 0.00106  , 0.00144  ] 0.064      [1:2:0:0:0:0:0:0:0:0:0:0]
+[ 57, 5] (  0.0365  ,  0.0353  ) [ 0.00138  , 0.00103  ] 0.249      [4:0:0:0:0:0:0:0:0:0:0:0]
+[ 58, 3] (  0.0353  ,  0.033   ) [ 0.00124  , 0.00106  ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 59, 4] (  0.033   ,  0.0343  ) [  0.0013  , 0.000646 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 60, 3] (  0.0343  ,  0.0296  ) [ 0.000634 , 0.000621 ] 0.171      [1:1:0:0:0:0:0:0:0:0:0:0]
+[ 61, 3] (  0.0296  ,  0.0285  ) [ 0.000603 ,  0.0008  ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
+[ 62, 6] (  0.0285  ,  0.026   ) [ 0.00115  , 0.000922 ] 0.0578     [5:0:0:0:0:0:0:0:0:0:0:0]
+[ 63, 4] (  0.026   ,  0.0232  ) [ 0.000574 , 0.000561 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 64, 4] (  0.0232  ,  0.0221  ) [ 0.000526 , 0.000275 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 65, 2] (  0.0221  ,  0.0219  ) [ 0.000304 , 0.000221 ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 66,15] (  0.0219  ,  0.0177  ) [ 0.000401 , 0.000143 ] 0.0866     [14:0:0:0:0:0:0:0:0:0:0:0]
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 67, 4] (  0.0177  ,  0.0163  ) [ 0.000141 , 0.000129 ] 0.064      [2:1:0:0:0:0:0:0:0:0:0:0]
+[ 68, 3] (  0.0163  ,  0.0143  ) [ 0.000112 , 8.87e-05 ] 0.16       [1:1:0:0:0:0:0:0:0:0:0:0]
+[ 69, 5] (  0.0143  , 0.00939  ) [ 8.28e-05 , 5.68e-05 ] 0.388      [4:0:0:0:0:0:0:0:0:0:0:0]
+[ 70, 3] ( 0.00939  , 0.00886  ) [ 8.4e-05  , 7.11e-05 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 71, 4] ( 0.00886  , 0.00854  ) [ 7.03e-05 , 5.12e-05 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 72, 4] ( 0.00854  , 0.00798  ) [ 4.95e-05 , 3.67e-05 ] 0.0652     [3:0:0:0:0:0:0:0:0:0:0:0]
+[ 73, 2] ( 0.00798  , 0.00531  ) [ 3.25e-05 , 7.89e-06 ] 0.721      [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 74, 3] ( 0.00531  , 0.00395  ) [ 1.23e-05 , 1.92e-05 ] 0.209      [2:0:0:0:0:0:0:0:0:0:0:0]
+[ 75, 8] ( 0.00395  , 0.00184  ) [ 9.1e-06  , 4.14e-06 ] 0.295      [7:0:0:0:0:0:0:0:0:0:0:0]
+[ 76, 1] ( 0.00184  , 0.000257 ) [ 3.71e-06 , 1.23e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 77, 1] ( 0.000257 , 1.09e-05 ) [ 8.32e-08 , 4.25e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 78, 1] ( 1.09e-05 , 3.73e-08 ) [ 4.7e-09  , 2.07e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 79, 1] ( 3.73e-08 , 4.68e-12 ) [ 2.09e-11 , 1.73e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9499999999999997
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 80, 2] (  0.0103  , 0.00521  ) [ 7.77e-05 , 2.4e-05  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 81, 1] ( 0.00521  , 0.000791 ) [ 1.13e-05 , 1.01e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 82, 1] ( 0.000791 , 8.95e-05 ) [ 1.35e-06 , 2.96e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 83, 1] ( 8.95e-05 , 3.33e-06 ) [ 3.54e-08 , 6.66e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 84, 1] ( 3.33e-06 , 1.03e-08 ) [ 7.58e-10 , 3.37e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 85, 1] ( 1.03e-08 , 8.76e-12 ) [ 3.4e-12  , 1.59e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
----------------------------- NewtonDumped ----------------------------
+----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
 n_power        = 6             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.25          dump_max       = 0.9
@@ -223,45 +668,44 @@ dump_min       = 0.25          dump_max       = 0.9
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
 Converged      = YES           tolerance      = 1e-09
-N. Equations   = 2411          N. System pars = 400
+N. Equations   = 2411          N. System pars = 1600
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 231[ms]       timeout        = 0 [ms]
-iteration      = 141           Memory Used    = 294Kb (+47bytes)
-max iterations = 300           max acc. iter. = 800
+Elapsed Time   = 228[ms]       timeout        = 0 [ms]
+iteration      = 85            Memory Used    = 529Kb (+70bytes)
+max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 396           Jacobian       = 112
-Factorization  = 112           Inversion      = 501
-------------------------- SOLVER PARAMETERS --------------------------
+Function       = 505           Jacobian       = 85
+Factorization  = 85            Inversion      = 541
+----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.95
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 9.5566e-13    last ||d||_inf = 1.9633e-13
-last ||f||_1   = 2.0143e-14    last ||d||_1   = 7.4008e-15
-last ||f||_2   = 8.5529e-14    last ||d||_2   = 2.5182e-14
+last ||f||_inf = 5.1262e-10    last ||d||_inf = 3.5701e-14
+last ||f||_1   = 8.7615e-12    last ||d||_1   = 1.5923e-15
+last ||f||_2   = 3.8391e-11    last ||d||_2   = 4.4826e-15
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties for check)
+Check Jacobian Begin
+Check DabcDxlxlpu:
 All internal blocks OK
+Check DhcDxlxlop:
 Last block: OK
 Check Jacobian End
 Check Controls Begin
-[diagnostic] internal error: 
-PenaltyBarrier1DLessThan[vPositive]::operator ()(-0) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:455
-
+All controls solution are OK
+Check Controls End
 target [Lagrange,Mayer]       = [ 0, -1.013 ]
 [Penalties/Barriers,Controls] = [ 0, 1.163e-07 ]
 Optimization parameters:
-TimeSize: 0.198711133269923873
+TimeSize: 0.198711718792395714
 All Done Folks!

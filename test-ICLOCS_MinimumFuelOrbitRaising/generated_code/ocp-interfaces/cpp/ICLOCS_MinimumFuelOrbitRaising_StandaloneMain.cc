@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 21/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tf = 3.32;
     real_type epsilon_max = 1;
     real_type epsilon = epsilon_max;
+    real_type tf = 3.32;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -227,7 +227,7 @@ ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

@@ -79,7 +79,6 @@ ODExvars, ODEuvars, ODEwfunc := time2space(ODExvars, ODEuvars, ODEwfunc,t,zeta, 
 ODEwfunc: <%>;
 ODExvars;
 ODEuvars;
-;
 loadDynamicSystem(
   states    = ODExvars,  
   controls  = ODEuvars,
@@ -92,7 +91,6 @@ EQGC := subs( diff(ODExvars,zeta)=~0, zeta=zeta_i, ODEwfunc[1..3]):
 NameGC := ["lambda__i","p__i","omega__i"]:
 GCs := [seq([EQGC[i],NameGC[i]],i=1..nops(EQGC))];
 <%>;
-;
 addBoundaryConditions(initial = ICs, final = FCs, generic = GCs );
 mayer_target    := 0 :
 lagrange_target := subs( dnew, t=zeta, 1/zeta__dot) * ( w__t + w__U *( <ODEuvars>^%T . <ODEuvars> ) ):
@@ -156,9 +154,7 @@ constraints_params := [
   v__adm      = 1,
   lambda__max = 1
 ];
-ADMISSIBLE_REGIONS := [ 
-                        v(zeta)        > v__adm
-                      ];
+ADMISSIBLE_REGIONS := [ v(zeta) > v__adm ];
 CONTINUATION := [
 
   [ w__t  = w__t0  + (w__t1  - w__t0 )*s ], # push the minimum time
@@ -255,11 +251,12 @@ OCP_data := [# wheel data - - - - - - - -
 PARAMETERS := OCP_data;
 ;
 x_guess := [
-            v     =  v__ss,
-            omega = omega__ss,
-            lambda= lambda__ss,
-            p     = p__ss,
-            b     = b__ss];
+ v      =  v__ss,
+ omega  = omega__ss,
+ lambda = lambda__ss,
+ p      = p__ss,
+ b      = b__ss
+];
 
 u_guess  := [p__o = p__ss, b__o = b__ss];
 ### addUserFunction(a(t)=0 , derivatives=0);
@@ -277,26 +274,29 @@ map(x->cat(op(0,x),__ub)*cat(op(0,x),__lb),ODEuvars);
 < op(%%), op(%) >:
 tmp_F := B_data() = %^%T . %;
 ### addUserFunction( B_data(), derivatives = 1);
-;
 ##  map(x-> addUserFunction( cat(B__,op(0,x),__ub)() = cat(op(0,x),__ub) ) ,ODExvars);
 ##  map(x-> addUserFunction( cat(B__,op(0,x),__lb)() = cat(op(0,x),__lb) ) ,ODExvars);
 ##  map(x-> addUserFunction( cat(B__,op(0,x),__ub)() = cat(op(0,x),__ub) ) ,ODEuvars);
 ##  map(x-> addUserFunction( cat(B__,op(0,x),__lb)() = cat(op(0,x),__lb) ) ,ODEuvars);
-;
 PARAMETERS := [op(PARAMETERS), op(bound_data)];
+Mesh := [
+  [length=0.1*L, n=round(0.1*mesh_np*4)],
+  [length=0.8*L, n=round(0.8*mesh_np)],
+  [length=0.1*L, n=round(0.1*mesh_np*4)]
+];
 generateOCProblem(
   project_name,           
-  BVP_only                  = false,
-  max_accumulated_iter      = 1500,
-  max_step_iter             = 40,
-  mesh                      = [[length=0.1*L, n=0.1*mesh_np*4],[length=0.8*L, n=0.8*mesh_np],[length=0.1*L, n=0.1*mesh_np*4]],
-  standard_post_processing  = true,
-  integral_post_processing  = int_post_proc,
-  output_directory          = project_dir,
-  states_guess              = x_guess,
-  parameters                = PARAMETERS,
-  user_parameters           = map(lhs,bound_data),
-  continuation              = CONTINUATION,
-  post_processing           = post_process_outputs,
-  admissible_region         = ADMISSIBLE_REGIONS
+  BVP_only                 = false,
+  max_accumulated_iter     = 1500,
+  max_step_iter            = 40,
+  mesh                     = Mesh,
+  standard_post_processing = true,
+  integral_post_processing = int_post_proc,
+  output_directory         = project_dir,
+  states_guess             = x_guess,
+  parameters               = PARAMETERS,
+  user_parameters          = map(lhs,bound_data),
+  continuation             = CONTINUATION,
+  post_processing          = post_process_outputs,
+  admissible_region        = ADMISSIBLE_REGIONS
 );

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,56 +75,146 @@ namespace BangBangFtauDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangFtau::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   BangBangFtau::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangFtau::LT_numEqns() const { return 5; }
+  real_type
+  BangBangFtau::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
 
-  void
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   BangBangFtau::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_vsT];
-    result__[ 0   ] = vsTpositive(-t1);
-    real_type t2   = U__[iU_vsB];
-    result__[ 1   ] = vsBpositive(-t2);
-    result__[ 2   ] = vsTmax(t1 - ModelPars[iM_maxT]);
-    result__[ 3   ] = vsTBInterval_min(-1 - t1 + t2);
-    result__[ 4   ] = vsTBInterval_max(t1 - t2 - 1);
+    real_type t2   = vsTpositive(-t1);
+    real_type t3   = U__[iU_vsB];
+    real_type t4   = vsBpositive(-t3);
+    real_type t7   = vsTmax(t1 - ModelPars[iM_maxT]);
+    real_type t9   = vsTBInterval_min(-1 - t1 + t3);
+    real_type t11  = vsTBInterval_max(t1 - t3 - 1);
+    real_type result__ = t2 + t4 + t7 + t9 + t11;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 5, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtau::JPxpu_numEqns() const { return 6; }
+
+  void
+  BangBangFtau::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangFtau::JU_numEqns() const { return 0; }
+  integer BangBangFtau::JUxpu_numEqns() const { return 6; }
 
   void
-  BangBangFtau::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFtau::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFtau::LTxpu_numEqns() const { return 6; }
+
+  void
+  BangBangFtau::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    real_type t1   = U__[iU_vsT];
+    real_type t2   = ALIAS_vsTpositive_D(-t1);
+    real_type t5   = ALIAS_vsTmax_D(t1 - ModelPars[iM_maxT]);
+    real_type t6   = U__[iU_vsB];
+    real_type t8   = ALIAS_vsTBInterval_min_D(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_D(t1 - t6 - 1);
+    result__[ 4   ] = -t2 + t5 - t8 + t10;
+    real_type t11  = ALIAS_vsBpositive_D(-t6);
+    result__[ 5   ] = -t11 + t8 - t10;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,10 +223,10 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -155,87 +245,83 @@ namespace BangBangFtauDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::DJPDxpu_numRows() const { return 0; }
-  integer BangBangFtau::DJPDxpu_numCols() const { return 6; }
-  integer BangBangFtau::DJPDxpu_nnz()     const { return 0; }
+  integer BangBangFtau::D2JPD2xpu_numRows() const { return 6; }
+  integer BangBangFtau::D2JPD2xpu_numCols() const { return 6; }
+  integer BangBangFtau::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  BangBangFtau::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFtau::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  BangBangFtau::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFtau::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::DLTDxpu_numRows() const { return 5; }
-  integer BangBangFtau::DLTDxpu_numCols() const { return 6; }
-  integer BangBangFtau::DLTDxpu_nnz()     const { return 7; }
+  integer BangBangFtau::D2LTD2xpu_numRows() const { return 6; }
+  integer BangBangFtau::D2LTD2xpu_numCols() const { return 6; }
+  integer BangBangFtau::D2LTD2xpu_nnz()     const { return 4; }
 
   void
-  BangBangFtau::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 5   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 4   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 5   ;
-    iIndex[5 ] = 4   ; jIndex[5 ] = 4   ;
-    iIndex[6 ] = 4   ; jIndex[6 ] = 5   ;
+  BangBangFtau::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 5   ;
   }
 
 
   void
-  BangBangFtau::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFtau::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_vsT];
-    real_type t2   = ALIAS_vsTpositive_D(-t1);
-    result__[ 0   ] = -t2;
-    real_type t3   = U__[iU_vsB];
-    real_type t4   = ALIAS_vsBpositive_D(-t3);
-    result__[ 1   ] = -t4;
-    result__[ 2   ] = ALIAS_vsTmax_D(t1 - ModelPars[iM_maxT]);
-    real_type t8   = ALIAS_vsTBInterval_min_D(-1 - t1 + t3);
-    result__[ 3   ] = -t8;
-    result__[ 4   ] = t8;
-    result__[ 5   ] = ALIAS_vsTBInterval_max_D(t1 - t3 - 1);
-    result__[ 6   ] = -result__[5];
+    real_type t2   = ALIAS_vsTpositive_DD(-t1);
+    real_type t5   = ALIAS_vsTmax_DD(t1 - ModelPars[iM_maxT]);
+    real_type t6   = U__[iU_vsB];
+    real_type t8   = ALIAS_vsTBInterval_min_DD(-1 - t1 + t6);
+    real_type t10  = ALIAS_vsTBInterval_max_DD(t1 - t6 - 1);
+    result__[ 0   ] = t2 + t5 + t8 + t10;
+    result__[ 1   ] = -t8 - t10;
+    result__[ 2   ] = result__[1];
+    real_type t11  = ALIAS_vsBpositive_DD(-t6);
+    result__[ 3   ] = t11 + t8 + t10;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::DJUDxpu_numRows() const { return 0; }
-  integer BangBangFtau::DJUDxpu_numCols() const { return 6; }
-  integer BangBangFtau::DJUDxpu_nnz()     const { return 0; }
+  integer BangBangFtau::D2JUD2xpu_numRows() const { return 6; }
+  integer BangBangFtau::D2JUD2xpu_numCols() const { return 6; }
+  integer BangBangFtau::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  BangBangFtau::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFtau::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  BangBangFtau::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFtau::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -259,10 +345,10 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -282,96 +368,6 @@ namespace BangBangFtauDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::D2JPD2xpu_numRows() const { return 6; }
-  integer BangBangFtau::D2JPD2xpu_numCols() const { return 6; }
-  integer BangBangFtau::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  BangBangFtau::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BangBangFtau::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::D2LTD2xpu_numRows() const { return 6; }
-  integer BangBangFtau::D2LTD2xpu_numCols() const { return 6; }
-  integer BangBangFtau::D2LTD2xpu_nnz()     const { return 4; }
-
-  void
-  BangBangFtau::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 5   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 5   ; jIndex[3 ] = 5   ;
-  }
-
-
-  void
-  BangBangFtau::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_vsT];
-    real_type t2   = ALIAS_vsTpositive_DD(-t1);
-    real_type t7   = ALIAS_vsTmax_DD(t1 - ModelPars[iM_maxT]);
-    real_type t10  = U__[iU_vsB];
-    real_type t12  = ALIAS_vsTBInterval_min_DD(-1 - t1 + t10);
-    real_type t14  = OMEGA__[3] * t12;
-    real_type t16  = ALIAS_vsTBInterval_max_DD(t1 - t10 - 1);
-    real_type t18  = OMEGA__[4] * t16;
-    result__[ 0   ] = OMEGA__[0] * t2 + OMEGA__[2] * t7 + t14 + t18;
-    result__[ 1   ] = -t14 - t18;
-    result__[ 2   ] = result__[1];
-    real_type t19  = ALIAS_vsBpositive_DD(-t10);
-    result__[ 3   ] = OMEGA__[1] * t19 + t14 + t18;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFtau::D2JUD2xpu_numRows() const { return 6; }
-  integer BangBangFtau::D2JUD2xpu_numCols() const { return 6; }
-  integer BangBangFtau::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  BangBangFtau::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BangBangFtau::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFtau::D2LTargsD2xpu_numRows() const { return 6; }
   integer BangBangFtau::D2LTargsD2xpu_numCols() const { return 6; }
   integer BangBangFtau::D2LTargsD2xpu_nnz()     const { return 0; }
@@ -384,11 +380,11 @@ namespace BangBangFtauDefine {
 
   void
   BangBangFtau::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

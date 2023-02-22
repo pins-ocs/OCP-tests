@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: SingularLuus04_FreeTime_main.m                                 %
 %                                                                       %
-%  version: 1.0   date 10/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -36,7 +36,7 @@ ocp = SingularLuus04_FreeTime( 'SingularLuus04_FreeTime' );
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(SingularLuus04_FreeTime_data);
 ocp.setup('../../data/SingularLuus04_FreeTime_Data');  % automatically try extension .rb and .lua
-ocp.infoLevel(4);
+ocp.set_info_level(4);
 
 ocp.set_guess(); % use default guess generated in MAPLE
 %

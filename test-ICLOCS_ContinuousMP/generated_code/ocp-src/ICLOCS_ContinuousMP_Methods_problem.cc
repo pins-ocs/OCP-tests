@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -461,297 +461,6 @@ namespace ICLOCS_ContinuousMPDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  ICLOCS_ContinuousMP::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[80];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
-    X__[7] = (XL__[7]+XR__[7])/2;
-    X__[8] = (XL__[8]+XR__[8])/2;
-    X__[9] = (XL__[9]+XR__[9])/2;
-    X__[10] = (XL__[10]+XR__[10])/2;
-    X__[11] = (XL__[11]+XR__[11])/2;
-    X__[12] = (XL__[12]+XR__[12])/2;
-    X__[13] = (XL__[13]+XR__[13])/2;
-    X__[14] = (XL__[14]+XR__[14])/2;
-    X__[15] = (XL__[15]+XR__[15])/2;
-    X__[16] = (XL__[16]+XR__[16])/2;
-    X__[17] = (XL__[17]+XR__[17])/2;
-    X__[18] = (XL__[18]+XR__[18])/2;
-    X__[19] = (XL__[19]+XR__[19])/2;
-    X__[20] = (XL__[20]+XR__[20])/2;
-    X__[21] = (XL__[21]+XR__[21])/2;
-    X__[22] = (XL__[22]+XR__[22])/2;
-    X__[23] = (XL__[23]+XR__[23])/2;
-    X__[24] = (XL__[24]+XR__[24])/2;
-    X__[25] = (XL__[25]+XR__[25])/2;
-    X__[26] = (XL__[26]+XR__[26])/2;
-    X__[27] = (XL__[27]+XR__[27])/2;
-    X__[28] = (XL__[28]+XR__[28])/2;
-    X__[29] = (XL__[29]+XR__[29])/2;
-    X__[30] = (XL__[30]+XR__[30])/2;
-    X__[31] = (XL__[31]+XR__[31])/2;
-    X__[32] = (XL__[32]+XR__[32])/2;
-    X__[33] = (XL__[33]+XR__[33])/2;
-    X__[34] = (XL__[34]+XR__[34])/2;
-    X__[35] = (XL__[35]+XR__[35])/2;
-    X__[36] = (XL__[36]+XR__[36])/2;
-    X__[37] = (XL__[37]+XR__[37])/2;
-    X__[38] = (XL__[38]+XR__[38])/2;
-    X__[39] = (XL__[39]+XR__[39])/2;
-    X__[40] = (XL__[40]+XR__[40])/2;
-    X__[41] = (XL__[41]+XR__[41])/2;
-    X__[42] = (XL__[42]+XR__[42])/2;
-    X__[43] = (XL__[43]+XR__[43])/2;
-    X__[44] = (XL__[44]+XR__[44])/2;
-    X__[45] = (XL__[45]+XR__[45])/2;
-    X__[46] = (XL__[46]+XR__[46])/2;
-    X__[47] = (XL__[47]+XR__[47])/2;
-    X__[48] = (XL__[48]+XR__[48])/2;
-    X__[49] = (XL__[49]+XR__[49])/2;
-    X__[50] = (XL__[50]+XR__[50])/2;
-    X__[51] = (XL__[51]+XR__[51])/2;
-    X__[52] = (XL__[52]+XR__[52])/2;
-    X__[53] = (XL__[53]+XR__[53])/2;
-    X__[54] = (XL__[54]+XR__[54])/2;
-    X__[55] = (XL__[55]+XR__[55])/2;
-    X__[56] = (XL__[56]+XR__[56])/2;
-    X__[57] = (XL__[57]+XR__[57])/2;
-    X__[58] = (XL__[58]+XR__[58])/2;
-    X__[59] = (XL__[59]+XR__[59])/2;
-    X__[60] = (XL__[60]+XR__[60])/2;
-    X__[61] = (XL__[61]+XR__[61])/2;
-    X__[62] = (XL__[62]+XR__[62])/2;
-    X__[63] = (XL__[63]+XR__[63])/2;
-    X__[64] = (XL__[64]+XR__[64])/2;
-    X__[65] = (XL__[65]+XR__[65])/2;
-    X__[66] = (XL__[66]+XR__[66])/2;
-    X__[67] = (XL__[67]+XR__[67])/2;
-    X__[68] = (XL__[68]+XR__[68])/2;
-    X__[69] = (XL__[69]+XR__[69])/2;
-    X__[70] = (XL__[70]+XR__[70])/2;
-    X__[71] = (XL__[71]+XR__[71])/2;
-    X__[72] = (XL__[72]+XR__[72])/2;
-    X__[73] = (XL__[73]+XR__[73])/2;
-    X__[74] = (XL__[74]+XR__[74])/2;
-    X__[75] = (XL__[75]+XR__[75])/2;
-    X__[76] = (XL__[76]+XR__[76])/2;
-    X__[77] = (XL__[77]+XR__[77])/2;
-    X__[78] = (XL__[78]+XR__[78])/2;
-    X__[79] = (XL__[79]+XR__[79])/2;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool ok = true;
-    real_type t1   = P__[iP_u1];
-    ok = ok && u1Limitation_min.check_range(-10 - t1, m_max_penalty_value);
-    ok = ok && u1Limitation_max.check_range(t1 - 10, m_max_penalty_value);
-    real_type t4   = P__[iP_u2];
-    ok = ok && u2Limitation_min.check_range(-10 - t4, m_max_penalty_value);
-    ok = ok && u2Limitation_max.check_range(t4 - 10, m_max_penalty_value);
-    real_type t7   = P__[iP_u3];
-    ok = ok && u3Limitation_min.check_range(-10 - t7, m_max_penalty_value);
-    ok = ok && u3Limitation_max.check_range(t7 - 10, m_max_penalty_value);
-    real_type t10  = P__[iP_u4];
-    ok = ok && u4Limitation_min.check_range(-10 - t10, m_max_penalty_value);
-    ok = ok && u4Limitation_max.check_range(t10 - 10, m_max_penalty_value);
-    real_type t13  = P__[iP_u5];
-    ok = ok && u5Limitation_min.check_range(-10 - t13, m_max_penalty_value);
-    ok = ok && u5Limitation_max.check_range(t13 - 10, m_max_penalty_value);
-    real_type t16  = P__[iP_u6];
-    ok = ok && u6Limitation_min.check_range(-10 - t16, m_max_penalty_value);
-    ok = ok && u6Limitation_max.check_range(t16 - 10, m_max_penalty_value);
-    real_type t19  = P__[iP_u7];
-    ok = ok && u7Limitation_min.check_range(-10 - t19, m_max_penalty_value);
-    ok = ok && u7Limitation_max.check_range(t19 - 10, m_max_penalty_value);
-    real_type t22  = P__[iP_u8];
-    ok = ok && u8Limitation_min.check_range(-10 - t22, m_max_penalty_value);
-    ok = ok && u8Limitation_max.check_range(t22 - 10, m_max_penalty_value);
-    real_type t25  = P__[iP_u9];
-    ok = ok && u9Limitation_min.check_range(-10 - t25, m_max_penalty_value);
-    ok = ok && u9Limitation_max.check_range(t25 - 10, m_max_penalty_value);
-    real_type t28  = P__[iP_u10];
-    ok = ok && u10Limitation_min.check_range(-10 - t28, m_max_penalty_value);
-    ok = ok && u10Limitation_max.check_range(t28 - 10, m_max_penalty_value);
-    real_type t31  = P__[iP_u11];
-    ok = ok && u11Limitation_min.check_range(-10 - t31, m_max_penalty_value);
-    ok = ok && u11Limitation_max.check_range(t31 - 10, m_max_penalty_value);
-    real_type t34  = P__[iP_u12];
-    ok = ok && u12Limitation_min.check_range(-10 - t34, m_max_penalty_value);
-    ok = ok && u12Limitation_max.check_range(t34 - 10, m_max_penalty_value);
-    real_type t37  = P__[iP_u13];
-    ok = ok && u13Limitation_min.check_range(-10 - t37, m_max_penalty_value);
-    ok = ok && u13Limitation_max.check_range(t37 - 10, m_max_penalty_value);
-    real_type t40  = P__[iP_u14];
-    ok = ok && u14Limitation_min.check_range(-10 - t40, m_max_penalty_value);
-    ok = ok && u14Limitation_max.check_range(t40 - 10, m_max_penalty_value);
-    real_type t43  = P__[iP_u15];
-    ok = ok && u15Limitation_min.check_range(-10 - t43, m_max_penalty_value);
-    ok = ok && u15Limitation_max.check_range(t43 - 10, m_max_penalty_value);
-    real_type t46  = P__[iP_u16];
-    ok = ok && u16Limitation_min.check_range(-10 - t46, m_max_penalty_value);
-    ok = ok && u16Limitation_max.check_range(t46 - 10, m_max_penalty_value);
-    real_type t49  = P__[iP_u17];
-    ok = ok && u17Limitation_min.check_range(-10 - t49, m_max_penalty_value);
-    ok = ok && u17Limitation_max.check_range(t49 - 10, m_max_penalty_value);
-    real_type t52  = P__[iP_u18];
-    ok = ok && u18Limitation_min.check_range(-10 - t52, m_max_penalty_value);
-    ok = ok && u18Limitation_max.check_range(t52 - 10, m_max_penalty_value);
-    real_type t55  = P__[iP_u19];
-    ok = ok && u19Limitation_min.check_range(-10 - t55, m_max_penalty_value);
-    ok = ok && u19Limitation_max.check_range(t55 - 10, m_max_penalty_value);
-    real_type t58  = P__[iP_u20];
-    ok = ok && u20Limitation_min.check_range(-10 - t58, m_max_penalty_value);
-    ok = ok && u20Limitation_max.check_range(t58 - 10, m_max_penalty_value);
-    real_type t61  = ModelPars[iM_xy_bound];
-    real_type t62  = X__[iX_xx1];
-    ok = ok && xx1Limitation_min.check_range(-t61 - t62, m_max_penalty_value);
-    ok = ok && xx1Limitation_max.check_range(t62 - t61, m_max_penalty_value);
-    real_type t65  = X__[iX_yy1];
-    ok = ok && yy1Limitation_min.check_range(-t61 - t65, m_max_penalty_value);
-    ok = ok && yy1Limitation_max.check_range(t65 - t61, m_max_penalty_value);
-    real_type t68  = X__[iX_xx2];
-    ok = ok && xx2Limitation_min.check_range(-t61 - t68, m_max_penalty_value);
-    ok = ok && xx2Limitation_max.check_range(t68 - t61, m_max_penalty_value);
-    real_type t71  = X__[iX_yy2];
-    ok = ok && yy2Limitation_min.check_range(-t61 - t71, m_max_penalty_value);
-    ok = ok && yy2Limitation_max.check_range(t71 - t61, m_max_penalty_value);
-    real_type t74  = X__[iX_xx3];
-    ok = ok && xx3Limitation_min.check_range(-t61 - t74, m_max_penalty_value);
-    ok = ok && xx3Limitation_max.check_range(t74 - t61, m_max_penalty_value);
-    real_type t77  = X__[iX_yy3];
-    ok = ok && yy3Limitation_min.check_range(-t61 - t77, m_max_penalty_value);
-    ok = ok && yy3Limitation_max.check_range(t77 - t61, m_max_penalty_value);
-    real_type t80  = X__[iX_xx4];
-    ok = ok && xx4Limitation_min.check_range(-t61 - t80, m_max_penalty_value);
-    ok = ok && xx4Limitation_max.check_range(t80 - t61, m_max_penalty_value);
-    real_type t83  = X__[iX_yy4];
-    ok = ok && yy4Limitation_min.check_range(-t61 - t83, m_max_penalty_value);
-    ok = ok && yy4Limitation_max.check_range(t83 - t61, m_max_penalty_value);
-    real_type t86  = X__[iX_xx5];
-    ok = ok && xx5Limitation_min.check_range(-t61 - t86, m_max_penalty_value);
-    ok = ok && xx5Limitation_max.check_range(t86 - t61, m_max_penalty_value);
-    real_type t89  = X__[iX_yy5];
-    ok = ok && yy5Limitation_min.check_range(-t61 - t89, m_max_penalty_value);
-    ok = ok && yy5Limitation_max.check_range(t89 - t61, m_max_penalty_value);
-    real_type t92  = X__[iX_xx6];
-    ok = ok && xx6Limitation_min.check_range(-t61 - t92, m_max_penalty_value);
-    ok = ok && xx6Limitation_max.check_range(t92 - t61, m_max_penalty_value);
-    real_type t95  = X__[iX_yy6];
-    ok = ok && yy6Limitation_min.check_range(-t61 - t95, m_max_penalty_value);
-    ok = ok && yy6Limitation_max.check_range(t95 - t61, m_max_penalty_value);
-    real_type t98  = X__[iX_xx7];
-    ok = ok && xx7Limitation_min.check_range(-t61 - t98, m_max_penalty_value);
-    ok = ok && xx7Limitation_max.check_range(t98 - t61, m_max_penalty_value);
-    real_type t101 = X__[iX_yy7];
-    ok = ok && yy7Limitation_min.check_range(-t61 - t101, m_max_penalty_value);
-    ok = ok && yy7Limitation_max.check_range(t101 - t61, m_max_penalty_value);
-    real_type t104 = X__[iX_xx8];
-    ok = ok && xx8Limitation_min.check_range(-t61 - t104, m_max_penalty_value);
-    ok = ok && xx8Limitation_max.check_range(t104 - t61, m_max_penalty_value);
-    real_type t107 = X__[iX_yy8];
-    ok = ok && yy8Limitation_min.check_range(-t61 - t107, m_max_penalty_value);
-    ok = ok && yy8Limitation_max.check_range(t107 - t61, m_max_penalty_value);
-    real_type t110 = X__[iX_xx9];
-    ok = ok && xx9Limitation_min.check_range(-t61 - t110, m_max_penalty_value);
-    ok = ok && xx9Limitation_max.check_range(t110 - t61, m_max_penalty_value);
-    real_type t113 = X__[iX_yy9];
-    ok = ok && yy9Limitation_min.check_range(-t61 - t113, m_max_penalty_value);
-    ok = ok && yy9Limitation_max.check_range(t113 - t61, m_max_penalty_value);
-    real_type t116 = X__[iX_xx10];
-    ok = ok && xx10Limitation_min.check_range(-t61 - t116, m_max_penalty_value);
-    ok = ok && xx10Limitation_max.check_range(t116 - t61, m_max_penalty_value);
-    real_type t119 = X__[iX_yy10];
-    ok = ok && yy10Limitation_min.check_range(-t61 - t119, m_max_penalty_value);
-    ok = ok && yy10Limitation_max.check_range(t119 - t61, m_max_penalty_value);
-    real_type t122 = X__[iX_xx11];
-    ok = ok && xx11Limitation_min.check_range(-t61 - t122, m_max_penalty_value);
-    ok = ok && xx11Limitation_max.check_range(t122 - t61, m_max_penalty_value);
-    real_type t125 = X__[iX_yy11];
-    ok = ok && yy11Limitation_min.check_range(-t61 - t125, m_max_penalty_value);
-    ok = ok && yy11Limitation_max.check_range(t125 - t61, m_max_penalty_value);
-    real_type t128 = X__[iX_xx12];
-    ok = ok && xx12Limitation_min.check_range(-t61 - t128, m_max_penalty_value);
-    ok = ok && xx12Limitation_max.check_range(t128 - t61, m_max_penalty_value);
-    real_type t131 = X__[iX_yy12];
-    ok = ok && yy12Limitation_min.check_range(-t61 - t131, m_max_penalty_value);
-    ok = ok && yy12Limitation_max.check_range(t131 - t61, m_max_penalty_value);
-    real_type t134 = X__[iX_xx13];
-    ok = ok && xx13Limitation_min.check_range(-t61 - t134, m_max_penalty_value);
-    ok = ok && xx13Limitation_max.check_range(t134 - t61, m_max_penalty_value);
-    real_type t137 = X__[iX_yy13];
-    ok = ok && yy13Limitation_min.check_range(-t61 - t137, m_max_penalty_value);
-    ok = ok && yy13Limitation_max.check_range(t137 - t61, m_max_penalty_value);
-    real_type t140 = X__[iX_xx14];
-    ok = ok && xx14Limitation_min.check_range(-t61 - t140, m_max_penalty_value);
-    ok = ok && xx14Limitation_max.check_range(t140 - t61, m_max_penalty_value);
-    real_type t143 = X__[iX_yy14];
-    ok = ok && yy14Limitation_min.check_range(-t61 - t143, m_max_penalty_value);
-    ok = ok && yy14Limitation_max.check_range(t143 - t61, m_max_penalty_value);
-    real_type t146 = X__[iX_xx15];
-    ok = ok && xx15Limitation_min.check_range(-t61 - t146, m_max_penalty_value);
-    ok = ok && xx15Limitation_max.check_range(t146 - t61, m_max_penalty_value);
-    real_type t149 = X__[iX_yy15];
-    ok = ok && yy15Limitation_min.check_range(-t61 - t149, m_max_penalty_value);
-    ok = ok && yy15Limitation_max.check_range(t149 - t61, m_max_penalty_value);
-    real_type t152 = X__[iX_xx16];
-    ok = ok && xx16Limitation_min.check_range(-t61 - t152, m_max_penalty_value);
-    ok = ok && xx16Limitation_max.check_range(t152 - t61, m_max_penalty_value);
-    real_type t155 = X__[iX_yy16];
-    ok = ok && yy16Limitation_min.check_range(-t61 - t155, m_max_penalty_value);
-    ok = ok && yy16Limitation_max.check_range(t155 - t61, m_max_penalty_value);
-    real_type t158 = X__[iX_xx17];
-    ok = ok && xx17Limitation_min.check_range(-t61 - t158, m_max_penalty_value);
-    ok = ok && xx17Limitation_max.check_range(t158 - t61, m_max_penalty_value);
-    real_type t161 = X__[iX_yy17];
-    ok = ok && yy17Limitation_min.check_range(-t61 - t161, m_max_penalty_value);
-    ok = ok && yy17Limitation_max.check_range(t161 - t61, m_max_penalty_value);
-    real_type t164 = X__[iX_xx18];
-    ok = ok && xx18Limitation_min.check_range(-t61 - t164, m_max_penalty_value);
-    ok = ok && xx18Limitation_max.check_range(t164 - t61, m_max_penalty_value);
-    real_type t167 = X__[iX_yy18];
-    ok = ok && yy18Limitation_min.check_range(-t61 - t167, m_max_penalty_value);
-    ok = ok && yy18Limitation_max.check_range(t167 - t61, m_max_penalty_value);
-    real_type t170 = X__[iX_xx19];
-    ok = ok && xx19Limitation_min.check_range(-t61 - t170, m_max_penalty_value);
-    ok = ok && xx19Limitation_max.check_range(t170 - t61, m_max_penalty_value);
-    real_type t173 = X__[iX_yy19];
-    ok = ok && yy19Limitation_min.check_range(-t61 - t173, m_max_penalty_value);
-    ok = ok && yy19Limitation_max.check_range(t173 - t61, m_max_penalty_value);
-    real_type t176 = X__[iX_xx20];
-    ok = ok && xx20Limitation_min.check_range(-t61 - t176, m_max_penalty_value);
-    ok = ok && xx20Limitation_max.check_range(t176 - t61, m_max_penalty_value);
-    real_type t179 = X__[iX_yy20];
-    ok = ok && yy20Limitation_min.check_range(-t61 - t179, m_max_penalty_value);
-    ok = ok && yy20Limitation_max.check_range(t179 - t61, m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -761,185 +470,186 @@ namespace ICLOCS_ContinuousMPDefine {
 
   real_type
   ICLOCS_ContinuousMP::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = sin(X__[iX_xx2]);
-    real_type t5   = P__[iP_u2];
-    real_type t9   = X__[iX_x3];
-    real_type t10  = sin(t9);
-    real_type t11  = P__[iP_u3];
-    real_type t16  = sin(X__[iX_xx3]);
-    real_type t21  = X__[iX_x4];
-    real_type t22  = sin(t21);
-    real_type t23  = P__[iP_u4];
-    real_type t28  = sin(X__[iX_xx4]);
-    real_type t33  = X__[iX_x5];
-    real_type t34  = sin(t33);
-    real_type t35  = P__[iP_u5];
-    real_type t40  = sin(X__[iX_xx5]);
-    real_type t45  = X__[iX_x6];
-    real_type t46  = sin(t45);
-    real_type t47  = P__[iP_u6];
-    real_type t52  = sin(X__[iX_xx6]);
-    real_type t57  = X__[iX_x7];
-    real_type t58  = sin(t57);
-    real_type t59  = P__[iP_u7];
-    real_type t64  = sin(X__[iX_xx7]);
-    real_type t69  = X__[iX_y1];
-    real_type t72  = X__[iX_y2];
-    real_type t75  = X__[iX_y3];
-    real_type t78  = X__[iX_y4];
-    real_type t80  = (0.2e0 * t3 + t5) * L__[iL_lambda62__xo] + (t10 + t11) * L__[iL_lambda23__xo] + (0.2e0 * t16 + t11) * L__[iL_lambda63__xo] + (t22 + t23) * L__[iL_lambda24__xo] + (0.2e0 * t28 + t23) * L__[iL_lambda64__xo] + (t34 + t35) * L__[iL_lambda25__xo] + (0.2e0 * t40 + t35) * L__[iL_lambda65__xo] + (t46 + t47) * L__[iL_lambda26__xo] + (0.2e0 * t52 + t47) * L__[iL_lambda66__xo] + (t58 + t59) * L__[iL_lambda27__xo] + (0.2e0 * t64 + t59) * L__[iL_lambda67__xo] + t69 * L__[iL_lambda1__xo] + t72 * L__[iL_lambda2__xo] + t75 * L__[iL_lambda3__xo] + t78 * L__[iL_lambda4__xo];
-    real_type t82  = X__[iX_y5];
-    real_type t85  = X__[iX_y6];
-    real_type t88  = X__[iX_y7];
-    real_type t91  = X__[iX_y8];
-    real_type t94  = X__[iX_y9];
-    real_type t97  = X__[iX_y10];
-    real_type t100 = X__[iX_y11];
-    real_type t103 = X__[iX_y12];
-    real_type t106 = X__[iX_y13];
-    real_type t109 = X__[iX_y14];
-    real_type t112 = X__[iX_y15];
-    real_type t115 = X__[iX_y16];
-    real_type t118 = X__[iX_y17];
-    real_type t122 = sin(X__[iX_xx19]);
-    real_type t124 = P__[iP_u19];
-    real_type t128 = X__[iX_x20];
-    real_type t129 = sin(t128);
-    real_type t130 = P__[iP_u20];
-    real_type t133 = t82 * L__[iL_lambda5__xo] + t85 * L__[iL_lambda6__xo] + t88 * L__[iL_lambda7__xo] + t91 * L__[iL_lambda8__xo] + t94 * L__[iL_lambda9__xo] + t97 * L__[iL_lambda10__xo] + t100 * L__[iL_lambda11__xo] + t103 * L__[iL_lambda12__xo] + t106 * L__[iL_lambda13__xo] + t109 * L__[iL_lambda14__xo] + t112 * L__[iL_lambda15__xo] + t115 * L__[iL_lambda16__xo] + t118 * L__[iL_lambda17__xo] + (0.2e0 * t122 + t124) * L__[iL_lambda79__xo] + (t129 + t130) * L__[iL_lambda40__xo];
-    real_type t137 = sin(X__[iX_xx20]);
-    real_type t144 = Q__[iQ_zeta];
-    real_type t145 = sin(t144);
-    real_type t153 = sin(t144 + 1);
-    real_type t161 = sin(t144 + 2);
-    real_type t169 = sin(t144 + 3);
-    real_type t177 = sin(t144 + 4);
-    real_type t185 = sin(t144 + 5);
-    real_type t193 = sin(t144 + 6);
-    real_type t201 = sin(t144 + 7);
-    real_type t209 = sin(t144 + 8);
-    real_type t217 = sin(t144 + 9);
-    real_type t225 = sin(t144 + 10);
-    real_type t233 = sin(t144 + 11);
-    real_type t241 = sin(t144 + 12);
-    real_type t249 = sin(t144 + 13);
-    real_type t253 = (0.2e0 * t137 + t130) * L__[iL_lambda80__xo] + (0.12e1 * X__[iX_yy1] + 0.1e0 * t145) * L__[iL_lambda41__xo] + (0.12e1 * X__[iX_yy2] + 0.1e0 * t153) * L__[iL_lambda42__xo] + (0.12e1 * X__[iX_yy3] + 0.1e0 * t161) * L__[iL_lambda43__xo] + (0.12e1 * X__[iX_yy4] + 0.1e0 * t169) * L__[iL_lambda44__xo] + (0.12e1 * X__[iX_yy5] + 0.1e0 * t177) * L__[iL_lambda45__xo] + (0.12e1 * X__[iX_yy6] + 0.1e0 * t185) * L__[iL_lambda46__xo] + (0.12e1 * X__[iX_yy7] + 0.1e0 * t193) * L__[iL_lambda47__xo] + (0.12e1 * X__[iX_yy8] + 0.1e0 * t201) * L__[iL_lambda48__xo] + (0.12e1 * X__[iX_yy9] + 0.1e0 * t209) * L__[iL_lambda49__xo] + (0.12e1 * X__[iX_yy10] + 0.1e0 * t217) * L__[iL_lambda50__xo] + (0.12e1 * X__[iX_yy11] + 0.1e0 * t225) * L__[iL_lambda51__xo] + (0.12e1 * X__[iX_yy12] + 0.1e0 * t233) * L__[iL_lambda52__xo] + (0.12e1 * X__[iX_yy13] + 0.1e0 * t241) * L__[iL_lambda53__xo] + (0.12e1 * X__[iX_yy14] + 0.1e0 * t249) * L__[iL_lambda54__xo];
-    real_type t258 = sin(t144 + 14);
-    real_type t263 = X__[iX_y18];
-    real_type t266 = X__[iX_y19];
-    real_type t269 = X__[iX_y20];
-    real_type t272 = X__[iX_x1];
-    real_type t273 = sin(t272);
-    real_type t274 = P__[iP_u1];
-    real_type t279 = sin(X__[iX_xx1]);
-    real_type t284 = X__[iX_x2];
-    real_type t285 = sin(t284);
-    real_type t292 = sin(t144 + 15);
-    real_type t300 = sin(t144 + 16);
-    real_type t308 = sin(t144 + 17);
-    real_type t316 = sin(t144 + 18);
-    real_type t324 = sin(t144 + 19);
-    real_type t329 = X__[iX_x8];
-    real_type t330 = sin(t329);
-    real_type t331 = P__[iP_u8];
-    real_type t336 = sin(X__[iX_xx8]);
-    real_type t341 = X__[iX_x9];
-    real_type t342 = sin(t341);
-    real_type t343 = P__[iP_u9];
-    real_type t346 = (0.12e1 * X__[iX_yy15] + 0.1e0 * t258) * L__[iL_lambda55__xo] + t263 * L__[iL_lambda18__xo] + t266 * L__[iL_lambda19__xo] + t269 * L__[iL_lambda20__xo] + (t273 + t274) * L__[iL_lambda21__xo] + (0.2e0 * t279 + t274) * L__[iL_lambda61__xo] + (t285 + t5) * L__[iL_lambda22__xo] + (0.12e1 * X__[iX_yy16] + 0.1e0 * t292) * L__[iL_lambda56__xo] + (0.12e1 * X__[iX_yy17] + 0.1e0 * t300) * L__[iL_lambda57__xo] + (0.12e1 * X__[iX_yy18] + 0.1e0 * t308) * L__[iL_lambda58__xo] + (0.12e1 * X__[iX_yy19] + 0.1e0 * t316) * L__[iL_lambda59__xo] + (0.12e1 * X__[iX_yy20] + 0.1e0 * t324) * L__[iL_lambda60__xo] + (t330 + t331) * L__[iL_lambda28__xo] + (0.2e0 * t336 + t331) * L__[iL_lambda68__xo] + (t342 + t343) * L__[iL_lambda29__xo];
-    real_type t351 = sin(X__[iX_xx9]);
-    real_type t356 = X__[iX_x10];
-    real_type t357 = sin(t356);
-    real_type t358 = P__[iP_u10];
-    real_type t363 = sin(X__[iX_xx10]);
-    real_type t368 = X__[iX_x11];
-    real_type t369 = sin(t368);
-    real_type t370 = P__[iP_u11];
-    real_type t375 = sin(X__[iX_xx11]);
-    real_type t380 = X__[iX_x12];
-    real_type t381 = sin(t380);
-    real_type t382 = P__[iP_u12];
-    real_type t387 = sin(X__[iX_xx12]);
-    real_type t392 = X__[iX_x13];
-    real_type t393 = sin(t392);
-    real_type t394 = P__[iP_u13];
-    real_type t399 = sin(X__[iX_xx13]);
-    real_type t404 = X__[iX_x14];
-    real_type t405 = sin(t404);
-    real_type t406 = P__[iP_u14];
-    real_type t411 = sin(X__[iX_xx14]);
-    real_type t416 = X__[iX_x15];
-    real_type t417 = sin(t416);
-    real_type t418 = P__[iP_u15];
-    real_type t423 = sin(X__[iX_xx15]);
-    real_type t428 = X__[iX_x16];
-    real_type t429 = sin(t428);
-    real_type t430 = P__[iP_u16];
-    real_type t435 = sin(X__[iX_xx16]);
-    real_type t439 = (0.2e0 * t351 + t343) * L__[iL_lambda69__xo] + (t357 + t358) * L__[iL_lambda30__xo] + (0.2e0 * t363 + t358) * L__[iL_lambda70__xo] + (t369 + t370) * L__[iL_lambda31__xo] + (0.2e0 * t375 + t370) * L__[iL_lambda71__xo] + (t381 + t382) * L__[iL_lambda32__xo] + (0.2e0 * t387 + t382) * L__[iL_lambda72__xo] + (t393 + t394) * L__[iL_lambda33__xo] + (0.2e0 * t399 + t394) * L__[iL_lambda73__xo] + (t405 + t406) * L__[iL_lambda34__xo] + (0.2e0 * t411 + t406) * L__[iL_lambda74__xo] + (t417 + t418) * L__[iL_lambda35__xo] + (0.2e0 * t423 + t418) * L__[iL_lambda75__xo] + (t429 + t430) * L__[iL_lambda36__xo] + (0.2e0 * t435 + t430) * L__[iL_lambda76__xo];
-    real_type t441 = X__[iX_x17];
-    real_type t442 = sin(t441);
-    real_type t443 = P__[iP_u17];
-    real_type t448 = sin(X__[iX_xx17]);
-    real_type t453 = X__[iX_x18];
-    real_type t454 = sin(t453);
-    real_type t455 = P__[iP_u18];
-    real_type t460 = sin(X__[iX_xx18]);
-    real_type t465 = X__[iX_x19];
-    real_type t466 = sin(t465);
-    real_type t469 = t118 * t118;
-    real_type t471 = t263 * t263;
-    real_type t473 = t266 * t266;
-    real_type t475 = t269 * t269;
-    real_type t476 = t94 * t94;
-    real_type t478 = t97 * t97;
-    real_type t480 = t100 * t100;
-    real_type t482 = t103 * t103;
-    real_type t484 = t106 * t106;
-    real_type t486 = t109 * t109;
-    real_type t488 = (t442 + t443) * L__[iL_lambda37__xo] + (0.2e0 * t448 + t443) * L__[iL_lambda77__xo] + (t454 + t455) * L__[iL_lambda38__xo] + (0.2e0 * t460 + t455) * L__[iL_lambda78__xo] + (t466 + t124) * L__[iL_lambda39__xo] + 4 * t469 + 3 * t471 + 2 * t473 + t475 + 12 * t476 + 11 * t478 + 10 * t480 + 9 * t482 + 8 * t484 + 7 * t486;
-    real_type t490 = t272 * t272;
-    real_type t492 = t284 * t284;
-    real_type t494 = t9 * t9;
-    real_type t496 = t21 * t21;
-    real_type t498 = t33 * t33;
-    real_type t500 = t45 * t45;
-    real_type t502 = t57 * t57;
-    real_type t504 = t329 * t329;
-    real_type t506 = t341 * t341;
-    real_type t508 = t356 * t356;
-    real_type t510 = t368 * t368;
-    real_type t512 = t380 * t380;
-    real_type t514 = t392 * t392;
-    real_type t516 = t404 * t404;
-    real_type t518 = t416 * t416;
-    real_type t520 = 20 * t490 + 19 * t492 + 18 * t494 + 17 * t496 + 16 * t498 + 15 * t500 + 14 * t502 + 13 * t504 + 12 * t506 + 11 * t508 + 10 * t510 + 9 * t512 + 8 * t514 + 7 * t516 + 6 * t518;
-    real_type t521 = t428 * t428;
-    real_type t523 = t441 * t441;
-    real_type t525 = t453 * t453;
-    real_type t527 = t465 * t465;
-    real_type t529 = t128 * t128;
-    real_type t530 = t69 * t69;
-    real_type t532 = t72 * t72;
-    real_type t534 = t75 * t75;
-    real_type t536 = t78 * t78;
-    real_type t538 = t82 * t82;
-    real_type t540 = t85 * t85;
-    real_type t542 = t88 * t88;
-    real_type t544 = t91 * t91;
-    real_type t546 = t112 * t112;
-    real_type t548 = t115 * t115;
-    real_type t550 = 5 * t521 + 4 * t523 + 3 * t525 + 2 * t527 + t529 + 20 * t530 + 19 * t532 + 18 * t534 + 17 * t536 + 16 * t538 + 15 * t540 + 14 * t542 + 13 * t544 + 6 * t546 + 5 * t548;
-    real_type result__ = t80 + t133 + t253 + t346 + t439 + t488 + t520 + t550;
+    real_type t1   = X__[iX_x10];
+    real_type t2   = t1 * t1;
+    real_type t4   = X__[iX_x11];
+    real_type t5   = t4 * t4;
+    real_type t7   = X__[iX_x12];
+    real_type t8   = t7 * t7;
+    real_type t10  = X__[iX_x13];
+    real_type t11  = t10 * t10;
+    real_type t13  = X__[iX_x14];
+    real_type t14  = t13 * t13;
+    real_type t16  = X__[iX_x15];
+    real_type t17  = t16 * t16;
+    real_type t19  = X__[iX_x16];
+    real_type t20  = t19 * t19;
+    real_type t22  = X__[iX_x17];
+    real_type t23  = t22 * t22;
+    real_type t25  = X__[iX_x19];
+    real_type t26  = t25 * t25;
+    real_type t28  = X__[iX_x20];
+    real_type t29  = t28 * t28;
+    real_type t30  = X__[iX_y1];
+    real_type t31  = t30 * t30;
+    real_type t33  = X__[iX_y2];
+    real_type t34  = t33 * t33;
+    real_type t36  = X__[iX_y3];
+    real_type t37  = t36 * t36;
+    real_type t39  = X__[iX_y4];
+    real_type t40  = t39 * t39;
+    real_type t42  = X__[iX_y5];
+    real_type t43  = t42 * t42;
+    real_type t45  = 11 * t2 + 10 * t5 + 9 * t8 + 8 * t11 + 7 * t14 + 6 * t17 + 5 * t20 + 4 * t23 + 2 * t26 + t29 + 20 * t31 + 19 * t34 + 18 * t37 + 17 * t40 + 16 * t43;
+    real_type t46  = X__[iX_y6];
+    real_type t47  = t46 * t46;
+    real_type t49  = X__[iX_y7];
+    real_type t50  = t49 * t49;
+    real_type t52  = X__[iX_y8];
+    real_type t53  = t52 * t52;
+    real_type t55  = X__[iX_y9];
+    real_type t56  = t55 * t55;
+    real_type t58  = X__[iX_y10];
+    real_type t59  = t58 * t58;
+    real_type t61  = X__[iX_y11];
+    real_type t62  = t61 * t61;
+    real_type t64  = X__[iX_y12];
+    real_type t65  = t64 * t64;
+    real_type t67  = X__[iX_y13];
+    real_type t68  = t67 * t67;
+    real_type t70  = X__[iX_y14];
+    real_type t71  = t70 * t70;
+    real_type t73  = X__[iX_y15];
+    real_type t74  = t73 * t73;
+    real_type t76  = X__[iX_y16];
+    real_type t77  = t76 * t76;
+    real_type t79  = X__[iX_y17];
+    real_type t80  = t79 * t79;
+    real_type t82  = X__[iX_y18];
+    real_type t83  = t82 * t82;
+    real_type t85  = X__[iX_y19];
+    real_type t86  = t85 * t85;
+    real_type t88  = X__[iX_y20];
+    real_type t89  = t88 * t88;
+    real_type t90  = 15 * t47 + 14 * t50 + 13 * t53 + 12 * t56 + 11 * t59 + 10 * t62 + 9 * t65 + 8 * t68 + 7 * t71 + 6 * t74 + 5 * t77 + 4 * t80 + 3 * t83 + 2 * t86 + t89;
+    real_type t92  = X__[iX_x18];
+    real_type t93  = t92 * t92;
+    real_type t95  = X__[iX_x1];
+    real_type t96  = t95 * t95;
+    real_type t98  = X__[iX_x2];
+    real_type t99  = t98 * t98;
+    real_type t101 = X__[iX_x3];
+    real_type t102 = t101 * t101;
+    real_type t104 = X__[iX_x4];
+    real_type t105 = t104 * t104;
+    real_type t107 = X__[iX_x5];
+    real_type t108 = t107 * t107;
+    real_type t110 = X__[iX_x6];
+    real_type t111 = t110 * t110;
+    real_type t113 = X__[iX_x7];
+    real_type t114 = t113 * t113;
+    real_type t116 = X__[iX_x8];
+    real_type t117 = t116 * t116;
+    real_type t119 = X__[iX_x9];
+    real_type t120 = t119 * t119;
+    real_type t125 = Q__[iQ_zeta];
+    real_type t127 = sin(t125 + 12);
+    real_type t135 = sin(t125 + 13);
+    real_type t145 = 3 * t93 + 20 * t96 + 19 * t99 + 18 * t102 + 17 * t105 + 16 * t108 + 15 * t111 + 14 * t114 + 13 * t117 + 12 * t120 + (0.12e1 * X__[iX_yy13] + 0.1e0 * t127) * MU__[52] + (0.12e1 * X__[iX_yy14] + 0.1e0 * t135) * MU__[53] + t61 * MU__[10] + t64 * MU__[11] + t67 * MU__[12];
+    real_type t161 = sin(t95);
+    real_type t162 = P__[iP_u1];
+    real_type t167 = sin(X__[iX_xx1]);
+    real_type t172 = sin(t98);
+    real_type t173 = P__[iP_u2];
+    real_type t178 = sin(X__[iX_xx2]);
+    real_type t183 = sin(t101);
+    real_type t184 = P__[iP_u3];
+    real_type t189 = sin(X__[iX_xx3]);
+    real_type t194 = sin(t104);
+    real_type t195 = P__[iP_u4];
+    real_type t200 = sin(X__[iX_xx4]);
+    real_type t204 = t70 * MU__[13] + t73 * MU__[14] + t76 * MU__[15] + t79 * MU__[16] + t82 * MU__[17] + t85 * MU__[18] + t88 * MU__[19] + (t161 + t162) * MU__[20] + (0.2e0 * t167 + t162) * MU__[60] + (t172 + t173) * MU__[21] + (0.2e0 * t178 + t173) * MU__[61] + (t183 + t184) * MU__[22] + (0.2e0 * t189 + t184) * MU__[62] + (t194 + t195) * MU__[23] + (0.2e0 * t200 + t195) * MU__[63];
+    real_type t208 = sin(t107);
+    real_type t209 = P__[iP_u5];
+    real_type t214 = sin(X__[iX_xx5]);
+    real_type t219 = sin(t110);
+    real_type t220 = P__[iP_u6];
+    real_type t225 = sin(X__[iX_xx6]);
+    real_type t230 = sin(t13);
+    real_type t231 = P__[iP_u14];
+    real_type t236 = sin(X__[iX_xx14]);
+    real_type t241 = sin(t16);
+    real_type t242 = P__[iP_u15];
+    real_type t247 = sin(X__[iX_xx15]);
+    real_type t252 = sin(t19);
+    real_type t253 = P__[iP_u16];
+    real_type t258 = sin(X__[iX_xx16]);
+    real_type t263 = sin(t22);
+    real_type t264 = P__[iP_u17];
+    real_type t269 = sin(X__[iX_xx17]);
+    real_type t274 = sin(t92);
+    real_type t275 = P__[iP_u18];
+    real_type t280 = sin(X__[iX_xx18]);
+    real_type t285 = sin(t25);
+    real_type t286 = P__[iP_u19];
+    real_type t289 = (t208 + t209) * MU__[24] + (0.2e0 * t214 + t209) * MU__[64] + (t219 + t220) * MU__[25] + (0.2e0 * t225 + t220) * MU__[65] + (t230 + t231) * MU__[33] + (0.2e0 * t236 + t231) * MU__[73] + (t241 + t242) * MU__[34] + (0.2e0 * t247 + t242) * MU__[74] + (t252 + t253) * MU__[35] + (0.2e0 * t258 + t253) * MU__[75] + (t263 + t264) * MU__[36] + (0.2e0 * t269 + t264) * MU__[76] + (t274 + t275) * MU__[37] + (0.2e0 * t280 + t275) * MU__[77] + (t285 + t286) * MU__[38];
+    real_type t292 = sin(X__[iX_xx19]);
+    real_type t297 = sin(t28);
+    real_type t298 = P__[iP_u20];
+    real_type t303 = sin(X__[iX_xx20]);
+    real_type t310 = sin(t125);
+    real_type t318 = sin(t125 + 1);
+    real_type t326 = sin(t125 + 2);
+    real_type t334 = sin(t125 + 3);
+    real_type t342 = sin(t125 + 4);
+    real_type t350 = sin(t125 + 5);
+    real_type t358 = sin(t125 + 6);
+    real_type t366 = sin(t125 + 7);
+    real_type t374 = sin(t125 + 8);
+    real_type t382 = sin(t125 + 9);
+    real_type t390 = sin(t125 + 10);
+    real_type t398 = sin(t125 + 11);
+    real_type t402 = (0.2e0 * t292 + t286) * MU__[78] + (t297 + t298) * MU__[39] + (0.2e0 * t303 + t298) * MU__[79] + (0.12e1 * X__[iX_yy1] + 0.1e0 * t310) * MU__[40] + (0.12e1 * X__[iX_yy2] + 0.1e0 * t318) * MU__[41] + (0.12e1 * X__[iX_yy3] + 0.1e0 * t326) * MU__[42] + (0.12e1 * X__[iX_yy4] + 0.1e0 * t334) * MU__[43] + (0.12e1 * X__[iX_yy5] + 0.1e0 * t342) * MU__[44] + (0.12e1 * X__[iX_yy6] + 0.1e0 * t350) * MU__[45] + (0.12e1 * X__[iX_yy7] + 0.1e0 * t358) * MU__[46] + (0.12e1 * X__[iX_yy8] + 0.1e0 * t366) * MU__[47] + (0.12e1 * X__[iX_yy9] + 0.1e0 * t374) * MU__[48] + (0.12e1 * X__[iX_yy10] + 0.1e0 * t382) * MU__[49] + (0.12e1 * X__[iX_yy11] + 0.1e0 * t390) * MU__[50] + (0.12e1 * X__[iX_yy12] + 0.1e0 * t398) * MU__[51];
+    real_type t428 = sin(t125 + 14);
+    real_type t436 = sin(t125 + 15);
+    real_type t444 = sin(t125 + 16);
+    real_type t452 = sin(t125 + 17);
+    real_type t460 = sin(t125 + 18);
+    real_type t464 = t30 * MU__[0] + t33 * MU__[1] + t36 * MU__[2] + t39 * MU__[3] + t42 * MU__[4] + t46 * MU__[5] + t49 * MU__[6] + t52 * MU__[7] + t55 * MU__[8] + t58 * MU__[9] + (0.12e1 * X__[iX_yy15] + 0.1e0 * t428) * MU__[54] + (0.12e1 * X__[iX_yy16] + 0.1e0 * t436) * MU__[55] + (0.12e1 * X__[iX_yy17] + 0.1e0 * t444) * MU__[56] + (0.12e1 * X__[iX_yy18] + 0.1e0 * t452) * MU__[57] + (0.12e1 * X__[iX_yy19] + 0.1e0 * t460) * MU__[58];
+    real_type t469 = sin(t125 + 19);
+    real_type t474 = sin(t113);
+    real_type t475 = P__[iP_u7];
+    real_type t480 = sin(X__[iX_xx7]);
+    real_type t485 = sin(t116);
+    real_type t486 = P__[iP_u8];
+    real_type t491 = sin(X__[iX_xx8]);
+    real_type t496 = sin(t119);
+    real_type t497 = P__[iP_u9];
+    real_type t502 = sin(X__[iX_xx9]);
+    real_type t507 = sin(t1);
+    real_type t508 = P__[iP_u10];
+    real_type t513 = sin(X__[iX_xx10]);
+    real_type t518 = sin(t4);
+    real_type t519 = P__[iP_u11];
+    real_type t524 = sin(X__[iX_xx11]);
+    real_type t529 = sin(t7);
+    real_type t530 = P__[iP_u12];
+    real_type t535 = sin(X__[iX_xx12]);
+    real_type t540 = sin(t10);
+    real_type t541 = P__[iP_u13];
+    real_type t546 = sin(X__[iX_xx13]);
+    real_type t550 = (0.12e1 * X__[iX_yy20] + 0.1e0 * t469) * MU__[59] + (t474 + t475) * MU__[26] + (0.2e0 * t480 + t475) * MU__[66] + (t485 + t486) * MU__[27] + (0.2e0 * t491 + t486) * MU__[67] + (t496 + t497) * MU__[28] + (0.2e0 * t502 + t497) * MU__[68] + (t507 + t508) * MU__[29] + (0.2e0 * t513 + t508) * MU__[69] + (t518 + t519) * MU__[30] + (0.2e0 * t524 + t519) * MU__[70] + (t529 + t530) * MU__[31] + (0.2e0 * t535 + t530) * MU__[71] + (t540 + t541) * MU__[32] + (0.2e0 * t546 + t541) * MU__[72];
+    real_type result__ = t45 + t90 + t145 + t204 + t289 + t402 + t464 + t550;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -956,57 +666,57 @@ namespace ICLOCS_ContinuousMPDefine {
 
   real_type
   ICLOCS_ContinuousMP::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x14] * X__[iX_x14];
-    real_type t5   = X__[iX_x15] * X__[iX_x15];
-    real_type t8   = X__[iX_x19] * X__[iX_x19];
-    real_type t11  = X__[iX_x20] * X__[iX_x20];
-    real_type t13  = X__[iX_y1] * X__[iX_y1];
-    real_type t16  = X__[iX_y2] * X__[iX_y2];
-    real_type t19  = X__[iX_y3] * X__[iX_y3];
-    real_type t22  = X__[iX_y4] * X__[iX_y4];
-    real_type t25  = X__[iX_y5] * X__[iX_y5];
-    real_type t28  = X__[iX_y6] * X__[iX_y6];
-    real_type t31  = X__[iX_y7] * X__[iX_y7];
-    real_type t34  = X__[iX_y8] * X__[iX_y8];
-    real_type t37  = X__[iX_y9] * X__[iX_y9];
-    real_type t40  = X__[iX_y10] * X__[iX_y10];
-    real_type t43  = X__[iX_y11] * X__[iX_y11];
-    real_type t46  = X__[iX_y12] * X__[iX_y12];
-    real_type t49  = X__[iX_y13] * X__[iX_y13];
-    real_type t52  = X__[iX_y14] * X__[iX_y14];
-    real_type t55  = X__[iX_y15] * X__[iX_y15];
-    real_type t58  = X__[iX_y16] * X__[iX_y16];
-    real_type t60  = 7 * t2 + 6 * t5 + 2 * t8 + t11 + 20 * t13 + 19 * t16 + 18 * t19 + 17 * t22 + 16 * t25 + 15 * t28 + 14 * t31 + 13 * t34 + 12 * t37 + 11 * t40 + 10 * t43 + 9 * t46 + 8 * t49 + 7 * t52 + 6 * t55 + 5 * t58;
-    real_type t62  = X__[iX_x1] * X__[iX_x1];
-    real_type t65  = X__[iX_x2] * X__[iX_x2];
-    real_type t68  = X__[iX_x3] * X__[iX_x3];
-    real_type t71  = X__[iX_x4] * X__[iX_x4];
-    real_type t74  = X__[iX_x5] * X__[iX_x5];
-    real_type t77  = X__[iX_x6] * X__[iX_x6];
-    real_type t80  = X__[iX_x7] * X__[iX_x7];
-    real_type t83  = X__[iX_x8] * X__[iX_x8];
-    real_type t86  = X__[iX_x9] * X__[iX_x9];
-    real_type t89  = X__[iX_x10] * X__[iX_x10];
-    real_type t92  = X__[iX_x11] * X__[iX_x11];
-    real_type t95  = X__[iX_x12] * X__[iX_x12];
-    real_type t98  = X__[iX_x13] * X__[iX_x13];
-    real_type t101 = X__[iX_x16] * X__[iX_x16];
-    real_type t104 = X__[iX_x17] * X__[iX_x17];
-    real_type t107 = X__[iX_x18] * X__[iX_x18];
-    real_type t110 = X__[iX_y17] * X__[iX_y17];
-    real_type t113 = X__[iX_y18] * X__[iX_y18];
-    real_type t116 = X__[iX_y19] * X__[iX_y19];
-    real_type t119 = X__[iX_y20] * X__[iX_y20];
-    real_type t120 = 20 * t62 + 19 * t65 + 18 * t68 + 17 * t71 + 16 * t74 + 15 * t77 + 14 * t80 + 13 * t83 + 12 * t86 + 11 * t89 + 10 * t92 + 9 * t95 + 8 * t98 + 5 * t101 + 4 * t104 + 3 * t107 + 4 * t110 + 3 * t113 + 2 * t116 + t119;
-    real_type result__ = t60 + t120;
+    real_type t2   = X__[iX_x11] * X__[iX_x11];
+    real_type t5   = X__[iX_x12] * X__[iX_x12];
+    real_type t8   = X__[iX_x13] * X__[iX_x13];
+    real_type t11  = X__[iX_x15] * X__[iX_x15];
+    real_type t14  = X__[iX_x16] * X__[iX_x16];
+    real_type t17  = X__[iX_x18] * X__[iX_x18];
+    real_type t20  = X__[iX_x19] * X__[iX_x19];
+    real_type t23  = X__[iX_x20] * X__[iX_x20];
+    real_type t25  = X__[iX_y1] * X__[iX_y1];
+    real_type t28  = X__[iX_y7] * X__[iX_y7];
+    real_type t31  = X__[iX_y8] * X__[iX_y8];
+    real_type t34  = X__[iX_y9] * X__[iX_y9];
+    real_type t37  = X__[iX_y12] * X__[iX_y12];
+    real_type t40  = X__[iX_y13] * X__[iX_y13];
+    real_type t43  = X__[iX_y14] * X__[iX_y14];
+    real_type t46  = X__[iX_y15] * X__[iX_y15];
+    real_type t49  = X__[iX_y17] * X__[iX_y17];
+    real_type t52  = X__[iX_y18] * X__[iX_y18];
+    real_type t55  = X__[iX_y19] * X__[iX_y19];
+    real_type t58  = X__[iX_y20] * X__[iX_y20];
+    real_type t59  = 10 * t2 + 9 * t5 + 8 * t8 + 6 * t11 + 5 * t14 + 3 * t17 + 2 * t20 + t23 + 20 * t25 + 14 * t28 + 13 * t31 + 12 * t34 + 9 * t37 + 8 * t40 + 7 * t43 + 6 * t46 + 4 * t49 + 3 * t52 + 2 * t55 + t58;
+    real_type t61  = X__[iX_x1] * X__[iX_x1];
+    real_type t64  = X__[iX_x2] * X__[iX_x2];
+    real_type t67  = X__[iX_x3] * X__[iX_x3];
+    real_type t70  = X__[iX_x4] * X__[iX_x4];
+    real_type t73  = X__[iX_x5] * X__[iX_x5];
+    real_type t76  = X__[iX_x6] * X__[iX_x6];
+    real_type t79  = X__[iX_x7] * X__[iX_x7];
+    real_type t82  = X__[iX_x8] * X__[iX_x8];
+    real_type t85  = X__[iX_x9] * X__[iX_x9];
+    real_type t88  = X__[iX_x10] * X__[iX_x10];
+    real_type t91  = X__[iX_x14] * X__[iX_x14];
+    real_type t94  = X__[iX_x17] * X__[iX_x17];
+    real_type t97  = X__[iX_y2] * X__[iX_y2];
+    real_type t100 = X__[iX_y3] * X__[iX_y3];
+    real_type t103 = X__[iX_y4] * X__[iX_y4];
+    real_type t106 = X__[iX_y5] * X__[iX_y5];
+    real_type t109 = X__[iX_y6] * X__[iX_y6];
+    real_type t112 = X__[iX_y10] * X__[iX_y10];
+    real_type t115 = X__[iX_y11] * X__[iX_y11];
+    real_type t118 = X__[iX_y16] * X__[iX_y16];
+    real_type t120 = 20 * t61 + 19 * t64 + 18 * t67 + 17 * t70 + 16 * t73 + 15 * t76 + 14 * t79 + 13 * t82 + 12 * t85 + 11 * t88 + 7 * t91 + 4 * t94 + 19 * t97 + 18 * t100 + 17 * t103 + 16 * t106 + 15 * t109 + 11 * t112 + 10 * t115 + 5 * t118;
+    real_type result__ = t59 + t120;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -1023,9 +733,9 @@ namespace ICLOCS_ContinuousMPDefine {
 
   real_type
   ICLOCS_ContinuousMP::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -1048,10 +758,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -1260,10 +970,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -1281,10 +991,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -1446,10 +1156,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -1512,9 +1222,9 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -1533,22 +1243,22 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ICLOCS_ContinuousMP::DsegmentLinkDxp_numRows() const { return 0; }
-  integer ICLOCS_ContinuousMP::DsegmentLinkDxp_numCols() const { return 0; }
-  integer ICLOCS_ContinuousMP::DsegmentLinkDxp_nnz() const { return 0; }
+  integer ICLOCS_ContinuousMP::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer ICLOCS_ContinuousMP::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer ICLOCS_ContinuousMP::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  ICLOCS_ContinuousMP::DsegmentLinkDxp_pattern(
+  ICLOCS_ContinuousMP::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -1558,11 +1268,11 @@ namespace ICLOCS_ContinuousMPDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_ContinuousMP::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  ICLOCS_ContinuousMP::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -1579,10 +1289,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -2092,10 +1802,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -2443,10 +2153,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -2644,12 +2354,12 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-   // EMPTY!
+    // EMPTY!
   }
 
 }

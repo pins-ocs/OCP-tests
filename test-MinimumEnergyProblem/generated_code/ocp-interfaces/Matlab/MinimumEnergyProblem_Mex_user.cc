@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Mex_user.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_interpLog(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -54,7 +54,7 @@ ProblemStorage::do_interpLog_D_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_1', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_1', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -76,7 +76,7 @@ ProblemStorage::do_interpLog_D_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_2', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_2', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -98,7 +98,7 @@ ProblemStorage::do_interpLog_D_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_3', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_3', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -120,7 +120,7 @@ ProblemStorage::do_interpLog_D_1_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_1_1', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_1_1', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -142,7 +142,7 @@ ProblemStorage::do_interpLog_D_1_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_1_2', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_1_2', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -164,7 +164,7 @@ ProblemStorage::do_interpLog_D_1_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_1_3', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_1_3', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -186,7 +186,7 @@ ProblemStorage::do_interpLog_D_2_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_2_2', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_2_2', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -208,7 +208,7 @@ ProblemStorage::do_interpLog_D_2_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_2_3', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_2_3', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -230,7 +230,7 @@ ProblemStorage::do_interpLog_D_3_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('interpLog_D_3_3', obj, xo__s, xo__v0, xo__v1 ): "
+  #define CMD "res = " MODEL_NAME "_Mex('interpLog_D_3_3', obj, xo__s, xo__v0, xo__v1 ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );

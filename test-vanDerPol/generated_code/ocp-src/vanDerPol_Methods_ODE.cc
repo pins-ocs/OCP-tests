@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_ODE.cc                                       |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,62 +62,69 @@ namespace vanDerPolDefine {
    |   \___/|___/|___|
   \*/
 
-  integer vanDerPol::rhs_ode_numEqns() const { return 2; }
+  integer vanDerPol::ode_numEqns() const { return 2; }
 
   void
-  vanDerPol::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  vanDerPol::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_x2];
-    real_type t1   = X__[iX_x1];
-    real_type t2   = t1 * t1;
-    result__[ 1   ] = result__[0] * (-t2 + 1) - t1 + U__[iU_u];
+    real_type t1   = X__[iX_x2];
+    result__[ 0   ] = t1 - V__[0];
+    real_type t3   = X__[iX_x1];
+    real_type t4   = t3 * t3;
+    result__[ 1   ] = t1 * (-t4 + 1) - t3 + U__[iU_u] - V__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer vanDerPol::Drhs_odeDxpu_numRows() const { return 2; }
-  integer vanDerPol::Drhs_odeDxpu_numCols() const { return 3; }
-  integer vanDerPol::Drhs_odeDxpu_nnz()     const { return 4; }
+  integer vanDerPol::DodeDxpuv_numRows() const { return 2; }
+  integer vanDerPol::DodeDxpuv_numCols() const { return 5; }
+  integer vanDerPol::DodeDxpuv_nnz()     const { return 6; }
 
   void
-  vanDerPol::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  vanDerPol::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 2   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  vanDerPol::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  vanDerPol::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
     real_type t1   = X__[iX_x1];
-    result__[ 1   ] = -2 * X__[iX_x2] * t1 - 1;
+    result__[ 2   ] = -2 * X__[iX_x2] * t1 - 1;
     real_type t5   = t1 * t1;
-    result__[ 2   ] = -t5 + 1;
-    result__[ 3   ] = 1;
+    result__[ 3   ] = -t5 + 1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 6, i_segment );
   }
 
   /*\
@@ -143,9 +150,9 @@ namespace vanDerPolDefine {
 
   void
   vanDerPol::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -155,104 +162,6 @@ namespace vanDerPolDefine {
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer vanDerPol::eta_numEqns() const { return 2; }
-
-  void
-  vanDerPol::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer vanDerPol::DetaDxp_numRows() const { return 2; }
-  integer vanDerPol::DetaDxp_numCols() const { return 2; }
-  integer vanDerPol::DetaDxp_nnz()     const { return 0; }
-
-  void
-  vanDerPol::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  vanDerPol::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer vanDerPol::nu_numEqns() const { return 2; }
-
-  void
-  vanDerPol::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer vanDerPol::DnuDxp_numRows() const { return 2; }
-  integer vanDerPol::DnuDxp_numCols() const { return 2; }
-  integer vanDerPol::DnuDxp_nnz()     const { return 0; }
-
-  void
-  vanDerPol::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  vanDerPol::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

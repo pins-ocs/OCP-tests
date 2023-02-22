@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_UserFunctions.cc                              |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -153,7 +153,7 @@ namespace AlpRiderDefine {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
-    real_type result__ = 2 * t1 * t2 * t4 * xo__b - 2 * t1 * t4;
+    real_type result__ = 2 * t4 * t2 * t1 * xo__b - 2 * t4 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),
@@ -201,7 +201,7 @@ namespace AlpRiderDefine {
     real_type t1   = xo__t - xo__a;
     real_type t2   = t1 * t1;
     real_type t4   = exp(-t2 * xo__b);
-    real_type result__ = -2 * t1 * t2 * t4 * xo__b + 2 * t1 * t4;
+    real_type result__ = -2 * t4 * t2 * t1 * xo__b + 2 * t4 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),

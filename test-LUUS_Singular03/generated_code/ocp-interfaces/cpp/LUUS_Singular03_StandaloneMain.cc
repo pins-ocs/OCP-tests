@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tolerance0 = 0.01;
     real_type u_epsilon0 = 0.01;
-    real_type epsi_x0 = 0.0001;
     real_type Tf = 5;
+    real_type epsi_x0 = 0.0001;
     real_type epsi_x = epsi_x0;
+    real_type u_tolerance0 = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -238,7 +238,7 @@ LUUS_Singular03_data.Mesh["segments"][0]["n"] = 1000;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

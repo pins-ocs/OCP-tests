@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -74,51 +74,128 @@ namespace BangBangFmoduleDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangFmodule::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   BangBangFmodule::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BangBangFmodule::LT_numEqns() const { return 0; }
-
-  void
-  BangBangFmodule::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BangBangFmodule::JU_numEqns() const { return 2; }
-
-  void
-  BangBangFmodule::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = controlP(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
-    result__[ 1   ] = controlM(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "JU_eval", 2, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BangBangFmodule::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = controlP(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    real_type t6   = controlM(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
+    real_type result__ = t3 + t6;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BangBangFmodule::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JPxpu_numEqns() const { return 4; }
+
+  void
+  BangBangFmodule::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::JUxpu_numEqns() const { return 4; }
+
+  void
+  BangBangFmodule::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    result__[ 3   ] = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BangBangFmodule::LTxpu_numEqns() const { return 4; }
+
+  void
+  BangBangFmodule::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,107 +204,13 @@ namespace BangBangFmoduleDefine {
 
   void
   BangBangFmodule::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::DJPDxpu_numRows() const { return 0; }
-  integer BangBangFmodule::DJPDxpu_numCols() const { return 4; }
-  integer BangBangFmodule::DJPDxpu_nnz()     const { return 0; }
-
-  void
-  BangBangFmodule::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BangBangFmodule::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::DLTDxpu_numRows() const { return 0; }
-  integer BangBangFmodule::DLTDxpu_numCols() const { return 4; }
-  integer BangBangFmodule::DLTDxpu_nnz()     const { return 0; }
-
-  void
-  BangBangFmodule::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BangBangFmodule::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::DJUDxpu_numRows() const { return 2; }
-  integer BangBangFmodule::DJUDxpu_numCols() const { return 4; }
-  integer BangBangFmodule::DJUDxpu_nnz()     const { return 2; }
-
-  void
-  BangBangFmodule::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
-  }
-
-
-  void
-  BangBangFmodule::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
-    result__[ 1   ] = ALIAS_controlM_D_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFmodule::DLTargsDxpu_numRows() const { return 0; }
-  integer BangBangFmodule::DLTargsDxpu_numCols() const { return 4; }
-  integer BangBangFmodule::DLTargsDxpu_nnz()     const { return 0; }
-
-  void
-  BangBangFmodule::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BangBangFmodule::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -243,15 +226,13 @@ namespace BangBangFmoduleDefine {
 
   void
   BangBangFmodule::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFmodule::D2LTD2xpu_numRows() const { return 4; }
@@ -266,15 +247,13 @@ namespace BangBangFmoduleDefine {
 
   void
   BangBangFmodule::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BangBangFmodule::D2JUD2xpu_numRows() const { return 4; }
@@ -290,23 +269,42 @@ namespace BangBangFmoduleDefine {
 
   void
   BangBangFmodule::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_controlP_D_1_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
-    result__[ 0   ] = OMEGA__[0] * t3;
-    real_type t7   = ALIAS_controlM_D_1_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
-    result__[ 1   ] = OMEGA__[1] * t7;
+    result__[ 0   ] = ALIAS_controlP_D_1_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
+    result__[ 1   ] = ALIAS_controlM_D_1_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 2, i_segment );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BangBangFmodule::DLTargsDxpu_numRows() const { return 0; }
+  integer BangBangFmodule::DLTargsDxpu_numCols() const { return 4; }
+  integer BangBangFmodule::DLTargsDxpu_nnz()     const { return 0; }
+
+  void
+  BangBangFmodule::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    // EMPTY!
+  }
+
+
+  void
+  BangBangFmodule::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    // EMPTY!
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -322,11 +320,11 @@ namespace BangBangFmoduleDefine {
 
   void
   BangBangFmodule::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

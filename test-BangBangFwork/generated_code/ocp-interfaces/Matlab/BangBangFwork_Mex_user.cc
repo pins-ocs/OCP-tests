@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFwork_Mex_user.cc                                      |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_fMax(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('fMax', obj, xo__zeta ): "
+  #define CMD "res = " MODEL_NAME "_Mex('fMax', obj, xo__zeta ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__zeta" );
@@ -48,7 +48,7 @@ ProblemStorage::do_fMax_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('fMax_D', obj, xo__zeta ): "
+  #define CMD "res = " MODEL_NAME "_Mex('fMax_D', obj, xo__zeta ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__zeta" );
@@ -64,7 +64,7 @@ ProblemStorage::do_fMax_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('fMax_DD', obj, xo__zeta ): "
+  #define CMD "res = " MODEL_NAME "_Mex('fMax_DD', obj, xo__zeta ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__zeta" );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/1/2023                                        |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -115,6 +115,7 @@ namespace stirred_tankDefine {
   stirred_tank::H_eval(
     NodeQXL const & NODE__,
     P_const_p_type  P__,
+    MU_const_p_type MU__,
     U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
@@ -130,7 +131,7 @@ namespace stirred_tankDefine {
     real_type t7   = t6 * t5;
     real_type t8   = X__[iX_x2];
     real_type t9   = t8 * t6;
-    real_type t10  = 0.176e2 * t9;
+    real_type t10  = 0.88e2 / 5.0 * t9;
     real_type t11  = X__[iX_x6];
     real_type t13  = U__[iU_u3];
     real_type t14  = t13 * t11 * t6;
@@ -140,10 +141,10 @@ namespace stirred_tankDefine {
     real_type t31  = X__[iX_x4];
     real_type t34  = X__[iX_x5];
     real_type t35  = t34 * t31;
-    real_type t36  = 0.513e2 * t35;
+    real_type t36  = 0.513e3 / 0.10e2 * t35;
     real_type t50  = X__[iX_x7];
     real_type t66  = t13 * t13;
-    real_type result__ = (t2 - t7 - t10 - t15) * L__[iL_lambda1__xo] + (-t8 * t5 - t10 - 146 * t21 + t3) * L__[iL_lambda2__xo] + (-t20 * t5 - 73 * t21 + t4) * L__[iL_lambda3__xo] + (-t31 * t5 + 0.352e2 * t9 - t36) * L__[iL_lambda4__xo] + (-t34 * t5 + 219 * t21 - t36) * L__[iL_lambda5__xo] + (-t11 * t5 - t15 + 102 * t35) * L__[iL_lambda6__xo] + (-t50 * t5 + 46 * t14) * L__[iL_lambda7__xo] + (0.58e1 * t7 - 0.58e1 * t2 - 0.37e1 * t3 - 0.41e1 * t4 + (23 * t31 + 11 * t34 + 28 * t11 + 35 * t50) * t5 - 5 * t66 - 0.9e-1) * L__[iL_lambda8__xo];
+    real_type result__ = (t2 - t7 - t10 - t15) * MU__[0] + (-t5 * t8 - t10 - 146 * t21 + t3) * MU__[1] + (-t20 * t5 - 73 * t21 + t4) * MU__[2] + (-t31 * t5 + 0.176e3 / 5.0 * t9 - t36) * MU__[3] + (-t34 * t5 + 219 * t21 - t36) * MU__[4] + (-t11 * t5 - t15 + 102 * t35) * MU__[5] + (-t5 * t50 + 46 * t14) * MU__[6] + (0.29e2 / 5.0 * t7 - 0.29e2 / 5.0 * t2 - 0.37e2 / 0.10e2 * t3 - 0.41e2 / 0.10e2 * t4 + (23 * t31 + 11 * t34 + 28 * t11 + 35 * t50) * t5 - 5 * t66 - 9.0 / 0.100e3) * MU__[7];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }

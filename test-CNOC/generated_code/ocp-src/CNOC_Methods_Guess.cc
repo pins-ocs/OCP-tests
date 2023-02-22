@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -152,26 +152,30 @@ namespace CNOCDefine {
   \*/
 
   void
-  CNOC::p_guess_eval( P_pointer_type P__ ) const {
+  CNOC::p_guess_eval( P_p_type P__ ) const {
   }
 
   void
   CNOC::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    X__[ iX_s   ] = Q__[iQ_zeta];
-    X__[ iX_n   ] = 0;
-    X__[ iX_vs  ] = ALIAS_nominalFeed();
-    X__[ iX_vn  ] = 0;
-    X__[ iX_as  ] = 0;
-    X__[ iX_an  ] = 0;
-    X__[ iX_coV ] = 1.0 / X__[iX_vs];
+    { // open block to avoid temporary clash
+      X__[ iX_s   ] = Q__[iQ_zeta];
+      X__[ iX_n   ] = 0;
+      X__[ iX_vs  ] = ALIAS_nominalFeed();
+      X__[ iX_vn  ] = 0;
+      X__[ iX_as  ] = 0;
+      X__[ iX_an  ] = 0;
+      X__[ iX_coV ] = 1.0 / X__[iX_vs];
+    }
+    { // open block to avoid temporary clash
 
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 7 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 7 );
@@ -304,7 +308,7 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  CNOC::p_check( P_const_pointer_type P__ ) const {
+  CNOC::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -312,23 +316,59 @@ namespace CNOCDefine {
 
   bool
   CNOC::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  CNOC::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  CNOC::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    bool ok = true;
+    ok = ok && timePositive.check_range(-X__[iX_coV], m_max_penalty_value);
+    real_type t3   = X__[iX_vs] * X__[iX_vs];
+    real_type t5   = X__[iX_vn] * X__[iX_vn];
+    real_type t7   = sqrt(t3 + t5);
+    real_type t8   = ALIAS_nominalFeed();
+    ok = ok && vLimit.check_range(1.0 / t8 * t7 - 0.101e1, m_max_penalty_value);
+    real_type t15  = X__[iX_n] / ModelPars[iM_path_following_tolerance];
+    ok = ok && PathFollowingTolerance_min.check_range(-1 - t15, m_max_penalty_value);
+    ok = ok && PathFollowingTolerance_max.check_range(t15 - 1, m_max_penalty_value);
+    real_type t18  = X__[iX_as];
+    real_type t21  = 1.0 / ModelPars[iM_as_max] * t18;
+    ok = ok && as_limit_min.check_range(-1 - t21, m_max_penalty_value);
+    ok = ok && as_limit_max.check_range(t21 - 1, m_max_penalty_value);
+    real_type t24  = X__[iX_an];
+    real_type t27  = 1.0 / ModelPars[iM_an_max] * t24;
+    ok = ok && an_limit_min.check_range(-1 - t27, m_max_penalty_value);
+    ok = ok && an_limit_max.check_range(t27 - 1, m_max_penalty_value);
+    real_type t31  = ALIAS_theta(X__[iX_s]);
+    real_type t32  = cos(t31);
+    real_type t34  = sin(t31);
+    real_type t39  = 1.0 / ModelPars[iM_ax_max] * (t32 * t18 - t34 * t24);
+    ok = ok && ax_limit_min.check_range(-1 - t39, m_max_penalty_value);
+    ok = ok && ax_limit_max.check_range(t39 - 1, m_max_penalty_value);
+    real_type t47  = 1.0 / ModelPars[iM_ay_max] * (t34 * t18 + t32 * t24);
+    ok = ok && ay_limit_min.check_range(-1 - t47, m_max_penalty_value);
+    ok = ok && ay_limit_max.check_range(t47 - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -345,46 +385,19 @@ namespace CNOCDefine {
 
   void
   CNOC::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        UGUESS__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-
-    real_type Q__[1];
-    real_type X__[7];
-    real_type L__[7];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
-    // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
-    L__[5] = (LL__[5]+LR__[5])/2;
-    L__[6] = (LL__[6]+LR__[6])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_js ] = jnControl.solve(-L__[iL_lambda5__xo], ModelPars[iM_js_min], ModelPars[iM_js_max]);
+    UGUESS__[ iU_js ] = jnControl.solve(-MU__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t5   = ModelPars[iM_jn_max];
-    UGUESS__[ iU_jn ] = jnControl.solve(-L__[iL_lambda6__xo], -t5, t5);
+    UGUESS__[ iU_jn ] = jnControl.solve(-MU__[5], -t5, t5);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
@@ -399,15 +412,15 @@ namespace CNOCDefine {
 
   bool
   CNOC::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
+    integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     // controls range check
     real_type t2   = ModelPars[iM_jn_max];

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -65,44 +65,20 @@ namespace SingularLuus04_FreeTimeDefine {
 
   real_type
   SingularLuus04_FreeTime::g_fun_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = XL__[iX_T];
-    real_type t3   = XL__[iX_x] * XL__[iX_x];
-    real_type t4   = ModelPars[iM_theta];
-    real_type t8   = LM__[0];
-    real_type t12  = LM__[1];
-    real_type t16  = LM__[2];
-    real_type t18  = UM__[0];
-    real_type t20  = uControl(t18, -1, 1);
-    real_type t22  = XR__[iX_T];
-    real_type t24  = XR__[iX_x] * XR__[iX_x];
-    real_type result__ = (t4 * t1 + t3) * t1 + XL__[iX_y] * t1 * t8 + XL__[iX_z] * t1 * t12 + t18 * t1 * t16 + t20 * t1 + (t4 * t22 + t24) * t22 + XR__[iX_y] * t22 * t8 + XR__[iX_z] * t22 * t12 + t18 * t22 * t16 + t20 * t22;
+    real_type t1   = X__[iX_T];
+    real_type t3   = X__[iX_x] * X__[iX_x];
+    real_type t8   = U__[iU_u];
+    real_type t9   = uControl(t8, -1, 1);
+    real_type result__ = (t1 * ModelPars[iM_theta] + t3) * t1 + t9 * t1 + X__[iX_y] * t1 * MU__[0] + X__[iX_z] * t1 * MU__[1] + t8 * t1 * MU__[2];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -115,96 +91,54 @@ namespace SingularLuus04_FreeTimeDefine {
 
   void
   SingularLuus04_FreeTime::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[2];
-    real_type t2   = XL__[iX_T];
-    real_type t5   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    real_type t7   = XR__[iX_T];
-    result__[ 0   ] = t2 * t1 + t7 * t1 + t5 * t2 + t5 * t7;
+    real_type t1   = X__[iX_T];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * MU__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularLuus04_FreeTime::DgDxlxlp_numRows() const { return 1; }
-  integer SingularLuus04_FreeTime::DgDxlxlp_numCols() const { return 16; }
-  integer SingularLuus04_FreeTime::DgDxlxlp_nnz()     const { return 4; }
+  integer SingularLuus04_FreeTime::DgDxpm_numRows() const { return 1; }
+  integer SingularLuus04_FreeTime::DgDxpm_numCols() const { return 8; }
+  integer SingularLuus04_FreeTime::DgDxpm_nnz()     const { return 2; }
 
   void
-  SingularLuus04_FreeTime::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularLuus04_FreeTime::DgDxpm_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 11  ;
-    iIndex[3 ] = 0   ; jIndex[3 ] = 14  ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularLuus04_FreeTime::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SingularLuus04_FreeTime::DgDxpm_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = LM__[2] + t3;
-    result__[ 1   ] = 0.5e0 * XL__[iX_T] + 0.5e0 * XR__[iX_T];
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = result__[1];
+    real_type t2   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t2 + MU__[2];
+    result__[ 1   ] = X__[iX_T];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -222,36 +156,18 @@ namespace SingularLuus04_FreeTimeDefine {
 
   void
   SingularLuus04_FreeTime::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = t3 * XL__[iX_T] + t3 * XR__[iX_T];
+    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t3 * X__[iX_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -274,123 +190,19 @@ namespace SingularLuus04_FreeTimeDefine {
 
   void
   SingularLuus04_FreeTime::u_eval_analytic(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[4], LM__[4];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    XM__[3] = (XL__[3]+XR__[3])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    LM__[3] = (LL__[3]+LR__[3])/2;
-    integer i_segment = LEFT__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = NODE__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    U__[ iU_u ] = uControl.solve(-LM__[2], -1, 1);
+    U__[ iU_u ] = uControl.solve(-MU__[2], -1, 1);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );
-  }
-
-  /*\
-  :|:   ___         _           _   ___    _   _            _
-  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
-  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
-  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
-  \*/
-
-  real_type
-  SingularLuus04_FreeTime::m_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t2   = U__[iU_u];
-    real_type t3   = uControl(t2, -1, 1);
-    real_type t9   = pow(-X__[iX_y] * t1 + V__[0], 2);
-    real_type t14  = pow(-X__[iX_z] * t1 + V__[1], 2);
-    real_type t18  = pow(-t2 * t1 + V__[2], 2);
-    real_type t20  = V__[3] * V__[3];
-    real_type result__ = t3 * t1 + t14 + t18 + t20 + t9;
-    if ( m_debug ) {
-      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SingularLuus04_FreeTime::DmDu_numEqns() const { return 1; }
-
-  void
-  SingularLuus04_FreeTime::DmDu_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t2   = U__[iU_u];
-    real_type t3   = ALIAS_uControl_D_1(t2, -1, 1);
-    result__[ 0   ] = t3 * t1 - 2 * t1 * (-t2 * t1 + V__[2]);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularLuus04_FreeTime::DmDuu_numRows() const { return 1; }
-  integer SingularLuus04_FreeTime::DmDuu_numCols() const { return 1; }
-  integer SingularLuus04_FreeTime::DmDuu_nnz()     const { return 1; }
-
-  void
-  SingularLuus04_FreeTime::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  SingularLuus04_FreeTime::DmDuu_sparse(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_T];
-    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
-    real_type t5   = t1 * t1;
-    result__[ 0   ] = t3 * t1 + 2 * t5;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }
 
 }

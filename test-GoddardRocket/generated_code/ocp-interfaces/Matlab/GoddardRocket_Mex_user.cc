@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Mex_user.cc                                      |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -51,7 +51,7 @@ ProblemStorage::do_DD_D_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD_D_1', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD_D_1', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -70,7 +70,7 @@ ProblemStorage::do_DD_D_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD_D_2', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD_D_2', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -89,7 +89,7 @@ ProblemStorage::do_DD_D_1_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD_D_1_1', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD_D_1_1', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -108,7 +108,7 @@ ProblemStorage::do_DD_D_1_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD_D_1_2', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD_D_1_2', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -127,7 +127,7 @@ ProblemStorage::do_DD_D_2_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('DD_D_2_2', obj, xo__h, xo__v ): "
+  #define CMD "res = " MODEL_NAME "_Mex('DD_D_2_2', obj, xo__h, xo__v ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -146,7 +146,7 @@ ProblemStorage::do_gg(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('gg', obj, xo__h ): "
+  #define CMD "res = " MODEL_NAME "_Mex('gg', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -162,7 +162,7 @@ ProblemStorage::do_gg_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('gg_D', obj, xo__h ): "
+  #define CMD "res = " MODEL_NAME "_Mex('gg_D', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -178,7 +178,7 @@ ProblemStorage::do_gg_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('gg_DD', obj, xo__h ): "
+  #define CMD "res = " MODEL_NAME "_Mex('gg_DD', obj, xo__h ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__h" );
@@ -194,7 +194,7 @@ ProblemStorage::do_explog(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -216,7 +216,7 @@ ProblemStorage::do_explog_D_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_1', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_1', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -238,7 +238,7 @@ ProblemStorage::do_explog_D_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_2', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_2', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -260,7 +260,7 @@ ProblemStorage::do_explog_D_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_3', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_3', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -282,7 +282,7 @@ ProblemStorage::do_explog_D_1_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_1_1', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_1_1', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -304,7 +304,7 @@ ProblemStorage::do_explog_D_1_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_1_2', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_1_2', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -326,7 +326,7 @@ ProblemStorage::do_explog_D_1_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_1_3', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_1_3', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -348,7 +348,7 @@ ProblemStorage::do_explog_D_2_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_2_2', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_2_2', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -370,7 +370,7 @@ ProblemStorage::do_explog_D_2_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_2_3', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_2_3', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );
@@ -392,7 +392,7 @@ ProblemStorage::do_explog_D_3_3(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('explog_D_3_3', obj, xo__s, xo__a, xo__b ): "
+  #define CMD "res = " MODEL_NAME "_Mex('explog_D_3_3', obj, xo__s, xo__a, xo__b ): "
   CHECK_IN_OUT( 5, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__s" );

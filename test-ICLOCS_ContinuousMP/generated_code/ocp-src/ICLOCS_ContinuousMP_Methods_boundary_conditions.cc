@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -301,10 +301,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::bc_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -608,10 +608,10 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::DbcDxxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -798,13 +798,651 @@ namespace ICLOCS_ContinuousMPDefine {
 
   void
   ICLOCS_ContinuousMP::D2bcD2xxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    NodeQX const &          LEFT__,
+    NodeQX const &          RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
   ) const {
     // EMPTY
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_ContinuousMP::fd_BC_numEqns() const { return 160; }
+
+  void
+  ICLOCS_ContinuousMP::fd_BC_eval(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    real_type t1   = OMEGA__[40];
+    result__[ 0   ] = t1 + LL__[iL_lambda1__xo];
+    real_type t3   = OMEGA__[41];
+    result__[ 1   ] = t3 + LL__[iL_lambda2__xo];
+    real_type t5   = OMEGA__[42];
+    result__[ 2   ] = t5 + LL__[iL_lambda3__xo];
+    real_type t7   = OMEGA__[43];
+    result__[ 3   ] = t7 + LL__[iL_lambda4__xo];
+    real_type t9   = OMEGA__[44];
+    result__[ 4   ] = t9 + LL__[iL_lambda5__xo];
+    real_type t11  = OMEGA__[45];
+    result__[ 5   ] = t11 + LL__[iL_lambda6__xo];
+    real_type t13  = OMEGA__[46];
+    result__[ 6   ] = t13 + LL__[iL_lambda7__xo];
+    real_type t15  = OMEGA__[47];
+    result__[ 7   ] = t15 + LL__[iL_lambda8__xo];
+    real_type t17  = OMEGA__[48];
+    result__[ 8   ] = t17 + LL__[iL_lambda9__xo];
+    real_type t19  = OMEGA__[49];
+    result__[ 9   ] = t19 + LL__[iL_lambda10__xo];
+    real_type t21  = OMEGA__[50];
+    result__[ 10  ] = t21 + LL__[iL_lambda11__xo];
+    real_type t23  = OMEGA__[51];
+    result__[ 11  ] = t23 + LL__[iL_lambda12__xo];
+    real_type t25  = OMEGA__[52];
+    result__[ 12  ] = t25 + LL__[iL_lambda13__xo];
+    real_type t27  = OMEGA__[53];
+    result__[ 13  ] = t27 + LL__[iL_lambda14__xo];
+    real_type t29  = OMEGA__[54];
+    result__[ 14  ] = t29 + LL__[iL_lambda15__xo];
+    real_type t31  = OMEGA__[55];
+    result__[ 15  ] = t31 + LL__[iL_lambda16__xo];
+    real_type t33  = OMEGA__[56];
+    result__[ 16  ] = t33 + LL__[iL_lambda17__xo];
+    real_type t35  = OMEGA__[57];
+    result__[ 17  ] = t35 + LL__[iL_lambda18__xo];
+    real_type t37  = OMEGA__[58];
+    result__[ 18  ] = t37 + LL__[iL_lambda19__xo];
+    real_type t39  = OMEGA__[59];
+    result__[ 19  ] = t39 + LL__[iL_lambda20__xo];
+    real_type t41  = OMEGA__[60];
+    result__[ 20  ] = t41 + LL__[iL_lambda21__xo];
+    real_type t43  = OMEGA__[61];
+    result__[ 21  ] = t43 + LL__[iL_lambda22__xo];
+    real_type t45  = OMEGA__[62];
+    result__[ 22  ] = t45 + LL__[iL_lambda23__xo];
+    real_type t47  = OMEGA__[63];
+    result__[ 23  ] = t47 + LL__[iL_lambda24__xo];
+    real_type t49  = OMEGA__[64];
+    result__[ 24  ] = t49 + LL__[iL_lambda25__xo];
+    real_type t51  = OMEGA__[65];
+    result__[ 25  ] = t51 + LL__[iL_lambda26__xo];
+    real_type t53  = OMEGA__[66];
+    result__[ 26  ] = t53 + LL__[iL_lambda27__xo];
+    real_type t55  = OMEGA__[67];
+    result__[ 27  ] = t55 + LL__[iL_lambda28__xo];
+    real_type t57  = OMEGA__[68];
+    result__[ 28  ] = t57 + LL__[iL_lambda29__xo];
+    real_type t59  = OMEGA__[69];
+    result__[ 29  ] = t59 + LL__[iL_lambda30__xo];
+    real_type t61  = OMEGA__[70];
+    result__[ 30  ] = t61 + LL__[iL_lambda31__xo];
+    real_type t63  = OMEGA__[71];
+    result__[ 31  ] = t63 + LL__[iL_lambda32__xo];
+    real_type t65  = OMEGA__[72];
+    result__[ 32  ] = t65 + LL__[iL_lambda33__xo];
+    real_type t67  = OMEGA__[73];
+    result__[ 33  ] = t67 + LL__[iL_lambda34__xo];
+    real_type t69  = OMEGA__[74];
+    result__[ 34  ] = t69 + LL__[iL_lambda35__xo];
+    real_type t71  = OMEGA__[75];
+    result__[ 35  ] = t71 + LL__[iL_lambda36__xo];
+    real_type t73  = OMEGA__[76];
+    result__[ 36  ] = t73 + LL__[iL_lambda37__xo];
+    real_type t75  = OMEGA__[77];
+    result__[ 37  ] = t75 + LL__[iL_lambda38__xo];
+    real_type t77  = OMEGA__[78];
+    result__[ 38  ] = t77 + LL__[iL_lambda39__xo];
+    real_type t79  = OMEGA__[79];
+    result__[ 39  ] = t79 + LL__[iL_lambda40__xo];
+    result__[ 40  ] = -t1 + OMEGA__[0] + LL__[iL_lambda41__xo];
+    real_type t83  = OMEGA__[2];
+    result__[ 41  ] = -t3 - t83 + LL__[iL_lambda42__xo];
+    real_type t85  = OMEGA__[3];
+    result__[ 42  ] = -t5 - t85 + LL__[iL_lambda43__xo];
+    real_type t87  = OMEGA__[4];
+    result__[ 43  ] = -t7 - t87 + LL__[iL_lambda44__xo];
+    real_type t89  = OMEGA__[5];
+    result__[ 44  ] = -t9 - t89 + LL__[iL_lambda45__xo];
+    real_type t91  = OMEGA__[6];
+    result__[ 45  ] = -t11 - t91 + LL__[iL_lambda46__xo];
+    real_type t93  = OMEGA__[7];
+    result__[ 46  ] = -t13 - t93 + LL__[iL_lambda47__xo];
+    real_type t95  = OMEGA__[8];
+    result__[ 47  ] = -t15 - t95 + LL__[iL_lambda48__xo];
+    real_type t97  = OMEGA__[9];
+    result__[ 48  ] = -t17 - t97 + LL__[iL_lambda49__xo];
+    real_type t99  = OMEGA__[10];
+    result__[ 49  ] = -t19 - t99 + LL__[iL_lambda50__xo];
+    real_type t101 = OMEGA__[11];
+    result__[ 50  ] = -t21 - t101 + LL__[iL_lambda51__xo];
+    real_type t103 = OMEGA__[12];
+    result__[ 51  ] = -t23 - t103 + LL__[iL_lambda52__xo];
+    real_type t105 = OMEGA__[13];
+    result__[ 52  ] = -t25 - t105 + LL__[iL_lambda53__xo];
+    real_type t107 = OMEGA__[14];
+    result__[ 53  ] = -t107 - t27 + LL__[iL_lambda54__xo];
+    real_type t109 = OMEGA__[15];
+    result__[ 54  ] = -t109 - t29 + LL__[iL_lambda55__xo];
+    real_type t111 = OMEGA__[16];
+    result__[ 55  ] = -t111 - t31 + LL__[iL_lambda56__xo];
+    real_type t113 = OMEGA__[17];
+    result__[ 56  ] = -t113 - t33 + LL__[iL_lambda57__xo];
+    real_type t115 = OMEGA__[18];
+    result__[ 57  ] = -t115 - t35 + LL__[iL_lambda58__xo];
+    real_type t117 = OMEGA__[19];
+    result__[ 58  ] = -t117 - t37 + LL__[iL_lambda59__xo];
+    real_type t119 = OMEGA__[20];
+    result__[ 59  ] = -t119 - t39 + LL__[iL_lambda60__xo];
+    result__[ 60  ] = -t41 + OMEGA__[1] + LL__[iL_lambda61__xo];
+    real_type t123 = OMEGA__[21];
+    result__[ 61  ] = -t123 - t43 + LL__[iL_lambda62__xo];
+    real_type t125 = OMEGA__[22];
+    result__[ 62  ] = -t125 - t45 + LL__[iL_lambda63__xo];
+    real_type t127 = OMEGA__[23];
+    result__[ 63  ] = -t127 - t47 + LL__[iL_lambda64__xo];
+    real_type t129 = OMEGA__[24];
+    result__[ 64  ] = -t129 - t49 + LL__[iL_lambda65__xo];
+    real_type t131 = OMEGA__[25];
+    result__[ 65  ] = -t131 - t51 + LL__[iL_lambda66__xo];
+    real_type t133 = OMEGA__[26];
+    result__[ 66  ] = -t133 - t53 + LL__[iL_lambda67__xo];
+    real_type t135 = OMEGA__[27];
+    result__[ 67  ] = -t135 - t55 + LL__[iL_lambda68__xo];
+    real_type t137 = OMEGA__[28];
+    result__[ 68  ] = -t137 - t57 + LL__[iL_lambda69__xo];
+    real_type t139 = OMEGA__[29];
+    result__[ 69  ] = -t139 - t59 + LL__[iL_lambda70__xo];
+    real_type t141 = OMEGA__[30];
+    result__[ 70  ] = -t141 - t61 + LL__[iL_lambda71__xo];
+    real_type t143 = OMEGA__[31];
+    result__[ 71  ] = -t143 - t63 + LL__[iL_lambda72__xo];
+    real_type t145 = OMEGA__[32];
+    result__[ 72  ] = -t145 - t65 + LL__[iL_lambda73__xo];
+    real_type t147 = OMEGA__[33];
+    result__[ 73  ] = -t147 - t67 + LL__[iL_lambda74__xo];
+    real_type t149 = OMEGA__[34];
+    result__[ 74  ] = -t149 - t69 + LL__[iL_lambda75__xo];
+    real_type t151 = OMEGA__[35];
+    result__[ 75  ] = -t151 - t71 + LL__[iL_lambda76__xo];
+    real_type t153 = OMEGA__[36];
+    result__[ 76  ] = -t153 - t73 + LL__[iL_lambda77__xo];
+    real_type t155 = OMEGA__[37];
+    result__[ 77  ] = -t155 - t75 + LL__[iL_lambda78__xo];
+    real_type t157 = OMEGA__[38];
+    result__[ 78  ] = -t157 - t77 + LL__[iL_lambda79__xo];
+    real_type t159 = OMEGA__[39];
+    result__[ 79  ] = -t159 - t79 + LL__[iL_lambda80__xo];
+    result__[ 80  ] = -LR__[iL_lambda1__xo];
+    result__[ 81  ] = -LR__[iL_lambda2__xo];
+    result__[ 82  ] = -LR__[iL_lambda3__xo];
+    result__[ 83  ] = -LR__[iL_lambda4__xo];
+    result__[ 84  ] = -LR__[iL_lambda5__xo];
+    result__[ 85  ] = -LR__[iL_lambda6__xo];
+    result__[ 86  ] = -LR__[iL_lambda7__xo];
+    result__[ 87  ] = -LR__[iL_lambda8__xo];
+    result__[ 88  ] = -LR__[iL_lambda9__xo];
+    result__[ 89  ] = -LR__[iL_lambda10__xo];
+    result__[ 90  ] = -LR__[iL_lambda11__xo];
+    result__[ 91  ] = -LR__[iL_lambda12__xo];
+    result__[ 92  ] = -LR__[iL_lambda13__xo];
+    result__[ 93  ] = -LR__[iL_lambda14__xo];
+    result__[ 94  ] = -LR__[iL_lambda15__xo];
+    result__[ 95  ] = -LR__[iL_lambda16__xo];
+    result__[ 96  ] = -LR__[iL_lambda17__xo];
+    result__[ 97  ] = -LR__[iL_lambda18__xo];
+    result__[ 98  ] = -LR__[iL_lambda19__xo];
+    result__[ 99  ] = -LR__[iL_lambda20__xo];
+    result__[ 100 ] = -LR__[iL_lambda21__xo];
+    result__[ 101 ] = -LR__[iL_lambda22__xo];
+    result__[ 102 ] = -LR__[iL_lambda23__xo];
+    result__[ 103 ] = -LR__[iL_lambda24__xo];
+    result__[ 104 ] = -LR__[iL_lambda25__xo];
+    result__[ 105 ] = -LR__[iL_lambda26__xo];
+    result__[ 106 ] = -LR__[iL_lambda27__xo];
+    result__[ 107 ] = -LR__[iL_lambda28__xo];
+    result__[ 108 ] = -LR__[iL_lambda29__xo];
+    result__[ 109 ] = -LR__[iL_lambda30__xo];
+    result__[ 110 ] = -LR__[iL_lambda31__xo];
+    result__[ 111 ] = -LR__[iL_lambda32__xo];
+    result__[ 112 ] = -LR__[iL_lambda33__xo];
+    result__[ 113 ] = -LR__[iL_lambda34__xo];
+    result__[ 114 ] = -LR__[iL_lambda35__xo];
+    result__[ 115 ] = -LR__[iL_lambda36__xo];
+    result__[ 116 ] = -LR__[iL_lambda37__xo];
+    result__[ 117 ] = -LR__[iL_lambda38__xo];
+    result__[ 118 ] = -LR__[iL_lambda39__xo];
+    result__[ 119 ] = -LR__[iL_lambda40__xo];
+    result__[ 120 ] = t83 - LR__[iL_lambda41__xo];
+    result__[ 121 ] = t85 - LR__[iL_lambda42__xo];
+    result__[ 122 ] = t87 - LR__[iL_lambda43__xo];
+    result__[ 123 ] = t89 - LR__[iL_lambda44__xo];
+    result__[ 124 ] = t91 - LR__[iL_lambda45__xo];
+    result__[ 125 ] = t93 - LR__[iL_lambda46__xo];
+    result__[ 126 ] = t95 - LR__[iL_lambda47__xo];
+    result__[ 127 ] = t97 - LR__[iL_lambda48__xo];
+    result__[ 128 ] = t99 - LR__[iL_lambda49__xo];
+    result__[ 129 ] = t101 - LR__[iL_lambda50__xo];
+    result__[ 130 ] = t103 - LR__[iL_lambda51__xo];
+    result__[ 131 ] = t105 - LR__[iL_lambda52__xo];
+    result__[ 132 ] = t107 - LR__[iL_lambda53__xo];
+    result__[ 133 ] = t109 - LR__[iL_lambda54__xo];
+    result__[ 134 ] = t111 - LR__[iL_lambda55__xo];
+    result__[ 135 ] = t113 - LR__[iL_lambda56__xo];
+    result__[ 136 ] = t115 - LR__[iL_lambda57__xo];
+    result__[ 137 ] = t117 - LR__[iL_lambda58__xo];
+    result__[ 138 ] = t119 - LR__[iL_lambda59__xo];
+    result__[ 139 ] = -LR__[iL_lambda60__xo];
+    result__[ 140 ] = t123 - LR__[iL_lambda61__xo];
+    result__[ 141 ] = t125 - LR__[iL_lambda62__xo];
+    result__[ 142 ] = t127 - LR__[iL_lambda63__xo];
+    result__[ 143 ] = t129 - LR__[iL_lambda64__xo];
+    result__[ 144 ] = t131 - LR__[iL_lambda65__xo];
+    result__[ 145 ] = t133 - LR__[iL_lambda66__xo];
+    result__[ 146 ] = t135 - LR__[iL_lambda67__xo];
+    result__[ 147 ] = t137 - LR__[iL_lambda68__xo];
+    result__[ 148 ] = t139 - LR__[iL_lambda69__xo];
+    result__[ 149 ] = t141 - LR__[iL_lambda70__xo];
+    result__[ 150 ] = t143 - LR__[iL_lambda71__xo];
+    result__[ 151 ] = t145 - LR__[iL_lambda72__xo];
+    result__[ 152 ] = t147 - LR__[iL_lambda73__xo];
+    result__[ 153 ] = t149 - LR__[iL_lambda74__xo];
+    result__[ 154 ] = t151 - LR__[iL_lambda75__xo];
+    result__[ 155 ] = t153 - LR__[iL_lambda76__xo];
+    result__[ 156 ] = t155 - LR__[iL_lambda77__xo];
+    result__[ 157 ] = t157 - LR__[iL_lambda78__xo];
+    result__[ 158 ] = t159 - LR__[iL_lambda79__xo];
+    result__[ 159 ] = -LR__[iL_lambda80__xo];
+    result__[ 160 ] = 0;
+    result__[ 161 ] = 0;
+    result__[ 162 ] = 0;
+    result__[ 163 ] = 0;
+    result__[ 164 ] = 0;
+    result__[ 165 ] = 0;
+    result__[ 166 ] = 0;
+    result__[ 167 ] = 0;
+    result__[ 168 ] = 0;
+    result__[ 169 ] = 0;
+    result__[ 170 ] = 0;
+    result__[ 171 ] = 0;
+    result__[ 172 ] = 0;
+    result__[ 173 ] = 0;
+    result__[ 174 ] = 0;
+    result__[ 175 ] = 0;
+    result__[ 176 ] = 0;
+    result__[ 177 ] = 0;
+    result__[ 178 ] = 0;
+    result__[ 179 ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 80, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_ContinuousMP::Dfd_BCDxlxlp_numRows() const { return 180; }
+  integer ICLOCS_ContinuousMP::Dfd_BCDxlxlp_numCols() const { return 340; }
+  integer ICLOCS_ContinuousMP::Dfd_BCDxlxlp_nnz()     const { return 160; }
+
+  void
+  ICLOCS_ContinuousMP::Dfd_BCDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 80  ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 81  ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 82  ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 83  ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 84  ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 85  ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 86  ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 87  ;
+    iIndex[8 ] = 8   ; jIndex[8 ] = 88  ;
+    iIndex[9 ] = 9   ; jIndex[9 ] = 89  ;
+    iIndex[10] = 10  ; jIndex[10] = 90  ;
+    iIndex[11] = 11  ; jIndex[11] = 91  ;
+    iIndex[12] = 12  ; jIndex[12] = 92  ;
+    iIndex[13] = 13  ; jIndex[13] = 93  ;
+    iIndex[14] = 14  ; jIndex[14] = 94  ;
+    iIndex[15] = 15  ; jIndex[15] = 95  ;
+    iIndex[16] = 16  ; jIndex[16] = 96  ;
+    iIndex[17] = 17  ; jIndex[17] = 97  ;
+    iIndex[18] = 18  ; jIndex[18] = 98  ;
+    iIndex[19] = 19  ; jIndex[19] = 99  ;
+    iIndex[20] = 20  ; jIndex[20] = 100 ;
+    iIndex[21] = 21  ; jIndex[21] = 101 ;
+    iIndex[22] = 22  ; jIndex[22] = 102 ;
+    iIndex[23] = 23  ; jIndex[23] = 103 ;
+    iIndex[24] = 24  ; jIndex[24] = 104 ;
+    iIndex[25] = 25  ; jIndex[25] = 105 ;
+    iIndex[26] = 26  ; jIndex[26] = 106 ;
+    iIndex[27] = 27  ; jIndex[27] = 107 ;
+    iIndex[28] = 28  ; jIndex[28] = 108 ;
+    iIndex[29] = 29  ; jIndex[29] = 109 ;
+    iIndex[30] = 30  ; jIndex[30] = 110 ;
+    iIndex[31] = 31  ; jIndex[31] = 111 ;
+    iIndex[32] = 32  ; jIndex[32] = 112 ;
+    iIndex[33] = 33  ; jIndex[33] = 113 ;
+    iIndex[34] = 34  ; jIndex[34] = 114 ;
+    iIndex[35] = 35  ; jIndex[35] = 115 ;
+    iIndex[36] = 36  ; jIndex[36] = 116 ;
+    iIndex[37] = 37  ; jIndex[37] = 117 ;
+    iIndex[38] = 38  ; jIndex[38] = 118 ;
+    iIndex[39] = 39  ; jIndex[39] = 119 ;
+    iIndex[40] = 40  ; jIndex[40] = 120 ;
+    iIndex[41] = 41  ; jIndex[41] = 121 ;
+    iIndex[42] = 42  ; jIndex[42] = 122 ;
+    iIndex[43] = 43  ; jIndex[43] = 123 ;
+    iIndex[44] = 44  ; jIndex[44] = 124 ;
+    iIndex[45] = 45  ; jIndex[45] = 125 ;
+    iIndex[46] = 46  ; jIndex[46] = 126 ;
+    iIndex[47] = 47  ; jIndex[47] = 127 ;
+    iIndex[48] = 48  ; jIndex[48] = 128 ;
+    iIndex[49] = 49  ; jIndex[49] = 129 ;
+    iIndex[50] = 50  ; jIndex[50] = 130 ;
+    iIndex[51] = 51  ; jIndex[51] = 131 ;
+    iIndex[52] = 52  ; jIndex[52] = 132 ;
+    iIndex[53] = 53  ; jIndex[53] = 133 ;
+    iIndex[54] = 54  ; jIndex[54] = 134 ;
+    iIndex[55] = 55  ; jIndex[55] = 135 ;
+    iIndex[56] = 56  ; jIndex[56] = 136 ;
+    iIndex[57] = 57  ; jIndex[57] = 137 ;
+    iIndex[58] = 58  ; jIndex[58] = 138 ;
+    iIndex[59] = 59  ; jIndex[59] = 139 ;
+    iIndex[60] = 60  ; jIndex[60] = 140 ;
+    iIndex[61] = 61  ; jIndex[61] = 141 ;
+    iIndex[62] = 62  ; jIndex[62] = 142 ;
+    iIndex[63] = 63  ; jIndex[63] = 143 ;
+    iIndex[64] = 64  ; jIndex[64] = 144 ;
+    iIndex[65] = 65  ; jIndex[65] = 145 ;
+    iIndex[66] = 66  ; jIndex[66] = 146 ;
+    iIndex[67] = 67  ; jIndex[67] = 147 ;
+    iIndex[68] = 68  ; jIndex[68] = 148 ;
+    iIndex[69] = 69  ; jIndex[69] = 149 ;
+    iIndex[70] = 70  ; jIndex[70] = 150 ;
+    iIndex[71] = 71  ; jIndex[71] = 151 ;
+    iIndex[72] = 72  ; jIndex[72] = 152 ;
+    iIndex[73] = 73  ; jIndex[73] = 153 ;
+    iIndex[74] = 74  ; jIndex[74] = 154 ;
+    iIndex[75] = 75  ; jIndex[75] = 155 ;
+    iIndex[76] = 76  ; jIndex[76] = 156 ;
+    iIndex[77] = 77  ; jIndex[77] = 157 ;
+    iIndex[78] = 78  ; jIndex[78] = 158 ;
+    iIndex[79] = 79  ; jIndex[79] = 159 ;
+    iIndex[80] = 80  ; jIndex[80] = 240 ;
+    iIndex[81] = 81  ; jIndex[81] = 241 ;
+    iIndex[82] = 82  ; jIndex[82] = 242 ;
+    iIndex[83] = 83  ; jIndex[83] = 243 ;
+    iIndex[84] = 84  ; jIndex[84] = 244 ;
+    iIndex[85] = 85  ; jIndex[85] = 245 ;
+    iIndex[86] = 86  ; jIndex[86] = 246 ;
+    iIndex[87] = 87  ; jIndex[87] = 247 ;
+    iIndex[88] = 88  ; jIndex[88] = 248 ;
+    iIndex[89] = 89  ; jIndex[89] = 249 ;
+    iIndex[90] = 90  ; jIndex[90] = 250 ;
+    iIndex[91] = 91  ; jIndex[91] = 251 ;
+    iIndex[92] = 92  ; jIndex[92] = 252 ;
+    iIndex[93] = 93  ; jIndex[93] = 253 ;
+    iIndex[94] = 94  ; jIndex[94] = 254 ;
+    iIndex[95] = 95  ; jIndex[95] = 255 ;
+    iIndex[96] = 96  ; jIndex[96] = 256 ;
+    iIndex[97] = 97  ; jIndex[97] = 257 ;
+    iIndex[98] = 98  ; jIndex[98] = 258 ;
+    iIndex[99] = 99  ; jIndex[99] = 259 ;
+    iIndex[100] = 100 ; jIndex[100] = 260 ;
+    iIndex[101] = 101 ; jIndex[101] = 261 ;
+    iIndex[102] = 102 ; jIndex[102] = 262 ;
+    iIndex[103] = 103 ; jIndex[103] = 263 ;
+    iIndex[104] = 104 ; jIndex[104] = 264 ;
+    iIndex[105] = 105 ; jIndex[105] = 265 ;
+    iIndex[106] = 106 ; jIndex[106] = 266 ;
+    iIndex[107] = 107 ; jIndex[107] = 267 ;
+    iIndex[108] = 108 ; jIndex[108] = 268 ;
+    iIndex[109] = 109 ; jIndex[109] = 269 ;
+    iIndex[110] = 110 ; jIndex[110] = 270 ;
+    iIndex[111] = 111 ; jIndex[111] = 271 ;
+    iIndex[112] = 112 ; jIndex[112] = 272 ;
+    iIndex[113] = 113 ; jIndex[113] = 273 ;
+    iIndex[114] = 114 ; jIndex[114] = 274 ;
+    iIndex[115] = 115 ; jIndex[115] = 275 ;
+    iIndex[116] = 116 ; jIndex[116] = 276 ;
+    iIndex[117] = 117 ; jIndex[117] = 277 ;
+    iIndex[118] = 118 ; jIndex[118] = 278 ;
+    iIndex[119] = 119 ; jIndex[119] = 279 ;
+    iIndex[120] = 120 ; jIndex[120] = 280 ;
+    iIndex[121] = 121 ; jIndex[121] = 281 ;
+    iIndex[122] = 122 ; jIndex[122] = 282 ;
+    iIndex[123] = 123 ; jIndex[123] = 283 ;
+    iIndex[124] = 124 ; jIndex[124] = 284 ;
+    iIndex[125] = 125 ; jIndex[125] = 285 ;
+    iIndex[126] = 126 ; jIndex[126] = 286 ;
+    iIndex[127] = 127 ; jIndex[127] = 287 ;
+    iIndex[128] = 128 ; jIndex[128] = 288 ;
+    iIndex[129] = 129 ; jIndex[129] = 289 ;
+    iIndex[130] = 130 ; jIndex[130] = 290 ;
+    iIndex[131] = 131 ; jIndex[131] = 291 ;
+    iIndex[132] = 132 ; jIndex[132] = 292 ;
+    iIndex[133] = 133 ; jIndex[133] = 293 ;
+    iIndex[134] = 134 ; jIndex[134] = 294 ;
+    iIndex[135] = 135 ; jIndex[135] = 295 ;
+    iIndex[136] = 136 ; jIndex[136] = 296 ;
+    iIndex[137] = 137 ; jIndex[137] = 297 ;
+    iIndex[138] = 138 ; jIndex[138] = 298 ;
+    iIndex[139] = 139 ; jIndex[139] = 299 ;
+    iIndex[140] = 140 ; jIndex[140] = 300 ;
+    iIndex[141] = 141 ; jIndex[141] = 301 ;
+    iIndex[142] = 142 ; jIndex[142] = 302 ;
+    iIndex[143] = 143 ; jIndex[143] = 303 ;
+    iIndex[144] = 144 ; jIndex[144] = 304 ;
+    iIndex[145] = 145 ; jIndex[145] = 305 ;
+    iIndex[146] = 146 ; jIndex[146] = 306 ;
+    iIndex[147] = 147 ; jIndex[147] = 307 ;
+    iIndex[148] = 148 ; jIndex[148] = 308 ;
+    iIndex[149] = 149 ; jIndex[149] = 309 ;
+    iIndex[150] = 150 ; jIndex[150] = 310 ;
+    iIndex[151] = 151 ; jIndex[151] = 311 ;
+    iIndex[152] = 152 ; jIndex[152] = 312 ;
+    iIndex[153] = 153 ; jIndex[153] = 313 ;
+    iIndex[154] = 154 ; jIndex[154] = 314 ;
+    iIndex[155] = 155 ; jIndex[155] = 315 ;
+    iIndex[156] = 156 ; jIndex[156] = 316 ;
+    iIndex[157] = 157 ; jIndex[157] = 317 ;
+    iIndex[158] = 158 ; jIndex[158] = 318 ;
+    iIndex[159] = 159 ; jIndex[159] = 319 ;
+  }
+
+
+  void
+  ICLOCS_ContinuousMP::Dfd_BCDxlxlp_sparse(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = 1;
+    result__[ 6   ] = 1;
+    result__[ 7   ] = 1;
+    result__[ 8   ] = 1;
+    result__[ 9   ] = 1;
+    result__[ 10  ] = 1;
+    result__[ 11  ] = 1;
+    result__[ 12  ] = 1;
+    result__[ 13  ] = 1;
+    result__[ 14  ] = 1;
+    result__[ 15  ] = 1;
+    result__[ 16  ] = 1;
+    result__[ 17  ] = 1;
+    result__[ 18  ] = 1;
+    result__[ 19  ] = 1;
+    result__[ 20  ] = 1;
+    result__[ 21  ] = 1;
+    result__[ 22  ] = 1;
+    result__[ 23  ] = 1;
+    result__[ 24  ] = 1;
+    result__[ 25  ] = 1;
+    result__[ 26  ] = 1;
+    result__[ 27  ] = 1;
+    result__[ 28  ] = 1;
+    result__[ 29  ] = 1;
+    result__[ 30  ] = 1;
+    result__[ 31  ] = 1;
+    result__[ 32  ] = 1;
+    result__[ 33  ] = 1;
+    result__[ 34  ] = 1;
+    result__[ 35  ] = 1;
+    result__[ 36  ] = 1;
+    result__[ 37  ] = 1;
+    result__[ 38  ] = 1;
+    result__[ 39  ] = 1;
+    result__[ 40  ] = 1;
+    result__[ 41  ] = 1;
+    result__[ 42  ] = 1;
+    result__[ 43  ] = 1;
+    result__[ 44  ] = 1;
+    result__[ 45  ] = 1;
+    result__[ 46  ] = 1;
+    result__[ 47  ] = 1;
+    result__[ 48  ] = 1;
+    result__[ 49  ] = 1;
+    result__[ 50  ] = 1;
+    result__[ 51  ] = 1;
+    result__[ 52  ] = 1;
+    result__[ 53  ] = 1;
+    result__[ 54  ] = 1;
+    result__[ 55  ] = 1;
+    result__[ 56  ] = 1;
+    result__[ 57  ] = 1;
+    result__[ 58  ] = 1;
+    result__[ 59  ] = 1;
+    result__[ 60  ] = 1;
+    result__[ 61  ] = 1;
+    result__[ 62  ] = 1;
+    result__[ 63  ] = 1;
+    result__[ 64  ] = 1;
+    result__[ 65  ] = 1;
+    result__[ 66  ] = 1;
+    result__[ 67  ] = 1;
+    result__[ 68  ] = 1;
+    result__[ 69  ] = 1;
+    result__[ 70  ] = 1;
+    result__[ 71  ] = 1;
+    result__[ 72  ] = 1;
+    result__[ 73  ] = 1;
+    result__[ 74  ] = 1;
+    result__[ 75  ] = 1;
+    result__[ 76  ] = 1;
+    result__[ 77  ] = 1;
+    result__[ 78  ] = 1;
+    result__[ 79  ] = 1;
+    result__[ 80  ] = -1;
+    result__[ 81  ] = -1;
+    result__[ 82  ] = -1;
+    result__[ 83  ] = -1;
+    result__[ 84  ] = -1;
+    result__[ 85  ] = -1;
+    result__[ 86  ] = -1;
+    result__[ 87  ] = -1;
+    result__[ 88  ] = -1;
+    result__[ 89  ] = -1;
+    result__[ 90  ] = -1;
+    result__[ 91  ] = -1;
+    result__[ 92  ] = -1;
+    result__[ 93  ] = -1;
+    result__[ 94  ] = -1;
+    result__[ 95  ] = -1;
+    result__[ 96  ] = -1;
+    result__[ 97  ] = -1;
+    result__[ 98  ] = -1;
+    result__[ 99  ] = -1;
+    result__[ 100 ] = -1;
+    result__[ 101 ] = -1;
+    result__[ 102 ] = -1;
+    result__[ 103 ] = -1;
+    result__[ 104 ] = -1;
+    result__[ 105 ] = -1;
+    result__[ 106 ] = -1;
+    result__[ 107 ] = -1;
+    result__[ 108 ] = -1;
+    result__[ 109 ] = -1;
+    result__[ 110 ] = -1;
+    result__[ 111 ] = -1;
+    result__[ 112 ] = -1;
+    result__[ 113 ] = -1;
+    result__[ 114 ] = -1;
+    result__[ 115 ] = -1;
+    result__[ 116 ] = -1;
+    result__[ 117 ] = -1;
+    result__[ 118 ] = -1;
+    result__[ 119 ] = -1;
+    result__[ 120 ] = -1;
+    result__[ 121 ] = -1;
+    result__[ 122 ] = -1;
+    result__[ 123 ] = -1;
+    result__[ 124 ] = -1;
+    result__[ 125 ] = -1;
+    result__[ 126 ] = -1;
+    result__[ 127 ] = -1;
+    result__[ 128 ] = -1;
+    result__[ 129 ] = -1;
+    result__[ 130 ] = -1;
+    result__[ 131 ] = -1;
+    result__[ 132 ] = -1;
+    result__[ 133 ] = -1;
+    result__[ 134 ] = -1;
+    result__[ 135 ] = -1;
+    result__[ 136 ] = -1;
+    result__[ 137 ] = -1;
+    result__[ 138 ] = -1;
+    result__[ 139 ] = -1;
+    result__[ 140 ] = -1;
+    result__[ 141 ] = -1;
+    result__[ 142 ] = -1;
+    result__[ 143 ] = -1;
+    result__[ 144 ] = -1;
+    result__[ 145 ] = -1;
+    result__[ 146 ] = -1;
+    result__[ 147 ] = -1;
+    result__[ 148 ] = -1;
+    result__[ 149 ] = -1;
+    result__[ 150 ] = -1;
+    result__[ 151 ] = -1;
+    result__[ 152 ] = -1;
+    result__[ 153 ] = -1;
+    result__[ 154 ] = -1;
+    result__[ 155 ] = -1;
+    result__[ 156 ] = -1;
+    result__[ 157 ] = -1;
+    result__[ 158 ] = -1;
+    result__[ 159 ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "Dfd_BCDxlxlp_sparse", 160, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

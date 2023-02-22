@@ -17,27 +17,36 @@ loadDynamicSystem(
   controls  = cvars,
   states    = qvars
 );
-addBoundaryConditions(initial=[x,z,vx,vz,theta],final=[x,z,vx,vz,theta]);
-infoBoundaryConditions() ;
-addControlBound( u1,
-                 scale       = T,
-                 controlType = "U_COS_LOGARITHMIC",
-                 maxabs      = 1,
-                 epsilon     = epsi_penalty,
-                 tolerance   = tol_penalty) ;
-addControlBound( u2,
-                 scale       = T,
-                 controlType = "U_COS_LOGARITHMIC",
-                 maxabs      = 1,
-                 epsilon     = epsi_penalty,
-                 tolerance   = tol_penalty) ;
-addControlBound( u3,
-                 scale       = T,
-                 controlType = "U_COS_LOGARITHMIC",
-                 maxabs      = 1,
-                 epsilon     = epsi_penalty,
-                 tolerance   = tol_penalty) ;
-setTarget( mayer = T ) ;
+addBoundaryConditions(
+  initial = [x,z,vx,vz,theta],
+  final   = [x,z,vx,vz,theta]
+);
+infoBoundaryConditions();
+addControlBound(
+  u1,
+  scale       = T,
+  controlType = "U_COS_LOGARITHMIC",
+  maxabs      = 1,
+  epsilon     = epsi_penalty,
+  tolerance   = tol_penalty
+);
+addControlBound(
+  u2,
+  scale       = T,
+  controlType = "U_COS_LOGARITHMIC",
+  maxabs      = 1,
+  epsilon     = epsi_penalty,
+  tolerance   = tol_penalty
+);
+addControlBound(
+  u3,
+  scale       = T,
+  controlType = "U_COS_LOGARITHMIC",
+  maxabs      = 1,
+  epsilon     = epsi_penalty,
+  tolerance   = tol_penalty
+);
+setTarget( mayer = T );
 pars := [
   inertia      = 0.12,
   epsi_penalty = 0.1,
@@ -77,8 +86,10 @@ CONTINUATION := [
     [u3,"epsilon"] = epsi
   ]
 ];
+project_dir  := "../generated_code";
+project_name := "Underwater";
 generateOCProblem(
-  "Underwater",
+  project_name,
   #post_processing        = [[T(zeta),"minTime"]],
   parameters              = pars,
   mesh                    = [length=1,n=1000],
@@ -86,4 +97,4 @@ generateOCProblem(
   optimization_parameters = [ T = Tguess ],
   states_guess            = GUESS
 ) ;
-;
+# if used in batch mode use the comment to quit;

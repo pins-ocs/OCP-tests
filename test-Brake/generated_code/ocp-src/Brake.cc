@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake.cc                                                       |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -89,6 +89,7 @@ namespace BrakeDefine {
   char const *namesModelPars[numModelPars+1] = {
     "Tguess",
     "epsilon",
+    "mu",
     "v_f",
     "v_i",
     "x_i",
@@ -137,7 +138,7 @@ namespace BrakeDefine {
   // Constraints 2D
   // User classes
   {
-    m_U_solve_iterative = false;
+    m_U_solve_iterative = true;
 
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );

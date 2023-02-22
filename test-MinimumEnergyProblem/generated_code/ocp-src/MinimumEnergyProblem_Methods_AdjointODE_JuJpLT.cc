@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_AdjointODE.cc                     |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -58,50 +58,123 @@ namespace MinimumEnergyProblemDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer MinimumEnergyProblem::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   MinimumEnergyProblem::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer MinimumEnergyProblem::LT_numEqns() const { return 1; }
-
-  void
-  MinimumEnergyProblem::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer MinimumEnergyProblem::JU_numEqns() const { return 0; }
+  real_type
+  MinimumEnergyProblem::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  MinimumEnergyProblem::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MinimumEnergyProblem::JPxpu_numEqns() const { return 3; }
 
   void
-  MinimumEnergyProblem::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  MinimumEnergyProblem::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MinimumEnergyProblem::JUxpu_numEqns() const { return 3; }
+
+  void
+  MinimumEnergyProblem::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 3, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer MinimumEnergyProblem::LTxpu_numEqns() const { return 3; }
+
+  void
+  MinimumEnergyProblem::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_x1Limitation_D(X__[iX_x1] - 1.0 / 9.0);
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,10 +183,10 @@ namespace MinimumEnergyProblemDefine {
 
   void
   MinimumEnergyProblem::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -126,70 +199,70 @@ namespace MinimumEnergyProblemDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::DJPDxpu_numRows() const { return 0; }
-  integer MinimumEnergyProblem::DJPDxpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::DJPDxpu_nnz()     const { return 0; }
+  integer MinimumEnergyProblem::D2JPD2xpu_numRows() const { return 3; }
+  integer MinimumEnergyProblem::D2JPD2xpu_numCols() const { return 3; }
+  integer MinimumEnergyProblem::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  MinimumEnergyProblem::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  MinimumEnergyProblem::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  MinimumEnergyProblem::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  MinimumEnergyProblem::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::DLTDxpu_numRows() const { return 1; }
-  integer MinimumEnergyProblem::DLTDxpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::DLTDxpu_nnz()     const { return 1; }
+  integer MinimumEnergyProblem::D2LTD2xpu_numRows() const { return 3; }
+  integer MinimumEnergyProblem::D2LTD2xpu_numCols() const { return 3; }
+  integer MinimumEnergyProblem::D2LTD2xpu_nnz()     const { return 1; }
 
   void
-  MinimumEnergyProblem::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  MinimumEnergyProblem::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
 
   void
-  MinimumEnergyProblem::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  MinimumEnergyProblem::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_x1Limitation_D(X__[iX_x1] - 1.0 / 9.0);
+    result__[ 0   ] = ALIAS_x1Limitation_DD(X__[iX_x1] - 1.0 / 9.0);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::DJUDxpu_numRows() const { return 0; }
-  integer MinimumEnergyProblem::DJUDxpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::DJUDxpu_nnz()     const { return 0; }
+  integer MinimumEnergyProblem::D2JUD2xpu_numRows() const { return 3; }
+  integer MinimumEnergyProblem::D2JUD2xpu_numCols() const { return 3; }
+  integer MinimumEnergyProblem::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  MinimumEnergyProblem::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  MinimumEnergyProblem::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  MinimumEnergyProblem::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  MinimumEnergyProblem::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -207,10 +280,10 @@ namespace MinimumEnergyProblemDefine {
 
   void
   MinimumEnergyProblem::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -221,82 +294,6 @@ namespace MinimumEnergyProblemDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 1, i_segment );
   }
 
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::D2JPD2xpu_numRows() const { return 3; }
-  integer MinimumEnergyProblem::D2JPD2xpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  MinimumEnergyProblem::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  MinimumEnergyProblem::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::D2LTD2xpu_numRows() const { return 3; }
-  integer MinimumEnergyProblem::D2LTD2xpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::D2LTD2xpu_nnz()     const { return 1; }
-
-  void
-  MinimumEnergyProblem::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  MinimumEnergyProblem::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_x1Limitation_DD(X__[iX_x1] - 1.0 / 9.0);
-    result__[ 0   ] = OMEGA__[0] * t3;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 1, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer MinimumEnergyProblem::D2JUD2xpu_numRows() const { return 3; }
-  integer MinimumEnergyProblem::D2JUD2xpu_numCols() const { return 3; }
-  integer MinimumEnergyProblem::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  MinimumEnergyProblem::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  MinimumEnergyProblem::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,11 +309,11 @@ namespace MinimumEnergyProblemDefine {
 
   void
   MinimumEnergyProblem::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

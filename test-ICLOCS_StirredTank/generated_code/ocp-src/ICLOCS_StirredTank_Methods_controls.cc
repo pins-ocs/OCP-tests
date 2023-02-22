@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_controls.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,68 +75,33 @@ namespace ICLOCS_StirredTankDefine {
 
   real_type
   ICLOCS_StirredTank::g_fun_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_TimeSize];
-    real_type t2   = ModelPars[iM_w_time];
-    real_type t3   = XL__[iX_x1];
-    real_type t4   = ModelPars[iM_x1_f];
-    real_type t6   = pow(t3 - t4, 2);
-    real_type t7   = XL__[iX_x2];
-    real_type t8   = ModelPars[iM_x2_f];
-    real_type t10  = pow(t7 - t8, 2);
-    real_type t11  = UM__[0];
+    real_type t3   = X__[iX_x1];
+    real_type t6   = pow(t3 - ModelPars[iM_x1_f], 2);
+    real_type t7   = X__[iX_x2];
+    real_type t10  = pow(t7 - ModelPars[iM_x2_f], 2);
+    real_type t11  = U__[iU_u];
     real_type t14  = pow(t11 - ModelPars[iM_u_f], 2);
-    real_type t18  = t1 * LM__[0];
-    real_type t19  = 1 - t3;
-    real_type t21  = 1.0 / ModelPars[iM_theta];
-    real_type t23  = ModelPars[iM_k];
-    real_type t25  = ModelPars[iM_En];
-    real_type t28  = exp(-1.0 / t7 * t25);
-    real_type t29  = t28 * t3 * t23;
-    real_type t33  = t1 * LM__[1];
-    real_type t34  = ModelPars[iM_Tf];
-    real_type t38  = t11 * ModelPars[iM_a];
-    real_type t39  = ModelPars[iM_Tc];
-    real_type t44  = uControl(t11, 0, 2);
-    real_type t48  = tfbound(ModelPars[iM_T_min] - t1);
-    real_type t50  = x1bound_min(-t3);
-    real_type t52  = x1bound_max(-t19);
-    real_type t53  = x2bound_min(-t7);
-    real_type t55  = x2bound_max(t7 - 1);
-    real_type t56  = XR__[iX_x1];
-    real_type t58  = pow(t56 - t4, 2);
-    real_type t59  = XR__[iX_x2];
-    real_type t61  = pow(t59 - t8, 2);
-    real_type t64  = 1 - t56;
-    real_type t69  = exp(-1.0 / t59 * t25);
-    real_type t70  = t69 * t56 * t23;
-    real_type t79  = x1bound_min(-t56);
-    real_type t81  = x1bound_max(-t64);
-    real_type t82  = x2bound_min(-t59);
-    real_type t84  = x2bound_max(t59 - 1);
-    real_type result__ = (t2 + t6 + t10 + t14) * t1 + (t21 * t19 - t29) * t18 + (t21 * (t34 - t7) + t29 - (t7 - t39) * t38) * t33 + 2 * t44 + 2 * t48 + t50 + t52 + t53 + t55 + (t2 + t58 + t61 + t14) * t1 + (t21 * t64 - t70) * t18 + (t21 * (t34 - t59) + t70 - (t59 - t39) * t38) * t33 + t79 + t81 + t82 + t84;
+    real_type t17  = uControl(t11, 0, 2);
+    real_type t20  = tfbound(ModelPars[iM_T_min] - t1);
+    real_type t21  = x1bound_min(-t3);
+    real_type t22  = t3 - 1;
+    real_type t23  = x1bound_max(t22);
+    real_type t24  = x2bound_min(-t7);
+    real_type t26  = x2bound_max(t7 - 1);
+    real_type t31  = 1.0 / ModelPars[iM_theta];
+    real_type t38  = exp(-1.0 / t7 * ModelPars[iM_En]);
+    real_type t39  = t38 * t3 * ModelPars[iM_k];
+    real_type result__ = (ModelPars[iM_w_time] + t6 + t10 + t14) * t1 + t17 + t20 + t21 + t23 + t24 + t26 + (-t31 * t22 - t39) * t1 * MU__[0] + (t31 * (ModelPars[iM_Tf] - t7) + t39 - (t7 - ModelPars[iM_Tc]) * t11 * ModelPars[iM_a]) * t1 * MU__[1];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -149,99 +114,60 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_TimeSize];
-    real_type t2   = UM__[0];
-    real_type t9   = t1 * LM__[1];
-    real_type t10  = ModelPars[iM_a];
-    real_type t12  = ModelPars[iM_Tc];
-    real_type t16  = ALIAS_uControl_D_1(t2, 0, 2);
-    result__[ 0   ] = 2 * (2 * t2 - 2 * ModelPars[iM_u_f]) * t1 - (XL__[iX_x2] - t12) * t10 * t9 + 2 * t16 - (XR__[iX_x2] - t12) * t10 * t9;
+    real_type t2   = U__[iU_u];
+    real_type t7   = ALIAS_uControl_D_1(t2, 0, 2);
+    result__[ 0   ] = (2 * t2 - 2 * ModelPars[iM_u_f]) * t1 + t7 - ModelPars[iM_a] * (X__[iX_x2] - ModelPars[iM_Tc]) * t1 * MU__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::DgDxlxlp_numRows() const { return 1; }
-  integer ICLOCS_StirredTank::DgDxlxlp_numCols() const { return 9; }
-  integer ICLOCS_StirredTank::DgDxlxlp_nnz()     const { return 5; }
+  integer ICLOCS_StirredTank::DgDxpm_numRows() const { return 1; }
+  integer ICLOCS_StirredTank::DgDxpm_numCols() const { return 5; }
+  integer ICLOCS_StirredTank::DgDxpm_nnz()     const { return 3; }
 
   void
-  ICLOCS_StirredTank::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_StirredTank::DgDxpm_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 5   ;
-    iIndex[3 ] = 0   ; jIndex[3 ] = 7   ;
-    iIndex[4 ] = 0   ; jIndex[4 ] = 8   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_StirredTank::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_StirredTank::DgDxpm_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = LM__[1];
+    real_type t1   = MU__[1];
     real_type t2   = P__[iP_TimeSize];
     real_type t4   = ModelPars[iM_a];
     result__[ 0   ] = -t4 * t2 * t1;
-    real_type t6   = t4 * t2;
-    real_type t8   = ModelPars[iM_Tc];
-    real_type t9   = XL__[iX_x2] - t8;
-    real_type t13  = XR__[iX_x2] - t8;
-    result__[ 1   ] = -0.5e0 * t9 * t6 - 0.5e0 * t13 * t6;
-    result__[ 2   ] = result__[0];
-    result__[ 3   ] = result__[1];
-    real_type t20  = t4 * t1;
-    result__[ 4   ] = -t13 * t20 - t9 * t20 + 4 * UM__[0] - 4 * ModelPars[iM_u_f];
+    real_type t13  = X__[iX_x2] - ModelPars[iM_Tc];
+    result__[ 1   ] = -t13 * t4 * t1 + 2 * U__[iU_u] - 2 * ModelPars[iM_u_f];
+    result__[ 2   ] = -t13 * t4 * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -259,32 +185,18 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_uControl_D_1_1(UM__[0], 0, 2);
-    result__[ 0   ] = 4 * P__[iP_TimeSize] + 2 * t4;
+    real_type t4   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 2);
+    result__[ 0   ] = 2 * P__[iP_TimeSize] + t4;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -307,116 +219,15 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::u_eval_analytic(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        U__
   ) const {
     UTILS_ERROR(
       "ICLOCS_StirredTank::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"
     );
-  }
-
-  /*\
-  :|:   ___         _           _   ___    _   _            _
-  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
-  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
-  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
-  \*/
-
-  real_type
-  ICLOCS_StirredTank::m_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = uControl(t1, 0, 2);
-    real_type t4   = P__[iP_TimeSize];
-    real_type t6   = tfbound(ModelPars[iM_T_min] - t4);
-    real_type t7   = X__[iX_x1];
-    real_type t8   = x1bound_min(-t7);
-    real_type t9   = t7 - 1;
-    real_type t10  = x1bound_max(t9);
-    real_type t11  = X__[iX_x2];
-    real_type t12  = x2bound_min(-t11);
-    real_type t14  = x2bound_max(t11 - 1);
-    real_type t18  = 1.0 / ModelPars[iM_theta];
-    real_type t25  = exp(-1.0 / t11 * ModelPars[iM_En]);
-    real_type t26  = t25 * t7 * ModelPars[iM_k];
-    real_type t30  = pow(V__[0] - (-t18 * t9 - t26) * t4, 2);
-    real_type t43  = pow(V__[1] - (t18 * (ModelPars[iM_Tf] - t11) + t26 - (t11 - ModelPars[iM_Tc]) * t1 * ModelPars[iM_a]) * t4, 2);
-    real_type result__ = t2 + t6 + t8 + t10 + t12 + t14 + t30 + t43;
-    if ( m_debug ) {
-      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ICLOCS_StirredTank::DmDu_numEqns() const { return 1; }
-
-  void
-  ICLOCS_StirredTank::DmDu_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = ALIAS_uControl_D_1(t1, 0, 2);
-    real_type t4   = P__[iP_TimeSize];
-    real_type t6   = X__[iX_x2];
-    real_type t17  = exp(-1.0 / t6 * ModelPars[iM_En]);
-    real_type t19  = ModelPars[iM_a];
-    real_type t22  = t6 - ModelPars[iM_Tc];
-    result__[ 0   ] = t2 + 2 * t22 * t19 * t4 * (V__[1] - (1.0 / ModelPars[iM_theta] * (ModelPars[iM_Tf] - t6) + t17 * X__[iX_x1] * ModelPars[iM_k] - t22 * t1 * t19) * t4);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::DmDuu_numRows() const { return 1; }
-  integer ICLOCS_StirredTank::DmDuu_numCols() const { return 1; }
-  integer ICLOCS_StirredTank::DmDuu_nnz()     const { return 1; }
-
-  void
-  ICLOCS_StirredTank::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  ICLOCS_StirredTank::DmDuu_sparse(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 2);
-    real_type t4   = P__[iP_TimeSize] * P__[iP_TimeSize];
-    real_type t6   = ModelPars[iM_a] * ModelPars[iM_a];
-    real_type t11  = pow(X__[iX_x2] - ModelPars[iM_Tc], 2);
-    result__[ 0   ] = 2 * t11 * t6 * t4 + t2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }
 
 }

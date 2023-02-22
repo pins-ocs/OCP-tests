@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_problem.cc                       |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -93,46 +93,6 @@ namespace HypersonicProblem3DOFDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  HypersonicProblem3DOF::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[7];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool ok = true;
-    real_type t1   = X__[iX_G];
-    ok = ok && G_bound_min.check_range(-0.314159265358979323846264338328e1 - t1, m_max_penalty_value);
-    ok = ok && G_bound_max.check_range(t1 - 0.314159265358979323846264338328e1, m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -142,9 +102,10 @@ namespace HypersonicProblem3DOFDefine {
 
   real_type
   HypersonicProblem3DOF::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -199,7 +160,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t112 = t46 * t29;
     real_type t128 = sin(t106);
     real_type t135 = tan(t48);
-    real_type result__ = t3 * t1 - t8 * t1 + (t11 + t13 + t15 + t17 + t19 + t21 + t23) * t1 + (t10 * t33 + t31 * t30) * t1 * L__[iL_lambda1__xo] + (1.0 / t49 * t46 * t42 * t39 * t30 + t12 * t33) * t1 * L__[iL_lambda2__xo] + (t46 * t58 * t39 * t30 + t14 * t33) * t1 * L__[iL_lambda3__xo] + ((-t70 * t67 * t31 - t89 * t86 * (t2 * ModelPars[iM_CD1] + t3 * ModelPars[iM_CD2] + ModelPars[iM_CD0]) * t78 * t77 / 2) * t28 + t16 * t33) * t1 * L__[iL_lambda4__xo] + ((t107 * t89 * t86 * t104 * t29 * t77 / 2 + t39 * (t112 - 1.0 / t29 * t70 * t67)) * t28 + t18 * t33) * t1 * L__[iL_lambda5__xo] + ((1.0 / t39 * t128 * t89 * t86 * t104 * t29 * t77 / 2 - t135 * t42 * t39 * t112) * t28 + t20 * t33) * t1 * L__[iL_lambda6__xo] + (U__[iU_u2] * ModelPars[iM_sigma_dot_max] * t28 + t22 * t33) * t1 * L__[iL_lambda7__xo];
+    real_type result__ = t3 * t1 - t8 * t1 + (t11 + t13 + t15 + t17 + t19 + t21 + t23) * t1 + (t10 * t33 + t31 * t30) * t1 * MU__[0] + (1.0 / t49 * t46 * t42 * t39 * t30 + t12 * t33) * t1 * MU__[1] + (t46 * t58 * t39 * t30 + t14 * t33) * t1 * MU__[2] + ((-t70 * t67 * t31 - t89 * t86 * (t2 * ModelPars[iM_CD1] + t3 * ModelPars[iM_CD2] + ModelPars[iM_CD0]) * t78 * t77 / 2) * t28 + t16 * t33) * t1 * MU__[3] + ((t107 * t89 * t86 * t104 * t29 * t77 / 2 + t39 * (t112 - 1.0 / t29 * t70 * t67)) * t28 + t18 * t33) * t1 * MU__[4] + ((1.0 / t39 * t128 * t89 * t86 * t104 * t29 * t77 / 2 - t135 * t42 * t39 * t112) * t28 + t20 * t33) * t1 * MU__[5] + (U__[iU_u2] * ModelPars[iM_sigma_dot_max] * t28 + t22 * t33) * t1 * MU__[6];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -216,9 +177,9 @@ namespace HypersonicProblem3DOFDefine {
 
   real_type
   HypersonicProblem3DOF::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -252,9 +213,9 @@ namespace HypersonicProblem3DOFDefine {
 
   real_type
   HypersonicProblem3DOF::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -280,10 +241,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -329,10 +290,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -361,10 +322,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -420,41 +381,41 @@ namespace HypersonicProblem3DOFDefine {
   void
   HypersonicProblem3DOF::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 16  ;
-    iIndex[2 ] = 7   ; jIndex[2 ] = 7   ;
-    iIndex[3 ] = 7   ; jIndex[3 ] = 16  ;
-    iIndex[4 ] = 9   ; jIndex[4 ] = 9   ;
-    iIndex[5 ] = 9   ; jIndex[5 ] = 16  ;
-    iIndex[6 ] = 10  ; jIndex[6 ] = 10  ;
-    iIndex[7 ] = 10  ; jIndex[7 ] = 16  ;
-    iIndex[8 ] = 11  ; jIndex[8 ] = 11  ;
-    iIndex[9 ] = 11  ; jIndex[9 ] = 16  ;
-    iIndex[10] = 12  ; jIndex[10] = 12  ;
-    iIndex[11] = 12  ; jIndex[11] = 16  ;
-    iIndex[12] = 13  ; jIndex[12] = 13  ;
-    iIndex[13] = 13  ; jIndex[13] = 16  ;
-    iIndex[14] = 14  ; jIndex[14] = 14  ;
-    iIndex[15] = 14  ; jIndex[15] = 16  ;
-    iIndex[16] = 15  ; jIndex[16] = 15  ;
-    iIndex[17] = 15  ; jIndex[17] = 16  ;
-    iIndex[18] = 16  ; jIndex[18] = 4   ;
-    iIndex[19] = 16  ; jIndex[19] = 7   ;
-    iIndex[20] = 16  ; jIndex[20] = 9   ;
-    iIndex[21] = 16  ; jIndex[21] = 10  ;
-    iIndex[22] = 16  ; jIndex[22] = 11  ;
-    iIndex[23] = 16  ; jIndex[23] = 12  ;
-    iIndex[24] = 16  ; jIndex[24] = 13  ;
-    iIndex[25] = 16  ; jIndex[25] = 14  ;
-    iIndex[26] = 16  ; jIndex[26] = 15  ;
+    iIndex[1 ] = 4   ; jIndex[1 ] = 7   ;
+    iIndex[2 ] = 7   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 7   ; jIndex[3 ] = 8   ;
+    iIndex[4 ] = 7   ; jIndex[4 ] = 10  ;
+    iIndex[5 ] = 7   ; jIndex[5 ] = 11  ;
+    iIndex[6 ] = 7   ; jIndex[6 ] = 12  ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 13  ;
+    iIndex[8 ] = 7   ; jIndex[8 ] = 14  ;
+    iIndex[9 ] = 7   ; jIndex[9 ] = 15  ;
+    iIndex[10] = 7   ; jIndex[10] = 16  ;
+    iIndex[11] = 8   ; jIndex[11] = 7   ;
+    iIndex[12] = 8   ; jIndex[12] = 8   ;
+    iIndex[13] = 10  ; jIndex[13] = 7   ;
+    iIndex[14] = 10  ; jIndex[14] = 10  ;
+    iIndex[15] = 11  ; jIndex[15] = 7   ;
+    iIndex[16] = 11  ; jIndex[16] = 11  ;
+    iIndex[17] = 12  ; jIndex[17] = 7   ;
+    iIndex[18] = 12  ; jIndex[18] = 12  ;
+    iIndex[19] = 13  ; jIndex[19] = 7   ;
+    iIndex[20] = 13  ; jIndex[20] = 13  ;
+    iIndex[21] = 14  ; jIndex[21] = 7   ;
+    iIndex[22] = 14  ; jIndex[22] = 14  ;
+    iIndex[23] = 15  ; jIndex[23] = 7   ;
+    iIndex[24] = 15  ; jIndex[24] = 15  ;
+    iIndex[25] = 16  ; jIndex[25] = 7   ;
+    iIndex[26] = 16  ; jIndex[26] = 16  ;
   }
 
 
   void
   HypersonicProblem3DOF::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -468,31 +429,31 @@ namespace HypersonicProblem3DOFDefine {
     real_type t8   = t7 * t7;
     result__[ 0   ] = t1 / 4 + 1.0 / t8 * t5 * t1 / 4;
     result__[ 1   ] = 1.0 / t7 * t4 / 2;
-    result__[ 2   ] = 2 * t1;
+    result__[ 2   ] = result__[1];
     result__[ 3   ] = 2 * U__[iU_alpha];
-    result__[ 4   ] = result__[2];
-    result__[ 5   ] = 2 * U__[iU_c_h];
-    result__[ 6   ] = result__[4];
-    result__[ 7   ] = 2 * U__[iU_c_theta];
-    result__[ 8   ] = result__[6];
-    result__[ 9   ] = 2 * U__[iU_c_phi];
-    result__[ 10  ] = result__[8];
-    result__[ 11  ] = 2 * U__[iU_c_V];
-    result__[ 12  ] = result__[10];
-    result__[ 13  ] = 2 * U__[iU_c_G];
+    result__[ 4   ] = 2 * U__[iU_c_h];
+    result__[ 5   ] = 2 * U__[iU_c_theta];
+    result__[ 6   ] = 2 * U__[iU_c_phi];
+    result__[ 7   ] = 2 * U__[iU_c_V];
+    result__[ 8   ] = 2 * U__[iU_c_G];
+    result__[ 9   ] = 2 * U__[iU_c_psi];
+    result__[ 10  ] = 2 * U__[iU_c_sigma];
+    result__[ 11  ] = result__[3];
+    result__[ 12  ] = 2 * t1;
+    result__[ 13  ] = result__[4];
     result__[ 14  ] = result__[12];
-    result__[ 15  ] = 2 * U__[iU_c_psi];
+    result__[ 15  ] = result__[5];
     result__[ 16  ] = result__[14];
-    result__[ 17  ] = 2 * U__[iU_c_sigma];
-    result__[ 18  ] = result__[1];
-    result__[ 19  ] = result__[3];
-    result__[ 20  ] = result__[5];
-    result__[ 21  ] = result__[7];
-    result__[ 22  ] = result__[9];
-    result__[ 23  ] = result__[11];
-    result__[ 24  ] = result__[13];
-    result__[ 25  ] = result__[15];
-    result__[ 26  ] = result__[17];
+    result__[ 17  ] = result__[6];
+    result__[ 18  ] = result__[16];
+    result__[ 19  ] = result__[7];
+    result__[ 20  ] = result__[18];
+    result__[ 21  ] = result__[8];
+    result__[ 22  ] = result__[20];
+    result__[ 23  ] = result__[9];
+    result__[ 24  ] = result__[22];
+    result__[ 25  ] = result__[10];
+    result__[ 26  ] = result__[24];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 27, i_segment );
   }
@@ -510,9 +471,9 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -531,22 +492,22 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HypersonicProblem3DOF::DsegmentLinkDxp_numRows() const { return 0; }
-  integer HypersonicProblem3DOF::DsegmentLinkDxp_numCols() const { return 0; }
-  integer HypersonicProblem3DOF::DsegmentLinkDxp_nnz() const { return 0; }
+  integer HypersonicProblem3DOF::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer HypersonicProblem3DOF::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer HypersonicProblem3DOF::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  HypersonicProblem3DOF::DsegmentLinkDxp_pattern(
+  HypersonicProblem3DOF::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -556,11 +517,11 @@ namespace HypersonicProblem3DOFDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  HypersonicProblem3DOF::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  HypersonicProblem3DOF::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -577,10 +538,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -652,10 +613,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -711,10 +672,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -749,12 +710,12 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-   // EMPTY!
+    // EMPTY!
   }
 
 }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Methods_ODE.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,63 +71,70 @@ namespace TrainDefine {
    |   \___/|___/|___|
   \*/
 
-  integer Train::rhs_ode_numEqns() const { return 2; }
+  integer Train::ode_numEqns() const { return 2; }
 
   void
-  Train::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Train::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_v];
-    real_type t2   = acc(X__[iX_x], result__[0]);
-    result__[ 1   ] = t2 + U__[iU_ua] - U__[iU_ub];
+    real_type t1   = X__[iX_v];
+    result__[ 0   ] = t1 - V__[0];
+    real_type t4   = acc(X__[iX_x], t1);
+    result__[ 1   ] = t4 + U__[iU_ua] - U__[iU_ub] - V__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::Drhs_odeDxpu_numRows() const { return 2; }
-  integer Train::Drhs_odeDxpu_numCols() const { return 4; }
-  integer Train::Drhs_odeDxpu_nnz()     const { return 5; }
+  integer Train::DodeDxpuv_numRows() const { return 2; }
+  integer Train::DodeDxpuv_numCols() const { return 6; }
+  integer Train::DodeDxpuv_nnz()     const { return 7; }
 
   void
-  Train::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Train::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 4   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 5   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Train::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Train::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
     real_type t1   = X__[iX_x];
     real_type t2   = X__[iX_v];
-    result__[ 1   ] = acc_D_1(t1, t2);
-    result__[ 2   ] = acc_D_2(t1, t2);
-    result__[ 3   ] = 1;
-    result__[ 4   ] = -1;
+    result__[ 2   ] = acc_D_1(t1, t2);
+    result__[ 3   ] = acc_D_2(t1, t2);
+    result__[ 4   ] = 1;
+    result__[ 5   ] = -1;
+    result__[ 6   ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 7, i_segment );
   }
 
   /*\
@@ -153,9 +160,9 @@ namespace TrainDefine {
 
   void
   Train::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -165,104 +172,6 @@ namespace TrainDefine {
     result__[ 1   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 2, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Train::eta_numEqns() const { return 2; }
-
-  void
-  Train::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::DetaDxp_numRows() const { return 2; }
-  integer Train::DetaDxp_numCols() const { return 2; }
-  integer Train::DetaDxp_nnz()     const { return 0; }
-
-  void
-  Train::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Train::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Train::nu_numEqns() const { return 2; }
-
-  void
-  Train::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Train::DnuDxp_numRows() const { return 2; }
-  integer Train::DnuDxp_numCols() const { return 2; }
-  integer Train::DnuDxp_nnz()     const { return 0; }
-
-  void
-  Train::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Train::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Mex_user.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_u1Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u1Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u1Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -48,7 +48,7 @@ ProblemStorage::do_u1Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u1Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u1Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -64,7 +64,7 @@ ProblemStorage::do_u1Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u1Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u1Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -80,7 +80,7 @@ ProblemStorage::do_u2Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u2Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u2Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -96,7 +96,7 @@ ProblemStorage::do_u2Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u2Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u2Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -112,7 +112,7 @@ ProblemStorage::do_u2Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u2Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u2Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -128,7 +128,7 @@ ProblemStorage::do_u3Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u3Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u3Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -144,7 +144,7 @@ ProblemStorage::do_u3Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u3Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u3Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -160,7 +160,7 @@ ProblemStorage::do_u3Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u3Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u3Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -176,7 +176,7 @@ ProblemStorage::do_u4Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u4Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u4Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -192,7 +192,7 @@ ProblemStorage::do_u4Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u4Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u4Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -208,7 +208,7 @@ ProblemStorage::do_u4Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u4Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u4Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -224,7 +224,7 @@ ProblemStorage::do_u5Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u5Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u5Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -240,7 +240,7 @@ ProblemStorage::do_u5Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u5Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u5Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -256,7 +256,7 @@ ProblemStorage::do_u5Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u5Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u5Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -272,7 +272,7 @@ ProblemStorage::do_u6Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u6Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u6Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -288,7 +288,7 @@ ProblemStorage::do_u6Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u6Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u6Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -304,7 +304,7 @@ ProblemStorage::do_u6Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u6Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u6Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -320,7 +320,7 @@ ProblemStorage::do_u7Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u7Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u7Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -336,7 +336,7 @@ ProblemStorage::do_u7Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u7Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u7Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -352,7 +352,7 @@ ProblemStorage::do_u7Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u7Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u7Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -368,7 +368,7 @@ ProblemStorage::do_u8Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u8Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u8Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -384,7 +384,7 @@ ProblemStorage::do_u8Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u8Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u8Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -400,7 +400,7 @@ ProblemStorage::do_u8Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u8Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u8Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -416,7 +416,7 @@ ProblemStorage::do_u9Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u9Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u9Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -432,7 +432,7 @@ ProblemStorage::do_u9Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u9Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u9Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -448,7 +448,7 @@ ProblemStorage::do_u9Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u9Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u9Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -464,7 +464,7 @@ ProblemStorage::do_u10Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u10Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u10Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -480,7 +480,7 @@ ProblemStorage::do_u10Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u10Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u10Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -496,7 +496,7 @@ ProblemStorage::do_u10Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u10Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u10Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -512,7 +512,7 @@ ProblemStorage::do_u11Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u11Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u11Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -528,7 +528,7 @@ ProblemStorage::do_u11Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u11Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u11Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -544,7 +544,7 @@ ProblemStorage::do_u11Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u11Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u11Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -560,7 +560,7 @@ ProblemStorage::do_u12Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u12Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u12Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -576,7 +576,7 @@ ProblemStorage::do_u12Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u12Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u12Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -592,7 +592,7 @@ ProblemStorage::do_u12Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u12Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u12Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -608,7 +608,7 @@ ProblemStorage::do_u13Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u13Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u13Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -624,7 +624,7 @@ ProblemStorage::do_u13Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u13Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u13Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -640,7 +640,7 @@ ProblemStorage::do_u13Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u13Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u13Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -656,7 +656,7 @@ ProblemStorage::do_u14Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u14Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u14Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -672,7 +672,7 @@ ProblemStorage::do_u14Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u14Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u14Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -688,7 +688,7 @@ ProblemStorage::do_u14Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u14Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u14Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -704,7 +704,7 @@ ProblemStorage::do_u15Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u15Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u15Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -720,7 +720,7 @@ ProblemStorage::do_u15Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u15Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u15Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -736,7 +736,7 @@ ProblemStorage::do_u15Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u15Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u15Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -752,7 +752,7 @@ ProblemStorage::do_u16Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u16Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u16Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -768,7 +768,7 @@ ProblemStorage::do_u16Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u16Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u16Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -784,7 +784,7 @@ ProblemStorage::do_u16Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u16Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u16Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -800,7 +800,7 @@ ProblemStorage::do_u17Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u17Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u17Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -816,7 +816,7 @@ ProblemStorage::do_u17Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u17Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u17Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -832,7 +832,7 @@ ProblemStorage::do_u17Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u17Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u17Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -848,7 +848,7 @@ ProblemStorage::do_u18Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u18Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u18Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -864,7 +864,7 @@ ProblemStorage::do_u18Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u18Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u18Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -880,7 +880,7 @@ ProblemStorage::do_u18Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u18Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u18Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -896,7 +896,7 @@ ProblemStorage::do_u19Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u19Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u19Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -912,7 +912,7 @@ ProblemStorage::do_u19Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u19Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u19Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -928,7 +928,7 @@ ProblemStorage::do_u19Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u19Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u19Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -944,7 +944,7 @@ ProblemStorage::do_u20Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u20Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u20Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -960,7 +960,7 @@ ProblemStorage::do_u20Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u20Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u20Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -976,7 +976,7 @@ ProblemStorage::do_u20Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u20Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u20Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -992,7 +992,7 @@ ProblemStorage::do_xx1Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx1Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx1Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1008,7 +1008,7 @@ ProblemStorage::do_xx1Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx1Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx1Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1024,7 +1024,7 @@ ProblemStorage::do_xx1Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx1Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx1Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1040,7 +1040,7 @@ ProblemStorage::do_yy1Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy1Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy1Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1056,7 +1056,7 @@ ProblemStorage::do_yy1Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy1Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy1Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1072,7 +1072,7 @@ ProblemStorage::do_yy1Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy1Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy1Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1088,7 +1088,7 @@ ProblemStorage::do_xx2Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx2Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx2Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1104,7 +1104,7 @@ ProblemStorage::do_xx2Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx2Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx2Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1120,7 +1120,7 @@ ProblemStorage::do_xx2Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx2Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx2Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1136,7 +1136,7 @@ ProblemStorage::do_yy2Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy2Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy2Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1152,7 +1152,7 @@ ProblemStorage::do_yy2Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy2Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy2Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1168,7 +1168,7 @@ ProblemStorage::do_yy2Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy2Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy2Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1184,7 +1184,7 @@ ProblemStorage::do_xx3Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx3Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx3Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1200,7 +1200,7 @@ ProblemStorage::do_xx3Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx3Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx3Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1216,7 +1216,7 @@ ProblemStorage::do_xx3Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx3Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx3Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1232,7 +1232,7 @@ ProblemStorage::do_yy3Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy3Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy3Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1248,7 +1248,7 @@ ProblemStorage::do_yy3Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy3Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy3Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1264,7 +1264,7 @@ ProblemStorage::do_yy3Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy3Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy3Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1280,7 +1280,7 @@ ProblemStorage::do_xx4Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx4Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx4Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1296,7 +1296,7 @@ ProblemStorage::do_xx4Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx4Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx4Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1312,7 +1312,7 @@ ProblemStorage::do_xx4Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx4Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx4Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1328,7 +1328,7 @@ ProblemStorage::do_yy4Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy4Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy4Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1344,7 +1344,7 @@ ProblemStorage::do_yy4Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy4Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy4Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1360,7 +1360,7 @@ ProblemStorage::do_yy4Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy4Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy4Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1376,7 +1376,7 @@ ProblemStorage::do_xx5Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx5Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx5Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1392,7 +1392,7 @@ ProblemStorage::do_xx5Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx5Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx5Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1408,7 +1408,7 @@ ProblemStorage::do_xx5Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx5Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx5Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1424,7 +1424,7 @@ ProblemStorage::do_yy5Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy5Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy5Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1440,7 +1440,7 @@ ProblemStorage::do_yy5Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy5Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy5Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1456,7 +1456,7 @@ ProblemStorage::do_yy5Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy5Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy5Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1472,7 +1472,7 @@ ProblemStorage::do_xx6Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx6Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx6Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1488,7 +1488,7 @@ ProblemStorage::do_xx6Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx6Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx6Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1504,7 +1504,7 @@ ProblemStorage::do_xx6Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx6Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx6Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1520,7 +1520,7 @@ ProblemStorage::do_yy6Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy6Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy6Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1536,7 +1536,7 @@ ProblemStorage::do_yy6Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy6Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy6Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1552,7 +1552,7 @@ ProblemStorage::do_yy6Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy6Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy6Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1568,7 +1568,7 @@ ProblemStorage::do_xx7Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx7Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx7Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1584,7 +1584,7 @@ ProblemStorage::do_xx7Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx7Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx7Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1600,7 +1600,7 @@ ProblemStorage::do_xx7Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx7Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx7Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1616,7 +1616,7 @@ ProblemStorage::do_yy7Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy7Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy7Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1632,7 +1632,7 @@ ProblemStorage::do_yy7Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy7Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy7Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1648,7 +1648,7 @@ ProblemStorage::do_yy7Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy7Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy7Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1664,7 +1664,7 @@ ProblemStorage::do_xx8Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx8Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx8Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1680,7 +1680,7 @@ ProblemStorage::do_xx8Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx8Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx8Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1696,7 +1696,7 @@ ProblemStorage::do_xx8Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx8Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx8Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1712,7 +1712,7 @@ ProblemStorage::do_yy8Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy8Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy8Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1728,7 +1728,7 @@ ProblemStorage::do_yy8Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy8Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy8Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1744,7 +1744,7 @@ ProblemStorage::do_yy8Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy8Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy8Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1760,7 +1760,7 @@ ProblemStorage::do_xx9Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx9Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx9Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1776,7 +1776,7 @@ ProblemStorage::do_xx9Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx9Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx9Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1792,7 +1792,7 @@ ProblemStorage::do_xx9Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx9Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx9Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1808,7 +1808,7 @@ ProblemStorage::do_yy9Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy9Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy9Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1824,7 +1824,7 @@ ProblemStorage::do_yy9Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy9Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy9Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1840,7 +1840,7 @@ ProblemStorage::do_yy9Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy9Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy9Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1856,7 +1856,7 @@ ProblemStorage::do_xx10Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx10Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx10Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1872,7 +1872,7 @@ ProblemStorage::do_xx10Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx10Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx10Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1888,7 +1888,7 @@ ProblemStorage::do_xx10Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx10Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx10Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1904,7 +1904,7 @@ ProblemStorage::do_yy10Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy10Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy10Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1920,7 +1920,7 @@ ProblemStorage::do_yy10Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy10Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy10Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1936,7 +1936,7 @@ ProblemStorage::do_yy10Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy10Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy10Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1952,7 +1952,7 @@ ProblemStorage::do_xx11Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx11Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx11Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1968,7 +1968,7 @@ ProblemStorage::do_xx11Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx11Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx11Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -1984,7 +1984,7 @@ ProblemStorage::do_xx11Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx11Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx11Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2000,7 +2000,7 @@ ProblemStorage::do_yy11Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy11Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy11Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2016,7 +2016,7 @@ ProblemStorage::do_yy11Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy11Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy11Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2032,7 +2032,7 @@ ProblemStorage::do_yy11Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy11Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy11Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2048,7 +2048,7 @@ ProblemStorage::do_xx12Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx12Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx12Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2064,7 +2064,7 @@ ProblemStorage::do_xx12Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx12Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx12Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2080,7 +2080,7 @@ ProblemStorage::do_xx12Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx12Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx12Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2096,7 +2096,7 @@ ProblemStorage::do_yy12Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy12Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy12Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2112,7 +2112,7 @@ ProblemStorage::do_yy12Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy12Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy12Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2128,7 +2128,7 @@ ProblemStorage::do_yy12Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy12Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy12Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2144,7 +2144,7 @@ ProblemStorage::do_xx13Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx13Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx13Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2160,7 +2160,7 @@ ProblemStorage::do_xx13Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx13Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx13Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2176,7 +2176,7 @@ ProblemStorage::do_xx13Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx13Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx13Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2192,7 +2192,7 @@ ProblemStorage::do_yy13Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy13Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy13Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2208,7 +2208,7 @@ ProblemStorage::do_yy13Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy13Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy13Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2224,7 +2224,7 @@ ProblemStorage::do_yy13Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy13Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy13Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2240,7 +2240,7 @@ ProblemStorage::do_xx14Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx14Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx14Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2256,7 +2256,7 @@ ProblemStorage::do_xx14Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx14Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx14Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2272,7 +2272,7 @@ ProblemStorage::do_xx14Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx14Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx14Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2288,7 +2288,7 @@ ProblemStorage::do_yy14Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy14Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy14Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2304,7 +2304,7 @@ ProblemStorage::do_yy14Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy14Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy14Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2320,7 +2320,7 @@ ProblemStorage::do_yy14Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy14Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy14Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2336,7 +2336,7 @@ ProblemStorage::do_xx15Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx15Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx15Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2352,7 +2352,7 @@ ProblemStorage::do_xx15Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx15Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx15Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2368,7 +2368,7 @@ ProblemStorage::do_xx15Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx15Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx15Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2384,7 +2384,7 @@ ProblemStorage::do_yy15Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy15Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy15Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2400,7 +2400,7 @@ ProblemStorage::do_yy15Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy15Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy15Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2416,7 +2416,7 @@ ProblemStorage::do_yy15Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy15Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy15Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2432,7 +2432,7 @@ ProblemStorage::do_xx16Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx16Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx16Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2448,7 +2448,7 @@ ProblemStorage::do_xx16Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx16Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx16Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2464,7 +2464,7 @@ ProblemStorage::do_xx16Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx16Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx16Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2480,7 +2480,7 @@ ProblemStorage::do_yy16Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy16Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy16Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2496,7 +2496,7 @@ ProblemStorage::do_yy16Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy16Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy16Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2512,7 +2512,7 @@ ProblemStorage::do_yy16Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy16Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy16Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2528,7 +2528,7 @@ ProblemStorage::do_xx17Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx17Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx17Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2544,7 +2544,7 @@ ProblemStorage::do_xx17Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx17Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx17Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2560,7 +2560,7 @@ ProblemStorage::do_xx17Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx17Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx17Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2576,7 +2576,7 @@ ProblemStorage::do_yy17Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy17Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy17Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2592,7 +2592,7 @@ ProblemStorage::do_yy17Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy17Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy17Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2608,7 +2608,7 @@ ProblemStorage::do_yy17Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy17Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy17Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2624,7 +2624,7 @@ ProblemStorage::do_xx18Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx18Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx18Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2640,7 +2640,7 @@ ProblemStorage::do_xx18Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx18Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx18Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2656,7 +2656,7 @@ ProblemStorage::do_xx18Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx18Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx18Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2672,7 +2672,7 @@ ProblemStorage::do_yy18Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy18Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy18Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2688,7 +2688,7 @@ ProblemStorage::do_yy18Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy18Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy18Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2704,7 +2704,7 @@ ProblemStorage::do_yy18Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy18Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy18Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2720,7 +2720,7 @@ ProblemStorage::do_xx19Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx19Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx19Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2736,7 +2736,7 @@ ProblemStorage::do_xx19Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx19Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx19Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2752,7 +2752,7 @@ ProblemStorage::do_xx19Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx19Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx19Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2768,7 +2768,7 @@ ProblemStorage::do_yy19Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy19Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy19Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2784,7 +2784,7 @@ ProblemStorage::do_yy19Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy19Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy19Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2800,7 +2800,7 @@ ProblemStorage::do_yy19Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy19Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy19Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2816,7 +2816,7 @@ ProblemStorage::do_xx20Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx20Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx20Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2832,7 +2832,7 @@ ProblemStorage::do_xx20Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx20Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx20Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2848,7 +2848,7 @@ ProblemStorage::do_xx20Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('xx20Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('xx20Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2864,7 +2864,7 @@ ProblemStorage::do_yy20Limitation(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy20Limitation', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy20Limitation', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2880,7 +2880,7 @@ ProblemStorage::do_yy20Limitation_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy20Limitation_D', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy20Limitation_D', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );
@@ -2896,7 +2896,7 @@ ProblemStorage::do_yy20Limitation_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('yy20Limitation_DD', obj, xo___V ): "
+  #define CMD "res = " MODEL_NAME "_Mex('yy20Limitation_DD', obj, xo___V ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo___V" );

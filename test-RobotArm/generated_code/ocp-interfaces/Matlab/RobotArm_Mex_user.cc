@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Mex_user.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_I_phi(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_phi', obj, xo__rho ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_phi', obj, xo__rho ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -48,7 +48,7 @@ ProblemStorage::do_I_phi_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_phi_D', obj, xo__rho ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_phi_D', obj, xo__rho ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -64,7 +64,7 @@ ProblemStorage::do_I_phi_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_phi_DD', obj, xo__rho ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_phi_DD', obj, xo__rho ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -80,7 +80,7 @@ ProblemStorage::do_I_theta(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -99,7 +99,7 @@ ProblemStorage::do_I_theta_D_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta_D_1', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta_D_1', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -118,7 +118,7 @@ ProblemStorage::do_I_theta_D_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta_D_2', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta_D_2', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -137,7 +137,7 @@ ProblemStorage::do_I_theta_D_1_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta_D_1_1', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta_D_1_1', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -156,7 +156,7 @@ ProblemStorage::do_I_theta_D_1_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta_D_1_2', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta_D_1_2', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );
@@ -175,7 +175,7 @@ ProblemStorage::do_I_theta_D_2_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('I_theta_D_2_2', obj, xo__rho, xo__phi ): "
+  #define CMD "res = " MODEL_NAME "_Mex('I_theta_D_2_2', obj, xo__rho, xo__phi ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__rho" );

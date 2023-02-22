@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_Mex_user.cc                                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_x_exact(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x_exact', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x_exact', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -48,7 +48,7 @@ ProblemStorage::do_x_exact_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x_exact_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x_exact_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -64,7 +64,7 @@ ProblemStorage::do_x_exact_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x_exact_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x_exact_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -80,7 +80,7 @@ ProblemStorage::do_u_exact(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u_exact', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u_exact', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -96,7 +96,7 @@ ProblemStorage::do_u_exact_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u_exact_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u_exact_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -112,7 +112,7 @@ ProblemStorage::do_u_exact_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('u_exact_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('u_exact_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );

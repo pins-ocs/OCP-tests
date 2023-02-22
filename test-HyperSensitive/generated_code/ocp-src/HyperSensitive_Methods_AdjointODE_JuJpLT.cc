@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -54,44 +54,120 @@ namespace HyperSensitiveDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HyperSensitive::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   HyperSensitive::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HyperSensitive::LT_numEqns() const { return 0; }
-
-  void
-  HyperSensitive::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer HyperSensitive::JU_numEqns() const { return 0; }
-
-  void
+  real_type
   HyperSensitive::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  HyperSensitive::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HyperSensitive::JPxpu_numEqns() const { return 2; }
+
+  void
+  HyperSensitive::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HyperSensitive::JUxpu_numEqns() const { return 2; }
+
+  void
+  HyperSensitive::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HyperSensitive::LTxpu_numEqns() const { return 2; }
+
+  void
+  HyperSensitive::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -100,74 +176,74 @@ namespace HyperSensitiveDefine {
 
   void
   HyperSensitive::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::DJPDxpu_numRows() const { return 0; }
-  integer HyperSensitive::DJPDxpu_numCols() const { return 2; }
-  integer HyperSensitive::DJPDxpu_nnz()     const { return 0; }
+  integer HyperSensitive::D2JPD2xpu_numRows() const { return 2; }
+  integer HyperSensitive::D2JPD2xpu_numCols() const { return 2; }
+  integer HyperSensitive::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  HyperSensitive::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  HyperSensitive::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  HyperSensitive::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  HyperSensitive::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::DLTDxpu_numRows() const { return 0; }
-  integer HyperSensitive::DLTDxpu_numCols() const { return 2; }
-  integer HyperSensitive::DLTDxpu_nnz()     const { return 0; }
+  integer HyperSensitive::D2LTD2xpu_numRows() const { return 2; }
+  integer HyperSensitive::D2LTD2xpu_numCols() const { return 2; }
+  integer HyperSensitive::D2LTD2xpu_nnz()     const { return 0; }
 
   void
-  HyperSensitive::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  HyperSensitive::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  HyperSensitive::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  HyperSensitive::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::DJUDxpu_numRows() const { return 0; }
-  integer HyperSensitive::DJUDxpu_numCols() const { return 2; }
-  integer HyperSensitive::DJUDxpu_nnz()     const { return 0; }
+  integer HyperSensitive::D2JUD2xpu_numRows() const { return 2; }
+  integer HyperSensitive::D2JUD2xpu_numCols() const { return 2; }
+  integer HyperSensitive::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  HyperSensitive::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  HyperSensitive::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  HyperSensitive::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  HyperSensitive::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -185,83 +261,14 @@ namespace HyperSensitiveDefine {
 
   void
   HyperSensitive::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::D2JPD2xpu_numRows() const { return 2; }
-  integer HyperSensitive::D2JPD2xpu_numCols() const { return 2; }
-  integer HyperSensitive::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  HyperSensitive::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  HyperSensitive::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::D2LTD2xpu_numRows() const { return 2; }
-  integer HyperSensitive::D2LTD2xpu_numCols() const { return 2; }
-  integer HyperSensitive::D2LTD2xpu_nnz()     const { return 0; }
-
-  void
-  HyperSensitive::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  HyperSensitive::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HyperSensitive::D2JUD2xpu_numRows() const { return 2; }
-  integer HyperSensitive::D2JUD2xpu_numCols() const { return 2; }
-  integer HyperSensitive::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  HyperSensitive::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  HyperSensitive::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -277,11 +284,11 @@ namespace HyperSensitiveDefine {
 
   void
   HyperSensitive::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

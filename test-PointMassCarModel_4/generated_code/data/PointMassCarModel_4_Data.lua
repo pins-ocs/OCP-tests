@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,12 +20,12 @@
 -- User Header
 
 -- Auxiliary values
+wT0       = 0.01
 road_tol0 = 0.01
+p_epsi0   = 0.1
+wT        = wT0
 up_tol0   = 0.01
 up_epsi0  = 0.1
-wT0       = 0.01
-wT        = wT0
-p_epsi0   = 0.1
 p_tol0    = 0.1
 m         = 700.0
 kD        = 0.2500000000/m
@@ -41,8 +41,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -54,20 +52,25 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -360,83 +363,83 @@ content = {
     segments = {
       
       {
-        length     = 190.0,
-        rightWidth = 60.0,
-        gridSize   = 1.0,
+        curvature  = 0.0,
         leftWidth  = 15/2.0,
-        curvature  = 0.0,
+        length     = 190.0,
+        gridSize   = 1.0,
+        rightWidth = 60.0,
       },
       
       {
-        length     = 973.8937227,
-        rightWidth = 30.0,
-        gridSize   = 1.0,
-        leftWidth  = 60.0,
         curvature  = 0.003225806452,
+        leftWidth  = 60.0,
+        length     = 973.8937227,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
       },
       
       {
+        curvature  = 0.0,
+        leftWidth  = 30.0,
         length     = 180.0,
-        rightWidth = 30.0,
         gridSize   = 1.0,
-        leftWidth  = 30.0,
-        curvature  = 0.0,
+        rightWidth = 30.0,
       },
       
       {
-        length     = 235.619449,
-        rightWidth = 15.0,
-        gridSize   = 1.0,
-        leftWidth  = 20.0,
         curvature  = 0.006666666667,
-      },
-      
-      {
-        length     = 240.0,
-        rightWidth = 30.0,
-        gridSize   = 1.0,
-        leftWidth  = 30.0,
-        curvature  = 0.0,
-      },
-      
-      {
+        leftWidth  = 20.0,
         length     = 235.619449,
-        rightWidth = 30.0,
         gridSize   = 1.0,
+        rightWidth = 15.0,
+      },
+      
+      {
+        curvature  = 0.0,
         leftWidth  = 30.0,
+        length     = 240.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+      },
+      
+      {
         curvature  = -1/150.0,
+        leftWidth  = 30.0,
+        length     = 235.619449,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
       },
       
       {
+        curvature  = 0.0,
+        leftWidth  = 30.0,
         length     = 200.0,
-        rightWidth = 30.0,
         gridSize   = 1.0,
-        leftWidth  = 30.0,
-        curvature  = 0.0,
+        rightWidth = 30.0,
       },
       
       {
-        length     = 125.6637062,
-        rightWidth = 30.0,
-        gridSize   = 1.0,
-        leftWidth  = 30.0,
         curvature  = 0.025,
-      },
-      
-      {
-        length     = 480.0,
-        rightWidth = 30.0,
+        leftWidth  = 30.0,
+        length     = 125.6637062,
         gridSize   = 1.0,
-        leftWidth  = 30.0,
-        curvature  = 0.0,
+        rightWidth = 30.0,
       },
       
       {
-        length     = 10.0,
-        rightWidth = 30.0,
-        gridSize   = 0.1,
-        leftWidth  = 30.0,
         curvature  = 0.0,
+        leftWidth  = 30.0,
+        length     = 480.0,
+        gridSize   = 1.0,
+        rightWidth = 30.0,
+      },
+      
+      {
+        curvature  = 0.0,
+        leftWidth  = 30.0,
+        length     = 10.0,
+        gridSize   = 0.1,
+        rightWidth = 30.0,
       },
     },
   },

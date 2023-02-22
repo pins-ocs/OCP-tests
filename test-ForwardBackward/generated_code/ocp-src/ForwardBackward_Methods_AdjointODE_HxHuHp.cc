@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -70,11 +70,11 @@ namespace ForwardBackwardDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,88 +83,86 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    real_type t3   = X__[iX_v] * X__[iX_v];
+    real_type t2   = X__[iX_v];
+    real_type t3   = t2 * t2;
     real_type t4   = 1.0 / t3;
-    result__[ 0   ] = -t4 * ModelPars[iM_wT] + (-t4 * U__[iU_a] - ModelPars[iM_c1]) * L__[iL_lambda1__xo];
+    real_type t8   = ALIAS_LimitV_min_D(ModelPars[iM_v_min] - t2);
+    real_type t11  = ALIAS_LimitV_max_D(t2 - ModelPars[iM_v_max]);
+    real_type t13  = U__[iU_a];
+    real_type t14  = t13 * t13;
+    real_type t17  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t18  = t17 * t17;
+    real_type t19  = t3 * t3;
+    real_type t23  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    real_type t24  = 1.0 / t23;
+    real_type t27  = ALIAS_LimitE_D(t24 * (t14 * ModelPars[iM_WA] + t19 * t18) - 1);
+    result__[ 0   ] = -t4 * ModelPars[iM_wT] - t8 + t11 + 4 * t24 * t3 * t2 * t18 * t27 + (-t4 * t13 - ModelPars[iM_c1]) * MU__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 1, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::DHxpDxpu_numRows() const { return 1; }
-  integer ForwardBackward::DHxpDxpu_numCols() const { return 2; }
-  integer ForwardBackward::DHxpDxpu_nnz()     const { return 2; }
+  integer ForwardBackward::DHxpDxpuv_numRows() const { return 1; }
+  integer ForwardBackward::DHxpDxpuv_numCols() const { return 3; }
+  integer ForwardBackward::DHxpDxpuv_nnz()     const { return 2; }
 
   void
-  ForwardBackward::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ForwardBackward::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
   }
 
 
   void
-  ForwardBackward::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ForwardBackward::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = t2 * t2;
-    real_type t5   = 1.0 / t3 / t2;
-    real_type t7   = L__[iL_lambda1__xo];
-    result__[ 0   ] = 2 * t5 * U__[iU_a] * t7 + 2 * t5 * ModelPars[iM_wT];
-    result__[ 1   ] = -1.0 / t3 * t7;
+    real_type t4   = t3 * t2;
+    real_type t5   = 1.0 / t4;
+    real_type t10  = ALIAS_LimitV_min_DD(ModelPars[iM_v_min] - t2);
+    real_type t13  = ALIAS_LimitV_max_DD(t2 - ModelPars[iM_v_max]);
+    real_type t14  = ModelPars[iM_WA];
+    real_type t15  = U__[iU_a];
+    real_type t16  = t15 * t15;
+    real_type t19  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t20  = t19 * t19;
+    real_type t21  = t3 * t3;
+    real_type t25  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    real_type t26  = 1.0 / t25;
+    real_type t28  = t26 * (t16 * t14 + t21 * t20) - 1;
+    real_type t29  = ALIAS_LimitE_DD(t28);
+    real_type t30  = t20 * t20;
+    real_type t33  = t25 * t25;
+    real_type t34  = 1.0 / t33;
+    real_type t38  = ALIAS_LimitE_D(t28);
+    real_type t43  = MU__[0];
+    result__[ 0   ] = 16 * t34 * t21 * t3 * t30 * t29 + 12 * t26 * t3 * t20 * t38 + 2 * t5 * t15 * t43 + 2 * t5 * ModelPars[iM_wT] + t10 + t13;
+    result__[ 1   ] = 8 * t4 * t20 * t34 * t15 * t14 * t29 - 1.0 / t3 * t43;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 2, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ForwardBackward::Hu_numEqns() const { return 1; }
-
-  void
-  ForwardBackward::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * ModelPars[iM_epsilon] * U__[iU_a] + L__[iL_lambda1__xo] / X__[iX_v];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 2, i_segment );
   }
 
 }

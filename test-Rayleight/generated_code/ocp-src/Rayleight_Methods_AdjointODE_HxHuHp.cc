@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Rayleight_Methods_AdjointODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -46,11 +46,11 @@ namespace RayleightDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,85 +59,55 @@ namespace RayleightDefine {
 
   void
   Rayleight::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = L__[iL_lambda2__xo];
+    real_type t3   = MU__[1];
     result__[ 0   ] = 2 * X__[iX_x1] - t3;
     real_type t6   = X__[iX_x2] * X__[iX_x2];
-    result__[ 1   ] = L__[iL_lambda1__xo] + (-0.42e0 * t6 + 0.14e1) * t3;
+    result__[ 1   ] = MU__[0] + (-0.42e0 * t6 + 0.14e1) * t3;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 2, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Rayleight::DHxpDxpu_numRows() const { return 2; }
-  integer Rayleight::DHxpDxpu_numCols() const { return 3; }
-  integer Rayleight::DHxpDxpu_nnz()     const { return 2; }
+  integer Rayleight::DHxpDxpuv_numRows() const { return 2; }
+  integer Rayleight::DHxpDxpuv_numCols() const { return 5; }
+  integer Rayleight::DHxpDxpuv_nnz()     const { return 2; }
 
   void
-  Rayleight::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Rayleight::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
   }
 
 
   void
-  Rayleight::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Rayleight::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2;
-    result__[ 1   ] = -0.84e0 * L__[iL_lambda2__xo] * X__[iX_x2];
+    result__[ 1   ] = -0.84e0 * MU__[1] * X__[iX_x2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 2, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Rayleight::Hu_numEqns() const { return 1; }
-
-  void
-  Rayleight::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * U__[iU_u] + 4 * L__[iL_lambda2__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 2, i_segment );
   }
 
 }

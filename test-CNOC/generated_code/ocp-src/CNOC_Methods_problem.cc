@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -149,69 +149,6 @@ using Mechatronix::ToolPath2D;
 namespace CNOCDefine {
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  CNOC::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[7];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    X__[5] = (XL__[5]+XR__[5])/2;
-    X__[6] = (XL__[6]+XR__[6])/2;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    bool ok = true;
-    ok = ok && timePositive.check_range(-X__[iX_coV], m_max_penalty_value);
-    real_type t3   = X__[iX_vs] * X__[iX_vs];
-    real_type t5   = X__[iX_vn] * X__[iX_vn];
-    real_type t7   = sqrt(t3 + t5);
-    real_type t8   = ALIAS_nominalFeed();
-    ok = ok && vLimit.check_range(1.0 / t8 * t7 - 0.101e1, m_max_penalty_value);
-    real_type t15  = X__[iX_n] / ModelPars[iM_path_following_tolerance];
-    ok = ok && PathFollowingTolerance_min.check_range(-1 - t15, m_max_penalty_value);
-    ok = ok && PathFollowingTolerance_max.check_range(t15 - 1, m_max_penalty_value);
-    real_type t18  = X__[iX_as];
-    real_type t21  = 1.0 / ModelPars[iM_as_max] * t18;
-    ok = ok && as_limit_min.check_range(-1 - t21, m_max_penalty_value);
-    ok = ok && as_limit_max.check_range(t21 - 1, m_max_penalty_value);
-    real_type t24  = X__[iX_an];
-    real_type t27  = 1.0 / ModelPars[iM_an_max] * t24;
-    ok = ok && an_limit_min.check_range(-1 - t27, m_max_penalty_value);
-    ok = ok && an_limit_max.check_range(t27 - 1, m_max_penalty_value);
-    real_type t31  = ALIAS_theta(X__[iX_s]);
-    real_type t32  = cos(t31);
-    real_type t34  = sin(t31);
-    real_type t39  = 1.0 / ModelPars[iM_ax_max] * (t32 * t18 - t34 * t24);
-    ok = ok && ax_limit_min.check_range(-1 - t39, m_max_penalty_value);
-    ok = ok && ax_limit_max.check_range(t39 - 1, m_max_penalty_value);
-    real_type t47  = 1.0 / ModelPars[iM_ay_max] * (t34 * t18 + t32 * t24);
-    ok = ok && ay_limit_min.check_range(-1 - t47, m_max_penalty_value);
-    ok = ok && ay_limit_max.check_range(t47 - 1, m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -221,9 +158,10 @@ namespace CNOCDefine {
 
   real_type
   CNOC::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -244,7 +182,7 @@ namespace CNOCDefine {
     real_type t30  = X__[iX_as];
     real_type t32  = t23 * t20;
     real_type t38  = X__[iX_an];
-    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * L__[iL_lambda1__xo] + t1 * t4 * L__[iL_lambda2__xo] - t1 * (-t2 * t32 * t4 - t30) * L__[iL_lambda3__xo] - t1 * (t20 * t23 * t3 - t38) * L__[iL_lambda4__xo] - t1 * (-t2 * t32 * t38 - U__[iU_js]) * L__[iL_lambda5__xo] - t1 * (t2 * t30 * t32 - U__[iU_jn]) * L__[iL_lambda6__xo];
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * MU__[0] + t1 * t4 * MU__[1] - t1 * (-t2 * t32 * t4 - t30) * MU__[2] - t1 * (t20 * t23 * t3 - t38) * MU__[3] - t1 * (-t2 * t32 * t38 - U__[iU_js]) * MU__[4] - t1 * (t2 * t30 * t32 - U__[iU_jn]) * MU__[5];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -261,9 +199,9 @@ namespace CNOCDefine {
 
   real_type
   CNOC::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -292,9 +230,9 @@ namespace CNOCDefine {
 
   real_type
   CNOC::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -317,10 +255,10 @@ namespace CNOCDefine {
 
   void
   CNOC::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -363,10 +301,10 @@ namespace CNOCDefine {
 
   void
   CNOC::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -384,10 +322,10 @@ namespace CNOCDefine {
 
   void
   CNOC::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -438,10 +376,10 @@ namespace CNOCDefine {
 
   void
   CNOC::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -464,12 +402,12 @@ namespace CNOCDefine {
     real_type t20  = t19 * t11;
     real_type t23  = 1.0 / t14;
     real_type t25  = t23 * t11 * t17;
-    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t3 * t20 * t17 + 2 * t25;
-    result__[ 1   ] = -2 * t4 * t2 * t19 * t11 * t17 + 2 * t2 * t11 * t4 * t8;
+    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t17 * t20 * t3 + 2 * t25;
+    result__[ 1   ] = -2 * t11 * t17 * t19 * t2 * t4 + 2 * t11 * t2 * t4 * t8;
     real_type t35  = t11 * t16;
     result__[ 2   ] = 2 * t2 * t23 * t35;
     result__[ 3   ] = result__[1];
-    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t5 * t20 * t17 + 2 * t25;
+    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t17 * t20 * t5 + 2 * t25;
     result__[ 5   ] = 2 * t4 * t23 * t35;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
@@ -490,9 +428,9 @@ namespace CNOCDefine {
 
   void
   CNOC::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -511,22 +449,22 @@ namespace CNOCDefine {
 
   void
   CNOC::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer CNOC::DsegmentLinkDxp_numRows() const { return 0; }
-  integer CNOC::DsegmentLinkDxp_numCols() const { return 0; }
-  integer CNOC::DsegmentLinkDxp_nnz() const { return 0; }
+  integer CNOC::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer CNOC::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer CNOC::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  CNOC::DsegmentLinkDxp_pattern(
+  CNOC::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -536,11 +474,11 @@ namespace CNOCDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  CNOC::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -557,10 +495,10 @@ namespace CNOCDefine {
 
   void
   CNOC::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -583,23 +521,23 @@ namespace CNOCDefine {
     real_type t9   = sin(t8);
     real_type t11  = XL__[iX_vs];
     real_type t12  = cos(t8);
-    result__[ 2   ] = -t12 * t11 + t9 * t4 + XR__[iX_vs];
-    result__[ 3   ] = -t9 * t11 - t12 * t4 + XR__[iX_vn];
+    result__[ 2   ] = -t11 * t12 + t4 * t9 + XR__[iX_vs];
+    result__[ 3   ] = -t11 * t9 - t12 * t4 + XR__[iX_vn];
     real_type t18  = XL__[iX_an];
     real_type t20  = XL__[iX_as];
-    result__[ 4   ] = -t12 * t20 + t9 * t18 + XR__[iX_as];
-    result__[ 5   ] = -t12 * t18 - t9 * t20 + XR__[iX_an];
+    result__[ 4   ] = -t12 * t20 + t18 * t9 + XR__[iX_as];
+    result__[ 5   ] = -t12 * t18 - t20 * t9 + XR__[iX_an];
     result__[ 6   ] = LL__[iL_lambda7__xo];
     result__[ 7   ] = XR__[iX_s] - t6;
     result__[ 8   ] = XR__[iX_n];
     real_type t27  = LR__[iL_lambda4__xo];
     real_type t29  = LR__[iL_lambda3__xo];
-    result__[ 9   ] = -t12 * t29 - t9 * t27 + LL__[iL_lambda3__xo];
-    result__[ 10  ] = -t12 * t27 + t9 * t29 + LL__[iL_lambda4__xo];
+    result__[ 9   ] = -t12 * t29 - t27 * t9 + LL__[iL_lambda3__xo];
+    result__[ 10  ] = -t12 * t27 + t29 * t9 + LL__[iL_lambda4__xo];
     real_type t35  = LR__[iL_lambda6__xo];
     real_type t37  = LR__[iL_lambda5__xo];
-    result__[ 11  ] = -t12 * t37 - t9 * t35 + LL__[iL_lambda5__xo];
-    result__[ 12  ] = -t12 * t35 + t9 * t37 + LL__[iL_lambda6__xo];
+    result__[ 11  ] = -t12 * t37 - t35 * t9 + LL__[iL_lambda5__xo];
+    result__[ 12  ] = -t12 * t35 + t37 * t9 + LL__[iL_lambda6__xo];
     result__[ 13  ] = LR__[iL_lambda7__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 14, i_segment_left, i_segment_right );
@@ -649,10 +587,10 @@ namespace CNOCDefine {
 
   void
   CNOC::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -714,10 +652,10 @@ namespace CNOCDefine {
 
   void
   CNOC::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -793,10 +731,10 @@ namespace CNOCDefine {
 
   void
   CNOC::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

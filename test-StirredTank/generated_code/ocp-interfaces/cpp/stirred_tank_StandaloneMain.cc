@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/1/2023                                        |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol_max = 0.1;
     real_type tf = 0.2;
     real_type epsi_max = 0.1;
+    real_type tol_max = 0.1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 stirred_tank_data.Mesh["s0"] = 0;
-stirred_tank_data.Mesh["segments"][0]["length"] = tf;
 stirred_tank_data.Mesh["segments"][0]["n"] = 1000;
+stirred_tank_data.Mesh["segments"][0]["length"] = tf;
 
 
     // alias for user object classes passed as pointers

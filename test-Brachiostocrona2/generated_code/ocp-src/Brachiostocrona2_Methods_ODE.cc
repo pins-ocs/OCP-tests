@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,14 +55,15 @@ namespace Brachiostocrona2Define {
    |   \___/|___/|___|
   \*/
 
-  integer Brachiostocrona2::rhs_ode_numEqns() const { return 3; }
+  integer Brachiostocrona2::ode_numEqns() const { return 3; }
 
   void
-  Brachiostocrona2::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Brachiostocrona2::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -72,40 +73,44 @@ namespace Brachiostocrona2Define {
     real_type t3   = X__[iX_v] * t1;
     real_type t4   = U__[iU_theta];
     real_type t5   = cos(t4);
-    result__[ 0   ] = t5 * t3;
-    real_type t6   = sin(t4);
-    result__[ 1   ] = t6 * t3;
-    result__[ 2   ] = -t6 * ModelPars[iM_g] * t1;
+    result__[ 0   ] = t5 * t3 - V__[0];
+    real_type t8   = sin(t4);
+    result__[ 1   ] = t8 * t3 - V__[1];
+    result__[ 2   ] = -t8 * ModelPars[iM_g] * t1 - ModelPars[iM_mass] * V__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona2::Drhs_odeDxpu_numRows() const { return 3; }
-  integer Brachiostocrona2::Drhs_odeDxpu_numCols() const { return 5; }
-  integer Brachiostocrona2::Drhs_odeDxpu_nnz()     const { return 8; }
+  integer Brachiostocrona2::DodeDxpuv_numRows() const { return 3; }
+  integer Brachiostocrona2::DodeDxpuv_numCols() const { return 8; }
+  integer Brachiostocrona2::DodeDxpuv_nnz()     const { return 11; }
 
   void
-  Brachiostocrona2::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brachiostocrona2::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 4   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 5   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 2   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 4   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 6   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 3   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 4   ;
+    iIndex[10] = 2   ; jIndex[10] = 7   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Brachiostocrona2::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Brachiostocrona2::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -120,14 +125,17 @@ namespace Brachiostocrona2Define {
     real_type t5   = t4 * t1;
     real_type t6   = sin(t2);
     result__[ 2   ] = -t6 * t5;
-    result__[ 3   ] = t6 * t1;
-    result__[ 4   ] = t6 * t4;
-    result__[ 5   ] = t3 * t5;
+    result__[ 3   ] = -1;
+    result__[ 4   ] = t6 * t1;
+    result__[ 5   ] = t6 * t4;
+    result__[ 6   ] = t3 * t5;
+    result__[ 7   ] = -1;
     real_type t8   = ModelPars[iM_g];
-    result__[ 6   ] = -t6 * t8;
-    result__[ 7   ] = -t3 * t8 * t1;
+    result__[ 8   ] = -t6 * t8;
+    result__[ 9   ] = -t3 * t8 * t1;
+    result__[ 10  ] = -ModelPars[iM_mass];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 11, i_segment );
   }
 
   /*\
@@ -154,9 +162,9 @@ namespace Brachiostocrona2Define {
 
   void
   Brachiostocrona2::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -167,106 +175,6 @@ namespace Brachiostocrona2Define {
     result__[ 2   ] = ModelPars[iM_mass];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 3, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Brachiostocrona2::eta_numEqns() const { return 3; }
-
-  void
-  Brachiostocrona2::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = ModelPars[iM_mass] * L__[iL_lambda3__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona2::DetaDxp_numRows() const { return 3; }
-  integer Brachiostocrona2::DetaDxp_numCols() const { return 4; }
-  integer Brachiostocrona2::DetaDxp_nnz()     const { return 0; }
-
-  void
-  Brachiostocrona2::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Brachiostocrona2::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Brachiostocrona2::nu_numEqns() const { return 3; }
-
-  void
-  Brachiostocrona2::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = ModelPars[iM_mass] * V__[2];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brachiostocrona2::DnuDxp_numRows() const { return 3; }
-  integer Brachiostocrona2::DnuDxp_numCols() const { return 4; }
-  integer Brachiostocrona2::DnuDxp_nnz()     const { return 0; }
-
-  void
-  Brachiostocrona2::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Brachiostocrona2::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,8 +32,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -45,20 +43,25 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -284,8 +287,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 100.0,
+        length = 1.0,
       },
     },
   },

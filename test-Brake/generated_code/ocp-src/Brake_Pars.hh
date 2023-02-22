@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Pars.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define BRAKEPARS_DOT_HH
 
 #define numBc                    3
-#define numModelPars             6
+#define numModelPars             7
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -54,10 +54,11 @@
 // ModelPars Maps
 #define iM_Tguess      0
 #define iM_epsilon     1
-#define iM_v_f         2
-#define iM_v_i         3
-#define iM_x_i         4
-#define iM_epsilon2    5
+#define iM_mu          2
+#define iM_v_f         3
+#define iM_v_i         4
+#define iM_x_i         5
+#define iM_epsilon2    6
 
 #endif
 

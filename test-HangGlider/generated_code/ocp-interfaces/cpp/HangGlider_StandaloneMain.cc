@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tol_max = 0.01;
     real_type cL_min = 0;
     real_type epsi_max = 0.01;
-    real_type tol_max = 0.01;
     real_type W0 = 1000;
-    real_type W = W0;
     real_type cL_max = 1.4;
+    real_type W = W0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -206,8 +206,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HangGlider_data.Mesh["s0"] = 0;
-HangGlider_data.Mesh["segments"][0]["length"] = 1;
 HangGlider_data.Mesh["segments"][0]["n"] = 400;
+HangGlider_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -269,7 +269,7 @@ HangGlider_data.Mesh["segments"][0]["n"] = 400;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

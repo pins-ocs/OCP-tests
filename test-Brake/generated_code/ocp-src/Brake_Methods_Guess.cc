@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_Guess.cc                                         |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -257,24 +257,15 @@ namespace BrakeDefine {
 
   void
   Brake::u_guess_eval(
-    NodeQXL const & LEFT__,
-    NodeQXL const & RIGHT__,
+    NodeQXL const & NODE__,
     P_const_p_type  P__,
+    MU_const_p_type MU__,
     U_p_type        UGUESS__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    real_type QM__[1], XM__[2], LM__[2];
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_a ] = 0;
     if ( m_debug )
@@ -291,25 +282,15 @@ namespace BrakeDefine {
 
   bool
   Brake::u_check_if_admissible(
-    NodeQXL const & LEFT__,
-    NodeQXL const & RIGHT__,
+    NodeQX const &  NODE__,
     P_const_p_type  P__,
-    U_const_p_type  UM__
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    real_type QM__[1], XM__[2], LM__[2];
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     // no controls to check
     return ok;
   }

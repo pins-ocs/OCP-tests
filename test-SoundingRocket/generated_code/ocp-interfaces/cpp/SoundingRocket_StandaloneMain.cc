@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,16 +50,16 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type b = 350;
     real_type epsi0 = 0.01;
-    real_type x3_f = b;
-    real_type tol0 = 0.01;
-    real_type g = 9.81;
-    real_type u_tolerance = tol0;
-    real_type u_epsi = epsi0;
-    real_type B = 4*g;
     real_type W0 = 1;
+    real_type b = 350;
+    real_type x3_f = b;
+    real_type g = 9.81;
     real_type W = W0;
+    real_type B = 4*g;
+    real_type u_epsi = epsi0;
+    real_type tol0 = 0.01;
+    real_type u_tolerance = tol0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -248,7 +248,7 @@ SoundingRocket_data.Mesh["segments"][0]["n"] = 100;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

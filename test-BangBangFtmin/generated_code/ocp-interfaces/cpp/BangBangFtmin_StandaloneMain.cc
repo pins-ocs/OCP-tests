@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtmin_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -163,8 +163,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFtmin_data.Mesh["s0"] = 0;
-BangBangFtmin_data.Mesh["segments"][0]["length"] = 1;
 BangBangFtmin_data.Mesh["segments"][0]["n"] = 100;
+BangBangFtmin_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers
@@ -226,7 +226,7 @@ BangBangFtmin_data.Mesh["segments"][0]["n"] = 100;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

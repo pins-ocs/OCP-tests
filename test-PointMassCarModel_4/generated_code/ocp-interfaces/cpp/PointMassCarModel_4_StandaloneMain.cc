@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,12 +50,12 @@ main() {
     Road2D           road( "road" );
 
     // Auxiliary values
+    real_type wT0 = 0.01;
     real_type road_tol0 = 0.01;
+    real_type p_epsi0 = 0.1;
+    real_type wT = wT0;
     real_type up_tol0 = 0.01;
     real_type up_epsi0 = 0.1;
-    real_type wT0 = 0.01;
-    real_type wT = wT0;
-    real_type p_epsi0 = 0.1;
     real_type p_tol0 = 0.1;
     real_type m = 700;
     real_type kD = 0.2500000000/m;
@@ -230,56 +230,56 @@ PointMassCarModel_4_data.Road["s0"] = 0;
 PointMassCarModel_4_data.Road["x0"] = 0;
 PointMassCarModel_4_data.Road["y0"] = 0;
 PointMassCarModel_4_data.Road["is_SAE"] = false;
-PointMassCarModel_4_data.Road["segments"][0]["length"] = 190;
-PointMassCarModel_4_data.Road["segments"][0]["rightWidth"] = 60;
-PointMassCarModel_4_data.Road["segments"][0]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][0]["leftWidth"] = 15/2;
 PointMassCarModel_4_data.Road["segments"][0]["curvature"] = 0;
-PointMassCarModel_4_data.Road["segments"][1]["length"] = 973.8937227;
-PointMassCarModel_4_data.Road["segments"][1]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][1]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][1]["leftWidth"] = 60;
+PointMassCarModel_4_data.Road["segments"][0]["leftWidth"] = 15/2;
+PointMassCarModel_4_data.Road["segments"][0]["length"] = 190;
+PointMassCarModel_4_data.Road["segments"][0]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][0]["rightWidth"] = 60;
 PointMassCarModel_4_data.Road["segments"][1]["curvature"] = 0.003225806452;
-PointMassCarModel_4_data.Road["segments"][2]["length"] = 180;
-PointMassCarModel_4_data.Road["segments"][2]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][2]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][2]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][1]["leftWidth"] = 60;
+PointMassCarModel_4_data.Road["segments"][1]["length"] = 973.8937227;
+PointMassCarModel_4_data.Road["segments"][1]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][1]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][2]["curvature"] = 0;
-PointMassCarModel_4_data.Road["segments"][3]["length"] = 235.619449;
-PointMassCarModel_4_data.Road["segments"][3]["rightWidth"] = 15;
-PointMassCarModel_4_data.Road["segments"][3]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][3]["leftWidth"] = 20;
+PointMassCarModel_4_data.Road["segments"][2]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][2]["length"] = 180;
+PointMassCarModel_4_data.Road["segments"][2]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][2]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][3]["curvature"] = 0.006666666667;
-PointMassCarModel_4_data.Road["segments"][4]["length"] = 240;
-PointMassCarModel_4_data.Road["segments"][4]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][4]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][4]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][3]["leftWidth"] = 20;
+PointMassCarModel_4_data.Road["segments"][3]["length"] = 235.619449;
+PointMassCarModel_4_data.Road["segments"][3]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][3]["rightWidth"] = 15;
 PointMassCarModel_4_data.Road["segments"][4]["curvature"] = 0;
-PointMassCarModel_4_data.Road["segments"][5]["length"] = 235.619449;
-PointMassCarModel_4_data.Road["segments"][5]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][5]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][5]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][4]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][4]["length"] = 240;
+PointMassCarModel_4_data.Road["segments"][4]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][4]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][5]["curvature"] = -1/150;
-PointMassCarModel_4_data.Road["segments"][6]["length"] = 200;
-PointMassCarModel_4_data.Road["segments"][6]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][6]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][6]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][5]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][5]["length"] = 235.619449;
+PointMassCarModel_4_data.Road["segments"][5]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][5]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][6]["curvature"] = 0;
-PointMassCarModel_4_data.Road["segments"][7]["length"] = 125.6637062;
-PointMassCarModel_4_data.Road["segments"][7]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][7]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][7]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][6]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][6]["length"] = 200;
+PointMassCarModel_4_data.Road["segments"][6]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][6]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][7]["curvature"] = 0.025;
-PointMassCarModel_4_data.Road["segments"][8]["length"] = 480;
-PointMassCarModel_4_data.Road["segments"][8]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][8]["gridSize"] = 1;
-PointMassCarModel_4_data.Road["segments"][8]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][7]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][7]["length"] = 125.6637062;
+PointMassCarModel_4_data.Road["segments"][7]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][7]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][8]["curvature"] = 0;
-PointMassCarModel_4_data.Road["segments"][9]["length"] = 10;
-PointMassCarModel_4_data.Road["segments"][9]["rightWidth"] = 30;
-PointMassCarModel_4_data.Road["segments"][9]["gridSize"] = 0.1;
-PointMassCarModel_4_data.Road["segments"][9]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][8]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][8]["length"] = 480;
+PointMassCarModel_4_data.Road["segments"][8]["gridSize"] = 1;
+PointMassCarModel_4_data.Road["segments"][8]["rightWidth"] = 30;
 PointMassCarModel_4_data.Road["segments"][9]["curvature"] = 0;
+PointMassCarModel_4_data.Road["segments"][9]["leftWidth"] = 30;
+PointMassCarModel_4_data.Road["segments"][9]["length"] = 10;
+PointMassCarModel_4_data.Road["segments"][9]["gridSize"] = 0.1;
+PointMassCarModel_4_data.Road["segments"][9]["rightWidth"] = 30;
 
 
     // alias for user object classes passed as pointers
@@ -341,7 +341,7 @@ PointMassCarModel_4_data.Road["segments"][9]["curvature"] = 0;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

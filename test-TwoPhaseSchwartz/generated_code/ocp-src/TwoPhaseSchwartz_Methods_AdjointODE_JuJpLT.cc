@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -69,28 +69,47 @@ namespace TwoPhaseSchwartzDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer TwoPhaseSchwartz::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   TwoPhaseSchwartz::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer TwoPhaseSchwartz::LT_numEqns() const { return 2; }
+  real_type
+  TwoPhaseSchwartz::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = u1Control(U__[iU_u1], -1, 1);
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
 
-  void
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   TwoPhaseSchwartz::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -99,30 +118,94 @@ namespace TwoPhaseSchwartzDefine {
     real_type t3   = pow(X__[iX_x1] - 1, 2);
     real_type t5   = X__[iX_x2];
     real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    result__[ 0   ] = bound1(1 - 9 * t3 - t8);
-    result__[ 1   ] = bound2(-0.8e0 - t5);
+    real_type t10  = bound1(1 - 9 * t3 - t8);
+    real_type t12  = bound2(-0.8e0 - t5);
+    real_type result__ = t10 + t12;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 2, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer TwoPhaseSchwartz::JU_numEqns() const { return 1; }
+  integer TwoPhaseSchwartz::JPxpu_numEqns() const { return 6; }
 
   void
-  TwoPhaseSchwartz::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  TwoPhaseSchwartz::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = u1Control(U__[iU_u1], -1, 1);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoPhaseSchwartz::JUxpu_numEqns() const { return 6; }
+
+  void
+  TwoPhaseSchwartz::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer TwoPhaseSchwartz::LTxpu_numEqns() const { return 6; }
+
+  void
+  TwoPhaseSchwartz::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = X__[iX_x1] - 1;
+    real_type t3   = t2 * t2;
+    real_type t5   = X__[iX_x2];
+    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
+    real_type t10  = ALIAS_bound1_D(1 - 9 * t3 - t8);
+    result__[ 0   ] = -18 * t2 * t10;
+    real_type t17  = ALIAS_bound2_D(-0.8e0 - t5);
+    result__[ 1   ] = (-0.2222222222e2 * t5 + 0.8888888886e1) * t10 - t17;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -131,10 +214,10 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -151,124 +234,6 @@ namespace TwoPhaseSchwartzDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DJPDxpu_numRows() const { return 0; }
-  integer TwoPhaseSchwartz::DJPDxpu_numCols() const { return 6; }
-  integer TwoPhaseSchwartz::DJPDxpu_nnz()     const { return 0; }
-
-  void
-  TwoPhaseSchwartz::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  TwoPhaseSchwartz::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DLTDxpu_numRows() const { return 2; }
-  integer TwoPhaseSchwartz::DLTDxpu_numCols() const { return 6; }
-  integer TwoPhaseSchwartz::DLTDxpu_nnz()     const { return 3; }
-
-  void
-  TwoPhaseSchwartz::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-  }
-
-
-  void
-  TwoPhaseSchwartz::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x1] - 1;
-    real_type t3   = t2 * t2;
-    real_type t5   = X__[iX_x2];
-    real_type t8   = pow(0.3333333333e1 * t5 - 0.1333333333e1, 2);
-    real_type t10  = ALIAS_bound1_D(1 - 9 * t3 - t8);
-    result__[ 0   ] = -18 * t2 * t10;
-    result__[ 1   ] = (-0.2222222222e2 * t5 + 0.8888888886e1) * t10;
-    real_type t16  = ALIAS_bound2_D(-0.8e0 - t5);
-    result__[ 2   ] = -t16;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DJUDxpu_numRows() const { return 1; }
-  integer TwoPhaseSchwartz::DJUDxpu_numCols() const { return 6; }
-  integer TwoPhaseSchwartz::DJUDxpu_nnz()     const { return 1; }
-
-  void
-  TwoPhaseSchwartz::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
-  }
-
-
-  void
-  TwoPhaseSchwartz::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DLTargsDxpu_numRows() const { return 2; }
-  integer TwoPhaseSchwartz::DLTargsDxpu_numCols() const { return 6; }
-  integer TwoPhaseSchwartz::DLTargsDxpu_nnz()     const { return 3; }
-
-  void
-  TwoPhaseSchwartz::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-  }
-
-
-  void
-  TwoPhaseSchwartz::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -18 * X__[iX_x1] + 18;
-    result__[ 1   ] = -0.2222222222e2 * X__[iX_x2] + 0.8888888886e1;
-    result__[ 2   ] = -1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 3, i_segment );
-  }
-
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer TwoPhaseSchwartz::D2JPD2xpu_numRows() const { return 6; }
   integer TwoPhaseSchwartz::D2JPD2xpu_numCols() const { return 6; }
   integer TwoPhaseSchwartz::D2JPD2xpu_nnz()     const { return 0; }
@@ -281,15 +246,13 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer TwoPhaseSchwartz::D2LTD2xpu_numRows() const { return 6; }
@@ -307,11 +270,10 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -325,20 +287,17 @@ namespace TwoPhaseSchwartzDefine {
     real_type t10  = ALIAS_bound1_DD(t9);
     real_type t12  = -18 * t2;
     real_type t13  = t12 * t12;
-    real_type t15  = OMEGA__[0];
-    real_type t17  = ALIAS_bound1_D(t9);
-    real_type t18  = t15 * t17;
-    result__[ 0   ] = t15 * t13 * t10 - 18 * t18;
-    real_type t21  = -0.2222222222e2 * t5 + 0.8888888886e1;
-    result__[ 1   ] = t15 * t12 * t21 * t10;
+    real_type t15  = ALIAS_bound1_D(t9);
+    result__[ 0   ] = t13 * t10 - 18 * t15;
+    real_type t18  = -0.2222222222e2 * t5 + 0.8888888886e1;
+    result__[ 1   ] = t12 * t18 * t10;
     result__[ 2   ] = result__[1];
-    real_type t24  = t21 * t21;
-    real_type t29  = ALIAS_bound2_DD(-0.8e0 - t5);
-    result__[ 3   ] = t15 * t24 * t10 - 0.2222222222e2 * t18 + OMEGA__[1] * t29;
+    real_type t20  = t18 * t18;
+    real_type t24  = ALIAS_bound2_DD(-0.8e0 - t5);
+    result__[ 3   ] = t20 * t10 - 0.2222222222e2 * t15 + t24;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer TwoPhaseSchwartz::D2JUD2xpu_numRows() const { return 6; }
@@ -353,21 +312,51 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
-    result__[ 0   ] = OMEGA__[0] * t2;
+    result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 1, i_segment );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer TwoPhaseSchwartz::DLTargsDxpu_numRows() const { return 2; }
+  integer TwoPhaseSchwartz::DLTargsDxpu_numCols() const { return 6; }
+  integer TwoPhaseSchwartz::DLTargsDxpu_nnz()     const { return 3; }
+
+  void
+  TwoPhaseSchwartz::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
+  }
+
+
+  void
+  TwoPhaseSchwartz::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -18 * X__[iX_x1] + 18;
+    result__[ 1   ] = -0.2222222222e2 * X__[iX_x2] + 0.8888888886e1;
+    result__[ 2   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 3, i_segment );
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -384,11 +373,11 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

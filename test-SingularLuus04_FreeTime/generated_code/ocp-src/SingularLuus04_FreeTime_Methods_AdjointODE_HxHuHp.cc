@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_AdjointODE.cc                  |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -57,11 +57,11 @@ namespace SingularLuus04_FreeTimeDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,38 +70,40 @@ namespace SingularLuus04_FreeTimeDefine {
 
   void
   SingularLuus04_FreeTime::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = X__[iX_x];
     result__[ 0   ] = 2 * t2 * t1;
-    real_type t4   = L__[iL_lambda1__xo];
+    real_type t4   = MU__[0];
     result__[ 1   ] = t1 * t4;
-    real_type t5   = L__[iL_lambda2__xo];
+    real_type t5   = MU__[1];
     result__[ 2   ] = t1 * t5;
-    real_type t13  = t2 * t2;
-    result__[ 3   ] = 2 * ModelPars[iM_theta] * t1 + X__[iX_y] * t4 + X__[iX_z] * t5 + L__[iL_lambda3__xo] * U__[iU_u] + t13;
+    real_type t9   = t2 * t2;
+    real_type t10  = U__[iU_u];
+    real_type t11  = uControl(t10, -1, 1);
+    result__[ 3   ] = 2 * ModelPars[iM_theta] * t1 + t10 * MU__[2] + X__[iX_y] * t4 + X__[iX_z] * t5 + t11 + t9;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 4, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularLuus04_FreeTime::DHxpDxpu_numRows() const { return 4; }
-  integer SingularLuus04_FreeTime::DHxpDxpu_numCols() const { return 5; }
-  integer SingularLuus04_FreeTime::DHxpDxpu_nnz()     const { return 9; }
+  integer SingularLuus04_FreeTime::DHxpDxpuv_numRows() const { return 4; }
+  integer SingularLuus04_FreeTime::DHxpDxpuv_numCols() const { return 9; }
+  integer SingularLuus04_FreeTime::DHxpDxpuv_nnz()     const { return 9; }
 
   void
-  SingularLuus04_FreeTime::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularLuus04_FreeTime::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
@@ -115,59 +117,30 @@ namespace SingularLuus04_FreeTimeDefine {
 
 
   void
-  SingularLuus04_FreeTime::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SingularLuus04_FreeTime::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2 * X__[iX_T];
     result__[ 1   ] = 2 * X__[iX_x];
-    result__[ 2   ] = L__[iL_lambda1__xo];
-    result__[ 3   ] = L__[iL_lambda2__xo];
+    result__[ 2   ] = MU__[0];
+    result__[ 3   ] = MU__[1];
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[2];
     result__[ 6   ] = result__[3];
     result__[ 7   ] = 2 * ModelPars[iM_theta];
-    result__[ 8   ] = L__[iL_lambda3__xo];
+    real_type t5   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 8   ] = t5 + MU__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 9, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SingularLuus04_FreeTime::Hu_numEqns() const { return 1; }
-
-  void
-  SingularLuus04_FreeTime::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda3__xo] * X__[iX_T];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 9, i_segment );
   }
 
 }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -59,11 +59,11 @@ namespace BangBangForkDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,112 +72,87 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
-    real_type t1   = L__[iL_lambda3__xo];
+    real_type t1   = MU__[2];
     real_type t2   = P__[iP_T];
     real_type t4   = X__[iX_x2];
     real_type t5   = t4 * t4;
     real_type t6   = t5 * t5;
     real_type t7   = ModelPars[iM_kappa];
-    real_type t11  = L__[iL_lambda1__xo];
+    real_type t11  = MU__[0];
     result__[ 1   ] = -5 * t7 * t6 * t2 * t1 - t2 * t11;
-    real_type t13  = L__[iL_lambda2__xo];
+    real_type t13  = MU__[1];
     result__[ 2   ] = t2 * t13;
     real_type t15  = U__[iU_u2];
     real_type t16  = t15 * t15;
-    result__[ 3   ] = t16 * ModelPars[iM_WC] - t4 * t11 + (t15 * ModelPars[iM_WU2] + X__[iX_x3]) * t13 + (-t6 * t4 * t7 + U__[iU_u]) * t1;
+    real_type t18  = U__[iU_u];
+    real_type t19  = uControl(t18, -1, 1);
+    real_type t20  = ALIAS_Tbarrier_D(-t2);
+    result__[ 3   ] = t16 * ModelPars[iM_WC] + t19 - t20 - t4 * t11 + (t15 * ModelPars[iM_WU2] + X__[iX_x3]) * t13 + (-t6 * t4 * t7 + t18) * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 4, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFork::DHxpDxpu_numRows() const { return 4; }
-  integer BangBangFork::DHxpDxpu_numCols() const { return 6; }
-  integer BangBangFork::DHxpDxpu_nnz()     const { return 7; }
+  integer BangBangFork::DHxpDxpuv_numRows() const { return 4; }
+  integer BangBangFork::DHxpDxpuv_numCols() const { return 9; }
+  integer BangBangFork::DHxpDxpuv_nnz()     const { return 8; }
 
   void
-  BangBangFork::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  BangBangFork::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 1   ;
     iIndex[4 ] = 3   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 4   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 5   ;
+    iIndex[5 ] = 3   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 3   ; jIndex[6 ] = 4   ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 5   ;
   }
 
 
   void
-  BangBangFork::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFork::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda3__xo];
+    real_type t1   = MU__[2];
+    real_type t2   = P__[iP_T];
     real_type t4   = ModelPars[iM_kappa];
     real_type t5   = X__[iX_x2];
     real_type t6   = t5 * t5;
-    result__[ 0   ] = -20 * t6 * t5 * t4 * P__[iP_T] * t1;
+    result__[ 0   ] = -20 * t6 * t5 * t4 * t2 * t1;
     real_type t12  = t6 * t6;
-    result__[ 1   ] = -5 * t12 * t4 * t1 - L__[iL_lambda1__xo];
-    result__[ 2   ] = L__[iL_lambda2__xo];
+    result__[ 1   ] = -5 * t12 * t4 * t1 - MU__[0];
+    result__[ 2   ] = MU__[1];
     result__[ 3   ] = result__[1];
     result__[ 4   ] = result__[2];
-    result__[ 5   ] = t1;
-    result__[ 6   ] = 2 * ModelPars[iM_WC] * U__[iU_u2] + ModelPars[iM_WU2] * result__[4];
+    result__[ 5   ] = ALIAS_Tbarrier_DD(-t2);
+    real_type t17  = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 6   ] = t17 + t1;
+    result__[ 7   ] = 2 * ModelPars[iM_WC] * U__[iU_u2] + ModelPars[iM_WU2] * result__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 7, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BangBangFork::Hu_numEqns() const { return 2; }
-
-  void
-  BangBangFork::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = P__[iP_T];
-    result__[ 0   ] = t2 * L__[iL_lambda3__xo];
-    result__[ 1   ] = ModelPars[iM_WU2] * t2 * L__[iL_lambda2__xo] + 2 * U__[iU_u2] * t2 * ModelPars[iM_WC];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 8, i_segment );
   }
 
 }

@@ -64,4 +64,9 @@ generateOCProblem(
   states_guess      = GUESS,
   continuation      = CONT
 );
+ocp := getOCProblem();
+eval(ocp["FD"]);
+eval(ocp["ode"]);
+eval(ocp["adjoint_ode"]);
+eval(ocp["controls"]);
 # if used in batch mode use the comment to quit;

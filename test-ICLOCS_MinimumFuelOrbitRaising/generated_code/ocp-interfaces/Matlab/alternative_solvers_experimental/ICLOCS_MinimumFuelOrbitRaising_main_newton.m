@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_MinimumFuelOrbitRaising_fsolve_main.m                   %
 %                                                                       %
-%  version: 1.0   date 21/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -36,21 +36,21 @@ ocp = ICLOCS_MinimumFuelOrbitRaising( 'ICLOCS_MinimumFuelOrbitRaising' );
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
 ocp.setup('../../data/ICLOCS_MinimumFuelOrbitRaising_Data'); % automatically try extension .rb and .lua
-ocp.infoLevel(infolevel);
+ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);
 
 [xinit,uimit] = ocp.get_raw_solution();
 nwt   = NewtonSolver( 2 );
-fun   = @(x) ocp.eval_F(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
-jac   = @(x) ocp.eval_JF(x,ocp.eval_U(x,ocp.init_U(x,do_minimization)));
+fun   = @(x) ocp.eval_F(x,ocp.eval_U(x,ocp.guess_U(x)));
+jac   = @(x) ocp.eval_JF(x,ocp.eval_U(x,ocp.guess_U(x)));
 check = @(x) ocp.check_raw_solution(x);
 
 [x,ierr] = nwt.solve( xinit, fun, jac, check );
 
 ierr
 
-u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
+u = ocp.eval_U(x,ocp.guess_U(x));
 ocp.set_raw_solution(x,u);
 
 % -------------------------------------------------------------------------

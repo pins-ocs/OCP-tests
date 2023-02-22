@@ -22,27 +22,35 @@ addBoundaryConditions(
 infoBoundaryConditions();
 setTarget(
   mayer    = 0,
-  lagrange = -vr(zeta)
+  lagrange = -vr(zeta)+epsilon*theta(zeta)^2
 );
 ;
 ;
 PARS := [
-  theta_max = Pi,
-  T         = 0.1405,
-  md        = 0.0749,
-  tf        = 3.32
+  theta_max   = Pi,
+  T           = 0.1405,
+  md          = 0.0749,
+  tf          = 3.32,
+  epsilon     = epsilon_max,
+  epsilon_max = 1,
+  epsilon_min = 0
 ];
 POST := [
-  [ theta(zeta) - floor(theta(zeta)/(2*Pi))*(2*Pi), "THETA" ],
-  [ mass(zeta), "MASS" ]
+  [ theta(zeta) - round(theta(zeta)/(2*Pi))*(2*Pi), "THETA" ],
+  [ theta_max,        "THETA_max" ],
+  [ -theta_max,       "THETA_min" ],
+  [ mass(zeta),       "MASS" ],
+  [ cos(theta(zeta)), "COSTHETA" ],
+  [ sin(theta(zeta)), "SINTHETA" ]
 ];
 CONT := [
+  [ epsilon = epsilon_max*(1-s)+epsilon_min*s ]
 ];
 GUESS := [
   r  = 1,
   vr = 0,
-  vt = 1,
-  lambda3__xo = -1e-10
+  vt = 1
+  #lambda3__xo = -1e-10
 ];
 REGION := [
   [ theta(zeta) >= -theta_max, "u" ],
@@ -51,7 +59,9 @@ REGION := [
 MESH_DEF := [length=tf,n=400];
 project_dir  := "../generated_code";
 project_name := "ICLOCS_MinimumFuelOrbitRaising";
-U_SOLVED := [theta = arctan(-lambda2__xo(zeta),-lambda3__xo(zeta))];
+U_SOLVED := [
+  theta = arctan(-lambda2__xo(zeta),-lambda3__xo(zeta))
+];
 generateOCProblem(
   project_name, clean = false,
   post_processing       = POST,
@@ -60,16 +70,16 @@ generateOCProblem(
   mesh                  = MESH_DEF,
   continuation          = CONT,
   controls_iterative    = false,
-  controls_guess        = U_SOLVED,
-  controls_user_defined = U_SOLVED,
+  controls_guess        = [theta=0],
+  #controls_user_defined = U_SOLVED,
   states_guess          = GUESS,
   admissible_region     = REGION
 );
-ocp := getOCProblem();
-eval(ocp["controls"]);
-collect(ocp["controls"]["g_fun"],[sin,cos,theta]);
-subs(theta(zeta_M)=TH,%):
-simplify(diff(%,TH));
-ocp["controls"]["g"];
+#ocp := getOCProblem();
+#eval(ocp["controls"]);
+#collect(ocp["controls"]["g_fun"],[sin,cos,theta]);
+#subs(theta(zeta_M)=TH,%):
+#simplify(diff(%,TH));
+#ocp["controls"]["g"];
 #eval(ocp);
 # if used in batch mode use the comment to quit;

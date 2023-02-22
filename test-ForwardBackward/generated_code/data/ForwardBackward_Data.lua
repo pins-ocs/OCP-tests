@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,20 +20,20 @@
 -- User Header
 
 -- Auxiliary values
-v_epsi   = 0.01
+E_tol0   = 0.25
+a_tol    = 0.01
+c0_0     = 0.0
+a_epsi   = 0.01
 c1_0     = 0.0
 c1       = c1_0
+E_tol    = E_tol0
 epsilon0 = 0.1
 epsilon  = epsilon0
+v_epsi   = 0.01
 E_epsi0  = 0.25
 E_epsi   = E_epsi0
-a_epsi   = 0.01
-a_tol    = 0.01
-E_tol0   = 0.25
-E_tol    = E_tol0
-v_tol    = 0.01
-c0_0     = 0.0
 c0       = c0_0
+v_tol    = 0.01
 
 content = {
 
@@ -46,8 +46,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -59,20 +57,25 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'

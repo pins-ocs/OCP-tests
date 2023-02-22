@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,48 +67,29 @@ namespace BikeSteeringDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BikeSteering::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   BikeSteering::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BikeSteering::LT_numEqns() const { return 1; }
-
-  void
-  BikeSteering::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = minimumTimeSize(-X__[iX_TimeSize]);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BikeSteering::JU_numEqns() const { return 1; }
-
-  void
+  real_type
   BikeSteering::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -116,9 +97,102 @@ namespace BikeSteeringDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_Fmax];
     real_type t4   = FyControl(U__[iU_Fy], -t3, t3);
-    result__[ 0   ] = t4 * X__[iX_TimeSize];
+    real_type result__ = t4 * X__[iX_TimeSize];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  BikeSteering::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = minimumTimeSize(-X__[iX_TimeSize]);
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BikeSteering::JPxpu_numEqns() const { return 4; }
+
+  void
+  BikeSteering::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BikeSteering::JUxpu_numEqns() const { return 4; }
+
+  void
+  BikeSteering::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    real_type t1   = U__[iU_Fy];
+    real_type t2   = ModelPars[iM_Fmax];
+    result__[ 2   ] = FyControl(t1, -t2, t2);
+    real_type t4   = ALIAS_FyControl_D_1(t1, -t2, t2);
+    result__[ 3   ] = t4 * X__[iX_TimeSize];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer BikeSteering::LTxpu_numEqns() const { return 4; }
+
+  void
+  BikeSteering::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    real_type t2   = ALIAS_minimumTimeSize_D(-X__[iX_TimeSize]);
+    result__[ 2   ] = -t2;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -127,10 +201,10 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -140,116 +214,6 @@ namespace BikeSteeringDefine {
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
   }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::DJPDxpu_numRows() const { return 0; }
-  integer BikeSteering::DJPDxpu_numCols() const { return 4; }
-  integer BikeSteering::DJPDxpu_nnz()     const { return 0; }
-
-  void
-  BikeSteering::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  BikeSteering::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::DLTDxpu_numRows() const { return 1; }
-  integer BikeSteering::DLTDxpu_numCols() const { return 4; }
-  integer BikeSteering::DLTDxpu_nnz()     const { return 1; }
-
-  void
-  BikeSteering::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-  }
-
-
-  void
-  BikeSteering::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_minimumTimeSize_D(-X__[iX_TimeSize]);
-    result__[ 0   ] = -t2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::DJUDxpu_numRows() const { return 1; }
-  integer BikeSteering::DJUDxpu_numCols() const { return 4; }
-  integer BikeSteering::DJUDxpu_nnz()     const { return 2; }
-
-  void
-  BikeSteering::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 3   ;
-  }
-
-
-  void
-  BikeSteering::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_Fy];
-    real_type t2   = ModelPars[iM_Fmax];
-    result__[ 0   ] = FyControl(t1, -t2, t2);
-    real_type t4   = ALIAS_FyControl_D_1(t1, -t2, t2);
-    result__[ 1   ] = t4 * X__[iX_TimeSize];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BikeSteering::DLTargsDxpu_numRows() const { return 1; }
-  integer BikeSteering::DLTargsDxpu_numCols() const { return 4; }
-  integer BikeSteering::DLTargsDxpu_nnz()     const { return 1; }
-
-  void
-  BikeSteering::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-  }
-
-
-  void
-  BikeSteering::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 1, i_segment );
-  }
-
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -265,15 +229,13 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BikeSteering::D2LTD2xpu_numRows() const { return 4; }
@@ -288,22 +250,19 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_minimumTimeSize_DD(-X__[iX_TimeSize]);
-    result__[ 0   ] = OMEGA__[0] * t2;
+    result__[ 0   ] = ALIAS_minimumTimeSize_DD(-X__[iX_TimeSize]);
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 1, i_segment );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer BikeSteering::D2JUD2xpu_numRows() const { return 4; }
@@ -320,11 +279,10 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -332,15 +290,41 @@ namespace BikeSteeringDefine {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_Fy];
     real_type t2   = ModelPars[iM_Fmax];
-    real_type t3   = ALIAS_FyControl_D_1(t1, -t2, t2);
-    real_type t4   = OMEGA__[0];
-    result__[ 0   ] = t4 * t3;
+    result__[ 0   ] = ALIAS_FyControl_D_1(t1, -t2, t2);
     result__[ 1   ] = result__[0];
-    real_type t6   = ALIAS_FyControl_D_1_1(t1, -t2, t2);
-    result__[ 2   ] = t4 * t6 * X__[iX_TimeSize];
+    real_type t4   = ALIAS_FyControl_D_1_1(t1, -t2, t2);
+    result__[ 2   ] = t4 * X__[iX_TimeSize];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 3, i_segment );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer BikeSteering::DLTargsDxpu_numRows() const { return 1; }
+  integer BikeSteering::DLTargsDxpu_numCols() const { return 4; }
+  integer BikeSteering::DLTargsDxpu_nnz()     const { return 1; }
+
+  void
+  BikeSteering::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+  }
+
+
+  void
+  BikeSteering::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 1, i_segment );
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -356,11 +340,11 @@ namespace BikeSteeringDefine {
 
   void
   BikeSteering::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

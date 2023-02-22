@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank_Data.lua                                          |
  |                                                                       |
- |  version: 1.0   date 20/1/2023                                        |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,9 +20,9 @@
 -- User Header
 
 -- Auxiliary values
-tol_max  = 0.1
 tf       = 0.2
 epsi_max = 0.1
+tol_max  = 0.1
 
 content = {
 
@@ -56,6 +56,8 @@ content = {
   LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
@@ -319,8 +321,8 @@ content = {
     segments = {
       
       {
-        length = tf,
         n      = 1000.0,
+        length = tf,
       },
     },
   },

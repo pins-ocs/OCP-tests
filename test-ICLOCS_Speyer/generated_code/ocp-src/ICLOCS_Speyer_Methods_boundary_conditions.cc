@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer_Methods_boundary_conditions.cc                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -59,10 +59,10 @@ namespace ICLOCS_SpeyerDefine {
 
   void
   ICLOCS_Speyer::bc_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -94,10 +94,10 @@ namespace ICLOCS_SpeyerDefine {
 
   void
   ICLOCS_Speyer::DbcDxxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -130,13 +130,87 @@ namespace ICLOCS_SpeyerDefine {
 
   void
   ICLOCS_Speyer::D2bcD2xxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    NodeQX const &          LEFT__,
+    NodeQX const &          RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
   ) const {
     // EMPTY
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_Speyer::fd_BC_numEqns() const { return 4; }
+
+  void
+  ICLOCS_Speyer::fd_BC_eval(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    real_type t1   = OMEGA__[0];
+    result__[ 0   ] = t1 + LL__[iL_lambda1__xo];
+    real_type t3   = OMEGA__[1];
+    result__[ 1   ] = t3 + LL__[iL_lambda2__xo];
+    result__[ 2   ] = -t1 - LR__[iL_lambda1__xo];
+    result__[ 3   ] = -t3 - LR__[iL_lambda2__xo];
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 2, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_Speyer::Dfd_BCDxlxlp_numRows() const { return 4; }
+  integer ICLOCS_Speyer::Dfd_BCDxlxlp_numCols() const { return 8; }
+  integer ICLOCS_Speyer::Dfd_BCDxlxlp_nnz()     const { return 4; }
+
+  void
+  ICLOCS_Speyer::Dfd_BCDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 6   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 7   ;
+  }
+
+
+  void
+  ICLOCS_Speyer::Dfd_BCDxlxlp_sparse(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = -1;
+    result__[ 3   ] = -1;
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "Dfd_BCDxlxlp_sparse", 4, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

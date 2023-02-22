@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CMakeLists.txt                                                 #
 #                                                                       #
-#  version: 1.0   date 8/2/2023                                         #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -18,6 +18,9 @@
 cmake_minimum_required( VERSION 3.14 )
 
 project( Brake_Mex )
+
+#set( CMAKE_VERBOSE_MAKEFILE ON )
+set( CMAKE_BUILD_TYPE Release )
 
 find_package( Matlab REQUIRED )
 

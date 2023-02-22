@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 11/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,22 +50,22 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type eps_c0 = 0.1;
-    real_type L = 300;
-    real_type rw = 0.3;
-    real_type v__0 = 10;
-    real_type omega__0 = 1/rw*v__0;
     real_type tol_c0 = 0.1;
-    real_type eps_l = 0.01;
-    real_type tol_c = tol_c0;
-    real_type TT__max = 800;
+    real_type v__0 = 10;
     real_type tol_l = 0.01;
-    real_type eps_c = eps_c0;
+    real_type tol_c = tol_c0;
     real_type h__b = 1;
-    real_type E__pow = 60*TT__max;
-    real_type mesh_np = 2.000000000*L;
     real_type w__t0 = 1;
     real_type w__t = w__t0;
+    real_type rw = 0.3;
+    real_type omega__0 = 1/rw*v__0;
+    real_type L = 300;
+    real_type mesh_np = 2.000000000*L;
+    real_type TT__max = 800;
+    real_type eps_l = 0.01;
+    real_type eps_c0 = 0.1;
+    real_type eps_c = eps_c0;
+    real_type E__pow = 60*TT__max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -227,8 +227,8 @@ main() {
     // ClipIntervalWithErf
     GenericContainer & data_clipInt = gc_MappedObjects["clipInt"];
     data_clipInt["delta"] = 0;
-    data_clipInt["h"] = 0.01;
     data_clipInt["delta2"] = 0;
+    data_clipInt["h"] = 0.01;
 
     // SignRegularizedWithErf
     GenericContainer & data_sign_reg = gc_MappedObjects["sign_reg"];
@@ -362,7 +362,7 @@ TyreDynamic_data.Mesh["segments"][2]["n"] = round(.4*mesh_np);
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

@@ -2,9 +2,9 @@
 #-----------------------------------------------------------------------#
 #  file: HangGlider_ruby_run.rb                                         #
 #                                                                       #
-#  version: 1.0   date 10/11/2022                                       #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #

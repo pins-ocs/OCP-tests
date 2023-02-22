@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,11 +75,11 @@ namespace RobotArmDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -88,134 +88,119 @@ namespace RobotArmDefine {
 
   void
   RobotArm::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = X__[iX_rho];
     real_type t3   = X__[iX_phi];
     real_type t4   = I_theta_D_1(t2, t3);
     real_type t6   = V__[4];
-    real_type t8   = L__[iL_lambda3__xo];
+    real_type t8   = MU__[2];
     real_type t9   = I_phi_D(t2);
     result__[ 0   ] = -t6 * t4 * t1 - V__[5] * t9 * t8;
     result__[ 1   ] = 0;
     real_type t13  = I_theta_D_2(t2, t3);
     result__[ 2   ] = -t6 * t13 * t1;
-    real_type t16  = L__[iL_lambda4__xo];
+    real_type t16  = MU__[3];
     real_type t17  = P__[iP_T];
     result__[ 3   ] = t17 * t16;
-    real_type t18  = L__[iL_lambda5__xo];
+    real_type t18  = MU__[4];
     result__[ 4   ] = t17 * t18;
-    real_type t19  = L__[iL_lambda6__xo];
+    real_type t19  = MU__[5];
     result__[ 5   ] = t17 * t19;
-    result__[ 6   ] = U__[iU_u_theta] * t1 + X__[iX_rho1] * t16 + X__[iX_theta1] * t18 + X__[iX_phi1] * t19 + U__[iU_u_phi] * t8 + L__[iL_lambda1__xo] * U__[iU_u_rho];
+    real_type t20  = U__[iU_u_rho];
+    real_type t21  = u_rhoControl(t20, -1, 1);
+    real_type t22  = U__[iU_u_theta];
+    real_type t23  = u_thetaControl(t22, -1, 1);
+    real_type t24  = U__[iU_u_phi];
+    real_type t25  = u_phiControl(t24, -1, 1);
+    result__[ 6   ] = t22 * t1 + X__[iX_rho1] * t16 + X__[iX_theta1] * t18 + X__[iX_phi1] * t19 + t20 * MU__[0] + t24 * t8 + t21 + t23 + t25;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 7, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer RobotArm::DHxpDxpu_numRows() const { return 7; }
-  integer RobotArm::DHxpDxpu_numCols() const { return 10; }
-  integer RobotArm::DHxpDxpu_nnz()     const { return 13; }
+  integer RobotArm::DHxpDxpuv_numRows() const { return 7; }
+  integer RobotArm::DHxpDxpuv_numCols() const { return 16; }
+  integer RobotArm::DHxpDxpuv_nnz()     const { return 16; }
 
   void
-  RobotArm::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  RobotArm::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
-    iIndex[4 ] = 3   ; jIndex[4 ] = 6   ;
-    iIndex[5 ] = 4   ; jIndex[5 ] = 6   ;
-    iIndex[6 ] = 5   ; jIndex[6 ] = 6   ;
-    iIndex[7 ] = 6   ; jIndex[7 ] = 3   ;
-    iIndex[8 ] = 6   ; jIndex[8 ] = 4   ;
-    iIndex[9 ] = 6   ; jIndex[9 ] = 5   ;
-    iIndex[10] = 6   ; jIndex[10] = 7   ;
-    iIndex[11] = 6   ; jIndex[11] = 8   ;
-    iIndex[12] = 6   ; jIndex[12] = 9   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 14  ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 15  ;
+    iIndex[4 ] = 2   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 2   ; jIndex[5 ] = 2   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 14  ;
+    iIndex[7 ] = 3   ; jIndex[7 ] = 6   ;
+    iIndex[8 ] = 4   ; jIndex[8 ] = 6   ;
+    iIndex[9 ] = 5   ; jIndex[9 ] = 6   ;
+    iIndex[10] = 6   ; jIndex[10] = 3   ;
+    iIndex[11] = 6   ; jIndex[11] = 4   ;
+    iIndex[12] = 6   ; jIndex[12] = 5   ;
+    iIndex[13] = 6   ; jIndex[13] = 7   ;
+    iIndex[14] = 6   ; jIndex[14] = 8   ;
+    iIndex[15] = 6   ; jIndex[15] = 9   ;
   }
 
 
   void
-  RobotArm::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  RobotArm::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = X__[iX_rho];
     real_type t3   = X__[iX_phi];
     real_type t4   = I_theta_D_1_1(t2, t3);
     real_type t6   = V__[4];
-    real_type t8   = L__[iL_lambda3__xo];
+    real_type t8   = MU__[2];
     real_type t9   = I_phi_DD(t2);
     result__[ 0   ] = -t6 * t4 * t1 - V__[5] * t9 * t8;
     real_type t13  = I_theta_D_1_2(t2, t3);
     result__[ 1   ] = -t6 * t13 * t1;
-    result__[ 2   ] = result__[1];
-    real_type t16  = I_theta_D_2_2(t2, t3);
-    result__[ 3   ] = -t6 * t16 * t1;
-    result__[ 4   ] = L__[iL_lambda4__xo];
-    result__[ 5   ] = L__[iL_lambda5__xo];
-    result__[ 6   ] = L__[iL_lambda6__xo];
-    result__[ 7   ] = result__[4];
-    result__[ 8   ] = result__[5];
-    result__[ 9   ] = result__[6];
-    result__[ 10  ] = L__[iL_lambda1__xo];
-    result__[ 11  ] = t1;
-    result__[ 12  ] = t8;
+    real_type t16  = I_theta_D_1(t2, t3);
+    result__[ 2   ] = -t16 * t1;
+    real_type t18  = I_phi_D(t2);
+    result__[ 3   ] = -t18 * t8;
+    result__[ 4   ] = result__[1];
+    real_type t20  = I_theta_D_2_2(t2, t3);
+    result__[ 5   ] = -t6 * t20 * t1;
+    real_type t23  = I_theta_D_2(t2, t3);
+    result__[ 6   ] = -t23 * t1;
+    result__[ 7   ] = MU__[3];
+    result__[ 8   ] = MU__[4];
+    result__[ 9   ] = MU__[5];
+    result__[ 10  ] = result__[7];
+    result__[ 11  ] = result__[8];
+    result__[ 12  ] = result__[9];
+    real_type t26  = ALIAS_u_rhoControl_D_1(U__[iU_u_rho], -1, 1);
+    result__[ 13  ] = t26 + MU__[0];
+    real_type t29  = ALIAS_u_thetaControl_D_1(U__[iU_u_theta], -1, 1);
+    result__[ 14  ] = t29 + t1;
+    real_type t31  = ALIAS_u_phiControl_D_1(U__[iU_u_phi], -1, 1);
+    result__[ 15  ] = t31 + t8;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 13, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer RobotArm::Hu_numEqns() const { return 3; }
-
-  void
-  RobotArm::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = P__[iP_T];
-    result__[ 0   ] = t2 * L__[iL_lambda1__xo];
-    result__[ 1   ] = t2 * L__[iL_lambda2__xo];
-    result__[ 2   ] = t2 * L__[iL_lambda3__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 16, i_segment );
   }
 
 }

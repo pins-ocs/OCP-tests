@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -58,50 +58,126 @@ namespace GerdtsKunkelDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer GerdtsKunkel::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   GerdtsKunkel::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer GerdtsKunkel::LT_numEqns() const { return 1; }
-
-  void
-  GerdtsKunkel::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer GerdtsKunkel::JU_numEqns() const { return 0; }
+  real_type
+  GerdtsKunkel::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  GerdtsKunkel::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GerdtsKunkel::JPxpu_numEqns() const { return 4; }
 
   void
-  GerdtsKunkel::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  GerdtsKunkel::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GerdtsKunkel::JUxpu_numEqns() const { return 4; }
+
+  void
+  GerdtsKunkel::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer GerdtsKunkel::LTxpu_numEqns() const { return 4; }
+
+  void
+  GerdtsKunkel::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = ALIAS_x1Limitation_D(X__[iX_x1] - 1.0 / 9.0);
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,10 +186,10 @@ namespace GerdtsKunkelDefine {
 
   void
   GerdtsKunkel::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -126,70 +202,70 @@ namespace GerdtsKunkelDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::DJPDxpu_numRows() const { return 0; }
-  integer GerdtsKunkel::DJPDxpu_numCols() const { return 4; }
-  integer GerdtsKunkel::DJPDxpu_nnz()     const { return 0; }
+  integer GerdtsKunkel::D2JPD2xpu_numRows() const { return 4; }
+  integer GerdtsKunkel::D2JPD2xpu_numCols() const { return 4; }
+  integer GerdtsKunkel::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  GerdtsKunkel::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  GerdtsKunkel::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  GerdtsKunkel::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  GerdtsKunkel::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::DLTDxpu_numRows() const { return 1; }
-  integer GerdtsKunkel::DLTDxpu_numCols() const { return 4; }
-  integer GerdtsKunkel::DLTDxpu_nnz()     const { return 1; }
+  integer GerdtsKunkel::D2LTD2xpu_numRows() const { return 4; }
+  integer GerdtsKunkel::D2LTD2xpu_numCols() const { return 4; }
+  integer GerdtsKunkel::D2LTD2xpu_nnz()     const { return 1; }
 
   void
-  GerdtsKunkel::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  GerdtsKunkel::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
   }
 
 
   void
-  GerdtsKunkel::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  GerdtsKunkel::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_x1Limitation_D(X__[iX_x1] - 1.0 / 9.0);
+    result__[ 0   ] = ALIAS_x1Limitation_DD(X__[iX_x1] - 1.0 / 9.0);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::DJUDxpu_numRows() const { return 0; }
-  integer GerdtsKunkel::DJUDxpu_numCols() const { return 4; }
-  integer GerdtsKunkel::DJUDxpu_nnz()     const { return 0; }
+  integer GerdtsKunkel::D2JUD2xpu_numRows() const { return 4; }
+  integer GerdtsKunkel::D2JUD2xpu_numCols() const { return 4; }
+  integer GerdtsKunkel::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  GerdtsKunkel::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  GerdtsKunkel::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  GerdtsKunkel::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  GerdtsKunkel::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -207,10 +283,10 @@ namespace GerdtsKunkelDefine {
 
   void
   GerdtsKunkel::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -221,82 +297,6 @@ namespace GerdtsKunkelDefine {
       Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 1, i_segment );
   }
 
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::D2JPD2xpu_numRows() const { return 4; }
-  integer GerdtsKunkel::D2JPD2xpu_numCols() const { return 4; }
-  integer GerdtsKunkel::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  GerdtsKunkel::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  GerdtsKunkel::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::D2LTD2xpu_numRows() const { return 4; }
-  integer GerdtsKunkel::D2LTD2xpu_numCols() const { return 4; }
-  integer GerdtsKunkel::D2LTD2xpu_nnz()     const { return 1; }
-
-  void
-  GerdtsKunkel::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  GerdtsKunkel::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ALIAS_x1Limitation_DD(X__[iX_x1] - 1.0 / 9.0);
-    result__[ 0   ] = OMEGA__[0] * t3;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 1, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GerdtsKunkel::D2JUD2xpu_numRows() const { return 4; }
-  integer GerdtsKunkel::D2JUD2xpu_numCols() const { return 4; }
-  integer GerdtsKunkel::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  GerdtsKunkel::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  GerdtsKunkel::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -312,11 +312,11 @@ namespace GerdtsKunkelDefine {
 
   void
   GerdtsKunkel::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

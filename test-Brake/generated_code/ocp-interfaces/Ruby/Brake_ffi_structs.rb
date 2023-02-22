@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Brake_ffi_structs.rb                                              #
 #                                                                          #
-#  version: 1.0   date 8/2/2023                                            #
+#  version: 1.0   date 22/2/2023                                           #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -43,6 +43,8 @@ module Brake
       :Tguess,   :data_t,
 
       :epsilon,  :data_t,
+
+      :mu,       :data_t,
 
       :v_f,      :data_t,
 

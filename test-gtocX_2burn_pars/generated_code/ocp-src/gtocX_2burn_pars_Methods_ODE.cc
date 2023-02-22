@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -55,14 +55,15 @@ namespace gtocX_2burn_parsDefine {
    |   \___/|___/|___|
   \*/
 
-  integer gtocX_2burn_pars::rhs_ode_numEqns() const { return 3; }
+  integer gtocX_2burn_pars::ode_numEqns() const { return 3; }
 
   void
-  gtocX_2burn_pars::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  gtocX_2burn_pars::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -81,45 +82,49 @@ namespace gtocX_2burn_parsDefine {
     real_type t16  = acceleration_r(t15, t7);
     real_type t17  = t16 * ModelPars[iM_w_nonlin];
     real_type t18  = sin(t14);
-    result__[ 0   ] = t18 * t17 * t10;
-    real_type t20  = cos(t14);
-    result__[ 1   ] = -t20 * t17 * t10;
-    real_type t26  = pow(t12 * t20 + t13 * t18 + 1, 2);
-    result__[ 2   ] = t8 / t5 / t4 * t26 * t3;
+    result__[ 0   ] = t18 * t17 * t10 - V__[0];
+    real_type t22  = cos(t14);
+    result__[ 1   ] = -t22 * t17 * t10 - V__[1];
+    real_type t29  = pow(t22 * t12 + t18 * t13 + 1, 2);
+    result__[ 2   ] = t8 / t5 / t4 * t29 * t3 - V__[2];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::Drhs_odeDxpu_numRows() const { return 3; }
-  integer gtocX_2burn_pars::Drhs_odeDxpu_numCols() const { return 6; }
-  integer gtocX_2burn_pars::Drhs_odeDxpu_nnz()     const { return 12; }
+  integer gtocX_2burn_pars::DodeDxpuv_numRows() const { return 3; }
+  integer gtocX_2burn_pars::DodeDxpuv_numCols() const { return 9; }
+  integer gtocX_2burn_pars::DodeDxpuv_nnz()     const { return 15; }
 
   void
-  gtocX_2burn_pars::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  gtocX_2burn_pars::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 0   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 1   ;
-    iIndex[6 ] = 1   ; jIndex[6 ] = 2   ;
-    iIndex[7 ] = 1   ; jIndex[7 ] = 3   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 0   ;
-    iIndex[9 ] = 2   ; jIndex[9 ] = 1   ;
-    iIndex[10] = 2   ; jIndex[10] = 2   ;
-    iIndex[11] = 2   ; jIndex[11] = 3   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 6   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 0   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 1   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 2   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 3   ;
+    iIndex[9 ] = 1   ; jIndex[9 ] = 7   ;
+    iIndex[10] = 2   ; jIndex[10] = 0   ;
+    iIndex[11] = 2   ; jIndex[11] = 1   ;
+    iIndex[12] = 2   ; jIndex[12] = 2   ;
+    iIndex[13] = 2   ; jIndex[13] = 3   ;
+    iIndex[14] = 2   ; jIndex[14] = 8   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  gtocX_2burn_pars::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  gtocX_2burn_pars::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -154,21 +159,24 @@ namespace gtocX_2burn_parsDefine {
     real_type t37  = t19 * t30;
     real_type t40  = ray_D_1(t4, t12, t13, t14);
     result__[ 3   ] = t37 * t36 / 2 + t19 * t40 * t17 * t10;
-    result__[ 4   ] = -t31 * t18 * t17 * t10;
-    result__[ 5   ] = -t31 * t22 * t17 * t10;
-    result__[ 6   ] = -t31 * t25 * t17 * t10 + t37 * t10;
-    result__[ 7   ] = -t32 * t36 / 2 - t31 * t40 * t17 * t10;
+    result__[ 4   ] = -1;
+    result__[ 5   ] = -t31 * t18 * t17 * t10;
+    result__[ 6   ] = -t31 * t22 * t17 * t10;
+    result__[ 7   ] = -t31 * t25 * t17 * t10 + t37 * t10;
+    result__[ 8   ] = -t32 * t36 / 2 - t31 * t40 * t17 * t10;
+    result__[ 9   ] = -1;
     real_type t61  = t31 * t12 + t19 * t13 + 1;
     real_type t62  = t61 * t3;
     real_type t65  = t8 / t5 / t4;
-    result__[ 8   ] = 2 * t31 * t65 * t62;
-    result__[ 9   ] = 2 * t19 * t65 * t62;
-    result__[ 10  ] = 2 * (-t19 * t12 + t31 * t13) * t65 * t62;
+    result__[ 10  ] = 2 * t31 * t65 * t62;
+    result__[ 11  ] = 2 * t19 * t65 * t62;
+    result__[ 12  ] = 2 * (-t19 * t12 + t31 * t13) * t65 * t62;
     real_type t75  = t61 * t61;
     real_type t77  = t4 * t4;
-    result__[ 11  ] = -3.0 / 2.0 * t8 / t5 / t77 * t75 * t3;
+    result__[ 13  ] = -3.0 / 2.0 * t8 / t5 / t77 * t75 * t3;
+    result__[ 14  ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 12, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 15, i_segment );
   }
 
   /*\
@@ -195,9 +203,9 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -208,106 +216,6 @@ namespace gtocX_2burn_parsDefine {
     result__[ 2   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 3, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer gtocX_2burn_pars::eta_numEqns() const { return 3; }
-
-  void
-  gtocX_2burn_pars::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = L__[iL_lambda3__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DetaDxp_numRows() const { return 3; }
-  integer gtocX_2burn_pars::DetaDxp_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DetaDxp_nnz()     const { return 0; }
-
-  void
-  gtocX_2burn_pars::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  gtocX_2burn_pars::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer gtocX_2burn_pars::nu_numEqns() const { return 3; }
-
-  void
-  gtocX_2burn_pars::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DnuDxp_numRows() const { return 3; }
-  integer gtocX_2burn_pars::DnuDxp_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DnuDxp_nnz()     const { return 0; }
-
-  void
-  gtocX_2burn_pars::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  gtocX_2burn_pars::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

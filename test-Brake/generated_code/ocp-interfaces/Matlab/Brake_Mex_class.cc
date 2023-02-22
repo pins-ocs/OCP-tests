@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Mex_class.cc                                             |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -58,9 +58,6 @@ ProblemStorage::done_solve() {
   solution2_ok = false;
   solution3_ok = false;
 }
-
-integer
-ProblemStorage::nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
 
 void
 ProblemStorage::read( string const & fname, GenericContainer & gc ) {
@@ -224,6 +221,23 @@ ProblemStorage::get_L(
     nL == this->dim_X(),
     "{} |lambda| = {} expected to be {}\n",
     msg, nL, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_MU(
+  char const        msg[],
+  mxArray const   * mx_MU,
+  MU_const_p_type & MU
+) {
+  mwSize nMU;
+  MU.set( Utils::mex_vector_pointer( mx_MU, nMU, fmt::format( "get_MU {}", msg ) ) );
+  UTILS_ASSERT(
+    nMU == this->dim_X(), // MU = X in dimensione
+    "{} |lambda| = {} expected to be {}\n",
+    msg, nMU, this->dim_X()
   );
 }
 

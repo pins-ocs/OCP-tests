@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Main.cc                                  |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,26 +50,26 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_epsilon = 0.1;
-    real_type WTF0 = 1;
-    real_type one_km = 1000;
-    real_type re = 6378*one_km;
-    real_type V_f = 2*one_km;
-    real_type V_i = 2*one_km;
-    real_type h_i = 40*one_km;
-    real_type S = 7500*one_km;
+    real_type to_rad = 0.01745329252;
+    real_type sigma_dot_max = 10*to_rad;
     real_type u_tolerance = 0.1;
+    real_type phi_f = 0.5*to_rad;
+    real_type G_f = -15*to_rad;
+    real_type u_epsilon = 0.1;
+    real_type one_km = 1000;
+    real_type S = 7500*one_km;
+    real_type theta_f = 2*to_rad;
+    real_type V_f = 2*one_km;
+    real_type re = 6378*one_km;
+    real_type WTF0 = 1;
     real_type WTF = WTF0;
     real_type CTRL0 = 1;
     real_type CTRL = CTRL0;
+    real_type G_i = -15*to_rad;
+    real_type h_i = 40*one_km;
+    real_type V_i = 2*one_km;
     real_type ODE0 = 0;
     real_type ODE = ODE0;
-    real_type to_rad = 0.01745329252;
-    real_type theta_f = 2*to_rad;
-    real_type G_i = -15*to_rad;
-    real_type sigma_dot_max = 10*to_rad;
-    real_type G_f = -15*to_rad;
-    real_type phi_f = 0.5*to_rad;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -240,8 +240,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 HypersonicProblem3DOF_data.Mesh["s0"] = 0;
-HypersonicProblem3DOF_data.Mesh["segments"][0]["n"] = 400;
 HypersonicProblem3DOF_data.Mesh["segments"][0]["length"] = 1;
+HypersonicProblem3DOF_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -303,7 +303,7 @@ HypersonicProblem3DOF_data.Mesh["segments"][0]["length"] = 1;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

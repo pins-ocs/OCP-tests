@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular04_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,10 +51,10 @@ main() {
 
     // Auxiliary values
     real_type epsi_x0 = 0.01;
-    real_type u_tolerance0 = 0.01;
     real_type Tf = 6;
-    real_type epsi_x = epsi_x0;
     real_type u_epsilon0 = 0.01;
+    real_type u_tolerance0 = 0.01;
+    real_type epsi_x = epsi_x0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -177,8 +177,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 LUUS_Singular04_data.Mesh["s0"] = 0;
-LUUS_Singular04_data.Mesh["segments"][0]["n"] = 1000;
 LUUS_Singular04_data.Mesh["segments"][0]["length"] = Tf;
+LUUS_Singular04_data.Mesh["segments"][0]["n"] = 1000;
 
 
     // alias for user object classes passed as pointers
@@ -240,7 +240,7 @@ LUUS_Singular04_data.Mesh["segments"][0]["length"] = Tf;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,20 +50,20 @@ main() {
     Path2D           trajectory( "trajectory" );
 
     // Auxiliary values
-    real_type v_epsi = 0.01;
+    real_type E_tol0 = 0.25;
+    real_type a_tol = 0.01;
+    real_type c0_0 = 0;
+    real_type a_epsi = 0.01;
     real_type c1_0 = 0;
     real_type c1 = c1_0;
+    real_type E_tol = E_tol0;
     real_type epsilon0 = 0.1;
     real_type epsilon = epsilon0;
+    real_type v_epsi = 0.01;
     real_type E_epsi0 = 0.25;
     real_type E_epsi = E_epsi0;
-    real_type a_epsi = 0.01;
-    real_type a_tol = 0.01;
-    real_type E_tol0 = 0.25;
-    real_type E_tol = E_tol0;
-    real_type v_tol = 0.01;
-    real_type c0_0 = 0;
     real_type c0 = c0_0;
+    real_type v_tol = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -281,7 +281,7 @@ main() {
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

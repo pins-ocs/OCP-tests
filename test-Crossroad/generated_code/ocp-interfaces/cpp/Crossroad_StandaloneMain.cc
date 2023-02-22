@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type jerk_min = -10;
     real_type L = 100;
     real_type jerk_max = 10;
     real_type wJ = 1/jerk_max^2;
+    real_type jerk_min = -10;
     real_type s_f = L;
     integer InfoLevel = 4;
 
@@ -215,10 +215,10 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Crossroad_data.Mesh["s0"] = 0;
-Crossroad_data.Mesh["segments"][0]["n"] = 100;
 Crossroad_data.Mesh["segments"][0]["length"] = 0.5;
-Crossroad_data.Mesh["segments"][1]["n"] = 100;
+Crossroad_data.Mesh["segments"][0]["n"] = 100;
 Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
+Crossroad_data.Mesh["segments"][1]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -280,7 +280,7 @@ Crossroad_data.Mesh["segments"][1]["length"] = 0.5;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

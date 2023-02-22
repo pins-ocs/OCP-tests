@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: BrysonDenham_fsolve_main.m                                     %
 %                                                                       %
-%  version: 1.0   date 10/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -41,7 +41,7 @@ nlsys = @(x) nlsys_local(ocp,x);
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(BrysonDenham_data);
 ocp.setup('../../data/BrysonDenham_Data'); % automatically try extension .rb and .lua
-ocp.infoLevel(infolevel);
+ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 
 algo = { 'trust-region-dogleg', 'trust-region', 'levenberg-marquardt' };
@@ -63,8 +63,7 @@ options = optimoptions(...
 [x0,u0] = ocp.get_raw_solution();
 x       = fsolve( nlsys, x0, options );
 
-do_minimization = false;
-u = ocp.eval_U(x,ocp.init_U(x,do_minimization));
+u = ocp.eval_U(x,ocp.guess_U(x));
 ocp.set_raw_solution(x,u);
 
 % -------------------------------------------------------------------------
@@ -87,7 +86,7 @@ ocp.plot_controls();
 
 function [F,JF] = nlsys_local( ocp, x )
   do_minimization = false;
-  u_guess  = ocp.init_U(x,do_minimization);
+  u_guess  = ocp.guess_U(x);
   u        = ocp.eval_U(x,u_guess);
   [F,ok1]  = ocp.eval_F(x,u);
   [JF,ok2] = ocp.eval_JF(x,u);

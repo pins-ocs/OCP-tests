@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -58,28 +58,47 @@ namespace gtocX_2burn_parsDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer gtocX_2burn_pars::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   gtocX_2burn_pars::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer gtocX_2burn_pars::LT_numEqns() const { return 1; }
+  real_type
+  gtocX_2burn_pars::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
 
-  void
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   gtocX_2burn_pars::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -88,23 +107,92 @@ namespace gtocX_2burn_parsDefine {
     real_type t2   = X__[iX_L];
     real_type t3   = cos(t2);
     real_type t6   = sin(t2);
-    result__[ 0   ] = ray_positive(-t3 * X__[iX_f] - t6 * X__[iX_g] - 1);
+    real_type result__ = ray_positive(-t3 * X__[iX_f] - t6 * X__[iX_g] - 1);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer gtocX_2burn_pars::JPxpu_numEqns() const { return 6; }
+
+  void
+  gtocX_2burn_pars::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer gtocX_2burn_pars::JU_numEqns() const { return 0; }
+  integer gtocX_2burn_pars::JUxpu_numEqns() const { return 6; }
 
   void
-  gtocX_2burn_pars::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  gtocX_2burn_pars::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 6, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer gtocX_2burn_pars::LTxpu_numEqns() const { return 6; }
+
+  void
+  gtocX_2burn_pars::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_f];
+    real_type t2   = X__[iX_L];
+    real_type t3   = cos(t2);
+    real_type t5   = X__[iX_g];
+    real_type t6   = sin(t2);
+    real_type t9   = ALIAS_ray_positive_D(-t3 * t1 - t6 * t5 - 1);
+    result__[ 0   ] = -t3 * t9;
+    result__[ 1   ] = -t6 * t9;
+    result__[ 2   ] = (t6 * t1 - t3 * t5) * t9;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,10 +201,10 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -132,121 +220,6 @@ namespace gtocX_2burn_parsDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DJPDxpu_numRows() const { return 0; }
-  integer gtocX_2burn_pars::DJPDxpu_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DJPDxpu_nnz()     const { return 0; }
-
-  void
-  gtocX_2burn_pars::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  gtocX_2burn_pars::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DLTDxpu_numRows() const { return 1; }
-  integer gtocX_2burn_pars::DLTDxpu_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DLTDxpu_nnz()     const { return 3; }
-
-  void
-  gtocX_2burn_pars::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-  }
-
-
-  void
-  gtocX_2burn_pars::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_f];
-    real_type t2   = X__[iX_L];
-    real_type t3   = cos(t2);
-    real_type t5   = X__[iX_g];
-    real_type t6   = sin(t2);
-    real_type t9   = ALIAS_ray_positive_D(-t3 * t1 - t6 * t5 - 1);
-    result__[ 0   ] = -t3 * t9;
-    result__[ 1   ] = -t6 * t9;
-    result__[ 2   ] = (t6 * t1 - t3 * t5) * t9;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 3, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DJUDxpu_numRows() const { return 0; }
-  integer gtocX_2burn_pars::DJUDxpu_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DJUDxpu_nnz()     const { return 0; }
-
-  void
-  gtocX_2burn_pars::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  gtocX_2burn_pars::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer gtocX_2burn_pars::DLTargsDxpu_numRows() const { return 1; }
-  integer gtocX_2burn_pars::DLTargsDxpu_numCols() const { return 6; }
-  integer gtocX_2burn_pars::DLTargsDxpu_nnz()     const { return 3; }
-
-  void
-  gtocX_2burn_pars::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-  }
-
-
-  void
-  gtocX_2burn_pars::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_L];
-    real_type t2   = cos(t1);
-    result__[ 0   ] = -t2;
-    real_type t3   = sin(t1);
-    result__[ 1   ] = -t3;
-    result__[ 2   ] = -t2 * X__[iX_g] + t3 * X__[iX_f];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 3, i_segment );
-  }
-
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer gtocX_2burn_pars::D2JPD2xpu_numRows() const { return 6; }
   integer gtocX_2burn_pars::D2JPD2xpu_numCols() const { return 6; }
   integer gtocX_2burn_pars::D2JPD2xpu_nnz()     const { return 0; }
@@ -259,15 +232,13 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer gtocX_2burn_pars::D2LTD2xpu_numRows() const { return 6; }
@@ -290,11 +261,10 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -310,26 +280,23 @@ namespace gtocX_2burn_parsDefine {
     real_type t8   = -1 - t4 - t7;
     real_type t9   = ALIAS_ray_positive_DD(t8);
     real_type t10  = t3 * t3;
-    real_type t12  = OMEGA__[0];
-    result__[ 0   ] = t12 * t10 * t9;
-    real_type t14  = t12 * t3;
-    result__[ 1   ] = t14 * t6 * t9;
-    real_type t17  = t1 * t6 - t3 * t5;
-    real_type t18  = t17 * t9;
-    real_type t20  = ALIAS_ray_positive_D(t8);
-    result__[ 2   ] = t12 * t20 * t6 - t14 * t18;
+    result__[ 0   ] = t10 * t9;
+    result__[ 1   ] = t3 * t6 * t9;
+    real_type t14  = t6 * t1 - t5 * t3;
+    real_type t15  = t14 * t9;
+    real_type t17  = ALIAS_ray_positive_D(t8);
+    result__[ 2   ] = -t3 * t15 + t6 * t17;
     result__[ 3   ] = result__[1];
-    real_type t23  = t6 * t6;
-    result__[ 4   ] = t12 * t23 * t9;
-    result__[ 5   ] = -t12 * t18 * t6 - t12 * t20 * t3;
+    real_type t19  = t6 * t6;
+    result__[ 4   ] = t19 * t9;
+    result__[ 5   ] = -t6 * t15 - t3 * t17;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
-    real_type t29  = t17 * t17;
-    result__[ 8   ] = t12 * t29 * t9 + t12 * (t4 + t7) * t20;
+    real_type t22  = t14 * t14;
+    result__[ 8   ] = t22 * t9 + (t4 + t7) * t17;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 9, i_segment );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer gtocX_2burn_pars::D2JUD2xpu_numRows() const { return 6; }
@@ -344,14 +311,48 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer gtocX_2burn_pars::DLTargsDxpu_numRows() const { return 1; }
+  integer gtocX_2burn_pars::DLTargsDxpu_numCols() const { return 6; }
+  integer gtocX_2burn_pars::DLTargsDxpu_nnz()     const { return 3; }
+
+  void
+  gtocX_2burn_pars::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+  }
+
+
+  void
+  gtocX_2burn_pars::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_L];
+    real_type t2   = cos(t1);
+    result__[ 0   ] = -t2;
+    real_type t3   = sin(t1);
+    result__[ 1   ] = -t3;
+    result__[ 2   ] = -t2 * X__[iX_g] + t3 * X__[iX_f];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 3, i_segment );
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -371,11 +372,11 @@ namespace gtocX_2burn_parsDefine {
 
   void
   gtocX_2burn_pars::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

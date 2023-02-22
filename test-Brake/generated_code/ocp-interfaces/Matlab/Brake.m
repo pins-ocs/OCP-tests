@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: Brake.m                                                        %
 %                                                                       %
-%  version: 1.0   date 8/2/2023                                         %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -68,44 +68,8 @@ classdef Brake < handle
       self.dim_ineq      = res.dim_ineq;
     end
     % ---------------------------------------------------------------------
-    function res = get_dim_Q( self )
-      res = Brake_Mex( 'dim_Q', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_X( self )
-      res = Brake_Mex( 'dim_X', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_Pars( self )
-      res = Brake_Mex( 'dim_Pars', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = get_dim_BC( self )
       res = Brake_Mex( 'dim_BC', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_Post( self )
-      res = Brake_Mex( 'dim_Post', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_Ipost( self )
-      res = Brake_Mex( 'dim_Ipost', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_active_BC( self )
-      res = Brake_Mex( 'num_active_BC', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_nodes( self )
-      res = Brake_Mex( 'num_nodes', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_equations( self )
-      res = Brake_Mex( 'num_equations', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_segments( self )
-      res = Brake_Mex( 'num_segments', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = get_dim_full_bc( self )
@@ -114,6 +78,42 @@ classdef Brake < handle
     % ---------------------------------------------------------------------
     function res = get_dim_ineq( self )
       res = Brake_Mex( 'dim_ineq', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Ipost( self )
+      res = Brake_Mex( 'dim_Ipost', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Pars( self )
+      res = Brake_Mex( 'dim_Pars', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Post( self )
+      res = Brake_Mex( 'dim_Post', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Q( self )
+      res = Brake_Mex( 'dim_Q', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_X( self )
+      res = Brake_Mex( 'dim_X', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_active_BC( self )
+      res = Brake_Mex( 'num_active_BC', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_equations( self )
+      res = Brake_Mex( 'num_equations', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_nodes( self )
+      res = Brake_Mex( 'num_nodes', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_segments( self )
+      res = Brake_Mex( 'num_segments', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function n = names( self )
@@ -430,40 +430,6 @@ classdef Brake < handle
       %
       [X, Lambda, Pars, Omega] = Brake_Mex( 'unpack', self.objectHandle, sol );
     end
-    % ---------------------------------------------------------------------
-    function sol = pack_for_direct( self, X, U, Pars )
-      %
-      % Combine the solution from the matrices `X`, `U` and `Pars`
-      % in a single vector ato be used with a direct solver.
-      %
-      %  X    = [ x0, x1, ..., xn     ] % The states at nodal point
-      %  U    = [ u0, u1, ..., u(n-1) ] % The controls at cell point
-      %  Pars = are the optimization parameter of the OCP
-      %
-      sol = Brake_Mex( 'pack_for_direct', self.objectHandle, X, U, Pars );
-    end
-    % ---------------------------------------------------------------------
-    function [ X, U, Pars ] = unpack_for_direct( self, sol )
-      %
-      % Unpack from a vector to the matrices `X`, `U` and `Pars`.
-      % The vector must contains the data as stored in a direct solver.
-      %
-      [X, U, Pars] = Brake_Mex( 'unpack_for_direct', self.objectHandle, sol );
-    end
-    % ---------------------------------------------------------------------
-    function [ Lambda, Omega ] = estimate_multipliers( self, X, U, Pars, method )
-      %
-      % From the matrices `X`, `U` and `Pars` estimate
-      % the multiplein a single vector ato be used with a direct solver.
-      %
-      %  X    = [ x0, x1, ..., xn     ] % The states at nodal point
-      %  U    = [ u0, u1, ..., u(n-1) ] % The controls at cell point
-      %  Pars = are the optimization parameter of the OCP
-      %
-      %  method = 'least_squares' ...
-      %
-      [ Lambda, Omega ] = Brake_Mex( 'estimate_multipliers', self.objectHandle, X, U, Pars, method );
-    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -574,6 +540,23 @@ classdef Brake < handle
       JF = Brake_Mex( 'eval_JF_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
+    function [JF,ok] = eval_JF2( self, Z, U )
+      %
+      % Return the jacobian of the nonlinear system
+      % of the indirect methods evaluated ad `Z` and `U`.
+      % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
+      %
+      [JF,ok] = Brake_Mex( 'eval_JF2', self.objectHandle, Z, U );
+    end
+    % ---------------------------------------------------------------------
+    function JF = eval_JF2_pattern( self )
+      %
+      % Return the pattern of the jacobian of the nonlinear
+      % system of the indirect methods.
+      %
+      JF = Brake_Mex( 'eval_JF2_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
     function [Z,U] = get_raw_solution( self )
       %
       % Return the solution states and multipliers and controls as stored in PINS.
@@ -674,11 +657,11 @@ classdef Brake < handle
       end
     end
     % ---------------------------------------------------------------------
-    function DuDxlxlp = eval_DuDxlxlp( self, L, R, pars )
+    function DuDxlxlp = eval_DuDxlxlp( self, L, R, pars, MU )
       %
       % Compute the jacobian of controls given states and multiplyers.
       %
-      DuDxlxlp = Brake_Mex( 'DuDxlxlp', self.objectHandle, L, R, pars );
+      DuDxlxlp = Brake_Mex( 'DuDxlxlp', self.objectHandle, L, R, pars, MU );
     end
     % ---------------------------------------------------------------------
     %   ____ ___ ____  _____ ____ _____
@@ -689,26 +672,26 @@ classdef Brake < handle
     %
     %  minimize Target
     %
-    %  subject to ODE: A( q, x, pars ) x' = rhs( q, x, pars, u )
+    %  subject to ODE: rhs( q, x, pars, u ) - A( q, x, pars ) x'
     % ---------------------------------------------------------------------
-    function rhs = eval_rhs_ode( self, S, pars, U )
+    function rhs = eval_ode( self, S, pars, U, V )
       %
-      % Compute rhs of the ODE `A( q, x, pars ) x' = rhs( q, x, pars, u )`.
+      % Compute rhs of the ODE `rhs( q, x, pars, u ) - A( q, x, pars ) x'`.
       %
       % S.iseg
       % S.q
       % S.x
       %
-      rhs = Brake_Mex( 'rhs_ode', self.objectHandle, S, pars, U );
+      rhs = Brake_Mex( 'ode', self.objectHandle, S, pars, U, V );
     end
     % ---------------------------------------------------------------------
     %
-    function J = eval_Drhs_odeDxpu( self, S, pars, U )
+    function J = eval_DodeDxpuv( self, S, pars, U, V )
       %
       % Compute Jacobian of rhs of the ODE `A( q, x, pars ) x' = rhs( q, x, pars, u )`
       % respect to `x`.
       %
-      J = Brake_Mex( 'Drhs_odeDxpu', self.objectHandle, S, pars, U );
+      J = Brake_Mex( 'DodeDxpuv', self.objectHandle, S, pars, U, V );
     end
     % ---------------------------------------------------------------------
     function A = eval_A( self, S, pars )
@@ -719,46 +702,12 @@ classdef Brake < handle
       A = Brake_Mex( 'A', self.objectHandle, S, pars );
     end
     % ---------------------------------------------------------------------
-    function eta = eval_eta( self, S, pars )
-      %
-      % Compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`.
-      %
-      eta = Brake_Mex( 'eta', self.objectHandle, S, pars );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DetaDxp( self, S, pars )
-      %
-      % Compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
-      % respect to `x` and `pars`.
-      %
-      J = Brake_Mex( 'DetaDxp', self.objectHandle, S, pars );
-    end
-    % ---------------------------------------------------------------------
-    function nu = eval_nu( self, S, pars, V )
-      %
-      % Compute `nu(q,x,V,pars) = A(q,x,pars) V`.
-      %
-      nu = Brake_Mex( 'nu', self.objectHandle, S, pars, V );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DnuDxp( self, S, pars, V )
-      %
-      % Compute the Jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
-      % respect to `x` and `pars`.
-      %
-      J = Brake_Mex( 'DnuDxp', self.objectHandle, S, pars, V );
-    end
-    % ---------------------------------------------------------------------
     function bc = eval_bc( self, L, R, pars )
       bc = Brake_Mex( 'bc', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
     function J = eval_DbcDxxp( self, L, R, pars )
       J = Brake_Mex( 'DbcDxxp', self.objectHandle, L, R, pars );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, L, R, pars, omega )
-      J = Brake_Mex( 'D2bcD2xxp', self.objectHandle, L, R, pars, omega );
     end
     % ---------------------------------------------------------------------
     function target = eval_lagrange_target( self, S, pars, U )
@@ -779,38 +728,6 @@ classdef Brake < handle
     %  | |_| | | | |  __/ (__| |_
     %  |____/|_|_|  \___|\___|\__|
     %
-    % ---------------------------------------------------------------------
-    function fd_ode = eval_fd_ode( self, L, R, U, pars )
-      if iseg_L == iseg_R
-        fd_ode = Brake_Mex( 'fd_ode', self.objectHandle, L, R, U, pars );
-      else
-        % per ora solo condizione di continuità
-        fd_ode = x_R - x_L;
-      end
-    end
-    % ---------------------------------------------------------------------
-    function Dfd_odeDxxpu = eval_Dfd_odeDxxpu( self, L, R, U, pars )
-      if iseg_L == iseg_R
-        Dfd_odeDxxpu = Brake_Mex( 'Dfd_odeDxxpu', self.objectHandle, L, R, U, pars );
-      else
-        % per ora codizione di continuità
-        nx = self.dim_x;
-        np = self.dim_pars;
-        nu = self.dim_u;
-        Dfd_odeDxxpu = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
-      end
-    end
-    % ---------------------------------------------------------------------
-    function D2fd_odeD2xxpu = eval_D2fd_odeD2xxpu( self, L, R, U, pars, omega )
-      if iseg_L == iseg_R
-        D2fd_odeD2xxpu = Brake_Mex( 'D2fd_odeD2xxpu', self.objectHandle, L, R, U, pars, omega );
-      else
-        nx = self.dim_x;
-        np = self.dim_pars;
-        nu = self.dim_u;
-        D2fd_odeD2xxpu = zeros( 2*nx+nu+np );
-      end
-    end
     % ---------------------------------------------------------------------
     function J = eval_Dfd_BCDxlxlp( self, L, R, pars, omega )
       J = Brake_Mex( 'Dfd_BCDxlxlp', self.objectHandle, L, R, pars, omega );
@@ -856,22 +773,22 @@ classdef Brake < handle
     %   | || |\  | |_| | ||  _ <| |__| |___  | |
     %  |___|_| \_|____/___|_| \_\_____\____| |_|
     % ---------------------------------------------------------------------
-    function Hxp = eval_Hxp( self, S, pars, U )
+    function Hxp = eval_Hxp( self, S, pars, MU, U, V )
       %
       % Derivative of H(x,V,lambda,u,pars,zeta) =
       %   J(x,u,pars,zeta) + lambda.f(x,u,pars,zeta)
       %
-      % Hxp(x,lambda,u,p,zeta) = partial_{xp} H(...)
+      % Hxp(x,u,p,mu,zeta) = partial_{xp} H(...)
       %
-      Hxp = Brake_Mex( 'Hxp', self.objectHandle, S, pars, U );
+      Hxp = Brake_Mex( 'Hxp', self.objectHandle, S, pars, MU, U, V );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DHxpDxlpu( self, S, pars, U )
+    function J = eval_DHxpDxpuv( self, S, pars, MU, U, V )
       %
-      % Compute the jacobian of `Hxp( q, x, lambda, pars, U )`
+      % Compute the jacobian of `Hxp( q, x, pars, mu, U, V )`
       % respect to `x`, `lambda`, `u` and `pars`.
       %
-      J = Brake_Mex( 'DHxpDxlpu', self.objectHandle, S, pars, U );
+      J = Brake_Mex( 'DHxpDxpuv', self.objectHandle, S, pars, MU, U, V );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -892,16 +809,16 @@ classdef Brake < handle
       J = Brake_Mex( 'JU', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function LT = eval_LT( self, S, pars, U )
-      LT = Brake_Mex( 'LT', self.objectHandle, S, pars, U );
-    end
-    % ---------------------------------------------------------------------
     function JP = eval_JP( self, S, pars, U )
       JP = Brake_Mex( 'JP', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
     function JU = eval_JU( self, S, pars, U )
       JU = Brake_Mex( 'JU', self.objectHandle, S, pars, U );
+    end
+    % ---------------------------------------------------------------------
+    function LT = eval_LT( self, S, pars, U )
+      LT = Brake_Mex( 'LT', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
     function LTargs = eval_LTargs( self, S, pars, U )
@@ -916,13 +833,6 @@ classdef Brake < handle
     % ---------------------------------------------------------------------
     function J = eval_DjumpDxlxlp( self, L, R, pars )
       J = Brake_Mex( 'DjumpDxlxlp', self.objectHandle, L, R, pars );
-    end
-    % ---------------------------------------------------------------------
-    % DA FARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    % omega*Jump(x_l,lambda_L,x_R,lambda_R,pars)
-    %
-    function H = eval_D2jumpD2xlxlp( self, L, R, pars, omega )
-      H = Brake_Mex( 'D2jumpD2xlxlp', self.objectHandle, L, R, pars, omega );
     end
     % ---------------------------------------------------------------------
     function target = eval_q( self, S )
@@ -958,16 +868,16 @@ classdef Brake < handle
       res = Brake_Mex('A_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
+    function res = DetaDxp_pattern( self )
+      res = Brake_Mex('DetaDxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
     function res = DbcDxxp_pattern( self )
       res = Brake_Mex('DbcDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = D2bcD2xxp_pattern( self )
-      res = Brake_Mex('D2bcD2xxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = Drhs_odeDxpu_pattern( self )
-      res = Brake_Mex('Drhs_odeDxpu_pattern', self.objectHandle );
+    function res = DodeDxpuv_pattern( self )
+      res = Brake_Mex('DodeDxpuv_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DsegmentLinkDxxp_pattern( self )
@@ -978,32 +888,20 @@ classdef Brake < handle
       res = Brake_Mex('DjumpDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHxpDxlpu_pattern( self )
-      res = Brake_Mex('DHxpDxlpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJPDxpu_pattern( self )
-      res = Brake_Mex('DJPDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DLTDxpu_pattern( self )
-      res = Brake_Mex('DLTDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJUDxpu_pattern( self )
-      res = Brake_Mex('DJUDxpu_pattern', self.objectHandle );
+    function res = DHxpDxpuv_pattern( self )
+      res = Brake_Mex('DHxpDxpuv_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = D2JPD2xpu_pattern( self )
       res = Brake_Mex('D2JPD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = D2LTD2xpu_pattern( self )
-      res = Brake_Mex('D2LTD2xpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = D2JUD2xpu_pattern( self )
       res = Brake_Mex('D2JUD2xpu_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2LTD2xpu_pattern( self )
+      res = Brake_Mex('D2LTD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DLTargsDxpu_pattern( self )
@@ -1014,16 +912,8 @@ classdef Brake < handle
       res = Brake_Mex('D2LTargsD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DnuDxp_pattern( self )
-      res = Brake_Mex('DnuDxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DetaDxp_pattern( self )
-      res = Brake_Mex('DetaDxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DgDxlxlp_pattern( self )
-      res = Brake_Mex('DgDxlxlp_pattern', self.objectHandle );
+    function res = DgDxpm_pattern( self )
+      res = Brake_Mex('DgDxpm_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DgDu_pattern( self )

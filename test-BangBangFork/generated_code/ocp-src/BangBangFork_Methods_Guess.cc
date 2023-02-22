@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -61,7 +61,7 @@ namespace BangBangForkDefine {
   \*/
 
   void
-  BangBangFork::p_guess_eval( P_pointer_type P__ ) const {
+  BangBangFork::p_guess_eval( P_p_type P__ ) const {
     P__[ iP_T ] = ModelPars[iM_T_guess];
     if ( m_debug )
       Mechatronix::check( P__.pointer(), "p_guess_eval", 1 );
@@ -69,19 +69,23 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = Q__[iQ_zeta];
-    real_type t2   = 1 - t1;
-    X__[ iX_x1 ] = ModelPars[iM_x1_f] * t1 + ModelPars[iM_x1_i] * t2;
-    X__[ iX_x2 ] = ModelPars[iM_x2_f] * t1 + ModelPars[iM_x2_i] * t2;
-    X__[ iX_x3 ] = ModelPars[iM_x3_f] * t1 + ModelPars[iM_x3_i] * t2;
+    { // open block to avoid temporary clash
+      real_type t1   = Q__[iQ_zeta];
+      real_type t2   = 1 - t1;
+      X__[ iX_x1 ] = ModelPars[iM_x1_f] * t1 + ModelPars[iM_x1_i] * t2;
+      X__[ iX_x2 ] = ModelPars[iM_x2_f] * t1 + ModelPars[iM_x2_i] * t2;
+      X__[ iX_x3 ] = ModelPars[iM_x3_f] * t1 + ModelPars[iM_x3_i] * t2;
+    }
+    { // open block to avoid temporary clash
 
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 3 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 3 );
@@ -214,7 +218,7 @@ namespace BangBangForkDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  BangBangFork::p_check( P_const_pointer_type P__ ) const {
+  BangBangFork::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -222,23 +226,34 @@ namespace BangBangForkDefine {
 
   bool
   BangBangFork::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  BangBangFork::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  BangBangFork::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool ok = true;
+    ok = ok && Tbarrier.check_range(-P__[iP_T], m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -255,37 +270,18 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        UGUESS__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-
-    real_type Q__[1];
-    real_type X__[3];
-    real_type L__[3];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 2, 0 );
-    UGUESS__[ iU_u  ] = uControl.solve(-L__[iL_lambda3__xo], -1, 1);
-    UGUESS__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * L__[iL_lambda2__xo] * ModelPars[iM_WU2] / 2;
+    UGUESS__[ iU_u  ] = uControl.solve(-MU__[2], -1, 1);
+    UGUESS__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * MU__[1] * ModelPars[iM_WU2] / 2;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 2, i_segment );
   }
@@ -300,15 +296,15 @@ namespace BangBangForkDefine {
 
   bool
   BangBangFork::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
+    integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], -1, 1);

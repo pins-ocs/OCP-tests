@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -230,7 +230,7 @@ namespace Bike1DDefine {
   }
 
   void
-  Bike1D::setup_parameters( real_type const Pars[] ) {
+  Bike1D::setup_parameters( real_const_ptr Pars ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -372,13 +372,14 @@ namespace Bike1DDefine {
     m_console->message("User function ``clip'' mapped with: ",msg_level);
     m_console->message( clip.info(),msg_level);
 
-    m_console->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
       m_console->message(
-        fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
+        fmt::format("  {:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
     }
+    m_console->message("MODEL PARAMETERS END\n",msg_level);
 
   }
 
@@ -411,9 +412,11 @@ namespace Bike1DDefine {
     // Begin: User Setup Code
     // End: User Setup Code
 
+    int msg_level = 2;
+    m_console->message( this->info(), msg_level );
+
     this->info_BC();
     this->info_classes();
-    // this->info(); stampato dopo GUESS
   }
 
   /* --------------------------------------------------------------------------

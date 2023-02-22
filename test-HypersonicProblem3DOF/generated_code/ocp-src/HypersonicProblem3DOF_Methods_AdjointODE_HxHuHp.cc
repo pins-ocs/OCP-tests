@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_AdjointODE.cc                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -61,11 +61,11 @@ namespace HypersonicProblem3DOFDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,18 +74,18 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = P__[iP_Tf];
     real_type t3   = t2 * t1;
     real_type t4   = ModelPars[iM_ODE];
@@ -104,11 +104,11 @@ namespace HypersonicProblem3DOFDefine {
     real_type t18  = X__[iX_phi];
     real_type t19  = cos(t18);
     real_type t20  = 1.0 / t19;
-    real_type t24  = L__[iL_lambda3__xo];
+    real_type t24  = MU__[2];
     real_type t26  = t4 * t2 * t24;
     real_type t27  = t9 * t5;
     real_type t28  = sin(t10);
-    real_type t32  = L__[iL_lambda4__xo];
+    real_type t32  = MU__[3];
     real_type t33  = t2 * t32;
     real_type t34  = sin(t8);
     real_type t35  = ModelPars[iM_mu];
@@ -125,7 +125,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t58  = ModelPars[iM_Aref];
     real_type t60  = 1.0 / ModelPars[iM_m];
     real_type t61  = t60 * t58;
-    real_type t68  = L__[iL_lambda5__xo];
+    real_type t68  = MU__[4];
     real_type t69  = t2 * t68;
     real_type t70  = t5 * t46;
     real_type t71  = t70 * t44;
@@ -137,7 +137,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t80  = t79 * t76;
     real_type t83  = t17 * t5;
     real_type t85  = 1.0 / t5;
-    real_type t93  = L__[iL_lambda6__xo];
+    real_type t93  = MU__[5];
     real_type t94  = t2 * t93;
     real_type t95  = sin(t77);
     real_type t97  = 1.0 / t9;
@@ -152,7 +152,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t117 = t9 * t108;
     real_type t118 = t102 * t102;
     result__[ 2   ] = t112 / t109 * t108 * t12 * t7 - (1 + t118) * t11 * t117 * t116;
-    real_type t123 = L__[iL_lambda1__xo];
+    real_type t123 = MU__[0];
     real_type t124 = t2 * t123;
     real_type t128 = t20 * t108;
     real_type t131 = t28 * t9;
@@ -167,47 +167,55 @@ namespace HypersonicProblem3DOFDefine {
     real_type t162 = t8 / 2;
     real_type t163 = sin(t162);
     real_type t165 = cos(t162);
-    real_type t169 = t9 * t6;
-    real_type t171 = t11 * t34;
-    real_type t182 = t108 * t5;
-    real_type t184 = -t85 * t145 + t182;
-    real_type t188 = t75 * t5;
-    real_type t189 = t188 * t140;
-    real_type t190 = t9 * t9;
-    result__[ 4   ] = 1.0 / t165 * t163 * t2 / 2 + t169 * t124 - t128 * t171 * t7 - t108 * t28 * t34 * t5 * t26 - t17 * t35 * t9 * t4 * t33 - t34 * t184 * t4 * t69 + (t34 / t190 * t95 * t61 * t189 / 2 + t102 * t171 * t182) * t4 * t94;
-    real_type t204 = t108 * t11;
-    result__[ 5   ] = t102 * t28 * t117 * t116 - t128 * t131 * t7 + t204 * t27 * t26;
-    real_type t210 = t46 * t134;
-    result__[ 6   ] = t97 * t79 * t58 * t188 * t210 * t94 / 2 - t95 * t61 * t188 * t210 * t69 / 2;
-    real_type t221 = log(t165);
-    real_type t222 = U__[iU_c_h];
-    real_type t223 = t222 * t222;
-    real_type t224 = U__[iU_c_theta];
-    real_type t225 = t224 * t224;
-    real_type t226 = U__[iU_c_phi];
-    real_type t227 = t226 * t226;
-    real_type t228 = U__[iU_c_V];
+    real_type t169 = -0.314159265358979323846264338328e1 - t8;
+    real_type t170 = ALIAS_G_bound_min_D(t169);
+    real_type t172 = t8 - 0.314159265358979323846264338328e1;
+    real_type t173 = ALIAS_G_bound_max_D(t172);
+    real_type t175 = t9 * t6;
+    real_type t177 = t11 * t34;
+    real_type t188 = t108 * t5;
+    real_type t190 = -t85 * t145 + t188;
+    real_type t194 = t75 * t5;
+    real_type t195 = t194 * t140;
+    real_type t196 = t9 * t9;
+    result__[ 4   ] = 1.0 / t165 * t163 * t2 / 2 - t170 * t2 + t173 * t2 + t175 * t124 - t128 * t177 * t7 - t108 * t28 * t34 * t5 * t26 - t17 * t35 * t9 * t4 * t33 - t34 * t190 * t4 * t69 + (t34 / t196 * t95 * t61 * t195 / 2 + t102 * t177 * t188) * t4 * t94;
+    real_type t210 = t108 * t11;
+    result__[ 5   ] = t102 * t28 * t117 * t116 - t128 * t131 * t7 + t210 * t27 * t26;
+    real_type t216 = t46 * t134;
+    result__[ 6   ] = t97 * t79 * t58 * t194 * t216 * t94 / 2 - t95 * t61 * t194 * t216 * t69 / 2;
+    real_type t227 = log(t165);
+    real_type t228 = U__[iU_c_h];
     real_type t229 = t228 * t228;
-    real_type t230 = U__[iU_c_G];
+    real_type t230 = U__[iU_c_theta];
     real_type t231 = t230 * t230;
-    real_type t232 = U__[iU_c_psi];
+    real_type t232 = U__[iU_c_phi];
     real_type t233 = t232 * t232;
-    real_type t234 = U__[iU_c_sigma];
+    real_type t234 = U__[iU_c_V];
     real_type t235 = t234 * t234;
-    real_type t237 = ModelPars[iM_CTRL];
-    result__[ 7   ] = t51 - t221 + t223 + t225 + t227 + t229 + t231 + t233 + t235 + (t222 * t237 + t34 * t6) * t123 + (t20 * t204 * t169 + t224 * t237) * t1 + (t132 * t6 + t226 * t237) * t24 + ((-t17 * t36 - t137 * t48 * t140 / 2) * t4 + t228 * t237) * t32 + ((t80 * t5 * t140 / 2 + t9 * t184) * t4 + t230 * t237) * t68 + ((t154 * t189 / 2 - t103 * t182) * t4 + t232 * t237) * t93 + (U__[iU_u2] * ModelPars[iM_sigma_dot_max] * t4 + t234 * t237) * L__[iL_lambda7__xo];
+    real_type t236 = U__[iU_c_G];
+    real_type t237 = t236 * t236;
+    real_type t238 = U__[iU_c_psi];
+    real_type t239 = t238 * t238;
+    real_type t240 = U__[iU_c_sigma];
+    real_type t241 = t240 * t240;
+    real_type t242 = U__[iU_u2];
+    real_type t243 = u2Control(t242, -1, 1);
+    real_type t244 = G_bound_min(t169);
+    real_type t245 = G_bound_max(t172);
+    real_type t247 = ModelPars[iM_CTRL];
+    result__[ 7   ] = t51 - t227 + t229 + t231 + t233 + t235 + t237 + t239 + t241 + t243 + t244 + t245 + (t228 * t247 + t34 * t6) * t123 + (t20 * t210 * t175 + t230 * t247) * t1 + (t132 * t6 + t232 * t247) * t24 + ((-t17 * t36 - t137 * t48 * t140 / 2) * t4 + t234 * t247) * t32 + ((t80 * t5 * t140 / 2 + t9 * t190) * t4 + t236 * t247) * t68 + ((t154 * t195 / 2 - t103 * t188) * t4 + t238 * t247) * t93 + (t242 * ModelPars[iM_sigma_dot_max] * t4 + t240 * t247) * MU__[6];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 8, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HypersonicProblem3DOF::DHxpDxpu_numRows() const { return 8; }
-  integer HypersonicProblem3DOF::DHxpDxpu_numCols() const { return 17; }
-  integer HypersonicProblem3DOF::DHxpDxpu_nnz()     const { return 57; }
+  integer HypersonicProblem3DOF::DHxpDxpuv_numRows() const { return 8; }
+  integer HypersonicProblem3DOF::DHxpDxpuv_numCols() const { return 24; }
+  integer HypersonicProblem3DOF::DHxpDxpuv_nnz()     const { return 57; }
 
   void
-  HypersonicProblem3DOF::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  HypersonicProblem3DOF::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 3   ;
@@ -269,19 +277,19 @@ namespace HypersonicProblem3DOFDefine {
 
 
   void
-  HypersonicProblem3DOF::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  HypersonicProblem3DOF::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = P__[iP_Tf];
     real_type t3   = t2 * t1;
     real_type t4   = ModelPars[iM_ODE];
@@ -300,11 +308,11 @@ namespace HypersonicProblem3DOFDefine {
     real_type t19  = X__[iX_phi];
     real_type t20  = cos(t19);
     real_type t21  = 1.0 / t20;
-    real_type t26  = L__[iL_lambda3__xo];
+    real_type t26  = MU__[2];
     real_type t28  = t4 * t2 * t26;
     real_type t29  = t9 * t5;
     real_type t30  = sin(t10);
-    real_type t35  = L__[iL_lambda4__xo];
+    real_type t35  = MU__[3];
     real_type t36  = t2 * t35;
     real_type t37  = sin(t8);
     real_type t38  = ModelPars[iM_mu];
@@ -327,7 +335,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t65  = 1.0 / ModelPars[iM_m];
     real_type t66  = t65 * t63;
     real_type t67  = t66 * t61 * t53;
-    real_type t73  = L__[iL_lambda5__xo];
+    real_type t73  = MU__[4];
     real_type t74  = t2 * t73;
     real_type t75  = t5 * t51;
     real_type t76  = t75 * t48;
@@ -340,7 +348,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t85  = t84 * t81;
     real_type t88  = t18 * t5;
     real_type t91  = 1.0 / t5;
-    real_type t99  = L__[iL_lambda6__xo];
+    real_type t99  = MU__[5];
     real_type t100 = t2 * t99;
     real_type t101 = sin(t82);
     real_type t102 = t101 * t65;
@@ -437,7 +445,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t305 = t137 * t36;
     real_type t310 = t115 * t38;
     result__[ 16  ] = -t66 * t61 * t51 * t305 - 2 * t9 / t53 / t5 * t310 * t4 * t74;
-    real_type t317 = L__[iL_lambda1__xo];
+    real_type t317 = MU__[0];
     real_type t318 = t2 * t317;
     real_type t320 = t273 * t168;
     real_type t322 = t30 * t37;
@@ -470,110 +478,59 @@ namespace HypersonicProblem3DOFDefine {
     real_type t389 = t388 * t388;
     real_type t391 = cos(t387);
     real_type t392 = t391 * t391;
-    real_type t400 = t264 * t30 * t29 * t28;
-    real_type t403 = t264 * t5;
-    real_type t405 = -t91 * t310 + t403;
-    real_type t409 = t215 * t330;
-    real_type t413 = t37 * t37;
-    result__[ 25  ] = t2 / 4 + 1.0 / t392 * t389 * t2 / 4 - t37 * t6 * t318 - t275 - t400 + t115 * t39 * t175 - t9 * t405 * t4 * t74 + (t413 / t189 / t9 * t101 * t66 * t409 + t160 * t409 / 2 + t109 * t403) * t4 * t100;
+    real_type t396 = -0.314159265358979323846264338328e1 - t8;
+    real_type t397 = ALIAS_G_bound_min_DD(t396);
+    real_type t399 = t8 - 0.314159265358979323846264338328e1;
+    real_type t400 = ALIAS_G_bound_max_DD(t399);
+    real_type t406 = t264 * t30 * t29 * t28;
+    real_type t409 = t264 * t5;
+    real_type t411 = -t91 * t310 + t409;
+    real_type t415 = t215 * t330;
+    real_type t419 = t37 * t37;
+    result__[ 25  ] = t2 / 4 + 1.0 / t392 * t389 * t2 / 4 + t397 * t2 + t400 * t2 - t37 * t6 * t318 - t275 - t406 + t115 * t39 * t175 - t9 * t411 * t4 * t74 + (t419 / t189 / t9 * t101 * t66 * t415 + t160 * t415 / 2 + t109 * t409) * t4 * t100;
     result__[ 26  ] = -t206 * t293 * t123 - t283 * t171 * t28 + t273 * t322 * t7;
-    real_type t429 = t5 * t330;
-    real_type t430 = t429 * t213;
-    result__[ 27  ] = t37 * t190 * t83 * t65 * t81 * t430 / 2;
-    result__[ 28  ] = 1.0 / t391 * t388 / 2 + t29 * t354 - t320 * t222 - t323 * t225 - t115 * t176 * t227 - t37 * t405 * t234 + (t193 * t409 / 2 + t196 * t403) * t241;
-    result__[ 29  ] = t192 * t65 * t382 * t430 / 2;
+    real_type t435 = t5 * t330;
+    real_type t436 = t435 * t213;
+    result__[ 27  ] = t37 * t190 * t83 * t65 * t81 * t436 / 2;
+    real_type t445 = ALIAS_G_bound_min_D(t396);
+    real_type t446 = ALIAS_G_bound_max_D(t399);
+    result__[ 28  ] = 1.0 / t391 * t388 / 2 - t445 + t446 + t29 * t354 - t320 * t222 - t323 * t225 - t115 * t176 * t227 - t37 * t411 * t234 + (t193 * t415 / 2 + t196 * t409) * t241;
+    result__[ 29  ] = t192 * t65 * t382 * t436 / 2;
     result__[ 30  ] = result__[4];
     result__[ 31  ] = result__[12];
     result__[ 32  ] = result__[18];
     result__[ 33  ] = result__[26];
-    result__[ 34  ] = t373 * t123 - t275 - t400;
+    result__[ 34  ] = t373 * t123 - t275 - t406;
     result__[ 35  ] = -t340 * t222 + t342 * t225 + t344 * t303;
     result__[ 36  ] = result__[5];
     result__[ 37  ] = result__[19];
     result__[ 38  ] = result__[27];
-    real_type t458 = t349 * t74;
-    result__[ 39  ] = -t104 * t216 * t350 / 2 - t256 * t215 * t458 / 2;
-    real_type t464 = t330 * t234;
-    real_type t467 = t429 * t241;
-    result__[ 40  ] = -t210 * t215 * t464 / 2 + t351 * t467 / 2;
-    result__[ 41  ] = -t210 * t259 * t458 / 2 + t217 * t260 * t350 / 2;
+    real_type t466 = t349 * t74;
+    result__[ 39  ] = -t104 * t216 * t350 / 2 - t256 * t215 * t466 / 2;
+    real_type t472 = t330 * t234;
+    real_type t475 = t435 * t241;
+    result__[ 40  ] = -t210 * t215 * t472 / 2 + t351 * t475 / 2;
+    result__[ 41  ] = -t210 * t259 * t466 / 2 + t217 * t260 * t350 / 2;
     result__[ 42  ] = result__[6];
     result__[ 43  ] = result__[13];
     result__[ 44  ] = result__[20];
     result__[ 45  ] = result__[28];
     result__[ 46  ] = result__[35];
     result__[ 47  ] = result__[40];
-    result__[ 48  ] = 2 * t55 - t66 * t250 * t53 * t361 / 2 + t256 * t259 * t464 / 2 + t383 * t467 / 2;
-    real_type t485 = L__[iL_lambda7__xo];
-    result__[ 49  ] = ModelPars[iM_sigma_dot_max] * t4 * t485;
-    real_type t488 = ModelPars[iM_CTRL];
-    result__[ 50  ] = t488 * t317 + 2 * U__[iU_c_h];
-    result__[ 51  ] = t488 * t1 + 2 * U__[iU_c_theta];
-    result__[ 52  ] = t488 * t26 + 2 * U__[iU_c_phi];
-    result__[ 53  ] = t488 * t35 + 2 * U__[iU_c_V];
-    result__[ 54  ] = t488 * t73 + 2 * U__[iU_c_G];
-    result__[ 55  ] = t488 * t99 + 2 * U__[iU_c_psi];
-    result__[ 56  ] = t488 * t485 + 2 * U__[iU_c_sigma];
+    result__[ 48  ] = 2 * t55 - t66 * t250 * t53 * t361 / 2 + t256 * t259 * t472 / 2 + t383 * t475 / 2;
+    real_type t494 = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
+    real_type t495 = MU__[6];
+    result__[ 49  ] = ModelPars[iM_sigma_dot_max] * t4 * t495 + t494;
+    real_type t499 = ModelPars[iM_CTRL];
+    result__[ 50  ] = t499 * t317 + 2 * U__[iU_c_h];
+    result__[ 51  ] = t499 * t1 + 2 * U__[iU_c_theta];
+    result__[ 52  ] = t499 * t26 + 2 * U__[iU_c_phi];
+    result__[ 53  ] = t499 * t35 + 2 * U__[iU_c_V];
+    result__[ 54  ] = t499 * t73 + 2 * U__[iU_c_G];
+    result__[ 55  ] = t499 * t99 + 2 * U__[iU_c_psi];
+    result__[ 56  ] = t499 * t495 + 2 * U__[iU_c_sigma];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 57, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer HypersonicProblem3DOF::Hu_numEqns() const { return 9; }
-
-  void
-  HypersonicProblem3DOF::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_Tf];
-    real_type t2   = U__[iU_alpha];
-    real_type t6   = t1 * L__[iL_lambda4__xo];
-    real_type t7   = ModelPars[iM_ODE];
-    real_type t9   = ModelPars[iM_rho0] * t7;
-    real_type t15  = exp(-X__[iX_h] / ModelPars[iM_S]);
-    real_type t16  = X__[iX_V];
-    real_type t17  = t16 * t16;
-    real_type t24  = ModelPars[iM_Aref];
-    real_type t27  = 1.0 / ModelPars[iM_m];
-    real_type t33  = t1 * L__[iL_lambda5__xo];
-    real_type t34  = t15 * t9;
-    real_type t37  = ModelPars[iM_CL1] * t16;
-    real_type t39  = X__[iX_sigma];
-    real_type t40  = cos(t39);
-    real_type t46  = t1 * L__[iL_lambda6__xo];
-    real_type t49  = sin(t39);
-    real_type t52  = cos(X__[iX_G]);
-    result__[ 0   ] = 2 * t2 * t1 - t27 * t24 * (2 * t2 * ModelPars[iM_CD2] + ModelPars[iM_CD1]) * t17 * t15 * t9 * t6 / 2 + t40 * t27 * t24 * t37 * t34 * t33 / 2 + 1.0 / t52 * t49 * t27 * t24 * t37 * t34 * t46 / 2;
-    real_type t59  = t1 * L__[iL_lambda7__xo];
-    result__[ 1   ] = ModelPars[iM_sigma_dot_max] * t7 * t59;
-    real_type t64  = ModelPars[iM_CTRL];
-    result__[ 2   ] = t64 * t1 * L__[iL_lambda1__xo] + 2 * U__[iU_c_h] * t1;
-    result__[ 3   ] = t64 * t1 * L__[iL_lambda2__xo] + 2 * U__[iU_c_theta] * t1;
-    result__[ 4   ] = t64 * t1 * L__[iL_lambda3__xo] + 2 * U__[iU_c_phi] * t1;
-    result__[ 5   ] = 2 * U__[iU_c_V] * t1 + t64 * t6;
-    result__[ 6   ] = 2 * U__[iU_c_G] * t1 + t64 * t33;
-    result__[ 7   ] = 2 * U__[iU_c_psi] * t1 + t64 * t46;
-    result__[ 8   ] = 2 * U__[iU_c_sigma] * t1 + t64 * t59;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 9, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 57, i_segment );
   }
 
 }

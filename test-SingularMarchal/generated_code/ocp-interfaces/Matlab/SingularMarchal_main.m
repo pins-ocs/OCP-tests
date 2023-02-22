@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: SingularMarchal_main.m                                         %
 %                                                                       %
-%  version: 1.0   date 10/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -36,7 +36,7 @@ ocp = SingularMarchal( 'SingularMarchal' );
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(SingularMarchal_data);
 ocp.setup('../../data/SingularMarchal_Data');  % automatically try extension .rb and .lua
-ocp.infoLevel(4);
+ocp.set_info_level(4);
 
 ocp.set_guess(); % use default guess generated in MAPLE
 %

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,49 +67,25 @@ namespace BangBangForkDefine {
 
   real_type
   BangBangFork::g_fun_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[3], LM__[3];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = P__[iP_T];
-    real_type t4   = UM__[1];
+    real_type t4   = U__[iU_u2];
     real_type t5   = t4 * t4;
-    real_type t9   = t2 * LM__[0];
-    real_type t10  = XL__[iX_x2];
-    real_type t13  = t2 * LM__[1];
-    real_type t15  = t4 * ModelPars[iM_WU2];
-    real_type t20  = t2 * LM__[2];
-    real_type t21  = t10 * t10;
-    real_type t22  = t21 * t21;
-    real_type t24  = ModelPars[iM_kappa];
-    real_type t26  = UM__[0];
-    real_type t29  = uControl(t26, -1, 1);
-    real_type t32  = Tbarrier(-t2);
-    real_type t34  = XR__[iX_x2];
-    real_type t39  = t34 * t34;
-    real_type t40  = t39 * t39;
-    real_type result__ = 2 * t5 * t2 * ModelPars[iM_WC] - t10 * t9 + (t15 + XL__[iX_x3]) * t13 + (-t24 * t22 * t10 + t26) * t20 + 2 * t29 * t2 + 2 * t32 - t34 * t9 + (t15 + XR__[iX_x3]) * t13 + (-t24 * t40 * t34 + t26) * t20;
+    real_type t7   = U__[iU_u];
+    real_type t8   = uControl(t7, -1, 1);
+    real_type t10  = Tbarrier(-t2);
+    real_type t13  = X__[iX_x2];
+    real_type t25  = t13 * t13;
+    real_type t26  = t25 * t25;
+    real_type result__ = t5 * t2 * ModelPars[iM_WC] + t8 * t2 + t10 - t13 * t2 * MU__[0] + (t4 * ModelPars[iM_WU2] + X__[iX_x3]) * t2 * MU__[1] + (-t26 * t13 * ModelPars[iM_kappa] + t7) * t2 * MU__[2];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -122,97 +98,60 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[3], LM__[3];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = P__[iP_T];
-    real_type t5   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 0   ] = 2 * t5 * t2 + 2 * t2 * LM__[2];
-    result__[ 1   ] = 2 * ModelPars[iM_WU2] * t2 * LM__[1] + 4 * ModelPars[iM_WC] * UM__[1] * t2;
+    real_type t1   = P__[iP_T];
+    real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t3 * t1 + t1 * MU__[2];
+    result__[ 1   ] = ModelPars[iM_WU2] * t1 * MU__[1] + 2 * ModelPars[iM_WC] * U__[iU_u2] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFork::DgDxlxlp_numRows() const { return 2; }
-  integer BangBangFork::DgDxlxlp_numCols() const { return 13; }
-  integer BangBangFork::DgDxlxlp_nnz()     const { return 6; }
+  integer BangBangFork::DgDxpm_numRows() const { return 2; }
+  integer BangBangFork::DgDxpm_numCols() const { return 7; }
+  integer BangBangFork::DgDxpm_nnz()     const { return 4; }
 
   void
-  BangBangFork::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 5   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 11  ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 12  ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 4   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 10  ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 12  ;
+  BangBangFork::DgDxpm_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 3   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 5   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFork::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  BangBangFork::DgDxpm_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[3], LM__[3];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    result__[ 0   ] = 0.10e1 * t1;
-    result__[ 1   ] = result__[0];
-    real_type t4   = ALIAS_uControl_D_1(UM__[0], -1, 1);
-    result__[ 2   ] = 2 * LM__[2] + 2 * t4;
-    real_type t6   = ModelPars[iM_WU2];
-    result__[ 3   ] = 0.10e1 * t6 * t1;
-    result__[ 4   ] = result__[3];
-    result__[ 5   ] = 2 * t6 * LM__[1] + 4 * UM__[1] * ModelPars[iM_WC];
+    real_type t2   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t2 + MU__[2];
+    result__[ 1   ] = P__[iP_T];
+    real_type t5   = ModelPars[iM_WU2];
+    result__[ 2   ] = t5 * MU__[1] + 2 * ModelPars[iM_WC] * U__[iU_u2];
+    result__[ 3   ] = t5 * result__[1];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 6, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -231,36 +170,20 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[3], LM__[3];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
-    real_type t3   = ALIAS_uControl_D_1_1(UM__[0], -1, 1);
-    result__[ 0   ] = 2 * t3 * t1;
-    result__[ 1   ] = 4 * ModelPars[iM_WC] * t1;
+    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
+    result__[ 0   ] = t3 * t1;
+    result__[ 1   ] = 2 * ModelPars[iM_WC] * t1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 2, i_segment );
   }
@@ -283,133 +206,20 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::u_eval_analytic(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        U__
   ) const {
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[3], LM__[3];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    XM__[2] = (XL__[2]+XR__[2])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
-    LM__[2] = (LL__[2]+LR__[2])/2;
-    integer i_segment = LEFT__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
+    integer i_segment = NODE__.i_segment;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    U__[ iU_u  ] = uControl.solve(-LM__[2], -1, 1);
-    U__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * LM__[1] * ModelPars[iM_WU2] / 2;
+    U__[ iU_u  ] = uControl.solve(-MU__[2], -1, 1);
+    U__[ iU_u2 ] = -1.0 / ModelPars[iM_WC] * MU__[1] * ModelPars[iM_WU2] / 2;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 2 );
-  }
-
-  /*\
-  :|:   ___         _           _   ___    _   _            _
-  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
-  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
-  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
-  \*/
-
-  real_type
-  BangBangFork::m_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = U__[iU_u];
-    real_type t3   = uControl(t2, -1, 1);
-    real_type t5   = Tbarrier(-t1);
-    real_type t6   = X__[iX_x2];
-    real_type t10  = pow(t6 * t1 + V__[0], 2);
-    real_type t19  = pow(V__[1] - (ModelPars[iM_WU2] * U__[iU_u2] + X__[iX_x3]) * t1, 2);
-    real_type t22  = t6 * t6;
-    real_type t23  = t22 * t22;
-    real_type t29  = pow(V__[2] - (-t23 * t6 * ModelPars[iM_kappa] + t2) * t1, 2);
-    real_type result__ = t3 * t1 + t10 + t19 + t29 + t5;
-    if ( m_debug ) {
-      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer BangBangFork::DmDu_numEqns() const { return 2; }
-
-  void
-  BangBangFork::DmDu_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t2   = U__[iU_u];
-    real_type t3   = ALIAS_uControl_D_1(t2, -1, 1);
-    real_type t7   = X__[iX_x2];
-    real_type t8   = t7 * t7;
-    real_type t9   = t8 * t8;
-    result__[ 0   ] = t3 * t1 - 2 * t1 * (V__[2] - (-t9 * t7 * ModelPars[iM_kappa] + t2) * t1);
-    real_type t18  = ModelPars[iM_WU2];
-    result__[ 1   ] = -2 * t18 * t1 * (V__[1] - (U__[iU_u2] * t18 + X__[iX_x3]) * t1);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDu_eval", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer BangBangFork::DmDuu_numRows() const { return 2; }
-  integer BangBangFork::DmDuu_numCols() const { return 2; }
-  integer BangBangFork::DmDuu_nnz()     const { return 2; }
-
-  void
-  BangBangFork::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-  }
-
-
-  void
-  BangBangFork::DmDuu_sparse(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_T];
-    real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
-    real_type t5   = t1 * t1;
-    result__[ 0   ] = t3 * t1 + 2 * t5;
-    real_type t8   = ModelPars[iM_WU2] * ModelPars[iM_WU2];
-    result__[ 1   ] = 2 * t8 * t5;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 2, i_segment );
   }
 
 }

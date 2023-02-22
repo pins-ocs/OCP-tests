@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_AdjointODE.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -86,11 +86,11 @@ namespace FarmerDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -99,16 +99,16 @@ namespace FarmerDefine {
 
   void
   Farmer::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w1];
     real_type t3   = 1.0 / t2;
@@ -124,24 +124,25 @@ namespace FarmerDefine {
     real_type t16  = X__[iX_x4];
     real_type t19  = Ptot(Q__[iQ_zeta]);
     real_type t21  = (t12 * t11 + t16 * t15 + t4 * t3 + t8 * t7 - t19) * ModelPars[iM_wP];
-    result__[ 0   ] = 2 * t3 * t21 + 2 * t4 * t2 - 2 * (-t4 + U__[iU_x1__o]) * ModelPars[iM_wJ1] - L__[iL_lambda1__xo] / ModelPars[iM_tau__1];
-    result__[ 1   ] = 2 * t7 * t21 + 2 * t8 * t6 - 2 * (-t8 + U__[iU_x2__o]) * ModelPars[iM_wJ2] - L__[iL_lambda2__xo] / ModelPars[iM_tau__2];
-    real_type t64  = L__[iL_lambda4__xo] / ModelPars[iM_tau__4];
-    result__[ 2   ] = 2 * t11 * t21 + 2 * t12 * t10 - 2 * (-t12 + U__[iU_x3__o]) * ModelPars[iM_wJ3] - L__[iL_lambda3__xo] / ModelPars[iM_tau__3] + t64;
+    result__[ 0   ] = 2 * t3 * t21 + 2 * t4 * t2 - 2 * (-t4 + U__[iU_x1__o]) * ModelPars[iM_wJ1] - MU__[0] / ModelPars[iM_tau__1];
+    real_type t45  = ALIAS_LimitX2X4_D(t8 + t16 - 0.12e0);
+    result__[ 1   ] = 2 * t7 * t21 + 2 * t8 * t6 - 2 * (-t8 + U__[iU_x2__o]) * ModelPars[iM_wJ2] + t45 - MU__[1] / ModelPars[iM_tau__2];
+    real_type t66  = MU__[3] / ModelPars[iM_tau__4];
+    result__[ 2   ] = 2 * t11 * t21 + 2 * t12 * t10 - 2 * (-t12 + U__[iU_x3__o]) * ModelPars[iM_wJ3] - MU__[2] / ModelPars[iM_tau__3] + t66;
     result__[ 3   ] = 0;
-    result__[ 4   ] = 2 * t15 * t21 + 2 * t16 * t14 - 2 * (-t16 + U__[iU_x4__o]) * ModelPars[iM_wJ4] - t64 - L__[iL_lambda5__xo] / ModelPars[iM_tau__5];
+    result__[ 4   ] = 2 * t15 * t21 + 2 * t16 * t14 - 2 * (-t16 + U__[iU_x4__o]) * ModelPars[iM_wJ4] + t45 - t66 - MU__[4] / ModelPars[iM_tau__5];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 5, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Farmer::DHxpDxpu_numRows() const { return 5; }
-  integer Farmer::DHxpDxpu_numCols() const { return 9; }
-  integer Farmer::DHxpDxpu_nnz()     const { return 20; }
+  integer Farmer::DHxpDxpuv_numRows() const { return 5; }
+  integer Farmer::DHxpDxpuv_numCols() const { return 14; }
+  integer Farmer::DHxpDxpuv_nnz()     const { return 20; }
 
   void
-  Farmer::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Farmer::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -166,17 +167,17 @@ namespace FarmerDefine {
 
 
   void
-  Farmer::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Farmer::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_wP];
     real_type t2   = ModelPars[iM_w1];
@@ -197,60 +198,28 @@ namespace FarmerDefine {
     result__[ 4   ] = -2 * t6;
     result__[ 5   ] = result__[1];
     real_type t22  = t8 * t8;
-    real_type t25  = ModelPars[iM_wJ2];
-    result__[ 6   ] = 2 / t22 * t1 + 2 * t8 + 2 * t25;
+    real_type t28  = 2 * ModelPars[iM_wJ2];
+    real_type t32  = ALIAS_LimitX2X4_DD(X__[iX_x2] + X__[iX_x4] - 0.12e0);
+    result__[ 6   ] = 2 / t22 * t1 + 2 * t8 + t28 + t32;
     result__[ 7   ] = 2 * t9 * t15;
-    result__[ 8   ] = 2 * t9 * t19;
-    result__[ 9   ] = -2 * t25;
+    result__[ 8   ] = 2 * t9 * t19 + t32;
+    result__[ 9   ] = -t28;
     result__[ 10  ] = result__[2];
     result__[ 11  ] = result__[7];
-    real_type t30  = t13 * t13;
-    real_type t33  = ModelPars[iM_wJ3];
-    result__[ 12  ] = 2 / t30 * t1 + 2 * t13 + 2 * t33;
+    real_type t36  = t13 * t13;
+    real_type t39  = ModelPars[iM_wJ3];
+    result__[ 12  ] = 2 / t36 * t1 + 2 * t13 + 2 * t39;
     result__[ 13  ] = 2 * t14 * t19;
-    result__[ 14  ] = -2 * t33;
+    result__[ 14  ] = -2 * t39;
     result__[ 15  ] = result__[3];
     result__[ 16  ] = result__[8];
     result__[ 17  ] = result__[13];
-    real_type t37  = t17 * t17;
-    real_type t40  = ModelPars[iM_wJ4];
-    result__[ 18  ] = 2 / t37 * t1 + 2 * t17 + 2 * t40;
-    result__[ 19  ] = -2 * t40;
+    real_type t43  = t17 * t17;
+    real_type t49  = 2 * ModelPars[iM_wJ4];
+    result__[ 18  ] = 2 / t43 * t1 + 2 * t17 + t49 + t32;
+    result__[ 19  ] = -t49;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 20, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Farmer::Hu_numEqns() const { return 4; }
-
-  void
-  Farmer::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 2 * ModelPars[iM_wJ1] * (-X__[iX_x1] + U__[iU_x1__o]) + L__[iL_lambda1__xo] / ModelPars[iM_tau__1];
-    result__[ 1   ] = 2 * ModelPars[iM_wJ2] * (-X__[iX_x2] + U__[iU_x2__o]) + L__[iL_lambda2__xo] / ModelPars[iM_tau__2];
-    result__[ 2   ] = 2 * ModelPars[iM_wJ3] * (-X__[iX_x3] + U__[iU_x3__o]) + L__[iL_lambda3__xo] / ModelPars[iM_tau__3];
-    result__[ 3   ] = 2 * ModelPars[iM_wJ4] * (-X__[iX_x4] + U__[iU_x4__o]) + L__[iL_lambda5__xo] / ModelPars[iM_tau__5];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 20, i_segment );
   }
 
 }

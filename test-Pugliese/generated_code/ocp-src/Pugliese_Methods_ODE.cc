@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,14 +51,15 @@ namespace PuglieseDefine {
    |   \___/|___/|___|
   \*/
 
-  integer Pugliese::rhs_ode_numEqns() const { return 5; }
+  integer Pugliese::ode_numEqns() const { return 5; }
 
   void
-  Pugliese::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Pugliese::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -68,51 +69,57 @@ namespace PuglieseDefine {
     real_type t8   = X__[iX_C];
     real_type t9   = T_lim(t2);
     real_type t12  = X__[iX_I__p];
-    result__[ 0   ] = (1 - 1.0 / ModelPars[iM_K] * t2) * ModelPars[iM_r] - t9 * t8 - t2 * t8 * t12 * ModelPars[iM_kappa__AC];
-    real_type t16  = X__[iX_DD];
-    real_type t17  = D_lim(t16);
-    real_type t19  = IL(t2, t8);
-    real_type t20  = IL_lim(t19);
-    real_type t22  = X__[iX_R];
-    result__[ 1   ] = t17 - (t22 * ModelPars[iM_kappa__R] + t20 + ModelPars[iM_mu__C]) * t8;
-    result__[ 2   ] = t16 * ModelPars[iM_a__R] + t19 * ModelPars[iM_a__IL] - t22 * ModelPars[iM_mu__R];
-    result__[ 3   ] = -t16 * ModelPars[iM_mu__D] + ModelPars[iM_rho__D];
-    result__[ 4   ] = -t12 * ModelPars[iM_lambda];
+    result__[ 0   ] = (1 - 1.0 / ModelPars[iM_K] * t2) * ModelPars[iM_r] - t9 * t8 - t2 * t8 * t12 * ModelPars[iM_kappa__AC] - V__[0];
+    real_type t17  = X__[iX_DD];
+    real_type t18  = D_lim(t17);
+    real_type t20  = IL(t2, t8);
+    real_type t21  = IL_lim(t20);
+    real_type t23  = X__[iX_R];
+    result__[ 1   ] = t18 - (t23 * ModelPars[iM_kappa__R] + t21 + ModelPars[iM_mu__C]) * t8 - V__[1];
+    result__[ 2   ] = t17 * ModelPars[iM_a__R] + t20 * ModelPars[iM_a__IL] - t23 * ModelPars[iM_mu__R] - V__[2];
+    result__[ 3   ] = -t17 * ModelPars[iM_mu__D] - V__[3] + ModelPars[iM_rho__D];
+    result__[ 4   ] = -t12 * ModelPars[iM_lambda] - V__[4];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 5, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Pugliese::Drhs_odeDxpu_numRows() const { return 5; }
-  integer Pugliese::Drhs_odeDxpu_numCols() const { return 5; }
-  integer Pugliese::Drhs_odeDxpu_nnz()     const { return 13; }
+  integer Pugliese::DodeDxpuv_numRows() const { return 5; }
+  integer Pugliese::DodeDxpuv_numCols() const { return 10; }
+  integer Pugliese::DodeDxpuv_nnz()     const { return 18; }
 
   void
-  Pugliese::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Pugliese::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 1   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 0   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 1   ;
-    iIndex[9 ] = 2   ; jIndex[9 ] = 2   ;
-    iIndex[10] = 2   ; jIndex[10] = 3   ;
-    iIndex[11] = 3   ; jIndex[11] = 3   ;
-    iIndex[12] = 4   ; jIndex[12] = 4   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 5   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 0   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 1   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 2   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 3   ;
+    iIndex[8 ] = 1   ; jIndex[8 ] = 6   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 0   ;
+    iIndex[10] = 2   ; jIndex[10] = 1   ;
+    iIndex[11] = 2   ; jIndex[11] = 2   ;
+    iIndex[12] = 2   ; jIndex[12] = 3   ;
+    iIndex[13] = 2   ; jIndex[13] = 7   ;
+    iIndex[14] = 3   ; jIndex[14] = 3   ;
+    iIndex[15] = 3   ; jIndex[15] = 8   ;
+    iIndex[16] = 4   ; jIndex[16] = 4   ;
+    iIndex[17] = 4   ; jIndex[17] = 9   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Pugliese::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  Pugliese::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -127,26 +134,31 @@ namespace PuglieseDefine {
     real_type t13  = T_lim(t6);
     result__[ 1   ] = -t6 * t11 - t13;
     result__[ 2   ] = -t6 * t5 * t9;
+    result__[ 3   ] = -1;
     real_type t17  = IL(t6, t5);
     real_type t18  = IL_lim_D(t17);
     real_type t19  = t18 * t5;
     real_type t20  = IL_D_1(t6, t5);
-    result__[ 3   ] = -t20 * t19;
+    result__[ 4   ] = -t20 * t19;
     real_type t23  = IL_lim(t17);
     real_type t24  = ModelPars[iM_kappa__R];
     real_type t27  = IL_D_2(t6, t5);
-    result__[ 4   ] = -t27 * t19 - X__[iX_R] * t24 - t23 - ModelPars[iM_mu__C];
-    result__[ 5   ] = -t24 * t5;
-    result__[ 6   ] = D_lim_D(X__[iX_DD]);
+    result__[ 5   ] = -t27 * t19 - X__[iX_R] * t24 - t23 - ModelPars[iM_mu__C];
+    result__[ 6   ] = -t24 * t5;
+    result__[ 7   ] = D_lim_D(X__[iX_DD]);
+    result__[ 8   ] = -1;
     real_type t31  = ModelPars[iM_a__IL];
-    result__[ 7   ] = t20 * t31;
-    result__[ 8   ] = t27 * t31;
-    result__[ 9   ] = -ModelPars[iM_mu__R];
-    result__[ 10  ] = ModelPars[iM_a__R];
-    result__[ 11  ] = -ModelPars[iM_mu__D];
-    result__[ 12  ] = -ModelPars[iM_lambda];
+    result__[ 9   ] = t20 * t31;
+    result__[ 10  ] = t27 * t31;
+    result__[ 11  ] = -ModelPars[iM_mu__R];
+    result__[ 12  ] = ModelPars[iM_a__R];
+    result__[ 13  ] = -1;
+    result__[ 14  ] = -ModelPars[iM_mu__D];
+    result__[ 15  ] = -1;
+    result__[ 16  ] = -ModelPars[iM_lambda];
+    result__[ 17  ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 13, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 18, i_segment );
   }
 
   /*\
@@ -175,9 +187,9 @@ namespace PuglieseDefine {
 
   void
   Pugliese::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -190,110 +202,6 @@ namespace PuglieseDefine {
     result__[ 4   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 5, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Pugliese::eta_numEqns() const { return 5; }
-
-  void
-  Pugliese::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = L__[iL_lambda3__xo];
-    result__[ 3   ] = L__[iL_lambda4__xo];
-    result__[ 4   ] = L__[iL_lambda5__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",5, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Pugliese::DetaDxp_numRows() const { return 5; }
-  integer Pugliese::DetaDxp_numCols() const { return 5; }
-  integer Pugliese::DetaDxp_nnz()     const { return 0; }
-
-  void
-  Pugliese::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Pugliese::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Pugliese::nu_numEqns() const { return 5; }
-
-  void
-  Pugliese::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    result__[ 4   ] = V__[4];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 5, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Pugliese::DnuDxp_numRows() const { return 5; }
-  integer Pugliese::DnuDxp_numCols() const { return 5; }
-  integer Pugliese::DnuDxp_nnz()     const { return 0; }
-
-  void
-  Pugliese::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Pugliese::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

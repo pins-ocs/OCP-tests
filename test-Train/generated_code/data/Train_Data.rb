@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: Train_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 10/11/2022                                       #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,17 +20,16 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+epsi_max = 0.01
 ubMax    = 2.0
 tol_max  = 0.01
 uaMax    = 10.0
-epsi_max = 0.01
 
 mechatronix do |data|
 
-  data.Debug     = false  # activate run time debug
-  data.Doctor    = false  # Enable doctor
-  data.InfoLevel = 4      # Level of message
-  data.Use_control_penalties_in_adjoint_equations = false
+  data.Debug             = false  # activate run time debug
+  data.Doctor            = false  # Enable doctor
+  data.InfoLevel         = 4      # Level of message
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -40,20 +39,26 @@ mechatronix do |data|
   #  \__|_| |_|_|  \___|\__,_|\__,_|___/
 
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
-  data.U_threaded  = true
-  data.F_threaded  = true
-  data.JF_threaded = true
-  data.LU_threaded = true
+  data.N_threads             = [1,$MAX_THREAD_NUM-1].max
+  data.U_threaded            = true
+  data.JU_threaded           = true
+  data.F_threaded            = true
+  data.JF_threaded           = true
+  data.LU_threaded           = true
+  data.LU_factorize_threaded = true
+  data.LU_solve_threaded     = true
+
 
   # Enable check jacobian and controls
+  data.MuCheck_epsilon       = 1e-6
+  data.MuCheck               = false
   data.ControlsCheck         = true
   data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
-  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  # jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
 
   # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -341,16 +346,16 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 25.0,
         :length => 0.25,
+        :n      => 25.0,
       },
       {
-        :n      => 3000.0,
         :length => 0.75,
+        :n      => 3000.0,
       },
       {
-        :n      => 100.0,
         :length => 3.8,
+        :n      => 100.0,
       },
     ],
   };

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -78,62 +78,148 @@ namespace ForwardBackwardDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ForwardBackward::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   ForwardBackward::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ForwardBackward::LT_numEqns() const { return 5; }
+  real_type
+  ForwardBackward::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
 
-  void
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   ForwardBackward::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
-    result__[ 0   ] = LimitV_min(ModelPars[iM_v_min] - t2);
-    result__[ 1   ] = LimitV_max(t2 - ModelPars[iM_v_max]);
-    real_type t7   = U__[iU_a];
-    result__[ 2   ] = LimitA_min(ModelPars[iM_a_min] - t7);
-    result__[ 3   ] = LimitA_max(t7 - ModelPars[iM_a_max]);
-    real_type t12  = t7 * t7;
-    real_type t15  = ALIAS_kappa(Q__[iQ_zeta]);
-    real_type t16  = t15 * t15;
-    real_type t17  = t2 * t2;
-    real_type t18  = t17 * t17;
-    real_type t22  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    result__[ 4   ] = LimitE(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1);
+    real_type t4   = LimitV_min(ModelPars[iM_v_min] - t2);
+    real_type t7   = LimitV_max(t2 - ModelPars[iM_v_max]);
+    real_type t9   = U__[iU_a];
+    real_type t11  = LimitA_min(ModelPars[iM_a_min] - t9);
+    real_type t14  = LimitA_max(t9 - ModelPars[iM_a_max]);
+    real_type t16  = t9 * t9;
+    real_type t19  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t20  = t19 * t19;
+    real_type t21  = t2 * t2;
+    real_type t22  = t21 * t21;
+    real_type t26  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    real_type t30  = LimitE(1.0 / t26 * (t16 * ModelPars[iM_WA] + t22 * t20) - 1);
+    real_type result__ = t4 + t7 + t11 + t14 + t30;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 5, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ForwardBackward::JPxpu_numEqns() const { return 2; }
+
+  void
+  ForwardBackward::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ForwardBackward::JU_numEqns() const { return 0; }
+  integer ForwardBackward::JUxpu_numEqns() const { return 2; }
 
   void
-  ForwardBackward::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ForwardBackward::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 2, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ForwardBackward::LTxpu_numEqns() const { return 2; }
+
+  void
+  ForwardBackward::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    real_type t2   = X__[iX_v];
+    real_type t4   = ALIAS_LimitV_min_D(ModelPars[iM_v_min] - t2);
+    real_type t7   = ALIAS_LimitV_max_D(t2 - ModelPars[iM_v_max]);
+    real_type t8   = ModelPars[iM_WA];
+    real_type t9   = U__[iU_a];
+    real_type t10  = t9 * t9;
+    real_type t13  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t14  = t13 * t13;
+    real_type t15  = t2 * t2;
+    real_type t16  = t15 * t15;
+    real_type t20  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    real_type t21  = 1.0 / t20;
+    real_type t24  = ALIAS_LimitE_D(t21 * (t10 * t8 + t16 * t14) - 1);
+    result__[ 0   ] = 4 * t21 * t15 * t2 * t14 * t24 - t4 + t7;
+    real_type t32  = ALIAS_LimitA_min_D(ModelPars[iM_a_min] - t9);
+    real_type t35  = ALIAS_LimitA_max_D(t9 - ModelPars[iM_a_max]);
+    result__[ 1   ] = 2 * t21 * t9 * t8 * t24 - t32 + t35;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -142,10 +228,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -170,93 +256,97 @@ namespace ForwardBackwardDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::DJPDxpu_numRows() const { return 0; }
-  integer ForwardBackward::DJPDxpu_numCols() const { return 2; }
-  integer ForwardBackward::DJPDxpu_nnz()     const { return 0; }
+  integer ForwardBackward::D2JPD2xpu_numRows() const { return 2; }
+  integer ForwardBackward::D2JPD2xpu_numCols() const { return 2; }
+  integer ForwardBackward::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  ForwardBackward::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ForwardBackward::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  ForwardBackward::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ForwardBackward::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::DLTDxpu_numRows() const { return 5; }
-  integer ForwardBackward::DLTDxpu_numCols() const { return 2; }
-  integer ForwardBackward::DLTDxpu_nnz()     const { return 6; }
+  integer ForwardBackward::D2LTD2xpu_numRows() const { return 2; }
+  integer ForwardBackward::D2LTD2xpu_numCols() const { return 2; }
+  integer ForwardBackward::D2LTD2xpu_nnz()     const { return 4; }
 
   void
-  ForwardBackward::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ForwardBackward::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 4   ; jIndex[4 ] = 0   ;
-    iIndex[5 ] = 4   ; jIndex[5 ] = 1   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
   }
 
 
   void
-  ForwardBackward::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ForwardBackward::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
-    real_type t4   = ALIAS_LimitV_min_D(ModelPars[iM_v_min] - t2);
-    result__[ 0   ] = -t4;
-    result__[ 1   ] = ALIAS_LimitV_max_D(t2 - ModelPars[iM_v_max]);
-    real_type t8   = U__[iU_a];
-    real_type t10  = ALIAS_LimitA_min_D(ModelPars[iM_a_min] - t8);
-    result__[ 2   ] = -t10;
-    result__[ 3   ] = ALIAS_LimitA_max_D(t8 - ModelPars[iM_a_max]);
-    real_type t13  = ModelPars[iM_WA];
-    real_type t14  = t8 * t8;
-    real_type t17  = ALIAS_kappa(Q__[iQ_zeta]);
-    real_type t18  = t17 * t17;
-    real_type t19  = t2 * t2;
-    real_type t20  = t19 * t19;
-    real_type t24  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    real_type t25  = 1.0 / t24;
-    real_type t28  = ALIAS_LimitE_D(t25 * (t14 * t13 + t20 * t18) - 1);
-    result__[ 4   ] = 4 * t25 * t19 * t2 * t18 * t28;
-    result__[ 5   ] = 2 * t25 * t8 * t13 * t28;
+    real_type t4   = ALIAS_LimitV_min_DD(ModelPars[iM_v_min] - t2);
+    real_type t7   = ALIAS_LimitV_max_DD(t2 - ModelPars[iM_v_max]);
+    real_type t8   = ModelPars[iM_WA];
+    real_type t9   = U__[iU_a];
+    real_type t10  = t9 * t9;
+    real_type t13  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t14  = t13 * t13;
+    real_type t15  = t2 * t2;
+    real_type t16  = t15 * t15;
+    real_type t20  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    real_type t21  = 1.0 / t20;
+    real_type t23  = t21 * (t10 * t8 + t16 * t14) - 1;
+    real_type t24  = ALIAS_LimitE_DD(t23);
+    real_type t25  = t14 * t14;
+    real_type t28  = t20 * t20;
+    real_type t29  = 1.0 / t28;
+    real_type t33  = ALIAS_LimitE_D(t23);
+    result__[ 0   ] = 16 * t29 * t16 * t15 * t25 * t24 + 12 * t21 * t15 * t14 * t33 + t4 + t7;
+    result__[ 1   ] = 8 * t15 * t2 * t14 * t29 * t9 * t8 * t24;
+    result__[ 2   ] = result__[1];
+    real_type t46  = ALIAS_LimitA_min_DD(ModelPars[iM_a_min] - t9);
+    real_type t49  = ALIAS_LimitA_max_DD(t9 - ModelPars[iM_a_max]);
+    real_type t50  = t8 * t8;
+    result__[ 3   ] = 4 * t29 * t10 * t50 * t24 + 2 * t21 * t8 * t33 + t46 + t49;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 6, i_segment );
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::DJUDxpu_numRows() const { return 0; }
-  integer ForwardBackward::DJUDxpu_numCols() const { return 2; }
-  integer ForwardBackward::DJUDxpu_nnz()     const { return 0; }
+  integer ForwardBackward::D2JUD2xpu_numRows() const { return 2; }
+  integer ForwardBackward::D2JUD2xpu_numCols() const { return 2; }
+  integer ForwardBackward::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  ForwardBackward::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ForwardBackward::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  ForwardBackward::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ForwardBackward::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -279,10 +369,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -307,109 +397,6 @@ namespace ForwardBackwardDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::D2JPD2xpu_numRows() const { return 2; }
-  integer ForwardBackward::D2JPD2xpu_numCols() const { return 2; }
-  integer ForwardBackward::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  ForwardBackward::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  ForwardBackward::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::D2LTD2xpu_numRows() const { return 2; }
-  integer ForwardBackward::D2LTD2xpu_numCols() const { return 2; }
-  integer ForwardBackward::D2LTD2xpu_nnz()     const { return 4; }
-
-  void
-  ForwardBackward::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-  }
-
-
-  void
-  ForwardBackward::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_v];
-    real_type t4   = ALIAS_LimitV_min_DD(ModelPars[iM_v_min] - t2);
-    real_type t9   = ALIAS_LimitV_max_DD(t2 - ModelPars[iM_v_max]);
-    real_type t12  = ModelPars[iM_WA];
-    real_type t13  = U__[iU_a];
-    real_type t14  = t13 * t13;
-    real_type t17  = ALIAS_kappa(Q__[iQ_zeta]);
-    real_type t18  = t17 * t17;
-    real_type t19  = t2 * t2;
-    real_type t20  = t19 * t19;
-    real_type t24  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    real_type t25  = 1.0 / t24;
-    real_type t27  = t25 * (t12 * t14 + t18 * t20) - 1;
-    real_type t28  = ALIAS_LimitE_DD(t27);
-    real_type t29  = t18 * t18;
-    real_type t32  = t24 * t24;
-    real_type t33  = 1.0 / t32;
-    real_type t35  = OMEGA__[4];
-    real_type t39  = ALIAS_LimitE_D(t27);
-    result__[ 0   ] = 16 * t19 * t20 * t28 * t29 * t33 * t35 + 12 * t18 * t19 * t25 * t35 * t39 + t4 * OMEGA__[0] + t9 * OMEGA__[1];
-    result__[ 1   ] = 8 * t35 * t19 * t2 * t18 * t33 * t13 * t12 * t28;
-    result__[ 2   ] = result__[1];
-    real_type t54  = ALIAS_LimitA_min_DD(ModelPars[iM_a_min] - t13);
-    real_type t59  = ALIAS_LimitA_max_DD(t13 - ModelPars[iM_a_max]);
-    real_type t62  = t12 * t12;
-    result__[ 3   ] = 4 * t14 * t28 * t33 * t35 * t62 + 2 * t12 * t25 * t35 * t39 + t54 * OMEGA__[2] + t59 * OMEGA__[3];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 4, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ForwardBackward::D2JUD2xpu_numRows() const { return 2; }
-  integer ForwardBackward::D2JUD2xpu_numCols() const { return 2; }
-  integer ForwardBackward::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  ForwardBackward::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  ForwardBackward::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer ForwardBackward::D2LTargsD2xpu_numRows() const { return 2; }
   integer ForwardBackward::D2LTargsD2xpu_numCols() const { return 2; }
   integer ForwardBackward::D2LTargsD2xpu_nnz()     const { return 2; }
@@ -423,11 +410,11 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

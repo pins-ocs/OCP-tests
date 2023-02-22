@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_ODE.cc                                            |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -155,14 +155,15 @@ namespace CNOCDefine {
    |   \___/|___/|___|
   \*/
 
-  integer CNOC::rhs_ode_numEqns() const { return 7; }
+  integer CNOC::ode_numEqns() const { return 7; }
 
   void
-  CNOC::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  CNOC::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -172,69 +173,77 @@ namespace CNOCDefine {
     real_type t4   = ALIAS_kappa(X__[iX_s]);
     real_type t7   = 1.0 / (-t4 * X__[iX_n] + 1);
     real_type t9   = X__[iX_coV];
-    result__[ 0   ] = t9 * t7 * t1;
-    real_type t10  = X__[iX_vn];
-    result__[ 1   ] = t9 * t10;
-    real_type t11  = X__[iX_as];
-    real_type t13  = t7 * t4;
-    result__[ 2   ] = -t9 * (-t13 * t10 * t1 - t11);
-    real_type t17  = X__[iX_an];
-    real_type t18  = t1 * t1;
-    result__[ 3   ] = -t9 * (t7 * t4 * t18 - t17);
-    result__[ 4   ] = -t9 * (-t13 * t17 * t1 - U__[iU_js]);
-    result__[ 5   ] = -t9 * (t13 * t11 * t1 - U__[iU_jn]);
-    result__[ 6   ] = 0;
+    result__[ 0   ] = t9 * t7 * t1 - V__[0];
+    real_type t12  = X__[iX_vn];
+    result__[ 1   ] = t9 * t12 - V__[1];
+    real_type t15  = X__[iX_as];
+    real_type t17  = t7 * t4;
+    result__[ 2   ] = -t9 * (-t17 * t12 * t1 - t15) - V__[2];
+    real_type t22  = X__[iX_an];
+    real_type t23  = t1 * t1;
+    result__[ 3   ] = -t9 * (t7 * t4 * t23 - t22) - V__[3];
+    result__[ 4   ] = -t9 * (-t17 * t22 * t1 - U__[iU_js]) - V__[4];
+    result__[ 5   ] = -t9 * (t17 * t15 * t1 - U__[iU_jn]) - V__[5];
+    result__[ 6   ] = -V__[6];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 7, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 7, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer CNOC::Drhs_odeDxpu_numRows() const { return 7; }
-  integer CNOC::Drhs_odeDxpu_numCols() const { return 9; }
-  integer CNOC::Drhs_odeDxpu_nnz()     const { return 29; }
+  integer CNOC::DodeDxpuv_numRows() const { return 7; }
+  integer CNOC::DodeDxpuv_numCols() const { return 16; }
+  integer CNOC::DodeDxpuv_nnz()     const { return 36; }
 
   void
-  CNOC::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  CNOC::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
     iIndex[3 ] = 0   ; jIndex[3 ] = 6   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 3   ;
-    iIndex[5 ] = 1   ; jIndex[5 ] = 6   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 0   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 1   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 2   ;
-    iIndex[9 ] = 2   ; jIndex[9 ] = 3   ;
-    iIndex[10] = 2   ; jIndex[10] = 4   ;
-    iIndex[11] = 2   ; jIndex[11] = 6   ;
-    iIndex[12] = 3   ; jIndex[12] = 0   ;
-    iIndex[13] = 3   ; jIndex[13] = 1   ;
-    iIndex[14] = 3   ; jIndex[14] = 2   ;
-    iIndex[15] = 3   ; jIndex[15] = 5   ;
-    iIndex[16] = 3   ; jIndex[16] = 6   ;
-    iIndex[17] = 4   ; jIndex[17] = 0   ;
-    iIndex[18] = 4   ; jIndex[18] = 1   ;
-    iIndex[19] = 4   ; jIndex[19] = 2   ;
-    iIndex[20] = 4   ; jIndex[20] = 5   ;
-    iIndex[21] = 4   ; jIndex[21] = 6   ;
-    iIndex[22] = 4   ; jIndex[22] = 7   ;
-    iIndex[23] = 5   ; jIndex[23] = 0   ;
-    iIndex[24] = 5   ; jIndex[24] = 1   ;
-    iIndex[25] = 5   ; jIndex[25] = 2   ;
-    iIndex[26] = 5   ; jIndex[26] = 4   ;
-    iIndex[27] = 5   ; jIndex[27] = 6   ;
-    iIndex[28] = 5   ; jIndex[28] = 8   ;
+    iIndex[4 ] = 0   ; jIndex[4 ] = 9   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 3   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 1   ; jIndex[7 ] = 10  ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 0   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 1   ;
+    iIndex[10] = 2   ; jIndex[10] = 2   ;
+    iIndex[11] = 2   ; jIndex[11] = 3   ;
+    iIndex[12] = 2   ; jIndex[12] = 4   ;
+    iIndex[13] = 2   ; jIndex[13] = 6   ;
+    iIndex[14] = 2   ; jIndex[14] = 11  ;
+    iIndex[15] = 3   ; jIndex[15] = 0   ;
+    iIndex[16] = 3   ; jIndex[16] = 1   ;
+    iIndex[17] = 3   ; jIndex[17] = 2   ;
+    iIndex[18] = 3   ; jIndex[18] = 5   ;
+    iIndex[19] = 3   ; jIndex[19] = 6   ;
+    iIndex[20] = 3   ; jIndex[20] = 12  ;
+    iIndex[21] = 4   ; jIndex[21] = 0   ;
+    iIndex[22] = 4   ; jIndex[22] = 1   ;
+    iIndex[23] = 4   ; jIndex[23] = 2   ;
+    iIndex[24] = 4   ; jIndex[24] = 5   ;
+    iIndex[25] = 4   ; jIndex[25] = 6   ;
+    iIndex[26] = 4   ; jIndex[26] = 7   ;
+    iIndex[27] = 4   ; jIndex[27] = 13  ;
+    iIndex[28] = 5   ; jIndex[28] = 0   ;
+    iIndex[29] = 5   ; jIndex[29] = 1   ;
+    iIndex[30] = 5   ; jIndex[30] = 2   ;
+    iIndex[31] = 5   ; jIndex[31] = 4   ;
+    iIndex[32] = 5   ; jIndex[32] = 6   ;
+    iIndex[33] = 5   ; jIndex[33] = 8   ;
+    iIndex[34] = 5   ; jIndex[34] = 14  ;
+    iIndex[35] = 6   ; jIndex[35] = 15  ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CNOC::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  CNOC::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -255,45 +264,52 @@ namespace CNOCDefine {
     real_type t15  = 1.0 / t6;
     result__[ 2   ] = t10 * t15;
     result__[ 3   ] = t15 * t1;
-    result__[ 4   ] = t10;
-    result__[ 5   ] = X__[iX_vn];
-    real_type t16  = result__[5] * t1;
+    result__[ 4   ] = -1;
+    result__[ 5   ] = t10;
+    result__[ 6   ] = X__[iX_vn];
+    result__[ 7   ] = -1;
+    real_type t16  = result__[6] * t1;
     real_type t17  = t15 * t12;
     real_type t21  = t12 * t2 * t8;
-    result__[ 6   ] = -result__[4] * (-t21 * t4 * t16 - t17 * t16);
+    result__[ 8   ] = -result__[5] * (-t21 * t4 * t16 - t17 * t16);
     real_type t25  = t4 * t4;
-    real_type t27  = result__[4] * t8 * t25;
-    result__[ 7   ] = t27 * t16;
-    result__[ 8   ] = result__[2] * t4 * result__[5];
-    result__[ 9   ] = result__[2] * t4 * t1;
-    result__[ 10  ] = result__[4];
+    real_type t27  = result__[5] * t8 * t25;
+    result__[ 9   ] = t27 * t16;
+    result__[ 10  ] = result__[2] * t4 * result__[6];
+    result__[ 11  ] = result__[2] * t4 * t1;
+    result__[ 12  ] = result__[5];
     real_type t30  = X__[iX_as];
     real_type t31  = t15 * t4;
-    result__[ 11  ] = t31 * t16 + t30;
+    result__[ 13  ] = t31 * t16 + t30;
+    result__[ 14  ] = -1;
     real_type t33  = t1 * t1;
     real_type t36  = t4 * t33;
-    result__[ 12  ] = -result__[10] * (t15 * t12 * t33 + t21 * t36);
-    result__[ 13  ] = -result__[10] * t8 * t25 * t33;
-    result__[ 14  ] = -2 * result__[9];
-    result__[ 15  ] = result__[10];
+    result__[ 15  ] = -result__[12] * (t15 * t12 * t33 + t21 * t36);
+    result__[ 16  ] = -result__[12] * t8 * t25 * t33;
+    result__[ 17  ] = -2 * result__[11];
+    result__[ 18  ] = result__[12];
     real_type t44  = X__[iX_an];
-    result__[ 16  ] = -t15 * t36 + t44;
+    result__[ 19  ] = -t15 * t36 + t44;
+    result__[ 20  ] = -1;
     real_type t46  = t44 * t1;
-    result__[ 17  ] = -result__[15] * (-t21 * t4 * t46 - t17 * t46);
-    result__[ 18  ] = t27 * t46;
-    result__[ 19  ] = result__[2] * t4 * t44;
-    result__[ 20  ] = result__[9];
-    result__[ 21  ] = t31 * t46 + U__[iU_js];
-    result__[ 22  ] = result__[15];
-    real_type t55  = t1 * t30;
-    result__[ 23  ] = -result__[22] * (t21 * t4 * t55 + t17 * t55);
-    result__[ 24  ] = -t27 * t55;
-    result__[ 25  ] = -result__[2] * t4 * t30;
-    result__[ 26  ] = -result__[20];
-    result__[ 27  ] = -t31 * t55 + U__[iU_jn];
-    result__[ 28  ] = result__[22];
+    result__[ 21  ] = -result__[18] * (-t21 * t4 * t46 - t17 * t46);
+    result__[ 22  ] = t27 * t46;
+    result__[ 23  ] = result__[2] * t4 * t44;
+    result__[ 24  ] = result__[11];
+    result__[ 25  ] = t31 * t46 + U__[iU_js];
+    result__[ 26  ] = result__[18];
+    result__[ 27  ] = -1;
+    real_type t55  = t30 * t1;
+    result__[ 28  ] = -result__[26] * (t21 * t4 * t55 + t17 * t55);
+    result__[ 29  ] = -t27 * t55;
+    result__[ 30  ] = -result__[2] * t4 * t30;
+    result__[ 31  ] = -result__[24];
+    result__[ 32  ] = -t31 * t55 + U__[iU_jn];
+    result__[ 33  ] = result__[26];
+    result__[ 34  ] = -1;
+    result__[ 35  ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 29, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 36, i_segment );
   }
 
   /*\
@@ -324,9 +340,9 @@ namespace CNOCDefine {
 
   void
   CNOC::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -341,114 +357,6 @@ namespace CNOCDefine {
     result__[ 6   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 7, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer CNOC::eta_numEqns() const { return 7; }
-
-  void
-  CNOC::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = L__[iL_lambda3__xo];
-    result__[ 3   ] = L__[iL_lambda4__xo];
-    result__[ 4   ] = L__[iL_lambda5__xo];
-    result__[ 5   ] = L__[iL_lambda6__xo];
-    result__[ 6   ] = L__[iL_lambda7__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",7, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer CNOC::DetaDxp_numRows() const { return 7; }
-  integer CNOC::DetaDxp_numCols() const { return 7; }
-  integer CNOC::DetaDxp_nnz()     const { return 0; }
-
-  void
-  CNOC::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  CNOC::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer CNOC::nu_numEqns() const { return 7; }
-
-  void
-  CNOC::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    result__[ 4   ] = V__[4];
-    result__[ 5   ] = V__[5];
-    result__[ 6   ] = V__[6];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 7, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer CNOC::DnuDxp_numRows() const { return 7; }
-  integer CNOC::DnuDxp_numCols() const { return 7; }
-  integer CNOC::DnuDxp_nnz()     const { return 0; }
-
-  void
-  CNOC::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  CNOC::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

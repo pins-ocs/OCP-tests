@@ -2,9 +2,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -20,31 +20,31 @@
 -- User Header
 
 -- Auxiliary values
-m_i           = 1.0
-epsi_TS_max   = 0.025
-tol_v_max     = 0.01
-epsi_T_max    = 0.1
-tol_v         = tol_v_max
-h_i           = 1.0
-epsi_v_max    = 0.1
-epsi_v        = epsi_v_max
-mc            = 0.6
 g0            = 1.0
-Tmax          = 3.5*g0*m_i
-epsi_TS       = epsi_TS_max
+epsi_v_max    = 0.1
+h_i           = 1.0
+c             = 0.5*(g0*h_i)**(1/2.0)
+epsi_v        = epsi_v_max
+vc            = 620.0
+tol_T_max     = 0.01
 tol_mass_max  = 0.01
 tol_mass      = tol_mass_max
-c             = 0.5*(g0*h_i)**(1/2.0)
-vc            = 620.0
-Dc            = 0.5*vc*m_i/g0
-tol_T_max     = 0.01
-tol_T         = tol_T_max
-epsi_mass_max = 0.025
-epsi_mass     = epsi_mass_max
 tol_TS_max    = 0.0001
 tol_TS        = tol_TS_max
+epsi_mass_max = 0.025
+tol_T         = tol_T_max
+m_i           = 1.0
+Dc            = 0.5*vc*m_i/g0
+Tmax          = 3.5*g0*m_i
+epsi_T_max    = 0.1
 epsi_T        = epsi_T_max
+mc            = 0.6
 m_f           = mc*m_i
+epsi_TS_max   = 0.025
+epsi_TS       = epsi_TS_max
+tol_v_max     = 0.01
+tol_v         = tol_v_max
+epsi_mass     = epsi_mass_max
 
 content = {
 
@@ -57,8 +57,6 @@ content = {
   -- Level of message
   InfoLevel = 4,
 
-  Use_control_penalties_in_adjoint_equations = false,
-
   Max_penalty_value = 1000,
 
   --[[
@@ -70,20 +68,25 @@ content = {
   --]]
 
   -- maximum number of threads used for linear algebra and various solvers
-  N_threads   = 4,
-  U_threaded  = true,
-  F_threaded  = true,
-  JF_threaded = true,
-  LU_threaded = true,
+  N_threads             = 4,
+  U_threaded            = true,
+  JU_threaded           = true,
+  F_threaded            = true,
+  JF_threaded           = true,
+  LU_threaded           = true,
+  LU_factorize_threaded = true,
+  LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
   JacobianCheckFull     = false,
   JacobianCheck_epsilon = 1e-4,
 
-  -- Jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  -- Jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   JacobianDiscretization = "ANALYTIC",
 
   -- jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'

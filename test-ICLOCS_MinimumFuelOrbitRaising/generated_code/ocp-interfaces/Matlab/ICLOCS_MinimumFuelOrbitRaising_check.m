@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: ICLOCS_MinimumFuelOrbitRaising_main.m                          %
 %                                                                       %
-%  version: 1.0   date 21/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -23,7 +23,7 @@ close all
 ocp = ICLOCS_MinimumFuelOrbitRaising( 'ICLOCS_MinimumFuelOrbitRaising' );
 
 ocp.setup('../../data/ICLOCS_MinimumFuelOrbitRaising_Data'); % automatically try extension .rb and .lua
-ocp.infoLevel(4);
+ocp.set_info_level(4);
 ocp.set_guess(); % use default guess generated in MAPLE
 [Z,U] = ocp.get_raw_solution();
 [F,OK] = ocp.eval_F( Z, U );

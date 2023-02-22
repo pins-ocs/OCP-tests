@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Data.lua                                                 |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -53,6 +53,8 @@ content = {
   LU_solve_threaded     = true,
 
   -- Enable check jacobian and controls
+  MuCheck_epsilon       = 1e-6,
+  MuCheck               = false,
   ControlsCheck         = true,
   ControlsCheck_epsilon = 1e-6,
   JacobianCheck         = false,
@@ -86,7 +88,7 @@ content = {
     solver = 'NewtonDumped',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
-    Iterative = false,
+    Iterative = true,
     InfoLevel = -1, -- suppress all messages
     -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
     initialize_control_solver = 'QuasiNewton',
@@ -250,6 +252,7 @@ content = {
 
     -- Model Parameters
     epsilon  = 0.1,
+    mu       = 0.0,
     epsilon2 = 0.0,
 
     -- Guess Parameters
@@ -289,8 +292,8 @@ content = {
     segments = {
       
       {
-        n      = 10.0,
         length = 1.0,
+        n      = 150.0,
       },
     },
   },

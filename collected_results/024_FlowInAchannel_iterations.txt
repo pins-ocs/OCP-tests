@@ -1,3 +1,45 @@
+MODEL:FlowInAchannel
+BEGIN DIMS
+  dim         = u=0, q=1, x=4, p=0, bc(active/total)=(4/4)
+  total       = nZ=812, nP=400, nU=0, Q=101
+  index start = omega=808, p=812
+  post proc.  = n_post=0, n_Ipost=0
+END DIMS
+BEGIN MESH
+ num_nodes    = 101
+ num_segments = 1
+END MESH
+BEGIN THREADS
+  Used threads: 15
+  U/JU/F/JF/LU: true/true/true/true/true
+END THREADS
+BEGIN PARAMS
+  m_debug:                 false
+  m_max_penalty_value:     1000
+  Solver Controls:         Newton
+  Jacobian evaluation:     ANALYTIC
+  Jacobian BC evaluation:  ANALYTIC
+  Initializer Controls:    not selected
+  Initialize Multipliers:  false
+  Initialize Guess:        not selected + not selected
+  Continuation interval:   [0,0)
+  mesh class pointer:      0x7ff7b00d95c0
+  solver class pointer:    0x7fe94980e5c0
+END PARAMS
+BEGIN LINEAR ALGEBRA
+  rows   = 812
+  cols   = 812
+  nblock = 100
+  n      = 8
+  qr     = 4
+  qx     = 4
+  nr     = 0
+  nx     = 0
+  treads = 16/nblk:15/factorize:true/solve:true
+  intern = CyclicReduction+LU
+  last   = LastBlock LUPQ
+END PARAMS
+
 Boundary Conditions activation status
 [xx] = activated, [  ] = NOT activated
 
@@ -16,19 +58,19 @@ num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 1 npts = 101 no data set
 END Mesh[mesh]
-Model Parameters
-.......................................R = 10000
-NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
+MODEL PARAMETERS BEGIN
+  .......................................R = 10000
+MODEL PARAMETERS END
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1, 3] (   73.9   ,    64    ) [   52.2   ,    43    ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
-[  2, 6] (    64    ,   36.2   ) [   45.6   ,    19    ] 0.774      [0:0:5:0:0:0:0:0:0:0:0:0]
-[  3, 1] (   36.2   ,  0.292   ) [   16.6   ,  0.104   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  4, 1] (  0.292   , 8.35e-05 ) [  0.108   , 3.07e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  5, 1] ( 8.35e-05 , 9.41e-12 ) [ 3.08e-05 , 4.47e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  6, 1] ( 9.41e-12 , 4.48e-15 ) [ 4.47e-12 , 3.36e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  1, 3] ( 7.39e+03 , 6.4e+03  ) [   52.2   ,    43    ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
+[  2, 6] ( 6.4e+03  , 3.62e+03 ) [   45.6   ,    19    ] 0.774      [0:0:5:0:0:0:0:0:0:0:0:0]
+[  3, 1] ( 3.62e+03 ,   29.2   ) [   16.6   ,  0.104   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 1] (   29.2   , 0.00835  ) [  0.108   , 3.07e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] ( 0.00835  , 9.41e-10 ) [ 3.08e-05 , 4.47e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 9.41e-10 , 1.08e-12 ) [ 4.47e-12 , 6.56e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
----------------------------- NewtonDumped ----------------------------
+----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
 n_power        = 6             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.25          dump_max       = 0.9
@@ -37,10 +79,10 @@ dump_min       = 0.25          dump_max       = 0.9
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
 Converged      = YES           tolerance      = 1e-09
-N. Equations   = 812           N. System pars = 0
+N. Equations   = 812           N. System pars = 400
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 5.17[ms]      timeout        = 0 [ms]
-iteration      = 6             Memory Used    = 76Kb (+96bytes)
+Elapsed Time   = 6.62[ms]      timeout        = 0 [ms]
+iteration      = 6             Memory Used    = 185Kb (+7bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -49,23 +91,25 @@ Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
 Function       = 14            Jacobian       = 6
 Factorization  = 6             Inversion      = 19
-------------------------- SOLVER PARAMETERS --------------------------
+----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.95
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 1.819e-12     last ||d||_inf = 2.161e-12
-last ||f||_1   = 4.483e-15     last ||d||_1   = 3.3607e-15
-last ||f||_2   = 6.4398e-14    last ||d||_2   = 7.7173e-14
+last ||f||_inf = 4.6566e-10    last ||d||_inf = 2.3649e-12
+last ||f||_1   = 1.0753e-12    last ||d||_1   = 6.5554e-15
+last ||f||_2   = 1.8289e-11    last ||d||_2   = 9.8191e-14
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties for check)
+Check Jacobian Begin
+Check DabcDxlxlpu:
 All internal blocks OK
+Check DhcDxlxlop:
 Last block: OK
 Check Jacobian End
 target [Lagrange,Mayer]       = [ 0, 0 ]

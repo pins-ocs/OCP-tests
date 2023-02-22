@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_AdjointODE.cc           |
  |                                                                       |
- |  version: 1.0   date 21/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -46,11 +46,11 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,28 +59,28 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
   void
   ICLOCS_MinimumFuelOrbitRaising::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = X__[iX_vt];
     real_type t3   = t2 * t2;
     real_type t4   = X__[iX_r];
     real_type t5   = t4 * t4;
     real_type t6   = 1.0 / t5;
-    real_type t13  = L__[iL_lambda3__xo];
+    real_type t13  = MU__[2];
     real_type t15  = X__[iX_vr] * t13;
     result__[ 0   ] = (-t6 * t3 + 2 / t5 / t4) * t1 + t6 * t2 * t15;
     real_type t20  = 1.0 / t4;
-    result__[ 1   ] = -t20 * t2 * t13 + L__[iL_lambda1__xo] - 1;
+    result__[ 1   ] = -t20 * t2 * t13 + MU__[0] - 1;
     result__[ 2   ] = 2 * t20 * t2 * t1 - t20 * t15;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 3, i_segment );
@@ -88,12 +88,12 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpu_numRows() const { return 3; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpu_numCols() const { return 4; }
-  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpu_nnz()     const { return 8; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpuv_numRows() const { return 3; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpuv_numCols() const { return 7; }
+  integer ICLOCS_MinimumFuelOrbitRaising::DHxpDxpuv_nnz()     const { return 8; }
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_MinimumFuelOrbitRaising::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
     iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
@@ -106,26 +106,26 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
 
 
   void
-  ICLOCS_MinimumFuelOrbitRaising::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_MinimumFuelOrbitRaising::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = X__[iX_vt];
     real_type t3   = t2 * t2;
     real_type t4   = X__[iX_r];
     real_type t5   = t4 * t4;
     real_type t7   = 1.0 / t5 / t4;
     real_type t10  = t5 * t5;
-    real_type t15  = L__[iL_lambda3__xo];
+    real_type t15  = MU__[2];
     real_type t17  = X__[iX_vr] * t15;
     result__[ 0   ] = (2 * t7 * t3 - 6 / t10) * t1 - 2 * t7 * t2 * t17;
     real_type t22  = 1.0 / t5;
@@ -138,43 +138,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     result__[ 6   ] = result__[4];
     result__[ 7   ] = 2 * t27 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 8, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ICLOCS_MinimumFuelOrbitRaising::Hu_numEqns() const { return 1; }
-
-  void
-  ICLOCS_MinimumFuelOrbitRaising::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_theta];
-    real_type t6   = ModelPars[iM_T];
-    real_type t8   = cos(t2);
-    real_type t10  = mass(Q__[iQ_zeta]);
-    real_type t11  = 1.0 / t10;
-    real_type t16  = sin(t2);
-    result__[ 0   ] = -t11 * t16 * t6 * L__[iL_lambda3__xo] + t11 * t8 * t6 * L__[iL_lambda2__xo] + 2 * t2 * ModelPars[iM_epsilon];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 8, i_segment );
   }
 
 }

@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: TyreDynamic_Data.rb                                            #
 #                                                                       #
-#  version: 1.0   date 11/11/2022                                       #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,29 +20,28 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-eps_c0   = 0.1
-L        = 300.0
-rw       = 0.3
-v__0     = 10.0
-omega__0 = 1/rw*v__0
 tol_c0   = 0.1
-eps_l    = 0.01
-tol_c    = tol_c0
-TT__max  = 800.0
+v__0     = 10.0
 tol_l    = 0.01
-eps_c    = eps_c0
+tol_c    = tol_c0
 h__b     = 1.0
-E__pow   = 60*TT__max
-mesh_np  = 2.000000000*L
 w__t0    = 1.0
 w__t     = w__t0
+rw       = 0.3
+omega__0 = 1/rw*v__0
+L        = 300.0
+mesh_np  = 2.000000000*L
+TT__max  = 800.0
+eps_l    = 0.01
+eps_c0   = 0.1
+eps_c    = eps_c0
+E__pow   = 60*TT__max
 
 mechatronix do |data|
 
-  data.Debug     = false  # activate run time debug
-  data.Doctor    = false  # Enable doctor
-  data.InfoLevel = 4      # Level of message
-  data.Use_control_penalties_in_adjoint_equations = false
+  data.Debug             = false  # activate run time debug
+  data.Doctor            = false  # Enable doctor
+  data.InfoLevel         = 4      # Level of message
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -52,20 +51,26 @@ mechatronix do |data|
   #  \__|_| |_|_|  \___|\__,_|\__,_|___/
 
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
-  data.U_threaded  = true
-  data.F_threaded  = true
-  data.JF_threaded = true
-  data.LU_threaded = true
+  data.N_threads             = [1,$MAX_THREAD_NUM-1].max
+  data.U_threaded            = true
+  data.JU_threaded           = true
+  data.F_threaded            = true
+  data.JF_threaded           = true
+  data.LU_threaded           = true
+  data.LU_factorize_threaded = true
+  data.LU_solve_threaded     = true
+
 
   # Enable check jacobian and controls
+  data.MuCheck_epsilon       = 1e-6
+  data.MuCheck               = false
   data.ControlsCheck         = true
   data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
-  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  # jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
 
   # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -353,7 +358,7 @@ mechatronix do |data|
   data.MappedObjects[:clipSup] = { :h => 0.01 }
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clipInt] = { :delta => 0.0, :h => 0.01, :delta2 => 0.0 }
+  data.MappedObjects[:clipInt] = { :delta => 0.0, :delta2 => 0.0, :h => 0.01 }
 
   # SignRegularizedWithErf
   data.MappedObjects[:sign_reg] = { :h => 0.01 }

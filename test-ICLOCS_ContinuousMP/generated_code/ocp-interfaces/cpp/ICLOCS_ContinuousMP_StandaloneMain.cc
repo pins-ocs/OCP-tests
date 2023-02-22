@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type xy_eps0 = 0.1;
-    real_type xy_eps = xy_eps0;
     real_type xy_tol0 = 0.1;
     real_type xy_tol = xy_tol0;
+    real_type xy_eps0 = 0.1;
+    real_type xy_eps = xy_eps0;
     real_type epsi_ctrl = 0.01;
     real_type tol_ctrl = 0.01;
     integer InfoLevel = 4;
@@ -964,8 +964,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_ContinuousMP_data.Mesh["s0"] = 0;
-ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 ICLOCS_ContinuousMP_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 
 
     // alias for user object classes passed as pointers
@@ -1027,7 +1027,7 @@ ICLOCS_ContinuousMP_data.Mesh["segments"][0]["length"] = 1;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

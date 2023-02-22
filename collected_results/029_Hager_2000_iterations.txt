@@ -1,3 +1,45 @@
+MODEL:Hager_2000
+BEGIN DIMS
+  dim         = u=1, q=1, x=1, p=0, bc(active/total)=(1/1)
+  total       = nZ=203, nP=200, nU=100, Q=101
+  index start = omega=202, p=203
+  post proc.  = n_post=2, n_Ipost=0
+END DIMS
+BEGIN MESH
+ num_nodes    = 101
+ num_segments = 1
+END MESH
+BEGIN THREADS
+  Used threads: 15
+  U/JU/F/JF/LU: true/true/true/true/true
+END THREADS
+BEGIN PARAMS
+  m_debug:                 false
+  m_max_penalty_value:     1000
+  Solver Controls:         Newton
+  Jacobian evaluation:     ANALYTIC
+  Jacobian BC evaluation:  ANALYTIC
+  Initializer Controls:    not selected
+  Initialize Multipliers:  false
+  Initialize Guess:        not selected + not selected
+  Continuation interval:   [0,0)
+  mesh class pointer:      0x7ff7bb2145c8
+  solver class pointer:    0x7fd3ec8141c0
+END PARAMS
+BEGIN LINEAR ALGEBRA
+  rows   = 203
+  cols   = 203
+  nblock = 100
+  n      = 2
+  qr     = 1
+  qx     = 1
+  nr     = 0
+  nx     = 0
+  treads = 16/nblk:15/factorize:true/solve:true
+  intern = CyclicReduction+LU
+  last   = LastBlock LUPQ
+END PARAMS
+
 Boundary Conditions activation status
 [xx] = activated, [  ] = NOT activated
 
@@ -12,12 +54,11 @@ BEGIN Mesh[mesh]
 num. segments = 1
 num. nodes = 101
 Segment N.0: s0 = 0 length = 1 npts = 101 no data set
-END Mesh[mesh]NewtonDumped[OCP_solver_NewtonDumped] --- start iterations ---
-[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1, 1] (  0.0222  , 2.07e-16 ) [  0.905   , 3.79e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+END Mesh[mesh][iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] (   2.22   , 1.32e-14 ) [  0.905   , 1.04e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
----------------------------- NewtonDumped ----------------------------
+----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
 n_power        = 6             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.25          dump_max       = 0.9
@@ -26,10 +67,10 @@ dump_min       = 0.25          dump_max       = 0.9
 .................... BIG nonlinear system solver .....................
 ---------------------------- NewtonDumped ----------------------------
 Converged      = YES           tolerance      = 1e-09
-N. Equations   = 203           N. System pars = 100
+N. Equations   = 203           N. System pars = 200
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 0.85[ms]      timeout        = 0 [ms]
-iteration      = 1             Memory Used    = 32Kb (+5bytes)
+Elapsed Time   = 1.21[ms]      timeout        = 0 [ms]
+iteration      = 1             Memory Used    = 39Kb (+63bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -38,23 +79,25 @@ Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
 Function       = 2             Jacobian       = 1
 Factorization  = 1             Inversion      = 2
-------------------------- SOLVER PARAMETERS --------------------------
+----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
 c1             = 0.01          lambda_min     = 1e-10
 dump_min       = 0.4           dump_max       = 0.95
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 2.0192e-15    last ||d||_inf = 1.7567e-14
-last ||f||_1   = 2.073e-16     last ||d||_1   = 3.7942e-15
-last ||f||_2   = 3.498e-16     last ||d||_2   = 4.9436e-15
+last ||f||_inf = 1.4122e-13    last ||d||_inf = 5.4143e-15
+last ||f||_1   = 1.3204e-14    last ||d||_1   = 1.0446e-15
+last ||f||_2   = 2.3791e-14    last ||d||_2   = 1.5279e-15
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
-Check Jacobian Begin (disabling penalties for check)
+Check Jacobian Begin
+Check DabcDxlxlpu:
 All internal blocks OK
+Check DhcDxlxlop:
 Last block: OK
 Check Jacobian End
 Check Controls Begin

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_AdjointODE.cc                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -69,28 +69,48 @@ namespace HypersonicProblem3DOFDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HypersonicProblem3DOF::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   HypersonicProblem3DOF::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HypersonicProblem3DOF::LT_numEqns() const { return 2; }
+  real_type
+  HypersonicProblem3DOF::JU_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = u2Control(U__[iU_u2], -1, 1);
+    real_type result__ = t3 * P__[iP_Tf];
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
 
-  void
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
   HypersonicProblem3DOF::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -99,32 +119,130 @@ namespace HypersonicProblem3DOFDefine {
     real_type t1   = P__[iP_Tf];
     real_type t2   = X__[iX_G];
     real_type t4   = G_bound_min(-0.314159265358979323846264338328e1 - t2);
-    result__[ 0   ] = t4 * t1;
-    real_type t6   = G_bound_max(t2 - 0.314159265358979323846264338328e1);
-    result__[ 1   ] = t6 * t1;
+    real_type t7   = G_bound_max(t2 - 0.314159265358979323846264338328e1);
+    real_type result__ = t4 * t1 + t7 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 2, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
   }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer HypersonicProblem3DOF::JU_numEqns() const { return 1; }
+  integer HypersonicProblem3DOF::JPxpu_numEqns() const { return 17; }
 
   void
-  HypersonicProblem3DOF::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  HypersonicProblem3DOF::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = u2Control(U__[iU_u2], -1, 1);
-    result__[ 0   ] = t3 * P__[iP_Tf];
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    result__[ 7   ] = 0;
+    result__[ 8   ] = 0;
+    result__[ 9   ] = 0;
+    result__[ 10  ] = 0;
+    result__[ 11  ] = 0;
+    result__[ 12  ] = 0;
+    result__[ 13  ] = 0;
+    result__[ 14  ] = 0;
+    result__[ 15  ] = 0;
+    result__[ 16  ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 17, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HypersonicProblem3DOF::JUxpu_numEqns() const { return 17; }
+
+  void
+  HypersonicProblem3DOF::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    real_type t1   = U__[iU_u2];
+    result__[ 7   ] = u2Control(t1, -1, 1);
+    result__[ 8   ] = 0;
+    real_type t3   = ALIAS_u2Control_D_1(t1, -1, 1);
+    result__[ 9   ] = t3 * P__[iP_Tf];
+    result__[ 10  ] = 0;
+    result__[ 11  ] = 0;
+    result__[ 12  ] = 0;
+    result__[ 13  ] = 0;
+    result__[ 14  ] = 0;
+    result__[ 15  ] = 0;
+    result__[ 16  ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 17, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer HypersonicProblem3DOF::LTxpu_numEqns() const { return 17; }
+
+  void
+  HypersonicProblem3DOF::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    real_type t1   = P__[iP_Tf];
+    real_type t2   = X__[iX_G];
+    real_type t3   = -0.314159265358979323846264338328e1 - t2;
+    real_type t4   = ALIAS_G_bound_min_D(t3);
+    real_type t6   = t2 - 0.314159265358979323846264338328e1;
+    real_type t7   = ALIAS_G_bound_max_D(t6);
+    result__[ 4   ] = -t4 * t1 + t7 * t1;
+    result__[ 5   ] = 0;
+    result__[ 6   ] = 0;
+    real_type t9   = G_bound_min(t3);
+    real_type t10  = G_bound_max(t6);
+    result__[ 7   ] = t9 + t10;
+    result__[ 8   ] = 0;
+    result__[ 9   ] = 0;
+    result__[ 10  ] = 0;
+    result__[ 11  ] = 0;
+    result__[ 12  ] = 0;
+    result__[ 13  ] = 0;
+    result__[ 14  ] = 0;
+    result__[ 15  ] = 0;
+    result__[ 16  ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 17, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -133,10 +251,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -148,128 +266,6 @@ namespace HypersonicProblem3DOFDefine {
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "LTargs_eval", 2, i_segment );
   }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HypersonicProblem3DOF::DJPDxpu_numRows() const { return 0; }
-  integer HypersonicProblem3DOF::DJPDxpu_numCols() const { return 17; }
-  integer HypersonicProblem3DOF::DJPDxpu_nnz()     const { return 0; }
-
-  void
-  HypersonicProblem3DOF::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  HypersonicProblem3DOF::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HypersonicProblem3DOF::DLTDxpu_numRows() const { return 2; }
-  integer HypersonicProblem3DOF::DLTDxpu_numCols() const { return 17; }
-  integer HypersonicProblem3DOF::DLTDxpu_nnz()     const { return 4; }
-
-  void
-  HypersonicProblem3DOF::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 4   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 7   ;
-  }
-
-
-  void
-  HypersonicProblem3DOF::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = P__[iP_Tf];
-    real_type t2   = X__[iX_G];
-    real_type t3   = -0.314159265358979323846264338328e1 - t2;
-    real_type t4   = ALIAS_G_bound_min_D(t3);
-    result__[ 0   ] = -t4 * t1;
-    result__[ 1   ] = G_bound_min(t3);
-    real_type t6   = t2 - 0.314159265358979323846264338328e1;
-    real_type t7   = ALIAS_G_bound_max_D(t6);
-    result__[ 2   ] = t7 * t1;
-    result__[ 3   ] = G_bound_max(t6);
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HypersonicProblem3DOF::DJUDxpu_numRows() const { return 1; }
-  integer HypersonicProblem3DOF::DJUDxpu_numCols() const { return 17; }
-  integer HypersonicProblem3DOF::DJUDxpu_nnz()     const { return 2; }
-
-  void
-  HypersonicProblem3DOF::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 7   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 9   ;
-  }
-
-
-  void
-  HypersonicProblem3DOF::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u2];
-    result__[ 0   ] = u2Control(t1, -1, 1);
-    real_type t3   = ALIAS_u2Control_D_1(t1, -1, 1);
-    result__[ 1   ] = t3 * P__[iP_Tf];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 2, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer HypersonicProblem3DOF::DLTargsDxpu_numRows() const { return 2; }
-  integer HypersonicProblem3DOF::DLTargsDxpu_numCols() const { return 17; }
-  integer HypersonicProblem3DOF::DLTargsDxpu_nnz()     const { return 2; }
-
-  void
-  HypersonicProblem3DOF::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 4   ;
-  }
-
-
-  void
-  HypersonicProblem3DOF::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -1;
-    result__[ 1   ] = 1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 2, i_segment );
-  }
-
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -285,15 +281,13 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer HypersonicProblem3DOF::D2LTD2xpu_numRows() const { return 17; }
@@ -310,11 +304,10 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -324,19 +317,16 @@ namespace HypersonicProblem3DOFDefine {
     real_type t2   = X__[iX_G];
     real_type t3   = -0.314159265358979323846264338328e1 - t2;
     real_type t4   = ALIAS_G_bound_min_DD(t3);
-    real_type t6   = OMEGA__[0];
-    real_type t8   = t2 - 0.314159265358979323846264338328e1;
-    real_type t9   = ALIAS_G_bound_max_DD(t8);
-    real_type t11  = OMEGA__[1];
-    result__[ 0   ] = t1 * t11 * t9 + t1 * t4 * t6;
-    real_type t13  = ALIAS_G_bound_min_D(t3);
-    real_type t15  = ALIAS_G_bound_max_D(t8);
-    result__[ 1   ] = t11 * t15 - t13 * t6;
+    real_type t6   = t2 - 0.314159265358979323846264338328e1;
+    real_type t7   = ALIAS_G_bound_max_DD(t6);
+    result__[ 0   ] = t4 * t1 + t7 * t1;
+    real_type t9   = ALIAS_G_bound_min_D(t3);
+    real_type t10  = ALIAS_G_bound_max_D(t6);
+    result__[ 1   ] = -t9 + t10;
     result__[ 2   ] = result__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 3, i_segment );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer HypersonicProblem3DOF::D2JUD2xpu_numRows() const { return 17; }
@@ -353,26 +343,53 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u2];
-    real_type t2   = ALIAS_u2Control_D_1(t1, -1, 1);
-    real_type t3   = OMEGA__[0];
-    result__[ 0   ] = t3 * t2;
+    result__[ 0   ] = ALIAS_u2Control_D_1(t1, -1, 1);
     result__[ 1   ] = result__[0];
-    real_type t5   = ALIAS_u2Control_D_1_1(t1, -1, 1);
-    result__[ 2   ] = t3 * t5 * P__[iP_Tf];
+    real_type t3   = ALIAS_u2Control_D_1_1(t1, -1, 1);
+    result__[ 2   ] = t3 * P__[iP_Tf];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 3, i_segment );
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer HypersonicProblem3DOF::DLTargsDxpu_numRows() const { return 2; }
+  integer HypersonicProblem3DOF::DLTargsDxpu_numCols() const { return 17; }
+  integer HypersonicProblem3DOF::DLTargsDxpu_nnz()     const { return 2; }
+
+  void
+  HypersonicProblem3DOF::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 4   ;
+  }
+
+
+  void
+  HypersonicProblem3DOF::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -1;
+    result__[ 1   ] = 1;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 2, i_segment );
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -388,11 +405,11 @@ namespace HypersonicProblem3DOFDefine {
 
   void
   HypersonicProblem3DOF::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Mex_class.cc                                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -59,9 +59,6 @@ ProblemStorage::done_solve() {
   solution3_ok = false;
 }
 
-integer
-ProblemStorage::nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
-
 void
 ProblemStorage::read( string const & fname, GenericContainer & gc ) {
   // redirect output
@@ -77,26 +74,36 @@ ProblemStorage::read( string const & fname, GenericContainer & gc ) {
 // --------------------------------------------------------------------------
 
 void
-ProblemStorage::get_LR2(
-  char const      msg[],
-  int             nrhs,
-  mxArray const * prhs[],
-  NodeType2     & L,
-  NodeType2     & R
+ProblemStorage::get(
+  char const    * msg,
+  mxArray const * prhs,
+  NodeQXL       & S
 ) {
+
+  UTILS_ASSERT( mxIsStruct( prhs ), "ProblemStorage::get, argument must be a struct" );
 
   mwSize nQ, nX, nL;
 
+  mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
+  mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
+  mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
+  mxArray const * mx_L       = mxGetField( prhs, 0, "lambda"    );
+
+  UTILS_ASSERT( mx_segment != nullptr, "ProblemStorage::get, missing field `i_segment`" );
+  UTILS_ASSERT( mx_q       != nullptr, "ProblemStorage::get, missing field `q`"         );
+  UTILS_ASSERT( mx_X       != nullptr, "ProblemStorage::get, missing field `x`"         );
+  UTILS_ASSERT( mx_L       != nullptr, "ProblemStorage::get, missing field `lambda`"    );
+
   // -------------------
-  L.i_segment = integer( Utils::mex_get_int64( arg_in_2, fmt::format( "{} L_segment", msg ) ) );
+  S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
   UTILS_ASSERT(
-    L.i_segment >= 0 && L.i_segment < this->num_segments(),
-    "{} iseg_L = {} expected to be in [0,{})\n",
-    msg, L.i_segment, this->num_segments()
+    S.i_segment >= 0 && S.i_segment < this->num_segments(),
+    "{} i_segment = {} expected to be in [0,{})\n",
+    msg, S.i_segment, this->num_segments()
   );
 
   // -------------------
-  L.q = Utils::mex_vector_pointer( arg_in_3, nQ, fmt::format( "{} argument q_L", msg ) );
+  S.q = Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "{} S.q", msg ) );
   UTILS_ASSERT(
     nQ == this->dim_Q(),
     "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
@@ -104,7 +111,7 @@ ProblemStorage::get_LR2(
   );
 
   // -------------------
-  L.x = Utils::mex_vector_pointer( arg_in_4, nX, fmt::format( "{} argument x_L", msg ) );
+  S.x = Utils::mex_vector_pointer( mx_X, nX, fmt::format( "{} S.x", msg ) );
   UTILS_ASSERT(
     nX == this->dim_X(),
     "{} |x_L| = {} expected to be {}\n",
@@ -112,84 +119,7 @@ ProblemStorage::get_LR2(
   );
 
   // -------------------
-  L.lambda = Utils::mex_vector_pointer( arg_in_5, nL, fmt::format( "{} argument lambda_L", msg ) );
-  UTILS_ASSERT(
-    nL == this->dim_X(),
-    "{} |lambda_L| = {} expected to be {}\n",
-    msg, nL, this->dim_X()
-  );
-
-  // -------------------
-  R.i_segment = integer( Utils::mex_get_int64( arg_in_6, fmt::format( "{} R_segment", msg ) ) );
-  UTILS_ASSERT(
-    R.i_segment >= 0 && R.i_segment < this->num_segments(),
-    "{} iseg_R = {} expected to be in [0,{})\n",
-    msg, R.i_segment, this->num_segments()
-  );
-
-  // -------------------
-  R.q = Utils::mex_vector_pointer( arg_in_7, nQ, fmt::format( "{} argument q_R", msg ) );
-  UTILS_ASSERT(
-    nQ == this->dim_Q(),
-    "{} |q_R| = {} expected to be {}\n",
-    msg, nQ, this->dim_Q()
-  );
-
-  // -------------------
-  R.x = Utils::mex_vector_pointer( arg_in_8, nX, fmt::format( "{} argument x_R", msg ) );
-  UTILS_ASSERT(
-    nX == this->dim_X(),
-    "{} |x_R| = {} expected to be {}\n",
-    msg, nX, this->dim_X()
-  );
-
-  // -------------------
-  R.lambda = Utils::mex_vector_pointer( arg_in_9, nL, fmt::format( "{} argument lambda_R", msg ) );
-  UTILS_ASSERT(
-    nL == this->dim_X(),
-    "{} |lambda_R| = {} expected to be {}\n",
-    msg, nL, this->dim_X()
-  );
-}
-
-// --------------------------------------------------------------------------
-
-void
-ProblemStorage::get_N(
-  char const      msg[],
-  int             nrhs,
-  mxArray const * prhs[],
-  NodeType2     & N
-) {
-
-  mwSize nQ, nX, nL;
-
-  // -------------------
-  N.i_segment = integer( Utils::mex_get_int64( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
-  UTILS_ASSERT(
-    N.i_segment >= 0 && N.i_segment < this->num_segments(),
-    "{} iseg_L = {} expected to be in [0,{})\n",
-    msg, N.i_segment, this->num_segments()
-  );
-
-  // -------------------
-  N.q = Utils::mex_vector_pointer( arg_in_3, nQ, fmt::format( "{} argument q_M", msg ) );
-  UTILS_ASSERT(
-    nQ == this->dim_Q(),
-    "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
-    msg, nQ, this->dim_Q()
-  );
-
-  // -------------------
-  N.x = Utils::mex_vector_pointer( arg_in_4, nX, fmt::format( "{} argument x_M", msg ) );
-  UTILS_ASSERT(
-    nX == this->dim_X(),
-    "{} |x_L| = {} expected to be {}\n",
-    msg, nX, this->dim_X()
-  );
-
-  // -------------------
-  N.lambda = Utils::mex_vector_pointer( arg_in_5, nL, fmt::format( "{} argument lambda_M", msg ) );
+  S.lambda = Utils::mex_vector_pointer( mx_L, nL, fmt::format( "{} S.lambda", msg ) );
   UTILS_ASSERT(
     nL == this->dim_X(),
     "{} |lambda_L| = {} expected to be {}\n",
@@ -200,33 +130,42 @@ ProblemStorage::get_N(
 // --------------------------------------------------------------------------
 
 void
-ProblemStorage::get_qx(
-  char const      msg[],
-  int             nrhs,
-  mxArray const * prhs[],
-  NodeType      & N
+ProblemStorage::get(
+  char const    * msg,
+  mxArray const * prhs,
+  NodeQX        & S
 ) {
 
-  mwSize nQ, nX;
+  UTILS_ASSERT( mxIsStruct( prhs ), "ProblemStorage::get, argument must be a struct" );
+
+  mwSize nQ, nX, nL;
+
+  mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
+  mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
+  mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
+
+  UTILS_ASSERT( mx_segment != nullptr, "ProblemStorage::get, missing field `i_segment`" );
+  UTILS_ASSERT( mx_q       != nullptr, "ProblemStorage::get, missing field `q`"         );
+  UTILS_ASSERT( mx_X       != nullptr, "ProblemStorage::get, missing field `x`"         );
 
   // -------------------
-  N.i_segment = integer( Utils::mex_get_int64( arg_in_2, fmt::format( "{} i_segment", msg ) ) );
+  S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
   UTILS_ASSERT(
-    N.i_segment >= 0 && N.i_segment < this->num_segments(),
-    "{} iseg_L = {} expected to be in [0,{})\n",
-    msg, N.i_segment, this->num_segments()
+    S.i_segment >= 0 && S.i_segment < this->num_segments(),
+    "{} i_segment = {} expected to be in [0,{})\n",
+    msg, S.i_segment, this->num_segments()
   );
 
   // -------------------
-  N.q = Utils::mex_vector_pointer( arg_in_3, nQ, fmt::format( "{} argument q", msg ) );
+  S.q = Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "{} S.q", msg ) );
   UTILS_ASSERT(
     nQ == this->dim_Q(),
-    "{} |q_L| = {} expected to be {}\n",
+    "{} |q_L| = {} expected to be {}\n[try to call eval_q]\n",
     msg, nQ, this->dim_Q()
   );
 
   // -------------------
-  N.x = Utils::mex_vector_pointer( arg_in_4, nX, fmt::format( "{} argument x", msg ) );
+  S.x = Utils::mex_vector_pointer( mx_X, nX, fmt::format( "{} S.x", msg ) );
   UTILS_ASSERT(
     nX == this->dim_X(),
     "{} |x_L| = {} expected to be {}\n",
@@ -237,71 +176,168 @@ ProblemStorage::get_qx(
 // --------------------------------------------------------------------------
 
 void
-ProblemStorage::get_LR(
-  char const      msg[],
-  int             nrhs,
-  mxArray const * prhs[],
-  NodeType      & L,
-  NodeType      & R
+ProblemStorage::get_Q(
+  char const       msg[],
+  mxArray const  * mx_q,
+  Q_const_p_type & Q
 ) {
-
-  string msg_str;
-  mwSize nQ, nX, nL;
-
-  // -------------------
-  msg_str = fmt::format( "{} L_segment", msg );
-  L.i_segment = integer( Utils::mex_get_int64( arg_in_2, msg_str.c_str() ) );
-  UTILS_ASSERT(
-    L.i_segment >= 0 && L.i_segment < this->num_segments(),
-    "{} iseg_L = {} expected to be in [0,{})\n",
-    msg, L.i_segment, this->num_segments()
-  );
-
-  // -------------------
-  msg_str = fmt::format( "{} argument q_L", msg );
-  L.q = Utils::mex_vector_pointer( arg_in_3, nQ, msg_str.c_str() );
+  mwSize nQ;
+  Q.set( Utils::mex_vector_pointer( mx_q, nQ, fmt::format( "get_Q {}", msg ) ) );
   UTILS_ASSERT(
     nQ == this->dim_Q(),
-    "{} |q_L| = {} expected to be {}\n",
+    "{} |q| = {} expected to be {}\n",
     msg, nQ, this->dim_Q()
   );
+}
 
-  // -------------------
-  msg_str = fmt::format( "{} argument x_L", msg );
-  L.x = Utils::mex_vector_pointer( arg_in_4, nX, msg_str.c_str() );
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_X(
+  char const       msg[],
+  mxArray const  * mx_X,
+  X_const_p_type & X
+) {
+  mwSize nX;
+  X.set( Utils::mex_vector_pointer( mx_X, nX, fmt::format( "get_X {}", msg ) ) );
   UTILS_ASSERT(
     nX == this->dim_X(),
-    "{} |x_L| = {} expected to be {}\n",
-    msg, nX, this->dim_X()
-  );
-
-  // -------------------
-  msg_str = fmt::format( "{} R_segment", msg );
-  R.i_segment = integer( Utils::mex_get_int64( arg_in_5, msg_str.c_str() ) );
-  UTILS_ASSERT(
-    R.i_segment >= 0 && R.i_segment < this->num_segments(),
-    "{} iseg_R = {} expected to be in [0,{})\n",
-    msg, R.i_segment, this->num_segments()
-  );
-
-  // -------------------
-  msg_str = fmt::format( "{} argument q_R", msg );
-  R.q = Utils::mex_vector_pointer( arg_in_6, nQ, msg_str.c_str() );
-  UTILS_ASSERT(
-    nQ == this->dim_Q(),
-    "{} |q_R| = {} expected to be {}\n",
-    msg, nQ, this->dim_Q()
-  );
-
-  // -------------------
-  msg_str = fmt::format( "{} argument x_R", msg );
-  R.x = Utils::mex_vector_pointer( arg_in_7, nX, msg_str.c_str() );
-  UTILS_ASSERT(
-    nX == this->dim_X(),
-    "{} |x_R| = {} expected to be {}\n",
+    "{} |x| = {} expected to be {}\n",
     msg, nX, this->dim_X()
   );
 }
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_L(
+  char const       msg[],
+  mxArray const  * mx_L,
+  L_const_p_type & L
+) {
+  mwSize nL;
+  L.set( Utils::mex_vector_pointer( mx_L, nL, fmt::format( "get_L {}", msg ) ) );
+  UTILS_ASSERT(
+    nL == this->dim_X(),
+    "{} |lambda| = {} expected to be {}\n",
+    msg, nL, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_MU(
+  char const        msg[],
+  mxArray const   * mx_MU,
+  MU_const_p_type & MU
+) {
+  mwSize nMU;
+  MU.set( Utils::mex_vector_pointer( mx_MU, nMU, fmt::format( "get_MU {}", msg ) ) );
+  UTILS_ASSERT(
+    nMU == this->dim_X(), // MU = X in dimensione
+    "{} |lambda| = {} expected to be {}\n",
+    msg, nMU, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_U(
+  char const       msg[],
+  mxArray const  * mx_U,
+  U_const_p_type & U
+) {
+  mwSize nU;
+  U.set( Utils::mex_vector_pointer( mx_U, nU, fmt::format( "get_U {}", msg ) ) );
+  UTILS_ASSERT(
+    nU == this->dim_U(),
+    "{} |U| = {} expected to be {}\n",
+    msg, nU, this->dim_U()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_P(
+  char const       msg[],
+  mxArray const  * mx_P,
+  P_const_p_type & P
+) {
+  mwSize nP;
+  P.set( Utils::mex_vector_pointer( mx_P, nP, fmt::format( "get_P {}", msg ) ) );
+  UTILS_ASSERT(
+    nP == this->dim_Pars(),
+    "{} |P| = {} expected to be {}\n",
+    msg, nP, this->dim_Pars()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_V(
+  char const       msg[],
+  mxArray const  * mx_V,
+  V_const_p_type & V
+) {
+  mwSize nV;
+  V.set( Utils::mex_vector_pointer( mx_V, nV, fmt::format( "get_V {}", msg ) ) );
+  UTILS_ASSERT(
+    nV == this->dim_X(),
+    "{} |V| = {} expected to be {}\n",
+    msg, nV, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_OMEGA(
+  char const           msg[],
+  mxArray const      * mx_OMEGA,
+  OMEGA_const_p_type & OMEGA
+) {
+  mwSize nOMEGA;
+  OMEGA.set( Utils::mex_vector_pointer( mx_OMEGA, nOMEGA, fmt::format( "get_OMEGA {}", msg ) ) );
+  UTILS_ASSERT(
+    nOMEGA == this->dim_BC(),
+    "{} |OMEGA| = {} expected to be {}\n",
+    msg, nOMEGA, this->dim_BC()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_OMEGA_full(
+  char const                msg[],
+  mxArray const           * mx_OMEGA_full,
+  OMEGA_full_const_p_type & OMEGA_full
+) {
+  mwSize nOMEGA_full;
+  OMEGA_full.set( Utils::mex_vector_pointer( mx_OMEGA_full, nOMEGA_full, fmt::format( "get_OMEGA_full {}", msg ) ) );
+  UTILS_ASSERT(
+    nOMEGA_full == this->dim_BC(),
+    "{} |OMEGA_full| = {} expected to be {}\n",
+    msg, nOMEGA_full, this->dim_BC()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_ptr(
+  char const       msg[],
+  mxArray const  * mx_ptr,
+  real_const_ptr & ptr
+) {
+  mwSize n;
+  ptr = Utils::mex_vector_pointer( mx_ptr, n, fmt::format( "get_ptr {}", msg ) );
+}
+
+// --------------------------------------------------------------------------
 
 // EOF: Crossroad_Mex_class.cc
-

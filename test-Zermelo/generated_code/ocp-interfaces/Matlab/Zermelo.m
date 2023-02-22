@@ -1,9 +1,9 @@
 %-----------------------------------------------------------------------%
 %  file: Zermelo.m                                                      %
 %                                                                       %
-%  version: 1.0   date 10/11/2022                                       %
+%  version: 1.0   date 22/2/2023                                        %
 %                                                                       %
-%  Copyright (C) 2022                                                   %
+%  Copyright (C) 2023                                                   %
 %                                                                       %
 %      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             %
 %      Dipartimento di Ingegneria Industriale                           %
@@ -68,64 +68,52 @@ classdef Zermelo < handle
       self.dim_ineq      = res.dim_ineq;
     end
     % ---------------------------------------------------------------------
-    function res = get_dim_Q( self )
-      Zermelo_Mex( 'dim_Q', self.objectHandle );
-      res = Zermelo_Mex( 'dim_Q', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_X( self )
-      Zermelo_Mex( 'dim_X', self.objectHandle );
-      res = Zermelo_Mex( 'dim_X', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_Pars( self )
-      Zermelo_Mex( 'dim_Pars', self.objectHandle );
-      res = Zermelo_Mex( 'dim_Pars', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = get_dim_BC( self )
-      Zermelo_Mex( 'dim_BC', self.objectHandle );
       res = Zermelo_Mex( 'dim_BC', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = get_dim_Post( self )
-      Zermelo_Mex( 'dim_Post', self.objectHandle );
-      res = Zermelo_Mex( 'dim_Post', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_dim_Ipost( self )
-      Zermelo_Mex( 'dim_Ipost', self.objectHandle );
-      res = Zermelo_Mex( 'dim_Ipost', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_active_BC( self )
-      Zermelo_Mex( 'num_active_BC', self.objectHandle );
-      res = Zermelo_Mex( 'num_active_BC', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_nodes( self )
-      Zermelo_Mex( 'num_nodes', self.objectHandle );
-      res = Zermelo_Mex( 'num_nodes', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_equations( self )
-      Zermelo_Mex( 'num_equations', self.objectHandle );
-      res = Zermelo_Mex( 'num_equations', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = get_num_segments( self )
-      Zermelo_Mex( 'num_segments', self.objectHandle );
-      res = Zermelo_Mex( 'num_segments', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = get_dim_full_bc( self )
-      Zermelo_Mex( 'dim_full_bc', self.objectHandle );
       res = Zermelo_Mex( 'dim_full_bc', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = get_dim_ineq( self )
-      Zermelo_Mex( 'dim_ineq', self.objectHandle );
       res = Zermelo_Mex( 'dim_ineq', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Ipost( self )
+      res = Zermelo_Mex( 'dim_Ipost', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Pars( self )
+      res = Zermelo_Mex( 'dim_Pars', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Post( self )
+      res = Zermelo_Mex( 'dim_Post', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_Q( self )
+      res = Zermelo_Mex( 'dim_Q', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_dim_X( self )
+      res = Zermelo_Mex( 'dim_X', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_active_BC( self )
+      res = Zermelo_Mex( 'num_active_BC', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_equations( self )
+      res = Zermelo_Mex( 'num_equations', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_nodes( self )
+      res = Zermelo_Mex( 'num_nodes', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = get_num_segments( self )
+      res = Zermelo_Mex( 'num_segments', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function n = names( self )
@@ -172,6 +160,7 @@ classdef Zermelo < handle
       % res.LU_threaded = number of thread for LU factorization
       % res.F_threaded  = number of thread for F(X) computation
       % res.JF_threaded = number of thread for JF(X) computation
+      % res.JU_threaded = number of thread for JU(X) computation
       % res.U_threaded  = number of thread for controls computation
       %
       % res.ControlSolver = structure with the fields
@@ -239,12 +228,6 @@ classdef Zermelo < handle
       %
       Zermelo_Mex( 'set_info_level', self.objectHandle, infoLvl );
     end
-    %
-    % DEPRECATED
-    %
-    function infoLevel( self, infoLvl )
-      self.set_info_level( infoLvl );
-    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -291,20 +274,20 @@ classdef Zermelo < handle
     %
     % ---------------------------------------------------------------------
     %
-    function guess = get_guess( self )
+    function res = get_guess( self )
       %
       % Return a structure with the stored guess.
       %
-      guess = Zermelo_Mex( 'get_guess', self.objectHandle );
+      res = Zermelo_Mex( 'get_guess', self.objectHandle );
     end
     %
     % ---------------------------------------------------------------------
     %
-    function guess = get_solution_as_guess( self )
+    function res = get_solution_as_guess( self )
       %
       % Return a structure with the solution formatted as a guess.
       %
-      guess = Zermelo_Mex( 'get_solution_as_guess', self.objectHandle );
+      res = Zermelo_Mex( 'get_solution_as_guess', self.objectHandle );
     end
 
     % ---------------------------------------------------------------------
@@ -447,40 +430,6 @@ classdef Zermelo < handle
       %
       [X, Lambda, Pars, Omega] = Zermelo_Mex( 'unpack', self.objectHandle, sol );
     end
-    % ---------------------------------------------------------------------
-    function sol = pack_for_direct( self, X, U, Pars )
-      %
-      % Combine the solution from the matrices `X`, `U` and `Pars`
-      % in a single vector ato be used with a direct solver.
-      %
-      %  X    = [ x0, x1, ..., xn     ] % The states at nodal point
-      %  U    = [ u0, u1, ..., u(n-1) ] % The controls at cell point
-      %  Pars = are the optimization parameter of the OCP
-      %
-      sol = Zermelo_Mex( 'pack_for_direct', self.objectHandle, X, U, Pars );
-    end
-    % ---------------------------------------------------------------------
-    function [X, U, Pars] = unpack_for_direct( self, sol )
-      %
-      % Unpack from a vector to the matrices `X`, `U` and `Pars`.
-      % The vector must contains the data as stored in a direct solver.
-      %
-      [X, U, Pars] = Zermelo_Mex( 'unpack_for_direct', self.objectHandle, sol );
-    end
-    % ---------------------------------------------------------------------
-    function [Lambda,Omega] = estimate_multipliers( self, X, U, Pars, method )
-      %
-      % From the matrices `X`, `U` and `Pars` estimate
-      % the multiplein a single vector ato be used with a direct solver.
-      %
-      %  X    = [ x0, x1, ..., xn     ] % The states at nodal point
-      %  U    = [ u0, u1, ..., u(n-1) ] % The controls at cell point
-      %  Pars = are the optimization parameter of the OCP
-      %
-      %  method = 'least_squares' ...
-      %
-      [Lambda,Omega] = Zermelo_Mex( 'estimate_multipliers', self.objectHandle, X, U, Pars, method );
-    end
 
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -592,16 +541,16 @@ classdef Zermelo < handle
     % NONLINEAR SYSTEM (ASSEMBLED)
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function U = init_U( self, Z, do_minimization )
+    function U = guess_U( self, Z )
       %
       % Initialize `u`
       %
-      U = Zermelo_Mex( 'init_U', self.objectHandle, Z, do_minimization );
+      U = Zermelo_Mex( 'guess_U', self.objectHandle, Z );
     end
     % ---------------------------------------------------------------------
     function U = eval_U( self, Z, u_guess )
       %
-      % Compute controls `U` given a guess and X, L states.
+      % Compute controls `U` given a guess `u_guess`.
       % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
       %
       U = Zermelo_Mex( 'eval_U', self.objectHandle, Z, u_guess );
@@ -631,6 +580,23 @@ classdef Zermelo < handle
       % system of the indirect methods.
       %
       JF = Zermelo_Mex( 'eval_JF_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function [JF,ok] = eval_JF2( self, Z, U )
+      %
+      % Return the jacobian of the nonlinear system
+      % of the indirect methods evaluated ad `Z` and `U`.
+      % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
+      %
+      [JF,ok] = Zermelo_Mex( 'eval_JF2', self.objectHandle, Z, U );
+    end
+    % ---------------------------------------------------------------------
+    function JF = eval_JF2_pattern( self )
+      %
+      % Return the pattern of the jacobian of the nonlinear
+      % system of the indirect methods.
+      %
+      JF = Zermelo_Mex( 'eval_JF2_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function [Z,U] = get_raw_solution( self )
@@ -665,117 +631,79 @@ classdef Zermelo < handle
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [q_L,q_R] = eval_q_LR( self, iseg_L, t_L, iseg_R, t_R )
-      if length( t_L ) == 1
-        q_L = self.eval_q( iseg_L, t_L(1) );
-      else
-        q_L = t_L;
-      end
-      if length( t_R ) == 1
-        q_R = self.eval_q( iseg_R, t_R(1) );
-      else
-        q_R = t_R;
-      end
+    function [ q_L, q_R ] = eval_q_LR( self, L, R )
+      q_L = self.eval_q( L );
+      q_R = self.eval_q( R );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [ac] = eval_ac( self, iseg_L, t_L, x_L, lambda_L, ...
-                                    iseg_R, t_R, x_R, lambda_R, ...
-                                    pars, U )
+    function [a,b,c] = eval_abc( self, L, R, pars, U )
       %
-      % Compute the block of the nonlinear system
-      % given left and right states.
+      % Compute the block of the nonlinear system given left and right states.
+      %
+      % L.iseg     R.iseg
+      % L.q        R.q
+      % L.x        R.x
+      % L.lambda   R.lambda
       %
       % <<FD1.jpg>>
       %
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      ac = Zermelo_Mex( 'ac', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
-      );
+      [a,b,c] = Zermelo_Mex( 'abc', self.objectHandle, L, R, pars, U );
     end
     % ---------------------------------------------------------------------
-    function [ DacDxlxlp, DacDu ] = ...
-      eval_DacDxlxlpu( self, iseg_L, t_L, x_L, lambda_L, ...
-                             iseg_R, t_R, x_R, lambda_R, ...
-                             pars, U )
+    function DabcDxlxlpu = eval_DabcDxlxlpu( self, L, R, pars, U )
       %
       % Compute the block of the nonlinear system
       % given left and right states.
       %
       % <<FD2.jpg>>
       %
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [DacDxlxlp, DacDu] = Zermelo_Mex( ...
-        'DacDxlxlpu', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars, U ...
-      );
+      DabcDxlxlpu = Zermelo_Mex( 'DabcDxlxlpu', self.objectHandle, L, R, pars, U );
     end
     % ---------------------------------------------------------------------
-    function [h,c] = eval_hc( self, iseg_L, t_L, x_L, lambda_L, ...
-                                    iseg_R, t_R, x_R, lambda_R, pars )
+    function [h,c] = eval_hc( self, L, R, pars )
       %
       % Compute the block of the BC of the nonlinear
       % system given left and right states.
       %
       % <<FD3.jpg>>
       %
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [h,c] = Zermelo_Mex( 'hc', self.objectHandle, ...
-        iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-      );
+      [h,c] = Zermelo_Mex( 'hc', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function [Jh,Jc] = eval_DhcDxlxlop( self, iseg_L, t_L, x_L, lambda_L, ...
-                                              iseg_R, t_R, x_R, lambda_R, pars )
+    function [Jh,Jc] = eval_DhcDxlxlop( self, L, R, pars )
       %
       % Compute the block of the BC of the nonlinear system
       % given left and right states.
       %
       % <<FD4.jpg>>
       %
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      [Jh,Jc] = Zermelo_Mex( 'DhcDxlxlop', self.objectHandle, ...
-        iseg_L,  q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-      );
+      [Jh,Jc] = Zermelo_Mex( 'DhcDxlxlop', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % CONTINUOUS PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function u = eval_u( self, iseg_L, t_L, x_L, lambda_L, ...
-                               iseg_R, t_R, x_R, lambda_R, ...
-                               pars )
+    function u = eval_u( self, L, R, pars )
       %
       % Compute the control given states and multiplyers.
       %
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        u = Zermelo_Mex( 'u', self.objectHandle, ...
-          iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-        );
+      if L.iseg == L.iseg
+        u = Zermelo_Mex( 'u', self.objectHandle, L, R, pars );
       else
         u = zeros(self.dim_u,1);
       end
     end
     % ---------------------------------------------------------------------
-    function DuDxlxlp = eval_DuDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
-                                             iseg_R, t_R, x_R, lambda_R, ...
-                                             pars )
+    function DuDxlxlp = eval_DuDxlxlp( self, L, R, pars, MU )
       %
       % Compute the jacobian of controls given states and multiplyers.
       %
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        DuDxlxlp = Zermelo_Mex( 'DuDxlxlp', self.objectHandle, ...
-          iseg_L, q_L, x_L, lambda_L, iseg_R, q_R, x_R, lambda_R, pars ...
-        );
-      else
-        DuDxlxlp = zeros( self.dim_u, 4*self.dim_x+self.dim_pars );
-      end
+      DuDxlxlp = Zermelo_Mex( 'DuDxlxlp', self.objectHandle, L, R, pars, MU );
     end
     % ---------------------------------------------------------------------
     %   ____ ___ ____  _____ ____ _____
@@ -786,110 +714,54 @@ classdef Zermelo < handle
     %
     %  minimize Target
     %
-    %  subject to ODE: A(q,x,pars) x' = rhs( q, x, u, pars )
+    %  subject to ODE: rhs( q, x, pars, u ) - A( q, x, pars ) x'
     % ---------------------------------------------------------------------
-    function rhs = eval_rhs_ode( self, iseg, q, x, u, pars )
+    function rhs = eval_ode( self, S, pars, U, V )
       %
-      % Compute rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`.
+      % Compute rhs of the ODE `rhs( q, x, pars, u ) - A( q, x, pars ) x'`.
       %
-      rhs = Zermelo_Mex( 'rhs_ode', self.objectHandle, ...
-        iseg, q, x, u, pars ...
-      );
+      % S.iseg
+      % S.q
+      % S.x
+      %
+      rhs = Zermelo_Mex( 'ode', self.objectHandle, S, pars, U, V );
     end
     % ---------------------------------------------------------------------
     %
-    function J = eval_Drhs_odeDxpu( self, iseg, q, x, u, pars )
+    function J = eval_DodeDxpuv( self, S, pars, U, V )
       %
-      % Compute Jacobian of rhs of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % Compute Jacobian of rhs of the ODE `A( q, x, pars ) x' = rhs( q, x, pars, u )`
       % respect to `x`.
       %
-      J = Zermelo_Mex(...
-        'Drhs_odeDxpu', self.objectHandle, iseg, q, x, u, pars...
-      );
+      J = Zermelo_Mex( 'DodeDxpuv', self.objectHandle, S, pars, U, V );
     end
     % ---------------------------------------------------------------------
-    function A = eval_A( self, iseg, q, x, pars )
+    function A = eval_A( self, S, pars )
       %
-      % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, u, pars )`
+      % compute `A(q,x)` of the ODE `A(q,x,pars) x' = rhs( q, x, pars, u )`
       % respect to `pars`.
       %
-      A = Zermelo_Mex( 'A', self.objectHandle, iseg, q, x, pars );
+      A = Zermelo_Mex( 'A', self.objectHandle, S, pars );
     end
     % ---------------------------------------------------------------------
-    function eta = eval_eta( self, iseg, q, x, lambda, pars )
-      %
-      % Compute `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`.
-      %
-      eta = Zermelo_Mex(...
-        'eta', self.objectHandle, iseg, q, x, lambda, pars...
-      );
+    function bc = eval_bc( self, L, R, pars )
+      bc = Zermelo_Mex( 'bc', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DetaDxp( self, iseg, q, x, lambda, pars )
-      %
-      % Compute the jacobian of `eta(q,x,lambda,pars) = A(q,x,pars)^T lambda`
-      % respect to `x` and `pars`.
-      %
-      J = Zermelo_Mex(...
-        'DetaDxp', self.objectHandle, iseg, q, x, lambda, pars...
-      );
+    function J = eval_DbcDxxp( self, L, R, pars )
+      J = Zermelo_Mex( 'DbcDxxp', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function nu = eval_nu( self, iseg, q, x, V, pars )
-      %
-      % Compute `nu(q,x,V,pars) = A(q,x,pars) V`.
-      %
-      nu = Zermelo_Mex( 'nu', self.objectHandle, iseg, q, x, V, pars );
+    function target = eval_lagrange_target( self, S, pars, U )
+      target = Zermelo_Mex( 'lagrange_target', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DnuDxp( self, iseg, q, x, V, pars )
-      %
-      % Compute the Jacobian of `nu(q,x,V,pars) = A(q,x,pars) V`
-      % respect to `x` and `pars`.
-      %
-      J = Zermelo_Mex( 'DnuDxp', self.objectHandle, iseg, q, x, V, pars );
+    function DlagrangeDxpu = eval_DlagrangeDxpu( self, S, pars, U )
+      DlagrangeDxpu = Zermelo_Mex( 'DlagrangeDxpu', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function bc = eval_bc( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      bc = Zermelo_Mex( ...
-        'bc', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_DbcDxxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      J = Zermelo_Mex( ...
-        'DbcDxxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function J = eval_D2bcD2xxp( self, iseg_L, t_L, x_L, iseg_R, t_R, x_R, pars, omega_full )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      J = Zermelo_Mex( ...
-        'D2bcD2xxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars, omega_full ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function target = eval_lagrange_target( self, iseg, q, x, u, pars )
-      target = Zermelo_Mex( ...
-        'lagrange_target', self.objectHandle, iseg, q, x, u, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function DlagrangeDxpu = eval_DlagrangeDxpu( self, iseg, q, x, u, pars )
-      DlagrangeDxpu = Zermelo_Mex( ...
-        'DlagrangeDxpu', self.objectHandle, iseg, q, x, u, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function D2lagrangeD2xpu = eval_D2lagrangeD2xpu( self, iseg, q, x, u, pars )
-      D2lagrangeD2xpu = Zermelo_Mex( ...
-        'D2lagrangeD2xpu', self.objectHandle, iseg, q, x, u, pars ...
-      );
+    function D2lagrangeD2xpu = eval_D2lagrangeD2xpu( self, S, pars, U )
+      D2lagrangeD2xpu = Zermelo_Mex( 'D2lagrangeD2xpu', self.objectHandle, S, pars, U );
     end
     %
     %   ____  _               _
@@ -899,171 +771,41 @@ classdef Zermelo < handle
     %  |____/|_|_|  \___|\___|\__|
     %
     % ---------------------------------------------------------------------
-    function fd_ode = eval_fd_ode( self, iseg_L, t_L, x_L, ...
-                                         iseg_R, t_R, x_R, ...
-                                         U, pars )
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        fd_ode = Zermelo_Mex( ...
-          'fd_ode', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
-        );
-      else
-        % per ora solo condizione di continuità
-        fd_ode = x_R - x_L;
-      end
+    function J = eval_Dfd_BCDxlxlp( self, L, R, pars, omega )
+      J = Zermelo_Mex( 'Dfd_BCDxlxlp', self.objectHandle, L, R, pars, omega );
     end
     % ---------------------------------------------------------------------
-    function Dfd_odeDxxpu = eval_Dfd_odeDxxpu( self, iseg_L, t_L, x_L, ...
-                                                     iseg_R, t_R, x_R, ...
-                                                     U, pars )
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        Dfd_odeDxxpu = Zermelo_Mex( ...
-          'Dfd_odeDxxpu', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars ...
-        );
-      else
-        % per ora codizione di continuità
-        nx = self.dim_x;
-        np = self.dim_pars;
-        nu = self.dim_u;
-        Dfd_odeDxxpu = [ -eye(nx,nx), eye(nx,nx), zeros(nx,nu+np) ];
-      end
+    function target = eval_mayer_target( self, L, R, pars )
+      target = Zermelo_Mex( 'mayer_target', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function D2fd_odeD2xxpu = eval_D2fd_odeD2xxpu( self, iseg_L, t_L, x_L, ...
-                                                         iseg_R, t_R, x_R, ...
-                                                         U, pars, lambda )
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        D2fd_odeD2xxpu = Zermelo_Mex( ...
-          'D2fd_odeD2xxpu', self.objectHandle, ...
-          iseg_L, q_L, x_L, iseg_R, q_R, x_R, U, pars, lambda ...
-        );
-      else
-        nx = self.dim_x;
-        np = self.dim_pars;
-        nu = self.dim_u;
-        D2fd_odeD2xxpu = zeros( 2*nx+nu+np );
-      end
+    function DmayerDxxp = eval_DmayerDxxp( self, L, R, pars )
+      DmayerDxxp = Zermelo_Mex( 'DmayerDxxp', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function target = eval_mayer_target( self, iseg_L, t_L, x_L, ...
-                                               iseg_R, t_R, x_R, ...
-                                               pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      target = Zermelo_Mex( ...
-        'mayer_target', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
+    function D2mayerD2xxp = eval_D2mayerD2xxp( self, L, R, pars )
+      D2mayerD2xxp = Zermelo_Mex( 'D2mayerD2xxp', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function DmayerDxxp = eval_DmayerDxxp( self, iseg_L, t_L, x_L, ...
-                                                 iseg_R, t_R, x_R, ...
-                                                 pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      DmayerDxxp = Zermelo_Mex( ...
-        'DmayerDxxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function D2mayerD2xxp = eval_D2mayerD2xxp( self, iseg_L, t_L, x_L, ...
-                                                     iseg_R, t_R, x_R, ...
-                                                     pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      D2mayerD2xxp = Zermelo_Mex( ...
-        'D2mayerD2xxp', self.objectHandle, ...
-        iseg_L, q_L, x_L, iseg_R, q_R, x_R, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function c = eval_c( self, iseg, q, x, u, pars )
+    function c = eval_c( self, S, pars, U )
       %
       % Evaluate contraints c(x,u,p) <= 0
       %
-      c = Zermelo_Mex(...
-        'LTargs', self.objectHandle, iseg, q, x, u, pars ...
-      );
+      c = Zermelo_Mex( 'LTargs', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function c = eval_fd_c( self, iseg_L, t_L, x_L, ...
-                                  iseg_R, t_R, x_R, ...
-                                  u, pars )
-      %
-      % Evaluate contraints c(x_M,u,p) <= 0
-      %
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        q = (q_L+q_R)./2;
-        x = (x_L+x_R)./2;
-        c = self.eval_c(iseg_L,q,x,u,pars);
-      else
-        c = zeros( self.dim_ineq, 1 );
-      end
-    end
-    % ---------------------------------------------------------------------
-    function Jc = eval_DcDxpu( self, iseg, q, x, u, pars )
+    function Jc = eval_DcDxpu( self, S, pars, U )
       %
       % Evaluate jacobian of constraints c(x,u,p) <= 0
       %
-      Jc = Zermelo_Mex(...
-        'DLTargsDxpu', self.objectHandle, iseg, q, x, u, pars ...
-      );
+      Jc = Zermelo_Mex( 'DLTargsDxpu', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function Jc = eval_Dfd_cDxxpu( self, iseg_L, t_L, x_L, ...
-                                         iseg_R, t_R, x_R, ...
-                                         u, pars )
-      %
-      % Evaluate jacobian of constraints c(x,u,p) <= 0
-      %
-      nx = self.dim_x;
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        q      = (q_L+q_R)./2;
-        x      = (x_L+x_R)./2;
-        Jc_pre = self.eval_DcDxpu( iseg_L, q, x, u, pars );
-        Jx     = 0.5*Jc_pre(:,1:nx);
-        Jc     = [Jx,Jx,Jc_pre(:,nx+1:end)];
-      else
-        nn = 2*nx + self.dim_u + self.dim_pars;
-        Jc = zeros( self.dim_ineq, nn );
-      end
-    end
-    % ---------------------------------------------------------------------
-    function Hc = eval_D2cD2xpu( self, iseg, q, x, u, pars, omega )
+    function Hc = eval_D2cD2xpu( self, S, pars, U, omega )
       %
       % Evaluate hessian of constraints omega . c(x,u,p) <= 0
       %
-      Hc = Zermelo_Mex(...
-        'D2LTargsD2xpu', self.objectHandle, iseg, q, x, u, pars, omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function HcBIG = eval_D2fd_cD2xxpu( self, iseg_L, t_L, x_L, ...
-                                              iseg_R, t_R, x_R, ...
-                                              u, pars, omega )
-      %
-      % Evaluate hessian of constraints omega . c(x,u,p) <= 0
-      %
-      if iseg_L == iseg_R
-        [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-        q_M = (q_R+q_L)/2;
-        x_M = (x_R+x_L)/2;
-        Hc = self.eval_D2cD2xpu( iseg_L, q_M, x_M, u, pars, omega );
-        nx = self.dim_x;
-        A  = Hc(1:nx,1:nx)./4;
-        B  = Hc(1:nx,nx+1:end)./2;
-        C  = Hc(nx+1:end,nx+1:end);
-        HcBIG = [ A,   A,   B; ...
-                  A,   A,   B; ...
-                  B.', B.', C ];
-      else
-        nn    = 2*self.dim_x + self.dim_u + self.dim_pars;
-        HcBIG = zeros( nn, nn );
-      end
+      Hc = Zermelo_Mex( 'D2LTargsD2xpu', self.objectHandle, S, pars, U, omega );
     end
     %
     %
@@ -1073,125 +815,74 @@ classdef Zermelo < handle
     %   | || |\  | |_| | ||  _ <| |__| |___  | |
     %  |___|_| \_|____/___|_| \_\_____\____| |_|
     % ---------------------------------------------------------------------
-    function Hxp = eval_Hxp( self, iseg, q, x, lambda, V, u, pars )
+    function Hxp = eval_Hxp( self, S, pars, MU, U, V )
       %
       % Derivative of H(x,V,lambda,u,pars,zeta) =
-      %   J(x,u,pars,zeta) + lambda.(f(x,u,pars,zeta)-A(x,pars,zeta)*V)
+      %   J(x,u,pars,zeta) + lambda.f(x,u,pars,zeta)
       %
-      % Hxp(x,V,lambda,u,p,zeta) = partial_{xp} H(...)
+      % Hxp(x,u,p,mu,zeta) = partial_{xp} H(...)
       %
-      Hxp = Zermelo_Mex(...
-        'Hxp', self.objectHandle, iseg, q, x, lambda, V, u, pars...
-      );
+      Hxp = Zermelo_Mex( 'Hxp', self.objectHandle, S, pars, MU, U, V );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DHxpDxpu( self, iseg, q, x, lambda, V, u, pars )
+    function J = eval_DHxpDxpuv( self, S, pars, MU, U, V )
       %
-      % Compute the jacobian of `Hxp(q,x,lambda,V,pars)`
-      % respect to `x` and `pars`.
+      % Compute the jacobian of `Hxp( q, x, pars, mu, U, V )`
+      % respect to `x`, `lambda`, `u` and `pars`.
       %
-      J = Zermelo_Mex(...
-        'DHxpDxpu', self.objectHandle, iseg, q, x, lambda, V, u, pars ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function Hu = eval_Hu( self, iseg, q, x, lambda, u, pars )
-      %
-      % Derivative of H(x,V,lambda,u,pars,zeta) =
-      %   J(x,u,pars,zeta) + lambda.(f(x,u,pars,zeta)-A(x,pars,zeta)*V)
-      %
-      % Hu(x,lambda,u,p,zeta) = partial_u H(...)
-      %
-      Hu = Zermelo_Mex(...
-        'Hu', self.objectHandle, iseg, q, x, lambda, u, pars...
-      );
+      J = Zermelo_Mex( 'DHxpDxpuv', self.objectHandle, S, pars, MU, U, V );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function J = eval_penalties( self, iseg, q, x, u, pars )
+    function J = eval_penalties( self, S, pars, U )
       %
       % Compute Jp(x,u,pars,zeta)
       %
-      J = Zermelo_Mex( 'JP', self.objectHandle, iseg, q, x, u, pars );
+      J = Zermelo_Mex( 'JP', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function J = eval_control_penalties( self, iseg, q, x, u, pars )
+    function J = eval_control_penalties( self, S, pars, U )
       %
       % Compute Ju(x,u,pars,zeta)
       %
-      J = Zermelo_Mex( 'JU', self.objectHandle, iseg, q, x, u, pars );
+      J = Zermelo_Mex( 'JU', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function LT = eval_LT( self, iseg, q, x, u, pars )
-      LT = Zermelo_Mex(...
-        'LT', self.objectHandle, iseg, q, x, u, pars...
-      );
+    function JP = eval_JP( self, S, pars, U )
+      JP = Zermelo_Mex( 'JP', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function JP = eval_JP( self, iseg, q, x, u, pars )
-      JP = Zermelo_Mex(...
-        'JP', self.objectHandle, iseg, q, x, u, pars...
-      );
+    function JU = eval_JU( self, S, pars, U )
+      JU = Zermelo_Mex( 'JU', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function JU = eval_JU( self, iseg, q, x, u, pars )
-      JU = Zermelo_Mex(...
-        'JU', self.objectHandle, iseg, q, x, u, pars...
-      );
+    function LT = eval_LT( self, S, pars, U )
+      LT = Zermelo_Mex( 'LT', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
-    function LTargs = eval_LTargs( self, iseg, q, x, u, pars )
-      LTargs = Zermelo_Mex(...
-        'LTargs', self.objectHandle, iseg, q, x, u, pars...
-      );
+    function LTargs = eval_LTargs( self, S, pars, U )
+      LTargs = Zermelo_Mex( 'LTargs', self.objectHandle, S, pars, U );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function jmp = eval_jump( self, iseg_L, t_L, x_L, lambda_L, ...
-                                    iseg_R, t_R, x_R, lambda_R, pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      jmp = Zermelo_Mex( ...
-        'jump', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, ...
-        iseg_R, q_R, x_R, lambda_R, ...
-        pars ...
-      );
+    function jmp = eval_jump( self, L, R, pars )
+      jmp = Zermelo_Mex( 'jump', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    function J = eval_DjumpDxlxlp( self, iseg_L, t_L, x_L, lambda_L, ...
-                                         iseg_R, t_R, x_R, lambda_R, pars )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      J = Zermelo_Mex( ...
-        'DjumpDxlxlp', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, ...
-        iseg_R, q_R, x_R, lambda_R, ...
-        pars ...
-      );
+    function J = eval_DjumpDxlxlp( self, L, R, pars )
+      J = Zermelo_Mex( 'DjumpDxlxlp', self.objectHandle, L, R, pars );
     end
     % ---------------------------------------------------------------------
-    % DA FARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    % omega*Jump(x_l,lambda_L,x_R,lambda_R,pars)
-    %
-    function H = eval_Hessian_jump_xlxlp( self, ...
-      iseg_L, t_L, x_L, lambda_L, ...
-      iseg_R, t_R, x_R, lambda_R, ...
-      pars, omega                 ...
-    )
-      [q_L,q_R] = self.eval_q_LR( iseg_L, t_L, iseg_R, t_R );
-      H = Zermelo_Mex( ...
-        'Hessian_jump_xlxlp', self.objectHandle, ...
-        iseg_L, q_L, x_L, lambda_L, ...
-        iseg_R, q_R, x_R, lambda_R, ...
-        pars, omega ...
-      );
-    end
-    % ---------------------------------------------------------------------
-    function target = eval_q( self, i_segment, s )
-      target = Zermelo_Mex( 'mesh_functions', self.objectHandle, i_segment, s );
+    function target = eval_q( self, S )
+      %
+      % S.i_segment
+      % S.s
+      %
+      target = Zermelo_Mex( 'mesh_functions', self.objectHandle, S );
     end
     % ---------------------------------------------------------------------
     function nodes = get_nodes( self )
@@ -1219,52 +910,40 @@ classdef Zermelo < handle
       res = Zermelo_Mex('A_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
+    function res = DetaDxp_pattern( self )
+      res = Zermelo_Mex('DetaDxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
     function res = DbcDxxp_pattern( self )
       res = Zermelo_Mex('DbcDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = D2bcD2xxp_pattern( self )
-      res = Zermelo_Mex('D2bcD2xxp_pattern', self.objectHandle );
+    function res = DodeDxpuv_pattern( self )
+      res = Zermelo_Mex('DodeDxpuv_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = Drhs_odeDxpu_pattern( self )
-      res = Zermelo_Mex('Drhs_odeDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DsegmentLinkDxp_pattern( self )
-      res = Zermelo_Mex('DsegmentLinkDxp_pattern', self.objectHandle );
+    function res = DsegmentLinkDxxp_pattern( self )
+      res = Zermelo_Mex('DsegmentLinkDxxp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DjumpDxlxlp_pattern( self )
       res = Zermelo_Mex('DjumpDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DHxpDxpu_pattern( self )
-      res = Zermelo_Mex('DHxpDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJPDxpu_pattern( self )
-      res = Zermelo_Mex('DJPDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DLTDxpu_pattern( self )
-      res = Zermelo_Mex('DLTDxpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DJUDxpu_pattern( self )
-      res = Zermelo_Mex('DJUDxpu_pattern', self.objectHandle );
+    function res = DHxpDxpuv_pattern( self )
+      res = Zermelo_Mex('DHxpDxpuv_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = D2JPD2xpu_pattern( self )
       res = Zermelo_Mex('D2JPD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = D2LTD2xpu_pattern( self )
-      res = Zermelo_Mex('D2LTD2xpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = D2JUD2xpu_pattern( self )
       res = Zermelo_Mex('D2JUD2xpu_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2LTD2xpu_pattern( self )
+      res = Zermelo_Mex('D2LTD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DLTargsDxpu_pattern( self )
@@ -1275,24 +954,12 @@ classdef Zermelo < handle
       res = Zermelo_Mex('D2LTargsD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DnuDxp_pattern( self )
-      res = Zermelo_Mex('DnuDxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DetaDxp_pattern( self )
-      res = Zermelo_Mex('DetaDxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DgDxlxlp_pattern( self )
-      res = Zermelo_Mex('DgDxlxlp_pattern', self.objectHandle );
+    function res = DgDxpm_pattern( self )
+      res = Zermelo_Mex('DgDxpm_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DgDu_pattern( self )
       res = Zermelo_Mex('DgDu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DmDuu_pattern( self )
-      res = Zermelo_Mex('DmDuu_pattern', self.objectHandle );
     end
 
     % ---------------------------------------------------------------------

@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: PointMassCarModel_4_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 10/11/2022                                       #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -20,22 +20,21 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+wT0       = 0.01
 road_tol0 = 0.01
+p_epsi0   = 0.1
+wT        = wT0
 up_tol0   = 0.01
 up_epsi0  = 0.1
-wT0       = 0.01
-wT        = wT0
-p_epsi0   = 0.1
 p_tol0    = 0.1
 m         = 700.0
 kD        = 0.2500000000/m
 
 mechatronix do |data|
 
-  data.Debug     = false  # activate run time debug
-  data.Doctor    = false  # Enable doctor
-  data.InfoLevel = 4      # Level of message
-  data.Use_control_penalties_in_adjoint_equations = false
+  data.Debug             = false  # activate run time debug
+  data.Doctor            = false  # Enable doctor
+  data.InfoLevel         = 4      # Level of message
   data.Max_penalty_value = 1000
 
   #  _   _                        _
@@ -45,20 +44,26 @@ mechatronix do |data|
   #  \__|_| |_|_|  \___|\__,_|\__,_|___/
 
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads   = [1,$MAX_THREAD_NUM-1].max
-  data.U_threaded  = true
-  data.F_threaded  = true
-  data.JF_threaded = true
-  data.LU_threaded = true
+  data.N_threads             = [1,$MAX_THREAD_NUM-1].max
+  data.U_threaded            = true
+  data.JU_threaded           = true
+  data.F_threaded            = true
+  data.JF_threaded           = true
+  data.LU_threaded           = true
+  data.LU_factorize_threaded = true
+  data.LU_solve_threaded     = true
+
 
   # Enable check jacobian and controls
+  data.MuCheck_epsilon       = 1e-6
+  data.MuCheck               = false
   data.ControlsCheck         = true
   data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
   data.JacobianCheckFull     = false
   data.JacobianCheck_epsilon = 1e-4
 
-  # jacobian discretization: 'ANALYTIC', 'ANALYTIC2', 'FINITE_DIFFERENCE'
+  # jacobian discretization: 'ANALYTIC', 'FINITE_DIFFERENCE'
   data.JacobianDiscretization = 'ANALYTIC'
 
   # jacobian discretization BC part: 'ANALYTIC', 'FINITE_DIFFERENCE'
@@ -391,74 +396,74 @@ mechatronix do |data|
     :is_SAE   => false,
     :segments => [
       {
-        :length     => 190.0,
-        :rightWidth => 60.0,
-        :gridSize   => 1.0,
+        :curvature  => 0.0,
         :leftWidth  => 15/2.0,
-        :curvature  => 0.0,
+        :length     => 190.0,
+        :gridSize   => 1.0,
+        :rightWidth => 60.0,
       },
       {
-        :length     => 973.8937227,
-        :rightWidth => 30.0,
-        :gridSize   => 1.0,
-        :leftWidth  => 60.0,
         :curvature  => 0.003225806452,
+        :leftWidth  => 60.0,
+        :length     => 973.8937227,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
       },
       {
+        :curvature  => 0.0,
+        :leftWidth  => 30.0,
         :length     => 180.0,
-        :rightWidth => 30.0,
         :gridSize   => 1.0,
-        :leftWidth  => 30.0,
-        :curvature  => 0.0,
+        :rightWidth => 30.0,
       },
       {
-        :length     => 235.619449,
-        :rightWidth => 15.0,
-        :gridSize   => 1.0,
-        :leftWidth  => 20.0,
         :curvature  => 0.006666666667,
-      },
-      {
-        :length     => 240.0,
-        :rightWidth => 30.0,
-        :gridSize   => 1.0,
-        :leftWidth  => 30.0,
-        :curvature  => 0.0,
-      },
-      {
+        :leftWidth  => 20.0,
         :length     => 235.619449,
-        :rightWidth => 30.0,
         :gridSize   => 1.0,
+        :rightWidth => 15.0,
+      },
+      {
+        :curvature  => 0.0,
         :leftWidth  => 30.0,
+        :length     => 240.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+      },
+      {
         :curvature  => -1/150.0,
+        :leftWidth  => 30.0,
+        :length     => 235.619449,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
       },
       {
+        :curvature  => 0.0,
+        :leftWidth  => 30.0,
         :length     => 200.0,
-        :rightWidth => 30.0,
         :gridSize   => 1.0,
-        :leftWidth  => 30.0,
-        :curvature  => 0.0,
+        :rightWidth => 30.0,
       },
       {
-        :length     => 125.6637062,
-        :rightWidth => 30.0,
-        :gridSize   => 1.0,
-        :leftWidth  => 30.0,
         :curvature  => 0.025,
-      },
-      {
-        :length     => 480.0,
-        :rightWidth => 30.0,
+        :leftWidth  => 30.0,
+        :length     => 125.6637062,
         :gridSize   => 1.0,
-        :leftWidth  => 30.0,
-        :curvature  => 0.0,
+        :rightWidth => 30.0,
       },
       {
-        :length     => 10.0,
-        :rightWidth => 30.0,
-        :gridSize   => 0.1,
-        :leftWidth  => 30.0,
         :curvature  => 0.0,
+        :leftWidth  => 30.0,
+        :length     => 480.0,
+        :gridSize   => 1.0,
+        :rightWidth => 30.0,
+      },
+      {
+        :curvature  => 0.0,
+        :leftWidth  => 30.0,
+        :length     => 10.0,
+        :gridSize   => 0.1,
+        :rightWidth => 30.0,
       },
     ],
   };

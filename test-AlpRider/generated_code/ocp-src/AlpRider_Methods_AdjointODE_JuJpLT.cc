@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_AdjointODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -58,67 +58,47 @@ namespace AlpRiderDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer AlpRider::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   AlpRider::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer AlpRider::LT_numEqns() const { return 1; }
-
-  void
-  AlpRider::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = q_lower(Q__[iQ_zeta]);
-    real_type t4   = X__[iX_y1] * X__[iX_y1];
-    real_type t6   = X__[iX_y2] * X__[iX_y2];
-    real_type t8   = X__[iX_y3] * X__[iX_y3];
-    real_type t10  = X__[iX_y4] * X__[iX_y4];
-    result__[ 0   ] = Ybound(t2 - t4 - t6 - t8 - t10);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer AlpRider::JU_numEqns() const { return 0; }
-
-  void
+  real_type
   AlpRider::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer AlpRider::LTargs_numEqns() const { return 1; }
-
-  void
-  AlpRider::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  real_type
+  AlpRider::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -129,53 +109,73 @@ namespace AlpRiderDefine {
     real_type t6   = X__[iX_y2] * X__[iX_y2];
     real_type t8   = X__[iX_y3] * X__[iX_y3];
     real_type t10  = X__[iX_y4] * X__[iX_y4];
-    result__[ 0   ] = t2 - t4 - t6 - t8 - t10;
+    real_type result__ = Ybound(t2 - t4 - t6 - t8 - t10);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DJPDxpu_numRows() const { return 0; }
-  integer AlpRider::DJPDxpu_numCols() const { return 6; }
-  integer AlpRider::DJPDxpu_nnz()     const { return 0; }
+
+  integer AlpRider::JPxpu_numEqns() const { return 6; }
 
   void
-  AlpRider::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  AlpRider::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  AlpRider::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DLTDxpu_numRows() const { return 1; }
-  integer AlpRider::DLTDxpu_numCols() const { return 6; }
-  integer AlpRider::DLTDxpu_nnz()     const { return 4; }
+
+  integer AlpRider::JUxpu_numEqns() const { return 6; }
 
   void
-  AlpRider::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+  AlpRider::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 6, i_segment );
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer AlpRider::LTxpu_numEqns() const { return 6; }
 
   void
-  AlpRider::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  AlpRider::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -195,64 +195,36 @@ namespace AlpRiderDefine {
     result__[ 1   ] = -2 * t5 * t12;
     result__[ 2   ] = -2 * t7 * t12;
     result__[ 3   ] = -2 * t9 * t12;
+    result__[ 4   ] = 0;
+    result__[ 5   ] = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 6, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DJUDxpu_numRows() const { return 0; }
-  integer AlpRider::DJUDxpu_numCols() const { return 6; }
-  integer AlpRider::DJUDxpu_nnz()     const { return 0; }
+
+  integer AlpRider::LTargs_numEqns() const { return 1; }
 
   void
-  AlpRider::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  AlpRider::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer AlpRider::DLTargsDxpu_numRows() const { return 1; }
-  integer AlpRider::DLTargsDxpu_numCols() const { return 6; }
-  integer AlpRider::DLTargsDxpu_nnz()     const { return 4; }
-
-  void
-  AlpRider::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
-  }
-
-
-  void
-  AlpRider::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  AlpRider::LTargs_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = -2 * X__[iX_y1];
-    result__[ 1   ] = -2 * X__[iX_y2];
-    result__[ 2   ] = -2 * X__[iX_y3];
-    result__[ 3   ] = -2 * X__[iX_y4];
+    real_type t2   = q_lower(Q__[iQ_zeta]);
+    real_type t4   = X__[iX_y1] * X__[iX_y1];
+    real_type t6   = X__[iX_y2] * X__[iX_y2];
+    real_type t8   = X__[iX_y3] * X__[iX_y3];
+    real_type t10  = X__[iX_y4] * X__[iX_y4];
+    result__[ 0   ] = t2 - t4 - t6 - t8 - t10;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "LTargs_eval", 1, i_segment );
   }
-
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -268,15 +240,13 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer AlpRider::D2LTD2xpu_numRows() const { return 6; }
@@ -306,11 +276,10 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -327,33 +296,29 @@ namespace AlpRiderDefine {
     real_type t10  = t9 * t9;
     real_type t11  = t2 - t4 - t6 - t8 - t10;
     real_type t12  = ALIAS_Ybound_DD(t11);
-    real_type t14  = OMEGA__[0];
-    real_type t17  = ALIAS_Ybound_D(t11);
-    real_type t19  = 2 * t14 * t17;
-    result__[ 0   ] = 4 * t12 * t14 * t4 - t19;
-    real_type t21  = t14 * t3;
-    result__[ 1   ] = 4 * t21 * t5 * t12;
-    real_type t23  = t7 * t12;
-    result__[ 2   ] = 4 * t21 * t23;
-    real_type t25  = t9 * t12;
-    result__[ 3   ] = 4 * t21 * t25;
+    real_type t15  = ALIAS_Ybound_D(t11);
+    real_type t16  = 2 * t15;
+    result__[ 0   ] = 4 * t4 * t12 - t16;
+    result__[ 1   ] = 4 * t3 * t5 * t12;
+    real_type t19  = t7 * t12;
+    result__[ 2   ] = 4 * t3 * t19;
+    real_type t21  = t9 * t12;
+    result__[ 3   ] = 4 * t3 * t21;
     result__[ 4   ] = result__[1];
-    result__[ 5   ] = 4 * t12 * t14 * t6 - t19;
-    real_type t30  = t14 * t5;
-    result__[ 6   ] = 4 * t30 * t23;
-    result__[ 7   ] = 4 * t30 * t25;
+    result__[ 5   ] = 4 * t6 * t12 - t16;
+    result__[ 6   ] = 4 * t5 * t19;
+    result__[ 7   ] = 4 * t5 * t21;
     result__[ 8   ] = result__[2];
     result__[ 9   ] = result__[6];
-    result__[ 10  ] = 4 * t12 * t14 * t8 - t19;
-    result__[ 11  ] = 4 * t14 * t7 * t25;
+    result__[ 10  ] = 4 * t8 * t12 - t16;
+    result__[ 11  ] = 4 * t7 * t21;
     result__[ 12  ] = result__[3];
     result__[ 13  ] = result__[7];
     result__[ 14  ] = result__[11];
-    result__[ 15  ] = 4 * t10 * t12 * t14 - t19;
+    result__[ 15  ] = 4 * t10 * t12 - t16;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 16, i_segment );
   }
-
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer AlpRider::D2JUD2xpu_numRows() const { return 6; }
@@ -368,14 +333,47 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer AlpRider::DLTargsDxpu_numRows() const { return 1; }
+  integer AlpRider::DLTargsDxpu_numCols() const { return 6; }
+  integer AlpRider::DLTargsDxpu_nnz()     const { return 4; }
+
+  void
+  AlpRider::DLTargsDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
+    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
+  }
+
+
+  void
+  AlpRider::DLTargsDxpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = -2 * X__[iX_y1];
+    result__[ 1   ] = -2 * X__[iX_y2];
+    result__[ 2   ] = -2 * X__[iX_y3];
+    result__[ 3   ] = -2 * X__[iX_y4];
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "DLTargsDxpu_sparse", 4, i_segment );
+  }
+
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -394,11 +392,11 @@ namespace AlpRiderDefine {
 
   void
   AlpRider::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,45 +67,24 @@ namespace ICLOCS_PathConstrainedDefine {
 
   real_type
   ICLOCS_PathConstrained::g_fun_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
+    real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
-    real_type t5   = XL__[iX_x1] * XL__[iX_x1];
-    real_type t6   = XL__[iX_x2];
+    real_type t5   = X__[iX_x1] * X__[iX_x1];
+    real_type t6   = X__[iX_x2];
     real_type t7   = t6 * t6;
-    real_type t8   = LM__[0];
-    real_type t10  = LM__[1];
-    real_type t13  = uControl(t1, -20, 20);
-    real_type t17  = pow(QL__[iQ_zeta] - 0.5e0, 2);
-    real_type t20  = x2bound(0.5e0 - 8 * t17 + t6);
-    real_type t22  = XR__[iX_x1] * XR__[iX_x1];
-    real_type t23  = XR__[iX_x2];
-    real_type t24  = t23 * t23;
-    real_type t30  = pow(QR__[iQ_zeta] - 0.5e0, 2);
-    real_type t33  = x2bound(0.5e0 - 8 * t30 + t23);
-    real_type result__ = 0.10e-1 * t2 + t5 + t7 + t6 * t8 + (-t6 + t1) * t10 + 2 * t13 + t20 + t22 + t24 + t23 * t8 + (-t23 + t1) * t10 + t33;
+    real_type t8   = uControl(t1, -20, 20);
+    real_type t11  = pow(Q__[iQ_zeta] - 0.5e0, 2);
+    real_type t14  = x2bound(0.5e0 - 8 * t11 + t6);
+    real_type result__ = 0.5e-2 * t2 + t5 + t7 + t8 + t14 + t6 * MU__[0] + (-t6 + t1) * MU__[1];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -118,81 +97,51 @@ namespace ICLOCS_PathConstrainedDefine {
 
   void
   ICLOCS_PathConstrained::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t5   = ALIAS_uControl_D_1(t1, -20, 20);
-    result__[ 0   ] = 0.20e-1 * t1 + 2 * LM__[1] + 2 * t5;
+    real_type t1   = U__[iU_u];
+    real_type t3   = ALIAS_uControl_D_1(t1, -20, 20);
+    result__[ 0   ] = 0.10e-1 * t1 + t3 + MU__[1];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_PathConstrained::DgDxlxlp_numRows() const { return 1; }
-  integer ICLOCS_PathConstrained::DgDxlxlp_numCols() const { return 8; }
-  integer ICLOCS_PathConstrained::DgDxlxlp_nnz()     const { return 2; }
+  integer ICLOCS_PathConstrained::DgDxpm_numRows() const { return 1; }
+  integer ICLOCS_PathConstrained::DgDxpm_numCols() const { return 4; }
+  integer ICLOCS_PathConstrained::DgDxpm_nnz()     const { return 1; }
 
   void
-  ICLOCS_PathConstrained::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_PathConstrained::DgDxpm_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
-    iIndex[1 ] = 0   ; jIndex[1 ] = 7   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_PathConstrained::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_PathConstrained::DgDxpm_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = 1.0;
-    result__[ 1   ] = 1.0;
+    result__[ 0   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 2, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -210,32 +159,18 @@ namespace ICLOCS_PathConstrainedDefine {
 
   void
   ICLOCS_PathConstrained::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[2], LM__[2];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    XM__[1] = (XL__[1]+XR__[1])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
-    LM__[1] = (LL__[1]+LR__[1])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(UM__[0], -20, 20);
-    result__[ 0   ] = 0.20e-1 + 2 * t2;
+    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -20, 20);
+    result__[ 0   ] = 0.10e-1 + t2;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -258,99 +193,15 @@ namespace ICLOCS_PathConstrainedDefine {
 
   void
   ICLOCS_PathConstrained::u_eval_analytic(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        U__
   ) const {
     UTILS_ERROR(
       "ICLOCS_PathConstrained::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"
     );
-  }
-
-  /*\
-  :|:   ___         _           _   ___    _   _            _
-  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
-  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
-  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
-  \*/
-
-  real_type
-  ICLOCS_PathConstrained::m_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = uControl(t1, -20, 20);
-    real_type t5   = pow(Q__[iQ_zeta] - 0.5e0, 2);
-    real_type t7   = X__[iX_x2];
-    real_type t9   = x2bound(0.5e0 - 8 * t5 + t7);
-    real_type t12  = pow(V__[0] - t7, 2);
-    real_type t15  = pow(V__[1] + t7 - t1, 2);
-    real_type result__ = t2 + t9 + t12 + t15;
-    if ( m_debug ) {
-      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ICLOCS_PathConstrained::DmDu_numEqns() const { return 1; }
-
-  void
-  ICLOCS_PathConstrained::DmDu_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = ALIAS_uControl_D_1(t1, -20, 20);
-    result__[ 0   ] = t2 - 2 * V__[1] - 2 * X__[iX_x2] + 2 * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_PathConstrained::DmDuu_numRows() const { return 1; }
-  integer ICLOCS_PathConstrained::DmDuu_numCols() const { return 1; }
-  integer ICLOCS_PathConstrained::DmDuu_nnz()     const { return 1; }
-
-  void
-  ICLOCS_PathConstrained::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  ICLOCS_PathConstrained::DmDuu_sparse(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -20, 20);
-    result__[ 0   ] = t2 + 2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }
 
 }

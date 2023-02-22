@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau.hh                                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -81,25 +81,30 @@ namespace BangBangFtauDefine {
   extern char const *namesConstraint2D[];
   extern char const *namesConstraintU[];
 
-  using Mechatronix::X_pointer_type;
-  using Mechatronix::L_pointer_type;
-  using Mechatronix::Z_pointer_type;
-  using Mechatronix::U_pointer_type;
-  using Mechatronix::V_pointer_type;
-  using Mechatronix::Q_pointer_type;
-  using Mechatronix::P_pointer_type;
-  using Mechatronix::OMEGA_pointer_type;
-  using Mechatronix::OMEGA_full_pointer_type;
+  using Mechatronix::X_p_type;
+  using Mechatronix::L_p_type;
+  using Mechatronix::Z_p_type;
+  using Mechatronix::U_p_type;
+  using Mechatronix::MU_p_type;
+  using Mechatronix::V_p_type;
+  using Mechatronix::Q_p_type;
+  using Mechatronix::P_p_type;
+  using Mechatronix::OMEGA_p_type;
+  using Mechatronix::OMEGA_full_p_type;
 
-  using Mechatronix::X_const_pointer_type;
-  using Mechatronix::L_const_pointer_type;
-  using Mechatronix::Z_const_pointer_type;
-  using Mechatronix::U_const_pointer_type;
-  using Mechatronix::V_const_pointer_type;
-  using Mechatronix::Q_const_pointer_type;
-  using Mechatronix::P_const_pointer_type;
-  using Mechatronix::OMEGA_const_pointer_type;
-  using Mechatronix::OMEGA_full_const_pointer_type;
+  using Mechatronix::X_const_p_type;
+  using Mechatronix::L_const_p_type;
+  using Mechatronix::Z_const_p_type;
+  using Mechatronix::U_const_p_type;
+  using Mechatronix::MU_const_p_type;
+  using Mechatronix::V_const_p_type;
+  using Mechatronix::Q_const_p_type;
+  using Mechatronix::P_const_p_type;
+  using Mechatronix::OMEGA_const_p_type;
+  using Mechatronix::OMEGA_full_const_p_type;
+
+  using Mechatronix::NodeQX;
+  using Mechatronix::NodeQXL;
 
   using Mechatronix::MatrixWrapper;
 
@@ -141,11 +146,7 @@ namespace BangBangFtauDefine {
 
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
-
     using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-
-    using Mechatronix::Discretized_Indirect_OCP::bc_map;
-    using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -156,11 +157,18 @@ namespace BangBangFtauDefine {
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
     using Mechatronix::Discretized_Indirect_OCP::num_parameters;
+
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
+
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_values;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF;
+
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_nnz;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_pattern;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_values;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2;
 
     using Mechatronix::Discretized_Indirect_OCP::get_solution;
     using Mechatronix::Discretized_Indirect_OCP::get_solution_as_spline;

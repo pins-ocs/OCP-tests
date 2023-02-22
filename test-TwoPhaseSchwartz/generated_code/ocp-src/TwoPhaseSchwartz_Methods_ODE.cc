@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -66,76 +66,87 @@ namespace TwoPhaseSchwartzDefine {
    |   \___/|___/|___|
   \*/
 
-  integer TwoPhaseSchwartz::rhs_ode_numEqns() const { return 4; }
+  integer TwoPhaseSchwartz::ode_numEqns() const { return 4; }
 
   void
-  TwoPhaseSchwartz::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  TwoPhaseSchwartz::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = X__[iX_x2];
-    real_type t3   = X__[iX_x1] * X__[iX_x1];
-    result__[ 1   ] = U__[iU_u1] - 0.1e0 * result__[0] * (2 * t3 + 1);
-    real_type t8   = ModelPars[iM_T2];
-    real_type t9   = X__[iX_x4];
-    result__[ 2   ] = t9 * t8;
-    real_type t12  = X__[iX_x3] * X__[iX_x3];
-    result__[ 3   ] = (U__[iU_u2] - 0.1e0 * t9 * (2 * t12 + 1)) * t8;
+    real_type t1   = X__[iX_x2];
+    result__[ 0   ] = t1 - V__[0];
+    real_type t5   = X__[iX_x1] * X__[iX_x1];
+    result__[ 1   ] = U__[iU_u1] - 0.1e0 * t1 * (2 * t5 + 1) - V__[1];
+    real_type t11  = ModelPars[iM_T2];
+    real_type t12  = X__[iX_x4];
+    result__[ 2   ] = t12 * t11 - V__[2];
+    real_type t17  = X__[iX_x3] * X__[iX_x3];
+    result__[ 3   ] = (U__[iU_u2] - 0.1e0 * t12 * (2 * t17 + 1)) * t11 - V__[3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::Drhs_odeDxpu_numRows() const { return 4; }
-  integer TwoPhaseSchwartz::Drhs_odeDxpu_numCols() const { return 6; }
-  integer TwoPhaseSchwartz::Drhs_odeDxpu_nnz()     const { return 8; }
+  integer TwoPhaseSchwartz::DodeDxpuv_numRows() const { return 4; }
+  integer TwoPhaseSchwartz::DodeDxpuv_numCols() const { return 10; }
+  integer TwoPhaseSchwartz::DodeDxpuv_nnz()     const { return 12; }
 
   void
-  TwoPhaseSchwartz::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  TwoPhaseSchwartz::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 1   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 4   ;
-    iIndex[4 ] = 2   ; jIndex[4 ] = 3   ;
-    iIndex[5 ] = 3   ; jIndex[5 ] = 2   ;
-    iIndex[6 ] = 3   ; jIndex[6 ] = 3   ;
-    iIndex[7 ] = 3   ; jIndex[7 ] = 5   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 6   ;
+    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 7   ;
+    iIndex[6 ] = 2   ; jIndex[6 ] = 3   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 8   ;
+    iIndex[8 ] = 3   ; jIndex[8 ] = 2   ;
+    iIndex[9 ] = 3   ; jIndex[9 ] = 3   ;
+    iIndex[10] = 3   ; jIndex[10] = 5   ;
+    iIndex[11] = 3   ; jIndex[11] = 9   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoPhaseSchwartz::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  TwoPhaseSchwartz::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
     real_type t1   = X__[iX_x1];
-    result__[ 1   ] = -0.4e0 * X__[iX_x2] * t1;
+    result__[ 2   ] = -0.4e0 * X__[iX_x2] * t1;
     real_type t5   = t1 * t1;
-    result__[ 2   ] = -0.1e0 - 0.2e0 * t5;
-    result__[ 3   ] = 1;
-    result__[ 4   ] = ModelPars[iM_T2];
+    result__[ 3   ] = -0.1e0 - 0.2e0 * t5;
+    result__[ 4   ] = 1;
+    result__[ 5   ] = -1;
+    result__[ 6   ] = ModelPars[iM_T2];
+    result__[ 7   ] = -1;
     real_type t7   = X__[iX_x3];
-    result__[ 5   ] = -0.4e0 * X__[iX_x4] * t7 * result__[4];
+    result__[ 8   ] = -0.4e0 * X__[iX_x4] * t7 * result__[6];
     real_type t12  = t7 * t7;
-    result__[ 6   ] = (-0.1e0 - 0.2e0 * t12) * result__[4];
-    result__[ 7   ] = result__[4];
+    result__[ 9   ] = (-0.1e0 - 0.2e0 * t12) * result__[6];
+    result__[ 10  ] = result__[6];
+    result__[ 11  ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 8, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 12, i_segment );
   }
 
   /*\
@@ -163,9 +174,9 @@ namespace TwoPhaseSchwartzDefine {
 
   void
   TwoPhaseSchwartz::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -177,108 +188,6 @@ namespace TwoPhaseSchwartzDefine {
     result__[ 3   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer TwoPhaseSchwartz::eta_numEqns() const { return 4; }
-
-  void
-  TwoPhaseSchwartz::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = L__[iL_lambda3__xo];
-    result__[ 3   ] = L__[iL_lambda4__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DetaDxp_numRows() const { return 4; }
-  integer TwoPhaseSchwartz::DetaDxp_numCols() const { return 4; }
-  integer TwoPhaseSchwartz::DetaDxp_nnz()     const { return 0; }
-
-  void
-  TwoPhaseSchwartz::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  TwoPhaseSchwartz::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer TwoPhaseSchwartz::nu_numEqns() const { return 4; }
-
-  void
-  TwoPhaseSchwartz::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoPhaseSchwartz::DnuDxp_numRows() const { return 4; }
-  integer TwoPhaseSchwartz::DnuDxp_numCols() const { return 4; }
-  integer TwoPhaseSchwartz::DnuDxp_nnz()     const { return 0; }
-
-  void
-  TwoPhaseSchwartz::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  TwoPhaseSchwartz::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

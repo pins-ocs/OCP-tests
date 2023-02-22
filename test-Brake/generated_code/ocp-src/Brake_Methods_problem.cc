@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_problem.cc                                       |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -56,6 +56,7 @@ namespace BrakeDefine {
   Brake::H_eval(
     NodeQXL const & NODE__,
     P_const_p_type  P__,
+    MU_const_p_type MU__,
     U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
@@ -67,7 +68,9 @@ namespace BrakeDefine {
     real_type t4   = U__[iU_a];
     real_type t7   = cos(t4 * 0.314159265358979323846264338328e1 / 2);
     real_type t8   = log(t7);
-    real_type result__ = t4 * t1 * L__[iL_lambda2__xo] - t8 * ModelPars[iM_epsilon] * t1 + X__[iX_v] * t1 * L__[iL_lambda1__xo];
+    real_type t12  = guess_u(Q__[iQ_zeta]);
+    real_type t14  = pow(t4 - t12, 2);
+    real_type result__ = t4 * t1 * MU__[1] - t8 * ModelPars[iM_epsilon] * t1 + X__[iX_v] * t1 * MU__[0] + t14 * ModelPars[iM_mu];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -92,9 +95,12 @@ namespace BrakeDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t7   = cos(0.314159265358979323846264338328e1 * U__[iU_a] / 2);
+    real_type t4   = U__[iU_a];
+    real_type t7   = cos(t4 * 0.314159265358979323846264338328e1 / 2);
     real_type t8   = log(t7);
-    real_type result__ = -t8 * ModelPars[iM_epsilon] * P__[iP_T];
+    real_type t12  = guess_u(Q__[iQ_zeta]);
+    real_type t14  = pow(t4 - t12, 2);
+    real_type result__ = -t8 * ModelPars[iM_epsilon] * P__[iP_T] + t14 * ModelPars[iM_mu];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -218,12 +224,14 @@ namespace BrakeDefine {
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     real_type t1   = ModelPars[iM_epsilon];
-    real_type t4   = 0.314159265358979323846264338328e1 * U__[iU_a] / 2;
+    real_type t2   = U__[iU_a];
+    real_type t4   = t2 * 0.314159265358979323846264338328e1 / 2;
     real_type t5   = cos(t4);
     real_type t6   = log(t5);
     result__[ 2   ] = -t6 * t1;
     real_type t10  = sin(t4);
-    result__[ 3   ] = 1.0 / t5 * t10 * 0.314159265358979323846264338328e1 * t1 * P__[iP_T] / 2;
+    real_type t18  = guess_u(Q__[iQ_zeta]);
+    result__[ 3   ] = 1.0 / t5 * t10 * 0.314159265358979323846264338328e1 * t1 * P__[iP_T] / 2 + 2 * (t2 - t18) * ModelPars[iM_mu];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 4, i_segment );
   }
@@ -258,11 +266,11 @@ namespace BrakeDefine {
     real_type t7   = cos(t5);
     result__[ 0   ] = 1.0 / t7 * t6 * 0.314159265358979323846264338328e1 * t1 / 2;
     result__[ 1   ] = result__[0];
-    real_type t12  = t1 * P__[iP_T];
-    real_type t13  = 0.314159265358979323846264338328e1 * 0.314159265358979323846264338328e1;
-    real_type t15  = t6 * t6;
-    real_type t17  = t7 * t7;
-    result__[ 2   ] = t13 * t12 / 4 + 1.0 / t17 * t15 * t13 * t12 / 4;
+    real_type t11  = 0.314159265358979323846264338328e1 * 0.314159265358979323846264338328e1;
+    real_type t12  = P__[iP_T];
+    real_type t17  = t6 * t6;
+    real_type t19  = t7 * t7;
+    result__[ 2   ] = t1 * t12 * t11 / 4 + 1.0 / t19 * t17 * t11 * t1 * t12 / 4 + 2 * ModelPars[iM_mu];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
   }

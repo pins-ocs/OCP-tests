@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Brake_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 8/2/2023                                         #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -35,17 +35,19 @@ mechatronix do |data|
   #  \__|_| |_|_|  \___|\__,_|\__,_|___/
 
   # maximum number of threads used for linear algebra and various solvers
-  data.N_threads             = 1
-  data.U_threaded            = false
-  data.JU_threaded           = false
-  data.F_threaded            = false
-  data.JF_threaded           = false
-  data.LU_threaded           = false
-  data.LU_factorize_threaded = false
-  data.LU_solve_threaded     = false
+  data.N_threads             = [1,$MAX_THREAD_NUM-1].max
+  data.U_threaded            = true
+  data.JU_threaded           = true
+  data.F_threaded            = true
+  data.JF_threaded           = true
+  data.LU_threaded           = true
+  data.LU_factorize_threaded = true
+  data.LU_solve_threaded     = true
 
 
   # Enable check jacobian and controls
+  data.MuCheck_epsilon       = 1e-6
+  data.MuCheck               = false
   data.ControlsCheck         = true
   data.ControlsCheck_epsilon = 1e-6
   data.JacobianCheck         = true
@@ -78,7 +80,7 @@ mechatronix do |data|
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
-    :Iterative => false,
+    :Iterative => true,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
     # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
@@ -257,6 +259,7 @@ mechatronix do |data|
 
     # Model Parameters
     :epsilon  => 0.1,
+    :mu       => 0.0,
     :epsilon2 => 0.0,
 
     # Guess Parameters
@@ -318,8 +321,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 500.0,
         :length => 1.0,
+        :n      => 150.0,
       },
     ],
   };

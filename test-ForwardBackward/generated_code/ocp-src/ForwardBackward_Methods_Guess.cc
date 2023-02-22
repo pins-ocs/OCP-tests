@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -72,21 +72,25 @@ namespace ForwardBackwardDefine {
   \*/
 
   void
-  ForwardBackward::p_guess_eval( P_pointer_type P__ ) const {
+  ForwardBackward::p_guess_eval( P_p_type P__ ) const {
   }
 
   void
   ForwardBackward::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    real_type t1   = ModelPars[iM_v0];
-    X__[ iX_v ] = t1 + (ModelPars[iM_v1] - t1) * Q__[iQ_zeta];
+    { // open block to avoid temporary clash
+      real_type t1   = ModelPars[iM_v0];
+      X__[ iX_v ] = t1 + (ModelPars[iM_v1] - t1) * Q__[iQ_zeta];
+    }
+    { // open block to avoid temporary clash
 
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 1 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 1 );
@@ -222,7 +226,7 @@ namespace ForwardBackwardDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ForwardBackward::p_check( P_const_pointer_type P__ ) const {
+  ForwardBackward::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -230,23 +234,46 @@ namespace ForwardBackwardDefine {
 
   bool
   ForwardBackward::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  ForwardBackward::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  ForwardBackward::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    bool ok = true;
+    real_type t2   = X__[iX_v];
+    ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2, m_max_penalty_value);
+    ok = ok && LimitV_max.check_range(t2 - ModelPars[iM_v_max], m_max_penalty_value);
+    real_type t7   = U__[iU_a];
+    ok = ok && LimitA_min.check_range(ModelPars[iM_a_min] - t7, m_max_penalty_value);
+    ok = ok && LimitA_max.check_range(t7 - ModelPars[iM_a_max], m_max_penalty_value);
+    real_type t12  = t7 * t7;
+    real_type t15  = ALIAS_kappa(Q__[iQ_zeta]);
+    real_type t16  = t15 * t15;
+    real_type t17  = t2 * t2;
+    real_type t18  = t17 * t17;
+    real_type t22  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
+    ok = ok && LimitE.check_range(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -263,30 +290,15 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        UGUESS__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-
-    real_type Q__[1];
-    real_type X__[1];
-    real_type L__[1];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     UGUESS__[ iU_a ] = 0;
     if ( m_debug )
@@ -303,15 +315,15 @@ namespace ForwardBackwardDefine {
 
   bool
   ForwardBackward::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
+    integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     // admissible region
     real_type t3   = U__[iU_a] * U__[iU_a];

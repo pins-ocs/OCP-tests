@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Methods_AdjointODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -54,44 +54,126 @@ namespace BrakeDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer Brake::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   Brake::JP_eval(
     NodeQX const & NODE__,
     P_const_p_type P__,
-    U_const_p_type U__,
-    real_ptr       result__
+    U_const_p_type U__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer Brake::LT_numEqns() const { return 0; }
-
-  void
-  Brake::LT_eval(
-    NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__,
-    real_ptr       result__
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer Brake::JU_numEqns() const { return 0; }
-
-  void
+  real_type
   Brake::JU_eval(
     NodeQX const & NODE__,
     P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  Brake::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type result__ = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brake::JPxpu_numEqns() const { return 4; }
+
+  void
+  Brake::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
     U_const_p_type U__,
     real_ptr       result__
   ) const {
-    // EMPTY!
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brake::JUxpu_numEqns() const { return 4; }
+
+  void
+  Brake::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer Brake::LTxpu_numEqns() const { return 4; }
+
+  void
+  Brake::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -110,18 +192,18 @@ namespace BrakeDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::DJPDxpu_numRows() const { return 0; }
-  integer Brake::DJPDxpu_numCols() const { return 4; }
-  integer Brake::DJPDxpu_nnz()     const { return 0; }
+  integer Brake::D2JPD2xpu_numRows() const { return 4; }
+  integer Brake::D2JPD2xpu_numCols() const { return 4; }
+  integer Brake::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  Brake::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brake::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  Brake::DJPDxpu_sparse(
+  Brake::D2JPD2xpu_sparse(
     NodeQX const & NODE__,
     P_const_p_type P__,
     U_const_p_type U__,
@@ -131,18 +213,18 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::DLTDxpu_numRows() const { return 0; }
-  integer Brake::DLTDxpu_numCols() const { return 4; }
-  integer Brake::DLTDxpu_nnz()     const { return 0; }
+  integer Brake::D2LTD2xpu_numRows() const { return 4; }
+  integer Brake::D2LTD2xpu_numCols() const { return 4; }
+  integer Brake::D2LTD2xpu_nnz()     const { return 0; }
 
   void
-  Brake::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brake::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  Brake::DLTDxpu_sparse(
+  Brake::D2LTD2xpu_sparse(
     NodeQX const & NODE__,
     P_const_p_type P__,
     U_const_p_type U__,
@@ -152,18 +234,18 @@ namespace BrakeDefine {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::DJUDxpu_numRows() const { return 0; }
-  integer Brake::DJUDxpu_numCols() const { return 4; }
-  integer Brake::DJUDxpu_nnz()     const { return 0; }
+  integer Brake::D2JUD2xpu_numRows() const { return 4; }
+  integer Brake::D2JUD2xpu_numCols() const { return 4; }
+  integer Brake::D2JUD2xpu_nnz()     const { return 0; }
 
   void
-  Brake::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  Brake::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  Brake::DJUDxpu_sparse(
+  Brake::D2JUD2xpu_sparse(
     NodeQX const & NODE__,
     P_const_p_type P__,
     U_const_p_type U__,
@@ -193,75 +275,6 @@ namespace BrakeDefine {
     // EMPTY!
   }
 
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::D2JPD2xpu_numRows() const { return 4; }
-  integer Brake::D2JPD2xpu_numCols() const { return 4; }
-  integer Brake::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  Brake::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Brake::D2JPD2xpu_sparse(
-    NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__,
-    real_const_ptr OMEGA__,
-    real_ptr       result__
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::D2LTD2xpu_numRows() const { return 4; }
-  integer Brake::D2LTD2xpu_numCols() const { return 4; }
-  integer Brake::D2LTD2xpu_nnz()     const { return 0; }
-
-  void
-  Brake::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Brake::D2LTD2xpu_sparse(
-    NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__,
-    real_const_ptr OMEGA__,
-    real_ptr       result__
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Brake::D2JUD2xpu_numRows() const { return 4; }
-  integer Brake::D2JUD2xpu_numCols() const { return 4; }
-  integer Brake::D2JUD2xpu_nnz()     const { return 0; }
-
-  void
-  Brake::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  Brake::D2JUD2xpu_sparse(
-    NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__,
-    real_const_ptr OMEGA__,
-    real_ptr       result__
-  ) const {
-    // EMPTY!
-  }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

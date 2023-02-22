@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -299,7 +299,7 @@ namespace PointMassCarModel_1Define {
   }
 
   void
-  PointMassCarModel_1::setup_parameters( real_type const Pars[] ) {
+  PointMassCarModel_1::setup_parameters( real_const_ptr Pars ) {
     std::copy( Pars, Pars + numModelPars, ModelPars );
   }
 
@@ -452,13 +452,14 @@ namespace PointMassCarModel_1Define {
     m_console->message( "\nUser function `pRoad`\n",msg_level);
     m_console->message( pRoad->info(),msg_level);
 
-    m_console->message("\nModel Parameters\n",msg_level);
+    m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
       m_console->message(
-        fmt::format("{:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
+        fmt::format("  {:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
         msg_level
       );
     }
+    m_console->message("MODEL PARAMETERS END\n",msg_level);
 
   }
 
@@ -491,9 +492,11 @@ namespace PointMassCarModel_1Define {
     // Begin: User Setup Code
     // End: User Setup Code
 
+    int msg_level = 2;
+    m_console->message( this->info(), msg_level );
+
     this->info_BC();
     this->info_classes();
-    // this->info(); stampato dopo GUESS
   }
 
   /* --------------------------------------------------------------------------

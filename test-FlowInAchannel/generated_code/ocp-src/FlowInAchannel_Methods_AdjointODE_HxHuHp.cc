@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -46,11 +46,11 @@ namespace FlowInAchannelDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,34 +59,34 @@ namespace FlowInAchannelDefine {
 
   void
   FlowInAchannel::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ModelPars[iM_R] * L__[iL_lambda4__xo];
+    real_type t3   = ModelPars[iM_R] * MU__[3];
     result__[ 0   ] = -X__[iX_u3] * t3;
-    result__[ 1   ] = X__[iX_u2] * t3 + L__[iL_lambda1__xo];
-    result__[ 2   ] = X__[iX_u1] * t3 + L__[iL_lambda2__xo];
-    result__[ 3   ] = -X__[iX_u] * t3 + L__[iL_lambda3__xo];
+    result__[ 1   ] = X__[iX_u2] * t3 + MU__[0];
+    result__[ 2   ] = X__[iX_u1] * t3 + MU__[1];
+    result__[ 3   ] = -X__[iX_u] * t3 + MU__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 4, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer FlowInAchannel::DHxpDxpu_numRows() const { return 4; }
-  integer FlowInAchannel::DHxpDxpu_numCols() const { return 4; }
-  integer FlowInAchannel::DHxpDxpu_nnz()     const { return 4; }
+  integer FlowInAchannel::DHxpDxpuv_numRows() const { return 4; }
+  integer FlowInAchannel::DHxpDxpuv_numCols() const { return 8; }
+  integer FlowInAchannel::DHxpDxpuv_nnz()     const { return 4; }
 
   void
-  FlowInAchannel::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  FlowInAchannel::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
     iIndex[2 ] = 2   ; jIndex[2 ] = 1   ;
@@ -95,48 +95,25 @@ namespace FlowInAchannelDefine {
 
 
   void
-  FlowInAchannel::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  FlowInAchannel::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = L__[iL_lambda4__xo] * ModelPars[iM_R];
+    real_type t3   = MU__[3] * ModelPars[iM_R];
     result__[ 0   ] = -t3;
     result__[ 1   ] = t3;
     result__[ 2   ] = result__[1];
     result__[ 3   ] = result__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 4, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer FlowInAchannel::Hu_numEqns() const { return 0; }
-
-  void
-  FlowInAchannel::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 4, i_segment );
   }
 
 }

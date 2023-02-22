@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type u_tol_max = 1e-06;
-    real_type u_tol = u_tol_max;
     real_type u_epsi_max = 1e-06;
     real_type u_epsi = u_epsi_max;
+    real_type u_tol = u_tol_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -236,7 +236,7 @@ ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

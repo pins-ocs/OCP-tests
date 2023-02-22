@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_Guess.cc                                        |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -88,24 +88,28 @@ namespace FarmerDefine {
   \*/
 
   void
-  Farmer::p_guess_eval( P_pointer_type P__ ) const {
+  Farmer::p_guess_eval( P_p_type P__ ) const {
   }
 
   void
   Farmer::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    X__[ iX_x1  ] = 0.1e-1;
-    X__[ iX_x2  ] = 0.1e-1;
-    X__[ iX_x3  ] = 0.1e-1;
-    X__[ iX_res ] = 0.1e-1;
-    X__[ iX_x4  ] = 0.1e-1;
+    { // open block to avoid temporary clash
+      X__[ iX_x1  ] = 0.1e-1;
+      X__[ iX_x2  ] = 0.1e-1;
+      X__[ iX_x3  ] = 0.1e-1;
+      X__[ iX_res ] = 0.1e-1;
+      X__[ iX_x4  ] = 0.1e-1;
+    }
+    { // open block to avoid temporary clash
 
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 5 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 5 );
@@ -245,7 +249,7 @@ namespace FarmerDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  Farmer::p_check( P_const_pointer_type P__ ) const {
+  Farmer::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -253,9 +257,9 @@ namespace FarmerDefine {
 
   bool
   Farmer::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -270,16 +274,27 @@ namespace FarmerDefine {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  Farmer::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  Farmer::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool ok = true;
+    ok = ok && LimitX2X4.check_range(X__[iX_x2] + X__[iX_x4] - 0.12e0, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -296,38 +311,15 @@ namespace FarmerDefine {
 
   void
   Farmer::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        UGUESS__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-
-    real_type const * QL__ = LEFT__.q;
-    real_type const * XL__ = LEFT__.x;
-    real_type const * LL__ = LEFT__.lambda;
-
-    real_type const * QR__ = RIGHT__.q;
-    real_type const * XR__ = RIGHT__.x;
-    real_type const * LR__ = RIGHT__.lambda;
-
-    real_type Q__[1];
-    real_type X__[5];
-    real_type L__[5];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    X__[4] = (XL__[4]+XR__[4])/2;
-    // Lvars
-    L__[0] = (LL__[0]+LR__[0])/2;
-    L__[1] = (LL__[1]+LR__[1])/2;
-    L__[2] = (LL__[2]+LR__[2])/2;
-    L__[3] = (LL__[3]+LR__[3])/2;
-    L__[4] = (LL__[4]+LR__[4])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 4, 0 );
     UGUESS__[ iU_x1__o ] = 50;
     UGUESS__[ iU_x2__o ] = 50;
@@ -347,15 +339,15 @@ namespace FarmerDefine {
 
   bool
   Farmer::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
+    integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && x1__oControl.check_range(U__[iU_x1__o], -0.1e-2, 100);

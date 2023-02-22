@@ -1,9 +1,9 @@
 #-----------------------------------------------------------------------#
 #  file: CMakeLists.txt                                                 #
 #                                                                       #
-#  version: 1.0   date 10/11/2022                                       #
+#  version: 1.0   date 22/2/2023                                        #
 #                                                                       #
-#  Copyright (C) 2022                                                   #
+#  Copyright (C) 2023                                                   #
 #                                                                       #
 #      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             #
 #      Dipartimento di Ingegneria Industriale                           #
@@ -18,6 +18,9 @@
 cmake_minimum_required( VERSION 3.14 )
 
 project( Zermelo_Mex )
+
+#set( CMAKE_VERBOSE_MAKEFILE ON )
+set( CMAKE_BUILD_TYPE Release )
 
 find_package( Matlab REQUIRED )
 

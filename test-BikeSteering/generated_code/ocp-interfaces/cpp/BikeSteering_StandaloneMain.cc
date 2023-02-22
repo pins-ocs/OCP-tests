@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type mu = 1;
-    real_type m = 250;
     real_type g = 9.81;
+    real_type m = 250;
+    real_type mu = 1;
     real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
 
@@ -185,14 +185,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BikeSteering_data.Mesh["s0"] = 0;
-BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][0]["n"] = 10;
-BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
 BikeSteering_data.Mesh["segments"][1]["n"] = 40;
-BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
+BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][2]["n"] = 40;
-BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
+BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
 BikeSteering_data.Mesh["segments"][3]["n"] = 10;
+BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
 
 
     // alias for user object classes passed as pointers
@@ -254,7 +254,7 @@ BikeSteering_data.Mesh["segments"][3]["n"] = 10;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

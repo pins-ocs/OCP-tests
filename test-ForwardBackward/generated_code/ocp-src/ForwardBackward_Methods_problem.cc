@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -106,50 +106,6 @@ namespace ForwardBackwardDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  ForwardBackward::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[1];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
-    bool ok = true;
-    real_type t2   = X__[iX_v];
-    ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2, m_max_penalty_value);
-    ok = ok && LimitV_max.check_range(t2 - ModelPars[iM_v_max], m_max_penalty_value);
-    real_type t7   = U__[iU_a];
-    ok = ok && LimitA_min.check_range(ModelPars[iM_a_min] - t7, m_max_penalty_value);
-    ok = ok && LimitA_max.check_range(t7 - ModelPars[iM_a_max], m_max_penalty_value);
-    real_type t12  = t7 * t7;
-    real_type t15  = ALIAS_kappa(Q__[iQ_zeta]);
-    real_type t16  = t15 * t15;
-    real_type t17  = t2 * t2;
-    real_type t18  = t17 * t17;
-    real_type t22  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    ok = ok && LimitE.check_range(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1, m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -159,9 +115,10 @@ namespace ForwardBackwardDefine {
 
   real_type
   ForwardBackward::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -172,7 +129,7 @@ namespace ForwardBackwardDefine {
     real_type t3   = 1.0 / t2;
     real_type t6   = U__[iU_a];
     real_type t7   = t6 * t6;
-    real_type result__ = t3 * ModelPars[iM_wT] + t7 * ModelPars[iM_epsilon] + (-t2 * ModelPars[iM_c1] + t3 * t6 - ModelPars[iM_c0]) * L__[iL_lambda1__xo];
+    real_type result__ = t3 * ModelPars[iM_wT] + t7 * ModelPars[iM_epsilon] + (-t2 * ModelPars[iM_c1] + t3 * t6 - ModelPars[iM_c0]) * MU__[0];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -189,9 +146,9 @@ namespace ForwardBackwardDefine {
 
   real_type
   ForwardBackward::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -215,9 +172,9 @@ namespace ForwardBackwardDefine {
 
   real_type
   ForwardBackward::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -240,10 +197,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -274,10 +231,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -295,10 +252,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -325,10 +282,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -355,9 +312,9 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -376,22 +333,22 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ForwardBackward::DsegmentLinkDxp_numRows() const { return 0; }
-  integer ForwardBackward::DsegmentLinkDxp_numCols() const { return 0; }
-  integer ForwardBackward::DsegmentLinkDxp_nnz() const { return 0; }
+  integer ForwardBackward::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer ForwardBackward::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer ForwardBackward::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  ForwardBackward::DsegmentLinkDxp_pattern(
+  ForwardBackward::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -401,11 +358,11 @@ namespace ForwardBackwardDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ForwardBackward::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  ForwardBackward::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -422,10 +379,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -461,10 +418,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -496,10 +453,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -540,10 +497,10 @@ namespace ForwardBackwardDefine {
 
   void
   ForwardBackward::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Main.cc                                                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,24 +50,24 @@ main() {
     ToolPath2D       toolPath2D( "toolPath2D" );
 
     // Auxiliary values
-    real_type tol_PATH = 0.01;
-    real_type epsi_ACC = 0.01;
+    real_type tol_VMAX = 0.01;
+    real_type tol_CTRL = 0.01;
+    real_type epsi_CTRL = 0.01;
+    real_type v_nom = 0.173;
     real_type tol_ACC = 0.01;
     real_type path_following_tolerance = 1.0e-05;
-    real_type tol_CTRL = 0.01;
-    real_type tol_COV = 0.01;
-    real_type epsi_COV = 0.01;
-    real_type epsi_PATH = 0.01;
-    real_type epsi_VMAX = 0.01;
-    real_type tol_VMAX = 0.01;
-    real_type jn_max = 65;
-    real_type epsi_CTRL = 0.01;
     real_type js_min = -50;
-    real_type js_max = 30;
     real_type mesh_segments = 100;
-    real_type v_nom = 0.173;
     real_type deltaFeed = v_nom;
+    real_type jn_max = 65;
+    real_type epsi_VMAX = 0.01;
+    real_type epsi_COV = 0.01;
+    real_type js_max = 30;
+    real_type tol_PATH = 0.01;
+    real_type epsi_ACC = 0.01;
     real_type pf_error = path_following_tolerance;
+    real_type tol_COV = 0.01;
+    real_type epsi_PATH = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -536,7 +536,7 @@ CNOC_data.ToolPath2D["segments"][19]["n"] = mesh_segments;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

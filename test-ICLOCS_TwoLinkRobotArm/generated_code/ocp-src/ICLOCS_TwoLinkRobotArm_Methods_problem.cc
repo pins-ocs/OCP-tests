@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_problem.cc                      |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -97,41 +97,6 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  ICLOCS_TwoLinkRobotArm::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[4];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    X__[3] = (XL__[3]+XR__[3])/2;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool ok = true;
-
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -141,9 +106,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   real_type
   ICLOCS_TwoLinkRobotArm::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -165,7 +131,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t21  = t20 * t20;
     real_type t28  = t13 * t13;
     real_type t31  = 1.0 / (0.31e2 / 0.36e2 + 9.0 / 4.0 * t28);
-    real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * L__[iL_lambda1__xo] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * L__[iL_lambda2__xo] + (t20 - t16) * t2 * L__[iL_lambda3__xo] + t16 * t2 * L__[iL_lambda4__xo];
+    real_type result__ = (t5 + t7) * t2 * ModelPars[iM_rho] + t31 * (9.0 / 4.0 * t17 * t15 + 2 * t21 + 4.0 / 3.0 * t4 - 4.0 / 3.0 * t6 - 3.0 / 2.0 * t6 * t14) * t2 * MU__[0] - t31 * (9.0 / 4.0 * t21 * t15 + 7.0 / 2.0 * t17 - 7.0 / 3.0 * t6 + 3.0 / 2.0 * (t4 - t6) * t14) * t2 * MU__[1] + (t20 - t16) * t2 * MU__[2] + t16 * t2 * MU__[3];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -182,9 +148,9 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   real_type
   ICLOCS_TwoLinkRobotArm::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -209,9 +175,9 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   real_type
   ICLOCS_TwoLinkRobotArm::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -226,7 +192,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     real_type t4   = t3 * t3;
     real_type t6   = P__[iP_T];
     real_type t11  = t6 * t6;
-    real_type result__ = 1.0 / t6 * (-2 * t3 * t2 * t6 + t4 * t2 + t11);
+    real_type result__ = 1.0 / t6 * (-2 * t3 * t2 * t6 + t2 * t4 + t11);
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -239,10 +205,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -285,10 +251,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -321,10 +287,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -354,31 +320,31 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
+    iIndex[0 ] = 4   ; jIndex[0 ] = 5   ;
     iIndex[1 ] = 4   ; jIndex[1 ] = 6   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
-    iIndex[3 ] = 5   ; jIndex[3 ] = 6   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 4   ;
+    iIndex[3 ] = 5   ; jIndex[3 ] = 5   ;
     iIndex[4 ] = 6   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 6   ; jIndex[5 ] = 5   ;
+    iIndex[5 ] = 6   ; jIndex[5 ] = 6   ;
   }
 
 
   void
   ICLOCS_TwoLinkRobotArm::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_rho];
-    result__[ 0   ] = 2 * P__[iP_T] * t1;
-    result__[ 1   ] = 2 * U__[iU_u1] * t1;
+    result__[ 0   ] = 2 * U__[iU_u1] * t1;
+    result__[ 1   ] = 2 * U__[iU_u2] * t1;
     result__[ 2   ] = result__[0];
-    result__[ 3   ] = 2 * U__[iU_u2] * t1;
+    result__[ 3   ] = 2 * P__[iP_T] * t1;
     result__[ 4   ] = result__[1];
     result__[ 5   ] = result__[3];
     if ( m_debug )
@@ -398,9 +364,9 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -419,22 +385,22 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxp_numRows() const { return 0; }
-  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxp_numCols() const { return 0; }
-  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxp_nnz() const { return 0; }
+  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer ICLOCS_TwoLinkRobotArm::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  ICLOCS_TwoLinkRobotArm::DsegmentLinkDxp_pattern(
+  ICLOCS_TwoLinkRobotArm::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -444,11 +410,11 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ICLOCS_TwoLinkRobotArm::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  ICLOCS_TwoLinkRobotArm::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -465,10 +431,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -522,10 +488,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -569,10 +535,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -592,12 +558,12 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-   // EMPTY!
+    // EMPTY!
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank.hh                                                |
  |                                                                       |
- |  version: 1.0   date 20/1/2023                                        |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -85,6 +85,7 @@ namespace stirred_tankDefine {
   using Mechatronix::L_p_type;
   using Mechatronix::Z_p_type;
   using Mechatronix::U_p_type;
+  using Mechatronix::MU_p_type;
   using Mechatronix::V_p_type;
   using Mechatronix::Q_p_type;
   using Mechatronix::P_p_type;
@@ -95,6 +96,7 @@ namespace stirred_tankDefine {
   using Mechatronix::L_const_p_type;
   using Mechatronix::Z_const_p_type;
   using Mechatronix::U_const_p_type;
+  using Mechatronix::MU_const_p_type;
   using Mechatronix::V_const_p_type;
   using Mechatronix::Q_const_p_type;
   using Mechatronix::P_const_p_type;
@@ -143,11 +145,7 @@ namespace stirred_tankDefine {
 
     using Mechatronix::Discretized_Indirect_OCP::setup;
     using Mechatronix::Discretized_Indirect_OCP::guess;
-
     using Mechatronix::Discretized_Indirect_OCP::num_active_BC;
-
-    using Mechatronix::Discretized_Indirect_OCP::bc_map;
-    using Mechatronix::Discretized_Indirect_OCP::bc_inv_map;
 
     using Mechatronix::Discretized_Indirect_OCP::dim_Q;
     using Mechatronix::Discretized_Indirect_OCP::dim_X;
@@ -158,11 +156,18 @@ namespace stirred_tankDefine {
 
     using Mechatronix::Discretized_Indirect_OCP::num_equations;
     using Mechatronix::Discretized_Indirect_OCP::num_parameters;
+
     using Mechatronix::Discretized_Indirect_OCP::eval_F;
+
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_nnz;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_pattern;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF_values;
     using Mechatronix::Discretized_Indirect_OCP::eval_JF;
+
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_nnz;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_pattern;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2_values;
+    using Mechatronix::Discretized_Indirect_OCP::eval_JF2;
 
     using Mechatronix::Discretized_Indirect_OCP::get_solution;
     using Mechatronix::Discretized_Indirect_OCP::get_solution_as_spline;

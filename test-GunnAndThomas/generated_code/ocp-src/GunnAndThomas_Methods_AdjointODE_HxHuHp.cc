@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: GunnAndThomas_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -57,11 +57,11 @@ namespace GunnAndThomasDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,20 +70,20 @@ namespace GunnAndThomasDefine {
 
   void
   GunnAndThomas::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u];
-    real_type t3   = t2 * L__[iL_lambda1__xo];
-    real_type t4   = L__[iL_lambda2__xo];
+    real_type t3   = t2 * MU__[0];
+    real_type t4   = MU__[1];
     result__[ 0   ] = t2 * t4 - t3;
     result__[ 1   ] = 10 * t3 + (-9 * t2 - 1) * t4;
     if ( m_debug )
@@ -92,68 +92,36 @@ namespace GunnAndThomasDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer GunnAndThomas::DHxpDxpu_numRows() const { return 2; }
-  integer GunnAndThomas::DHxpDxpu_numCols() const { return 3; }
-  integer GunnAndThomas::DHxpDxpu_nnz()     const { return 2; }
+  integer GunnAndThomas::DHxpDxpuv_numRows() const { return 2; }
+  integer GunnAndThomas::DHxpDxpuv_numCols() const { return 5; }
+  integer GunnAndThomas::DHxpDxpuv_nnz()     const { return 2; }
 
   void
-  GunnAndThomas::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  GunnAndThomas::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 2   ;
   }
 
 
   void
-  GunnAndThomas::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  GunnAndThomas::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda1__xo];
-    real_type t2   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[0];
+    real_type t2   = MU__[1];
     result__[ 0   ] = -t1 + t2;
     result__[ 1   ] = 10 * t1 - 9 * t2;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 2, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer GunnAndThomas::Hu_numEqns() const { return 1; }
-
-  void
-  GunnAndThomas::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = X__[iX_x2];
-    real_type t4   = X__[iX_x1];
-    result__[ 0   ] = (10 * t2 - t4) * L__[iL_lambda1__xo] + (t4 - 9 * t2) * L__[iL_lambda2__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 2, i_segment );
   }
 
 }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brake_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 8/2/2023                                         |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -60,7 +60,7 @@ main() {
     data_ControlSolver["Rcond"]     = 1e-14; // reciprocal condition number threshold for QR, SVD, LSS, LSY
     data_ControlSolver["MaxIter"]   = 50;
     data_ControlSolver["Tolerance"] = 1e-9;
-    data_ControlSolver["Iterative"] = false;
+    data_ControlSolver["Iterative"] = true;
     data_ControlSolver["InfoLevel"] = 1;
 
     // Enable doctor
@@ -130,6 +130,7 @@ main() {
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
     data_Parameters["epsilon"] = 0.1;
+    data_Parameters["mu"] = 0;
     data_Parameters["epsilon2"] = 0;
 
     // Guess Parameters
@@ -159,8 +160,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Brake_data.Mesh["s0"] = 0;
-Brake_data.Mesh["segments"][0]["n"] = 10;
 Brake_data.Mesh["segments"][0]["length"] = 1;
+Brake_data.Mesh["segments"][0]["n"] = 150;
 
 
     // alias for user object classes passed as pointers

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_AdjointODE.cc                       |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -75,62 +75,140 @@ namespace ICLOCS_StirredTankDefine {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ICLOCS_StirredTank::JP_numEqns() const { return 0; }
-
-  void
+  real_type
   ICLOCS_StirredTank::JP_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer ICLOCS_StirredTank::LT_numEqns() const { return 5; }
-
-  void
-  ICLOCS_StirredTank::LT_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = tfbound(ModelPars[iM_T_min] - P__[iP_TimeSize]);
-    real_type t4   = X__[iX_x1];
-    result__[ 1   ] = x1bound_min(-t4);
-    result__[ 2   ] = x1bound_max(t4 - 1);
-    real_type t6   = X__[iX_x2];
-    result__[ 3   ] = x2bound_min(-t6);
-    result__[ 4   ] = x2bound_max(t6 - 1);
+    real_type result__ = 0;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "LT_eval", 5, i_segment );
+      Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
+    return result__;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer ICLOCS_StirredTank::JU_numEqns() const { return 1; }
-
-  void
+  real_type
   ICLOCS_StirredTank::JU_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = uControl(U__[iU_u], 0, 2);
+    real_type result__ = uControl(U__[iU_u], 0, 2);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "JU_eval", 1, i_segment );
+      Mechatronix::check_in_segment( &result__, "JU_eval", 1, i_segment );
+    return result__;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  real_type
+  ICLOCS_StirredTank::LT_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t4   = tfbound(ModelPars[iM_T_min] - P__[iP_TimeSize]);
+    real_type t5   = X__[iX_x1];
+    real_type t6   = x1bound_min(-t5);
+    real_type t8   = x1bound_max(t5 - 1);
+    real_type t9   = X__[iX_x2];
+    real_type t10  = x2bound_min(-t9);
+    real_type t12  = x2bound_max(t9 - 1);
+    real_type result__ = t4 + t6 + t8 + t10 + t12;
+    if ( m_debug )
+      Mechatronix::check_in_segment( &result__, "LT_eval", 1, i_segment );
+    return result__;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_StirredTank::JPxpu_numEqns() const { return 4; }
+
+  void
+  ICLOCS_StirredTank::JPxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JPxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_StirredTank::JUxpu_numEqns() const { return 4; }
+
+  void
+  ICLOCS_StirredTank::JUxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    result__[ 0   ] = 0;
+    result__[ 1   ] = 0;
+    result__[ 2   ] = 0;
+    result__[ 3   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 2);
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "JUxpu_eval", 4, i_segment );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_StirredTank::LTxpu_numEqns() const { return 4; }
+
+  void
+  ICLOCS_StirredTank::LTxpu_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
+  ) const {
+    integer i_segment  = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = X__[iX_x1];
+    real_type t2   = ALIAS_x1bound_min_D(-t1);
+    real_type t4   = ALIAS_x1bound_max_D(t1 - 1);
+    result__[ 0   ] = -t2 + t4;
+    real_type t5   = X__[iX_x2];
+    real_type t6   = ALIAS_x2bound_min_D(-t5);
+    real_type t8   = ALIAS_x2bound_max_D(t5 - 1);
+    result__[ 1   ] = -t6 + t8;
+    real_type t12  = ALIAS_tfbound_D(ModelPars[iM_T_min] - P__[iP_TimeSize]);
+    result__[ 2   ] = -t12;
+    result__[ 3   ] = 0;
+    if ( m_debug )
+      Mechatronix::check_in_segment( result__, "LTxpu_eval", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -139,10 +217,10 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::LTargs_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -161,91 +239,88 @@ namespace ICLOCS_StirredTankDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::DJPDxpu_numRows() const { return 0; }
-  integer ICLOCS_StirredTank::DJPDxpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::DJPDxpu_nnz()     const { return 0; }
+  integer ICLOCS_StirredTank::D2JPD2xpu_numRows() const { return 4; }
+  integer ICLOCS_StirredTank::D2JPD2xpu_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::D2JPD2xpu_nnz()     const { return 0; }
 
   void
-  ICLOCS_StirredTank::DJPDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  ICLOCS_StirredTank::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
     // EMPTY!
   }
 
 
   void
-  ICLOCS_StirredTank::DJPDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_StirredTank::D2JPD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::DLTDxpu_numRows() const { return 5; }
-  integer ICLOCS_StirredTank::DLTDxpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::DLTDxpu_nnz()     const { return 5; }
+  integer ICLOCS_StirredTank::D2LTD2xpu_numRows() const { return 4; }
+  integer ICLOCS_StirredTank::D2LTD2xpu_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::D2LTD2xpu_nnz()     const { return 3; }
 
   void
-  ICLOCS_StirredTank::DLTDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 3   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 4   ; jIndex[4 ] = 1   ;
+  ICLOCS_StirredTank::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
   }
 
 
   void
-  ICLOCS_StirredTank::DLTDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_StirredTank::D2LTD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t4   = ALIAS_tfbound_D(ModelPars[iM_T_min] - P__[iP_TimeSize]);
-    result__[ 0   ] = -t4;
-    real_type t5   = X__[iX_x1];
-    real_type t6   = ALIAS_x1bound_min_D(-t5);
-    result__[ 1   ] = -t6;
-    result__[ 2   ] = ALIAS_x1bound_max_D(t5 - 1);
-    real_type t8   = X__[iX_x2];
-    real_type t9   = ALIAS_x2bound_min_D(-t8);
-    result__[ 3   ] = -t9;
-    result__[ 4   ] = ALIAS_x2bound_max_D(t8 - 1);
+    real_type t1   = X__[iX_x1];
+    real_type t2   = ALIAS_x1bound_min_DD(-t1);
+    real_type t4   = ALIAS_x1bound_max_DD(t1 - 1);
+    result__[ 0   ] = t2 + t4;
+    real_type t5   = X__[iX_x2];
+    real_type t6   = ALIAS_x2bound_min_DD(-t5);
+    real_type t8   = ALIAS_x2bound_max_DD(t5 - 1);
+    result__[ 1   ] = t6 + t8;
+    result__[ 2   ] = ALIAS_tfbound_DD(ModelPars[iM_T_min] - P__[iP_TimeSize]);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DLTDxpu_sparse", 5, i_segment );
+      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 3, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::DJUDxpu_numRows() const { return 1; }
-  integer ICLOCS_StirredTank::DJUDxpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::DJUDxpu_nnz()     const { return 1; }
+  integer ICLOCS_StirredTank::D2JUD2xpu_numRows() const { return 4; }
+  integer ICLOCS_StirredTank::D2JUD2xpu_numCols() const { return 4; }
+  integer ICLOCS_StirredTank::D2JUD2xpu_nnz()     const { return 1; }
 
   void
-  ICLOCS_StirredTank::DJUDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 3   ;
+  ICLOCS_StirredTank::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
   }
 
 
   void
-  ICLOCS_StirredTank::DJUDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  ICLOCS_StirredTank::D2JUD2xpu_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = ALIAS_uControl_D_1(U__[iU_u], 0, 2);
+    result__[ 0   ] = ALIAS_uControl_D_1_1(U__[iU_u], 0, 2);
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DJUDxpu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -265,10 +340,10 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::DLTargsDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -286,99 +361,6 @@ namespace ICLOCS_StirredTankDefine {
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::D2JPD2xpu_numRows() const { return 4; }
-  integer ICLOCS_StirredTank::D2JPD2xpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::D2JPD2xpu_nnz()     const { return 0; }
-
-  void
-  ICLOCS_StirredTank::D2JPD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  ICLOCS_StirredTank::D2JPD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::D2LTD2xpu_numRows() const { return 4; }
-  integer ICLOCS_StirredTank::D2LTD2xpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::D2LTD2xpu_nnz()     const { return 3; }
-
-  void
-  ICLOCS_StirredTank::D2LTD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-    iIndex[1 ] = 1   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
-  }
-
-
-  void
-  ICLOCS_StirredTank::D2LTD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x1];
-    real_type t2   = ALIAS_x1bound_min_DD(-t1);
-    real_type t6   = ALIAS_x1bound_max_DD(t1 - 1);
-    result__[ 0   ] = OMEGA__[1] * t2 + OMEGA__[2] * t6;
-    real_type t9   = X__[iX_x2];
-    real_type t10  = ALIAS_x2bound_min_DD(-t9);
-    real_type t14  = ALIAS_x2bound_max_DD(t9 - 1);
-    result__[ 1   ] = OMEGA__[3] * t10 + OMEGA__[4] * t14;
-    real_type t20  = ALIAS_tfbound_DD(ModelPars[iM_T_min] - P__[iP_TimeSize]);
-    result__[ 2   ] = OMEGA__[0] * t20;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2LTD2xpu_sparse", 3, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer ICLOCS_StirredTank::D2JUD2xpu_numRows() const { return 4; }
-  integer ICLOCS_StirredTank::D2JUD2xpu_numCols() const { return 4; }
-  integer ICLOCS_StirredTank::D2JUD2xpu_nnz()     const { return 1; }
-
-  void
-  ICLOCS_StirredTank::D2JUD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
-  }
-
-
-  void
-  ICLOCS_StirredTank::D2JUD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 2);
-    result__[ 0   ] = OMEGA__[0] * t2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2JUD2xpu_sparse", 1, i_segment );
-  }
-
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer ICLOCS_StirredTank::D2LTargsD2xpu_numRows() const { return 4; }
   integer ICLOCS_StirredTank::D2LTargsD2xpu_numCols() const { return 4; }
   integer ICLOCS_StirredTank::D2LTargsD2xpu_nnz()     const { return 0; }
@@ -391,11 +373,11 @@ namespace ICLOCS_StirredTankDefine {
 
   void
   ICLOCS_StirredTank::D2LTargsD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_const_ptr       OMEGA__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_const_ptr OMEGA__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,13 +51,13 @@ main() {
 
     // Auxiliary values
     real_type u_epsi0 = 0.1;
-    real_type x1_i = 1;
     real_type u_epsi = u_epsi0;
+    real_type x1_i = 1;
+    real_type x2_i = 2;
+    real_type l1_i = -1/x1_i/x2_i;
+    real_type t0 = -ln(x1_i/x2_i)/x2_i;
     real_type u_tol0 = 0.1;
     real_type u_tol = u_tol0;
-    real_type x2_i = 2;
-    real_type t0 = -ln(x1_i/x2_i)/x2_i;
-    real_type l1_i = -1/x1_i/x2_i;
     real_type l2_i = l1_i*(x1_i*t0+exp(-t0*x2_i));
     integer InfoLevel = 4;
 
@@ -253,7 +253,7 @@ EconomicGrowthModel_data.Mesh["segments"][0]["n"] = 1000;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

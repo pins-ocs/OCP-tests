@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Mex_user.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -32,7 +32,7 @@ ProblemStorage::do_Q(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -51,7 +51,7 @@ ProblemStorage::do_Q_D_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q_D_1', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q_D_1', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -70,7 +70,7 @@ ProblemStorage::do_Q_D_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q_D_2', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q_D_2', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -89,7 +89,7 @@ ProblemStorage::do_Q_D_1_1(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q_D_1_1', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q_D_1_1', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -108,7 +108,7 @@ ProblemStorage::do_Q_D_1_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q_D_1_2', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q_D_1_2', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -127,7 +127,7 @@ ProblemStorage::do_Q_D_2_2(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('Q_D_2_2', obj, xo__x, xo__y ): "
+  #define CMD "res = " MODEL_NAME "_Mex('Q_D_2_2', obj, xo__x, xo__y ): "
   CHECK_IN_OUT( 4, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__x" );
@@ -146,7 +146,7 @@ ProblemStorage::do_x1L(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1L', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1L', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -162,7 +162,7 @@ ProblemStorage::do_x1L_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1L_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1L_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -178,7 +178,7 @@ ProblemStorage::do_x1L_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1L_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1L_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -194,7 +194,7 @@ ProblemStorage::do_x2L(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2L', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2L', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -210,7 +210,7 @@ ProblemStorage::do_x2L_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2L_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2L_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -226,7 +226,7 @@ ProblemStorage::do_x2L_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2L_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2L_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -242,7 +242,7 @@ ProblemStorage::do_l1L(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1L', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1L', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -258,7 +258,7 @@ ProblemStorage::do_l1L_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1L_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1L_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -274,7 +274,7 @@ ProblemStorage::do_l1L_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1L_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1L_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -290,7 +290,7 @@ ProblemStorage::do_l2L(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2L', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2L', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -306,7 +306,7 @@ ProblemStorage::do_l2L_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2L_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2L_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -322,7 +322,7 @@ ProblemStorage::do_l2L_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2L_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2L_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -338,7 +338,7 @@ ProblemStorage::do_x1R(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1R', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1R', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -354,7 +354,7 @@ ProblemStorage::do_x1R_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1R_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1R_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -370,7 +370,7 @@ ProblemStorage::do_x1R_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x1R_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x1R_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -386,7 +386,7 @@ ProblemStorage::do_x2R(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2R', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2R', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -402,7 +402,7 @@ ProblemStorage::do_x2R_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2R_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2R_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -418,7 +418,7 @@ ProblemStorage::do_x2R_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('x2R_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('x2R_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -434,7 +434,7 @@ ProblemStorage::do_l1R(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1R', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1R', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -450,7 +450,7 @@ ProblemStorage::do_l1R_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1R_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1R_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -466,7 +466,7 @@ ProblemStorage::do_l1R_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l1R_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l1R_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -482,7 +482,7 @@ ProblemStorage::do_l2R(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2R', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2R', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -498,7 +498,7 @@ ProblemStorage::do_l2R_D(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2R_D', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2R_D', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );
@@ -514,7 +514,7 @@ ProblemStorage::do_l2R_DD(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-  #define CMD MODEL_NAME "_Mex('l2R_DD', obj, xo__t ): "
+  #define CMD "res = " MODEL_NAME "_Mex('l2R_DD', obj, xo__t ): "
   CHECK_IN_OUT( 3, 1 );
   mwSize N0, M0;
   real_const_ptr arg0 = Utils::mex_matrix_pointer( arg_in_2, N0, M0, CMD " xo__t" );

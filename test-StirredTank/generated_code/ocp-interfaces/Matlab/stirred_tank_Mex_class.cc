@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank_Mex_class.cc                                      |
  |                                                                       |
- |  version: 1.0   date 20/1/2023                                        |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -59,9 +59,6 @@ ProblemStorage::done_solve() {
   solution3_ok = false;
 }
 
-integer
-ProblemStorage::nnz() const { return MODEL_CLASS::eval_JF_nnz(); }
-
 void
 ProblemStorage::read( string const & fname, GenericContainer & gc ) {
   // redirect output
@@ -83,12 +80,19 @@ ProblemStorage::get(
   NodeQXL       & S
 ) {
 
+  UTILS_ASSERT( mxIsStruct( prhs ), "ProblemStorage::get, argument must be a struct" );
+
   mwSize nQ, nX, nL;
 
   mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
   mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
   mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
   mxArray const * mx_L       = mxGetField( prhs, 0, "lambda"    );
+
+  UTILS_ASSERT( mx_segment != nullptr, "ProblemStorage::get, missing field `i_segment`" );
+  UTILS_ASSERT( mx_q       != nullptr, "ProblemStorage::get, missing field `q`"         );
+  UTILS_ASSERT( mx_X       != nullptr, "ProblemStorage::get, missing field `x`"         );
+  UTILS_ASSERT( mx_L       != nullptr, "ProblemStorage::get, missing field `lambda`"    );
 
   // -------------------
   S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
@@ -132,11 +136,17 @@ ProblemStorage::get(
   NodeQX        & S
 ) {
 
+  UTILS_ASSERT( mxIsStruct( prhs ), "ProblemStorage::get, argument must be a struct" );
+
   mwSize nQ, nX, nL;
 
   mxArray const * mx_segment = mxGetField( prhs, 0, "i_segment" );
   mxArray const * mx_q       = mxGetField( prhs, 0, "q"         );
   mxArray const * mx_X       = mxGetField( prhs, 0, "x"         );
+
+  UTILS_ASSERT( mx_segment != nullptr, "ProblemStorage::get, missing field `i_segment`" );
+  UTILS_ASSERT( mx_q       != nullptr, "ProblemStorage::get, missing field `q`"         );
+  UTILS_ASSERT( mx_X       != nullptr, "ProblemStorage::get, missing field `x`"         );
 
   // -------------------
   S.i_segment = integer( Utils::mex_get_int64( mx_segment, fmt::format( "{} S.i_segment", msg ) ) );
@@ -211,6 +221,23 @@ ProblemStorage::get_L(
     nL == this->dim_X(),
     "{} |lambda| = {} expected to be {}\n",
     msg, nL, this->dim_X()
+  );
+}
+
+// --------------------------------------------------------------------------
+
+void
+ProblemStorage::get_MU(
+  char const        msg[],
+  mxArray const   * mx_MU,
+  MU_const_p_type & MU
+) {
+  mwSize nMU;
+  MU.set( Utils::mex_vector_pointer( mx_MU, nMU, fmt::format( "get_MU {}", msg ) ) );
+  UTILS_ASSERT(
+    nMU == this->dim_X(), // MU = X in dimensione
+    "{} |lambda| = {} expected to be {}\n",
+    msg, nMU, this->dim_X()
   );
 }
 

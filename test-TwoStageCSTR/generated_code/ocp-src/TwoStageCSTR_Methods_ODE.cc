@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoStageCSTR_Methods_ODE.cc                                    |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -71,14 +71,15 @@ namespace TwoStageCSTRDefine {
    |   \___/|___/|___|
   \*/
 
-  integer TwoStageCSTR::rhs_ode_numEqns() const { return 4; }
+  integer TwoStageCSTR::ode_numEqns() const { return 4; }
 
   void
-  TwoStageCSTR::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  TwoStageCSTR::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -87,51 +88,57 @@ namespace TwoStageCSTRDefine {
     real_type t1   = X__[iX_x1];
     real_type t2   = X__[iX_x2];
     real_type t3   = R1(t1, t2);
-    result__[ 0   ] = 0.5e0 - t1 - t3;
-    result__[ 1   ] = t3 - (2 + U__[iU_u1]) * (t2 + 0.25e0);
-    real_type t8   = X__[iX_x3];
-    real_type t9   = ModelPars[iM_tau];
-    real_type t11  = X__[iX_x4];
-    real_type t12  = R2(t8, t11);
-    result__[ 2   ] = t1 - t8 - result__[0] * t9 - t12 + 0.25e0;
-    result__[ 3   ] = t2 - 2 * t11 - (t11 + 0.25e0) * U__[iU_u2] - result__[1] * t9 + t12 - 0.25e0;
+    result__[ 0   ] = 0.5e0 - t1 - t3 - V__[0];
+    real_type t8   = (2 + U__[iU_u1]) * (t2 + 0.25e0);
+    result__[ 1   ] = t3 - t8 - V__[1];
+    real_type t10  = X__[iX_x3];
+    real_type t11  = ModelPars[iM_tau];
+    real_type t14  = X__[iX_x4];
+    real_type t15  = R2(t10, t14);
+    result__[ 2   ] = t1 - t10 - (0.5e0 - t1 - t3) * t11 - t15 + 0.25e0 - V__[2];
+    result__[ 3   ] = t2 - 2 * t14 - (t14 + 0.25e0) * U__[iU_u2] - (t3 - t8) * t11 + t15 - 0.25e0 - V__[3];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 4, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::Drhs_odeDxpu_numRows() const { return 4; }
-  integer TwoStageCSTR::Drhs_odeDxpu_numCols() const { return 6; }
-  integer TwoStageCSTR::Drhs_odeDxpu_nnz()     const { return 15; }
+  integer TwoStageCSTR::DodeDxpuv_numRows() const { return 4; }
+  integer TwoStageCSTR::DodeDxpuv_numCols() const { return 10; }
+  integer TwoStageCSTR::DodeDxpuv_nnz()     const { return 19; }
 
   void
-  TwoStageCSTR::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  TwoStageCSTR::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 1   ; jIndex[2 ] = 0   ;
-    iIndex[3 ] = 1   ; jIndex[3 ] = 1   ;
-    iIndex[4 ] = 1   ; jIndex[4 ] = 4   ;
-    iIndex[5 ] = 2   ; jIndex[5 ] = 0   ;
-    iIndex[6 ] = 2   ; jIndex[6 ] = 1   ;
-    iIndex[7 ] = 2   ; jIndex[7 ] = 2   ;
-    iIndex[8 ] = 2   ; jIndex[8 ] = 3   ;
-    iIndex[9 ] = 3   ; jIndex[9 ] = 0   ;
-    iIndex[10] = 3   ; jIndex[10] = 1   ;
-    iIndex[11] = 3   ; jIndex[11] = 2   ;
-    iIndex[12] = 3   ; jIndex[12] = 3   ;
-    iIndex[13] = 3   ; jIndex[13] = 4   ;
-    iIndex[14] = 3   ; jIndex[14] = 5   ;
+    iIndex[2 ] = 0   ; jIndex[2 ] = 6   ;
+    iIndex[3 ] = 1   ; jIndex[3 ] = 0   ;
+    iIndex[4 ] = 1   ; jIndex[4 ] = 1   ;
+    iIndex[5 ] = 1   ; jIndex[5 ] = 4   ;
+    iIndex[6 ] = 1   ; jIndex[6 ] = 7   ;
+    iIndex[7 ] = 2   ; jIndex[7 ] = 0   ;
+    iIndex[8 ] = 2   ; jIndex[8 ] = 1   ;
+    iIndex[9 ] = 2   ; jIndex[9 ] = 2   ;
+    iIndex[10] = 2   ; jIndex[10] = 3   ;
+    iIndex[11] = 2   ; jIndex[11] = 8   ;
+    iIndex[12] = 3   ; jIndex[12] = 0   ;
+    iIndex[13] = 3   ; jIndex[13] = 1   ;
+    iIndex[14] = 3   ; jIndex[14] = 2   ;
+    iIndex[15] = 3   ; jIndex[15] = 3   ;
+    iIndex[16] = 3   ; jIndex[16] = 4   ;
+    iIndex[17] = 3   ; jIndex[17] = 5   ;
+    iIndex[18] = 3   ; jIndex[18] = 9   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  TwoStageCSTR::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  TwoStageCSTR::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -143,26 +150,30 @@ namespace TwoStageCSTRDefine {
     result__[ 0   ] = -1 - t3;
     real_type t4   = R1_D_2(t1, t2);
     result__[ 1   ] = -t4;
-    result__[ 2   ] = t3;
-    result__[ 3   ] = t4 - 2 - U__[iU_u1];
-    result__[ 4   ] = -t2 - 0.25e0;
+    result__[ 2   ] = -1;
+    result__[ 3   ] = t3;
+    result__[ 4   ] = t4 - 2 - U__[iU_u1];
+    result__[ 5   ] = -t2 - 0.25e0;
+    result__[ 6   ] = -1;
     real_type t6   = ModelPars[iM_tau];
-    result__[ 5   ] = -result__[0] * t6 + 1;
-    result__[ 6   ] = t4 * t6;
+    result__[ 7   ] = -result__[0] * t6 + 1;
+    result__[ 8   ] = t4 * t6;
     real_type t8   = X__[iX_x3];
     real_type t9   = X__[iX_x4];
     real_type t10  = R2_D_1(t8, t9);
-    result__[ 7   ] = -1 - t10;
+    result__[ 9   ] = -1 - t10;
     real_type t11  = R2_D_2(t8, t9);
-    result__[ 8   ] = -t11;
-    result__[ 9   ] = -result__[2] * t6;
-    result__[ 10  ] = -result__[3] * t6 + 1;
-    result__[ 11  ] = t10;
-    result__[ 12  ] = -2 - U__[iU_u2] + t11;
-    result__[ 13  ] = -result__[4] * t6;
-    result__[ 14  ] = -t9 - 0.25e0;
+    result__[ 10  ] = -t11;
+    result__[ 11  ] = -1;
+    result__[ 12  ] = -result__[3] * t6;
+    result__[ 13  ] = -result__[4] * t6 + 1;
+    result__[ 14  ] = t10;
+    result__[ 15  ] = -2 - U__[iU_u2] + t11;
+    result__[ 16  ] = -result__[5] * t6;
+    result__[ 17  ] = -t9 - 0.25e0;
+    result__[ 18  ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 15, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 19, i_segment );
   }
 
   /*\
@@ -190,9 +201,9 @@ namespace TwoStageCSTRDefine {
 
   void
   TwoStageCSTR::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -204,108 +215,6 @@ namespace TwoStageCSTRDefine {
     result__[ 3   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 4, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer TwoStageCSTR::eta_numEqns() const { return 4; }
-
-  void
-  TwoStageCSTR::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    result__[ 1   ] = L__[iL_lambda2__xo];
-    result__[ 2   ] = L__[iL_lambda3__xo];
-    result__[ 3   ] = L__[iL_lambda4__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::DetaDxp_numRows() const { return 4; }
-  integer TwoStageCSTR::DetaDxp_numCols() const { return 4; }
-  integer TwoStageCSTR::DetaDxp_nnz()     const { return 0; }
-
-  void
-  TwoStageCSTR::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  TwoStageCSTR::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer TwoStageCSTR::nu_numEqns() const { return 4; }
-
-  void
-  TwoStageCSTR::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    result__[ 1   ] = V__[1];
-    result__[ 2   ] = V__[2];
-    result__[ 3   ] = V__[3];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 4, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer TwoStageCSTR::DnuDxp_numRows() const { return 4; }
-  integer TwoStageCSTR::DnuDxp_numCols() const { return 4; }
-  integer TwoStageCSTR::DnuDxp_nnz()     const { return 0; }
-
-  void
-  TwoStageCSTR::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  TwoStageCSTR::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

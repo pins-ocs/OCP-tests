@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_boundary_conditions.cc          |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -79,10 +79,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::bc_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer i_segment_left  = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -124,10 +124,10 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::DbcDxxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -164,13 +164,110 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
 
   void
   ICLOCS_TwoLinkRobotArm::D2bcD2xxp_sparse(
-    NodeType const              & LEFT__,
-    NodeType const              & RIGHT__,
-    P_const_pointer_type          P__,
-    OMEGA_full_const_pointer_type OMEGA__,
-    real_type                     result__[]
+    NodeQX const &          LEFT__,
+    NodeQX const &          RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
   ) const {
     // EMPTY
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  integer ICLOCS_TwoLinkRobotArm::fd_BC_numEqns() const { return 8; }
+
+  void
+  ICLOCS_TwoLinkRobotArm::fd_BC_eval(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
+    result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
+    result__[ 2   ] = OMEGA__[2] + LL__[iL_lambda3__xo];
+    result__[ 3   ] = OMEGA__[3] + LL__[iL_lambda4__xo];
+    result__[ 4   ] = OMEGA__[4] - LR__[iL_lambda1__xo];
+    result__[ 5   ] = OMEGA__[5] - LR__[iL_lambda2__xo];
+    result__[ 6   ] = OMEGA__[6] - LR__[iL_lambda3__xo];
+    result__[ 7   ] = OMEGA__[7] - LR__[iL_lambda4__xo];
+    real_type t18  = -1 + ModelPars[iM_W];
+    real_type t19  = ModelPars[iM_T_guess];
+    real_type t21  = P__[iP_T];
+    real_type t27  = t19 * t19;
+    real_type t32  = t21 * t21;
+    result__[ 8   ] = 1.0 / t21 * (2 * t19 * t18 + 2 * t21) - 1.0 / t32 * (2 * t19 * t18 * t21 - t27 * t18 + t32);
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 8, i_segment_left, i_segment_right );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  integer ICLOCS_TwoLinkRobotArm::Dfd_BCDxlxlp_numRows() const { return 9; }
+  integer ICLOCS_TwoLinkRobotArm::Dfd_BCDxlxlp_numCols() const { return 17; }
+  integer ICLOCS_TwoLinkRobotArm::Dfd_BCDxlxlp_nnz()     const { return 9; }
+
+  void
+  ICLOCS_TwoLinkRobotArm::Dfd_BCDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+    iIndex[0 ] = 0   ; jIndex[0 ] = 4   ;
+    iIndex[1 ] = 1   ; jIndex[1 ] = 5   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 6   ;
+    iIndex[3 ] = 3   ; jIndex[3 ] = 7   ;
+    iIndex[4 ] = 4   ; jIndex[4 ] = 12  ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 13  ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 14  ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 15  ;
+    iIndex[8 ] = 8   ; jIndex[8 ] = 16  ;
+  }
+
+
+  void
+  ICLOCS_TwoLinkRobotArm::Dfd_BCDxlxlp_sparse(
+    NodeQXL const &         LEFT__,
+    NodeQXL const &         RIGHT__,
+    P_const_p_type          P__,
+    OMEGA_full_const_p_type OMEGA__,
+    real_ptr                result__
+  ) const {
+    integer  i_segment_left = LEFT__.i_segment;
+    real_const_ptr     QL__ = LEFT__.q;
+    real_const_ptr     XL__ = LEFT__.x;
+    real_const_ptr     LL__ = LEFT__.lambda;
+    integer i_segment_right = RIGHT__.i_segment;
+    real_const_ptr     QR__ = RIGHT__.q;
+    real_const_ptr     XR__ = RIGHT__.x;
+    real_const_ptr     LR__ = RIGHT__.lambda;
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    result__[ 0   ] = 1;
+    result__[ 1   ] = 1;
+    result__[ 2   ] = 1;
+    result__[ 3   ] = 1;
+    result__[ 4   ] = -1;
+    result__[ 5   ] = -1;
+    result__[ 6   ] = -1;
+    result__[ 7   ] = -1;
+    real_type t1   = P__[iP_T];
+    real_type t4   = -1 + ModelPars[iM_W];
+    real_type t5   = ModelPars[iM_T_guess];
+    real_type t9   = t1 * t1;
+    real_type t13  = t5 * t5;
+    result__[ 8   ] = 2 / t1 - 2 / t9 * (2 * t5 * t4 + 2 * t1) + 2 / t9 / t1 * (2 * t5 * t4 * t1 - t13 * t4 + t9);
+    if ( m_debug )
+      Mechatronix::check_in_segment2( result__, "Dfd_BCDxlxlp_sparse", 9, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

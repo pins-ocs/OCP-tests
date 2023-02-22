@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularConstrainedCalogero_Methods_controls.cc                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -67,34 +67,20 @@ namespace SingularConstrainedCalogeroDefine {
 
   real_type
   SingularConstrainedCalogero::g_fun_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[1], LM__[1];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
-    real_type t2   = QL__[iQ_zeta];
-    real_type t8   = uControl(t1, 0, 2);
-    real_type t12  = uMaxBound(XL__[iX_x] - t2 - t1 + 1);
-    real_type t13  = QR__[iQ_zeta];
-    real_type t18  = uMaxBound(XR__[iX_x] - t13 - t1 + 1);
-    real_type result__ = (t2 - 4) * t1 + 2 * t1 * LM__[0] + 2 * t8 + t12 + (t13 - 4) * t1 + t18;
+    real_type t1   = U__[iU_u];
+    real_type t2   = Q__[iQ_zeta];
+    real_type t5   = uControl(t1, 0, 2);
+    real_type t8   = uMaxBound(X__[iX_x] - t2 - t1 + 1);
+    real_type result__ = (t2 - 4) * t1 + t5 + t8 + t1 * MU__[0];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -107,88 +93,56 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::g_eval(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[1], LM__[1];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = QL__[iQ_zeta];
-    real_type t4   = UM__[0];
-    real_type t5   = ALIAS_uControl_D_1(t4, 0, 2);
-    real_type t9   = ALIAS_uMaxBound_D(XL__[iX_x] - t1 - t4 + 1);
-    real_type t10  = QR__[iQ_zeta];
-    real_type t13  = ALIAS_uMaxBound_D(XR__[iX_x] - t10 - t4 + 1);
-    result__[ 0   ] = t1 - 8 + 2 * LM__[0] + 2 * t5 - t9 + t10 - t13;
+    real_type t1   = Q__[iQ_zeta];
+    real_type t2   = U__[iU_u];
+    real_type t3   = ALIAS_uControl_D_1(t2, 0, 2);
+    real_type t6   = ALIAS_uMaxBound_D(X__[iX_x] - t1 - t2 + 1);
+    result__[ 0   ] = t1 - 4 + t3 - t6 + MU__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularConstrainedCalogero::DgDxlxlp_numRows() const { return 1; }
-  integer SingularConstrainedCalogero::DgDxlxlp_numCols() const { return 4; }
-  integer SingularConstrainedCalogero::DgDxlxlp_nnz()     const { return 4; }
+  integer SingularConstrainedCalogero::DgDxpm_numRows() const { return 1; }
+  integer SingularConstrainedCalogero::DgDxpm_numCols() const { return 2; }
+  integer SingularConstrainedCalogero::DgDxpm_nnz()     const { return 2; }
 
   void
-  SingularConstrainedCalogero::DgDxlxlp_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularConstrainedCalogero::DgDxpm_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
     iIndex[1 ] = 0   ; jIndex[1 ] = 1   ;
-    iIndex[2 ] = 0   ; jIndex[2 ] = 2   ;
-    iIndex[3 ] = 0   ; jIndex[3 ] = 3   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularConstrainedCalogero::DgDxlxlp_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SingularConstrainedCalogero::DgDxpm_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[1], LM__[1];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t3   = UM__[0];
-    real_type t5   = ALIAS_uMaxBound_DD(XL__[iX_x] - QL__[iQ_zeta] - t3 + 1);
+    real_type t5   = ALIAS_uMaxBound_DD(X__[iX_x] - Q__[iQ_zeta] - U__[iU_u] + 1);
     result__[ 0   ] = -t5;
-    result__[ 1   ] = 1.0;
-    real_type t9   = ALIAS_uMaxBound_DD(XR__[iX_x] - QR__[iQ_zeta] - t3 + 1);
-    result__[ 2   ] = -t9;
-    result__[ 3   ] = 1.0;
+    result__[ 1   ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DgDxlxlp_sparse", 4, i_segment );
+      Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 2, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,33 +160,20 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::DgDu_sparse(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    U_const_pointer_type UM__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr LL__ = LEFT__.lambda;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    real_const_ptr LR__ = RIGHT__.lambda;
-    // midpoint
-    real_type QM__[1], XM__[1], LM__[1];
-    // Qvars
-    QM__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    XM__[0] = (XL__[0]+XR__[0])/2;
-    // Lvars
-    LM__[0] = (LL__[0]+LR__[0])/2;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = UM__[0];
+    real_type t1   = U__[iU_u];
     real_type t2   = ALIAS_uControl_D_1_1(t1, 0, 2);
-    real_type t7   = ALIAS_uMaxBound_DD(XL__[iX_x] - QL__[iQ_zeta] - t1 + 1);
-    real_type t11  = ALIAS_uMaxBound_DD(XR__[iX_x] - QR__[iQ_zeta] - t1 + 1);
-    result__[ 0   ] = 2 * t2 + t7 + t11;
+    real_type t6   = ALIAS_uMaxBound_DD(X__[iX_x] - Q__[iQ_zeta] - t1 + 1);
+    result__[ 0   ] = t2 + t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -255,99 +196,15 @@ namespace SingularConstrainedCalogeroDefine {
 
   void
   SingularConstrainedCalogero::u_eval_analytic(
-    NodeType2 const &    LEFT__,
-    NodeType2 const &    RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       U__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        U__
   ) const {
     UTILS_ERROR(
       "SingularConstrainedCalogero::u_eval_analytic\n"
       "no analytic control available, use iterative!\n"
     );
-  }
-
-  /*\
-  :|:   ___         _           _   ___    _   _            _
-  :|:  / __|___ _ _| |_ _ _ ___| | | __|__| |_(_)_ __  __ _| |_ ___
-  :|: | (__/ _ \ ' \  _| '_/ _ \ | | _|(_-<  _| | '  \/ _` |  _/ -_)
-  :|:  \___\___/_||_\__|_| \___/_| |___/__/\__|_|_|_|_\__,_|\__\___|
-  \*/
-
-  real_type
-  SingularConstrainedCalogero::m_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = uControl(t1, 0, 2);
-    real_type t6   = uMaxBound(X__[iX_x] - Q__[iQ_zeta] - t1 + 1);
-    real_type t9   = pow(V__[0] - t1, 2);
-    real_type result__ = t2 + t6 + t9;
-    if ( m_debug ) {
-      UTILS_ASSERT( Utils::is_finite(result__), "m_eval(...) return {}\n", result__ );
-    }
-    return result__;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SingularConstrainedCalogero::DmDu_numEqns() const { return 1; }
-
-  void
-  SingularConstrainedCalogero::DmDu_eval(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = ALIAS_uControl_D_1(t1, 0, 2);
-    real_type t6   = ALIAS_uMaxBound_D(X__[iX_x] - Q__[iQ_zeta] - t1 + 1);
-    result__[ 0   ] = t2 - t6 - 2 * V__[0] + 2 * t1;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDu_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularConstrainedCalogero::DmDuu_numRows() const { return 1; }
-  integer SingularConstrainedCalogero::DmDuu_numCols() const { return 1; }
-  integer SingularConstrainedCalogero::DmDuu_nnz()     const { return 1; }
-
-  void
-  SingularConstrainedCalogero::DmDuu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
-  }
-
-
-  void
-  SingularConstrainedCalogero::DmDuu_sparse(
-    NodeType const &     NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = ALIAS_uControl_D_1_1(t1, 0, 2);
-    real_type t6   = ALIAS_uMaxBound_DD(X__[iX_x] - Q__[iQ_zeta] - t1 + 1);
-    result__[ 0   ] = t2 + t6 + 2;
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DmDuu_sparse", 1, i_segment );
   }
 
 }

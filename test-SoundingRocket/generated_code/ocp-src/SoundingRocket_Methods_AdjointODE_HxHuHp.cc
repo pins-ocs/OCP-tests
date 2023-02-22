@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -57,11 +57,11 @@ namespace SoundingRocketDefine {
 
   /*\
    |   _   _
-   |  | | | |_  __ _ __
-   |  | |_| \ \/ /| '_ \
-   |  |  _  |>  < | |_) |
-   |  |_| |_/_/\_\| .__/
-   |              |_|
+   |  | | | |_  ___ __  _   _
+   |  | |_| \ \/ / '_ \| | | |
+   |  |  _  |>  <| |_) | |_| |
+   |  |_| |_/_/\_\ .__/ \__,_|
+   |             |_|
   \*/
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,41 +70,42 @@ namespace SoundingRocketDefine {
 
   void
   SoundingRocket::Hxp_eval(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t2   = P__[iP_Tf];
     real_type t4   = X__[iX_x2];
     real_type t5   = ModelPars[iM_kappa];
-    real_type t9   = L__[iL_lambda1__xo];
+    real_type t9   = MU__[0];
     result__[ 1   ] = -2 * t5 * t4 * t2 * t1 + t2 * t9;
     result__[ 2   ] = 0;
-    real_type t12  = t4 * t4;
-    real_type t14  = ModelPars[iM_B];
-    real_type t15  = U__[iU_u];
-    result__[ 3   ] = t4 * t9 + (-t12 * t5 + t15 * t14 - ModelPars[iM_g]) * t1 + t15 * t14 * L__[iL_lambda3__xo];
+    real_type t11  = U__[iU_u];
+    real_type t12  = uControl(t11, 0, 1);
+    real_type t14  = t4 * t4;
+    real_type t16  = ModelPars[iM_B];
+    result__[ 3   ] = t12 + t4 * t9 + (t11 * t16 - t14 * t5 - ModelPars[iM_g]) * t1 + t11 * t16 * MU__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 4, i_segment );
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SoundingRocket::DHxpDxpu_numRows() const { return 4; }
-  integer SoundingRocket::DHxpDxpu_numCols() const { return 5; }
-  integer SoundingRocket::DHxpDxpu_nnz()     const { return 4; }
+  integer SoundingRocket::DHxpDxpuv_numRows() const { return 4; }
+  integer SoundingRocket::DHxpDxpuv_numCols() const { return 8; }
+  integer SoundingRocket::DHxpDxpuv_nnz()     const { return 4; }
 
   void
-  SoundingRocket::DHxpDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  SoundingRocket::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 1   ; jIndex[0 ] = 1   ;
     iIndex[1 ] = 1   ; jIndex[1 ] = 3   ;
     iIndex[2 ] = 3   ; jIndex[2 ] = 1   ;
@@ -113,59 +114,28 @@ namespace SoundingRocketDefine {
 
 
   void
-  SoundingRocket::DHxpDxpu_sparse(
-    NodeType2 const    & NODE__,
-    V_const_pointer_type V__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SoundingRocket::DHxpDxpuv_sparse(
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__,
+    V_const_p_type  V__,
+    real_ptr        result__
   ) const {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = L__[iL_lambda2__xo];
+    real_type t1   = MU__[1];
     real_type t4   = ModelPars[iM_kappa];
     result__[ 0   ] = -2 * t4 * P__[iP_Tf] * t1;
-    result__[ 1   ] = -2 * X__[iX_x2] * t4 * t1 + L__[iL_lambda1__xo];
+    result__[ 1   ] = -2 * X__[iX_x2] * t4 * t1 + MU__[0];
     result__[ 2   ] = result__[1];
-    real_type t12  = ModelPars[iM_B];
-    result__[ 3   ] = t12 * t1 + t12 * L__[iL_lambda3__xo];
+    real_type t13  = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
+    real_type t14  = ModelPars[iM_B];
+    result__[ 3   ] = t14 * t1 + t14 * MU__[2] + t13;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpu_sparse", 4, i_segment );
-  }
-
-  /*\
-   |  _   _
-   | | | | |_   _
-   | | |_| | | | |
-   | |  _  | |_| |
-   | |_| |_|\__,_|
-   |
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SoundingRocket::Hu_numEqns() const { return 1; }
-
-  void
-  SoundingRocket::Hu_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = P__[iP_Tf];
-    real_type t4   = ModelPars[iM_B];
-    result__[ 0   ] = t4 * t2 * L__[iL_lambda2__xo] + t4 * t2 * L__[iL_lambda3__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Hu_eval", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 4, i_segment );
   }
 
 }

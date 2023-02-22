@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_Guess.cc                                   |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -52,28 +52,32 @@ namespace gtocX_2burnDefine {
   \*/
 
   void
-  gtocX_2burn::p_guess_eval( P_pointer_type P__ ) const {
+  gtocX_2burn::p_guess_eval( P_p_type P__ ) const {
   }
 
   void
   gtocX_2burn::xlambda_guess_eval(
-    integer              i_segment,
-    Q_const_pointer_type Q__,
-    P_const_pointer_type P__,
-    X_pointer_type       X__,
-    L_pointer_type       L__
+    integer        i_segment,
+    Q_const_p_type Q__,
+    P_const_p_type P__,
+    X_p_type       X__,
+    L_p_type       L__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t1   = Q__[iQ_zeta];
-    real_type t3   = ModelPars[iM_time_i];
-    real_type t7   = t3 * (1 - t1) + ModelPars[iM_time_f] * t1;
-    X__[ iX_p ] = p_guess(t7);
-    X__[ iX_f ] = f_guess(t7);
-    X__[ iX_g ] = g_guess(t7);
-    X__[ iX_h ] = h_guess(t7);
-    X__[ iX_k ] = k_guess(t7);
-    X__[ iX_L ] = L_guess(t7, t3);
+    { // open block to avoid temporary clash
+      real_type t1   = Q__[iQ_zeta];
+      real_type t3   = ModelPars[iM_time_i];
+      real_type t7   = t3 * (1 - t1) + ModelPars[iM_time_f] * t1;
+      X__[ iX_p ] = p_guess(t7);
+      X__[ iX_f ] = f_guess(t7);
+      X__[ iX_g ] = g_guess(t7);
+      X__[ iX_h ] = h_guess(t7);
+      X__[ iX_k ] = k_guess(t7);
+      X__[ iX_L ] = L_guess(t7, t3);
+    }
+    { // open block to avoid temporary clash
 
+    }
     if ( m_debug ) {
       Mechatronix::check( X__.pointer(), "xlambda_guess_eval (x part)", 6 );
       Mechatronix::check( L__.pointer(), "xlambda_guess_eval (lambda part)", 6 );
@@ -209,7 +213,7 @@ namespace gtocX_2burnDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  gtocX_2burn::p_check( P_const_pointer_type P__ ) const {
+  gtocX_2burn::p_check( P_const_p_type P__ ) const {
     return true;
   }
 
@@ -217,9 +221,9 @@ namespace gtocX_2burnDefine {
 
   bool
   gtocX_2burn::xlambda_check_node(
-    integer              ipos,
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__
+    integer         ipos,
+    NodeQXL const & NODE__,
+    P_const_p_type  P__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -230,16 +234,30 @@ namespace gtocX_2burnDefine {
     return true;
   }
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  /*\
+   |   ___               _ _   _
+   |  | _ \___ _ _  __ _| | |_(_)___ ___
+   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
+   |  |_| \___|_||_\__,_|_|\__|_\___/__/
+   |
+  \*/
 
   bool
-  gtocX_2burn::xlambda_check_cell(
-    integer              icell,
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__
+  gtocX_2burn::penalties_check_node(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
-    return true;
+    integer i_segment = NODE__.i_segment;
+    real_const_ptr Q__ = NODE__.q;
+    real_const_ptr X__ = NODE__.x;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    bool ok = true;
+    real_type t2   = X__[iX_L];
+    real_type t3   = cos(t2);
+    real_type t6   = sin(t2);
+    ok = ok && ray_positive.check_range(-t3 * X__[iX_f] - t6 * X__[iX_g] - 1, m_max_penalty_value);
+    return ok;
   }
 
   /*\
@@ -256,10 +274,10 @@ namespace gtocX_2burnDefine {
 
   void
   gtocX_2burn::u_guess_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    U_pointer_type       UGUESS__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_p_type        UGUESS__
   ) const {
     // no controls to compute
   }
@@ -274,15 +292,15 @@ namespace gtocX_2burnDefine {
 
   bool
   gtocX_2burn::u_check_if_admissible(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const &  NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     bool ok = true;
-    integer  i_segment = NODE__.i_segment;
+    integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
     // no controls to check
     return ok;
   }

@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Train_Main.cc                                                  |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type epsi_max = 0.01;
     real_type ubMax = 2;
     real_type tol_max = 0.01;
     real_type uaMax = 10;
-    real_type epsi_max = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -186,12 +186,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 Train_data.Mesh["s0"] = 0;
-Train_data.Mesh["segments"][0]["n"] = 25;
 Train_data.Mesh["segments"][0]["length"] = 0.25;
-Train_data.Mesh["segments"][1]["n"] = 3000;
+Train_data.Mesh["segments"][0]["n"] = 25;
 Train_data.Mesh["segments"][1]["length"] = 0.75;
-Train_data.Mesh["segments"][2]["n"] = 100;
+Train_data.Mesh["segments"][1]["n"] = 3000;
 Train_data.Mesh["segments"][2]["length"] = 3.8;
+Train_data.Mesh["segments"][2]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -253,7 +253,7 @@ Train_data.Mesh["segments"][2]["length"] = 3.8;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);

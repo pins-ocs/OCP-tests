@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero_Methods_ODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -62,51 +62,55 @@ namespace SingularCalogeroDefine {
    |   \___/|___/|___|
   \*/
 
-  integer SingularCalogero::rhs_ode_numEqns() const { return 1; }
+  integer SingularCalogero::ode_numEqns() const { return 1; }
 
   void
-  SingularCalogero::rhs_ode_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SingularCalogero::ode_eval(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = U__[iU_u];
+    result__[ 0   ] = U__[iU_u] - V__[0];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "rhs_ode", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "ode", 1, i_segment );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogero::Drhs_odeDxpu_numRows() const { return 1; }
-  integer SingularCalogero::Drhs_odeDxpu_numCols() const { return 2; }
-  integer SingularCalogero::Drhs_odeDxpu_nnz()     const { return 1; }
+  integer SingularCalogero::DodeDxpuv_numRows() const { return 1; }
+  integer SingularCalogero::DodeDxpuv_numCols() const { return 3; }
+  integer SingularCalogero::DodeDxpuv_nnz()     const { return 2; }
 
   void
-  SingularCalogero::Drhs_odeDxpu_pattern( integer iIndex[], integer jIndex[] ) const {
+  SingularCalogero::DodeDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
     iIndex[0 ] = 0   ; jIndex[0 ] = 1   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
   }
 
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  SingularCalogero::Drhs_odeDxpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+  SingularCalogero::DodeDxpuv_sparse(
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    V_const_p_type V__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
+    result__[ 1   ] = -1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "Drhs_odeDxpu_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DodeDxpuv_sparse", 2, i_segment );
   }
 
   /*\
@@ -131,9 +135,9 @@ namespace SingularCalogeroDefine {
 
   void
   SingularCalogero::A_sparse(
-    NodeType const     & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -142,102 +146,6 @@ namespace SingularCalogeroDefine {
     result__[ 0   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 1, i_segment );
-  }
-
-  /*\
-   |        _
-   |    ___| |_ __ _
-   |   / _ \ __/ _` |
-   |  |  __/ || (_| |
-   |   \___|\__\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SingularCalogero::eta_numEqns() const { return 1; }
-
-  void
-  SingularCalogero::eta_eval(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer i_segment  = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = L__[iL_lambda1__xo];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__,"eta_eval",1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogero::DetaDxp_numRows() const { return 1; }
-  integer SingularCalogero::DetaDxp_numCols() const { return 1; }
-  integer SingularCalogero::DetaDxp_nnz()     const { return 0; }
-
-  void
-  SingularCalogero::DetaDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  SingularCalogero::DetaDxp_sparse(
-    NodeType2 const    & NODE__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
-  }
-
-  /*\
-   |    _ __  _   _
-   |   | '_ \| | | |
-   |   | | | | |_| |
-   |   |_| |_|\__,_|
-  \*/
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  integer SingularCalogero::nu_numEqns() const { return 1; }
-
-  void
-  SingularCalogero::nu_eval(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    integer  i_segment = NODE__.i_segment;
-    real_const_ptr Q__ = NODE__.q;
-    real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    result__[ 0   ] = V__[0];
-    if ( m_debug )
-      Mechatronix::check_in_segment( result__, "nu_eval", 1, i_segment );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer SingularCalogero::DnuDxp_numRows() const { return 1; }
-  integer SingularCalogero::DnuDxp_numCols() const { return 1; }
-  integer SingularCalogero::DnuDxp_nnz()     const { return 0; }
-
-  void
-  SingularCalogero::DnuDxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    // EMPTY!
-  }
-
-
-  void
-  SingularCalogero::DnuDxp_sparse(
-    NodeType const     & NODE__,
-    V_const_pointer_type V__,
-    P_const_pointer_type P__,
-    real_type            result__[]
-  ) const {
-    // EMPTY!
   }
 
 }

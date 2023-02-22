@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -94,40 +94,6 @@ namespace BangBangForkDefine {
   }
 
   /*\
-   |   ___               _ _   _
-   |  | _ \___ _ _  __ _| | |_(_)___ ___
-   |  |  _/ -_) ' \/ _` | |  _| / -_|_-<
-   |  |_| \___|_||_\__,_|_|\__|_\___/__/
-   |
-  \*/
-
-  bool
-  BangBangFork::penalties_check_cell(
-    NodeType const &     LEFT__,
-    NodeType const &     RIGHT__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
-  ) const {
-    integer i_segment = LEFT__.i_segment;
-    real_const_ptr QL__ = LEFT__.q;
-    real_const_ptr XL__ = LEFT__.x;
-    real_const_ptr QR__ = RIGHT__.q;
-    real_const_ptr XR__ = RIGHT__.x;
-    // midpoint
-    real_type Q__[1], X__[3];
-    // Qvars
-    Q__[0] = (QL__[0]+QR__[0])/2;
-    // Xvars
-    X__[0] = (XL__[0]+XR__[0])/2;
-    X__[1] = (XL__[1]+XR__[1])/2;
-    X__[2] = (XL__[2]+XR__[2])/2;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    bool ok = true;
-    ok = ok && Tbarrier.check_range(-P__[iP_T], m_max_penalty_value);
-    return ok;
-  }
-
-  /*\
    |  _  _            _ _ _            _
    | | || |__ _ _ __ (_) | |_ ___ _ _ (_)__ _ _ _
    | | __ / _` | '  \| | |  _/ _ \ ' \| / _` | ' \
@@ -137,9 +103,10 @@ namespace BangBangForkDefine {
 
   real_type
   BangBangFork::H_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    MU_const_p_type MU__,
+    U_const_p_type  U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -152,7 +119,7 @@ namespace BangBangForkDefine {
     real_type t9   = X__[iX_x2];
     real_type t21  = t9 * t9;
     real_type t22  = t21 * t21;
-    real_type result__ = t5 * t2 * ModelPars[iM_WC] - t9 * t2 * L__[iL_lambda1__xo] + (t4 * ModelPars[iM_WU2] + X__[iX_x3]) * t2 * L__[iL_lambda2__xo] + (-t22 * t9 * ModelPars[iM_kappa] + U__[iU_u]) * t2 * L__[iL_lambda3__xo];
+    real_type result__ = t5 * t2 * ModelPars[iM_WC] - t9 * t2 * MU__[0] + (t4 * ModelPars[iM_WU2] + X__[iX_x3]) * t2 * MU__[1] + (-t22 * t9 * ModelPars[iM_kappa] + U__[iU_u]) * t2 * MU__[2];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -169,9 +136,9 @@ namespace BangBangForkDefine {
 
   real_type
   BangBangFork::lagrange_target(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -195,9 +162,9 @@ namespace BangBangForkDefine {
 
   real_type
   BangBangFork::mayer_target(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -220,10 +187,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::DmayerDxxp_eval(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -259,10 +226,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::D2mayerD2xxp_sparse(
-    NodeType const     & LEFT__,
-    NodeType const     & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & LEFT__,
+    NodeQX const & RIGHT__,
+    P_const_p_type P__,
+    real_ptr       result__
   ) const {
     // EMPTY!
   }
@@ -280,10 +247,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::DlagrangeDxpu_eval(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -309,27 +276,27 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 4   ; jIndex[0 ] = 4   ;
-    iIndex[1 ] = 4   ; jIndex[1 ] = 5   ;
-    iIndex[2 ] = 5   ; jIndex[2 ] = 4   ;
+    iIndex[0 ] = 3   ; jIndex[0 ] = 5   ;
+    iIndex[1 ] = 5   ; jIndex[1 ] = 3   ;
+    iIndex[2 ] = 5   ; jIndex[2 ] = 5   ;
   }
 
 
   void
   BangBangFork::D2lagrangeD2xpu_sparse(
-    NodeType const     & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQX const & NODE__,
+    P_const_p_type P__,
+    U_const_p_type U__,
+    real_ptr       result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
-    real_type t2   = ModelPars[iM_WC];
-    result__[ 0   ] = 2 * t2 * P__[iP_T];
-    result__[ 1   ] = 2 * U__[iU_u2] * t2;
-    result__[ 2   ] = result__[1];
+    real_type t1   = ModelPars[iM_WC];
+    result__[ 0   ] = 2 * U__[iU_u2] * t1;
+    result__[ 1   ] = result__[0];
+    result__[ 2   ] = 2 * t1 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
   }
@@ -347,9 +314,9 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::q_eval(
-    integer        i_segment,
-    real_type      s,
-    Q_pointer_type result__
+    integer   i_segment,
+    real_type s,
+    Q_p_type  result__
   ) const {
     MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
@@ -368,22 +335,22 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::segmentLink_eval(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            segmentLink[]
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr        segmentLink
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer BangBangFork::DsegmentLinkDxp_numRows() const { return 0; }
-  integer BangBangFork::DsegmentLinkDxp_numCols() const { return 0; }
-  integer BangBangFork::DsegmentLinkDxp_nnz() const { return 0; }
+  integer BangBangFork::DsegmentLinkDxxp_numRows() const { return 0; }
+  integer BangBangFork::DsegmentLinkDxxp_numCols() const { return 0; }
+  integer BangBangFork::DsegmentLinkDxxp_nnz() const { return 0; }
 
   void
-  BangBangFork::DsegmentLinkDxp_pattern(
+  BangBangFork::DsegmentLinkDxxp_pattern(
     integer iIndex[],
     integer jIndex[]
   ) const {
@@ -393,11 +360,11 @@ namespace BangBangForkDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BangBangFork::DsegmentLinkDxp_sparse(
-    NodeType const     & L,
-    NodeType const     & R,
-    P_const_pointer_type p,
-    real_type            DsegmentLinkDxp[]
+  BangBangFork::DsegmentLinkDxxp_sparse(
+    NodeQX const & L,
+    NodeQX const & R,
+    P_const_p_type p,
+    real_ptr       DsegmentLinkDxxp
   ) const {
    UTILS_ERROR0("NON IMPLEMENTATA\n");
   }
@@ -414,10 +381,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::jump_eval(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -465,10 +432,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::DjumpDxlxlp_sparse(
-    NodeType2 const    & LEFT__,
-    NodeType2 const    & RIGHT__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & LEFT__,
+    NodeQXL const & RIGHT__,
+    P_const_p_type  P__,
+    real_ptr        result__
   ) const {
     integer  i_segment_left = LEFT__.i_segment;
     real_const_ptr     QL__ = LEFT__.q;
@@ -508,10 +475,10 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
@@ -532,12 +499,12 @@ namespace BangBangForkDefine {
 
   void
   BangBangFork::integrated_post_eval(
-    NodeType2 const    & NODE__,
-    U_const_pointer_type U__,
-    P_const_pointer_type P__,
-    real_type            result__[]
+    NodeQXL const & NODE__,
+    P_const_p_type  P__,
+    U_const_p_type  U__,
+    real_ptr        result__
   ) const {
-   // EMPTY!
+    // EMPTY!
   }
 
 }

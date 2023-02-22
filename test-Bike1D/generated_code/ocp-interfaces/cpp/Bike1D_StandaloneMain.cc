@@ -1,9 +1,9 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D_Main.cc                                                 |
  |                                                                       |
- |  version: 1.0   date 10/11/2022                                       |
+ |  version: 1.0   date 22/2/2023                                        |
  |                                                                       |
- |  Copyright (C) 2022                                                   |
+ |  Copyright (C) 2023                                                   |
  |                                                                       |
  |      Enrico Bertolazzi, Francesco Biral and Paolo Bosetti             |
  |      Dipartimento di Ingegneria Industriale                           |
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type mur_min = -1;
-    real_type muf_min = -1;
     real_type mur_max = 1;
+    real_type muf_min = -1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -159,9 +159,9 @@ main() {
 
     // ClipIntervalWithSinAtan
     GenericContainer & data_clip = gc_MappedObjects["clip"];
+    data_clip["h"] = 0.01;
     data_clip["delta2"] = 0;
     data_clip["delta"] = 0;
-    data_clip["h"] = 0.01;
 
     // Controls
     // Control Penalty type: QUADRATIC, PARABOLA, CUBIC, QUARTIC, BIPOWER
@@ -259,7 +259,7 @@ Bike1D_data.Mesh["segments"][0]["n"] = 1000;
     ALL_DONE_FOLKS;
     exit(0);
   }
-  catch ( char const exc[] ) {
+  catch ( char const * exc ) {
     console.error(exc);
     ALL_DONE_FOLKS;
     exit(0);
