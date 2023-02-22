@@ -48,7 +48,8 @@ begin # definitions
 
   puts "Compiling model: #{MODEL_NAME}\n"
 
-  MAPLE_SRC = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mw"
+  MAPLE_SRC  = "#{ROOT}/#{MODEL_DIR}/#{MODEL_NAME}.mw"
+  MATLAB_SRC = "#{ROOT}/generated_code/ocp-interfaces/Matlab"
 
   CLOBBER.include [
     "#{ROOT}/#{MODEL_DIR}/bvpOut",
@@ -156,6 +157,7 @@ end
 
 task :matlab do
   cd ROOT+'/generated_code/ocp-interfaces/Matlab'
+  FileUtils.rm_rf "build"
   FileUtils.mkdir_p "build"
   cd "build"
   sh "cmake -G Ninja -DCMAKE_BUILD_TYPE=Release .."
