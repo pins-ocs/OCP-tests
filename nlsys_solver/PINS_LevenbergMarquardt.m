@@ -1,8 +1,8 @@
-classdef LevenbergMarquardt < handle
+classdef PINS_LevenbergMarquardt < handle
   properties (SetAccess = private, Hidden = true)
     tolerance;
     iter;
-    maxiter;
+    max_iterations;
     ierr;
 
     tau;
@@ -14,10 +14,10 @@ classdef LevenbergMarquardt < handle
 
   methods
 
-    function self = LevenbergMarquardt()
-      self.tolerance = 1e-12;
-      self.maxiter   = 400;
-      self.tau       = 1;
+    function self = PINS_LevenbergMarquardt()
+      self.tolerance      = 1e-12;
+      self.max_iterations = 400;
+      self.tau            = 1;
     end
 
     function delete( ~ )
@@ -25,16 +25,16 @@ classdef LevenbergMarquardt < handle
     end
 
     function set_max_iteration( self, miter )
-      self.maxiter = miter;
+      self.max_iterations = miter;
     end
 
     function [xk,ierr] = solve( self, xinit, fun, jac, check )
-    
+
       self.f_eval  = fun;
       self.j_eval  = jac;
       self.ck_eval = check;
       self.iter    = 0;
-      
+
       dim = length(xinit);
       x0  = xinit;
       f0  = feval( self.f_eval, x0 );
@@ -46,7 +46,7 @@ classdef LevenbergMarquardt < handle
         ierr = 2;
         return;
       end
-      
+
       mu = self.tau;%full(max(max(abs(J0))));
       nu = 2;
 
@@ -56,7 +56,7 @@ classdef LevenbergMarquardt < handle
       normi_f0 = norm( f0, inf );
       norm2_f0 = norm( f0, 2   );
 
-      for k=1:self.maxiter
+      for k=1:self.max_iterations
         self.iter = k;
         xk = x0;
 

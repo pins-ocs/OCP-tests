@@ -1,12 +1,12 @@
-classdef NewtonSolver < handle
+classdef PINS_NewtonSolver < handle
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
     tolerance;
     iter;
-    maxiter;
+    max_iterations;
     ierr;
 
-    imerit;
+    selected_merit;
 
     x0;
     f0;
@@ -30,19 +30,19 @@ classdef NewtonSolver < handle
 
   methods
 
-    function self = NewtonSolver( imerit )
-      self.tolerance = 1e-8 ;
-      self.maxiter   = 100 ;
-      self.c1        = 0.001;
-      self.imerit    = imerit;
+    function self = PINS_NewtonSolver( selected_merit )
+      self.tolerance      = 1e-8 ;
+      self.max_iterations = 100 ;
+      self.c1             = 0.001;
+      self.selected_merit = selected_merit;
     end
 
     function delete( ~ )
       %% Destroy the C++ class instance
     end
 
-    function setMaxIter( self, miter )
-      self.maxiter = miter;
+    function set_max_iter( self, miter )
+      self.max_iterations = miter;
     end
 
     %  ____                      _ _
@@ -165,7 +165,7 @@ classdef NewtonSolver < handle
     % |_| |_| |_|\___|_|  |_|\__|
     %
     function m = merit( self, alpha )
-      switch self.imerit
+      switch self.selected_merit
       case 1
         m = self.Smerit( alpha ) ;
       case 2
@@ -180,7 +180,7 @@ classdef NewtonSolver < handle
     end
 
     function m0 = merit0( self )
-      switch self.imerit
+      switch self.selected_merit
       case 1
         m0 = self.Smerit0() ;
       case 2
@@ -195,7 +195,7 @@ classdef NewtonSolver < handle
     end
 
     function Dm0 = merit0_D( self )
-      switch self.imerit
+      switch self.selected_merit
       case 1
         Dm0 = self.Smerit0_D() ;
       case 2
@@ -228,7 +228,7 @@ classdef NewtonSolver < handle
       self.x0 = xinit;
       xk      = xinit;
       zold    = xinit;
-      for k=1:self.maxiter
+      for k=1:self.max_iterations
         self.iter = k;
 
         % evaluate merit function and gradient
@@ -256,8 +256,8 @@ classdef NewtonSolver < handle
         normi_d = norm( self.d0, inf );
 
         % do line search
-        if self.imerit == 0
-          alpha = self.MaxStep();
+        if self.selected_merit == 0
+          alpha = self.max_step();
         else
           alpha = self.linesearch();
         end
@@ -293,7 +293,7 @@ classdef NewtonSolver < handle
       it = self.iter;
     end
 
-    function lambda = MaxStep( self )
+    function lambda = max_step( self )
       lambda = 1;
       mul    = 1.5;
       for k=1:20

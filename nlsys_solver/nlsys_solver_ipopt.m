@@ -11,17 +11,13 @@ classdef nlsys_solver_ipopt < handle
   methods (Hidden = true)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function F = evaluate_F( self, x )
-      neq     = self.dims.neq;
-      u_guess = self.OBJ.init_U(x,self.do_minimization);
-      u       = self.OBJ.eval_U(x,u_guess);
-      [F,ok]  = self.OBJ.eval_F( x, u );
+      MU_U   = self.OBJ.eval_MU_U( x, self.OBJ.guess_U(x) );
+      [F,ok] = self.OBJ.eval_F( x, MU_U );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function JF = evaluate_JF( self, x )
-      neq     = self.dims.neq;
-      u_guess = self.OBJ.init_U(x,self.do_minimization);
-      u       = self.OBJ.eval_U(x,u_guess);
-      [JF,ok] = self.OBJ.eval_JF( x, u );
+      MU_U    = self.OBJ.eval_MU_U( x, self.OBJ.guess_U(x) );
+      [JF,ok] = self.OBJ.eval_JF( x, MU_U );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function JF = evaluate_pattern( self )
