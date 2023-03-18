@@ -141,7 +141,7 @@ task :run do
       end
       puts "Run: #{cmd}".yellow
       system(cmd);
-  end
+    end
   else
     puts "Missing: #{dir}".red
   end
@@ -164,6 +164,24 @@ task :matlab do
   sh "cmake --build ."
   cd ".."
   cd ROOT
+end
+
+task :run_matlab do
+  cd ROOT+'/generated_code/ocp-interfaces/Matlab' do
+    case OS
+    when :win
+      cmd = "matlab";
+    when :linux
+      M   = Dir.glob("/usr/local/MATLAB/R*/bin/matlab").map { |d| d }
+      cmd = M.sort.last;
+    else
+      M   = Dir.glob("/Applications/MATLAB_R*.app/bin/matlab").map { |d| d }
+      cmd = M.sort.last;
+    end
+    cmd = "#{cmd} -nodesktop -nojvm -nodisplay -nosplash"
+    puts "run: #{cmd}".yellow
+    sh cmd
+  end
 end
 
 desc "Remove all the ingnored files and reset the commit"
