@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = 1.0 / t2;
     real_type t6   = U__[iU_a];
@@ -123,7 +123,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_a];
     real_type t7   = ALIAS_LimitA_min_D(ModelPars[iM_a_min] - t2);
     real_type t10  = ALIAS_LimitA_max_D(t2 - ModelPars[iM_a_max]);
@@ -167,7 +167,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_WA];
     real_type t2   = U__[iU_a];
     real_type t3   = t2 * t2;
@@ -209,7 +209,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     real_type t4   = U__[iU_a];
     real_type t6   = ALIAS_LimitA_min_DD(ModelPars[iM_a_min] - t4);
     real_type t9   = ALIAS_LimitA_max_DD(t4 - ModelPars[iM_a_max]);

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: Train_Data.rb                                                  #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,10 +20,10 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_max = 0.01
-ubMax    = 2.0
 tol_max  = 0.01
+epsi_max = 0.01
 uaMax    = 10.0
+ubMax    = 2.0
 
 mechatronix do |data|
 
@@ -229,7 +229,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 

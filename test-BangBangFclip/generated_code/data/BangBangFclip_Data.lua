@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Data.lua                                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -21,9 +21,9 @@
 
 -- Auxiliary values
 h0         = 0.01
-vFmax      = 10.0
-tolerance0 = 0.01
 epsilon0   = 0.1
+tolerance0 = 0.01
+vFmax      = 10.0
 
 content = {
 
@@ -220,7 +220,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 
@@ -313,8 +313,8 @@ content = {
     segments = {
       
       {
-        n      = 100.0,
         length = 1.0,
+        n      = 100.0,
       },
     },
   },

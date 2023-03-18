@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_problem.cc                                      |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -103,7 +103,7 @@ namespace FarmerDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w1];
     real_type t4   = X__[iX_x1];
     real_type t6   = ModelPars[iM_w2];
@@ -150,7 +150,7 @@ namespace FarmerDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w1];
     real_type t4   = X__[iX_x1];
     real_type t6   = ModelPars[iM_w2];
@@ -196,8 +196,8 @@ namespace FarmerDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -222,8 +222,8 @@ namespace FarmerDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -282,7 +282,7 @@ namespace FarmerDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w1];
     real_type t3   = 1.0 / t2;
     real_type t4   = X__[iX_x1];
@@ -362,7 +362,7 @@ namespace FarmerDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_wP];
     real_type t2   = ModelPars[iM_w1];
     real_type t3   = t2 * t2;
@@ -434,7 +434,7 @@ namespace FarmerDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -510,8 +510,8 @@ namespace FarmerDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
     result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
     result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
@@ -573,8 +573,8 @@ namespace FarmerDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -620,7 +620,7 @@ namespace FarmerDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = x1__oControl(U__[iU_x1__o], -0.1e-2, 100);
     result__[ 1   ] = x2__oControl(U__[iU_x2__o], -0.1e-2, 100);
     result__[ 2   ] = x3__oControl(U__[iU_x3__o], -0.1e-2, 100);

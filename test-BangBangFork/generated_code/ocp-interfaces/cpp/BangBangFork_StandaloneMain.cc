@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type WC0 = 1;
-    real_type WC = WC0;
     real_type u_tol0 = 0.1;
     real_type u_tol = u_tol0;
     real_type u_epsi0 = 0.1;
+    real_type WC0 = 1;
+    real_type WC = WC0;
     real_type u_epsi = u_epsi0;
     integer InfoLevel = 4;
 
@@ -110,7 +110,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 3;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -196,8 +196,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFork_data.Mesh["s0"] = 0;
-BangBangFork_data.Mesh["segments"][0]["n"] = 100;
 BangBangFork_data.Mesh["segments"][0]["length"] = 1;
+BangBangFork_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

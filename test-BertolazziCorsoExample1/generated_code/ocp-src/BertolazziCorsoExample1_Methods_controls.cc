@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BertolazziCorsoExample1_Methods_controls.cc                    |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -62,7 +62,7 @@ namespace BertolazziCorsoExample1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = U__[iU_F];
     real_type t3   = t2 * t2;
@@ -88,7 +88,7 @@ namespace BertolazziCorsoExample1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     result__[ 0   ] = 2 * U__[iU_F] * t1 + 1.0 / ModelPars[iM_mass] * t1 * MU__[1];
     if ( m_debug )
@@ -120,7 +120,7 @@ namespace BertolazziCorsoExample1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t5   = 1.0 / ModelPars[iM_mass];
     result__[ 0   ] = t5 * MU__[1] + 2 * U__[iU_F];
     result__[ 1   ] = t5 * P__[iP_T];
@@ -152,7 +152,7 @@ namespace BertolazziCorsoExample1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 2 * P__[iP_T];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
@@ -185,7 +185,7 @@ namespace BertolazziCorsoExample1Define {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     U__[ iU_F ] = -MU__[1] / ModelPars[iM_mass] / 2;
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );

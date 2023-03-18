@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Fuller_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 12/3/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_max = 1;
     real_type u_epsilon_max = 0.0001;
     real_type u_epsilon = u_epsilon_max;
     real_type u_tolerance_max = 0.0001;
     real_type u_tolerance = u_tolerance_max;
+    real_type u_max = 1;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -173,16 +173,16 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ROSS_Fuller_data.Mesh["s0"] = 0;
-ROSS_Fuller_data.Mesh["segments"][0]["n"] = 200;
 ROSS_Fuller_data.Mesh["segments"][0]["length"] = 2;
-ROSS_Fuller_data.Mesh["segments"][1]["n"] = 200;
+ROSS_Fuller_data.Mesh["segments"][0]["n"] = 200;
 ROSS_Fuller_data.Mesh["segments"][1]["length"] = 0.8;
-ROSS_Fuller_data.Mesh["segments"][2]["n"] = 200;
+ROSS_Fuller_data.Mesh["segments"][1]["n"] = 200;
 ROSS_Fuller_data.Mesh["segments"][2]["length"] = 0.4;
-ROSS_Fuller_data.Mesh["segments"][3]["n"] = 200;
+ROSS_Fuller_data.Mesh["segments"][2]["n"] = 200;
 ROSS_Fuller_data.Mesh["segments"][3]["length"] = 0.2;
-ROSS_Fuller_data.Mesh["segments"][4]["n"] = 200;
+ROSS_Fuller_data.Mesh["segments"][3]["n"] = 200;
 ROSS_Fuller_data.Mesh["segments"][4]["length"] = 0.1;
+ROSS_Fuller_data.Mesh["segments"][4]["n"] = 200;
 
 
     // alias for user object classes passed as pointers

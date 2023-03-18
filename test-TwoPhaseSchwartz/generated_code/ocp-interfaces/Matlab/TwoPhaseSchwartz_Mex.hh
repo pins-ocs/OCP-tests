@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Mex.cc                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -70,21 +70,21 @@ using namespace MechatronixLoad;
 \*/
 class ProblemStorage : public MODEL_CLASS {
 
-  bool setup_ok     = false;
-  bool guess_ok     = false;
-  bool solve_ok     = false;
-  bool solution1_ok = false;
-  bool solution2_ok = false;
-  bool solution3_ok = false;
+  bool m_setup_ok     = false;
+  bool m_guess_ok     = false;
+  bool m_solve_ok     = false;
+  bool m_solution1_ok = false;
+  bool m_solution2_ok = false;
+  bool m_solution3_ok = false;
 
-  GenericContainer gc_data;
-  GenericContainer gc_solution1;
-  GenericContainer gc_solution2;
-  GenericContainer gc_solution3;
+  GenericContainer m_gc_data;
+  GenericContainer m_gc_solution1;
+  GenericContainer m_gc_solution2;
+  GenericContainer m_gc_solution3;
 
   // user defined Object instances (external)
 
-  MeshStd              mesh;
+  MeshStd              m_mesh;
 
 public:
 
@@ -139,12 +139,15 @@ public:
   void do_dims( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DlagrangeDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_DmayerDxxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DabcDxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DhcDxlxlop( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_MU_U_eval_Dxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_F( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_JF( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_JF_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_JF2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_eval_JF2_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_eval_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_eval_MU_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_guess( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_ocp_data( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_raw_solution( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
@@ -152,7 +155,7 @@ public:
   void do_get_solution_as_guess( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_solution2( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_get_solution3( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_guess_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_guess_MU_U( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_info( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_mesh_functions( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_names( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
@@ -169,42 +172,36 @@ public:
   void do_update_continuation( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_A( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_A_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DgDu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DgDu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DgDxpm( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DgDxpm_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DodeDxpuv( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DodeDxpuv_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DbcDxxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DbcDxxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DabcDxlxlpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DabcDxlxlpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DhcDxlxlop( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DhcDxlxlop_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_Dfd_BCDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_Dfd_BCDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DetaDxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DetaDxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DHxpDxpuv( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DHxpDxpuv_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JPD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JPD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JUD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2JUD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DLTargsDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DLTargsDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_D2lagrangeD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_D2lagrangeD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTargsD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTargsD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2LTD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DjumpDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DjumpDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_D2lagrangeD2xpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_D2lagrangeD2xpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2mayerD2xxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
   void do_D2mayerD2xxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DuDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
-  void do_DuDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DbcDxxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DbcDxxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DetaDxp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DetaDxp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_BCDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_Dfd_BCDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DgDu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DgDu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DgDxpm( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DgDxpm_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DHxpDxpuv( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DHxpDxpuv_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DjumpDxlxlp( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DjumpDxlxlp_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DLTargsDxpu( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DLTargsDxpu_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DodeDxpuv( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_DodeDxpuv_pattern( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
   void read  ( string const & fname, GenericContainer & gc );
   void get   ( char const msg[], mxArray const * prhs, NodeQX & N );
@@ -225,3 +222,5 @@ public:
 
 };
 
+extern Mechatronix::Console        * pConsole;
+extern Mechatronix::ThreadPoolBase * pTP;

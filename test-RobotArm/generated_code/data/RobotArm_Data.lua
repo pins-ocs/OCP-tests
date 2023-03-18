@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-u_tolerance0 = 0.01
 u_epsilon0   = 0.01
-u_tolerance  = u_tolerance0
 u_epsilon    = u_epsilon0
+u_tolerance0 = 0.01
+u_tolerance  = u_tolerance0
 
 content = {
 
@@ -220,7 +220,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 

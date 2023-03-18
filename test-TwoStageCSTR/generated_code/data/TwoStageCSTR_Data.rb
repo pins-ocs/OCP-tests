@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: TwoStageCSTR_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi = 0.0001
 tol  = 0.0001
+epsi = 0.0001
 
 mechatronix do |data|
 
@@ -227,7 +227,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 0,
   }
 
@@ -337,8 +337,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 2.0,
         :n      => 400.0,
+        :length => 2.0,
       },
     ],
   };

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Data.lua                               |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -21,9 +21,9 @@
 
 -- Auxiliary values
 theta0 = 1.0
-u_tol  = 0.01
 u_epsi = 0.01
 theta  = theta0
+u_tol  = 0.01
 
 content = {
 
@@ -220,7 +220,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 
@@ -313,8 +313,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 5000.0,
+        length = 1.0,
       },
     },
   },

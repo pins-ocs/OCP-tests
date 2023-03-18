@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -21,10 +21,10 @@
 
 -- Auxiliary values
 u_epsilon0   = 0.01
+u_tolerance0 = 0.01
 Tf           = 5.0
 epsi_x0      = 0.0001
 epsi_x       = epsi_x0
-u_tolerance0 = 0.01
 
 content = {
 
@@ -221,7 +221,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 

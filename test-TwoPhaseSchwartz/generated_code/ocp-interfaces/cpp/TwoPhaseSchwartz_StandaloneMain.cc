@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Main.cc                                       |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,11 +51,11 @@ main() {
 
     // Auxiliary values
     real_type tol0 = 0.1;
+    real_type epsi0 = 0.1;
+    real_type tol = tol0;
+    real_type epsi = epsi0;
     real_type epsilon0 = 0.001;
     real_type epsilon = epsilon0;
-    real_type tol = tol0;
-    real_type epsi0 = 0.1;
-    real_type epsi = epsi0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -110,7 +110,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -82,7 +82,7 @@ namespace BangBangFmoduleDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_Fp];
     real_type t2   = U__[iU_Fm];
     real_type t4   = controlP(t1, 0, ModelPars[iM_FpMax]);
@@ -109,7 +109,7 @@ namespace BangBangFmoduleDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_controlP_D_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
     real_type t4   = MU__[1];
     result__[ 0   ] = 1 + t3 + t4;
@@ -144,7 +144,7 @@ namespace BangBangFmoduleDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = -1;
     if ( m_debug )
@@ -176,7 +176,7 @@ namespace BangBangFmoduleDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_controlP_D_1_1(U__[iU_Fp], 0, ModelPars[iM_FpMax]);
     result__[ 1   ] = ALIAS_controlM_D_1_1(U__[iU_Fm], 0, ModelPars[iM_FmMax]);
     if ( m_debug )
@@ -210,7 +210,7 @@ namespace BangBangFmoduleDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = MU__[1];
     U__[ iU_Fp ] = controlM.solve(-1 - t1, 0, ModelPars[iM_FpMax]);
     U__[ iU_Fm ] = controlM.solve(-1 + t1, 0, ModelPars[iM_FmMax]);

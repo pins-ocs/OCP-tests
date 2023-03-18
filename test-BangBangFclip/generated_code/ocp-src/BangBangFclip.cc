@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip.cc                                               |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -152,7 +152,7 @@ namespace BangBangFclipDefine {
     m_U_solve_iterative = false;
 
     // continuation
-    this->ns_continuation_begin = 0;
+    this->ns_continuation_begin = 1;
     this->ns_continuation_end   = 1;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
@@ -195,7 +195,7 @@ namespace BangBangFclipDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -206,7 +206,7 @@ namespace BangBangFclipDefine {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuation_step_0( s ); break;
+      case 1: continuation_step_1( s ); break;
       default:
         UTILS_ERROR(
           "BangBangFclip::update_continuation( phase number={}, old_s={}, s={} )"
@@ -322,8 +322,6 @@ namespace BangBangFclipDefine {
     );
     GenericContainer const & gc = gc_data("Controls");
     controlForce.setup( gc("controlForce") );
-    // setup iterative solver
-    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -349,7 +347,7 @@ namespace BangBangFclipDefine {
       gc.exists("pMesh"),
       "in BangBangFclip::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -368,7 +366,7 @@ namespace BangBangFclipDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( pMesh->info(),msg_level);
+    m_console->message( m_pMesh->info(),msg_level);
 
     m_console->message("\nUser mapped functions\n",msg_level);
     m_console->message("User function ``clip'' mapped with: ",msg_level);
@@ -409,7 +407,7 @@ namespace BangBangFclipDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pMesh, gc );
+    this->setup( m_pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

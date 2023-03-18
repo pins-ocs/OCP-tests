@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_boundary_conditions.cc                     |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -122,8 +122,8 @@ namespace TyreDynamicDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_v];
     real_type t2   = ModelPars[iM_v__ss];
     result__[ 0   ] = t1 - t2;
@@ -140,7 +140,7 @@ namespace TyreDynamicDefine {
     real_type t13  = b__neg(t3);
     real_type t14  = TB(t13, t11);
     real_type t17  = Ma(t11);
-    result__[ 4   ] = t7 * ModelPars[iM_rw] - t12 - t14 - t17;
+    result__[ 4   ] = ModelPars[iM_rw] * t7 - t12 - t14 - t17;
     real_type t18  = kappa__w(t1, t11);
     result__[ 5   ] = -(t18 - t6) * t1;
     if ( m_debug )
@@ -182,8 +182,8 @@ namespace TyreDynamicDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -257,8 +257,8 @@ namespace TyreDynamicDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[3];
     real_type t2   = XL__[iX_v];
     real_type t3   = Fa_DD(t2);
@@ -328,8 +328,8 @@ namespace TyreDynamicDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type t2   = OMEGA__[3];
     real_type t3   = XL__[iX_v];
     real_type t4   = Fa_D(t3);
@@ -351,13 +351,13 @@ namespace TyreDynamicDefine {
     real_type t26  = kappa__w_D_2(t3, t7);
     result__[ 1   ] = (-t19 - t22 - t23) * t16 - t26 * t12 + LL__[iL_lambda2__xo];
     real_type t29  = F__x_D(t9);
-    result__[ 2   ] = ModelPars[iM_rw] * t29 * t16 - t29 * t2 + t12 + LL__[iL_lambda3__xo];
+    result__[ 2   ] = t16 * t29 * ModelPars[iM_rw] - t2 * t29 + t12 + LL__[iL_lambda3__xo];
     real_type t35  = TT_D_1(t18, t7);
     real_type t37  = p__pos_D(t17);
-    result__[ 3   ] = -t37 * t35 * t16 + LL__[iL_lambda4__xo];
+    result__[ 3   ] = -t16 * t35 * t37 + LL__[iL_lambda4__xo];
     real_type t41  = TB_D_1(t21, t7);
     real_type t43  = b__neg_D(t20);
-    result__[ 4   ] = -t43 * t41 * t16 + LL__[iL_lambda5__xo] + OMEGA__[1];
+    result__[ 4   ] = -t16 * t41 * t43 + LL__[iL_lambda5__xo] + OMEGA__[1];
     result__[ 5   ] = OMEGA__[2] - LR__[iL_lambda1__xo];
     result__[ 6   ] = -LR__[iL_lambda2__xo];
     result__[ 7   ] = -LR__[iL_lambda3__xo];
@@ -418,8 +418,8 @@ namespace TyreDynamicDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[3];
     real_type t2   = XL__[iX_v];
     real_type t3   = Fa_DD(t2);

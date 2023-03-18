@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,1)
-  mesh class pointer:      0x7ff7b84bc5b0
-  solver class pointer:    0x7fd84000e5c0
+  Continuation interval:   [1,1)
+  mesh class pointer:      0x7ff7b5a24598
+  solver class pointer:    0x7ff02b00e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 6009
@@ -160,7 +159,7 @@ Continuation step N.1 s=1, ds=0.05, old_s=0.9499999999999997
 [ 57,18] (  0.227   ,  0.215   ) [ 0.00128  , 0.00129  ] 0.0415     [17:0:0:0:0:0:0:0:0:0:0:0]
 [ 58,35] (  0.215   ,  0.214   ) [ 0.00146  , 0.00129  ] 0.0123     [34:0:0:0:0:0:0:0:0:0:0:0]
 [ 59,28] (  0.214   ,  0.206   ) [ 0.00107  , 0.000995 ] 0.0404     [27:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.041131, ||f||_inf = 5.8769
 
@@ -215,7 +214,7 @@ Continuation step N.1 s=1, ds=0.025, old_s=0.9749999999999999
 [102,17] (  0.117   ,  0.111   ) [ 0.000363 , 0.000323 ] 0.0522     [16:0:0:0:0:0:0:0:0:0:0:0]
 [103,23] (  0.111   ,  0.107   ) [ 0.000338 , 0.000299 ] 0.0326     [22:0:0:0:0:0:0:0:0:0:0:0]
 [104,17] (  0.107   ,  0.103   ) [ 0.000291 , 0.000277 ] 0.0415     [16:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.016037, ||f||_inf = 3.3886
 
@@ -270,7 +269,7 @@ Continuation step N.1 s=1, ds=0.0125, old_s=0.9874999999999999
 [147, 2] (  0.0624  ,  0.0564  ) [ 0.000153 , 0.00012  ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
 [148, 7] (  0.0564  ,  0.0524  ) [ 0.000183 , 0.000136 ] 0.123      [6:0:0:0:0:0:0:0:0:0:0:0]
 [149,18] (  0.0524  ,   0.05   ) [ 0.000135 , 0.000121 ] 0.0759     [17:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.011448, ||f||_inf = 2.8699
 
@@ -325,7 +324,7 @@ Continuation step N.1 s=1, ds=0.00625, old_s=0.9937499999999999
 [192, 9] (  0.0085  , 0.00698  ) [ 1.19e-05 , 9.69e-06 ] 0.0632     [8:0:0:0:0:0:0:0:0:0:0:0]
 [193, 1] ( 0.00698  , 0.00438  ) [ 7.69e-06 , 2.24e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [194,23] ( 0.00438  , 0.00277  ) [ 3.43e-06 , 1.1e-06  ] 0.154      [22:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.00090356, ||f||_inf = 2.2709
 
@@ -393,8 +392,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 6009          N. System pars = 4000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.61[sec]     timeout        = 0 [ms]
-iteration      = 239           Memory Used    = 1Mb (+3Kb)
+Elapsed Time   = 1.81[sec]     timeout        = 0 [ms]
+iteration      = 239           Memory Used    = 1Mb (+13Kb)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -419,58 +418,40 @@ last ||f||_2   = 1.1306e-08    last ||d||_2   = 1.0751e-12
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 0 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4293 : 1.4328       [A:FD] ---    0.0035258 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4293 : -1.4328      [A:FD] ---    0.0035258 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =     -0.10931 : -0.10958     [A:FD] ---   0.00026966 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.054694 : -0.054829    [A:FD] ---   0.00013492 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =  -2.3956e-11 : -2.526       [A:FD] ---        2.526 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =  -2.3956e-11 : -0.058808    [A:FD] ---     0.058808 : 5.881        [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 1 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4313 : 1.4348       [A:FD] ---    0.0035308 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4313 : -1.4348      [A:FD] ---    0.0035308 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =      -0.1088 : -0.10907     [A:FD] ---   0.00026839 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.054517 : -0.054652    [A:FD] ---   0.00013449 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =  -9.1769e-10 : -2.5257      [A:FD] ---       2.5257 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =  -9.1769e-10 : -0.058514    [A:FD] ---     0.058514 : 5.851        [err:err(%)]
+
 
 #ERR 3 DabcDxlxlpu block N. 2 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4333 : 1.4369       [A:FD] ---    0.0035359 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4333 : -1.4369      [A:FD] ---    0.0035359 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =     -0.10829 : -0.10856     [A:FD] ---   0.00026715 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.054341 : -0.054475    [A:FD] ---   0.00013406 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =    -3.64e-10 : -2.5254      [A:FD] ---       2.5254 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =    -3.64e-10 : -0.05822     [A:FD] ---      0.05822 : 5.822        [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 3 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4354 : 1.4389       [A:FD] ---    0.0035409 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4354 : -1.4389      [A:FD] ---    0.0035409 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =     -0.10779 : -0.10805     [A:FD] ---    0.0002659 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.054164 : -0.054298    [A:FD] ---   0.00013362 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =  -6.9769e-10 : -2.5252      [A:FD] ---       2.5252 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =  -6.9769e-10 : -0.057928    [A:FD] ---     0.057928 : 5.793        [err:err(%)]
+
 
 #ERR 5 DabcDxlxlpu block N. 4 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4374 : 1.441        [A:FD] ---     0.003546 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4374 : -1.441       [A:FD] ---     0.003546 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =     -0.10728 : -0.10755     [A:FD] ---   0.00026465 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.053988 : -0.054121    [A:FD] ---   0.00013318 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =   1.2546e-09 : -2.5249      [A:FD] ---       2.5249 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =   1.2546e-09 : -0.057635    [A:FD] ---     0.057635 : 5.764        [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 5 type: FD #x and #l=3 #p=0 #u=1 [ (xlp) x (xlxlpu) = 6 x 13]
 
-DaDu(0:2,0:0)[ 0, 0] =       1.4395 : 1.4431       [A:FD] ---     0.003551 : 0.2461       [err:err(%)]
-DaDu(0:2,0:0)[ 1, 0] =      -1.4395 : -1.4431      [A:FD] ---     0.003551 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 0, 0] =     -0.10678 : -0.10704     [A:FD] ---   0.00026343 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 1, 0] =    -0.053812 : -0.053945    [A:FD] ---   0.00013275 : 0.2461       [err:err(%)]
-DbDu(0:2,0:0)[ 2, 0] =  -5.1065e-10 : -2.5246      [A:FD] ---       2.5246 : 100          [err:err(%)]
+DbDu(0:2,0:0)[ 2, 0] =  -5.1065e-10 : -0.057344    [A:FD] ---     0.057344 : 5.734        [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

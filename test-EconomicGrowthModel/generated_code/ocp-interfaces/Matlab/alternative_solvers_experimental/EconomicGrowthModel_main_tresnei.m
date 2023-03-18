@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: EconomicGrowthModel_fsolve_main.m                              %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -14,16 +14,19 @@
 %             paolo.bosetti@unitn.it                                    %
 %-----------------------------------------------------------------------%
 
-
-addpath('../../../nlsys_solver');
-addpath('../../../../nlsys_solver');
-
 % -------------------------------------------------------------------------
 % INITIALIZATION
 % -------------------------------------------------------------------------
 clc;
 clear all;
 close all;
+
+DATA_PATH = '../../../data/';
+LIB_PATH  = '../../../../../nlsys_solver';
+
+addpath('..');
+addpath(LIB_PATH);
+
 figsize=[0,0,400,800];
 
 % create object
@@ -35,12 +38,12 @@ ocp = EconomicGrowthModel( 'EconomicGrowthModel' );
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-ocp.setup('../../data/EconomicGrowthModel_Data'); % automatically try extension .rb and .lua
+ocp.setup( [DATA_PATH 'EconomicGrowthModel_Data'] ); % automatically try extension .rb and .lua
 ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);
 
-[xinit,uimit] = ocp.get_raw_solution();
+[xinit,muinit,uinit] = ocp.get_raw_solution();
 
 LU = 1.e20*ones(size(xinit));
 
@@ -51,8 +54,8 @@ options.jacobian = 'on';
 
 ierr
 
-u = ocp.eval_U(x,ocp.guess_U(x));
-ocp.set_raw_solution(x,u);
+MU_U = ocp.eval_MU_U(x,ocp.guess_U(x));
+ocp.set_raw_solution(x,MU_U);
 
 % -------------------------------------------------------------------------
 % PLOT SOLUTION
@@ -73,10 +76,9 @@ ocp.plot_controls();
 
 function [F,JF] = nlsys_local( x, ocp )
   do_minimization = false;
-  u_guess  = ocp.guess_U(x);
-  u        = ocp.eval_U(x,u_guess);
-  [F,ok1]  = ocp.eval_F(x,u);
-  [JF,ok2] = ocp.eval_JF(x,u);
+  MU_U     = ocp.eval_MU_U(x,ocp.guess_U(x));
+  [F,ok1]  = ocp.eval_F(x,MU_U);
+  [JF,ok2] = ocp.eval_JF(x,MU_U);
   if ~(ok1&&ok2)
     F = NaN*ones(size(F));
   end

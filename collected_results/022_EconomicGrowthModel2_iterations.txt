@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,1)
-  mesh class pointer:      0x7ff7b3be25b0
-  solver class pointer:    0x7ff4e200e5c0
+  Continuation interval:   [1,1)
+  mesh class pointer:      0x7ff7b07bc598
+  solver class pointer:    0x7fc21700e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 50017
@@ -177,8 +176,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 50017         N. System pars = 30000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.48[sec]     timeout        = 0 [ms]
-iteration      = 62            Memory Used    = 10Mb (+38Kb)
+Elapsed Time   = 1.4[sec]      timeout        = 0 [ms]
+iteration      = 62            Memory Used    = 11Mb (+67Kb)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -203,52 +202,40 @@ last ||f||_2   = 1.2569e-07    last ||d||_2   = 3.1021e-11
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 0 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =       2.7225 : 2.7292       [A:FD] ---     0.006716 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =      -2.7225 : -2.7292      [A:FD] ---     0.006716 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072252 : -0.07243     [A:FD] ---   0.00017823 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =   -2.699e-10 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =   -2.699e-10 : -0.029526    [A:FD] ---     0.029526 : 2.953        [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 1 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =        2.724 : 2.7307       [A:FD] ---    0.0067196 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =       -2.724 : -2.7307      [A:FD] ---    0.0067196 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072209 : -0.072387    [A:FD] ---   0.00017813 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =  -5.5495e-10 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =  -5.5495e-10 : -0.029513    [A:FD] ---     0.029513 : 2.951        [err:err(%)]
+
 
 #ERR 3 DabcDxlxlpu block N. 2 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =       2.7255 : 2.7322       [A:FD] ---    0.0067233 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =      -2.7255 : -2.7322      [A:FD] ---    0.0067233 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072166 : -0.072344    [A:FD] ---   0.00017802 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =   1.0681e-10 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =   1.0681e-10 : -0.0295      [A:FD] ---       0.0295 : 2.95         [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 3 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =       2.7269 : 2.7337       [A:FD] ---    0.0067269 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =      -2.7269 : -2.7337      [A:FD] ---     0.006727 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072123 : -0.0723      [A:FD] ---   0.00017791 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =  -7.4434e-10 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =  -7.4434e-10 : -0.029487    [A:FD] ---     0.029487 : 2.949        [err:err(%)]
+
 
 #ERR 5 DabcDxlxlpu block N. 4 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =       2.7284 : 2.7352       [A:FD] ---    0.0067306 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =      -2.7284 : -2.7352      [A:FD] ---    0.0067306 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072079 : -0.072257    [A:FD] ---   0.00017781 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =  -6.0812e-10 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =  -6.0812e-10 : -0.029474    [A:FD] ---     0.029474 : 2.947        [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 5 type: FD #x and #l=5 #p=0 #u=1 [ (xlp) x (xlxlpu) = 10 x 21]
 
-DaDu(0:4,0:0)[ 1, 0] =       2.7299 : 2.7366       [A:FD] ---    0.0067343 : 0.2461       [err:err(%)]
-DaDu(0:4,0:0)[ 3, 0] =      -2.7299 : -2.7366      [A:FD] ---    0.0067343 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 0, 0] =    -0.072036 : -0.072214    [A:FD] ---    0.0001777 : 0.2461       [err:err(%)]
-DbDu(0:4,0:0)[ 4, 0] =   -1.116e-09 : -12.364      [A:FD] ---       12.364 : 100          [err:err(%)]
+DbDu(0:4,0:0)[ 4, 0] =   -1.116e-09 : -0.02946     [A:FD] ---      0.02946 : 2.946        [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

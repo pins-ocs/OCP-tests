@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,2)
-  mesh class pointer:      0x7ff7b9911588
-  solver class pointer:    0x7f84c280a7c0
+  Continuation interval:   [1,2)
+  mesh class pointer:      0x7ff7b99db570
+  solver class pointer:    0x7f89af80e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 41560
@@ -144,7 +143,7 @@ MODEL PARAMETERS END
 [  9, 1] ( 1.48e-06 , 2.4e-07  ) [  0.529   ,  0.137   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 10, 1] ( 2.4e-07  , 5.52e-08 ) [  0.236   , 0.00961  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 11, 1] ( 5.52e-08 , 1.6e-10  ) [  0.0103  , 8.32e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 12, 1] ( 1.6e-10  , 9.27e-15 ) [ 8.32e-07 , 6.6e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 1] ( 1.6e-10  , 9.27e-15 ) [ 8.32e-07 , 6.59e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1
 
@@ -164,7 +163,7 @@ Continuation step N.1 s=0.5, ds=0.3, old_s=0.19999999999999996
 [ 21, 5] ( 0.000355 , 9.85e-05 ) [  0.0943  , 0.00101  ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
 [ 22, 1] ( 9.85e-05 , 1.32e-06 ) [ 0.00138  , 8.14e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 23, 1] ( 1.32e-06 , 1.65e-09 ) [ 8.29e-06 , 3.75e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 24, 1] ( 1.65e-09 , 1.15e-14 ) [ 3.76e-09 , 1.19e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 24, 1] ( 1.65e-09 , 1.16e-14 ) [ 3.76e-09 , 1.19e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=0.95, ds=0.45, old_s=0.4999999999999999
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -172,7 +171,7 @@ Continuation step N.1 s=0.95, ds=0.45, old_s=0.4999999999999999
 [ 26, 1] ( 0.000307 , 4.47e-06 ) [ 0.00255  , 6.37e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 27, 1] ( 4.47e-06 , 2.96e-08 ) [ 6.29e-05 , 5.58e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 28, 1] ( 2.96e-08 , 1.11e-12 ) [ 5.62e-08 , 2.02e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 29, 1] ( 1.11e-12 , 9.62e-15 ) [ 2.02e-12 , 4.5e-15  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 29, 1] ( 1.11e-12 , 9.62e-15 ) [ 2.02e-12 , 4.51e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.1 s=1, ds=0.05, old_s=0.9499999999999997
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -189,7 +188,7 @@ Continuation step N.2 s=0.2, ds=0.2, old_s=    0
 [ 35, 2] ( 2.4e-05  , 1.11e-06 ) [ 0.000633 , 2.98e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 36, 2] ( 1.11e-06 , 5.52e-08 ) [ 2.97e-05 , 1.48e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
 [ 37, 2] ( 5.52e-08 , 2.76e-09 ) [ 1.48e-06 , 7.39e-08 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
-[ 38, 1] ( 2.76e-09 , 1.06e-14 ) [ 7.39e-08 , 3.12e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 38, 1] ( 2.76e-09 , 1.07e-14 ) [ 7.39e-08 , 3.12e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.2 s=0.5, ds=0.3, old_s=0.19999999999999996
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -198,7 +197,7 @@ Continuation step N.2 s=0.5, ds=0.3, old_s=0.19999999999999996
 [ 41, 1] ( 7.9e-06  , 8.76e-07 ) [ 0.00376  , 0.000471 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 42, 1] ( 8.76e-07 , 2.99e-08 ) [ 0.000662 , 2.55e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 43, 1] ( 2.99e-08 , 5.3e-11  ) [ 2.78e-05 , 5.62e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 44, 1] ( 5.3e-11  , 9.25e-15 ) [ 5.65e-08 , 2.86e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 44, 1] ( 5.3e-11  , 9.24e-15 ) [ 5.65e-08 , 2.86e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.2 s=0.95, ds=0.45, old_s=0.4999999999999999
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -211,7 +210,7 @@ Continuation step N.2 s=0.95, ds=0.45, old_s=0.4999999999999999
 [ 51, 1] ( 1.25e-06 , 1.98e-08 ) [ 0.000122 , 4.65e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 52, 1] ( 1.98e-08 , 1.84e-10 ) [ 5.7e-06  , 1.29e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 53, 1] ( 1.84e-10 , 5.86e-13 ) [ 1.44e-07 , 5.74e-10 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 54, 1] ( 5.86e-13 , 9.55e-15 ) [ 5.8e-10  ,  2e-14   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 54, 1] ( 5.86e-13 , 9.54e-15 ) [ 5.8e-10  , 2.01e-14 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 Continuation step N.2 s=1, ds=0.05, old_s=0.9499999999999997
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -225,8 +224,8 @@ Continuation step N.2 s=1, ds=0.05, old_s=0.9499999999999997
 [ 62, 1] ( 1.01e-08 , 7.94e-10 ) [ 3.06e-06 , 3.11e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 63, 1] ( 7.94e-10 , 6.19e-11 ) [ 4.93e-07 , 4.41e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [ 64, 1] ( 6.19e-11 , 1.08e-12 ) [ 5.62e-08 , 1.04e-09 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 65, 1] ( 1.08e-12 , 1.01e-14 ) [ 1.09e-09 , 4.42e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[ 66, 1] ( 1.01e-14 , 9.78e-15 ) [ 4.43e-13 , 4.75e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 65, 1] ( 1.08e-12 , 1.02e-14 ) [ 1.09e-09 , 4.42e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 66, 1] ( 1.02e-14 , 9.77e-15 ) [ 4.43e-13 , 4.74e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
 .................. CONTROLS nonlinear system solver ..................
 ----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
@@ -240,8 +239,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 41560         N. System pars = 26703
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.31[sec]     timeout        = 0 [ms]
-iteration      = 66            Memory Used    = 11Mb (+34Kb)
+Elapsed Time   = 1.16[sec]     timeout        = 0 [ms]
+iteration      = 66            Memory Used    = 12Mb (+95Kb)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -257,19 +256,18 @@ dump_min       = 0.4           dump_max       = 0.95
 ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
-last ||f||_inf = 4.2432e-12    last ||d||_inf = 2.2753e-13
-last ||f||_1   = 9.784e-15     last ||d||_1   = 4.7511e-15
-last ||f||_2   = 1.052e-13     last ||d||_2   = 2.2447e-14
+last ||f||_inf = 4.2432e-12    last ||d||_inf = 2.2758e-13
+last ||f||_1   = 9.769e-15     last ||d||_1   = 4.7362e-15
+last ||f||_2   = 1.0516e-13    last ||d||_2   = 2.2434e-14
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
-All internal blocks OK
-Check DhcDxlxlop:
-Last block: OK
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

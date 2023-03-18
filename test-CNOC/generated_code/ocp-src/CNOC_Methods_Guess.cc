@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -163,7 +163,7 @@ namespace CNOCDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_s   ] = Q__[iQ_zeta];
       X__[ iX_n   ] = 0;
@@ -332,42 +332,41 @@ namespace CNOCDefine {
   \*/
 
   bool
-  CNOC::penalties_check_node(
+  CNOC::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     bool ok = true;
-    ok = ok && timePositive.check_range(-X__[iX_coV], m_max_penalty_value);
+    ok = ok && timePositive.check_range(-X__[iX_coV]);
     real_type t3   = X__[iX_vs] * X__[iX_vs];
     real_type t5   = X__[iX_vn] * X__[iX_vn];
     real_type t7   = sqrt(t3 + t5);
     real_type t8   = ALIAS_nominalFeed();
-    ok = ok && vLimit.check_range(1.0 / t8 * t7 - 0.101e1, m_max_penalty_value);
+    ok = ok && vLimit.check_range(1.0 / t8 * t7 - 0.101e1);
     real_type t15  = X__[iX_n] / ModelPars[iM_path_following_tolerance];
-    ok = ok && PathFollowingTolerance_min.check_range(-1 - t15, m_max_penalty_value);
-    ok = ok && PathFollowingTolerance_max.check_range(t15 - 1, m_max_penalty_value);
+    ok = ok && PathFollowingTolerance_min.check_range(-1 - t15);
+    ok = ok && PathFollowingTolerance_max.check_range(t15 - 1);
     real_type t18  = X__[iX_as];
     real_type t21  = 1.0 / ModelPars[iM_as_max] * t18;
-    ok = ok && as_limit_min.check_range(-1 - t21, m_max_penalty_value);
-    ok = ok && as_limit_max.check_range(t21 - 1, m_max_penalty_value);
+    ok = ok && as_limit_min.check_range(-1 - t21);
+    ok = ok && as_limit_max.check_range(t21 - 1);
     real_type t24  = X__[iX_an];
     real_type t27  = 1.0 / ModelPars[iM_an_max] * t24;
-    ok = ok && an_limit_min.check_range(-1 - t27, m_max_penalty_value);
-    ok = ok && an_limit_max.check_range(t27 - 1, m_max_penalty_value);
+    ok = ok && an_limit_min.check_range(-1 - t27);
+    ok = ok && an_limit_max.check_range(t27 - 1);
     real_type t31  = ALIAS_theta(X__[iX_s]);
     real_type t32  = cos(t31);
     real_type t34  = sin(t31);
     real_type t39  = 1.0 / ModelPars[iM_ax_max] * (t32 * t18 - t34 * t24);
-    ok = ok && ax_limit_min.check_range(-1 - t39, m_max_penalty_value);
-    ok = ok && ax_limit_max.check_range(t39 - 1, m_max_penalty_value);
+    ok = ok && ax_limit_min.check_range(-1 - t39);
+    ok = ok && ax_limit_max.check_range(t39 - 1);
     real_type t47  = 1.0 / ModelPars[iM_ay_max] * (t34 * t18 + t32 * t24);
-    ok = ok && ay_limit_min.check_range(-1 - t47, m_max_penalty_value);
-    ok = ok && ay_limit_max.check_range(t47 - 1, m_max_penalty_value);
+    ok = ok && ay_limit_min.check_range(-1 - t47);
+    ok = ok && ay_limit_max.check_range(t47 - 1);
     return ok;
   }
 
@@ -421,7 +420,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     // controls range check
     real_type t2   = ModelPars[iM_jn_max];
     ok = ok && jnControl.check_range(U__[iU_jn], -t2, t2);

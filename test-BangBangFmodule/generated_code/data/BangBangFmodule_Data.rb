@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFmodule_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -227,7 +227,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 0,
   }
 
@@ -333,8 +333,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 100.0,
         :length => 1.0,
+        :n      => 100.0,
       },
     ],
   };

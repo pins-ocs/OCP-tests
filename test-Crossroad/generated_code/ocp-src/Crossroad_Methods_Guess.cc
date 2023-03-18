@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Methods_Guess.cc                                     |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -78,7 +78,7 @@ namespace CrossroadDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t2   = ModelPars[iM_L];
       X__[ iX_s  ] = t2 * Q__[iQ_zeta];
@@ -245,17 +245,16 @@ namespace CrossroadDefine {
   \*/
 
   bool
-  Crossroad::penalties_check_node(
+  Crossroad::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
-    ok = ok && Tpositive.check_range(-X__[iX_Ts], m_max_penalty_value);
+    ok = ok && Tpositive.check_range(-X__[iX_Ts]);
     real_type t3   = X__[iX_a] * X__[iX_a];
     real_type t5   = ModelPars[iM_along_max] * ModelPars[iM_along_max];
     real_type t8   = X__[iX_v];
@@ -264,9 +263,9 @@ namespace CrossroadDefine {
     real_type t12  = kappa(X__[iX_s]);
     real_type t13  = t12 * t12;
     real_type t16  = ModelPars[iM_alat_max] * ModelPars[iM_alat_max];
-    ok = ok && AccBound.check_range(1.0 / t5 * t3 + 1.0 / t16 * t13 * t10 - 1, m_max_penalty_value);
-    ok = ok && VelBound_min.check_range(-t8, m_max_penalty_value);
-    ok = ok && VelBound_max.check_range(t8 - ModelPars[iM_v_max], m_max_penalty_value);
+    ok = ok && AccBound.check_range(1.0 / t5 * t3 + 1.0 / t16 * t13 * t10 - 1);
+    ok = ok && VelBound_min.check_range(-t8);
+    ok = ok && VelBound_max.check_range(t8 - ModelPars[iM_v_max]);
     return ok;
   }
 
@@ -318,7 +317,7 @@ namespace CrossroadDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && jerkControl.check_range(U__[iU_jerk], ModelPars[iM_jerk_min], ModelPars[iM_jerk_max]);
     return ok;

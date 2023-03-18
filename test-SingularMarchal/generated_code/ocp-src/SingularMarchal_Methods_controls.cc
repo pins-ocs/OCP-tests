@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace SingularMarchalDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
     real_type t3   = t2 / 2;
     real_type t6   = U__[iU_u];
@@ -100,7 +100,7 @@ namespace SingularMarchalDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
     real_type t7   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t7 * (t2 / 2 + ModelPars[iM_epsilon]) + MU__[1];
@@ -133,7 +133,7 @@ namespace SingularMarchalDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t3 * X__[iX_x];
     result__[ 1   ] = 1;
@@ -165,7 +165,7 @@ namespace SingularMarchalDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x] * X__[iX_x];
     real_type t7   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
     result__[ 0   ] = t7 * (t2 / 2 + ModelPars[iM_epsilon]);
@@ -200,7 +200,7 @@ namespace SingularMarchalDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_x] * X__[iX_x];
     U__[ iU_u ] = uControl.solve(-2 / (t3 + 2 * ModelPars[iM_epsilon]) * MU__[1], -1, 1);
     if ( m_debug )

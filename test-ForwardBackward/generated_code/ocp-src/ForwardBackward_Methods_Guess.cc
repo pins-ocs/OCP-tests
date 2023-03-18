@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace ForwardBackwardDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t1   = ModelPars[iM_v0];
       X__[ iX_v ] = t1 + (ModelPars[iM_v1] - t1) * Q__[iQ_zeta];
@@ -250,29 +250,18 @@ namespace ForwardBackwardDefine {
   \*/
 
   bool
-  ForwardBackward::penalties_check_node(
+  ForwardBackward::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t2   = X__[iX_v];
-    ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2, m_max_penalty_value);
-    ok = ok && LimitV_max.check_range(t2 - ModelPars[iM_v_max], m_max_penalty_value);
-    real_type t7   = U__[iU_a];
-    ok = ok && LimitA_min.check_range(ModelPars[iM_a_min] - t7, m_max_penalty_value);
-    ok = ok && LimitA_max.check_range(t7 - ModelPars[iM_a_max], m_max_penalty_value);
-    real_type t12  = t7 * t7;
-    real_type t15  = ALIAS_kappa(Q__[iQ_zeta]);
-    real_type t16  = t15 * t15;
-    real_type t17  = t2 * t2;
-    real_type t18  = t17 * t17;
-    real_type t22  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
-    ok = ok && LimitE.check_range(1.0 / t22 * (t12 * ModelPars[iM_WA] + t18 * t16) - 1, m_max_penalty_value);
+    ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2);
+    ok = ok && LimitV_max.check_range(t2 - ModelPars[iM_v_max]);
     return ok;
   }
 
@@ -324,7 +313,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     // admissible region
     real_type t3   = U__[iU_a] * U__[iU_a];
     real_type t6   = ALIAS_kappa(Q__[iQ_zeta]);

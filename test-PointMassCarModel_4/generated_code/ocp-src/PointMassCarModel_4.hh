@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4.hh                                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -134,15 +134,15 @@ namespace PointMassCarModel_4Define {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::Road2D * pRoad;
+    Mechatronix::Road2D * m_pRoad;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     PointMassCarModel_4( PointMassCarModel_4 const & );
     PointMassCarModel_4 const & operator = ( PointMassCarModel_4 const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuation_step_0( real_type s );
     void continuation_step_1( real_type s );
+    void continuation_step_2( real_type s );
 
   public:
 

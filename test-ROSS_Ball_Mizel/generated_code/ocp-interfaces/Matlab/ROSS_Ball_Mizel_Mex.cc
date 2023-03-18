@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Ball_Mizel_Mex.cc                                         |
  |                                                                       |
- |  version: 1.0   date 12/3/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -36,8 +36,8 @@ static char const help_msg[] =
  |
 \*/
 
-static Mechatronix::Console        * pConsole{nullptr};
-static Mechatronix::ThreadPoolBase * pTP{nullptr};
+Mechatronix::Console        * pConsole{nullptr};
+Mechatronix::ThreadPoolBase * pTP{nullptr};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //   _ __   _____      __
@@ -203,13 +203,13 @@ DO_COMMAND_REMAP_TO_CLASS_METHOD(DlagrangeDxpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(DmayerDxxp);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(DabcDxlxlpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(DhcDxlxlop);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DuDxlxlp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(MU_U_eval_Dxlxlp);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_F);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF2);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF2_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_U);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_MU_U);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_guess);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_ocp_data);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_raw_solution);
@@ -217,7 +217,7 @@ DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution_as_guess);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution2);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution3);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(guess_U);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(guess_MU_U);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(info);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(mesh_functions);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(names);
@@ -304,13 +304,13 @@ static std::unordered_map<std::string,DO_CMD> cmd_to_fun = {
   {"DmayerDxxp",do_DmayerDxxp},
   {"DabcDxlxlpu",do_DabcDxlxlpu},
   {"DhcDxlxlop",do_DhcDxlxlop},
-  {"DuDxlxlp",do_DuDxlxlp},
+  {"MU_U_eval_Dxlxlp",do_MU_U_eval_Dxlxlp},
   {"eval_F",do_eval_F},
   {"eval_JF",do_eval_JF},
   {"eval_JF_pattern",do_eval_JF_pattern},
   {"eval_JF2",do_eval_JF2},
   {"eval_JF2_pattern",do_eval_JF2_pattern},
-  {"eval_U",do_eval_U},
+  {"eval_MU_U",do_eval_MU_U},
   {"get_guess",do_get_guess},
   {"get_ocp_data",do_get_ocp_data},
   {"get_raw_solution",do_get_raw_solution},
@@ -318,7 +318,7 @@ static std::unordered_map<std::string,DO_CMD> cmd_to_fun = {
   {"get_solution_as_guess",do_get_solution_as_guess},
   {"get_solution2",do_get_solution2},
   {"get_solution3",do_get_solution3},
-  {"guess_U",do_guess_U},
+  {"guess_MU_U",do_guess_MU_U},
   {"info",do_info},
   {"mesh_functions",do_mesh_functions},
   {"names",do_names},
@@ -400,17 +400,21 @@ mexFunction(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-
+  static bool             first_run{true};
   static mstream          mout1, mout2;
   static std::streambuf * outbuf{nullptr};
   static std::streambuf * errbuf{nullptr};
 
   char cmd[256];
 
-  if ( outbuf   == nullptr ) outbuf   = std::cout.rdbuf(&mout1); // Redirect COUT
-  if ( errbuf   == nullptr ) errbuf   = std::cerr.rdbuf(&mout2); // Redirect COUT
-  if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
-  if ( pTP      == nullptr ) pTP      = new ThreadPool1( std::thread::hardware_concurrency());
+  if ( first_run ) {
+    outbuf   = std::cout.rdbuf(&mout1); // Redirect COUT
+    errbuf   = std::cerr.rdbuf(&mout2); // Redirect COUT
+    pConsole = new Console(&std::cout,4);
+    pTP      = new ThreadPool1( std::thread::hardware_concurrency());
+    Mechatronix::set_PINS_running_in_a_mex(true);
+    first_run = false;
+  }
 
   try {
     pConsole->setOff(); // do not colorize

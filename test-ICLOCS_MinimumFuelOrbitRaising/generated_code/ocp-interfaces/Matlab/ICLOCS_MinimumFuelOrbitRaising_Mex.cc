@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Mex.cc                          |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -36,8 +36,8 @@ static char const help_msg[] =
  |
 \*/
 
-static Mechatronix::Console        * pConsole{nullptr};
-static Mechatronix::ThreadPoolBase * pTP{nullptr};
+Mechatronix::Console        * pConsole{nullptr};
+Mechatronix::ThreadPoolBase * pTP{nullptr};
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //   _ __   _____      __
@@ -201,12 +201,15 @@ DO_COMMAND_REMAP_TO_CLASS_METHOD(check_raw_solution);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(dims);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(DlagrangeDxpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(DmayerDxxp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DabcDxlxlpu);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DhcDxlxlop);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(MU_U_eval_Dxlxlp);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_F);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF2);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_JF2_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_U);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(eval_MU_U);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_guess);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_ocp_data);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_raw_solution);
@@ -214,7 +217,7 @@ DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution_as_guess);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution2);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(get_solution3);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(guess_U);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(guess_MU_U);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(info);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(mesh_functions);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(names);
@@ -231,42 +234,36 @@ DO_COMMAND_REMAP_TO_CLASS_METHOD(unpack);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(update_continuation);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(A);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(A_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDu);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDu_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDxpm);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDxpm_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DodeDxpuv);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DodeDxpuv_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DbcDxxp);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DbcDxxp_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DabcDxlxlpu);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DabcDxlxlpu_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DhcDxlxlop);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DhcDxlxlop_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(Dfd_BCDxlxlp);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(Dfd_BCDxlxlp_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DetaDxp);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DetaDxp_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DHxpDxpuv);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DHxpDxpuv_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2JPD2xpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2JPD2xpu_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2JUD2xpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2JUD2xpu_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DLTargsDxpu);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DLTargsDxpu_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(D2lagrangeD2xpu);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(D2lagrangeD2xpu_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2LTargsD2xpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2LTargsD2xpu_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2LTD2xpu);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2LTD2xpu_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DjumpDxlxlp);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DjumpDxlxlp_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(D2lagrangeD2xpu);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(D2lagrangeD2xpu_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2mayerD2xxp);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(D2mayerD2xxp_pattern);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DuDxlxlp);
-DO_COMMAND_REMAP_TO_CLASS_METHOD(DuDxlxlp_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DbcDxxp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DbcDxxp_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DetaDxp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DetaDxp_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(Dfd_BCDxlxlp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(Dfd_BCDxlxlp_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDu);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDu_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDxpm);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DgDxpm_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DHxpDxpuv);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DHxpDxpuv_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DjumpDxlxlp);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DjumpDxlxlp_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DLTargsDxpu);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DLTargsDxpu_pattern);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DodeDxpuv);
+DO_COMMAND_REMAP_TO_CLASS_METHOD(DodeDxpuv_pattern);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(mass);
 DO_COMMAND_REMAP_TO_CLASS_METHOD(mass_D);
 
@@ -307,12 +304,15 @@ static std::unordered_map<std::string,DO_CMD> cmd_to_fun = {
   {"dims",do_dims},
   {"DlagrangeDxpu",do_DlagrangeDxpu},
   {"DmayerDxxp",do_DmayerDxxp},
+  {"DabcDxlxlpu",do_DabcDxlxlpu},
+  {"DhcDxlxlop",do_DhcDxlxlop},
+  {"MU_U_eval_Dxlxlp",do_MU_U_eval_Dxlxlp},
   {"eval_F",do_eval_F},
   {"eval_JF",do_eval_JF},
   {"eval_JF_pattern",do_eval_JF_pattern},
   {"eval_JF2",do_eval_JF2},
   {"eval_JF2_pattern",do_eval_JF2_pattern},
-  {"eval_U",do_eval_U},
+  {"eval_MU_U",do_eval_MU_U},
   {"get_guess",do_get_guess},
   {"get_ocp_data",do_get_ocp_data},
   {"get_raw_solution",do_get_raw_solution},
@@ -320,7 +320,7 @@ static std::unordered_map<std::string,DO_CMD> cmd_to_fun = {
   {"get_solution_as_guess",do_get_solution_as_guess},
   {"get_solution2",do_get_solution2},
   {"get_solution3",do_get_solution3},
-  {"guess_U",do_guess_U},
+  {"guess_MU_U",do_guess_MU_U},
   {"info",do_info},
   {"mesh_functions",do_mesh_functions},
   {"names",do_names},
@@ -337,42 +337,36 @@ static std::unordered_map<std::string,DO_CMD> cmd_to_fun = {
   {"update_continuation",do_update_continuation},
   {"A",do_A},
   {"A_pattern",do_A_pattern},
-  {"DgDu",do_DgDu},
-  {"DgDu_pattern",do_DgDu_pattern},
-  {"DgDxpm",do_DgDxpm},
-  {"DgDxpm_pattern",do_DgDxpm_pattern},
-  {"DodeDxpuv",do_DodeDxpuv},
-  {"DodeDxpuv_pattern",do_DodeDxpuv_pattern},
-  {"DbcDxxp",do_DbcDxxp},
-  {"DbcDxxp_pattern",do_DbcDxxp_pattern},
-  {"DabcDxlxlpu",do_DabcDxlxlpu},
-  {"DabcDxlxlpu_pattern",do_DabcDxlxlpu_pattern},
-  {"DhcDxlxlop",do_DhcDxlxlop},
-  {"DhcDxlxlop_pattern",do_DhcDxlxlop_pattern},
-  {"Dfd_BCDxlxlp",do_Dfd_BCDxlxlp},
-  {"Dfd_BCDxlxlp_pattern",do_Dfd_BCDxlxlp_pattern},
-  {"DetaDxp",do_DetaDxp},
-  {"DetaDxp_pattern",do_DetaDxp_pattern},
-  {"DHxpDxpuv",do_DHxpDxpuv},
-  {"DHxpDxpuv_pattern",do_DHxpDxpuv_pattern},
   {"D2JPD2xpu",do_D2JPD2xpu},
   {"D2JPD2xpu_pattern",do_D2JPD2xpu_pattern},
   {"D2JUD2xpu",do_D2JUD2xpu},
   {"D2JUD2xpu_pattern",do_D2JUD2xpu_pattern},
-  {"DLTargsDxpu",do_DLTargsDxpu},
-  {"DLTargsDxpu_pattern",do_DLTargsDxpu_pattern},
+  {"D2lagrangeD2xpu",do_D2lagrangeD2xpu},
+  {"D2lagrangeD2xpu_pattern",do_D2lagrangeD2xpu_pattern},
   {"D2LTargsD2xpu",do_D2LTargsD2xpu},
   {"D2LTargsD2xpu_pattern",do_D2LTargsD2xpu_pattern},
   {"D2LTD2xpu",do_D2LTD2xpu},
   {"D2LTD2xpu_pattern",do_D2LTD2xpu_pattern},
-  {"DjumpDxlxlp",do_DjumpDxlxlp},
-  {"DjumpDxlxlp_pattern",do_DjumpDxlxlp_pattern},
-  {"D2lagrangeD2xpu",do_D2lagrangeD2xpu},
-  {"D2lagrangeD2xpu_pattern",do_D2lagrangeD2xpu_pattern},
   {"D2mayerD2xxp",do_D2mayerD2xxp},
   {"D2mayerD2xxp_pattern",do_D2mayerD2xxp_pattern},
-  {"DuDxlxlp",do_DuDxlxlp},
-  {"DuDxlxlp_pattern",do_DuDxlxlp_pattern},
+  {"DbcDxxp",do_DbcDxxp},
+  {"DbcDxxp_pattern",do_DbcDxxp_pattern},
+  {"DetaDxp",do_DetaDxp},
+  {"DetaDxp_pattern",do_DetaDxp_pattern},
+  {"Dfd_BCDxlxlp",do_Dfd_BCDxlxlp},
+  {"Dfd_BCDxlxlp_pattern",do_Dfd_BCDxlxlp_pattern},
+  {"DgDu",do_DgDu},
+  {"DgDu_pattern",do_DgDu_pattern},
+  {"DgDxpm",do_DgDxpm},
+  {"DgDxpm_pattern",do_DgDxpm_pattern},
+  {"DHxpDxpuv",do_DHxpDxpuv},
+  {"DHxpDxpuv_pattern",do_DHxpDxpuv_pattern},
+  {"DjumpDxlxlp",do_DjumpDxlxlp},
+  {"DjumpDxlxlp_pattern",do_DjumpDxlxlp_pattern},
+  {"DLTargsDxpu",do_DLTargsDxpu},
+  {"DLTargsDxpu_pattern",do_DLTargsDxpu_pattern},
+  {"DodeDxpuv",do_DodeDxpuv},
+  {"DodeDxpuv_pattern",do_DodeDxpuv_pattern},
   {"mass",do_mass},
   {"mass_D",do_mass_D},
   {"new",do_new},
@@ -410,17 +404,21 @@ mexFunction(
   int nlhs, mxArray       *plhs[],
   int nrhs, mxArray const *prhs[]
 ) {
-
+  static bool             first_run{true};
   static mstream          mout1, mout2;
   static std::streambuf * outbuf{nullptr};
   static std::streambuf * errbuf{nullptr};
 
   char cmd[256];
 
-  if ( outbuf   == nullptr ) outbuf   = std::cout.rdbuf(&mout1); // Redirect COUT
-  if ( errbuf   == nullptr ) errbuf   = std::cerr.rdbuf(&mout2); // Redirect COUT
-  if ( pConsole == nullptr ) pConsole = new Console(&std::cout,4);
-  if ( pTP      == nullptr ) pTP      = new ThreadPool1( std::thread::hardware_concurrency());
+  if ( first_run ) {
+    outbuf   = std::cout.rdbuf(&mout1); // Redirect COUT
+    errbuf   = std::cerr.rdbuf(&mout2); // Redirect COUT
+    pConsole = new Console(&std::cout,4);
+    pTP      = new ThreadPool1( std::thread::hardware_concurrency());
+    Mechatronix::set_PINS_running_in_a_mex(true);
+    first_run = false;
+  }
 
   try {
     pConsole->setOff(); // do not colorize

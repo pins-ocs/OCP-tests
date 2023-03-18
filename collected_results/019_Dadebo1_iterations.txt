@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,0)
-  mesh class pointer:      0x7ff7b5e115c8
-  solver class pointer:    0x7fc7ad80e5c0
+  Continuation interval:   [1,0)
+  mesh class pointer:      0x7ff7b9b865b0
+  solver class pointer:    0x7fab2580e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 4007
@@ -72,8 +71,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 4007          N. System pars = 3000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 4.01[ms]      timeout        = 0 [ms]
-iteration      = 2             Memory Used    = 628Kb (+65bytes)
+Elapsed Time   = 4.49[ms]      timeout        = 0 [ms]
+iteration      = 2             Memory Used    = 681Kb (+12bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -98,10 +97,9 @@ last ||f||_2   = 3.2383e-14    last ||d||_2   = 2.8439e-17
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
-All internal blocks OK
-Check DhcDxlxlop:
-Last block: OK
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

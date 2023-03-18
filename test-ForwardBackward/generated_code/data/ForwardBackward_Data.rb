@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ForwardBackward_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,20 +20,20 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-E_tol0   = 0.25
-a_tol    = 0.01
-c0_0     = 0.0
-a_epsi   = 0.01
-c1_0     = 0.0
-c1       = c1_0
-E_tol    = E_tol0
 epsilon0 = 0.1
 epsilon  = epsilon0
-v_epsi   = 0.01
+c1_0     = 0.0
+c1       = c1_0
+c0_0     = 0.0
+c0       = c0_0
+E_tol0   = 0.25
+a_tol    = 0.01
+a_epsi   = 0.01
+E_tol    = E_tol0
 E_epsi0  = 0.25
 E_epsi   = E_epsi0
-c0       = c0_0
 v_tol    = 0.01
+v_epsi   = 0.01
 
 mechatronix do |data|
 
@@ -239,7 +239,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 3,
   }
 

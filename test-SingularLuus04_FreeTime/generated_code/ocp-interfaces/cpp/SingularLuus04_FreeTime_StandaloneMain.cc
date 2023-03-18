@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Main.cc                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type theta0 = 1;
-    real_type u_tol = 0.01;
     real_type u_epsi = 0.01;
     real_type theta = theta0;
+    real_type u_tol = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -108,7 +108,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -181,8 +181,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularLuus04_FreeTime_data.Mesh["s0"] = 0;
-SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 SingularLuus04_FreeTime_data.Mesh["segments"][0]["n"] = 5000;
+SingularLuus04_FreeTime_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

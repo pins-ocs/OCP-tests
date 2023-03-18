@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Methods_controls.cc                      |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -77,7 +77,7 @@ namespace HypersonicProblem3DOFDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_Tf];
     real_type t2   = U__[iU_alpha];
     real_type t3   = t2 * t2;
@@ -152,7 +152,7 @@ namespace HypersonicProblem3DOFDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_Tf];
     real_type t2   = U__[iU_alpha];
     real_type t6   = t1 * MU__[3];
@@ -234,7 +234,7 @@ namespace HypersonicProblem3DOFDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = MU__[3];
     real_type t2   = P__[iP_Tf];
     real_type t3   = t2 * t1;
@@ -292,7 +292,7 @@ namespace HypersonicProblem3DOFDefine {
     real_type t117 = ALIAS_u2Control_D_1(U__[iU_u2], -1, 1);
     real_type t118 = MU__[6];
     real_type t120 = ModelPars[iM_sigma_dot_max];
-    result__[ 8   ] = t118 * t120 * t4 + t117;
+    result__[ 8   ] = t120 * t4 * t118 + t117;
     result__[ 9   ] = t120 * t109;
     real_type t123 = ModelPars[iM_CTRL];
     result__[ 10  ] = t123 * MU__[0] + 2 * U__[iU_c_h];
@@ -301,13 +301,13 @@ namespace HypersonicProblem3DOFDefine {
     result__[ 13  ] = result__[11];
     result__[ 14  ] = t123 * MU__[2] + 2 * U__[iU_c_phi];
     result__[ 15  ] = result__[13];
-    result__[ 16  ] = t1 * t123 + 2 * U__[iU_c_V];
+    result__[ 16  ] = t123 * t1 + 2 * U__[iU_c_V];
     result__[ 17  ] = result__[15];
     result__[ 18  ] = t123 * t30 + 2 * U__[iU_c_G];
     result__[ 19  ] = result__[17];
     result__[ 20  ] = t123 * t42 + 2 * U__[iU_c_psi];
     result__[ 21  ] = result__[19];
-    result__[ 22  ] = t118 * t123 + 2 * U__[iU_c_sigma];
+    result__[ 22  ] = t123 * t118 + 2 * U__[iU_c_sigma];
     result__[ 23  ] = result__[21];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 24, i_segment );
@@ -345,7 +345,7 @@ namespace HypersonicProblem3DOFDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_Tf];
     real_type t2   = 2 * t1;
     real_type t13  = exp(-X__[iX_h] / ModelPars[iM_S]);

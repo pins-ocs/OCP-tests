@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BikeSteering_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,8 +51,8 @@ main() {
 
     // Auxiliary values
     real_type g = 9.81;
-    real_type m = 250;
     real_type mu = 1;
+    real_type m = 250;
     real_type Fmax = m*g*mu;
     integer InfoLevel = 4;
 
@@ -108,7 +108,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 0;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -185,14 +185,14 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BikeSteering_data.Mesh["s0"] = 0;
-BikeSteering_data.Mesh["segments"][0]["n"] = 10;
 BikeSteering_data.Mesh["segments"][0]["length"] = 0.1;
-BikeSteering_data.Mesh["segments"][1]["n"] = 40;
+BikeSteering_data.Mesh["segments"][0]["n"] = 10;
 BikeSteering_data.Mesh["segments"][1]["length"] = 0.4;
-BikeSteering_data.Mesh["segments"][2]["n"] = 40;
+BikeSteering_data.Mesh["segments"][1]["n"] = 40;
 BikeSteering_data.Mesh["segments"][2]["length"] = 0.4;
-BikeSteering_data.Mesh["segments"][3]["n"] = 10;
+BikeSteering_data.Mesh["segments"][2]["n"] = 40;
 BikeSteering_data.Mesh["segments"][3]["length"] = 0.1;
+BikeSteering_data.Mesh["segments"][3]["n"] = 10;
 
 
     // alias for user object classes passed as pointers

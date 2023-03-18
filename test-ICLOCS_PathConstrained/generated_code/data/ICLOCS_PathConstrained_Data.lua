@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Data.lua                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,10 +20,10 @@
 -- User Header
 
 -- Auxiliary values
-epsi_ctrl0 = 0.01
-epsi_ctrl  = epsi_ctrl0
 tol_ctrl0  = 0.01
 tol_ctrl   = tol_ctrl0
+epsi_ctrl0 = 0.01
+epsi_ctrl  = epsi_ctrl0
 
 content = {
 
@@ -220,7 +220,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 

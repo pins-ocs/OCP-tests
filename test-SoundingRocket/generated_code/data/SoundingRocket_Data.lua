@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SoundingRocket_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-epsi0       = 0.01
+g           = 9.81
 W0          = 1.0
+W           = W0
+tol0        = 0.01
+B           = 4*g
+epsi0       = 0.01
+u_epsi      = epsi0
 b           = 350.0
 x3_f        = b
-g           = 9.81
-W           = W0
-B           = 4*g
-u_epsi      = epsi0
-tol0        = 0.01
 u_tolerance = tol0
 
 content = {
@@ -226,7 +226,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 2,
   },
 

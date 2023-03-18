@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_controls.cc                                  |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace vanDerPolDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_x2];
@@ -102,7 +102,7 @@ namespace vanDerPolDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     real_type t8   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
@@ -137,7 +137,7 @@ namespace vanDerPolDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1(U__[iU_u], -1, 1);
     result__[ 0   ] = 2 * t3 * X__[iX_x1];
     result__[ 1   ] = 2 * t3 * X__[iX_x2];
@@ -170,7 +170,7 @@ namespace vanDerPolDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_x1] * X__[iX_x1];
     real_type t4   = X__[iX_x2] * X__[iX_x2];
     real_type t8   = ALIAS_uControl_D_1_1(U__[iU_u], -1, 1);
@@ -206,7 +206,7 @@ namespace vanDerPolDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_x1] * X__[iX_x1];
     real_type t5   = X__[iX_x2] * X__[iX_x2];
     U__[ iU_u ] = uControl.solve(-1.0 / (t3 + t5 + ModelPars[iM_epsilon]) * MU__[1], -1, 1);

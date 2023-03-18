@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFork_Data.rb                                           #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,11 +20,11 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-WC0     = 1.0
-WC      = WC0
 u_tol0  = 0.1
 u_tol   = u_tol0
 u_epsi0 = 0.1
+WC0     = 1.0
+WC      = WC0
 u_epsi  = u_epsi0
 
 mechatronix do |data|
@@ -231,7 +231,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 3,
   }
 
@@ -359,8 +359,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 100.0,
         :length => 1.0,
+        :n      => 100.0,
       },
     ],
   };

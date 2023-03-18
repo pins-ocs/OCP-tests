@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Pugliese_Data.lua                                              |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -22,9 +22,9 @@
 -- Auxiliary values
 g__S = 3.5
 g__M = 1.5
-YEAR = 365.25
 t__S = 45.15
 C__S = (1-1/t__S)*g__S*p__S
+YEAR = 365.25
 t__M = 38.15
 C__M = (1-1/t__M)*g__M*p__M
 
@@ -223,7 +223,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 0,
   },
 

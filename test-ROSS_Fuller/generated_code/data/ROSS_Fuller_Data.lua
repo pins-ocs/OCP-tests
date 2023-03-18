@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Fuller_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 12/3/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,11 +20,11 @@
 -- User Header
 
 -- Auxiliary values
-u_max           = 1.0
 u_epsilon_max   = 0.0001
 u_epsilon       = u_epsilon_max
 u_tolerance_max = 0.0001
 u_tolerance     = u_tolerance_max
+u_max           = 1.0
 
 content = {
 
@@ -305,28 +305,28 @@ content = {
     segments = {
       
       {
-        n      = 200.0,
         length = 2.0,
+        n      = 200.0,
       },
       
       {
-        n      = 200.0,
         length = 0.8,
+        n      = 200.0,
       },
       
       {
-        n      = 200.0,
         length = 0.4,
+        n      = 200.0,
       },
       
       {
-        n      = 200.0,
         length = 0.2,
+        n      = 200.0,
       },
       
       {
-        n      = 200.0,
         length = 0.1,
+        n      = 200.0,
       },
     },
   },

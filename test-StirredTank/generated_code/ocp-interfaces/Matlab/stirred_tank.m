@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: stirred_tank.m                                                 %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -613,37 +613,64 @@ classdef stirred_tank < handle
     % NONLINEAR SYSTEM (ASSEMBLED)
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
+    % ---------------------------------------------------------------------
+    function [ MU, U ] = MU_U_split( self, MU_U )
+      dd    = self.dims();
+      nx    = dd.dim_x;
+      nu    = dd.dim_u;
+      ncell = dd.num_nodes-1;
+      MU    = reshape( MU_U(ncell*nu+1:ncell*(nx+nu)), nx, ncell );
+      U     = reshape( MU_U(1:ncell*nu), nu, ncell );
+    end
+    % ---------------------------------------------------------------------
+    function MU_U = MU_U_join( self, MU, U )
+      MU_U = [U(:);MU(:)];
+    end
+    % ---------------------------------------------------------------------
+    function MU_U = guess_MU_U( self, Z )
+      MU_U = stirred_tank_Mex( 'guess_MU_U', self.objectHandle, Z );
+    end
+    % ---------------------------------------------------------------------
     function U = guess_U( self, Z )
-      %
-      % Initialize `u`
-      %
-      U = stirred_tank_Mex( 'guess_U', self.objectHandle, Z );
+      MU_U    = self.guess_MU_U( Z );
+      [~, U ] = self.MU_U_split(MU_U);
+    end
+    % ---------------------------------------------------------------------
+    function MU_U = eval_MU_U( self, Z, u_guess )
+      MU_U = stirred_tank_Mex( 'eval_MU_U', self.objectHandle, Z, u_guess );
     end
     % ---------------------------------------------------------------------
     function U = eval_U( self, Z, u_guess )
-      %
-      % Compute controls `U` given a guess `u_guess`.
-      % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
-      %
-      U = stirred_tank_Mex( 'eval_U', self.objectHandle, Z, u_guess );
+      MU_U = self.eval_MU_U( Z, u_guess );
+      [~, U ] = self.MU_U_split(MU_U);
     end
     % ---------------------------------------------------------------------
-    function [F,ok] = eval_F( self, Z, U )
+    function [F,ok] = eval_F( self, Z, varargin )
       %
       % Return the nonlinear system of the indirect
-      % methods evaluated at `Z` and `U`.
+      % methods evaluated at `Z`, `MU` and `U`.
       % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
       %
-      [F,ok] = stirred_tank_Mex( 'eval_F', self.objectHandle, Z, U );
+      if nargin == 3
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      [F,ok] = stirred_tank_Mex( 'eval_F', self.objectHandle, Z, MU_U );
     end
     % ---------------------------------------------------------------------
-    function [JF,ok] = eval_JF( self, Z, U )
+    function [JF,ok] = eval_JF( self, Z, varargin )
       %
       % Return the jacobian of the nonlinear system
-      % of the indirect methods evaluated ad `Z` and `U`.
+      % of the indirect methods evaluated ad `Z`, `MU` and `U`.
       % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
       %
-      [JF,ok] = stirred_tank_Mex( 'eval_JF', self.objectHandle, Z, U );
+      if nargin == 3
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      [JF,ok] = stirred_tank_Mex( 'eval_JF', self.objectHandle, Z, MU_U );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF_pattern( self )
@@ -654,13 +681,18 @@ classdef stirred_tank < handle
       JF = stirred_tank_Mex( 'eval_JF_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function [JF,ok] = eval_JF2( self, Z, U )
+    function [JF,ok] = eval_JF2( self, Z, varargin )
       %
       % Return the jacobian of the nonlinear system
-      % of the indirect methods evaluated ad `Z` and `U`.
+      % of the indirect methods evaluated ad `Z`, `MU` and `U`.
       % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
       %
-      [JF,ok] = stirred_tank_Mex( 'eval_JF2', self.objectHandle, Z, U );
+      if nargin == 3
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      [JF,ok] = stirred_tank_Mex( 'eval_JF2', self.objectHandle, Z, MU_U );
     end
     % ---------------------------------------------------------------------
     function JF = eval_JF2_pattern( self )
@@ -671,19 +703,25 @@ classdef stirred_tank < handle
       JF = stirred_tank_Mex( 'eval_JF2_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function [Z,U] = get_raw_solution( self )
+    function [ Z, MU, U ] = get_raw_solution( self )
       %
       % Return the solution states and multipliers and controls as stored in PINS.
       %
-      [Z,U] = stirred_tank_Mex( 'get_raw_solution', self.objectHandle );
+      [ Z, MU_U ] = stirred_tank_Mex( 'get_raw_solution', self.objectHandle );
+      [ MU, U ]   = self.MU_U_split(MU_U);
     end
     % ---------------------------------------------------------------------
-    function set_raw_solution( self, Z, U )
+    function set_raw_solution( self, Z, varargin )
       %
       % Set the solution in a vector as stored in PINS.
       % Vector Z can be built as Z = pack( X, Lambda, Pars, Omega );
       %
-      stirred_tank_Mex( 'set_raw_solution', self.objectHandle, Z, U );
+      if nargin == 3
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      stirred_tank_Mex( 'set_raw_solution', self.objectHandle, Z, MU_U );
     end
     % ---------------------------------------------------------------------
     function ok = check_raw_solution( self, Z )
@@ -694,12 +732,17 @@ classdef stirred_tank < handle
       ok = stirred_tank_Mex( 'check_raw_solution', self.objectHandle, Z );
     end
     % ---------------------------------------------------------------------
-    function check_jacobian( self, Z, U, epsi )
+    function check_jacobian( self, Z, varargin )
       %
       % Check the analytic jacobian comparing with finite difference one.
       % `epsi` is the admitted tolerance.
       %
-      stirred_tank_Mex( 'check_jacobian', self.objectHandle, Z, U, epsi );
+      if nargin == 4
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      stirred_tank_Mex( 'check_jacobian', self.objectHandle, Z, MU_U, varargin{end} );
     end
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
@@ -712,7 +755,7 @@ classdef stirred_tank < handle
     % DISCRETIZED PROBLEM ACCESS
     % ---------------------------------------------------------------------
     % ---------------------------------------------------------------------
-    function [a,b,c] = eval_abc( self, L, R, pars, U )
+    function [a,b,c] = eval_abc( self, L, R, pars, varargin )
       %
       % Compute the block of the nonlinear system given left and right states.
       %
@@ -723,17 +766,27 @@ classdef stirred_tank < handle
       %
       % <<FD1.jpg>>
       %
-      [a,b,c] = stirred_tank_Mex( 'abc', self.objectHandle, L, R, pars, U );
+      if nargin == 5
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      [a,b,c] = stirred_tank_Mex( 'abc', self.objectHandle, L, R, pars, MU_U );
     end
     % ---------------------------------------------------------------------
-    function DabcDxlxlpu = eval_DabcDxlxlpu( self, L, R, pars, U )
+    function DabcDxlxlpu = eval_DabcDxlxlpu( self, L, R, pars, varargin )
       %
       % Compute the block of the nonlinear system
       % given left and right states.
       %
       % <<FD2.jpg>>
       %
-      DabcDxlxlpu = stirred_tank_Mex( 'DabcDxlxlpu', self.objectHandle, L, R, pars, U );
+      if nargin == 5
+        MU_U = varargin{1};
+      else
+        MU_U = self.MU_U_join( varargin{1}, varargin{2} ); % MU, U
+      end
+      DabcDxlxlpu = stirred_tank_Mex( 'DabcDxlxlpu', self.objectHandle, L, R, pars, MU_U );
     end
     % ---------------------------------------------------------------------
     function [h,c] = eval_hc( self, L, R, pars )
@@ -771,11 +824,11 @@ classdef stirred_tank < handle
       end
     end
     % ---------------------------------------------------------------------
-    function DuDxlxlp = eval_DuDxlxlp( self, L, R, pars, MU )
+    function [DmuDxlxlp, DuDxlxlp] = MU_U_eval_Dxlxlp( self, NODE, pars, MU, U )
       %
       % Compute the jacobian of controls given states and multiplyers.
       %
-      DuDxlxlp = stirred_tank_Mex( 'DuDxlxlp', self.objectHandle, L, R, pars, MU );
+      [DmuDxlxlp, DuDxlxlp] = stirred_tank_Mex( 'MU_U_eval_Dxlxlp', self.objectHandle, NODE, pars, MU, U );
     end
     % ---------------------------------------------------------------------
     %   ____ ___ ____  _____ ____ _____
@@ -982,30 +1035,6 @@ classdef stirred_tank < handle
       res = stirred_tank_Mex('A_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DetaDxp_pattern( self )
-      res = stirred_tank_Mex('DetaDxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DbcDxxp_pattern( self )
-      res = stirred_tank_Mex('DbcDxxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DodeDxpuv_pattern( self )
-      res = stirred_tank_Mex('DodeDxpuv_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DsegmentLinkDxxp_pattern( self )
-      res = stirred_tank_Mex('DsegmentLinkDxxp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DjumpDxlxlp_pattern( self )
-      res = stirred_tank_Mex('DjumpDxlxlp_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DHxpDxpuv_pattern( self )
-      res = stirred_tank_Mex('DHxpDxpuv_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
     function res = D2JPD2xpu_pattern( self )
       res = stirred_tank_Mex('D2JPD2xpu_pattern', self.objectHandle );
     end
@@ -1014,24 +1043,56 @@ classdef stirred_tank < handle
       res = stirred_tank_Mex('D2JUD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = D2LTD2xpu_pattern( self )
-      res = stirred_tank_Mex('D2LTD2xpu_pattern', self.objectHandle );
-    end
-    % ---------------------------------------------------------------------
-    function res = DLTargsDxpu_pattern( self )
-      res = stirred_tank_Mex('DLTargsDxpu_pattern', self.objectHandle );
+    function res = D2lagrangeD2xpu_pattern( self )
+      res = stirred_tank_Mex('D2lagrangeD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = D2LTargsD2xpu_pattern( self )
       res = stirred_tank_Mex('D2LTargsD2xpu_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
-    function res = DgDxpm_pattern( self )
-      res = stirred_tank_Mex('DgDxpm_pattern', self.objectHandle );
+    function res = D2LTD2xpu_pattern( self )
+      res = stirred_tank_Mex('D2LTD2xpu_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = D2mayerD2xxp_pattern( self )
+      res = stirred_tank_Mex('D2mayerD2xxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DbcDxxp_pattern( self )
+      res = stirred_tank_Mex('DbcDxxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DetaDxp_pattern( self )
+      res = stirred_tank_Mex('DetaDxp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = Dfd_BCDxlxlp_pattern( self )
+      res = stirred_tank_Mex('Dfd_BCDxlxlp_pattern', self.objectHandle );
     end
     % ---------------------------------------------------------------------
     function res = DgDu_pattern( self )
       res = stirred_tank_Mex('DgDu_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DgDxpm_pattern( self )
+      res = stirred_tank_Mex('DgDxpm_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DHxpDxpuv_pattern( self )
+      res = stirred_tank_Mex('DHxpDxpuv_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DjumpDxlxlp_pattern( self )
+      res = stirred_tank_Mex('DjumpDxlxlp_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DLTargsDxpu_pattern( self )
+      res = stirred_tank_Mex('DLTargsDxpu_pattern', self.objectHandle );
+    end
+    % ---------------------------------------------------------------------
+    function res = DodeDxpuv_pattern( self )
+      res = stirred_tank_Mex('DodeDxpuv_pattern', self.objectHandle );
     end
 
     % ---------------------------------------------------------------------

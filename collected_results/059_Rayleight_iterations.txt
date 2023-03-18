@@ -1,0 +1,119 @@
+MODEL:Rayleight
+BEGIN DIMS
+  dim         = u=1, q=1, x=2, p=0, bc(active/total)=(2/2)
+  total       = nZ=4006, nP=3000, nU=1000, Q=1001
+  index start = omega=4004, p=4006
+  post proc.  = n_post=0, n_Ipost=0
+END DIMS
+BEGIN MESH
+ num_nodes    = 1001
+ num_segments = 1
+END MESH
+BEGIN THREADS
+  Used threads: 15
+  U/JU/F/JF/LU: true/true/true/true/true
+END THREADS
+BEGIN PARAMS
+  m_debug:                 false
+  Solver Controls:         Newton
+  Jacobian evaluation:     ANALYTIC
+  Jacobian BC evaluation:  ANALYTIC
+  Initializer Controls:    not selected
+  Initialize Multipliers:  false
+  Initialize Guess:        not selected + not selected
+  Continuation interval:   [1,0)
+  mesh class pointer:      0x7ff7b94b25b0
+  solver class pointer:    0x7f9ca8813ef0
+END PARAMS
+BEGIN LINEAR ALGEBRA
+  rows   = 4006
+  cols   = 4006
+  nblock = 1000
+  n      = 4
+  qr     = 2
+  qx     = 2
+  nr     = 0
+  nx     = 0
+  treads = 16/nblk:15/factorize:true/solve:true
+  intern = CyclicReduction+LU
+  last   = LastBlock LUPQ
+END PARAMS
+
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x1
+[ 1] initial_x2
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 1
+num. nodes = 1001
+Segment N.0: s0 = 0 length = 2.5 npts = 1001 no data set
+END Mesh[mesh][iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1,28] (  0.0025  ,  0.0051  ) [   2.13   ,   1.91   ] 0.105      [0:0:5:0:22:0:0:0:0:0:0:0]
+[  2,33] (  0.0051  , 0.00993  ) [   1.86   ,   1.71   ] 0.0816     [0:0:9:0:23:0:0:0:0:0:0:0]
+[  3,30] ( 0.00993  ,  0.0192  ) [   1.64   ,   1.48   ] 0.0951     [0:0:12:0:17:0:0:0:0:0:0:0]
+[  4,26] (  0.0192  ,  0.0374  ) [   1.41   ,   1.24   ] 0.117      [0:0:16:0:9:0:0:0:0:0:0:0]
+[  5,22] (  0.0374  ,  0.0709  ) [   1.29   ,   1.11   ] 0.143      [0:0:18:0:3:0:0:0:0:0:0:0]
+[  6,15] (  0.0709  ,  0.139   ) [   1.18   ,  0.916   ] 0.205      [0:0:14:0:0:0:0:0:0:0:0:0]
+[  7, 2] (  0.139   ,   0.23   ) [  0.875   ,  0.599   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[  8, 1] (   0.23   ,  0.274   ) [  0.735   ,  0.129   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 2] (  0.274   ,  0.0261  ) [  0.0997  ,  0.0149  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 2] (  0.0261  , 0.00143  ) [  0.0146  , 0.000651 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 11, 2] ( 0.00143  , 7.16e-05 ) [ 0.000643 , 3.19e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 2] ( 7.16e-05 , 3.58e-06 ) [ 3.19e-05 , 1.59e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 1] ( 3.58e-06 , 2.19e-12 ) [ 1.59e-06 , 2.09e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
+n_power        = 6             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.25          dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+Converged      = YES           tolerance      = 1e-09
+N. Equations   = 4006          N. System pars = 3000
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 80.6[ms]      timeout        = 0 [ms]
+iteration      = 13            Memory Used    = 681Kb (+5bytes)
+max iterations = 300           max acc. iter. = 800
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 167           Jacobian       = 13
+Factorization  = 13            Inversion      = 179
+----------------------- SOLVER MERIT_F2_and_D2 -----------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.95
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
+........................... last residuals ...........................
+last ||f||_inf = 4.7311e-11    last ||d||_inf = 7.4688e-12
+last ||f||_1   = 2.1939e-12    last ||d||_1   = 2.0944e-12
+last ||f||_2   = 6.0032e-12    last ||d||_2   = 2.7907e-12
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 29.38, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

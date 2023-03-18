@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Methods_Guess.cc                            |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace ICLOCS_StirredTankDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_x1 ] = ModelPars[iM_x1_f];
       X__[ iX_x2 ] = ModelPars[iM_x2_f];
@@ -247,23 +247,22 @@ namespace ICLOCS_StirredTankDefine {
   \*/
 
   bool
-  ICLOCS_StirredTank::penalties_check_node(
+  ICLOCS_StirredTank::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
-    ok = ok && tfbound.check_range(ModelPars[iM_T_min] - P__[iP_TimeSize], m_max_penalty_value);
+    ok = ok && tfbound.check_range(ModelPars[iM_T_min] - P__[iP_TimeSize]);
     real_type t4   = X__[iX_x1];
-    ok = ok && x1bound_min.check_range(-t4, m_max_penalty_value);
-    ok = ok && x1bound_max.check_range(t4 - 1, m_max_penalty_value);
+    ok = ok && x1bound_min.check_range(-t4);
+    ok = ok && x1bound_max.check_range(t4 - 1);
     real_type t6   = X__[iX_x2];
-    ok = ok && x2bound_min.check_range(-t6, m_max_penalty_value);
-    ok = ok && x2bound_max.check_range(t6 - 1, m_max_penalty_value);
+    ok = ok && x2bound_min.check_range(-t6);
+    ok = ok && x2bound_max.check_range(t6 - 1);
     return ok;
   }
 
@@ -315,7 +314,7 @@ namespace ICLOCS_StirredTankDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], 0, 2);
     return ok;

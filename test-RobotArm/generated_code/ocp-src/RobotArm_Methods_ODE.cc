@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm_Methods_ODE.cc                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace RobotArmDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     result__[ 0   ] = U__[iU_u_rho] * t1 - ModelPars[iM_L] * V__[3];
     real_type t9   = X__[iX_rho];
@@ -152,7 +152,7 @@ namespace RobotArmDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = U__[iU_u_rho];
     result__[ 1   ] = P__[iP_T];
     result__[ 2   ] = -ModelPars[iM_L];
@@ -220,7 +220,7 @@ namespace RobotArmDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_L];
     real_type t1   = X__[iX_rho];
     result__[ 1   ] = I_theta(t1, X__[iX_phi]);

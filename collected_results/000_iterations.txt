@@ -11,7 +11,7 @@
  iteration = 69    Bike1D
  iteration = 25    BikeSteering
  iteration = 543   Brachiostocrona
- iteration = 17    Brachiostocrona2
+ iteration = 18    Brachiostocrona2
  iteration = 5     Brake
  iteration = 38    BrysonDenham
  iteration = 131   CNOC
@@ -35,7 +35,7 @@
  iteration = -1    ICLOCS2_BatchFermentor_WORKING_ON
  iteration = -1    ICLOCS2_ParallelParking_WORKING_ON
  iteration = 64    ICLOCS_Catalyst
- iteration = 8     ICLOCS_ContinuousMP
+ iteration = 7     ICLOCS_ContinuousMP
  iteration = 36    ICLOCS_MinimumFuelOrbitRaising
  iteration = 723   ICLOCS_PathConstrained
  iteration = 51    ICLOCS_SingularArc
@@ -54,6 +54,8 @@
  iteration = 66    PointMassCarModel_4
  iteration = -1    PointMassCarModel_5
  iteration = -1    Pugliese
+ iteration = 33    ROSS_Ball_Mizel
+ iteration = 142   ROSS_Fuller
  iteration = 13    Rayleight
  iteration = 39    RobotArm
  iteration = 79    SecondOrderSingularRegulator
@@ -70,7 +72,7 @@
  iteration = 26    TwoPhaseSchwartz
  iteration = 4     TwoStageCSTR
  iteration = -1    TyreDynamic
- iteration = 428   Underwater
+ iteration = 472   Underwater
  iteration = 5     WorstCaseScenario
  iteration = 9     Zermelo
  iteration = 19    gtocX_2burn

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Methods_Guess.cc                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -82,12 +82,12 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t1   = Q__[iQ_zeta];
       real_type t2   = 1 - t1;
-      X__[ iX_omega__alpha ] = ModelPars[iM_omega__alpha_f] * t1 + ModelPars[iM_omega__alpha_i] * t2;
-      X__[ iX_omega__beta  ] = ModelPars[iM_omega__beta_f] * t1 + ModelPars[iM_omega__beta_i] * t2;
+      X__[ iX_omega__alpha ] = t1 * ModelPars[iM_omega__alpha_f] + t2 * ModelPars[iM_omega__alpha_i];
+      X__[ iX_omega__beta  ] = t1 * ModelPars[iM_omega__beta_f] + t2 * ModelPars[iM_omega__beta_i];
     }
     { // open block to avoid temporary clash
 
@@ -248,15 +248,14 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
   \*/
 
   bool
-  ICLOCS_TwoLinkRobotArm::penalties_check_node(
+  ICLOCS_TwoLinkRobotArm::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
 
     return ok;
@@ -311,7 +310,7 @@ namespace ICLOCS_TwoLinkRobotArmDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && u1Control.check_range(U__[iU_u1], -1, 1);
     ok = ok && u2Control.check_range(U__[iU_u2], -1, 1);

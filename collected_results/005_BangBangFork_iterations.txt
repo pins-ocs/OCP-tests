@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,3)
-  mesh class pointer:      0x7ff7bfdb75c0
-  solver class pointer:    0x7f840e80ddc0
+  Continuation interval:   [1,3)
+  mesh class pointer:      0x7ff7b1f5a5a8
+  solver class pointer:    0x7fd93800e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 613
@@ -94,38 +93,8 @@ MODEL PARAMETERS BEGIN
   ....................................x3_f = 0
   ....................................x3_i = -1.2999999999999998
 MODEL PARAMETERS END
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(291.35547976460373) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(140.67773988230186) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(8.834717485287733) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1, 5] (   2.55   ,   2.64   ) [   19.1   ,   15.7   ] 0.0312     [0:0:0:0:0:0:0:0:0:0:0:0]
+[  1, 5] (   2.55   ,   2.64   ) [   19.1   ,   15.7   ] 0.0312     [0:0:0:0:0:0:0:3:0:0:0:0]
 [  2, 1] (   2.64   ,  0.857   ) [   1.96   ,  0.735   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  3, 2] (  0.857   ,  0.585   ) [   7.82   ,   7.14   ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
 [  4, 6] (  0.585   ,  0.786   ) [   325    ,   316    ] 0.083      [0:0:5:0:0:0:0:0:0:0:0:0]
@@ -213,27 +182,7 @@ Continuation step N.3 s=0.2, ds=0.2, old_s=    0
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [ 54,15] (   14.6   ,   9.09   ) [  0.541   ,  0.846   ] 0.488      [0:0:0:14:0:0:0:0:0:0:0:0]
 [ 55, 3] (   9.09   ,   8.31   ) [   3.79   ,   7.36   ] 0.16       [0:0:1:1:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #12
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(25.486865501422916) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(8.125933882237824) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[ 56,80] (   8.31   ,   8.12   ) [ 1.18e+03 ,   17.2   ] 0.000378   [74:0:2:0:0:0:0:0:0:0:0:0]
+[ 56,80] (   8.31   ,   8.12   ) [ 1.18e+03 ,   17.2   ] 0.000378   [74:0:2:0:0:0:0:2:0:0:0:0]
 [ 57,50] (   8.12   ,   8.12   ) [   84.6   ,   13.4   ] 0.000841   [49:0:0:0:0:0:0:0:0:0:0:0]
 [ 58,80] (   8.12   ,   8.09   ) [   23.8   ,   19.2   ] 0.000546   [79:0:0:0:0:0:0:0:0:0:0:0]
 [ 59,106] (   8.09   ,   8.13   ) [   66.8   ,   22.8   ] 0.000342   [105:0:0:0:0:0:0:0:0:0:0:0]
@@ -248,27 +197,7 @@ Should not happen here!
 [ 68,84] (   5.35   ,   5.35   ) [   17.4   ,   3.84   ] 0.00106    [82:0:1:0:0:0:0:0:0:0:0:0]
 [ 69,15] (   5.35   ,   4.93   ) [   4.16   ,   8.4    ] 0.0865     [1:0:1:12:0:0:0:0:0:0:0:0]
 [ 70, 5] (   4.93   ,   4.93   ) [   17.4   ,   34.2   ] 0.0256     [2:0:1:1:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #0
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(28.65684628632122) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #11
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(8.888241052321856) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[ 71,112] (   4.93   ,   4.02   ) [ 9.67e+03 ,   426    ] 0.000174   [85:0:23:0:0:0:0:0:0:0:0:0]
+[ 71,112] (   4.93   ,   4.02   ) [ 9.67e+03 ,   426    ] 0.000174   [85:0:23:0:0:0:0:2:0:0:0:0]
 [ 72,22] (   4.02   ,   4.06   ) [ 4.74e+04 , 1.58e+03 ] 1.06e-05   [21:0:0:0:0:0:0:0:0:0:0:0]
 [ 73,36] (   4.06   ,   4.12   ) [   260    ,    44    ] 6.91e-05   [35:0:0:0:0:0:0:0:0:0:0:0]
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
@@ -292,7 +221,7 @@ Should not happen here!
 [ 91,49] (   2.07   ,   2.07   ) [   25.5   ,   25.2   ] 8.42e-05   [48:0:0:0:0:0:0:0:0:0:0:0]
 [ 92, 9] (   2.07   ,   1.9    ) [  0.848   ,   1.86   ] 0.153      [0:0:0:8:0:0:0:0:0:0:0:0]
 [ 93, 5] (   1.9    ,   1.76   ) [   1.89   ,   3.32   ] 0.0813     [4:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 3 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 3 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 10.717, ||f||_inf = 36.914
 
@@ -304,40 +233,10 @@ Continuation step N.3 s=0.1, ds=0.1, old_s=    0
 [ 97,12] (   7.2    ,   7.24   ) [   240    ,   279    ] 4.19e-05   [0:3:4:4:0:0:0:0:0:0:0:0]
 [ 98,10] (   7.24   ,   7.28   ) [   174    ,   214    ] 0.000262   [0:1:4:4:0:0:0:0:0:0:0:0]
 [ 99,10] (   7.28   ,   7.3    ) [   141    ,   156    ] 0.000351   [0:1:4:4:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #14
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(0.553363066398731) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[100,13] (   7.3    ,   7.33   ) [   288    ,   291    ] 5.24e-05   [0:1:4:5:0:0:0:0:0:0:0:0]
+[100,13] (   7.3    ,   7.33   ) [   288    ,   291    ] 5.24e-05   [0:1:4:5:0:0:0:1:0:0:0:0]
 [101,12] (   7.33   ,   7.33   ) [   129    ,   129    ] 5.91e-05   [0:2:4:5:0:0:0:0:0:0:0:0]
 [102, 3] (   7.33   ,   6.78   ) [   3.36   ,   4.39   ] 0.167      [0:1:0:1:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #8
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(8.449650856843435) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #7
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(0.7723623342852006) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[103,109] (   6.78   ,   6.04   ) [ 2.69e+03 ,   89.5   ] 0.000482   [101:0:4:0:0:0:0:0:0:0:0:0]
+[103,109] (   6.78   ,   6.04   ) [ 2.69e+03 ,   89.5   ] 0.000482   [101:0:4:0:0:0:0:2:0:0:0:0]
 [104,66] (   6.04   ,   5.99   ) [   172    ,   275    ] 0.000399   [46:0:1:18:0:0:0:0:0:0:0:0]
 [105,56] (   5.99   ,   6.12   ) [ 1.44e+04 ,   739    ] 2.97e-05   [54:0:1:0:0:0:0:0:0:0:0:0]
 [106,28] (   6.12   ,   6.14   ) [   223    ,   17.2   ] 0.000335   [27:0:0:0:0:0:0:0:0:0:0:0]
@@ -370,7 +269,7 @@ Should not happen here!
 [132,42] (   2.34   ,   2.34   ) [   11.2   ,   11.2   ] 0.000175   [41:0:0:0:0:0:0:0:0:0:0:0]
 [133,69] (   2.34   ,   2.34   ) [   5.66   ,   5.65   ] 0.000323   [68:0:0:0:0:0:0:0:0:0:0:0]
 [134,123] (   2.34   ,   2.33   ) [  0.291   ,   0.29   ] 0.00133    [0:0:0:122:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 3 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 3 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 3.318, ||f||_inf = 70.471
 
@@ -378,28 +277,8 @@ Iter = 0, maxIter = 40, tolerance = 1e-09
 Continuation step N.3 s=0.05, ds=0.05, old_s=    0
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [136,24] (   3.64   ,   2.95   ) [  0.782   ,  0.579   ] 0.22       [13:0:0:10:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #13
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(3.507924921194949) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[137, 9] (   2.95   ,   2.94   ) [   103    ,   102    ] 0.00205    [2:0:1:3:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #3
-
-PenaltyBarrier1DLessThan[Tbarrier]::D(0.19906947663188657) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[138,25] (   2.94   ,   2.94   ) [   20.4   ,   20.3   ] 0.00171    [2:0:0:20:0:0:0:0:0:0:0:0]
+[137, 9] (   2.95   ,   2.94   ) [   103    ,   102    ] 0.00205    [2:0:1:3:0:0:0:1:0:0:0:0]
+[138,25] (   2.94   ,   2.94   ) [   20.4   ,   20.3   ] 0.00171    [2:0:0:20:0:0:0:1:0:0:0:0]
 [139, 7] (   2.94   ,   2.89   ) [   87.5   ,   78.3   ] 0.0041     [3:0:3:0:0:0:0:0:0:0:0:0]
 [140, 9] (   2.89   ,   2.92   ) [   49.6   ,   40.2   ] 0.000655   [8:0:0:0:0:0:0:0:0:0:0:0]
 [141,11] (   2.92   ,   2.94   ) [   182    ,   140    ] 0.000105   [10:0:0:0:0:0:0:0:0:0:0:0]
@@ -583,15 +462,15 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 613           N. System pars = 500
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 1.71[sec]     timeout        = 0 [ms]
-iteration      = 288           Memory Used    = 190Kb (+29bytes)
+Elapsed Time   = 1.84[sec]     timeout        = 0 [ms]
+iteration      = 288           Memory Used    = 202Kb (+85bytes)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 6304          Jacobian       = 288
+Function       = 6292          Jacobian       = 288
 Factorization  = 288           Inversion      = 6563
 ----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
@@ -609,64 +488,40 @@ last ||f||_2   = 5.8521e-14    last ||d||_2   = 5.8646e-17
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 0 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.013148    [A:FD] ---     0.013148 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : 0.011896     [A:FD] ---     0.011896 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.9849       [A:FD] ---     0.040417 : 1.004        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.024681    [A:FD] ---     0.024681 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : -0.0051553   [A:FD] ---    0.0051553 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =  -1.2232e-12 : -0.00029977  [A:FD] ---   0.00029977 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =  -1.2232e-12 : -0.00013247  [A:FD] ---   0.00013247 : 0.01325      [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 1 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.013584    [A:FD] ---     0.013584 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : 0.0097251    [A:FD] ---    0.0097251 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.9778       [A:FD] ---     0.047563 : 1.182        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.031961    [A:FD] ---     0.031961 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : -0.0040153   [A:FD] ---    0.0040153 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =    1.155e-12 : -0.00036099  [A:FD] ---   0.00036099 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =    1.155e-12 : -0.00016744  [A:FD] ---   0.00016744 : 0.01674      [err:err(%)]
+
 
 #ERR 3 DabcDxlxlpu block N. 2 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.013926    [A:FD] ---     0.013926 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : 0.007284     [A:FD] ---     0.007284 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.9715       [A:FD] ---     0.053867 : 1.338        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.038344    [A:FD] ---     0.038344 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : -0.0026003   [A:FD] ---    0.0026003 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =   -3.655e-12 : -0.00040867  [A:FD] ---   0.00040867 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =   -3.655e-12 : -0.00019556  [A:FD] ---   0.00019556 : 0.01956      [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 3 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.014165    [A:FD] ---     0.014165 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : 0.0046194    [A:FD] ---    0.0046194 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.9667       [A:FD] ---     0.058662 : 1.457        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.042851    [A:FD] ---     0.042851 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : -0.00096611  [A:FD] ---   0.00096611 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =  -3.0961e-12 : -0.00043561  [A:FD] ---   0.00043561 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =  -3.0961e-12 : -0.00021176  [A:FD] ---   0.00021176 : 0.02118      [err:err(%)]
+
 
 #ERR 5 DabcDxlxlpu block N. 4 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.014295    [A:FD] ---     0.014295 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : 0.0018035    [A:FD] ---    0.0018035 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.964        [A:FD] ---     0.061388 : 1.525        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.044674    [A:FD] ---     0.044674 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : 0.00079547   [A:FD] ---   0.00079547 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =  -3.5565e-12 : -0.00043691  [A:FD] ---   0.00043691 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =  -3.5565e-12 : -0.00021254  [A:FD] ---   0.00021254 : 0.02125      [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 5 type: FD #x and #l=3 #p=1 #u=2 [ (xlp) x (xlxlpu) = 7 x 15]
 
-DaDu(0:2,0:1)[ 0, 0] =            0 : -0.014309    [A:FD] ---     0.014309 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 1, 0] =            0 : -0.0010737   [A:FD] ---    0.0010737 : 100          [err:err(%)]
-DaDu(0:2,0:1)[ 2, 0] =       4.0254 : 3.9636       [A:FD] ---     0.061705 : 1.533        [err:err(%)]
-DbDu(0:2,0:1)[ 1, 0] =            0 : -0.043416    [A:FD] ---     0.043416 : 100          [err:err(%)]
-DbDu(0:2,0:1)[ 2, 0] =            0 : 0.0025684    [A:FD] ---    0.0025684 : 100          [err:err(%)]
-DcDu(0:0,0:1)[ 0, 0] =   1.0823e-12 : -0.00041146  [A:FD] ---   0.00041146 : 100          [err:err(%)]
+DcDu(0:0,0:1)[ 0, 0] =   1.0823e-12 : -0.00019723  [A:FD] ---   0.00019723 : 0.01972      [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

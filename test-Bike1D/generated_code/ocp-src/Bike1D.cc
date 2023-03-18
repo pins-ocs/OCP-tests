@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Bike1D.cc                                                      |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -191,7 +191,7 @@ namespace Bike1DDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -316,8 +316,6 @@ namespace Bike1DDefine {
     GenericContainer const & gc = gc_data("Controls");
     murControl.setup( gc("murControl") );
     mufControl.setup( gc("mufControl") );
-    // setup iterative solver
-    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -343,7 +341,7 @@ namespace Bike1DDefine {
       gc.exists("pMesh"),
       "in Bike1D::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -366,7 +364,7 @@ namespace Bike1DDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( pMesh->info(),msg_level);
+    m_console->message( m_pMesh->info(),msg_level);
 
     m_console->message("\nUser mapped functions\n",msg_level);
     m_console->message("User function ``clip'' mapped with: ",msg_level);
@@ -407,7 +405,7 @@ namespace Bike1DDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pMesh, gc );
+    this->setup( m_pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

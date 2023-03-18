@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_controls.cc                                    |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -66,7 +66,7 @@ namespace ZermeloDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = Tpositive(-t1);
     real_type t6   = X__[iX_x];
@@ -99,7 +99,7 @@ namespace ZermeloDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_T];
     real_type t4   = ModelPars[iM_S];
     real_type t5   = U__[iU_u];
@@ -136,7 +136,7 @@ namespace ZermeloDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_S];
     real_type t4   = U__[iU_u];
     real_type t5   = sin(t4);
@@ -173,13 +173,13 @@ namespace ZermeloDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_T];
     real_type t4   = ModelPars[iM_S];
     real_type t5   = U__[iU_u];
     real_type t6   = cos(t5);
     real_type t11  = sin(t5);
-    result__[ 0   ] = -t11 * t4 * t2 * MU__[3] - t6 * t4 * t2 * MU__[2];
+    result__[ 0   ] = -t11 * t2 * t4 * MU__[3] - t2 * t4 * t6 * MU__[2];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }
@@ -211,7 +211,7 @@ namespace ZermeloDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     U__[ iU_u ] = atan(MU__[3] / MU__[2]);
     if ( m_debug )
       Mechatronix::check( U__.pointer(), "u_eval_analytic", 1 );

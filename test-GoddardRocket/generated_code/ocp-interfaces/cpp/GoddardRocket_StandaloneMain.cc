@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GoddardRocket_Main.cc                                          |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,31 +50,31 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g0 = 1;
-    real_type epsi_v_max = 0.1;
-    real_type h_i = 1;
-    real_type c = 0.5*(g0*h_i)^(1/2.0);
-    real_type epsi_v = epsi_v_max;
-    real_type vc = 620;
-    real_type tol_T_max = 0.01;
     real_type tol_mass_max = 0.01;
-    real_type tol_mass = tol_mass_max;
-    real_type tol_TS_max = 0.0001;
-    real_type tol_TS = tol_TS_max;
-    real_type epsi_mass_max = 0.025;
-    real_type tol_T = tol_T_max;
     real_type m_i = 1;
-    real_type Dc = 0.5*vc*m_i/g0;
-    real_type Tmax = 3.5*g0*m_i;
-    real_type epsi_T_max = 0.1;
-    real_type epsi_T = epsi_T_max;
+    real_type vc = 620;
+    real_type epsi_mass_max = 0.025;
+    real_type epsi_mass = epsi_mass_max;
     real_type mc = 0.6;
-    real_type m_f = mc*m_i;
+    real_type tol_mass = tol_mass_max;
+    real_type tol_T_max = 0.01;
+    real_type tol_T = tol_T_max;
     real_type epsi_TS_max = 0.025;
     real_type epsi_TS = epsi_TS_max;
+    real_type m_f = mc*m_i;
+    real_type tol_TS_max = 0.0001;
+    real_type tol_TS = tol_TS_max;
+    real_type epsi_T_max = 0.1;
+    real_type epsi_T = epsi_T_max;
+    real_type h_i = 1;
+    real_type g0 = 1;
+    real_type Tmax = 3.5*g0*m_i;
+    real_type Dc = 0.5*vc*m_i/g0;
     real_type tol_v_max = 0.01;
     real_type tol_v = tol_v_max;
-    real_type epsi_mass = epsi_mass_max;
+    real_type epsi_v_max = 0.1;
+    real_type epsi_v = epsi_v_max;
+    real_type c = 0.5*(g0*h_i)^(1/2.0);
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -129,7 +129,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];

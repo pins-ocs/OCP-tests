@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Mex_class.cc                                   |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -24,39 +24,39 @@ ProblemStorage::ProblemStorage(
 )
 : MODEL_CLASS(cname,console,TP)
 // user defined Object instances (external)
-, mesh( "mesh" )
+, m_mesh( "mesh" )
 {}
 
 ProblemStorage::~ProblemStorage() {}
 
 void
 ProblemStorage::done_setup() {
-  setup_ok     = true;
-  guess_ok     = false;
-  solve_ok     = false;
-  solution1_ok = false;
-  solution2_ok = false;
-  solution3_ok = false;
+  m_setup_ok     = true;
+  m_guess_ok     = false;
+  m_solve_ok     = false;
+  m_solution1_ok = false;
+  m_solution2_ok = false;
+  m_solution3_ok = false;
 }
 
 void
 ProblemStorage::done_guess() {
-  setup_ok     = true;
-  guess_ok     = true;
-  solve_ok     = false;
-  solution1_ok = false;
-  solution2_ok = false;
-  solution3_ok = false;
+  m_setup_ok     = true;
+  m_guess_ok     = true;
+  m_solve_ok     = false;
+  m_solution1_ok = false;
+  m_solution2_ok = false;
+  m_solution3_ok = false;
 }
 
 void
 ProblemStorage::done_solve() {
-  setup_ok     = true;
-  guess_ok     = true;
-  solve_ok     = true;
-  solution1_ok = false;
-  solution2_ok = false;
-  solution3_ok = false;
+  m_setup_ok     = true;
+  m_guess_ok     = true;
+  m_solve_ok     = true;
+  m_solution1_ok = false;
+  m_solution2_ok = false;
+  m_solution3_ok = false;
 }
 
 void
@@ -65,10 +65,15 @@ ProblemStorage::read( string const & fname, GenericContainer & gc ) {
   Mechatronix::STDOUT_redirect rd;
   rd.start();
   bool ok = Mechatronix::load_script( fname, gc );
-  if ( !ok ) mexPrintf( "Mechatronix::load_script file not found\n" );
+  if ( !ok ) {
+    std::string msg = fmt::format( "Mechatronix::load_script file:'{}' file not found\n", fname );
+    mexErrMsgTxt( msg.c_str() );
+  }
   rd.stop();
-  if ( rd.str().length() > 0 )
-    mexPrintf( "Mechatronix::load_script return:\n%s\n", rd.str().c_str() );
+  if ( rd.str().length() > 0 ) {
+    std::string msg = fmt::format( "Mechatronix::load_script file:'{}' return:\n``{}''\n", fname, rd.str() );
+    pConsole->message( msg, 0 );
+  }
 }
 
 // --------------------------------------------------------------------------

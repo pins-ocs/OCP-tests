@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Data.lua                                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,22 +20,22 @@
 -- User Header
 
 -- Auxiliary values
-tol_c0   = 0.1
+rw       = 0.3
+h__b     = 1.0
 v__0     = 10.0
 tol_l    = 0.01
-tol_c    = tol_c0
-h__b     = 1.0
-w__t0    = 1.0
-w__t     = w__t0
-rw       = 0.3
-omega__0 = 1/rw*v__0
-L        = 300.0
-mesh_np  = 2.000000000*L
 TT__max  = 800.0
-eps_l    = 0.01
 eps_c0   = 0.1
 eps_c    = eps_c0
+L        = 300.0
+mesh_np  = 2.000000000*L
+omega__0 = 1/rw*v__0
+eps_l    = 0.01
+w__t0    = 1.0
+w__t     = w__t0
 E__pow   = 60*TT__max
+tol_c0   = 0.1
+tol_c    = tol_c0
 
 content = {
 
@@ -232,7 +232,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 2,
   },
 
@@ -341,9 +341,9 @@ content = {
   -- ClipSuperior
     clipSuph = 0.01,
   -- ClipIntervalWithErf
+    clipInth = 0.01,
     clipIntdelta = 0.0,
     clipIntdelta2 = 0.0,
-    clipInth = 0.01,
   -- SignRegularizedWithErf
     sign_regh = 0.01,
   -- AbsoluteValueRegularizedWithErf

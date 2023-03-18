@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -66,7 +66,7 @@ namespace gtocX_2burnDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_p];
     real_type t4   = Q__[iQ_zeta];
     real_type t6   = ModelPars[iM_time_i];
@@ -89,7 +89,7 @@ namespace gtocX_2burnDefine {
     real_type t35  = pow(t32 - t33, 2);
     real_type t38  = cos(t32);
     real_type t40  = sin(t32);
-    real_type t42  = -t16 * t38 - t20 * t40 - 1;
+    real_type t42  = -t38 * t16 - t40 * t20 - 1;
     real_type t43  = ray_positive(t42);
     real_type t45  = t8 - t6;
     real_type t47  = sqrt(t3);
@@ -121,7 +121,7 @@ namespace gtocX_2burnDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
 
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 0, i_segment );

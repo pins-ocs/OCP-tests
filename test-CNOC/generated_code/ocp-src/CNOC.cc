@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC.cc                                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -282,7 +282,7 @@ namespace CNOCDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -460,8 +460,6 @@ namespace CNOCDefine {
     GenericContainer const & gc = gc_data("Controls");
     jsControl.setup( gc("jsControl") );
     jnControl.setup( gc("jnControl") );
-    // setup iterative solver
-    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -487,7 +485,7 @@ namespace CNOCDefine {
       gc.exists("pToolPath2D"),
       "in CNOC::setup_pointers(gc) cant find key `pToolPath2D' in gc\n"
     );
-    pToolPath2D = gc("pToolPath2D").get_pointer<ToolPath2D*>();
+    m_pToolPath2D = gc("pToolPath2D").get_pointer<ToolPath2D*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -521,7 +519,7 @@ namespace CNOCDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pToolPath2D`\n",msg_level);
-    m_console->message( pToolPath2D->info(),msg_level);
+    m_console->message( m_pToolPath2D->info(),msg_level);
 
     m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
@@ -558,7 +556,7 @@ namespace CNOCDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pToolPath2D, gc );
+    this->setup( m_pToolPath2D, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

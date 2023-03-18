@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_controls.cc                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -114,7 +114,7 @@ namespace TyreDynamicDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_p__o];
     real_type t3   = t2 * t2;
     real_type t4   = U__[iU_b__o];
@@ -164,7 +164,7 @@ namespace TyreDynamicDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_p__o];
     real_type t2   = ModelPars[iM_w__U];
     real_type t5   = 1.0 / X__[iX_v];
@@ -204,7 +204,7 @@ namespace TyreDynamicDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_p__o];
     real_type t2   = ModelPars[iM_w__U];
     real_type t5   = X__[iX_v] * X__[iX_v];
@@ -245,7 +245,7 @@ namespace TyreDynamicDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = 1.0 / X__[iX_v];
     real_type t5   = 2 * t3 * ModelPars[iM_w__U];
     real_type t7   = ALIAS_p__oControl_D_1_1(U__[iU_p__o], -1, 1);

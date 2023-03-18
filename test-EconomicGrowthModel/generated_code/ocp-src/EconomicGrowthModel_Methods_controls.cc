@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -75,7 +75,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = U__[iU_u];
     real_type t3   = uControl(t2, 0, 1);
@@ -104,7 +104,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = ALIAS_uControl_D_1(U__[iU_u], 0, 1);
     real_type t8   = Q(X__[iX_x1], X__[iX_x2]);
@@ -141,7 +141,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = MU__[0];
     real_type t2   = X__[iX_x1];
     real_type t3   = X__[iX_x2];
@@ -184,7 +184,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = ALIAS_uControl_D_1_1(U__[iU_u], 0, 1);
     result__[ 0   ] = t3 * X__[iX_T];
     if ( m_debug )
@@ -218,7 +218,7 @@ namespace EconomicGrowthModelDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
     U__[ iU_u ] = uControl.solve(-t4 * MU__[0] + t4 * MU__[1], 0, 1);
     if ( m_debug )

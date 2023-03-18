@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: GoddardRocket_fsolve_main.m                                    %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -14,16 +14,19 @@
 %             paolo.bosetti@unitn.it                                    %
 %-----------------------------------------------------------------------%
 
-
-addpath('../../../nlsys_solver');
-addpath('../../../../nlsys_solver');
-
 % -------------------------------------------------------------------------
 % INITIALIZATION
 % -------------------------------------------------------------------------
 clc;
 clear all;
 close all
+
+DATA_PATH = '../../../data/';
+LIB_PATH  = '../../../../../nlsys_solver';
+
+addpath('..');
+addpath(LIB_PATH);
+
 figsize=[0,0,400,800];
 
 % create object
@@ -40,7 +43,7 @@ nlsys = @(x) nlsys_local(ocp,x);
 % READ PROBLEM DATA-------------------------------------------------------------
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(GoddardRocket_data);
-ocp.setup('../../data/GoddardRocket_Data'); % automatically try extension .rb and .lua
+ocp.setup( [DATA_PATH 'GoddardRocket_Data'] ); % automatically try extension .rb and .lua
 ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 
@@ -61,14 +64,14 @@ options = optimoptions(...
   'FiniteDifferenceStepSize',eps^(1/3.5) ...
 );
 
-[x0,u0] = ocp.get_raw_solution();
+[x0,mu0,u0] = ocp.get_raw_solution();
 LB = -Inf*ones(size(x0));
 UB = Inf*ones(size(x0));
 
 x = lsqnonlin( nlsys, x0, LB, UB, options );
 
-u = ocp.eval_U(x,ocp.guess_U(x));
-ocp.set_raw_solution(x,u);
+MU_U = ocp.eval_MU_U(x,ocp.guess_U(x));
+ocp.set_raw_solution(x,MU_U);
 
 % -------------------------------------------------------------------------
 % PLOT SOLUTION
@@ -83,22 +86,20 @@ ocp.plot_multipliers();
 subplot(3,1,3);
 ocp.plot_controls();
 
-
 [F,JF] = nlsys_local( ocp, x );
 
 fprintf('||F|| = %g, || grad F^2 || = %g\n', norm(F,inf), norm( JF.'*F, inf ));
 
 %%clear mex
-%[Z,U] = GoddardRocket_Mex('get_raw_solution',obj);
-%J     = GoddardRocket_Mex('eval_JF',obj,Z,U);
-%f     = GoddardRocket_Mex('eval_F',obj,Z,U);
+%[Z,MU,U] = GoddardRocket_Mex('get_raw_solution',obj);
+%J        = GoddardRocket_Mex('eval_JF',obj,Z,MU,U);
+%f        = GoddardRocket_Mex('eval_F',obj,Z,MU,U);
 
 function [F,JF] = nlsys_local( ocp, x )
   do_minimization = false;
-  u_guess  = ocp.guess_U(x);
-  u        = ocp.eval_U(x,u_guess);
-  [F,ok1]  = ocp.eval_F(x,u);
-  [JF,ok2] = ocp.eval_JF(x,u);
+  MU_U     = ocp.eval_MU_U(x,ocp.guess_U(x));
+  [F,ok1]  = ocp.eval_F(x,MU_U);
+  [JF,ok2] = ocp.eval_JF(x,MU_U);
   if ~(ok1&&ok2)
     F = NaN*ones(size(F));
   end

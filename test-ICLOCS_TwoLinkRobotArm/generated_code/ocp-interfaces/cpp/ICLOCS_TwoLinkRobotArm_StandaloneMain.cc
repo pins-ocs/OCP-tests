@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_TwoLinkRobotArm_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type u_epsilon0 = 0.01;
+    real_type u_epsilon = u_epsilon0;
     real_type u_tolerance0 = 0.01;
     real_type u_tolerance = u_tolerance0;
-    real_type u_epsilon = u_epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -108,7 +108,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 2;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -192,8 +192,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_TwoLinkRobotArm_data.Mesh["s0"] = 0;
-ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
 ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["n"] = 800;
+ICLOCS_TwoLinkRobotArm_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

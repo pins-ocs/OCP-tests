@@ -1,0 +1,159 @@
+MODEL:ROSS_Ball_Mizel
+BEGIN DIMS
+  dim         = u=1, q=1, x=1, p=0, bc(active/total)=(2/2)
+  total       = nZ=406, nP=402, nU=201, Q=202
+  index start = omega=404, p=406
+  post proc.  = n_post=2, n_Ipost=0
+END DIMS
+BEGIN MESH
+ num_nodes    = 202
+ num_segments = 2
+END MESH
+BEGIN THREADS
+  Used threads: 15
+  U/JU/F/JF/LU: true/true/true/true/true
+END THREADS
+BEGIN PARAMS
+  m_debug:                 false
+  Solver Controls:         Newton
+  Jacobian evaluation:     ANALYTIC
+  Jacobian BC evaluation:  ANALYTIC
+  Initializer Controls:    not selected
+  Initialize Multipliers:  false
+  Initialize Guess:        not selected + not selected
+  Continuation interval:   [1,1)
+  mesh class pointer:      0x7ff7b756b598
+  solver class pointer:    0x7f9b6000e2f0
+END PARAMS
+BEGIN LINEAR ALGEBRA
+  rows   = 406
+  cols   = 406
+  nblock = 201
+  n      = 2
+  qr     = 2
+  qx     = 2
+  nr     = 0
+  nx     = 0
+  treads = 16/nblk:15/factorize:true/solve:true
+  intern = CyclicReduction+LU
+  last   = LastBlock LUPQ
+END PARAMS
+
+Boundary Conditions activation status
+[xx] = activated, [  ] = NOT activated
+
+[ 0] initial_x
+[ 1] final_x
+
+
+
+User class (pointer)
+
+User function `pMesh`
+BEGIN Mesh[mesh]
+num. segments = 2
+num. nodes = 202
+Segment N.0: s0 = 0 length = 0.1 npts = 101 no data set
+Segment N.1: s0 = 0.1 length = 0.9 npts = 101 no data set
+END Mesh[mesh]
+MODEL PARAMETERS BEGIN
+  .................................epsilon = 0.0011391002965056166
+  ...................................kappa = 0.9899999999999998
+MODEL PARAMETERS END
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1,12] (  0.488   ,  0.216   ) [ 0.00113  , 0.00181  ] 0.569      [0:0:0:11:0:0:0:0:0:0:0:0]
+[  2, 1] (  0.216   ,  0.0846  ) [  0.0123  ,  0.0139  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 1] (  0.0846  ,  0.0873  ) [  0.0257  ,  0.0204  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 2] (  0.0873  ,  0.0509  ) [ 0.00526  , 0.00432  ] 0.6        [0:0:0:1:0:0:0:0:0:0:0:0]
+[  5, 2] (  0.0509  ,  0.0466  ) [  0.0093  , 0.00984  ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[  6, 2] (  0.0466  ,  0.0418  ) [ 0.00668  , 0.00685  ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
+[  7, 1] (  0.0418  ,  0.0141  ) [ 0.00201  , 0.00111  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 7] (  0.0141  , 0.00487  ) [ 0.00191  , 0.00426  ] 0.735      [0:0:0:6:0:0:0:0:0:0:0:0]
+[  9, 1] ( 0.00487  , 0.00212  ) [  0.0008  , 0.000394 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 10, 2] ( 0.00212  , 0.00358  ) [ 0.00121  , 0.000706 ] 0.793      [0:0:1:0:0:0:0:0:0:0:0:0]
+[ 11, 1] ( 0.00358  , 0.00013  ) [ 0.000108 , 0.000239 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 2] ( 0.00013  , 4.68e-05 ) [ 0.000132 , 1.96e-06 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 13, 2] ( 4.68e-05 , 2.39e-06 ) [ 2.46e-06 , 1.04e-07 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 1] ( 2.39e-06 , 1.74e-09 ) [ 1.02e-07 , 8.71e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 1] ( 1.74e-09 , 1.47e-09 ) [ 8.71e-11 , 4.74e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 1] ( 1.47e-09 , 1.31e-09 ) [ 4.74e-11 , 2.88e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 17, 2] ( 1.31e-09 , 1.39e-09 ) [ 2.88e-11 , 3.25e-11 ] 0.421      [0:1:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=    0
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 18, 1] ( 1.33e-09 , 1.27e-09 ) [ 3.5e-11  , 3.47e-11 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 2] ( 1.27e-09 , 1.23e-09 ) [ 3.47e-11 , 2.7e-11  ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 20, 2] ( 1.23e-09 , 1.15e-09 ) [ 2.7e-11  , 2.06e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 21, 2] ( 1.15e-09 , 1.33e-09 ) [ 2.06e-11 , 2.29e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=0.19999999999999996
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 22, 2] ( 1.14e-09 , 1.35e-09 ) [ 2.96e-11 , 3.93e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 23, 2] ( 1.35e-09 , 1.39e-09 ) [ 3.93e-11 , 2.15e-11 ] 0.458      [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 24, 2] ( 1.39e-09 , 1.27e-09 ) [ 2.15e-11 , 3.7e-11  ] 0.46       [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 25, 2] ( 1.27e-09 , 1.36e-09 ) [ 3.7e-11  , 4.18e-11 ] 0.413      [0:1:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=0.4999999999999999
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 26, 2] ( 1.22e-09 , 1.24e-09 ) [ 2.13e-11 , 2.97e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 27, 2] ( 1.24e-09 , 1.22e-09 ) [ 2.97e-11 , 2.75e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 28, 2] ( 1.22e-09 , 1.35e-09 ) [ 2.75e-11 , 2.02e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 29, 2] ( 1.35e-09 , 1.3e-09  ) [ 2.02e-11 , 3.72e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.9499999999999997
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 30, 2] ( 1.09e-09 , 1.18e-09 ) [ 3.61e-11 , 3.3e-11  ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 31, 2] ( 1.18e-09 , 1.27e-09 ) [ 3.3e-11  , 2.61e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 32, 2] ( 1.27e-09 , 1.24e-09 ) [ 2.61e-11 , 4.57e-11 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
+[ 33, 2] ( 1.24e-09 , 1.27e-09 ) [ 4.57e-11 , 3.41e-11 ] 0.401      [0:1:0:0:0:0:0:0:0:0:0:0]
+
+.................. CONTROLS nonlinear system solver ..................
+----------------- NewtonDumped with MERIT_F2_and_D2 ------------------
+n_power        = 6             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.25          dump_max       = 0.9
+----------------------------------------------------------------------
+
+.................... BIG nonlinear system solver .....................
+---------------------------- NewtonDumped ----------------------------
+Converged      = YES           tolerance      = 1e-09
+N. Equations   = 406           N. System pars = 402
+----------------------------- STATISTIC ------------------------------
+Elapsed Time   = 35.1[ms]      timeout        = 0 [ms]
+iteration      = 33            Memory Used    = 71Kb (+69bytes)
+max iterations = 40            max acc. iter. = 800
+---------------------------- CONTINUATION ----------------------------
+Initial Step   = 0.2           Minimum Step   = 0.001
+Reduce Factor  = 0.5           Augment Factor = 1.5
+Few iterations = 8
+---------------------------- EVALUATIONS -----------------------------
+Function       = 77            Jacobian       = 33
+Factorization  = 33            Inversion      = 105
+----------------------- SOLVER MERIT_F2_and_D2 -----------------------
+n_power        = 2             check_angle    = 120 [degree]
+c1             = 0.01          lambda_min     = 1e-10
+dump_min       = 0.4           dump_max       = 0.95
+ratio ||f||_2  = 2             ratio ||d||_2  = 2
+ratio ||f||_1  = 2             ratio ||d||_1  = 2
+........................... last residuals ...........................
+last ||f||_inf = 1.5374e-08    last ||d||_inf = 1.7458e-10
+last ||f||_1   = 1.2737e-09    last ||d||_1   = 3.4121e-11
+last ||f||_2   = 2.725e-09     last ||d||_2   = 4.9676e-11
+----------------------------------------------------------------------
+              __   __             ___  __   __   ___  __              
+             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
+             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
+                                                                      
+Check Jacobian Begin
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 0.001576, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

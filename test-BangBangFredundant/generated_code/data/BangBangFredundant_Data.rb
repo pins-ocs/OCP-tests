@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: BangBangFredundant_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,8 +20,8 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-maxAF = 100.0
 h0    = 0.01
+maxAF = 100.0
 
 mechatronix do |data|
 
@@ -227,7 +227,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 0,
   }
 
@@ -286,7 +286,7 @@ mechatronix do |data|
   data.MappedObjects = {}
 
   # ClipIntervalWithErf
-  data.MappedObjects[:clip] = { :h => h0, :delta => 0.0, :delta2 => 0.0 }
+  data.MappedObjects[:clip] = { :delta2 => 0.0, :delta => 0.0, :h => h0 }
 
 
   #                  _             _
@@ -354,8 +354,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 100.0,
+        :length => 1.0,
       },
     ],
   };

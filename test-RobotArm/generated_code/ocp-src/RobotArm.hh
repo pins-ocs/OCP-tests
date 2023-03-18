@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: RobotArm.hh                                                    |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -131,14 +131,14 @@ namespace RobotArmDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * pMesh;
+    Mechatronix::MeshStd * m_pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     RobotArm( RobotArm const & );
     RobotArm const & operator = ( RobotArm const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuation_step_0( real_type s );
+    void continuation_step_1( real_type s );
 
   public:
 

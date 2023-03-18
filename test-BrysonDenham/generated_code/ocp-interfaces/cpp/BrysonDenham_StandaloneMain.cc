@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BrysonDenham_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type tol = 0.0001;
     real_type epsi = 0.0001;
+    real_type tol = 0.0001;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -106,7 +106,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 0;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -165,8 +165,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BrysonDenham_data.Mesh["s0"] = 0;
-BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 BrysonDenham_data.Mesh["segments"][0]["n"] = 400;
+BrysonDenham_data.Mesh["segments"][0]["length"] = 1;
 
 
     // alias for user object classes passed as pointers

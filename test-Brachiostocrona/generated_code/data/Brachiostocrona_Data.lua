@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Data.lua                                       |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,13 +20,13 @@
 -- User Header
 
 -- Auxiliary values
-xf             = 5.0
-yf             = -2
-low_tolerance0 = 0.1
 g              = 9.81
-Vf             = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
-low_tolerance  = low_tolerance0
+yf             = -2
 Tf             = (-2.0*yf/g)**(1/2.0)
+low_tolerance0 = 0.1
+low_tolerance  = low_tolerance0
+xf             = 5.0
+Vf             = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -223,7 +223,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 

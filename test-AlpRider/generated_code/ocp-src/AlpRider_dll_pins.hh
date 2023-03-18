@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_dll_pins.hh                                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -92,19 +92,19 @@ namespace AlpRiderDefine {
 
   class AlpRider_Problem {
 
-    AlpRider   model;
+    AlpRider   m_model;
 
     // user defined Object instances (external)
 
-    MeshStd    mesh;
+    MeshStd    m_mesh;
 
     // block copy constructor
     AlpRider_Problem( AlpRider_Problem const & );
     AlpRider_Problem const & operator = ( AlpRider_Problem const & );
 
     // stored solution
-    Splines::SplineSet splines;
-    GenericContainer   gc_solution;
+    Splines::SplineSet m_splines;
+    GenericContainer   m_gc_solution;
 
   public:
 
@@ -113,8 +113,8 @@ namespace AlpRiderDefine {
       Console const  * console,
       ThreadPoolBase * TP
     )
-    : model("AlpRider",console,TP)
-    , mesh( "mesh" )
+    : m_model("AlpRider",console,TP)
+    , m_mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -136,10 +136,10 @@ namespace AlpRiderDefine {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        mesh.setup(gc_data("Mesh"));
-        ptrs[ "pMesh" ] = &mesh;
+        m_mesh.setup(gc_data("Mesh"));
+        ptrs[ "pMesh" ] = &m_mesh;
 
-        model.setup( gc_data );
+        m_model.setup( gc_data );
         ok    = true;
         error = "no error";
       }
@@ -158,73 +158,73 @@ namespace AlpRiderDefine {
     ALPRIDER_API_DLL
     void
     guess( GenericContainer const & gc_guess ) {
-      model.guess( gc_guess );
-      model.info();
+      m_model.guess( gc_guess );
+      m_model.info();
     }
 
     ALPRIDER_API_DLL
     bool
     solve() {
-      bool ok = model.solve();
-      model.get_solution( gc_solution );
-      model.get_solution_as_spline( splines );
+      bool ok = m_model.solve();
+      m_model.get_solution( m_gc_solution );
+      m_model.get_solution_as_spline( m_splines );
       return ok;
     }
 
     ALPRIDER_API_DLL
     GenericContainer const &
     getSolution()
-    { return gc_solution; }
+    { return m_gc_solution; }
 
     ALPRIDER_API_DLL
     void
     diagnostic( GenericContainer const & gc_data, GenericContainer & gc_solution )
-    { return model.diagnostic( gc_data, gc_solution ); }
+    { return m_model.diagnostic( gc_data, gc_solution ); }
 
     ALPRIDER_API_DLL
     integer
     numSplines() const
-    { return splines.numSplines(); }
+    { return m_splines.num_splines(); }
 
     // get the column of spline labelled `hdr`
     ALPRIDER_API_DLL
     integer
     spline_getPosition( char const * hdr ) const
-    { return splines.getPosition(hdr); }
+    { return m_splines.get_position(hdr); }
 
     ALPRIDER_API_DLL
     real_type
     spline_min( integer ipos ) const
-    { return splines.yMin( ipos );}
+    { return m_splines.y_min( ipos );}
 
     ALPRIDER_API_DLL
     real_type
     spline_max( integer ipos ) const
-    { return splines.yMax( ipos );}
+    { return m_splines.y_max( ipos );}
 
     // check if spline at column `ipos` is monotone and can be used as independent
     ALPRIDER_API_DLL
     bool
     spline_isMonotone( integer ipos ) const
-    { return splines.isMonotone(ipos) >= 0; }
+    { return m_splines.is_monotone(ipos) >= 0; }
 
     // get the label of the spline at column `ipos`
     ALPRIDER_API_DLL
     char const *
     spline_header( integer ipos ) const
-    { return splines.header(ipos).c_str(); }
+    { return m_splines.header(ipos).c_str(); }
 
     // get values of splines at `val` of default independent
     ALPRIDER_API_DLL
     void
     spline_eval( real_type val, vector<real_type> & values ) const
-    { return splines.eval(val,values); }
+    { return m_splines.eval(val,values); }
 
     // get values of splines at `val` using spline at ipos column as independent
     ALPRIDER_API_DLL
     void
     spline_eval2( integer ipos, real_type val, vector<real_type> & values ) const
-    { return splines.eval2(ipos,val,values); }
+    { return m_splines.eval2(ipos,val,values); }
 
   };
 

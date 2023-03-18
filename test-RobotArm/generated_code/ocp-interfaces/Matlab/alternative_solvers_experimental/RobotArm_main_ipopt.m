@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: RobotArm_fsolve_main.m                                         %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -14,16 +14,19 @@
 %             paolo.bosetti@unitn.it                                    %
 %-----------------------------------------------------------------------%
 
-
-addpath('../../../nlsys_solver');
-addpath('../../../../nlsys_solver');
-
 % -------------------------------------------------------------------------
 % INITIALIZATION
 % -------------------------------------------------------------------------
 clc;
 clear all;
 close all;
+
+DATA_PATH = '../../../data/';
+LIB_PATH  = '../../../../../nlsys_solver';
+
+addpath('..');
+addpath(LIB_PATH);
+
 figsize=[0,0,400,800];
 
 % create object
@@ -34,7 +37,7 @@ ocp = RobotArm( 'RobotArm' );
 % -----------------------------------------------------------------------------
 % SET UP OF OPTIMAL CONTROL PROBLEM
 % -----------------------------------------------------------------------------
-ocp.setup('../../data/RobotArm_Data'); % automatically try extension .rb and .lua
+ocp.setup( [DATA_PATH 'RobotArm_Data'] ); % automatically try extension .rb and .lua
 ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 %ocp.update_continuation(0,0,1);
@@ -42,8 +45,8 @@ ocp.set_guess(); % use default guess
 solver = nlsys_solver_ipopt(ocp);
 x = solver.solve();
 
-u = ocp.eval_U(x,ocp.guess_U(x));
-ocp.set_raw_solution(x,u);
+MU_U = ocp.eval_MU_U( x, ocp.guess_U( x ) );
+ocp.set_raw_solution( x, MU_U );
 
 % -------------------------------------------------------------------------
 % PLOT SOLUTION

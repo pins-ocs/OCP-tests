@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: SoundingRocket_main.m                                          %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -78,8 +78,8 @@ check_jacobian = false; % set true if you want to check jacobian matrix
 if check_jacobian
   % check the jacobian of initial guess
   epsi = 1e-5;
-  [Z,U] = ocp.get_raw_solution();
-  ocp.check_jacobian( Z, U, epsi );
+  [ Z, MU, U ] = ocp.get_raw_solution();
+  ocp.check_jacobian( Z, MU, U, epsi );
 end
 
 names = ocp.names();
@@ -101,8 +101,8 @@ ok = ocp.solve( timeout_ms );
 if check_jacobian
   % check the jacobian of the computed solution
   epsi = 1e-5;
-  [Z, U] = ocp.get_raw_solution();
-  ocp.check_jacobian( Z, U, epsi );
+  [ Z, MU, U ] = ocp.get_raw_solution();
+  ocp.check_jacobian( Z, MU, U, epsi );
 end
 
 % -------------------------------------------------------------------------
@@ -124,6 +124,6 @@ ocp.plot_multipliers();
 subplot(3,1,3);
 ocp.plot_controls();
 
-%[Z,U] = SoundingRocket_Mex('get_raw_solution',obj);
-%J     = SoundingRocket_Mex('eval_JF',obj,Z,U);
-%f     = SoundingRocket_Mex('eval_F',obj,Z,U);
+%[Z,MU,U] = SoundingRocket_Mex('get_raw_solution',obj);
+%J     = SoundingRocket_Mex('eval_JF',obj,Z,MU,U);
+%f     = SoundingRocket_Mex('eval_F',obj,Z,MU,U);

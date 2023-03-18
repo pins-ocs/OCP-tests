@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangF.hh                                                   |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -130,7 +130,7 @@ namespace BangBangFDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * pMesh;
+    Mechatronix::MeshStd * m_pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     BangBangF( BangBangF const & );

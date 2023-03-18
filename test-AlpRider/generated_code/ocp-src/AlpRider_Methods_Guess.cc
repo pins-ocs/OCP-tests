@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Methods_Guess.cc                                      |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -63,7 +63,7 @@ namespace AlpRiderDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t1   = ModelPars[iM_y1_i];
       real_type t2   = Q__[iQ_zeta];
@@ -234,22 +234,21 @@ namespace AlpRiderDefine {
   \*/
 
   bool
-  AlpRider::penalties_check_node(
+  AlpRider::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t2   = q_lower(Q__[iQ_zeta]);
     real_type t4   = X__[iX_y1] * X__[iX_y1];
     real_type t6   = X__[iX_y2] * X__[iX_y2];
     real_type t8   = X__[iX_y3] * X__[iX_y3];
     real_type t10  = X__[iX_y4] * X__[iX_y4];
-    ok = ok && Ybound.check_range(t2 - t4 - t6 - t8 - t10, m_max_penalty_value);
+    ok = ok && Ybound.check_range(t2 - t4 - t6 - t8 - t10);
     return ok;
   }
 

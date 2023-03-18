@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,1)
-  mesh class pointer:      0x7ff7bc4015b0
-  solver class pointer:    0x7fc97680e5c0
+  Continuation interval:   [1,1)
+  mesh class pointer:      0x7ff7bae21598
+  solver class pointer:    0x7fb65180e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 2412
@@ -85,73 +84,13 @@ MODEL PARAMETERS BEGIN
   ...............................tol_ctrl0 = 0.009999999999999995
   ...............................tol_ctrl1 = 9.999999999999999e-05
 MODEL PARAMETERS END
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #6
-
-PenaltyBarrier1DLessThan[tfbound]::D(17.86282058455879) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
-[  1,18] (   32.6   ,   30.4   ) [   2.29   ,   2.01   ] 0.0705     [1:0:0:14:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
-
-PenaltyBarrier1DLessThan[tfbound]::D(11.218410871813361) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  2, 3] (   30.4   ,   15.3   ) [   1.29   ,  0.196   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #9
-
-PenaltyBarrier1DLessThan[tfbound]::D(3.454492909211062) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  3, 3] (   15.3   ,   7.67   ) [  0.619   ,  0.365   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
-
-PenaltyBarrier1DLessThan[tfbound]::D(2.703766777065052) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  4, 3] (   7.67   ,   3.91   ) [  0.504   ,  0.288   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #11
-
-PenaltyBarrier1DLessThan[tfbound]::D(2.3229113919757705) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  5, 3] (   3.91   ,   2.14   ) [  0.449   ,  0.298   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #10
-
-PenaltyBarrier1DLessThan[tfbound]::D(1.579852156776635) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  6, 3] (   2.14   ,   1.53   ) [  0.797   ,  0.797   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
+[  1,18] (   32.6   ,   30.4   ) [   2.29   ,   2.01   ] 0.0705     [1:0:0:14:0:0:0:1:0:0:0:0]
+[  2, 3] (   30.4   ,   15.3   ) [   1.29   ,  0.196   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
+[  3, 3] (   15.3   ,   7.67   ) [  0.619   ,  0.365   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
+[  4, 3] (   7.67   ,   3.91   ) [  0.504   ,  0.288   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
+[  5, 3] (   3.91   ,   2.14   ) [  0.449   ,  0.298   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
+[  6, 3] (   2.14   ,   1.53   ) [  0.797   ,  0.797   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
 [  7, 3] (   1.53   ,   1.47   ) [   4.71   ,   4.01   ] 0.172      [0:1:1:0:0:0:0:0:0:0:0:0]
 [  8, 2] (   1.47   ,   1.8    ) [   1.98   ,  0.628   ] 0.4        [1:0:0:0:0:0:0:0:0:0:0:0]
 [  9,12] (   1.8    ,   1.87   ) [  0.921   ,  0.611   ] 0.306      [1:0:10:0:0:0:0:0:0:0:0:0]
@@ -225,15 +164,15 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 2412          N. System pars = 1600
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 87.4[ms]      timeout        = 0 [ms]
-iteration      = 51            Memory Used    = 526Kb (+78bytes)
+Elapsed Time   = 90.2[ms]      timeout        = 0 [ms]
+iteration      = 51            Memory Used    = 568Kb (+70bytes)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 171           Jacobian       = 51
+Function       = 165           Jacobian       = 51
 Factorization  = 51            Inversion      = 211
 ----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
@@ -251,10 +190,9 @@ last ||f||_2   = 2.9519e-14    last ||d||_2   = 2.4159e-16
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
-All internal blocks OK
-Check DhcDxlxlop:
-Last block: OK
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

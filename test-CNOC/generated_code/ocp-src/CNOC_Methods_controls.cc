@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_controls.cc                                       |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -166,7 +166,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = X__[iX_vs];
     real_type t3   = t2 * t2;
@@ -199,16 +199,16 @@ namespace CNOCDefine {
     real_type t63  = ALIAS_theta(t62);
     real_type t64  = cos(t63);
     real_type t66  = sin(t63);
-    real_type t71  = 1.0 / ModelPars[iM_ax_max] * (t64 * t41 - t66 * t51);
+    real_type t71  = 1.0 / ModelPars[iM_ax_max] * (t41 * t64 - t51 * t66);
     real_type t73  = ax_limit_min(-1 - t71);
     real_type t76  = ax_limit_max(t71 - 1);
-    real_type t83  = 1.0 / ModelPars[iM_ay_max] * (t66 * t41 + t64 * t51);
+    real_type t83  = 1.0 / ModelPars[iM_ay_max] * (t41 * t66 + t51 * t64);
     real_type t85  = ay_limit_min(-1 - t83);
     real_type t88  = ay_limit_max(t83 - 1);
     real_type t92  = ALIAS_kappa(t62);
     real_type t95  = 1.0 / (-t92 * t31 + 1);
     real_type t103 = t95 * t92;
-    real_type t126 = t60 * t1 + t73 * t1 + t76 * t1 + t85 * t1 + t88 * t1 + t1 * t95 * t2 * MU__[0] + t1 * t4 * MU__[1] - t1 * (-t103 * t4 * t2 - t41) * MU__[2] - t1 * (t95 * t92 * t3 - t51) * MU__[3] - t1 * (-t103 * t51 * t2 - t16) * MU__[4] - t1 * (t103 * t41 * t2 - t21) * MU__[5];
+    real_type t126 = t60 * t1 + t73 * t1 + t76 * t1 + t85 * t1 + t88 * t1 + t1 * t95 * t2 * MU__[0] + t1 * t4 * MU__[1] - t1 * (-t103 * t2 * t4 - t41) * MU__[2] - t1 * (t3 * t92 * t95 - t51) * MU__[3] - t1 * (-t103 * t51 * t2 - t16) * MU__[4] - t1 * (t103 * t2 * t41 - t21) * MU__[5];
     real_type result__ = 1.0 / t13 * t10 * t1 + t19 * t1 + t23 * t1 + t25 + t29 * t1 + t36 * t1 + t39 * t1 + t46 * t1 + t49 * t1 + t56 * t1 + t126;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
@@ -231,7 +231,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t5   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     result__[ 0   ] = t5 * t1 + t1 * MU__[4];
@@ -269,7 +269,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t4   = ALIAS_jsControl_D_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     result__[ 0   ] = t4 + MU__[4];
     result__[ 1   ] = X__[iX_coV];
@@ -306,7 +306,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t5   = ALIAS_jsControl_D_1_1(U__[iU_js], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     result__[ 0   ] = t5 * t1;
@@ -344,7 +344,7 @@ namespace CNOCDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     U__[ iU_js ] = jnControl.solve(-MU__[4], ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t5   = ModelPars[iM_jn_max];
     U__[ iU_jn ] = jnControl.solve(-MU__[5], -t5, t5);

@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Data.lua                                             |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -21,10 +21,10 @@
 
 -- Auxiliary values
 L        = 100.0
+s_f      = L
+jerk_min = -10
 jerk_max = 10.0
 wJ       = 1/jerk_max**2
-jerk_min = -10
-s_f      = L
 
 content = {
 
@@ -221,7 +221,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 0,
   },
 

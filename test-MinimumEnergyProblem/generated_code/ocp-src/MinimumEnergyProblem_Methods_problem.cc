@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: MinimumEnergyProblem_Methods_problem.cc                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -55,7 +55,7 @@ namespace MinimumEnergyProblemDefine {
   \*/
 
   void
-  MinimumEnergyProblem::continuation_step_0( real_type s ) {
+  MinimumEnergyProblem::continuation_step_1( real_type s ) {
     real_type t3   = interpLog(s, ModelPars[iM_max_epsi], ModelPars[iM_min_epsi]);
     x1Limitation.update_epsilon(t3);
     real_type t6   = interpLog(s, ModelPars[iM_max_tol], ModelPars[iM_min_tol]);
@@ -81,7 +81,7 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
     real_type t6   = X__[iX_x1] * X__[iX_x1];
@@ -109,7 +109,7 @@ namespace MinimumEnergyProblemDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_x1] * X__[iX_x1];
     real_type t6   = U__[iU_u] * U__[iU_u];
     real_type result__ = t3 * ModelPars[iM_c] / 2 + t6 / 2;
@@ -139,8 +139,8 @@ namespace MinimumEnergyProblemDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -165,8 +165,8 @@ namespace MinimumEnergyProblemDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -219,7 +219,7 @@ namespace MinimumEnergyProblemDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_c] * X__[iX_x1];
     result__[ 1   ] = 0;
     result__[ 2   ] = U__[iU_u];
@@ -249,7 +249,7 @@ namespace MinimumEnergyProblemDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ModelPars[iM_c];
     result__[ 1   ] = 1;
     if ( m_debug )
@@ -273,7 +273,7 @@ namespace MinimumEnergyProblemDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -349,8 +349,8 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
     result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
     result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
@@ -394,8 +394,8 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -429,7 +429,7 @@ namespace MinimumEnergyProblemDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = x1Limitation(X__[iX_x1] - 1.0 / 9.0);
     // do not check
     // Mechatronix::check_in_segment( result__, "post_eval", 1, i_segment );

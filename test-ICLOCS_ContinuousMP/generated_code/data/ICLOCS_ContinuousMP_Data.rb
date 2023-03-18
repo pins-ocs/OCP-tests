@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_ContinuousMP_Data.rb                                    #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+epsi_ctrl = 0.01
 xy_tol0   = 0.1
 xy_tol    = xy_tol0
+tol_ctrl  = 0.01
 xy_eps0   = 0.1
 xy_eps    = xy_eps0
-epsi_ctrl = 0.01
-tol_ctrl  = 0.01
 
 mechatronix do |data|
 
@@ -231,7 +231,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 
@@ -1247,8 +1247,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :length => 1.0,
         :n      => 50.0,
+        :length => 1.0,
       },
     ],
   };

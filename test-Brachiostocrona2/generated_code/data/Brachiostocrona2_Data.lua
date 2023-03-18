@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_Data.lua                                      |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,14 +20,14 @@
 -- User Header
 
 -- Auxiliary values
-xf     = 5.0
-yf     = -2
-g      = 9.81
-Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
 epsi0  = 1.0
-epsi   = epsi0
-Tf     = (-2.0*yf/g)**(1/2.0)
+yf     = -2
+xf     = 5.0
+g      = 9.81
 theta0 = arctan(yf,xf)
+epsi   = epsi0
+Vf     = (xf**2+yf**2)**(1/2.0)/(-2.0*yf/g)**(1/2.0)
+Tf     = (-2.0*yf/g)**(1/2.0)
 
 content = {
 
@@ -224,7 +224,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 1,
   },
 
@@ -316,8 +316,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 500.0,
+        length = 1.0,
       },
     },
   },

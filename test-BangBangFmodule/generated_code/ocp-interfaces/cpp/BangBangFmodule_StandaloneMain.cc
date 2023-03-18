@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFmodule_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -106,7 +106,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 0;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 BangBangFmodule_data.Mesh["s0"] = 0;
-BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 BangBangFmodule_data.Mesh["segments"][0]["length"] = 1;
+BangBangFmodule_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers

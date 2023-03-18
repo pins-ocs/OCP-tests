@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,1)
-  mesh class pointer:      0x7ff7b3e7d5b0
-  solver class pointer:    0x7f9e750141c0
+  Continuation interval:   [1,1)
+  mesh class pointer:      0x7ff7bcdbb598
+  solver class pointer:    0x7f89c200e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 4006
@@ -235,7 +234,7 @@ Continuation step N.1 s=0.95, ds=0.45, old_s=0.4999999999999999
 [144, 4] ( 0.000288 , 0.000295 ) [ 1.2e-05  , 1.14e-05 ] 0.064      [3:0:0:0:0:0:0:0:0:0:0:0]
 [145, 5] ( 0.000295 , 0.000287 ) [ 1.27e-05 , 1.23e-05 ] 0.0256     [4:0:0:0:0:0:0:0:0:0:0:0]
 [146, 5] ( 0.000287 , 0.000271 ) [ 8.06e-06 , 7.48e-06 ] 0.0256     [4:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.0069943, ||f||_inf = 0.6359
 
@@ -297,7 +296,7 @@ Continuation step N.1 s=1, ds=0.275, old_s=0.7249999999999999
 [196,97] (  0.0436  ,  0.0436  ) [ 0.00099  , 0.00103  ] 3.62e-05   [0:0:0:96:0:0:0:0:0:0:0:0]
 [197, 9] (  0.0436  ,  0.0493  ) [  0.0134  , 0.00114  ] 0.0037     [8:0:0:0:0:0:0:0:0:0:0:0]
 [198,16] (  0.0493  ,  0.0519  ) [ 0.00592  , 0.00142  ] 0.000193   [15:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 4.6807, ||f||_inf = 8.9786
 
@@ -356,7 +355,7 @@ Continuation step N.1 s=1, ds=0.1375, old_s=0.8624999999999999
 [245, 7] ( 0.00645  , 0.00667  ) [ 0.00018  , 0.000134 ] 0.0041     [3:0:1:2:0:0:0:0:0:0:0:0]
 [246, 5] ( 0.00667  , 0.00675  ) [ 0.000154 , 0.000196 ] 0.0256     [0:0:0:4:0:0:0:0:0:0:0:0]
 [247,12] ( 0.00675  , 0.00695  ) [ 0.000185 , 0.000144 ] 0.000562   [11:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.046654, ||f||_inf = 1.6916
 
@@ -415,7 +414,7 @@ Continuation step N.1 s=1, ds=0.06875, old_s=0.9312499999999999
 [294,39] (  0.062   ,  0.0627  ) [ 0.00991  , 0.00382  ] 5.92e-05   [38:0:0:0:0:0:0:0:0:0:0:0]
 [295,59] (  0.0627  ,  0.0621  ) [ 0.00202  , 0.00302  ] 0.000428   [0:0:3:55:0:0:0:0:0:0:0:0]
 [296,45] (  0.0621  ,  0.0621  ) [ 0.00521  , 0.00189  ] 9.81e-05   [44:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 1.1572, ||f||_inf = 7.6829
 
@@ -473,7 +472,7 @@ Continuation step N.1 s=1, ds=0.034375, old_s=0.965625
 [342, 3] ( 0.000376 , 0.000323 ) [ 4.06e-06 , 3.35e-06 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
 [343, 3] ( 0.000323 , 0.00028  ) [ 3.19e-06 , 2.69e-06 ] 0.16       [2:0:0:0:0:0:0:0:0:0:0:0]
 [344, 2] ( 0.00028  , 0.000199 ) [ 3.01e-06 , 1.97e-06 ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.00016757, ||f||_inf = 0.23029
 
@@ -531,7 +530,7 @@ Continuation step N.1 s=1, ds=0.017188, old_s=0.9828125
 [390, 2] ( 0.00422  ,  0.0055  ) [ 5.77e-05 , 4.36e-05 ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
 [391, 5] (  0.0055  , 0.00607  ) [ 7.52e-05 , 5.18e-05 ] 0.0256     [4:0:0:0:0:0:0:0:0:0:0:0]
 [392, 7] ( 0.00607  , 0.00604  ) [ 5.36e-05 , 5.34e-05 ] 0.0041     [6:0:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.017088, ||f||_inf = 1.7652
 
@@ -588,7 +587,7 @@ Continuation step N.1 s=1, ds=0.0085937, old_s=0.99140625
 [437,30] (  0.0112  ,  0.0153  ) [ 0.000342 , 0.000152 ] 0.0169     [29:0:0:0:0:0:0:0:0:0:0:0]
 [438,72] (  0.0153  ,  0.0154  ) [ 0.00039  , 0.000113 ] 0.000632   [71:0:0:0:0:0:0:0:0:0:0:0]
 [439,10] (  0.0154  ,  0.0116  ) [ 0.00011  , 0.000279 ] 0.18       [0:0:1:8:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.041535, ||f||_inf = 3.3587
 
@@ -645,7 +644,7 @@ Continuation step N.1 s=1, ds=0.0042969, old_s=0.995703125
 [484,13] ( 0.000794 , 0.000807 ) [ 1.97e-06 , 1.23e-06 ] 0.38       [1:0:11:0:0:0:0:0:0:0:0:0]
 [485, 3] ( 0.000807 , 0.000639 ) [ 1.18e-06 , 9.84e-07 ] 0.179      [0:2:0:0:0:0:0:0:0:0:0:0]
 [486, 2] ( 0.000639 , 0.00038  ) [ 1.21e-06 , 8.85e-07 ] 0.4        [0:1:0:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.00029743, ||f||_inf = 1.0079
 
@@ -703,7 +702,7 @@ Continuation step N.1 s=1, ds=0.0021484, old_s=0.9978515625
 [532, 4] ( 1.76e-05 , 1.67e-05 ) [ 2.05e-07 , 1.96e-07 ] 0.064      [0:1:2:0:0:0:0:0:0:0:0:0]
 [533, 3] ( 1.67e-05 , 1.58e-05 ) [ 3.89e-07 , 3.97e-07 ] 0.16       [0:0:2:0:0:0:0:0:0:0:0:0]
 [534, 2] ( 1.58e-05 , 2.31e-05 ) [ 7.74e-07 , 5.94e-07 ] 0.4        [0:0:1:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.00018919, ||f||_inf = 0.024996
 
@@ -760,7 +759,7 @@ Continuation step N.1 s=1, ds=0.0010742, old_s=0.99892578125
 [579, 4] ( 0.000987 , 0.00127  ) [ 9.81e-06 , 9.18e-06 ] 0.103      [3:0:0:0:0:0:0:0:0:0:0:0]
 [580, 5] ( 0.00127  , 0.000461 ) [ 2.8e-06  , 1.42e-06 ] 0.815      [4:0:0:0:0:0:0:0:0:0:0:0]
 [581, 4] ( 0.000461 , 0.000431 ) [ 1.14e-05 , 1.05e-05 ] 0.064      [1:1:1:0:0:0:0:0:0:0:0:0]
-solve_with_continuation() at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
+NonlinearSolverBase::solve_with_continuation, at phase 1 found: NewtonDumped[OCP_solver_NewtonDumped]::solve() too many iterations!
 Iter = 0, maxIter = 40, tolerance = 1e-09
 ||d||_inf = 0.0022976, ||f||_inf = 0.52837
 
@@ -798,8 +797,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 4006          N. System pars = 3000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 3.33[sec]     timeout        = 0 [ms]
-iteration      = 597           Memory Used    = 629Kb (+4bytes)
+Elapsed Time   = 3.25[sec]     timeout        = 0 [ms]
+iteration      = 597           Memory Used    = 681Kb (+51bytes)
 max iterations = 40            max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -824,34 +823,40 @@ last ||f||_2   = 4.4577e-06    last ||d||_2   = 3.1655e-11
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 0 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =      -1071.8 : -0.26775     [A:FD] ---       1071.5 : 99.98        [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 1 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =      -356.59 : -0.63667     [A:FD] ---       355.96 : 99.82        [err:err(%)]
 
+
 #ERR 3 DabcDxlxlpu block N. 2 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =       -213.4 : -0.93091     [A:FD] ---       212.47 : 99.56        [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 3 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =      -152.04 : -1.1827      [A:FD] ---       150.85 : 99.22        [err:err(%)]
 
+
 #ERR 5 DabcDxlxlpu block N. 4 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =      -117.94 : -1.4044      [A:FD] ---       116.54 : 98.81        [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 5 type: FD #x and #l=2 #p=0 #u=1 [ (xlp) x (xlxlpu) = 4 x 9]
 
 DbDu(0:1,0:0)[ 0, 0] =      -96.247 : -1.6028      [A:FD] ---       94.644 : 98.33        [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 Discretized_Indirect_OCP::check_control

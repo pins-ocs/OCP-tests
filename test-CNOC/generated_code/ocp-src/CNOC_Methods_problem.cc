@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_problem.cc                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -167,7 +167,7 @@ namespace CNOCDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = X__[iX_vs];
     real_type t3   = t2 * t2;
@@ -182,7 +182,7 @@ namespace CNOCDefine {
     real_type t30  = X__[iX_as];
     real_type t32  = t23 * t20;
     real_type t38  = X__[iX_an];
-    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * MU__[0] + t1 * t4 * MU__[1] - t1 * (-t2 * t32 * t4 - t30) * MU__[2] - t1 * (t20 * t23 * t3 - t38) * MU__[3] - t1 * (-t2 * t32 * t38 - U__[iU_js]) * MU__[4] - t1 * (t2 * t30 * t32 - U__[iU_jn]) * MU__[5];
+    real_type result__ = 1.0 / t13 * t10 * t1 + t1 * t23 * t2 * MU__[0] + t1 * t4 * MU__[1] - t1 * (-t32 * t4 * t2 - t30) * MU__[2] - t1 * (t23 * t20 * t3 - t38) * MU__[3] - t1 * (-t32 * t38 * t2 - U__[iU_js]) * MU__[4] - t1 * (t32 * t30 * t2 - U__[iU_jn]) * MU__[5];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -206,7 +206,7 @@ namespace CNOCDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_vs] * X__[iX_vs];
     real_type t5   = X__[iX_vn] * X__[iX_vn];
     real_type t7   = sqrt(t3 + t5);
@@ -240,8 +240,8 @@ namespace CNOCDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = m_pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = m_pToolPath2D->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -266,8 +266,8 @@ namespace CNOCDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = m_pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = m_pToolPath2D->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -330,7 +330,7 @@ namespace CNOCDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     real_type t2   = X__[iX_vs];
@@ -384,7 +384,7 @@ namespace CNOCDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_coV];
     real_type t2   = X__[iX_vs];
     real_type t3   = t2 * t2;
@@ -402,12 +402,12 @@ namespace CNOCDefine {
     real_type t20  = t19 * t11;
     real_type t23  = 1.0 / t14;
     real_type t25  = t23 * t11 * t17;
-    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t17 * t20 * t3 + 2 * t25;
-    result__[ 1   ] = -2 * t11 * t17 * t19 * t2 * t4 + 2 * t11 * t2 * t4 * t8;
+    result__[ 0   ] = 2 * t11 * t3 * t8 - 2 * t3 * t20 * t17 + 2 * t25;
+    result__[ 1   ] = -2 * t4 * t2 * t19 * t11 * t17 + 2 * t2 * t11 * t4 * t8;
     real_type t35  = t11 * t16;
     result__[ 2   ] = 2 * t2 * t23 * t35;
     result__[ 3   ] = result__[1];
-    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t17 * t20 * t5 + 2 * t25;
+    result__[ 4   ] = 2 * t11 * t5 * t8 - 2 * t5 * t20 * t17 + 2 * t25;
     result__[ 5   ] = 2 * t4 * t23 * t35;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
@@ -432,7 +432,7 @@ namespace CNOCDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -508,8 +508,8 @@ namespace CNOCDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = m_pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = m_pToolPath2D->get_segment_by_index(i_segment_right);
     real_type t2   = QL__[iQ_zeta];
     result__[ 0   ] = XL__[iX_s] - t2;
     result__[ 1   ] = XL__[iX_n];
@@ -521,23 +521,23 @@ namespace CNOCDefine {
     real_type t9   = sin(t8);
     real_type t11  = XL__[iX_vs];
     real_type t12  = cos(t8);
-    result__[ 2   ] = -t11 * t12 + t4 * t9 + XR__[iX_vs];
-    result__[ 3   ] = -t11 * t9 - t12 * t4 + XR__[iX_vn];
+    result__[ 2   ] = -t12 * t11 + t9 * t4 + XR__[iX_vs];
+    result__[ 3   ] = -t9 * t11 - t12 * t4 + XR__[iX_vn];
     real_type t18  = XL__[iX_an];
     real_type t20  = XL__[iX_as];
-    result__[ 4   ] = -t12 * t20 + t18 * t9 + XR__[iX_as];
-    result__[ 5   ] = -t12 * t18 - t20 * t9 + XR__[iX_an];
+    result__[ 4   ] = -t12 * t20 + t9 * t18 + XR__[iX_as];
+    result__[ 5   ] = -t12 * t18 - t9 * t20 + XR__[iX_an];
     result__[ 6   ] = LL__[iL_lambda7__xo];
     result__[ 7   ] = XR__[iX_s] - t6;
     result__[ 8   ] = XR__[iX_n];
     real_type t27  = LR__[iL_lambda4__xo];
     real_type t29  = LR__[iL_lambda3__xo];
-    result__[ 9   ] = -t12 * t29 - t27 * t9 + LL__[iL_lambda3__xo];
-    result__[ 10  ] = -t12 * t27 + t29 * t9 + LL__[iL_lambda4__xo];
+    result__[ 9   ] = -t12 * t29 - t9 * t27 + LL__[iL_lambda3__xo];
+    result__[ 10  ] = -t12 * t27 + t9 * t29 + LL__[iL_lambda4__xo];
     real_type t35  = LR__[iL_lambda6__xo];
     real_type t37  = LR__[iL_lambda5__xo];
-    result__[ 11  ] = -t12 * t37 - t35 * t9 + LL__[iL_lambda5__xo];
-    result__[ 12  ] = -t12 * t35 + t37 * t9 + LL__[iL_lambda6__xo];
+    result__[ 11  ] = -t12 * t37 - t9 * t35 + LL__[iL_lambda5__xo];
+    result__[ 12  ] = -t12 * t35 + t9 * t37 + LL__[iL_lambda6__xo];
     result__[ 13  ] = LR__[iL_lambda7__xo];
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "jump_eval", 14, i_segment_left, i_segment_right );
@@ -600,8 +600,8 @@ namespace CNOCDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    ToolPath2D::SegmentClass const & segmentLeft  = pToolPath2D->get_segment_by_index(i_segment_left);
-    ToolPath2D::SegmentClass const & segmentRight = pToolPath2D->get_segment_by_index(i_segment_right);
+    ToolPath2D::SegmentClass const & segmentLeft  = m_pToolPath2D->get_segment_by_index(i_segment_left);
+    ToolPath2D::SegmentClass const & segmentRight = m_pToolPath2D->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     real_type t2   = ALIAS_theta_L(QL__[iQ_zeta]);
@@ -661,7 +661,7 @@ namespace CNOCDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_js];
     result__[ 0   ] = jsControl(t1, ModelPars[iM_js_min], ModelPars[iM_js_max]);
     real_type t4   = U__[iU_jn];
@@ -740,7 +740,7 @@ namespace CNOCDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
     result__[ 0   ] = X__[iX_coV];
     // do not check
     // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,20 +50,20 @@ main() {
     Path2D           trajectory( "trajectory" );
 
     // Auxiliary values
-    real_type E_tol0 = 0.25;
-    real_type a_tol = 0.01;
-    real_type c0_0 = 0;
-    real_type a_epsi = 0.01;
-    real_type c1_0 = 0;
-    real_type c1 = c1_0;
-    real_type E_tol = E_tol0;
     real_type epsilon0 = 0.1;
     real_type epsilon = epsilon0;
-    real_type v_epsi = 0.01;
+    real_type c1_0 = 0;
+    real_type c1 = c1_0;
+    real_type c0_0 = 0;
+    real_type c0 = c0_0;
+    real_type E_tol0 = 0.25;
+    real_type a_tol = 0.01;
+    real_type a_epsi = 0.01;
+    real_type E_tol = E_tol0;
     real_type E_epsi0 = 0.25;
     real_type E_epsi = E_epsi0;
-    real_type c0 = c0_0;
     real_type v_tol = 0.01;
+    real_type v_epsi = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -118,7 +118,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 3;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];

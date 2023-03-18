@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising.hh                              |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -128,14 +128,14 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * pMesh;
+    Mechatronix::MeshStd * m_pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_MinimumFuelOrbitRaising( ICLOCS_MinimumFuelOrbitRaising const & );
     ICLOCS_MinimumFuelOrbitRaising const & operator = ( ICLOCS_MinimumFuelOrbitRaising const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuation_step_0( real_type s );
+    void continuation_step_1( real_type s );
 
   public:
 

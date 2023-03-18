@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace BangBangFtauDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_vsT];
     real_type t3   = t2 * t2;
     real_type t4   = U__[iU_vsB];
@@ -118,7 +118,7 @@ namespace BangBangFtauDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_epsiTB];
     real_type t2   = U__[iU_vsT];
     real_type t5   = ALIAS_vsTpositive_D(-t2);
@@ -158,7 +158,7 @@ namespace BangBangFtauDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / ModelPars[iM_tauT];
     result__[ 1   ] = 1.0 / ModelPars[iM_tauB];
     if ( m_debug )
@@ -192,7 +192,7 @@ namespace BangBangFtauDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = 2 * ModelPars[iM_epsiTB];
     real_type t3   = U__[iU_vsT];
     real_type t4   = ALIAS_vsTpositive_DD(-t3);

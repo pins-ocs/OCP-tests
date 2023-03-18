@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Farmer_Methods_controls.cc                                     |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -102,7 +102,7 @@ namespace FarmerDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ModelPars[iM_w1];
     real_type t4   = X__[iX_x1];
     real_type t6   = ModelPars[iM_w2];
@@ -156,7 +156,7 @@ namespace FarmerDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t3   = U__[iU_x1__o];
     real_type t7   = ALIAS_x1__oControl_D_1(t3, -0.1e-2, 100);
     result__[ 0   ] = 2 * (-X__[iX_x1] + t3) * ModelPars[iM_wJ1] + t7 + MU__[0] / ModelPars[iM_tau__1];
@@ -204,7 +204,7 @@ namespace FarmerDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = -2 * ModelPars[iM_wJ1];
     result__[ 1   ] = 1.0 / ModelPars[iM_tau__1];
     result__[ 2   ] = -2 * ModelPars[iM_wJ2];
@@ -244,7 +244,7 @@ namespace FarmerDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t4   = ALIAS_x1__oControl_D_1_1(U__[iU_x1__o], -0.1e-2, 100);
     result__[ 0   ] = 2 * ModelPars[iM_wJ1] + t4;
     real_type t8   = ALIAS_x2__oControl_D_1_1(U__[iU_x2__o], -0.1e-2, 100);

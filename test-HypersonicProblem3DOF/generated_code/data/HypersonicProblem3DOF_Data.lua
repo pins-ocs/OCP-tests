@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HypersonicProblem3DOF_Data.lua                                 |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,26 +20,26 @@
 -- User Header
 
 -- Auxiliary values
-to_rad        = 0.01745329252
-sigma_dot_max = 10*to_rad
-u_tolerance   = 0.1
-phi_f         = 0.5*to_rad
-G_f           = -15*to_rad
-u_epsilon     = 0.1
-one_km        = 1000.0
-S             = 7500*one_km
-theta_f       = 2*to_rad
-V_f           = 2*one_km
-re            = 6378*one_km
-WTF0          = 1.0
-WTF           = WTF0
 CTRL0         = 1.0
-CTRL          = CTRL0
-G_i           = -15*to_rad
-h_i           = 40*one_km
-V_i           = 2*one_km
 ODE0          = 0.0
 ODE           = ODE0
+WTF0          = 1.0
+CTRL          = CTRL0
+u_tolerance   = 0.1
+to_rad        = 0.01745329252
+phi_f         = 0.5*to_rad
+sigma_dot_max = 10*to_rad
+theta_f       = 2*to_rad
+G_f           = -15*to_rad
+u_epsilon     = 0.1
+G_i           = -15*to_rad
+WTF           = WTF0
+one_km        = 1000.0
+V_f           = 2*one_km
+re            = 6378*one_km
+V_i           = 2*one_km
+S             = 7500*one_km
+h_i           = 40*one_km
 
 content = {
 
@@ -236,7 +236,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 3,
   },
 
@@ -374,8 +374,8 @@ content = {
     segments = {
       
       {
-        length = 1.0,
         n      = 400.0,
+        length = 1.0,
       },
     },
   },

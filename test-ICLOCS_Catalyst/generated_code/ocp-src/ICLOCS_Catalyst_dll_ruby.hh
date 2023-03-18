@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Catalyst_dll_ruby.hh                                    |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -89,18 +89,18 @@ namespace ICLOCS_CatalystDefine {
 
   class ICLOCS_Catalyst_Problem {
 
-    ICLOCS_Catalyst model;
+    ICLOCS_Catalyst m_model;
 
     // user defined Object instances (external)
-    MeshStd    mesh;
+    MeshStd    m_mesh;
 
     // block copy constructor
     ICLOCS_Catalyst_Problem( ICLOCS_Catalyst_Problem const & );
     ICLOCS_Catalyst_Problem const & operator = ( ICLOCS_Catalyst_Problem const & );
 
     // stored solution
-    Splines::SplineSet splines;
-    GenericContainer   gc_solution;
+    Splines::SplineSet m_splines;
+    GenericContainer   m_gc_solution;
 
   public:
 
@@ -109,8 +109,8 @@ namespace ICLOCS_CatalystDefine {
       Console const  * console,
       ThreadPoolBase * TP
     )
-    : model("ICLOCS_Catalyst",console,TP)
-    , mesh( "mesh" )
+    : m_model("ICLOCS_Catalyst",console,TP)
+    , m_mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -130,10 +130,10 @@ namespace ICLOCS_CatalystDefine {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        mesh.setup(gc_data("Mesh"));
-        ptrs[ "pMesh" ] = &mesh;
+        m_mesh.setup(gc_data("Mesh"));
+        ptrs[ "pMesh" ] = &m_mesh;
 
-        model.setup( gc_data );
+        m_model.setup( gc_data );
       }
       catch ( std::exception const & exc ) {
         error = exc.what();
@@ -153,67 +153,67 @@ namespace ICLOCS_CatalystDefine {
     ICLOCS_CATALYST_API_DLL
     void
     guess( GenericContainer & gc_data ) {
-      model.guess( gc_data );
-      model.info();
+      m_model.guess( gc_data );
+      m_model.info();
     }
 
     ICLOCS_CATALYST_API_DLL
     bool
     solve() {
-      bool ok = model.solve();
-      model.get_solution( gc_solution );
-      model.get_solution_as_spline( splines );
+      bool ok = m_model.solve();
+      m_model.get_solution( m_gc_solution );
+      m_model.get_solution_as_spline( m_splines );
       return ok;
     }
 
     ICLOCS_CATALYST_API_DLL
     GenericContainer const &
     getSolution()
-    { return gc_solution; }
+    { return m_gc_solution; }
 
     ICLOCS_CATALYST_API_DLL
     void
     diagnostic( GenericContainer const & gc_data, GenericContainer & gc_solution )
-    { return model.diagnostic( gc_data, gc_solution ); }
+    { return m_model.diagnostic( gc_data, gc_solution ); }
 
     ICLOCS_CATALYST_API_DLL
     integer
     numSplines() const
-    { return splines.numSplines(); }
+    { return m_splines.numSplines(); }
 
     // get the column of spline labelled `hdr`
     ICLOCS_CATALYST_API_DLL
     integer
     spline_getPosition( char const * hdr ) const
-    { return splines.getPosition(hdr); }
+    { return m_splines.getPosition(hdr); }
 
     ICLOCS_CATALYST_API_DLL
     real_type
     spline_min( integer ipos ) const
-    { return splines.yMin( ipos );}
+    { return m_splines.y_min( ipos );}
 
     ICLOCS_CATALYST_API_DLL
     real_type
     spline_max( integer ipos ) const
-    { return splines.yMax( ipos );}
+    { return m_splines.y_max( ipos );}
 
     // check if spline at column `ipos` is monotone and can be used as independent
     ICLOCS_CATALYST_API_DLL
     bool
     spline_isMonotone( integer ipos ) const
-    { return splines.isMonotone(ipos) >= 0; }
+    { return m_splines.isMonotone(ipos) >= 0; }
 
     // get the label of the spline at column `ipos`
     ICLOCS_CATALYST_API_DLL
     char const *
     spline_header( integer ipos ) const
-    { return splines.header(ipos).c_str(); }
+    { return m_splines.header(ipos).c_str(); }
 
     // get values of splines at `val` of default independent
     ICLOCS_CATALYST_API_DLL
     void
     spline_eval( real_type val, vector<real_type> & values ) const
-    { return splines.eval(val,values); }
+    { return m_splines.eval(val,values); }
 
     // get values of splines at `val` using spline at ipos column as independent
     ICLOCS_CATALYST_API_DLL
@@ -223,7 +223,7 @@ namespace ICLOCS_CatalystDefine {
       real_type           val,
       vector<real_type> & values
     ) const {
-      return splines.eval2(ipos,val,values);
+      return m_splines.eval2(ipos,val,values);
     }
   };
 

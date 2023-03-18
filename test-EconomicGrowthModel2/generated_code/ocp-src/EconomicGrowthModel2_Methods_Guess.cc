@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel2_Methods_Guess.cc                          |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -72,7 +72,7 @@ namespace EconomicGrowthModel2Define {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_x1 ] = ModelPars[iM_x1_i];
       X__[ iX_x2 ] = ModelPars[iM_x2_i];
@@ -239,17 +239,16 @@ namespace EconomicGrowthModel2Define {
   \*/
 
   bool
-  EconomicGrowthModel2::penalties_check_node(
+  EconomicGrowthModel2::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
-    ok = ok && Tpositive.check_range(-X__[iX_T], m_max_penalty_value);
+    ok = ok && Tpositive.check_range(-X__[iX_T]);
     return ok;
   }
 
@@ -301,7 +300,7 @@ namespace EconomicGrowthModel2Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], 0, 1);
     return ok;

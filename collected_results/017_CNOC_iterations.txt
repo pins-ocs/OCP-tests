@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,0)
-  mesh class pointer:      0x7ff7b533f5b8
-  solver class pointer:    0x7ff5d88171c0
+  Continuation interval:   [1,0)
+  mesh class pointer:      0x7ff7b20e25a0
+  solver class pointer:    0x7faa6b80e2f0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 28292
@@ -356,8 +355,8 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 28292         N. System pars = 18171
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 2.47[sec]     timeout        = 0 [ms]
-iteration      = 131           Memory Used    = 7Mb (+72Kb)
+Elapsed Time   = 1.62[sec]     timeout        = 0 [ms]
+iteration      = 131           Memory Used    = 8Mb (+82Kb)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
@@ -382,11 +381,11 @@ last ||f||_2   = 1.6142e-08    last ||d||_2   = 1.7995e-14
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 0 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
 DbDx_L(0:6,0:6)[ 1, 1] =   1.9369e+07 : 2.3468e+07   [A:FD] ---   4.0996e+06 : 17.47        [err:err(%)]
-DbDx_L(0:6,0:6)[ 6, 1] =     -0.26804 : 0            [A:FD] ---      0.26804 : 100          [err:err(%)]
+DbDx_L(0:6,0:6)[ 6, 1] =     -0.26804 : 0            [A:FD] ---      0.26804 : 26.8         [err:err(%)]
 DbDx_L(0:6,0:6)[ 2, 2] =   -3.396e+05 : -3.395e+05   [A:FD] ---       104.88 : 0.03088      [err:err(%)]
 DbDx_L(0:6,0:6)[ 3, 2] =  -2.3351e+05 : -2.3339e+05  [A:FD] ---       119.92 : 0.05136      [err:err(%)]
 DbDx_L(0:6,0:6)[ 6, 2] =      -3.2255 : -3.2238      [A:FD] ---    0.0016919 : 0.05245      [err:err(%)]
@@ -394,13 +393,14 @@ DbDx_L(0:6,0:6)[ 2, 3] =  -2.3351e+05 : -2.3348e+05  [A:FD] ---       33.971 : 0
 DbDx_L(0:6,0:6)[ 3, 3] =  -1.6009e+05 : -1.6005e+05  [A:FD] ---       39.229 : 0.0245       [err:err(%)]
 DbDx_L(0:6,0:6)[ 6, 3] =       3.4923 : 3.4916       [A:FD] ---   0.00074062 : 0.02121      [err:err(%)]
 DbDx_R(0:6,0:6)[ 1, 1] =   1.9369e+07 : 2.3468e+07   [A:FD] ---   4.0996e+06 : 17.47        [err:err(%)]
-DbDx_R(0:6,0:6)[ 6, 1] =     -0.26804 : 0            [A:FD] ---      0.26804 : 100          [err:err(%)]
+DbDx_R(0:6,0:6)[ 6, 1] =     -0.26804 : 0            [A:FD] ---      0.26804 : 26.8         [err:err(%)]
 DbDx_R(0:6,0:6)[ 2, 2] =   -3.396e+05 : -3.395e+05   [A:FD] ---       104.88 : 0.03088      [err:err(%)]
 DbDx_R(0:6,0:6)[ 3, 2] =  -2.3351e+05 : -2.3339e+05  [A:FD] ---       119.92 : 0.05136      [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 2] =      -3.2255 : -3.2238      [A:FD] ---    0.0016919 : 0.05245      [err:err(%)]
 DbDx_R(0:6,0:6)[ 2, 3] =  -2.3351e+05 : -2.3348e+05  [A:FD] ---       33.971 : 0.01455      [err:err(%)]
 DbDx_R(0:6,0:6)[ 3, 3] =  -1.6009e+05 : -1.6005e+05  [A:FD] ---       39.229 : 0.0245       [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 3] =       3.4923 : 3.4916       [A:FD] ---   0.00074062 : 0.02121      [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 1 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
@@ -409,12 +409,14 @@ DbDx_L(0:6,0:6)[ 6, 1] =      -1.6281 : 0            [A:FD] ---       1.6281 : 1
 DbDx_R(0:6,0:6)[ 1, 1] =    2.011e+07 : 2.4112e+07   [A:FD] ---   4.0022e+06 : 16.6         [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 1] =      -1.6281 : 0            [A:FD] ---       1.6281 : 100          [err:err(%)]
 
+
 #ERR 3 DabcDxlxlpu block N. 2 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
 DbDx_L(0:6,0:6)[ 1, 1] =   2.6528e+07 : 2.9785e+07   [A:FD] ---   3.2576e+06 : 10.94        [err:err(%)]
 DbDx_L(0:6,0:6)[ 6, 1] =      -5.1823 : -2.9753      [A:FD] ---        2.207 : 42.59        [err:err(%)]
 DbDx_R(0:6,0:6)[ 1, 1] =   2.6528e+07 : 2.9785e+07   [A:FD] ---   3.2576e+06 : 10.94        [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 1] =      -5.1823 : -2.9753      [A:FD] ---        2.207 : 42.59        [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 3 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
@@ -423,12 +425,14 @@ DbDx_L(0:6,0:6)[ 6, 1] =      -13.823 : -12.221      [A:FD] ---       1.6015 : 1
 DbDx_R(0:6,0:6)[ 1, 1] =   5.9722e+07 : 5.9215e+07   [A:FD] ---   5.0646e+05 : 0.848        [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 1] =      -13.823 : -12.221      [A:FD] ---       1.6015 : 11.59        [err:err(%)]
 
+
 #ERR 5 DabcDxlxlpu block N. 4 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
 DbDx_L(0:6,0:6)[ 1, 1] =    2.377e+08 : 1.9589e+08   [A:FD] ---   4.1805e+07 : 17.59        [err:err(%)]
 DbDx_L(0:6,0:6)[ 6, 1] =       -40.18 : -38.033      [A:FD] ---       2.1464 : 5.342        [err:err(%)]
 DbDx_R(0:6,0:6)[ 1, 1] =    2.377e+08 : 1.9589e+08   [A:FD] ---   4.1805e+07 : 17.59        [err:err(%)]
 DbDx_R(0:6,0:6)[ 6, 1] =       -40.18 : -38.033      [A:FD] ---       2.1464 : 5.342        [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 5 type: FD #x and #l=7 #p=0 #u=2 [ (xlp) x (xlxlpu) = 14 x 30]
 
@@ -438,8 +442,9 @@ DbDx_R(0:6,0:6)[ 1, 1] =   1.2023e+09 : 6.7324e+08   [A:FD] ---    5.291e+08 : 4
 DbDx_R(0:6,0:6)[ 6, 1] =      -122.87 : -95.407      [A:FD] ---       27.458 : 22.35        [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

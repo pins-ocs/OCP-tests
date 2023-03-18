@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: GoddardRocket_Data.rb                                          #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,31 +20,31 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-g0            = 1.0
-epsi_v_max    = 0.1
-h_i           = 1.0
-c             = 0.5*(g0*h_i)**(1/2.0)
-epsi_v        = epsi_v_max
-vc            = 620.0
-tol_T_max     = 0.01
 tol_mass_max  = 0.01
-tol_mass      = tol_mass_max
-tol_TS_max    = 0.0001
-tol_TS        = tol_TS_max
-epsi_mass_max = 0.025
-tol_T         = tol_T_max
 m_i           = 1.0
-Dc            = 0.5*vc*m_i/g0
-Tmax          = 3.5*g0*m_i
-epsi_T_max    = 0.1
-epsi_T        = epsi_T_max
+vc            = 620.0
+epsi_mass_max = 0.025
+epsi_mass     = epsi_mass_max
 mc            = 0.6
-m_f           = mc*m_i
+tol_mass      = tol_mass_max
+tol_T_max     = 0.01
+tol_T         = tol_T_max
 epsi_TS_max   = 0.025
 epsi_TS       = epsi_TS_max
+m_f           = mc*m_i
+tol_TS_max    = 0.0001
+tol_TS        = tol_TS_max
+epsi_T_max    = 0.1
+epsi_T        = epsi_T_max
+h_i           = 1.0
+g0            = 1.0
+Tmax          = 3.5*g0*m_i
+Dc            = 0.5*vc*m_i/g0
 tol_v_max     = 0.01
 tol_v         = tol_v_max
-epsi_mass     = epsi_mass_max
+epsi_v_max    = 0.1
+epsi_v        = epsi_v_max
+c             = 0.5*(g0*h_i)**(1/2.0)
 
 mechatronix do |data|
 
@@ -250,7 +250,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 

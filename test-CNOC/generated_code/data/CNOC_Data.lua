@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Data.lua                                                  |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,24 +20,24 @@
 -- User Header
 
 -- Auxiliary values
-tol_VMAX                 = 0.01
 tol_CTRL                 = 0.01
-epsi_CTRL                = 0.01
-v_nom                    = 0.173
-tol_ACC                  = 0.01
-path_following_tolerance = 1.0e-05
-js_min                   = -50
-mesh_segments            = 100.0
-deltaFeed                = v_nom
-jn_max                   = 65.0
-epsi_VMAX                = 0.01
-epsi_COV                 = 0.01
-js_max                   = 30.0
-tol_PATH                 = 0.01
-epsi_ACC                 = 0.01
-pf_error                 = path_following_tolerance
-tol_COV                  = 0.01
 epsi_PATH                = 0.01
+epsi_ACC                 = 0.01
+tol_PATH                 = 0.01
+js_min                   = -50
+epsi_COV                 = 0.01
+tol_ACC                  = 0.01
+epsi_CTRL                = 0.01
+tol_VMAX                 = 0.01
+mesh_segments            = 100.0
+epsi_VMAX                = 0.01
+js_max                   = 30.0
+tol_COV                  = 0.01
+jn_max                   = 65.0
+v_nom                    = 0.173
+deltaFeed                = v_nom
+path_following_tolerance = 1.0e-05
+pf_error                 = path_following_tolerance
 
 content = {
 
@@ -234,7 +234,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 0,
   },
 

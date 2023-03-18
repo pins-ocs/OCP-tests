@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -78,7 +78,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
     result__[ 0   ] = MU__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "eta", 1, i_segment );

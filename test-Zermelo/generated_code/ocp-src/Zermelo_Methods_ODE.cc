@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Zermelo_Methods_ODE.cc                                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -68,7 +68,7 @@ namespace ZermeloDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t3   = X__[iX_x];
     real_type t4   = X__[iX_y];
@@ -79,9 +79,9 @@ namespace ZermeloDefine {
     real_type t15  = ModelPars[iM_S] * t1;
     real_type t16  = U__[iU_u];
     real_type t17  = cos(t16);
-    result__[ 2   ] = t17 * t15 - V__[2];
+    result__[ 2   ] = t15 * t17 - V__[2];
     real_type t20  = sin(t16);
-    result__[ 3   ] = t20 * t15 - V__[3];
+    result__[ 3   ] = t15 * t20 - V__[3];
     result__[ 4   ] = -V__[4];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "ode", 5, i_segment );
@@ -127,7 +127,7 @@ namespace ZermeloDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     real_type t2   = X__[iX_x];
     real_type t3   = X__[iX_y];
@@ -196,7 +196,7 @@ namespace ZermeloDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CMakeLists.txt                                                 #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -48,69 +48,36 @@ endforeach()
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/../../ocp-src ${INCLUDE} )
 
-if( APPLE )
-  set(POSTFIX "_osx_static")
-  include_directories( /usr/local/PINS/include )
-elseif( UNIX OR LINUX )
-  include_directories( /usr/local/PINS/include )
-  link_directories( /usr/local/PINS/lib /usr/local/PINS/dll )
-  set(POSTFIX "_linux_static")
-else()
-  set(POSTFIX "_win_static")
-endif()
+exec_program( pins ARGS --cflags     OUTPUT_VARIABLE CFLAGS   )
+exec_program( pins ARGS --cppflags   OUTPUT_VARIABLE CXXFLAGS )
+exec_program( pins ARGS --lflags     OUTPUT_VARIABLE LFLAGS   )
+#exec_program( pins ARGS --libs       OUTPUT_VARIABLE LIBS     )
+#exec_program( pins ARGS --frameworks OUTPUT_VARIABLE LIBS2    )
+#exec_program( pins ARGS --includes   OUTPUT_VARIABLE INCLUDE  )
 
-if( APPLE )
-  add_compile_options(-F/Library/Frameworks )
-  set( ALL_LIBS "-F/Library/Frameworks")
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixODE" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixSolver" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixVehicle" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixManufacturing" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixRoad" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixInterfaceMruby" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixNLSolver" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixSolver" )
-  set( ALL_LIBS "${ALL_LIBS} -framework MechatronixCore" )
-  set( ALL_LIBS "${ALL_LIBS} -framework Accelerate" )
-else()
-  set( ALL_LIBS "-L/usr/local/PINS/lib -L/usr/local/PINS/dll" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixODE${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixSolver${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixVehicle${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixManufacturing${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixRoad${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixInterfaceMruby${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixNLSolver${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixSolver${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lMechatronixCore${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lAlglin${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lHSL${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -llapack_wrapper${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lCommunication${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lsuperlu${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lSplines${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lClothoids${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lquarticRootsFlocke${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lGenericContainer${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lmruby${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lmruby_core${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lonig${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lyaml${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lUtils${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lreplxx${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lLua${POSTFIX}" )
-  set( ALL_LIBS "${ALL_LIBS} -lembedFiglet${POSTFIX}" )
-endif()
+exec_program( pins ARGS --cmake OUTPUT_VARIABLE LIBS_FILE )
+file( WRITE CMakefile-libs.txt ${LIBS_FILE} )
+include( ./CMakefile-libs.txt )
+
+set( CMAKE_C_FLAGS_DEBUG    "${CFLAGS}" )
+set( CMAKE_C_FLAGS          "${CFLAGS}" )
+set( CMAKE_CXX_FLAGS_DEBUG  "${CXXFLAGS}" )
+set( CMAKE_CXX_FLAGS        "${CXXFLAGS}" )
+
+set( CMAKE_SHARED_LINKER_FLAGS ${LFLAGS} )
+set( CMAKE_EXE_LINKER_FLAGS    ${LFLAGS} )
+
+set( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR} )
 
 if ( (UNIX OR LINUX) AND NOT APPLE )
-  set( ALL_LIBS "${ALL_LIBS} -lopenblas_linux -lgomp -lpthread -lreadline -l${CMAKE_DL_LIBS}" )
-  set( ALL_LIBS "${ALL_LIBS} -lquadmath -lgfortran -static-libstdc++ -static-libgcc -Wl,--no-undefined")
+  set( PINS_LIBS "${PINS_LIBS} -lopenblas_linux -lgomp -lpthread -lreadline -l${CMAKE_DL_LIBS}" )
+  set( PINS_LIBS "${PINS_LIBS} -lquadmath -lgfortran -static-libstdc++ -static-libgcc -Wl,--no-undefined")
 endif()
 
 matlab_add_mex(
   NAME ${PROJECT_NAME}
   SRC ${SOURCES}
-  LINK_TO "${ALL_LIBS}"
+  LINK_TO "${PINS_LIBS}"
 )
 
 add_custom_command(

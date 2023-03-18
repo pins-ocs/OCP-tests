@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03.hh                                             |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -129,14 +129,14 @@ namespace LUUS_Singular03Define {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * pMesh;
+    Mechatronix::MeshStd * m_pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     LUUS_Singular03( LUUS_Singular03 const & );
     LUUS_Singular03 const & operator = ( LUUS_Singular03 const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
-    void continuation_step_0( real_type s );
+    void continuation_step_1( real_type s );
 
   public:
 

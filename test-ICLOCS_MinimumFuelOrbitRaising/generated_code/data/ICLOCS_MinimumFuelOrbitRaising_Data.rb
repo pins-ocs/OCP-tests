@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_MinimumFuelOrbitRaising_Data.rb                         #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,9 +20,9 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
+tf          = 3.32
 epsilon_max = 1.0
 epsilon     = epsilon_max
-tf          = 3.32
 
 mechatronix do |data|
 
@@ -228,7 +228,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 
@@ -325,8 +325,8 @@ mechatronix do |data|
     :s0       => 0.0,
     :segments => [
       {
-        :n      => 400.0,
         :length => tf,
+        :n      => 400.0,
       },
     ],
   };

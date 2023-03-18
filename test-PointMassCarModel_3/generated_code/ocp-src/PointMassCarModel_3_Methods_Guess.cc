@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -168,7 +168,7 @@ namespace PointMassCarModel_3Define {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_s             ] = Q__[iQ_zeta];
       X__[ iX_V             ] = ModelPars[iM_Vguess];
@@ -334,15 +334,14 @@ namespace PointMassCarModel_3Define {
   \*/
 
   bool
-  PointMassCarModel_3::penalties_check_node(
+  PointMassCarModel_3::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t1   = X__[iX_fx];
     real_type t2   = t1 * t1;
@@ -353,14 +352,14 @@ namespace PointMassCarModel_3Define {
     real_type t13  = X__[iX_V];
     real_type t14  = t13 * t13;
     real_type t17  = ModelPars[iM_mu__y__max] * ModelPars[iM_mu__y__max];
-    ok = ok && AdherenceEllipse.check_range(t9 / t4 * t2 + t9 / t17 * t14 * t12 - 1, m_max_penalty_value);
+    ok = ok && AdherenceEllipse.check_range(t9 / t4 * t2 + t9 / t17 * t14 * t12 - 1);
     real_type t22  = X__[iX_n];
     real_type t23  = X__[iX_s];
     real_type t24  = ALIAS_leftWidth(t23);
-    ok = ok && RoadLeftBorder.check_range(t22 - t24, m_max_penalty_value);
+    ok = ok && RoadLeftBorder.check_range(t22 - t24);
     real_type t26  = ALIAS_rightWidth(t23);
-    ok = ok && RoadRightBorder.check_range(-t22 - t26, m_max_penalty_value);
-    ok = ok && PowerLimit.check_range(ModelPars[iM_m] / ModelPars[iM_Pmax] * t1 * t13 - 1, m_max_penalty_value);
+    ok = ok && RoadRightBorder.check_range(-t22 - t26);
+    ok = ok && PowerLimit.check_range(ModelPars[iM_m] / ModelPars[iM_Pmax] * t1 * t13 - 1);
     return ok;
   }
 
@@ -413,7 +412,7 @@ namespace PointMassCarModel_3Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && v__OmegaControl.check_range(U__[iU_v__Omega], -1, 1);
     ok = ok && v__fxControl.check_range(U__[iU_v__fx], -1, 1);

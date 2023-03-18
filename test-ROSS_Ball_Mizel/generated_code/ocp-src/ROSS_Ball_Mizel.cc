@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Ball_Mizel.cc                                             |
  |                                                                       |
- |  version: 1.0   date 12/3/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -176,7 +176,7 @@ namespace ROSS_Ball_MizelDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -283,8 +283,7 @@ namespace ROSS_Ball_MizelDefine {
   */
   void
   ROSS_Ball_Mizel::setup_controls( GenericContainer const & gc_data ) {
-    // no Control penalties, setup only iterative solver
-    this->setup_control_solver( gc_data );
+    // no Control penalties
   }
 
   /* --------------------------------------------------------------------------
@@ -310,7 +309,7 @@ namespace ROSS_Ball_MizelDefine {
       gc.exists("pMesh"),
       "in ROSS_Ball_Mizel::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -326,7 +325,7 @@ namespace ROSS_Ball_MizelDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( pMesh->info(),msg_level);
+    m_console->message( m_pMesh->info(),msg_level);
 
     m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
@@ -363,7 +362,7 @@ namespace ROSS_Ball_MizelDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pMesh, gc );
+    this->setup( m_pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

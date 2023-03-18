@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Ball_Mizel_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 12/3/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -64,7 +64,7 @@ namespace ROSS_Ball_MizelDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = U__[iU_u] - V__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "ode", 1, i_segment );
@@ -95,7 +95,7 @@ namespace ROSS_Ball_MizelDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = -1;
     if ( m_debug )
@@ -131,7 +131,7 @@ namespace ROSS_Ball_MizelDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 1, i_segment );

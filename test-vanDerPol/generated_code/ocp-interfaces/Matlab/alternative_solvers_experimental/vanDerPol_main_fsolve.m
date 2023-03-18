@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: vanDerPol_fsolve_main.m                                        %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -14,16 +14,19 @@
 %             paolo.bosetti@unitn.it                                    %
 %-----------------------------------------------------------------------%
 
-
-addpath('../../../nlsys_solver');
-addpath('../../../../nlsys_solver');
-
 % -------------------------------------------------------------------------
 % INITIALIZATION
 % -------------------------------------------------------------------------
 clc;
 clear all;
 close all
+
+DATA_PATH = '../../../data/';
+LIB_PATH  = '../../../../../nlsys_solver';
+
+addpath('..');
+addpath(LIB_PATH);
+
 figsize=[0,0,400,800];
 
 % create object
@@ -40,7 +43,7 @@ nlsys = @(x) nlsys_local(ocp,x);
 % READ PROBLEM DATA-------------------------------------------------------------
 % model data from 'model' structure defined in the following m.file
 %ocp.setup(vanDerPol_data);
-ocp.setup('../../data/vanDerPol_Data'); % automatically try extension .rb and .lua
+ocp.setup( [DATA_PATH 'vanDerPol_Data'] ); % automatically try extension .rb and .lua
 ocp.set_info_level(infolevel);
 ocp.set_guess(); % use default guess
 
@@ -60,11 +63,11 @@ options = optimoptions(...
   'FiniteDifferenceStepSize',eps^(1/3.5) ...
 );
 
-[x0,u0] = ocp.get_raw_solution();
-x       = fsolve( nlsys, x0, options );
+[ x0, mu0, u0 ] = ocp.get_raw_solution();
+x               = fsolve( nlsys, x0, options );
 
-u = ocp.eval_U(x,ocp.guess_U(x));
-ocp.set_raw_solution(x,u);
+MU_U = ocp.eval_MU_U(x,ocp.guess_U(x));
+ocp.set_raw_solution( x, MU_U );
 
 % -------------------------------------------------------------------------
 % PLOT SOLUTION
@@ -80,16 +83,17 @@ subplot(3,1,3);
 ocp.plot_controls();
 
 %%clear mex
-%[Z,U] = vanDerPol_Mex('get_raw_solution',obj);
-%J     = vanDerPol_Mex('eval_JF',obj,Z,U);
-%f     = vanDerPol_Mex('eval_F',obj,Z,U);
+%[Z,MU,U] = vanDerPol_Mex('get_raw_solution',obj);
+%J        = vanDerPol_Mex('eval_JF',obj,Z,MU,U);
+%f        = vanDerPol_Mex('eval_F',obj,Z,MU,U);
 
 function [F,JF] = nlsys_local( ocp, x )
   do_minimization = false;
-  u_guess  = ocp.guess_U(x);
-  u        = ocp.eval_U(x,u_guess);
-  [F,ok1]  = ocp.eval_F(x,u);
-  [JF,ok2] = ocp.eval_JF(x,u);
+  MU_U     = ocp.guess_MU_U(x);
+  [~,U]    = ocp.MU_U_split( MU_U );
+  MU_U     = ocp.eval_MU_U(x,U);
+  [F,ok1]  = ocp.eval_F(x,MU_U);
+  [JF,ok2] = ocp.eval_JF(x,MU_U);
   if ~(ok1&&ok2)
     F = NaN*ones(size(F));
   end

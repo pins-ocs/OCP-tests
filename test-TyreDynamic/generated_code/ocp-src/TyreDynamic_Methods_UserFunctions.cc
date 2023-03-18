@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_UserFunctions.cc                           |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -832,7 +832,7 @@ namespace TyreDynamicDefine {
     real_type t5   = ALIAS_sign_reg_D(xo__omega);
     real_type t9   = xo__omega * xo__omega;
     real_type t10  = ALIAS_sign_reg_DD(xo__omega);
-    real_type result__ = -t10 * t2 * t9 - 4 * t2 * t5 * xo__omega - 2 * t1 * t2;
+    real_type result__ = -t2 * t10 * t9 - 4 * t2 * t5 * xo__omega - 2 * t2 * t1;
     if ( m_debug ) {
       UTILS_ASSERT(
         Utils::is_finite(result__),

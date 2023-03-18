@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_StirredTank_Data.lua                                    |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,16 +20,16 @@
 -- User Header
 
 -- Auxiliary values
-x_epsi     = 0.01
-x_tol      = 0.01
 w_time_max = 1.0
-w_time     = w_time_max
+tol_T      = 1.0
+x_epsi     = 0.01
+epsi_T     = 0.01
+tol_ctrl0  = 0.1
+x_tol      = 0.01
 epsi_ctrl0 = 0.1
 epsi_ctrl  = epsi_ctrl0
-tol_ctrl0  = 0.1
 tol_ctrl   = tol_ctrl0
-tol_T      = 1.0
-epsi_T     = 0.01
+w_time     = w_time_max
 
 content = {
 
@@ -226,7 +226,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 2,
   },
 

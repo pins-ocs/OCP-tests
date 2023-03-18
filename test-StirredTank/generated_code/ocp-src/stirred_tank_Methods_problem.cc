@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: stirred_tank_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace stirred_tankDefine {
   \*/
 
   void
-  stirred_tank::continuation_step_0( real_type s ) {
+  stirred_tank::continuation_step_1( real_type s ) {
     real_type t1   = 1 - s;
     real_type epsi = s * ModelPars[iM_epsi_min] + ModelPars[iM_epsi_max] * t1;
     real_type tol  = s * ModelPars[iM_tol_min] + ModelPars[iM_tol_max] * t1;
@@ -122,7 +122,7 @@ namespace stirred_tankDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u4];
     real_type t3   = U__[iU_u1];
     real_type t4   = U__[iU_u2];
@@ -144,7 +144,7 @@ namespace stirred_tankDefine {
     real_type t36  = 0.513e3 / 0.10e2 * t35;
     real_type t50  = X__[iX_x7];
     real_type t66  = t13 * t13;
-    real_type result__ = (t2 - t7 - t10 - t15) * MU__[0] + (-t5 * t8 - t10 - 146 * t21 + t3) * MU__[1] + (-t20 * t5 - 73 * t21 + t4) * MU__[2] + (-t31 * t5 + 0.176e3 / 5.0 * t9 - t36) * MU__[3] + (-t34 * t5 + 219 * t21 - t36) * MU__[4] + (-t11 * t5 - t15 + 102 * t35) * MU__[5] + (-t5 * t50 + 46 * t14) * MU__[6] + (0.29e2 / 5.0 * t7 - 0.29e2 / 5.0 * t2 - 0.37e2 / 0.10e2 * t3 - 0.41e2 / 0.10e2 * t4 + (23 * t31 + 11 * t34 + 28 * t11 + 35 * t50) * t5 - 5 * t66 - 9.0 / 0.100e3) * MU__[7];
+    real_type result__ = (t2 - t7 - t10 - t15) * MU__[0] + (-t5 * t8 - t10 - 146 * t21 + t3) * MU__[1] + (-t20 * t5 - 73 * t21 + t4) * MU__[2] + (-t31 * t5 + 0.176e3 / 5.0 * t9 - t36) * MU__[3] + (-t34 * t5 + 219 * t21 - t36) * MU__[4] + (-t11 * t5 - t15 + 102 * t35) * MU__[5] + (-t50 * t5 + 46 * t14) * MU__[6] + (0.29e2 / 5.0 * t7 - 0.29e2 / 5.0 * t2 - 0.37e2 / 0.10e2 * t3 - 0.41e2 / 0.10e2 * t4 + (23 * t31 + 11 * t34 + 28 * t11 + 35 * t50) * t5 - 5 * t66 - 9.0 / 0.100e3) * MU__[7];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -168,7 +168,7 @@ namespace stirred_tankDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
@@ -196,8 +196,8 @@ namespace stirred_tankDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     real_type result__ = -XR__[iX_x8];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -222,8 +222,8 @@ namespace stirred_tankDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -288,7 +288,7 @@ namespace stirred_tankDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -343,7 +343,7 @@ namespace stirred_tankDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -419,8 +419,8 @@ namespace stirred_tankDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x1] - XL__[iX_x1];
     result__[ 1   ] = XR__[iX_x2] - XL__[iX_x2];
     result__[ 2   ] = XR__[iX_x3] - XL__[iX_x3];
@@ -500,8 +500,8 @@ namespace stirred_tankDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -559,7 +559,7 @@ namespace stirred_tankDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = u1Control(U__[iU_u1], 0, 20);
     result__[ 1   ] = u2Control(U__[iU_u2], 0, 6);
     result__[ 2   ] = u3Control(U__[iU_u3], 0, 4);

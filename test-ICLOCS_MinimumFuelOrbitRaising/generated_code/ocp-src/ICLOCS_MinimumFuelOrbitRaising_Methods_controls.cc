@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Methods_controls.cc             |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -62,7 +62,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_vr];
     real_type t3   = U__[iU_theta];
     real_type t4   = t3 * t3;
@@ -76,7 +76,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     real_type t20  = mass(Q__[iQ_zeta]);
     real_type t21  = 1.0 / t20;
     real_type t28  = cos(t3);
-    real_type result__ = -t1 + t4 * ModelPars[iM_epsilon] + t1 * MU__[0] + (t12 * t10 - 1.0 / t14 + t21 * t17 * t16) * MU__[1] + (-t12 * t9 * t1 + t21 * t28 * t16) * MU__[2];
+    real_type result__ = -t1 + t4 * ModelPars[iM_epsilon] + t1 * MU__[0] + (t12 * t10 - 1.0 / t14 + t21 * t17 * t16) * MU__[1] + (-t1 * t12 * t9 + t16 * t21 * t28) * MU__[2];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -98,7 +98,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_theta];
     real_type t6   = ModelPars[iM_T];
     real_type t8   = cos(t2);
@@ -135,7 +135,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_T];
     real_type t2   = U__[iU_theta];
     real_type t3   = cos(t2);
@@ -172,7 +172,7 @@ namespace ICLOCS_MinimumFuelOrbitRaisingDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t4   = ModelPars[iM_T];
     real_type t6   = U__[iU_theta];
     real_type t7   = sin(t6);

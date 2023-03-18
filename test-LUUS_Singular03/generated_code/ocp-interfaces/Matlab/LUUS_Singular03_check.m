@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: LUUS_Singular03_main.m                                         %
 %                                                                       %
-%  version: 1.0   date 22/2/2023                                        %
+%  version: 1.0   date 20/3/2023                                        %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -22,12 +22,12 @@ close all
 % create object
 ocp = LUUS_Singular03( 'LUUS_Singular03' );
 
-ocp.setup('../../data/LUUS_Singular03_Data'); % automatically try extension .rb and .lua
+ocp.setup('../../../data/LUUS_Singular03_Data'); % automatically try extension .rb and .lua
 ocp.set_info_level(4);
 ocp.set_guess(); % use default guess generated in MAPLE
-[Z,U] = ocp.get_raw_solution();
-[F,OK] = ocp.eval_F( Z, U );
-[JF,OK] = ocp.eval_JF( Z, U );
+[Z,MU,U] = ocp.get_raw_solution();
+[F,OK] = ocp.eval_F( Z, MU, U );
+[JF,OK] = ocp.eval_JF( Z, MU, U );
 
 [X,Lambda,Pars,Omega] = ocp.unpack( Z );
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Main.cc                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,9 +50,9 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tf = 3.32;
     real_type epsilon_max = 1;
     real_type epsilon = epsilon_max;
-    real_type tf = 3.32;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -107,7 +107,7 @@ main() {
     data_Solver["tolerance"]             = 1e-09;
 
     // continuation parameters
-    data_Solver["ns_continuation_begin"] = 0;
+    data_Solver["ns_continuation_begin"] = 1;
     data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
@@ -164,8 +164,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["s0"] = 0;
-ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["length"] = tf;
+ICLOCS_MinimumFuelOrbitRaising_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers

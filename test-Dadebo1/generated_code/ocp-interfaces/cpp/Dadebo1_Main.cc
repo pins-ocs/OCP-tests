@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Dadebo1_Main.cc                                                |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -33,10 +33,17 @@ main() {
   using Console     = Mechatronix::Console;
   using ThreadPool1 = Mechatronix::ThreadPool1;
 
-  // model cen be large and do not fit in stack, use new
+  // model can be large and do not fit in stack, use new
   GenericContainer gc_data, gc_solution;
   Console          console(&std::cout,4);
   ThreadPool1      TP(std::thread::hardware_concurrency());
+
+  try {
+    string val; bool ok = Utils::get_environment("TERM",val);
+    if ( !ok || val.find("xterm") == std::string::npos ) console.set_off();
+  } catch ( ... ) {
+    console.set_off();
+  }
 
   try {
     Dadebo1 * m_model = new Dadebo1("Dadebo1",&console,&TP);

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward.cc                                             |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -175,7 +175,7 @@ namespace ForwardBackwardDefine {
     m_U_solve_iterative = true;
 
     // continuation
-    this->ns_continuation_begin = 0;
+    this->ns_continuation_begin = 1;
     this->ns_continuation_end   = 3;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
@@ -218,7 +218,7 @@ namespace ForwardBackwardDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -229,9 +229,9 @@ namespace ForwardBackwardDefine {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuation_step_0( s ); break;
       case 1: continuation_step_1( s ); break;
       case 2: continuation_step_2( s ); break;
+      case 3: continuation_step_3( s ); break;
       default:
         UTILS_ERROR(
           "ForwardBackward::update_continuation( phase number={}, old_s={}, s={} )"
@@ -363,8 +363,7 @@ namespace ForwardBackwardDefine {
   */
   void
   ForwardBackward::setup_controls( GenericContainer const & gc_data ) {
-    // no Control penalties, setup only iterative solver
-    this->setup_control_solver( gc_data );
+    // no Control penalties
   }
 
   /* --------------------------------------------------------------------------
@@ -390,7 +389,7 @@ namespace ForwardBackwardDefine {
       gc.exists("pTrajectory"),
       "in ForwardBackward::setup_pointers(gc) cant find key `pTrajectory' in gc\n"
     );
-    pTrajectory = gc("pTrajectory").get_pointer<Path2D*>();
+    m_pTrajectory = gc("pTrajectory").get_pointer<Path2D*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -413,7 +412,7 @@ namespace ForwardBackwardDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pTrajectory`\n",msg_level);
-    m_console->message( pTrajectory->info(),msg_level);
+    m_console->message( m_pTrajectory->info(),msg_level);
 
     m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
@@ -450,7 +449,7 @@ namespace ForwardBackwardDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pTrajectory, gc );
+    this->setup( m_pTrajectory, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

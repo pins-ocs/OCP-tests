@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularCalogero.cc                                            |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -167,7 +167,7 @@ namespace SingularCalogeroDefine {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -246,8 +246,6 @@ namespace SingularCalogeroDefine {
     );
     GenericContainer const & gc = gc_data("Controls");
     uControl.setup( gc("uControl") );
-    // setup iterative solver
-    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -273,7 +271,7 @@ namespace SingularCalogeroDefine {
       gc.exists("pMesh"),
       "in SingularCalogero::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -292,7 +290,7 @@ namespace SingularCalogeroDefine {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( pMesh->info(),msg_level);
+    m_console->message( m_pMesh->info(),msg_level);
   }
 
   /* --------------------------------------------------------------------------
@@ -319,7 +317,7 @@ namespace SingularCalogeroDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pMesh, gc );
+    this->setup( m_pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

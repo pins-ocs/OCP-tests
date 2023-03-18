@@ -15,16 +15,15 @@ BEGIN THREADS
 END THREADS
 BEGIN PARAMS
   m_debug:                 false
-  m_max_penalty_value:     1000
   Solver Controls:         Newton
   Jacobian evaluation:     ANALYTIC
   Jacobian BC evaluation:  ANALYTIC
   Initializer Controls:    not selected
   Initialize Multipliers:  false
   Initialize Guess:        not selected + not selected
-  Continuation interval:   [0,0)
-  mesh class pointer:      0x7ff7b84ef5c8
-  solver class pointer:    0x7f7abd00e5c0
+  Continuation interval:   [1,0)
+  mesh class pointer:      0x7ff7b95945b0
+  solver class pointer:    0x7fe2a9813ef0
 END PARAMS
 BEGIN LINEAR ALGEBRA
   rows   = 2004
@@ -98,17 +97,7 @@ MODEL PARAMETERS END
 [  4, 1] (  0.0302  ,  0.0318  ) [   7.3    ,   3.22   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  5, 1] (  0.0318  ,  0.0459  ) [   10.8   ,   4.74   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  6, 2] (  0.0459  ,  0.0917  ) [   15.9   ,   7.02   ] 0.95       [0:0:0:0:1:0:0:0:0:0:0:0]
-NewtonDumped[OCP_solver_NewtonDumped]::compute_correction exception: 
-Discretized_Indirect_OCP::evaluate_function_thread, at thread #4
-
-PenaltyBarrier1DLessThan[vMinLimit]::operator ()(1.8705143369989514) argument must be < 0
-
-On File:PenaltyBarrier1D.cc:456
-
-On File:Discretized_Indirect_OCP_NLBLOCKS.cc:224
-
-Should not happen here!
-[  7, 3] (  0.0917  ,  0.106   ) [   22.3   ,   13.6   ] 0.5        [0:0:0:0:0:0:0:0:0:0:0:0]
+[  7, 3] (  0.0917  ,  0.106   ) [   22.3   ,   13.6   ] 0.5        [0:0:0:0:0:0:0:1:0:0:0:0]
 [  8, 1] (  0.106   ,  0.127   ) [   22.9   ,   6.01   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  9, 4] (  0.127   ,  0.0483  ) [   33.9   ,   2.85   ] 0.857      [3:0:0:0:0:0:0:0:0:0:0:0]
 [ 10, 1] (  0.0483  , 0.00974  ) [   3.49   ,  0.571   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
@@ -187,15 +176,15 @@ dump_min       = 0.25          dump_max       = 0.9
 Converged      = YES           tolerance      = 1e-09
 N. Equations   = 2004          N. System pars = 3000
 ----------------------------- STATISTIC ------------------------------
-Elapsed Time   = 195[ms]       timeout        = 0 [ms]
-iteration      = 69            Memory Used    = 372Kb (+63bytes)
+Elapsed Time   = 163[ms]       timeout        = 0 [ms]
+iteration      = 69            Memory Used    = 398Kb (+38bytes)
 max iterations = 300           max acc. iter. = 800
 ---------------------------- CONTINUATION ----------------------------
 Initial Step   = 0.2           Minimum Step   = 0.001
 Reduce Factor  = 0.5           Augment Factor = 1.5
 Few iterations = 8
 ---------------------------- EVALUATIONS -----------------------------
-Function       = 263           Jacobian       = 69
+Function       = 262           Jacobian       = 69
 Factorization  = 69            Inversion      = 330
 ----------------------- SOLVER MERIT_F2_and_D2 -----------------------
 n_power        = 2             check_angle    = 120 [degree]
@@ -205,48 +194,54 @@ ratio ||f||_2  = 2             ratio ||d||_2  = 2
 ratio ||f||_1  = 2             ratio ||d||_1  = 2
 ........................... last residuals ...........................
 last ||f||_inf = 5.684e-10     last ||d||_inf = 3.5862e-09
-last ||f||_1   = 8.2106e-12    last ||d||_1   = 2.2977e-10
-last ||f||_2   = 5.1099e-11    last ||d||_2   = 6.9064e-10
+last ||f||_1   = 8.2105e-12    last ||d||_1   = 2.2976e-10
+last ||f||_2   = 5.1098e-11    last ||d||_2   = 6.9061e-10
 ----------------------------------------------------------------------
               __   __             ___  __   __   ___  __              
              /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
              \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
                                                                       
 Check Jacobian Begin
-Check DabcDxlxlpu:
+Check DabcDxlxlpu: 
 #ERR 1 DabcDxlxlpu block N. 214 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   9.9884e-05 : -6.9965e-07  [A:FD] ---   0.00010058 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   9.9884e-05 : -6.9965e-07  [A:FD] ---   0.00010058 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   9.9884e-05 : -6.9965e-07  [A:FD] ---   0.00010058 : 0.01006      [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   9.9884e-05 : -6.9965e-07  [A:FD] ---   0.00010058 : 0.01006      [err:err(%)]
+
 
 #ERR 2 DabcDxlxlpu block N. 215 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   0.00010155 : -7.0568e-07  [A:FD] ---   0.00010226 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   0.00010155 : -7.0568e-07  [A:FD] ---   0.00010226 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   0.00010155 : -7.0568e-07  [A:FD] ---   0.00010226 : 0.01023      [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   0.00010155 : -7.0568e-07  [A:FD] ---   0.00010226 : 0.01023      [err:err(%)]
+
 
 #ERR 3 DabcDxlxlpu block N. 216 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   0.00010326 : -7.1184e-07  [A:FD] ---   0.00010397 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   0.00010326 : -7.1184e-07  [A:FD] ---   0.00010397 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   0.00010326 : -7.1184e-07  [A:FD] ---   0.00010397 : 0.0104       [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   0.00010326 : -7.1184e-07  [A:FD] ---   0.00010397 : 0.0104       [err:err(%)]
+
 
 #ERR 4 DabcDxlxlpu block N. 217 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   0.00010499 : -7.1813e-07  [A:FD] ---   0.00010571 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   0.00010499 : -7.1813e-07  [A:FD] ---   0.00010571 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   0.00010499 : -7.1813e-07  [A:FD] ---   0.00010571 : 0.01057      [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   0.00010499 : -7.1813e-07  [A:FD] ---   0.00010571 : 0.01057      [err:err(%)]
+
 
 #ERR 5 DabcDxlxlpu block N. 218 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   0.00010676 : -7.2456e-07  [A:FD] ---   0.00010749 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   0.00010676 : -7.2456e-07  [A:FD] ---   0.00010749 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   0.00010676 : -7.2456e-07  [A:FD] ---   0.00010749 : 0.01075      [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   0.00010676 : -7.2456e-07  [A:FD] ---   0.00010749 : 0.01075      [err:err(%)]
+
 
 #ERR 6 DabcDxlxlpu block N. 219 type: FD #x and #l=1 #p=0 #u=2 [ (xlp) x (xlxlpu) = 2 x 6]
 
-DbDx_L(0:0,0:0)[ 0, 0] =   0.00010857 : -7.3113e-07  [A:FD] ---    0.0001093 : 100.7        [err:err(%)]
-DbDx_R(0:0,0:0)[ 0, 0] =   0.00010857 : -7.3113e-07  [A:FD] ---    0.0001093 : 100.7        [err:err(%)]
+DbDx_L(0:0,0:0)[ 0, 0] =   0.00010857 : -7.3113e-07  [A:FD] ---    0.0001093 : 0.01093      [err:err(%)]
+DbDx_R(0:0,0:0)[ 0, 0] =   0.00010857 : -7.3113e-07  [A:FD] ---    0.0001093 : 0.01093      [err:err(%)]
 
 skipping...
-Check DhcDxlxlop:
-Last block: OK
+
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
 Check Jacobian End
 Check Controls Begin
 All controls solution are OK

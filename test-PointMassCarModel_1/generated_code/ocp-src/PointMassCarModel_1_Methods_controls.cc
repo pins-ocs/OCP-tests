@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_controls.cc                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -164,7 +164,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];
     real_type t4   = X__[iX_n];
@@ -211,10 +211,10 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
-    result__[ 0   ] = t5 * ModelPars[iM_v__fx__max] * MU__[4] + t5 * t7;
+    result__[ 0   ] = t5 * ModelPars[iM_v__fx__max] * MU__[4] + t7 * t5;
     real_type t14  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
     result__[ 1   ] = t5 * ModelPars[iM_v__Omega__max] * MU__[3] + t14 * t5;
     if ( m_debug )
@@ -252,7 +252,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_V];
     real_type t2   = X__[iX_alpha];
     real_type t3   = X__[iX_n];
@@ -261,19 +261,19 @@ namespace PointMassCarModel_1Define {
     real_type t7   = ALIAS_v__fxControl_D_1(U__[iU_v__fx], -1, 1);
     real_type t10  = ModelPars[iM_v__fx__max];
     real_type t11  = t10 * MU__[4];
-    result__[ 0   ] = t11 * t5 + t5 * t7;
+    result__[ 0   ] = t5 * t11 + t7 * t5;
     real_type t13  = inv_zeta__dot_D_2(t1, t2, t3, t4);
-    result__[ 1   ] = t11 * t13 + t13 * t7;
+    result__[ 1   ] = t13 * t11 + t7 * t13;
     real_type t16  = inv_zeta__dot_D_1(t1, t2, t3, t4);
-    result__[ 2   ] = t11 * t16 + t16 * t7;
+    result__[ 2   ] = t16 * t11 + t7 * t16;
     real_type t19  = inv_zeta__dot(t1, t2, t3, t4);
     result__[ 3   ] = t19 * t10;
     real_type t21  = ALIAS_v__OmegaControl_D_1(U__[iU_v__Omega], -1, 1);
     real_type t24  = ModelPars[iM_v__Omega__max];
     real_type t25  = t24 * MU__[3];
-    result__[ 4   ] = t21 * t5 + t25 * t5;
-    result__[ 5   ] = t13 * t21 + t13 * t25;
-    result__[ 6   ] = t16 * t21 + t16 * t25;
+    result__[ 4   ] = t21 * t5 + t5 * t25;
+    result__[ 5   ] = t21 * t13 + t13 * t25;
+    result__[ 6   ] = t21 * t16 + t16 * t25;
     result__[ 7   ] = t19 * t24;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 8, i_segment );
@@ -304,10 +304,10 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t5   = inv_zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type t7   = ALIAS_v__fxControl_D_1_1(U__[iU_v__fx], -1, 1);
-    result__[ 0   ] = t5 * t7;
+    result__[ 0   ] = t7 * t5;
     real_type t9   = ALIAS_v__OmegaControl_D_1_1(U__[iU_v__Omega], -1, 1);
     result__[ 1   ] = t9 * t5;
     if ( m_debug )
@@ -341,7 +341,7 @@ namespace PointMassCarModel_1Define {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     U__[ iU_v__fx    ] = v__OmegaControl.solve(-MU__[4] * ModelPars[iM_v__fx__max], -1, 1);
     U__[ iU_v__Omega ] = v__OmegaControl.solve(-MU__[3] * ModelPars[iM_v__Omega__max], -1, 1);
     if ( m_debug )

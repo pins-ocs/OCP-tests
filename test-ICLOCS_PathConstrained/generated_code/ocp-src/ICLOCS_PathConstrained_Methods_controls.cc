@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_controls.cc                     |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -75,7 +75,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t2   = t1 * t1;
     real_type t5   = X__[iX_x1] * X__[iX_x1];
@@ -106,7 +106,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t3   = ALIAS_uControl_D_1(t1, -20, 20);
     result__[ 0   ] = 0.10e-1 * t1 + t3 + MU__[1];
@@ -138,7 +138,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 1, i_segment );
@@ -168,7 +168,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_uControl_D_1_1(U__[iU_u], -20, 20);
     result__[ 0   ] = 0.10e-1 + t2;
     if ( m_debug )

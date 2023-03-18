@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HyperSensitive_Data.lua                                        |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -216,7 +216,7 @@ content = {
     },
 
     -- continuation parameters
-    ns_continuation_begin = 0,
+    ns_continuation_begin = 1,
     ns_continuation_end   = 0,
   },
 
@@ -286,11 +286,11 @@ content = {
     segments = {
       
       {
+        length           = 10000.0,
         density_function = {
           C   = 50.0,
           rho = 0.8,
         },
-        length           = 10000.0,
       },
     },
   },

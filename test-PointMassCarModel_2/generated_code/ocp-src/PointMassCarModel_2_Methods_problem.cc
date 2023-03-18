@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Methods_problem.cc                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -153,7 +153,7 @@ namespace PointMassCarModel_2Define {
   \*/
 
   void
-  PointMassCarModel_2::continuation_step_0( real_type s ) {
+  PointMassCarModel_2::continuation_step_1( real_type s ) {
     real_type t1   = ModelPars[iM_wT0];
     ModelPars[iM_wT] = t1 + (ModelPars[iM_wT1] - t1) * s;
   }
@@ -165,7 +165,7 @@ namespace PointMassCarModel_2Define {
   \*/
 
   void
-  PointMassCarModel_2::continuation_step_1( real_type s ) {
+  PointMassCarModel_2::continuation_step_2( real_type s ) {
     real_type t1   = ModelPars[iM_p_epsi0];
     real_type t5   = t1 + (ModelPars[iM_p_epsi1] - t1) * s;
     AdherenceEllipse.update_epsilon(t5);
@@ -197,7 +197,7 @@ namespace PointMassCarModel_2Define {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];
     real_type t5   = Q__[iQ_Kappa];
@@ -228,7 +228,7 @@ namespace PointMassCarModel_2Define {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t6   = zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     real_type result__ = 1.0 / t6 * ModelPars[iM_wT];
     if ( m_debug ) {
@@ -257,8 +257,8 @@ namespace PointMassCarModel_2Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = m_pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = m_pRoad->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -283,8 +283,8 @@ namespace PointMassCarModel_2Define {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = m_pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = m_pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -343,7 +343,7 @@ namespace PointMassCarModel_2Define {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];
     real_type t4   = X__[iX_n];
@@ -394,7 +394,7 @@ namespace PointMassCarModel_2Define {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_wT];
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];
@@ -407,24 +407,24 @@ namespace PointMassCarModel_2Define {
     real_type t12  = t11 * t11;
     real_type t16  = 1.0 / t7 * t1;
     real_type t17  = zeta__dot_D_3_3(t2, t3, t4, t5);
-    result__[ 0   ] = 2 * t12 * t10 - t17 * t16;
+    result__[ 0   ] = 2 * t10 * t12 - t17 * t16;
     real_type t19  = zeta__dot_D_2(t2, t3, t4, t5);
     real_type t23  = zeta__dot_D_2_3(t2, t3, t4, t5);
     result__[ 1   ] = 2 * t19 * t11 * t10 - t23 * t16;
     real_type t25  = zeta__dot_D_1(t2, t3, t4, t5);
     real_type t29  = zeta__dot_D_1_3(t2, t3, t4, t5);
-    result__[ 2   ] = 2 * t25 * t11 * t10 - t29 * t16;
+    result__[ 2   ] = 2 * t10 * t11 * t25 - t16 * t29;
     result__[ 3   ] = result__[1];
     real_type t31  = t19 * t19;
     real_type t34  = zeta__dot_D_2_2(t2, t3, t4, t5);
-    result__[ 4   ] = 2 * t31 * t10 - t34 * t16;
+    result__[ 4   ] = 2 * t10 * t31 - t16 * t34;
     real_type t39  = zeta__dot_D_1_2(t2, t3, t4, t5);
-    result__[ 5   ] = 2 * t25 * t19 * t10 - t39 * t16;
+    result__[ 5   ] = 2 * t10 * t19 * t25 - t16 * t39;
     result__[ 6   ] = result__[2];
     result__[ 7   ] = result__[5];
     real_type t41  = t25 * t25;
     real_type t44  = zeta__dot_D_1_1(t2, t3, t4, t5);
-    result__[ 8   ] = 2 * t41 * t10 - t44 * t16;
+    result__[ 8   ] = 2 * t10 * t41 - t16 * t44;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 9, i_segment );
   }
@@ -446,7 +446,7 @@ namespace PointMassCarModel_2Define {
     real_type s,
     Q_p_type  result__
   ) const {
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
     result__[ 1   ] = ALIAS_Kappa(s);
     result__[ 2   ] = ALIAS_leftWidth(s);
@@ -532,8 +532,8 @@ namespace PointMassCarModel_2Define {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = m_pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = m_pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_n] - XL__[iX_n];
     result__[ 1   ] = XR__[iX_alpha] - XL__[iX_alpha];
     result__[ 2   ] = XR__[iX_V] - XL__[iX_V];
@@ -595,8 +595,8 @@ namespace PointMassCarModel_2Define {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    Road2D::SegmentClass const & segmentLeft  = pRoad->get_segment_by_index(i_segment_left);
-    Road2D::SegmentClass const & segmentRight = pRoad->get_segment_by_index(i_segment_right);
+    Road2D::SegmentClass const & segmentLeft  = m_pRoad->get_segment_by_index(i_segment_left);
+    Road2D::SegmentClass const & segmentRight = m_pRoad->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -642,7 +642,7 @@ namespace PointMassCarModel_2Define {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = v__fxControl(U__[iU_v__fx], -1, 1);
     result__[ 1   ] = v__OmegaControl(U__[iU_v__Omega], -1, 1);
     real_type t3   = X__[iX_fx];
@@ -693,7 +693,7 @@ namespace PointMassCarModel_2Define {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
     real_type t5   = zeta__dot(X__[iX_V], X__[iX_alpha], X__[iX_n], Q__[iQ_Kappa]);
     result__[ 0   ] = 1.0 / t5;
     // do not check

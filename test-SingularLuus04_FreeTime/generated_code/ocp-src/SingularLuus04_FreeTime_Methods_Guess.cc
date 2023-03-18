@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularLuus04_FreeTime_Methods_Guess.cc                       |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -70,7 +70,7 @@ namespace SingularLuus04_FreeTimeDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_x ] = ModelPars[iM_x_i];
       X__[ iX_y ] = ModelPars[iM_y_i];
@@ -232,7 +232,7 @@ namespace SingularLuus04_FreeTimeDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_T];
     /* REMOVED */ Xoptima__check__node__lt(0, t1, Xoptima__message_node_check_0);
     /* REMOVED */ Xoptima__check__node__lt(t1, 100, Xoptima__message_node_check_1);
@@ -248,15 +248,14 @@ namespace SingularLuus04_FreeTimeDefine {
   \*/
 
   bool
-  SingularLuus04_FreeTime::penalties_check_node(
+  SingularLuus04_FreeTime::penalties_check(
     NodeQX const & NODE__,
-    P_const_p_type P__,
-    U_const_p_type U__
+    P_const_p_type P__
   ) const {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     bool ok = true;
 
     return ok;
@@ -310,7 +309,7 @@ namespace SingularLuus04_FreeTimeDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], -1, 1);
     return ok;

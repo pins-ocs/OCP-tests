@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS2_AlyChan_Data.rb                                        #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -21,9 +21,9 @@ include Mechatronix
 
 # Auxiliary values
 u_tol_max  = 1e-06
+u_tol      = u_tol_max
 u_epsi_max = 1e-06
 u_epsi     = u_epsi_max
-u_tol      = u_tol_max
 
 mechatronix do |data|
 
@@ -229,7 +229,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1.cc                                         |
  |                                                                       |
- |  version: 1.0   date 22/2/2023                                        |
+ |  version: 1.0   date 20/3/2023                                        |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -201,7 +201,7 @@ namespace PointMassCarModel_1Define {
     m_U_solve_iterative = false;
 
     // continuation
-    this->ns_continuation_begin = 0;
+    this->ns_continuation_begin = 1;
     this->ns_continuation_end   = 2;
     // Initialize to NaN all the ModelPars
     std::fill_n( ModelPars, numModelPars, Utils::NaN<real_type>() );
@@ -244,7 +244,7 @@ namespace PointMassCarModel_1Define {
     m_console->message(
       fmt::format(
         "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase+1, s, s-old_s, old_s
+        phase, s, s-old_s, old_s
       ),
       msg_level
     );
@@ -255,8 +255,8 @@ namespace PointMassCarModel_1Define {
       phase, old_s, s
     );
     switch ( phase ) {
-      case 0: continuation_step_0( s ); break;
       case 1: continuation_step_1( s ); break;
+      case 2: continuation_step_2( s ); break;
       default:
         UTILS_ERROR(
           "PointMassCarModel_1::update_continuation( phase number={}, old_s={}, s={} )"
@@ -396,8 +396,6 @@ namespace PointMassCarModel_1Define {
     GenericContainer const & gc = gc_data("Controls");
     v__fxControl.setup( gc("v__fxControl") );
     v__OmegaControl.setup( gc("v__OmegaControl") );
-    // setup iterative solver
-    this->setup_control_solver( gc_data );
   }
 
   /* --------------------------------------------------------------------------
@@ -423,7 +421,7 @@ namespace PointMassCarModel_1Define {
       gc.exists("pRoad"),
       "in PointMassCarModel_1::setup_pointers(gc) cant find key `pRoad' in gc\n"
     );
-    pRoad = gc("pRoad").get_pointer<Road2D*>();
+    m_pRoad = gc("pRoad").get_pointer<Road2D*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -450,7 +448,7 @@ namespace PointMassCarModel_1Define {
 
     m_console->message("\nUser class (pointer)\n",msg_level);
     m_console->message( "\nUser function `pRoad`\n",msg_level);
-    m_console->message( pRoad->info(),msg_level);
+    m_console->message( m_pRoad->info(),msg_level);
 
     m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
     for ( integer i = 0; i < numModelPars; ++i ) {
@@ -487,7 +485,7 @@ namespace PointMassCarModel_1Define {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( pRoad, gc );
+    this->setup( m_pRoad, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code

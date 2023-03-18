@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: ICLOCS_SingularArc_Data.rb                                     #
 #                                                                       #
-#  version: 1.0   date 22/2/2023                                        #
+#  version: 1.0   date 20/3/2023                                        #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,12 +20,12 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-epsi_ctrl0 = 0.01
-tol_ctrl0  = 0.01
-tol_ctrl   = tol_ctrl0
-epsi_ctrl  = epsi_ctrl0
 tol_T      = 0.1
 epsi_T     = 0.01
+tol_ctrl0  = 0.01
+tol_ctrl   = tol_ctrl0
+epsi_ctrl0 = 0.01
+epsi_ctrl  = epsi_ctrl0
 
 mechatronix do |data|
 
@@ -231,7 +231,7 @@ mechatronix do |data|
     },
 
     # continuation parameters
-    :ns_continuation_begin => 0,
+    :ns_continuation_begin => 1,
     :ns_continuation_end   => 1,
   }
 
