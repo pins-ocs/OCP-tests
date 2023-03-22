@@ -71,7 +71,7 @@ IPOST := [
 ]:;
 CONTINUATION := [];
 GUESS := [ v = v_i ];
-MESH_DEF := [[ length=1000, n=1000 ]];
+MESH_DEF := [[ length=1000, n=100 ]];
 project_dir  := "../generated_code";
 project_name := "Bike1D";
 generateOCProblem(

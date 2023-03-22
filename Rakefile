@@ -135,9 +135,9 @@ task :run do
   if File.exist?(dir) then
     cd dir do
       if OS != :win then
-        cmd = "./build/main";
+        cmd = "./bin/main";
       else
-        cmd = ".\\build\\main.exe";
+        cmd = ".\\bin\\main.exe";
       end
       puts "Run: #{cmd}".yellow
       system(cmd);
