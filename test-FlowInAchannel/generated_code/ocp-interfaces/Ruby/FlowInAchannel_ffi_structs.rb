@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: FlowInAchannel_ffi_structs.rb                                     #
 #                                                                          #
-#  version: 1.0   date 20/3/2023                                           #
+#  version: 1.0   date 9/5/2023                                            #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -40,7 +40,11 @@ module FlowInAchannel
   class FlowInAchannel_model_params < FFI::Struct
     layout(
 
-      :R, :data_t,
+      :R,  :data_t,
+
+      :R0, :data_t,
+
+      :R1, :data_t,
 
     )
 

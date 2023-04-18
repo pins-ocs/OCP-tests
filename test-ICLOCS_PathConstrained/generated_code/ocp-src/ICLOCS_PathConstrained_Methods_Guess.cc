@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Methods_Guess.cc                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -72,7 +72,7 @@ namespace ICLOCS_PathConstrainedDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_x1 ] = 0;
       X__[ iX_x2 ] = -1;
@@ -243,7 +243,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t3   = pow(Q__[iQ_zeta] - 0.5e0, 2);
     ok = ok && x2bound.check_range(0.5e0 - 8 * t3 + X__[iX_x2]);
@@ -298,7 +298,7 @@ namespace ICLOCS_PathConstrainedDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], -20, 20);
     return ok;

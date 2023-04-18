@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain.hh                                                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -113,7 +113,7 @@ namespace HangingChainDefine {
   class HangingChain : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[6];
+    real_type ModelPars[8];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -128,7 +128,7 @@ namespace HangingChainDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * m_pMesh;
+    Mechatronix::MeshStd * pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     HangingChain( HangingChain const & );
@@ -191,7 +191,7 @@ namespace HangingChainDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     HANGINGCHAIN_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))
@@ -230,6 +230,9 @@ namespace HangingChainDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // user functions prototype (with derivative)
+    HANGINGCHAIN_API_DLL real_type x_guess      ( real_type xo__s ) const;
+    HANGINGCHAIN_API_DLL real_type x_guess_D    ( real_type xo__s ) const;
+    HANGINGCHAIN_API_DLL real_type x_guess_DD   ( real_type xo__s ) const;
 
     #include <MechatronixSolver/OCP_methods.hxx>
     #include <MechatronixSolver/Indirect_OCP_methods.hxx>

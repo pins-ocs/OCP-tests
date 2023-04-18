@@ -58,10 +58,10 @@ begin # definitions
 
 rescue ModelDirNotFoundError
   warn "Cannot find ``model`` directory!\n".red
-  exit
+  #exit
 rescue WrongTestDirError
   warn "Wrong directory!\nyou must start within a test-MODELNAME with MODELNAME only letters\nfound: #{ROOT.split('/')[-1]}".red
-  exit
+  #exit
 rescue => e
   p e
   binding.pry
@@ -194,15 +194,10 @@ task :cleanup do
   sh "git submodule update --checkout --recursive"
 end
 
-task :clean do
-  Dir.glob("test-*/*.txt").each          { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/*.rb").each           { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/CMakeLists.txt").each { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/iterations.txt").each { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/lib").each            { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/bin").each            { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/data").each           { |f| FileUtils.rm_rf f }
-  Dir.glob("test-*/ocp-*").each          { |f| FileUtils.rm_rf f }
+task :clean_test do
+  puts "do clean_test".green
+  Dir.glob("test-*/generated_code").each do |f|
+    puts "remove #{f}".yellow
+    FileUtils.rm_rf f
+  end
 end
-
-

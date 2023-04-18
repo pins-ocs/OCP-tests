@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Main.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_ctrl = 0.01;
-    real_type xy_tol0 = 0.1;
-    real_type xy_tol = xy_tol0;
     real_type tol_ctrl = 0.01;
+    real_type xy_tol0 = 0.1;
+    real_type epsi_ctrl = 0.01;
     real_type xy_eps0 = 0.1;
+    real_type xy_tol = xy_tol0;
     real_type xy_eps = xy_eps0;
     integer InfoLevel = 4;
 
@@ -964,8 +964,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_ContinuousMP_data.Mesh["s0"] = 0;
-ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 ICLOCS_ContinuousMP_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_ContinuousMP_data.Mesh["segments"][0]["n"] = 50;
 
 
     // alias for user object classes passed as pointers
@@ -985,7 +985,8 @@ ICLOCS_ContinuousMP_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

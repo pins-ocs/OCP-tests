@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater.hh                                                  |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -113,7 +113,7 @@ namespace UnderwaterDefine {
   class Underwater : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[16];
+    real_type ModelPars[18];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     Mechatronix::PenaltyBarrierU u1Control;
@@ -131,7 +131,7 @@ namespace UnderwaterDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * m_pMesh;
+    Mechatronix::MeshStd * pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     Underwater( Underwater const & );
@@ -195,7 +195,7 @@ namespace UnderwaterDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     UNDERWATER_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))

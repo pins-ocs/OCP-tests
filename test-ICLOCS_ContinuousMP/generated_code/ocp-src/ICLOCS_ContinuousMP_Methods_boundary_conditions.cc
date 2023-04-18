@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP_Methods_boundary_conditions.cc             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -312,8 +312,8 @@ namespace ICLOCS_ContinuousMPDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = XL__[iX_xx1];
     result__[ 0   ] = t1 - 1;
     real_type t2   = XL__[iX_yy1];
@@ -619,8 +619,8 @@ namespace ICLOCS_ContinuousMPDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -827,8 +827,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[40];
     result__[ 0   ] = t1 + LL__[iL_lambda1__xo];
     real_type t3   = OMEGA__[41];
@@ -929,11 +929,11 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t99  = OMEGA__[10];
     result__[ 49  ] = -t19 - t99 + LL__[iL_lambda50__xo];
     real_type t101 = OMEGA__[11];
-    result__[ 50  ] = -t21 - t101 + LL__[iL_lambda51__xo];
+    result__[ 50  ] = -t101 - t21 + LL__[iL_lambda51__xo];
     real_type t103 = OMEGA__[12];
     result__[ 51  ] = -t23 - t103 + LL__[iL_lambda52__xo];
     real_type t105 = OMEGA__[13];
-    result__[ 52  ] = -t25 - t105 + LL__[iL_lambda53__xo];
+    result__[ 52  ] = -t105 - t25 + LL__[iL_lambda53__xo];
     real_type t107 = OMEGA__[14];
     result__[ 53  ] = -t107 - t27 + LL__[iL_lambda54__xo];
     real_type t109 = OMEGA__[15];
@@ -962,7 +962,7 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type t133 = OMEGA__[26];
     result__[ 66  ] = -t133 - t53 + LL__[iL_lambda67__xo];
     real_type t135 = OMEGA__[27];
-    result__[ 67  ] = -t135 - t55 + LL__[iL_lambda68__xo];
+    result__[ 67  ] = -t55 - t135 + LL__[iL_lambda68__xo];
     real_type t137 = OMEGA__[28];
     result__[ 68  ] = -t137 - t57 + LL__[iL_lambda69__xo];
     real_type t139 = OMEGA__[29];
@@ -1279,8 +1279,8 @@ namespace ICLOCS_ContinuousMPDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

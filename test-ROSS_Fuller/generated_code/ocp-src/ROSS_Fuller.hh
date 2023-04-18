@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ROSS_Fuller.hh                                                 |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -129,7 +129,7 @@ namespace ROSS_FullerDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * m_pMesh;
+    Mechatronix::MeshStd * pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     ROSS_Fuller( ROSS_Fuller const & );
@@ -192,7 +192,7 @@ namespace ROSS_FullerDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ROSS_FULLER_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFtau_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -155,9 +155,9 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clip = gc_MappedObjects["clip"];
-    data_clip["delta"] = 0;
-    data_clip["delta2"] = 0;
     data_clip["h"] = 0.1;
+    data_clip["delta2"] = 0;
+    data_clip["delta"] = 0;
 
     // Controls: No penalties or barriers constraint defined
 
@@ -222,7 +222,8 @@ BangBangFtau_data.Mesh["segments"][0]["n"] = 400;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

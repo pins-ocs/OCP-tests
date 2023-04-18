@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_ContinuousMP.cc                                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -867,13 +867,13 @@ namespace ICLOCS_ContinuousMPDefine {
     real_type s
   ) {
     int msg_level = 3;
-    m_console->message(
-      fmt::format(
-        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase, s, s-old_s, old_s
-      ),
-      msg_level
-    );
+    m_console->message( fmt::format(
+      "\nContinuation step N.{} s={}, ds={}, old_s={}\n",
+      phase,
+      fmt::format("{:.5}", s),
+      fmt::format("{:.5}", s-old_s),
+      fmt::format("{:.5}", old_s)
+    ), msg_level );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
       "ICLOCS_ContinuousMP::update_continuation( phase number={}, old_s={}, s={} ) "
@@ -1729,7 +1729,7 @@ namespace ICLOCS_ContinuousMPDefine {
       gc.exists("pMesh"),
       "in ICLOCS_ContinuousMP::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -1740,143 +1740,167 @@ namespace ICLOCS_ContinuousMPDefine {
   //  |_|_| |_|_|  \___/ \____|_|\__,_|___/___/\___||___/
   */
   void
-  ICLOCS_ContinuousMP::info_classes() const {
-    int msg_level = 3;
+  ICLOCS_ContinuousMP::info_model( integer level ) const {
+    if ( m_console == nullptr || m_console->get_level() < level ) return;
 
-    m_console->message("\nConstraints LT\n",msg_level);
-    m_console->message( u1Limitation_min.info(),msg_level);
-    m_console->message( u1Limitation_max.info(),msg_level);
-    m_console->message( u2Limitation_min.info(),msg_level);
-    m_console->message( u2Limitation_max.info(),msg_level);
-    m_console->message( u3Limitation_min.info(),msg_level);
-    m_console->message( u3Limitation_max.info(),msg_level);
-    m_console->message( u4Limitation_min.info(),msg_level);
-    m_console->message( u4Limitation_max.info(),msg_level);
-    m_console->message( u5Limitation_min.info(),msg_level);
-    m_console->message( u5Limitation_max.info(),msg_level);
-    m_console->message( u6Limitation_min.info(),msg_level);
-    m_console->message( u6Limitation_max.info(),msg_level);
-    m_console->message( u7Limitation_min.info(),msg_level);
-    m_console->message( u7Limitation_max.info(),msg_level);
-    m_console->message( u8Limitation_min.info(),msg_level);
-    m_console->message( u8Limitation_max.info(),msg_level);
-    m_console->message( u9Limitation_min.info(),msg_level);
-    m_console->message( u9Limitation_max.info(),msg_level);
-    m_console->message( u10Limitation_min.info(),msg_level);
-    m_console->message( u10Limitation_max.info(),msg_level);
-    m_console->message( u11Limitation_min.info(),msg_level);
-    m_console->message( u11Limitation_max.info(),msg_level);
-    m_console->message( u12Limitation_min.info(),msg_level);
-    m_console->message( u12Limitation_max.info(),msg_level);
-    m_console->message( u13Limitation_min.info(),msg_level);
-    m_console->message( u13Limitation_max.info(),msg_level);
-    m_console->message( u14Limitation_min.info(),msg_level);
-    m_console->message( u14Limitation_max.info(),msg_level);
-    m_console->message( u15Limitation_min.info(),msg_level);
-    m_console->message( u15Limitation_max.info(),msg_level);
-    m_console->message( u16Limitation_min.info(),msg_level);
-    m_console->message( u16Limitation_max.info(),msg_level);
-    m_console->message( u17Limitation_min.info(),msg_level);
-    m_console->message( u17Limitation_max.info(),msg_level);
-    m_console->message( u18Limitation_min.info(),msg_level);
-    m_console->message( u18Limitation_max.info(),msg_level);
-    m_console->message( u19Limitation_min.info(),msg_level);
-    m_console->message( u19Limitation_max.info(),msg_level);
-    m_console->message( u20Limitation_min.info(),msg_level);
-    m_console->message( u20Limitation_max.info(),msg_level);
-    m_console->message( xx1Limitation_min.info(),msg_level);
-    m_console->message( xx1Limitation_max.info(),msg_level);
-    m_console->message( yy1Limitation_min.info(),msg_level);
-    m_console->message( yy1Limitation_max.info(),msg_level);
-    m_console->message( xx2Limitation_min.info(),msg_level);
-    m_console->message( xx2Limitation_max.info(),msg_level);
-    m_console->message( yy2Limitation_min.info(),msg_level);
-    m_console->message( yy2Limitation_max.info(),msg_level);
-    m_console->message( xx3Limitation_min.info(),msg_level);
-    m_console->message( xx3Limitation_max.info(),msg_level);
-    m_console->message( yy3Limitation_min.info(),msg_level);
-    m_console->message( yy3Limitation_max.info(),msg_level);
-    m_console->message( xx4Limitation_min.info(),msg_level);
-    m_console->message( xx4Limitation_max.info(),msg_level);
-    m_console->message( yy4Limitation_min.info(),msg_level);
-    m_console->message( yy4Limitation_max.info(),msg_level);
-    m_console->message( xx5Limitation_min.info(),msg_level);
-    m_console->message( xx5Limitation_max.info(),msg_level);
-    m_console->message( yy5Limitation_min.info(),msg_level);
-    m_console->message( yy5Limitation_max.info(),msg_level);
-    m_console->message( xx6Limitation_min.info(),msg_level);
-    m_console->message( xx6Limitation_max.info(),msg_level);
-    m_console->message( yy6Limitation_min.info(),msg_level);
-    m_console->message( yy6Limitation_max.info(),msg_level);
-    m_console->message( xx7Limitation_min.info(),msg_level);
-    m_console->message( xx7Limitation_max.info(),msg_level);
-    m_console->message( yy7Limitation_min.info(),msg_level);
-    m_console->message( yy7Limitation_max.info(),msg_level);
-    m_console->message( xx8Limitation_min.info(),msg_level);
-    m_console->message( xx8Limitation_max.info(),msg_level);
-    m_console->message( yy8Limitation_min.info(),msg_level);
-    m_console->message( yy8Limitation_max.info(),msg_level);
-    m_console->message( xx9Limitation_min.info(),msg_level);
-    m_console->message( xx9Limitation_max.info(),msg_level);
-    m_console->message( yy9Limitation_min.info(),msg_level);
-    m_console->message( yy9Limitation_max.info(),msg_level);
-    m_console->message( xx10Limitation_min.info(),msg_level);
-    m_console->message( xx10Limitation_max.info(),msg_level);
-    m_console->message( yy10Limitation_min.info(),msg_level);
-    m_console->message( yy10Limitation_max.info(),msg_level);
-    m_console->message( xx11Limitation_min.info(),msg_level);
-    m_console->message( xx11Limitation_max.info(),msg_level);
-    m_console->message( yy11Limitation_min.info(),msg_level);
-    m_console->message( yy11Limitation_max.info(),msg_level);
-    m_console->message( xx12Limitation_min.info(),msg_level);
-    m_console->message( xx12Limitation_max.info(),msg_level);
-    m_console->message( yy12Limitation_min.info(),msg_level);
-    m_console->message( yy12Limitation_max.info(),msg_level);
-    m_console->message( xx13Limitation_min.info(),msg_level);
-    m_console->message( xx13Limitation_max.info(),msg_level);
-    m_console->message( yy13Limitation_min.info(),msg_level);
-    m_console->message( yy13Limitation_max.info(),msg_level);
-    m_console->message( xx14Limitation_min.info(),msg_level);
-    m_console->message( xx14Limitation_max.info(),msg_level);
-    m_console->message( yy14Limitation_min.info(),msg_level);
-    m_console->message( yy14Limitation_max.info(),msg_level);
-    m_console->message( xx15Limitation_min.info(),msg_level);
-    m_console->message( xx15Limitation_max.info(),msg_level);
-    m_console->message( yy15Limitation_min.info(),msg_level);
-    m_console->message( yy15Limitation_max.info(),msg_level);
-    m_console->message( xx16Limitation_min.info(),msg_level);
-    m_console->message( xx16Limitation_max.info(),msg_level);
-    m_console->message( yy16Limitation_min.info(),msg_level);
-    m_console->message( yy16Limitation_max.info(),msg_level);
-    m_console->message( xx17Limitation_min.info(),msg_level);
-    m_console->message( xx17Limitation_max.info(),msg_level);
-    m_console->message( yy17Limitation_min.info(),msg_level);
-    m_console->message( yy17Limitation_max.info(),msg_level);
-    m_console->message( xx18Limitation_min.info(),msg_level);
-    m_console->message( xx18Limitation_max.info(),msg_level);
-    m_console->message( yy18Limitation_min.info(),msg_level);
-    m_console->message( yy18Limitation_max.info(),msg_level);
-    m_console->message( xx19Limitation_min.info(),msg_level);
-    m_console->message( xx19Limitation_max.info(),msg_level);
-    m_console->message( yy19Limitation_min.info(),msg_level);
-    m_console->message( yy19Limitation_max.info(),msg_level);
-    m_console->message( xx20Limitation_min.info(),msg_level);
-    m_console->message( xx20Limitation_max.info(),msg_level);
-    m_console->message( yy20Limitation_min.info(),msg_level);
-    m_console->message( yy20Limitation_max.info(),msg_level);
+    // ==================================================================
+    this->info( level );
+    this->info_BC( level );
 
-    m_console->message("\nUser class (pointer)\n",msg_level);
-    m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( m_pMesh->info(),msg_level);
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No control penalties/barriers" ), level);
 
-    m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "Constraints type LT" ), level);
+    m_console->message( u1Limitation_min.info(),level);
+    m_console->message( u1Limitation_max.info(),level);
+    m_console->message( u2Limitation_min.info(),level);
+    m_console->message( u2Limitation_max.info(),level);
+    m_console->message( u3Limitation_min.info(),level);
+    m_console->message( u3Limitation_max.info(),level);
+    m_console->message( u4Limitation_min.info(),level);
+    m_console->message( u4Limitation_max.info(),level);
+    m_console->message( u5Limitation_min.info(),level);
+    m_console->message( u5Limitation_max.info(),level);
+    m_console->message( u6Limitation_min.info(),level);
+    m_console->message( u6Limitation_max.info(),level);
+    m_console->message( u7Limitation_min.info(),level);
+    m_console->message( u7Limitation_max.info(),level);
+    m_console->message( u8Limitation_min.info(),level);
+    m_console->message( u8Limitation_max.info(),level);
+    m_console->message( u9Limitation_min.info(),level);
+    m_console->message( u9Limitation_max.info(),level);
+    m_console->message( u10Limitation_min.info(),level);
+    m_console->message( u10Limitation_max.info(),level);
+    m_console->message( u11Limitation_min.info(),level);
+    m_console->message( u11Limitation_max.info(),level);
+    m_console->message( u12Limitation_min.info(),level);
+    m_console->message( u12Limitation_max.info(),level);
+    m_console->message( u13Limitation_min.info(),level);
+    m_console->message( u13Limitation_max.info(),level);
+    m_console->message( u14Limitation_min.info(),level);
+    m_console->message( u14Limitation_max.info(),level);
+    m_console->message( u15Limitation_min.info(),level);
+    m_console->message( u15Limitation_max.info(),level);
+    m_console->message( u16Limitation_min.info(),level);
+    m_console->message( u16Limitation_max.info(),level);
+    m_console->message( u17Limitation_min.info(),level);
+    m_console->message( u17Limitation_max.info(),level);
+    m_console->message( u18Limitation_min.info(),level);
+    m_console->message( u18Limitation_max.info(),level);
+    m_console->message( u19Limitation_min.info(),level);
+    m_console->message( u19Limitation_max.info(),level);
+    m_console->message( u20Limitation_min.info(),level);
+    m_console->message( u20Limitation_max.info(),level);
+    m_console->message( xx1Limitation_min.info(),level);
+    m_console->message( xx1Limitation_max.info(),level);
+    m_console->message( yy1Limitation_min.info(),level);
+    m_console->message( yy1Limitation_max.info(),level);
+    m_console->message( xx2Limitation_min.info(),level);
+    m_console->message( xx2Limitation_max.info(),level);
+    m_console->message( yy2Limitation_min.info(),level);
+    m_console->message( yy2Limitation_max.info(),level);
+    m_console->message( xx3Limitation_min.info(),level);
+    m_console->message( xx3Limitation_max.info(),level);
+    m_console->message( yy3Limitation_min.info(),level);
+    m_console->message( yy3Limitation_max.info(),level);
+    m_console->message( xx4Limitation_min.info(),level);
+    m_console->message( xx4Limitation_max.info(),level);
+    m_console->message( yy4Limitation_min.info(),level);
+    m_console->message( yy4Limitation_max.info(),level);
+    m_console->message( xx5Limitation_min.info(),level);
+    m_console->message( xx5Limitation_max.info(),level);
+    m_console->message( yy5Limitation_min.info(),level);
+    m_console->message( yy5Limitation_max.info(),level);
+    m_console->message( xx6Limitation_min.info(),level);
+    m_console->message( xx6Limitation_max.info(),level);
+    m_console->message( yy6Limitation_min.info(),level);
+    m_console->message( yy6Limitation_max.info(),level);
+    m_console->message( xx7Limitation_min.info(),level);
+    m_console->message( xx7Limitation_max.info(),level);
+    m_console->message( yy7Limitation_min.info(),level);
+    m_console->message( yy7Limitation_max.info(),level);
+    m_console->message( xx8Limitation_min.info(),level);
+    m_console->message( xx8Limitation_max.info(),level);
+    m_console->message( yy8Limitation_min.info(),level);
+    m_console->message( yy8Limitation_max.info(),level);
+    m_console->message( xx9Limitation_min.info(),level);
+    m_console->message( xx9Limitation_max.info(),level);
+    m_console->message( yy9Limitation_min.info(),level);
+    m_console->message( yy9Limitation_max.info(),level);
+    m_console->message( xx10Limitation_min.info(),level);
+    m_console->message( xx10Limitation_max.info(),level);
+    m_console->message( yy10Limitation_min.info(),level);
+    m_console->message( yy10Limitation_max.info(),level);
+    m_console->message( xx11Limitation_min.info(),level);
+    m_console->message( xx11Limitation_max.info(),level);
+    m_console->message( yy11Limitation_min.info(),level);
+    m_console->message( yy11Limitation_max.info(),level);
+    m_console->message( xx12Limitation_min.info(),level);
+    m_console->message( xx12Limitation_max.info(),level);
+    m_console->message( yy12Limitation_min.info(),level);
+    m_console->message( yy12Limitation_max.info(),level);
+    m_console->message( xx13Limitation_min.info(),level);
+    m_console->message( xx13Limitation_max.info(),level);
+    m_console->message( yy13Limitation_min.info(),level);
+    m_console->message( yy13Limitation_max.info(),level);
+    m_console->message( xx14Limitation_min.info(),level);
+    m_console->message( xx14Limitation_max.info(),level);
+    m_console->message( yy14Limitation_min.info(),level);
+    m_console->message( yy14Limitation_max.info(),level);
+    m_console->message( xx15Limitation_min.info(),level);
+    m_console->message( xx15Limitation_max.info(),level);
+    m_console->message( yy15Limitation_min.info(),level);
+    m_console->message( yy15Limitation_max.info(),level);
+    m_console->message( xx16Limitation_min.info(),level);
+    m_console->message( xx16Limitation_max.info(),level);
+    m_console->message( yy16Limitation_min.info(),level);
+    m_console->message( yy16Limitation_max.info(),level);
+    m_console->message( xx17Limitation_min.info(),level);
+    m_console->message( xx17Limitation_max.info(),level);
+    m_console->message( yy17Limitation_min.info(),level);
+    m_console->message( yy17Limitation_max.info(),level);
+    m_console->message( xx18Limitation_min.info(),level);
+    m_console->message( xx18Limitation_max.info(),level);
+    m_console->message( yy18Limitation_min.info(),level);
+    m_console->message( yy18Limitation_max.info(),level);
+    m_console->message( xx19Limitation_min.info(),level);
+    m_console->message( xx19Limitation_max.info(),level);
+    m_console->message( yy19Limitation_min.info(),level);
+    m_console->message( yy19Limitation_max.info(),level);
+    m_console->message( xx20Limitation_min.info(),level);
+    m_console->message( xx20Limitation_max.info(),level);
+    m_console->message( yy20Limitation_min.info(),level);
+    m_console->message( yy20Limitation_max.info(),level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No constraints 1D" ), level);
+
+    // ==================================================================
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No user class (local)" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "User class (pointer)" ), level);
+    m_console->PINS_COLOR_REVERSED( fmt::format(
+      "{:^73}\n", "User function `pMesh`"
+    ), level );
+    m_console->message( pMesh->info(),level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No user mapped functions" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "MODEL PARAMETERS" ), level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      m_console->message(
-        fmt::format("  {:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
-        msg_level
-      );
+      m_console->PINS_COLOR_REVERSED( fmt::format(
+        "|{:.>41} = {:.<27}|\n",
+        fmt::format( " {}", namesModelPars[i] ),
+        fmt::format( "{:.5} ", ModelPars[i] )
+      ), level );
     }
-    m_console->message("MODEL PARAMETERS END\n",msg_level);
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "END" ), level);
 
   }
 
@@ -1904,16 +1928,10 @@ namespace ICLOCS_ContinuousMPDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( m_pMesh, gc );
+    this->setup( pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code
-
-    int msg_level = 2;
-    m_console->message( this->info(), msg_level );
-
-    this->info_BC();
-    this->info_classes();
   }
 
   /* --------------------------------------------------------------------------
@@ -1926,33 +1944,43 @@ namespace ICLOCS_ContinuousMPDefine {
   */
   void
   ICLOCS_ContinuousMP::get_names( GenericContainer & out ) const {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & X_names = out["state_names"].set_vec_string();
+    X_names.reserve(numXvars);
     for ( integer i = 0; i < numXvars; ++i ) X_names.push_back(namesXvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & LM_names = out["lagrange_multiplier_names"].set_vec_string();
+    LM_names.reserve(numLvars);
     for ( integer i = 0; i < numLvars; ++i ) LM_names.push_back(namesLvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & U_names = out["control_names"].set_vec_string();
+    U_names.reserve(numUvars);
     for ( integer i = 0; i < numUvars; ++i ) U_names.push_back(namesUvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & Q_names = out["mesh_variable_names"].set_vec_string();
+    Q_names.reserve(numQvars);
     for ( integer i = 0; i < numQvars; ++i ) Q_names.push_back(namesQvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & P_names = out["parameter_names"].set_vec_string();
+    P_names.reserve(numPvars);
     for ( integer i = 0; i < numPvars; ++i ) P_names.push_back(namesPvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & OMEGA_names = out["bc_lagrange_multiplier_names"].set_vec_string();
+    OMEGA_names.reserve(numOMEGAvars);
     for ( integer i = 0; i < numOMEGAvars; ++i ) OMEGA_names.push_back(namesOMEGAvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & PP_names = out["post_processing_names"].set_vec_string();
+    PP_names.reserve(numPostProcess);
     for ( integer i = 0; i < numPostProcess; ++i ) PP_names.push_back(namesPostProcess[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     for ( integer i = 0; i < numIntegratedPostProcess; ++i )
       PP_names.push_back(namesIntegratedPostProcess[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & model_names = out["model_names"].set_vec_string();
+    model_names.reserve(numModelPars);
     for ( integer i = 0; i < numModelPars; ++i )
       model_names.push_back(namesModelPars[i]);
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   }
 
   // save model parameters

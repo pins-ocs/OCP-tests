@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_4_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -172,7 +172,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type result__ = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( &result__, "JP_eval", 1, i_segment );
@@ -190,7 +190,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t4   = v__fxControl(U__[iU_v__fx], -1, 1);
     real_type t7   = v__OmegaControl(U__[iU_v__Omega], -1, 1);
@@ -211,7 +211,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t3   = X__[iX_fx];
     real_type t4   = t3 * t3;
@@ -251,7 +251,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -279,7 +279,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
@@ -314,7 +314,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t3   = X__[iX_n];
     real_type t4   = X__[iX_s];
@@ -379,7 +379,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_fx];
     real_type t2   = t1 * t1;
     real_type t4   = ModelPars[iM_mu__x__max] * ModelPars[iM_mu__x__max];
@@ -467,7 +467,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t3   = X__[iX_n];
     real_type t4   = X__[iX_s];
@@ -591,7 +591,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t2   = exp(X__[iX_log_inv_Vseg]);
     real_type t3   = U__[iU_v__fx];
     real_type t4   = v__fxControl(t3, -1, 1);
@@ -641,7 +641,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_Omega];
     real_type t2   = t1 * t1;
     real_type t3   = X__[iX_V];
@@ -701,7 +701,7 @@ namespace PointMassCarModel_4Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_s];
     real_type t2   = ALIAS_leftWidth_DD(t1);
     real_type t5   = ALIAS_rightWidth_DD(t1);

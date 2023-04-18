@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel.hh                                              |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -113,7 +113,7 @@ namespace FlowInAchannelDefine {
   class FlowInAchannel : public Mechatronix::Discretized_Indirect_OCP {
 
     // Model Paramaters  - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    real_type ModelPars[1];
+    real_type ModelPars[3];
 
     // Controls  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -128,13 +128,14 @@ namespace FlowInAchannelDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * m_pMesh;
+    Mechatronix::MeshStd * pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     FlowInAchannel( FlowInAchannel const & );
     FlowInAchannel const & operator = ( FlowInAchannel const & );
 
     // subclass for continuation - - - - - - - - - - - - - - - - - - - - - - - -
+    void continuation_step_1( real_type s );
 
   public:
 
@@ -190,7 +191,7 @@ namespace FlowInAchannelDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     FLOWINACHANNEL_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))

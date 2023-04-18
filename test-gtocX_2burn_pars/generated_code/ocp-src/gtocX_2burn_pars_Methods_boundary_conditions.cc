@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_boundary_conditions.cc                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -74,8 +74,8 @@ namespace gtocX_2burn_parsDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = P__[iP_p];
     real_type t2   = XL__[iX_f];
     real_type t3   = XL__[iX_g];
@@ -169,8 +169,8 @@ namespace gtocX_2burn_parsDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = P__[iP_p];
     real_type t2   = XL__[iX_f];
     real_type t3   = XL__[iX_g];
@@ -310,8 +310,8 @@ namespace gtocX_2burn_parsDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
     real_type t2   = P__[iP_p];
     real_type t3   = XL__[iX_f];
@@ -427,33 +427,33 @@ namespace gtocX_2burn_parsDefine {
     real_type t155 = x_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t157 = y_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
     real_type t159 = z_position_D_1_3(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 27  ] = t155 * t101 + t157 * t107 + t159 * t110;
+    result__[ 27  ] = t101 * t155 + t107 * t157 + t110 * t159;
     real_type t161 = x_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t163 = y_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t165 = z_position_D_3_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 28  ] = t161 * t101 + t163 * t107 + t165 * t110;
+    result__[ 28  ] = t101 * t161 + t107 * t163 + t110 * t165;
     real_type t167 = x_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t169 = y_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t171 = z_position_D_3_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 29  ] = t167 * t101 + t169 * t107 + t171 * t110;
+    result__[ 29  ] = t101 * t167 + t107 * t169 + t110 * t171;
     result__[ 30  ] = result__[20];
     result__[ 31  ] = result__[26];
     real_type t173 = x_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t175 = y_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t177 = z_position_D_6_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 32  ] = t173 * t101 + t175 * t107 + t177 * t110;
+    result__[ 32  ] = t101 * t173 + t107 * t175 + t110 * t177;
     real_type t179 = x_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t181 = y_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t183 = z_position_D_1_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 33  ] = t179 * t101 + t181 * t107 + t183 * t110;
+    result__[ 33  ] = t101 * t179 + t107 * t181 + t110 * t183;
     real_type t185 = x_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t187 = y_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t189 = z_position_D_4_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 34  ] = t185 * t101 + t187 * t107 + t189 * t110;
+    result__[ 34  ] = t101 * t185 + t107 * t187 + t110 * t189;
     real_type t191 = x_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t193 = y_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
     real_type t195 = z_position_D_5_6(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 35  ] = t191 * t101 + t193 * t107 + t195 * t110;
+    result__[ 35  ] = t101 * t191 + t107 * t193 + t110 * t195;
     result__[ 36  ] = result__[3];
     result__[ 37  ] = result__[9];
     result__[ 38  ] = result__[15];
@@ -466,21 +466,21 @@ namespace gtocX_2burn_parsDefine {
     real_type t203 = x_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
     real_type t205 = y_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
     real_type t207 = z_position_D_1_1(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 42  ] = t197 * t1 + t203 * t101 + t205 * t107 + t199 * t11 + t207 * t110 + t201 * t14;
+    result__[ 42  ] = t1 * t197 + t101 * t203 + t107 * t205 + t11 * t199 + t110 * t207 + t14 * t201;
     real_type t209 = x_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t211 = y_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t213 = z_position_D_1_4(t2, t3, t4, t5, t6, t7, t8);
     real_type t215 = x_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t217 = y_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t219 = z_position_D_1_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 43  ] = t209 * t1 + t215 * t101 + t217 * t107 + t211 * t11 + t219 * t110 + t213 * t14;
+    result__[ 43  ] = t1 * t209 + t101 * t215 + t107 * t217 + t11 * t211 + t110 * t219 + t14 * t213;
     real_type t221 = x_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t223 = y_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t225 = z_position_D_1_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t227 = x_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t229 = y_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t231 = z_position_D_1_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 44  ] = t221 * t1 + t227 * t101 + t229 * t107 + t223 * t11 + t231 * t110 + t225 * t14;
+    result__[ 44  ] = t1 * t221 + t101 * t227 + t107 * t229 + t11 * t223 + t110 * t231 + t14 * t225;
     result__[ 45  ] = result__[4];
     result__[ 46  ] = result__[10];
     result__[ 47  ] = result__[16];
@@ -494,14 +494,14 @@ namespace gtocX_2burn_parsDefine {
     real_type t239 = x_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t241 = y_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
     real_type t243 = z_position_D_4_4(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 52  ] = t233 * t1 + t239 * t101 + t241 * t107 + t235 * t11 + t243 * t110 + t237 * t14;
+    result__[ 52  ] = t1 * t233 + t101 * t239 + t107 * t241 + t11 * t235 + t110 * t243 + t14 * t237;
     real_type t245 = x_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t247 = y_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t249 = z_position_D_4_5(t2, t3, t4, t5, t6, t7, t8);
     real_type t251 = x_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t253 = y_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t255 = z_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 53  ] = t245 * t1 + t251 * t101 + t253 * t107 + t247 * t11 + t255 * t110 + t249 * t14;
+    result__[ 53  ] = t1 * t245 + t101 * t251 + t107 * t253 + t11 * t247 + t110 * t255 + t14 * t249;
     result__[ 54  ] = result__[5];
     result__[ 55  ] = result__[11];
     result__[ 56  ] = result__[17];
@@ -516,7 +516,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t263 = x_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t265 = y_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t267 = z_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 62  ] = t257 * t1 + t263 * t101 + t265 * t107 + t259 * t11 + t267 * t110 + t261 * t14;
+    result__[ 62  ] = t1 * t257 + t101 * t263 + t107 * t265 + t11 * t259 + t110 * t267 + t14 * t261;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "D2bcD2xxp_sparse", 63, i_segment_left, i_segment_right );
   }
@@ -541,8 +541,8 @@ namespace gtocX_2burn_parsDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
     real_type t2   = P__[iP_p];
     real_type t3   = XL__[iX_f];
@@ -705,8 +705,8 @@ namespace gtocX_2burn_parsDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     real_type t1   = OMEGA__[0];
     real_type t2   = P__[iP_p];
     real_type t3   = XL__[iX_f];
@@ -902,7 +902,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t251 = x_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t253 = y_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t255 = z_position_D_4_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 59  ] = t245 * t1 + t251 * t101 + t253 * t107 + t247 * t11 + t255 * t110 + t249 * t14;
+    result__[ 59  ] = t1 * t245 + t101 * t251 + t107 * t253 + t11 * t247 + t110 * t255 + t14 * t249;
     result__[ 60  ] = result__[6];
     result__[ 61  ] = result__[13];
     result__[ 62  ] = result__[20];
@@ -917,7 +917,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t263 = x_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t265 = y_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
     real_type t267 = z_position_D_5_5(t2, t102, t103, t5, t6, t104, t8);
-    result__[ 68  ] = t257 * t1 + t263 * t101 + t265 * t107 + t259 * t11 + t267 * t110 + t261 * t14;
+    result__[ 68  ] = t1 * t257 + t101 * t263 + t107 * t265 + t11 * t259 + t110 * t267 + t14 * t261;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "Dfd_BCDxlxlp_sparse", 69, i_segment_left, i_segment_right );
   }

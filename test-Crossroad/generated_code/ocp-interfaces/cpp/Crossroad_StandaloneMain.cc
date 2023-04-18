@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Crossroad_Main.cc                                              |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,11 +50,11 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type L = 100;
-    real_type s_f = L;
-    real_type jerk_min = -10;
     real_type jerk_max = 10;
     real_type wJ = 1/jerk_max^2;
+    real_type jerk_min = -10;
+    real_type L = 100;
+    real_type s_f = L;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -238,7 +238,8 @@ Crossroad_data.Mesh["segments"][1]["n"] = 100;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

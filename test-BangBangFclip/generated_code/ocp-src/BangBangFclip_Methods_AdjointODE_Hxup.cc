@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFclip_Methods_AdjointODE.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -89,7 +89,7 @@ namespace BangBangFclipDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 0;
     result__[ 1   ] = MU__[0];
     real_type t5   = ALIAS_clip_D_1(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
@@ -122,7 +122,7 @@ namespace BangBangFclipDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t5   = ALIAS_clip_D_1_1(X__[iX_F], ModelPars[iM_minClip], ModelPars[iM_maxClip]);
     result__[ 0   ] = t5 * MU__[1];
     if ( m_debug )

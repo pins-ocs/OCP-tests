@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Pars.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define FLOWINACHANNELPARS_DOT_HH
 
 #define numBc                    4
-#define numModelPars             1
+#define numModelPars             3
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -32,7 +32,7 @@
 #define numPvars                 0
 #define numPostProcess           0
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_u           0
@@ -55,6 +55,8 @@
 
 // ModelPars Maps
 #define iM_R           0
+#define iM_R0          1
+#define iM_R1          2
 
 #endif
 

@@ -1,114 +1,108 @@
-MODEL:Brake
-BEGIN DIMS
-  dim         = u=1, q=1, x=2, p=1, bc(active/total)=(3/3)
-  total       = nZ=608, nP=450, nU=150, Q=151
-  index start = omega=604, p=607
-  post proc.  = n_post=0, n_Ipost=0
-END DIMS
-BEGIN MESH
- num_nodes    = 151
- num_segments = 1
-END MESH
-BEGIN THREADS
-  Used threads: 15
-  U/JU/F/JF/LU: true/true/true/true/true
-END THREADS
-BEGIN PARAMS
-  m_debug:                 false
-  Solver Controls:         Newton
-  Jacobian evaluation:     ANALYTIC
-  Jacobian BC evaluation:  ANALYTIC
-  Initializer Controls:    not selected
-  Initialize Multipliers:  false
-  Initialize Guess:        not selected + not selected
-  Continuation interval:   [1,0)
-  mesh class pointer:      0x7ff7bcff75b0
-  solver class pointer:    0x7fe6f2813ef0
-END PARAMS
-BEGIN LINEAR ALGEBRA
-  rows   = 608
-  cols   = 608
-  nblock = 150
-  n      = 4
-  qr     = 3
-  qx     = 3
-  nr     = 1
-  nx     = 1
-  treads = 16/nblk:15/factorize:true/solve:true
-  intern = CyclicReduction+LU
-  last   = LastBlock LUPQ
-END PARAMS
-
-Boundary Conditions activation status
++----------------------------- MODEL:Brake -----------------------------+
++................................ DIMS .................................+
+| dims                      = u=1, q=1, x=2, p=1, bc(act./tot.)=(3/3)   |
+| total                     = nZ=608, nP=450, nU=150, Q=151             |
+| index start               = omega=604, p=607                          |
+| post processing           = n_post=0, n_Ipost=0                       |
++................................ MESH .................................+
+| num_nodes                 = 151                                       |
+| num_segments              = 1                                         |
++............................... THREADS ...............................+
+| number of threads         = 15                                        |
+| U / JU / F / JF / LU      = true / true / true / true / true          |
++............................... PARAMS ................................+
+| m_debug                   = false                                     |
+| Solver                    = NewtonDumped                              |
+| Solver Controls           = MINIMIZE                                  |
+| Jacobian/Jacobian BC      = ANALYTIC / ANALYTIC                       |
+| Initializer Controls      = use_guess                                 |
+| Initialize Multipliers    = false                                     |
+| Initialize Guess          = zero + default                            |
+| Continuation interval     = [1,0]                                     |
+| mesh/solver class pointer = 0x7ff7b65d0438 / 0x7fa411013e20           |
+| mu_bar/sigma_bar          = 0.001/0.001                               |
++........................... LINEAR ALGEBRA ............................+
+| rows x cols               = 608 x 608                                 |
+| nblock/block size         = 150 / 4                                   |
+| qr/qx/nr/nx               = 3 / 3 / 1 / 1                             |
+| last blok rows x cols     = 12 x 12                                   |
+| thread [factorize/solve]  = [ true / true]                            |
+| solve block               = CyclicReduction+LU                        |
+| solve last block          = LastBlock LUPQ                            |
++-----------------------------------------------------------------------+
++.................Boundary Conditions activation status.................+
 [xx] = activated, [  ] = NOT activated
-
 [ 0] initial_x
 [ 1] initial_v
 [ 2] final_v
-
-
-
-User class (pointer)
-
-User function `pMesh`
++.....................No control penalties/barriers.....................+
++........................No constraints type LT.........................+
++...........................No constraints 1D...........................+
++.........................No user class (local).........................+
++.........................User class (pointer)..........................+
+                          User function `pMesh`                          
 BEGIN Mesh[mesh]
-num. segments = 1
-num. nodes = 151
-Segment N.0: s0 = 0 length = 1 npts = 151 no data set
+  num. segments = 1
+  num. nodes    = 151
+  Segment N.0: s0 = 0 length = 1 npts = 151 no data set
 END Mesh[mesh]
-MODEL PARAMETERS BEGIN
-  ..................................Tguess = 1
-  .................................epsilon = 0.09999999999999998
-  ......................................mu = 0
-  .....................................v_f = 0
-  .....................................v_i = 1
-  .....................................x_i = 0
-  ................................epsilon2 = 0
-MODEL PARAMETERS END
++.......................No user mapped functions........................+
++...........................MODEL PARAMETERS............................+
+|.................................. Tguess = 1 .........................|
+|................................. epsilon = 0.1 .......................|
+|...................................... mu = 0 .........................|
+|..................................... v_f = 0 .........................|
+|..................................... v_i = 1 .........................|
+|..................................... x_i = 0 .........................|
+|................................ epsilon2 = 0 .........................|
++..................................END..................................+
 [iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
 [  1,85] (  0.182   ,   0.18   ) [  0.266   ,  0.491   ] 0.0108     [0:0:0:84:0:0:0:0:0:0:0:0]
 [  2, 1] (   0.18   ,  0.0446  ) [  0.198   ,  0.0164  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  3, 1] (  0.0446  , 1.24e-06 ) [  0.0162  , 8.54e-06 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 [  4, 1] ( 1.24e-06 , 1.04e-09 ) [  1e-05   , 7.29e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
-[  5, 1] ( 1.04e-09 , 1.8e-13  ) [ 7.4e-08  , 3.97e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] ( 1.04e-09 , 6.81e-14 ) [ 7.4e-08  , 3.28e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
 
-.................. CONTROLS nonlinear system solver ..................
------------------ NewtonDumped with MERIT_F2_and_D2 ------------------
-n_power        = 6             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.25          dump_max       = 0.9
-----------------------------------------------------------------------
-
-.................... BIG nonlinear system solver .....................
----------------------------- NewtonDumped ----------------------------
-Converged      = YES           tolerance      = 1e-09
-N. Equations   = 608           N. System pars = 450
------------------------------ STATISTIC ------------------------------
-Elapsed Time   = 32[ms]        timeout        = 0 [ms]
-iteration      = 5             Memory Used    = 145Kb (+43bytes)
-max iterations = 300           max acc. iter. = 800
----------------------------- CONTINUATION ----------------------------
-Initial Step   = 0.2           Minimum Step   = 0.001
-Reduce Factor  = 0.5           Augment Factor = 1.5
-Few iterations = 8
----------------------------- EVALUATIONS -----------------------------
-Function       = 90            Jacobian       = 5
-Factorization  = 5             Inversion      = 94
------------------------ SOLVER MERIT_F2_and_D2 -----------------------
-n_power        = 2             check_angle    = 120 [degree]
-c1             = 0.01          lambda_min     = 1e-10
-dump_min       = 0.4           dump_max       = 0.95
-ratio ||f||_2  = 2             ratio ||d||_2  = 2
-ratio ||f||_1  = 2             ratio ||d||_1  = 2
-........................... last residuals ...........................
-last ||f||_inf = 7.3486e-11    last ||d||_inf = 1.6616e-11
-last ||f||_1   = 1.7962e-13    last ||d||_1   = 3.9711e-12
-last ||f||_2   = 2.9871e-12    last ||d||_2   = 5.8304e-12
-----------------------------------------------------------------------
-              __   __             ___  __   __   ___  __              
-             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \             
-             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/             
-                                                                      
++.................. CONTROLS nonlinear system solver ...................+
++--------------------------- MinimizeNewton ----------------------------+
+| c0              = 0.01            | epsi            = 1e-08           |
+| max_ok_low      = 10              |                                   |
+| lambda_dump     = 0.6             | mu_start        = 1               |
+| lambda_min      = 0.0001          | lambda_med      = 0.01            |
+| mu_min          = 1e-30           | mu_max          = 1e+20           |
+| last f          = 2.367e-05       | |g|_inf         = 0               |
++-----------------------------------------------------------------------+
++..................... BIG nonlinear system solver .....................+
++-----------------------------NewtonDumped------------------------------+
+| Converged       = YES             | tolerance       = 1e-09           |
+| N. Equations    = 608             | N. System pars  = 450             |
++------------------------------ STATISTIC ------------------------------+
+| Elapsed Time    = 29.2 [ms]       | timeout         = 0 [ms]          |
+| iteration       = 5               | Memory Used     = 151Kb(+47b)     |
+| max iterations  = 300             | max acc. iter.  = 800             |
++---------------------------- CONTINUATION -----------------------------+
+| Initial Step    = 0.2             | Minimum Step    = 0.001           |
+| Reduce Factor   = 0.5             | Augment Factor  = 1.5             |
+| Few iterations  = 8               |                                   |
++----------------------------- EVALUATIONS -----------------------------+
+| Function        = 90              | Jacobian        = 5               |
+| Factorization   = 5               | Inversion       = 94              |
++----------------------- SOLVER MERIT_F2_and_D2 ------------------------+
+| n_power         = 2               | check_angle     = 120 [degree]    |
+| c1              = 0.01            | lambda_min      = 1e-10           |
+| dump_min        = 0.4             | dump_max        = 0.95            |
+| ratio ||f||_2   = 2               | ratio ||d||_2   = 2               |
+| ratio ||f||_1   = 2               | ratio ||d||_1   = 2               |
++........................... last residuals ............................+
+| last ||f||_inf  = 1.1978e-12      | last ||d||_inf  = 1.3588e-11      |
+| last ||f||_1    = 6.8123e-14      | last ||d||_1    = 3.2789e-12      |
+| last ||f||_2    = 1.9823e-13      | last ||d||_2    = 4.821e-12       |
++-----------------------------------------------------------------------+
+|              __   __             ___  __   __   ___  __               |
+|             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \              |
+|             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/              |
+|                                                                       |
++-----------------------------------------------------------------------+
 Check Jacobian Begin
 Check DabcDxlxlpu: all OK
 Check DodeDxpuv:all OK
@@ -120,5 +114,5 @@ Check Controls End
 target [Lagrange,Mayer]       = [ 0.1711, 0.5707 ]
 [Penalties/Barriers,Controls] = [ 0, 0 ]
 Optimization parameters:
-T: 1.30961732590656599
+T: 1.30961732590606883
 All Done Folks!

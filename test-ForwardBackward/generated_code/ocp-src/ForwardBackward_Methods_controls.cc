@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_controls.cc                            |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -86,7 +86,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = 1.0 / t2;
     real_type t6   = U__[iU_a];
@@ -123,7 +123,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_a];
     real_type t7   = ALIAS_LimitA_min_D(ModelPars[iM_a_min] - t2);
     real_type t10  = ALIAS_LimitA_max_D(t2 - ModelPars[iM_a_max]);
@@ -136,7 +136,7 @@ namespace ForwardBackwardDefine {
     real_type t19  = t18 * t18;
     real_type t23  = ModelPars[iM_E_max] * ModelPars[iM_E_max];
     real_type t24  = 1.0 / t23;
-    real_type t27  = ALIAS_LimitE_D(t24 * (t12 * t11 + t19 * t16) - 1);
+    real_type t27  = ALIAS_LimitE_D(t24 * (t11 * t12 + t16 * t19) - 1);
     result__[ 0   ] = 2 * t2 * ModelPars[iM_epsilon] - t7 + t10 + 2 * t24 * t2 * t11 * t27 + 1.0 / t17 * MU__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
@@ -167,7 +167,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_WA];
     real_type t2   = U__[iU_a];
     real_type t3   = t2 * t2;
@@ -209,7 +209,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t4   = U__[iU_a];
     real_type t6   = ALIAS_LimitA_min_DD(ModelPars[iM_a_min] - t4);
     real_type t9   = ALIAS_LimitA_max_DD(t4 - ModelPars[iM_a_max]);

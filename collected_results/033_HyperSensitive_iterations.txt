@@ -1,0 +1,104 @@
++------------------------ MODEL:HyperSensitive -------------------------+
++................................ DIMS .................................+
+| dims                      = u=1, q=1, x=1, p=0, bc(act./tot.)=(2/2)   |
+| total                     = nZ=104, nP=100, nU=50, Q=51               |
+| index start               = omega=102, p=104                          |
+| post processing           = n_post=0, n_Ipost=0                       |
++................................ MESH .................................+
+| num_nodes                 = 51                                        |
+| num_segments              = 1                                         |
++............................... THREADS ...............................+
+| number of threads         = 15                                        |
+| U / JU / F / JF / LU      = true / true / true / true / true          |
++............................... PARAMS ................................+
+| m_debug                   = false                                     |
+| Solver                    = NewtonDumped                              |
+| Solver Controls           = MINIMIZE                                  |
+| Jacobian/Jacobian BC      = ANALYTIC / ANALYTIC                       |
+| Initializer Controls      = use_guess                                 |
+| Initialize Multipliers    = false                                     |
+| Initialize Guess          = zero + default                            |
+| Continuation interval     = [1,0]                                     |
+| mesh/solver class pointer = 0x7ff7b444a420 / 0x7f81c700ec20           |
+| mu_bar/sigma_bar          = 0.001/0.001                               |
++........................... LINEAR ALGEBRA ............................+
+| rows x cols               = 104 x 104                                 |
+| nblock/block size         = 50 / 2                                    |
+| qr/qx/nr/nx               = 2 / 2 / 0 / 0                             |
+| last blok rows x cols     = 6 x 6                                     |
+| thread [factorize/solve]  = [ true / true]                            |
+| solve block               = CyclicReduction+LU                        |
+| solve last block          = LastBlock LUPQ                            |
++-----------------------------------------------------------------------+
++.................Boundary Conditions activation status.................+
+[xx] = activated, [  ] = NOT activated
+[ 0] initial_y
+[ 1] final_y
++.....................No control penalties/barriers.....................+
++........................No constraints type LT.........................+
++...........................No constraints 1D...........................+
++.........................No user class (local).........................+
++.........................User class (pointer)..........................+
+                          User function `pMesh`                          
+BEGIN Mesh[mesh]
+  num. segments = 1
+  num. nodes    = 51
+  Segment N.0: s0 = 0 length = 1e+04 npts = 51 no data set
+END Mesh[mesh]
++.......................No user mapped functions........................+
++...........................MODEL PARAMETERS............................+
+|..................................... y_f = 1 .........................|
+|..................................... y_i = 1.5 .......................|
++..................................END..................................+
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 7] (  0.024   ,  0.0445  ) [  0.453   ,  0.306   ] 0.31       [1:0:0:0:5:0:0:0:0:0:0:0]
+[  2, 3] (  0.0445  ,  0.0875  ) [  0.269   ,  0.157   ] 0.38       [0:0:1:0:1:0:0:0:0:0:0:0]
+[  3, 5] (  0.0875  ,  0.132   ) [   0.19   ,  0.0678  ] 0.815      [0:0:4:0:0:0:0:0:0:0:0:0]
+[  4, 1] (  0.132   ,  0.0143  ) [  0.0775  , 0.00277  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 1] (  0.0143  , 5.4e-06  ) [ 0.00274  , 8.52e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 5.4e-06  , 1.09e-12 ) [ 8.52e-07 , 3.7e-13  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
++.................. CONTROLS nonlinear system solver ...................+
+|               Analytical solution for control(s) used!                |
++..................... BIG nonlinear system solver .....................+
++-----------------------------NewtonDumped------------------------------+
+| Converged       = YES             | tolerance       = 1e-09           |
+| N. Equations    = 104             | N. System pars  = 100             |
++------------------------------ STATISTIC ------------------------------+
+| Elapsed Time    = 11.8 [ms]       | timeout         = 0 [ms]          |
+| iteration       = 6               | Memory Used     = 26Kb(+33b)      |
+| max iterations  = 300             | max acc. iter.  = 800             |
++---------------------------- CONTINUATION -----------------------------+
+| Initial Step    = 0.2             | Minimum Step    = 0.001           |
+| Reduce Factor   = 0.5             | Augment Factor  = 1.5             |
+| Few iterations  = 8               |                                   |
++----------------------------- EVALUATIONS -----------------------------+
+| Function        = 19              | Jacobian        = 6               |
+| Factorization   = 6               | Inversion       = 24              |
++----------------------- SOLVER MERIT_F2_and_D2 ------------------------+
+| n_power         = 2               | check_angle     = 120 [degree]    |
+| c1              = 0.01            | lambda_min      = 1e-10           |
+| dump_min        = 0.4             | dump_max        = 0.95            |
+| ratio ||f||_2   = 2               | ratio ||d||_2   = 2               |
+| ratio ||f||_1   = 2               | ratio ||d||_1   = 2               |
++........................... last residuals ............................+
+| last ||f||_inf  = 4.0863e-11      | last ||d||_inf  = 5.5006e-12      |
+| last ||f||_1    = 1.0893e-12      | last ||d||_1    = 3.7025e-13      |
+| last ||f||_2    = 5.4093e-12      | last ||d||_2    = 1.2096e-12      |
++-----------------------------------------------------------------------+
+|              __   __             ___  __   __   ___  __               |
+|             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \              |
+|             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/              |
+|                                                                       |
++-----------------------------------------------------------------------+
+Check Jacobian Begin
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ 2.66, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained.hh                                      |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -130,7 +130,7 @@ namespace ICLOCS_PathConstrainedDefine {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::MeshStd * m_pMesh;
+    Mechatronix::MeshStd * pMesh;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_PathConstrained( ICLOCS_PathConstrained const & );
@@ -193,7 +193,7 @@ namespace ICLOCS_PathConstrainedDefine {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ICLOCS_PATHCONSTRAINED_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))

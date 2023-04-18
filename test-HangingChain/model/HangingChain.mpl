@@ -3,36 +3,41 @@ with(XOptima):;
 EQ1 := diff(x(t),t) = u(t):
 EQ2 := diff(z(t),t) = sqrt(1+u(t)^2):
 ode := [EQ||(1..2)]: <%>;
-xvars := [x(t),z(t)] ;
-uvars := [u(t)] ;
+xvars := [x(t),z(t)];
+uvars := [u(t)];
 loadDynamicSystem(
   equations = ode,
   controls  = uvars,
   states    = xvars
 );
+addUserFunction( x_guess(s) = (a+b)/2+WG*s*(s-1)*L );
 addBoundaryConditions(
   initial = [ x=a, z=0 ],
-  final   = [ x=b ] # z=L must be set least squares in mayer term!
+  final   = [ x=b, z=L ]
 );
 infoBoundaryConditions();
 setTarget(
-  lagrange = x(zeta)*sqrt(1+u(zeta)^2),
-  mayer    = (z(zeta_f)-L)^2 # BC z(1) = L
+  lagrange = W*x(zeta)*sqrt(1+u(zeta)^2)+
+            (1-W)*((x(zeta)-x_guess(zeta))^2) +
+            epsilon*u(zeta)^2,
+  mayer    = 0
 );
 PARS := [
   a  = 1,
   b  = 3,
-  u0 = b-a,
-  L0 = sqrt(1+u0^2),
-  L1 = 4,
-  L  = L0
+  L  = 4,
+  WG = 4,
+  W  = W0,
+  W0 = 0,
+  W1 = 1,
+  epsilon = 1e-8
 ];
 GUESS := [
-  x = a+zeta*(b-a),
+  x = x_guess(zeta),
   z = zeta*L
 ];
 CONT := [
-  [ L = L0*(1-s)+L1*s ]
+  [ W = W0*(1-s) + W1*s ]
 ];
 #addUserFunction(x_guess(x));
 #Describe(generateOCProblem);
@@ -41,15 +46,15 @@ project_name := "HangingChain";
 generateOCProblem(
   project_name, clean=true,
   parameters         = PARS,
-  mesh               = [ length=1, n=400 ],
-  controls_guess     = [ u=2*u0 ],
+  mesh               = [ length=1, n=40 ],
+  controls_guess     = [ u=0 ],
   controls_iterative = true,
   continuation       = CONT,
   states_guess       = GUESS
 );
-#res := XOptima:-getOCProblem();
-#indices(res);
-#eval(res["controls"]);
+res := XOptima:-getOCProblem();
+indices(res);
+eval(res["controls"]);
 #gg := subs(u(zeta)=u,
 #           x(zeta)=x,
 #           lambda1__xo(zeta)=lambda1,

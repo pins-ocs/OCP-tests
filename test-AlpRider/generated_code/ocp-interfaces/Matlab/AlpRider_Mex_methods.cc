@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: AlpRider_Mex.cc                                                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -90,8 +90,8 @@ ProblemStorage::do_setup(
   GenericContainer & ptrs = m_gc_data["Pointers"];
   // setup user object classes
   UTILS_MEX_ASSERT0( m_gc_data.exists("Mesh"), "missing key: ``Mesh'' in m_gc_data\n" );
-  m_mesh.setup( m_gc_data("Mesh") );
-  ptrs[ "pMesh" ] = &m_mesh;
+  mesh.setup( m_gc_data("Mesh") );
+  ptrs[ "pMesh" ] = &mesh;
 
   // setup model
   MODEL_CLASS::setup( m_gc_data );
@@ -170,7 +170,8 @@ ProblemStorage::do_set_guess(
       mxArray_to_GenericContainer( arg_in_2, gc_guess );
     }
     MODEL_CLASS::guess( gc_guess );
-    MODEL_CLASS::info();
+    integer level = 2;
+    MODEL_CLASS::info_model( level );
     this->done_guess();
   }
   catch ( std::exception const & exc ) {
@@ -1409,7 +1410,7 @@ ProblemStorage::do_u(
   U_p_type U( Utils::mex_create_matrix_value( arg_out_0, dim_U, 1 ) );
   if ( m_U_solve_iterative ) {
     this->u_guess_eval( NODE, P, MU, U );
-    US->u_eval( m_console, NODE, P, MU, U, U );
+    US->u_eval( 0, m_console, NODE, P, MU, U );
   } else {
     this->u_eval_analytic( NODE, P, MU, U );
   }

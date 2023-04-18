@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: BangBangFork_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -52,9 +52,9 @@ main() {
     // Auxiliary values
     real_type u_tol0 = 0.1;
     real_type u_tol = u_tol0;
-    real_type u_epsi0 = 0.1;
     real_type WC0 = 1;
     real_type WC = WC0;
+    real_type u_epsi0 = 0.1;
     real_type u_epsi = u_epsi0;
     integer InfoLevel = 4;
 
@@ -217,7 +217,8 @@ BangBangFork_data.Mesh["segments"][0]["n"] = 100;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

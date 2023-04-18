@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: EconomicGrowthModel_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -72,7 +72,7 @@ namespace EconomicGrowthModelDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_x1 ] = ModelPars[iM_x1_i];
       X__[ iX_x2 ] = ModelPars[iM_x2_i];
@@ -244,7 +244,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool ok = true;
     ok = ok && Tpositive.check_range(-X__[iX_T]);
     return ok;
@@ -275,7 +275,7 @@ namespace EconomicGrowthModelDefine {
     real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
     real_type t4   = Q(X__[iX_x1], X__[iX_x2]);
-    UGUESS__[ iU_u ] = uControl.solve(-t4 * MU__[0] + t4 * MU__[1], 0, 1);
+    UGUESS__[ iU_u ] = uControl.solve(-t4 * MU__[0] + MU__[1] * t4, 0, 1);
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }
@@ -299,7 +299,7 @@ namespace EconomicGrowthModelDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && uControl.check_range(U__[iU_u], 0, 1);
     return ok;

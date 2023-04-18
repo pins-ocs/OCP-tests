@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------#
 #  file: CNOC_Data.rb                                                   #
 #                                                                       #
-#  version: 1.0   date 20/3/2023                                        #
+#  version: 1.0   date 9/5/2023                                         #
 #                                                                       #
 #  Copyright (C) 2023                                                   #
 #                                                                       #
@@ -20,24 +20,24 @@ include Mechatronix
 # User Header
 
 # Auxiliary values
-tol_CTRL                 = 0.01
-epsi_PATH                = 0.01
-epsi_ACC                 = 0.01
-tol_PATH                 = 0.01
-js_min                   = -50
-epsi_COV                 = 0.01
-tol_ACC                  = 0.01
-epsi_CTRL                = 0.01
-tol_VMAX                 = 0.01
-mesh_segments            = 100.0
-epsi_VMAX                = 0.01
-js_max                   = 30.0
-tol_COV                  = 0.01
-jn_max                   = 65.0
 v_nom                    = 0.173
-deltaFeed                = v_nom
+tol_CTRL                 = 0.01
+epsi_VMAX                = 0.01
+tol_COV                  = 0.01
+epsi_CTRL                = 0.01
+js_max                   = 30.0
+jn_max                   = 65.0
+js_min                   = -50
+tol_VMAX                 = 0.01
+tol_PATH                 = 0.01
+epsi_COV                 = 0.01
 path_following_tolerance = 1.0e-05
+epsi_ACC                 = 0.01
 pf_error                 = path_following_tolerance
+epsi_PATH                = 0.01
+tol_ACC                  = 0.01
+mesh_segments            = 100.0
+deltaFeed                = v_nom
 
 mechatronix do |data|
 
@@ -93,16 +93,14 @@ mechatronix do |data|
   # setup solver for controls
   data.ControlSolver = {
     # ==============================================================
-    # 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
-    :solver => 'NewtonDumped',
+    # 'Hyness', 'NewtonDumped', 'Minimize'
+    :solver => 'Minimize',
     # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     :factorization => 'LU',
     # ==============================================================
     :Iterative => false,
     :InfoLevel => -1, # suppress all messages
     # ==============================================================
-    # 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
-    :initialize_control_solver => 'QuasiNewton',
 
     # solver parameters
     :NewtonDumped => {
@@ -113,7 +111,7 @@ mechatronix do |data|
       :max_iter             => 50,
       :max_step_iter        => 10,
       :max_accumulated_iter => 150,
-      :tolerance            => 1.0e-10, # tolerance for stopping criteria
+      :tolerance            => 1.0e-12, # tolerance for stopping criteria
       :c1                   => 0.01, # Constant for Armijo step acceptance criteria
       :lambda_min           => 1.0e-10, # minimum lambda for linesearch
       :dump_min             => 0.25, # (0,0.5)  dumping factor for linesearch
@@ -132,26 +130,24 @@ mechatronix do |data|
 
     :Hyness => {
       :max_iter  => 50,
-      :tolerance => 1.0e-10
+      :tolerance => 1.0e-12
     },
 
-    :LevenbergMarquardt => {
-      :max_iter  => 50,
-      :tolerance => 1.0e-10
-    },
-
-    :YixunShi => {
-      :max_iter  => 50,
-      :tolerance => 1.0e-10
-    },
-
-    :QuasiNewton => {
-      :max_iter  => 50,
-      :tolerance => 1.0e-10,
-      # 'BFGS', 'DFP', 'SR1' for Quasi Newton
-      :update => 'BFGS',
-      # 'EXACT', 'ARMIJO'
-      :linesearch => 'EXACT',
+    :Minimize => {
+      :max_iter     => 50,
+      :tolerance    => 1.0e-12,
+      :c0           => 0.01,
+      :lambda_dump  => 0.6,
+      :lambda_min   => 0.0001,
+      :lambda_med   => 0.01,
+      :mu_start     => 1,
+      :mu_min       => 1e-30,
+      :mu_max       => 1e20,
+      :mu_epsi      => 1e-8,
+      :dump_min     => 0.1,
+      :dump_max     => 0.9,
+      :max_ok_low   => 10,
+      :max_small_mu => 10
     },
   }
 
@@ -163,22 +159,26 @@ mechatronix do |data|
 
   # setup solver
   data.Solver = {
-    # Linear algebra factorization selection:
-    # 'LU', 'QR', 'QRP', 'SUPERLU'
-    # =================
+    # ==================================================================
+    # proxymal parameters
+    :sigma_bar => 0e-3,
+    :rho_bar   => 0e-3,
+    # ==================================================================
+
+    # ==================================================================
+    # Select from: 'LU', 'QR', 'QRP', 'SUPERLU'
     :factorization => 'LU',
-    # =================
+    # ==================================================================
 
-    # Last Block selection:
-    # 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
-    # ==============================================
+    # ==================================================================
+    # Select from: 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     :last_factorization => 'LUPQ', # automatically use PINV if singular
-    # ==============================================
+    # ==================================================================
 
-    # choose solves: Hyness, NewtonDumped
-    # ===================================
+    # ==================================================================
+    # select from: Hyness, NewtonDumped
     :solver => "NewtonDumped",
-    # ===================================
+    # ==================================================================
 
     # solver parameters
     :NewtonDumped => {

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_controls.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -62,11 +62,15 @@ namespace HangingChainDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_u];
-    real_type t3   = t2 * t2;
-    real_type t5   = sqrt(t3 + 1);
-    real_type result__ = t2 * MU__[0] + t5 * MU__[1] + t5 * X__[iX_x];
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = X__[iX_x];
+    real_type t4   = U__[iU_u];
+    real_type t5   = t4 * t4;
+    real_type t7   = sqrt(t5 + 1);
+    real_type t11  = x_guess(Q__[iQ_zeta]);
+    real_type t13  = pow(t2 - t11, 2);
+    real_type result__ = t7 * t2 * t1 + t13 * (1 - t1) + t5 * ModelPars[iM_epsilon] + t4 * MU__[0] + t7 * MU__[1];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "g_fun_eval(...) return {}\n", result__ );
     }
@@ -88,12 +92,12 @@ namespace HangingChainDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_u];
-    real_type t3   = t2 * t2;
-    real_type t5   = sqrt(t3 + 1);
-    real_type t6   = 1.0 / t5;
-    result__[ 0   ] = t2 * t6 * MU__[1] + t2 * t6 * X__[iX_x] + MU__[0];
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t4   = U__[iU_u];
+    real_type t5   = t4 * t4;
+    real_type t7   = sqrt(t5 + 1);
+    real_type t8   = 1.0 / t7;
+    result__[ 0   ] = t4 * t8 * ModelPars[iM_W] * X__[iX_x] + t4 * t8 * MU__[1] + 2 * t4 * ModelPars[iM_epsilon] + MU__[0];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "g_eval", 1, i_segment );
   }
@@ -124,13 +128,14 @@ namespace HangingChainDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = t1 * t1;
-    real_type t4   = sqrt(t2 + 1);
-    result__[ 0   ] = t1 / t4;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t2   = U__[iU_u];
+    real_type t3   = t2 * t2;
+    real_type t5   = sqrt(t3 + 1);
+    real_type t6   = 1.0 / t5;
+    result__[ 0   ] = t2 * t6 * ModelPars[iM_W];
     result__[ 1   ] = 1;
-    result__[ 2   ] = result__[0];
+    result__[ 2   ] = t2 * t6;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDxpm_sparse", 3, i_segment );
   }
@@ -159,15 +164,15 @@ namespace HangingChainDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t1   = X__[iX_x];
-    real_type t3   = U__[iU_u] * U__[iU_u];
-    real_type t4   = t3 + 1;
-    real_type t5   = sqrt(t4);
-    real_type t7   = 1.0 / t5 / t4;
-    real_type t10  = 1.0 / t5;
-    real_type t12  = MU__[1];
-    result__[ 0   ] = -t3 * t7 * t1 - t3 * t7 * t12 + t10 * t1 + t10 * t12;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = ModelPars[iM_W] * X__[iX_x];
+    real_type t5   = U__[iU_u] * U__[iU_u];
+    real_type t6   = t5 + 1;
+    real_type t7   = sqrt(t6);
+    real_type t9   = 1.0 / t7 / t6;
+    real_type t12  = 1.0 / t7;
+    real_type t16  = MU__[1];
+    result__[ 0   ] = -t5 * t9 * t16 - t5 * t9 * t3 + t12 * t16 + t12 * t3 + 2 * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DgDu_sparse", 1, i_segment );
   }

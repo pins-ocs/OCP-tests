@@ -1,7 +1,7 @@
 %-----------------------------------------------------------------------%
 %  file: HangingChain.m                                                 %
 %                                                                       %
-%  version: 1.0   date 20/3/2023                                        %
+%  version: 1.0   date 9/5/2023                                         %
 %                                                                       %
 %  Copyright (C) 2023                                                   %
 %                                                                       %
@@ -981,6 +981,23 @@ classdef HangingChain < handle
       res = HangingChain_Mex('DodeDxpuv_pattern', self.objectHandle );
     end
 
+    % ---------------------------------------------------------------------
+    %  _   _               ___             _   _
+    % | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+    % | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+    %  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+    % ---------------------------------------------------------------------
+    function res = x_guess( self, xo__s )
+      res = HangingChain_Mex('x_guess', self.objectHandle, xo__s );
+    end
+    % ---------------------------------------------------------------------
+    function res = x_guess_D( self, xo__s )
+      res = HangingChain_Mex('x_guess_D', self.objectHandle, xo__s );
+    end
+    % ---------------------------------------------------------------------
+    function res = x_guess_DD( self, xo__s )
+      res = HangingChain_Mex('x_guess_DD', self.objectHandle, xo__s );
+    end
     % ---------------------------------------------------------------------
     % PLOT SOLUTION
     % ---------------------------------------------------------------------

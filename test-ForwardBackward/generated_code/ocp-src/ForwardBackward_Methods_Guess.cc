@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_Guess.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -83,7 +83,7 @@ namespace ForwardBackwardDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t1   = ModelPars[iM_v0];
       X__[ iX_v ] = t1 + (ModelPars[iM_v1] - t1) * Q__[iQ_zeta];
@@ -257,7 +257,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t2   = X__[iX_v];
     ok = ok && LimitV_min.check_range(ModelPars[iM_v_min] - t2);
@@ -313,7 +313,7 @@ namespace ForwardBackwardDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     // admissible region
     real_type t3   = U__[iU_a] * U__[iU_a];
     real_type t6   = ALIAS_kappa(Q__[iQ_zeta]);

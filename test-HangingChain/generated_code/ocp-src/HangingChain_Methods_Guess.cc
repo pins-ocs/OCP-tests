@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_Guess.cc                                  |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -59,12 +59,11 @@ namespace HangingChainDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
-      real_type t1   = ModelPars[iM_a];
-      real_type t2   = Q__[iQ_zeta];
-      X__[ iX_x ] = t1 + (ModelPars[iM_b] - t1) * t2;
-      X__[ iX_z ] = ModelPars[iM_L] * t2;
+      real_type t1   = Q__[iQ_zeta];
+      X__[ iX_x ] = x_guess(t1);
+      X__[ iX_z ] = ModelPars[iM_L] * t1;
     }
     { // open block to avoid temporary clash
 
@@ -232,7 +231,7 @@ namespace HangingChainDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool ok = true;
 
     return ok;
@@ -262,7 +261,7 @@ namespace HangingChainDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 1, 0 );
-    UGUESS__[ iU_u ] = 2 * ModelPars[iM_u0];
+    UGUESS__[ iU_u ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 1, i_segment );
   }

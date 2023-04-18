@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Mex.cc                                                    |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ class ProblemStorage : public MODEL_CLASS {
 
   // user defined Object instances (external)
 
-  ToolPath2D           m_toolPath2D;
+  ToolPath2D           toolPath2D;
 
 public:
 

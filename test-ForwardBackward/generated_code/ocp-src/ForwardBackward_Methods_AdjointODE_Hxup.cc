@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_AdjointODE.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -93,7 +93,7 @@ namespace ForwardBackwardDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = t2 * t2;
     real_type t4   = 1.0 / t3;
@@ -137,7 +137,7 @@ namespace ForwardBackwardDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = t2 * t2;
     real_type t4   = t3 * t2;

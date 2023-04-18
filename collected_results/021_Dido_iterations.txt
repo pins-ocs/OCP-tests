@@ -1,0 +1,102 @@
++----------------------------- MODEL:Dido ------------------------------+
++................................ DIMS .................................+
+| dims                      = u=1, q=1, x=2, p=0, bc(act./tot.)=(3/3)   |
+| total                     = nZ=407, nP=300, nU=100, Q=101             |
+| index start               = omega=404, p=407                          |
+| post processing           = n_post=0, n_Ipost=0                       |
++................................ MESH .................................+
+| num_nodes                 = 101                                       |
+| num_segments              = 1                                         |
++............................... THREADS ...............................+
+| number of threads         = 15                                        |
+| U / JU / F / JF / LU      = true / true / true / true / true          |
++............................... PARAMS ................................+
+| m_debug                   = false                                     |
+| Solver                    = NewtonDumped                              |
+| Solver Controls           = MINIMIZE                                  |
+| Jacobian/Jacobian BC      = ANALYTIC / ANALYTIC                       |
+| Initializer Controls      = use_guess                                 |
+| Initialize Multipliers    = false                                     |
+| Initialize Guess          = zero + default                            |
+| Continuation interval     = [1,0]                                     |
+| mesh/solver class pointer = 0x7ff7b781f438 / 0x7fc33f00e220           |
+| mu_bar/sigma_bar          = 0.001/0.001                               |
++........................... LINEAR ALGEBRA ............................+
+| rows x cols               = 407 x 407                                 |
+| nblock/block size         = 100 / 4                                   |
+| qr/qx/nr/nx               = 3 / 3 / 0 / 0                             |
+| last blok rows x cols     = 11 x 11                                   |
+| thread [factorize/solve]  = [ true / true]                            |
+| solve block               = CyclicReduction+LU                        |
+| solve last block          = LastBlock LUPQ                            |
++-----------------------------------------------------------------------+
++.................Boundary Conditions activation status.................+
+[xx] = activated, [  ] = NOT activated
+[ 0] initial_x
+[ 1] initial_y
+[ 2] final_y
++.....................No control penalties/barriers.....................+
++........................No constraints type LT.........................+
++...........................No constraints 1D...........................+
++.........................No user class (local).........................+
++.........................User class (pointer)..........................+
+                          User function `pMesh`                          
+BEGIN Mesh[mesh]
+  num. segments = 1
+  num. nodes    = 101
+  Segment N.0: s0 = 0 length = 10 npts = 101 no data set
+END Mesh[mesh]
++.......................No user mapped functions........................+
++..........................NO MODEL PARAMETERS..........................+
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 2] (  0.251   ,  0.356   ) [   2.47   ,  0.569   ] 0.496      [1:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 1] (  0.356   ,  0.0845  ) [   1.23   ,  0.188   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  3, 2] (  0.0845  , 0.00422  ) [  0.199   , 0.00979  ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[  4, 2] ( 0.00422  , 0.000211 ) [ 0.00978  , 0.000489 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[  5, 2] ( 0.000211 , 1.06e-05 ) [ 0.000489 , 2.44e-05 ] 0.95       [1:0:0:0:0:0:0:0:0:0:0:0]
+[  6, 1] ( 1.06e-05 , 2.67e-12 ) [ 2.44e-05 , 4.04e-12 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
++.................. CONTROLS nonlinear system solver ...................+
+|               Analytical solution for control(s) used!                |
++..................... BIG nonlinear system solver .....................+
++-----------------------------NewtonDumped------------------------------+
+| Converged       = YES             | tolerance       = 1e-09           |
+| N. Equations    = 407             | N. System pars  = 300             |
++------------------------------ STATISTIC ------------------------------+
+| Elapsed Time    = 5.48 [ms]       | timeout         = 0 [ms]          |
+| iteration       = 6               | Memory Used     = 91Kb(+41b)      |
+| max iterations  = 300             | max acc. iter.  = 800             |
++---------------------------- CONTINUATION -----------------------------+
+| Initial Step    = 0.2             | Minimum Step    = 0.001           |
+| Reduce Factor   = 0.5             | Augment Factor  = 1.5             |
+| Few iterations  = 8               |                                   |
++----------------------------- EVALUATIONS -----------------------------+
+| Function        = 11              | Jacobian        = 6               |
+| Factorization   = 6               | Inversion       = 16              |
++----------------------- SOLVER MERIT_F2_and_D2 ------------------------+
+| n_power         = 2               | check_angle     = 120 [degree]    |
+| c1              = 0.01            | lambda_min      = 1e-10           |
+| dump_min        = 0.4             | dump_max        = 0.95            |
+| ratio ||f||_2   = 2               | ratio ||d||_2   = 2               |
+| ratio ||f||_1   = 2               | ratio ||d||_1   = 2               |
++........................... last residuals ............................+
+| last ||f||_inf  = 1.3772e-11      | last ||d||_inf  = 1.9709e-11      |
+| last ||f||_1    = 2.6736e-12      | last ||d||_1    = 4.0382e-12      |
+| last ||f||_2    = 4.1644e-12      | last ||d||_2    = 6.0039e-12      |
++-----------------------------------------------------------------------+
+|              __   __             ___  __   __   ___  __               |
+|             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \              |
+|             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/              |
+|                                                                       |
++-----------------------------------------------------------------------+
+Check Jacobian Begin
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
+Check Jacobian End
+Check Controls Begin
+All controls solution are OK
+Check Controls End
+target [Lagrange,Mayer]       = [ -15.91, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+All Done Folks!

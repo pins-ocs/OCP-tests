@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TwoPhaseSchwartz_Methods_controls.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -77,7 +77,7 @@ namespace TwoPhaseSchwartzDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = U__[iU_u2];
     real_type t3   = t2 * t2;
     real_type t5   = U__[iU_u1];
@@ -114,7 +114,7 @@ namespace TwoPhaseSchwartzDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
     result__[ 0   ] = t2 + MU__[1];
     result__[ 1   ] = MU__[3] * ModelPars[iM_T2] + 2 * ModelPars[iM_epsilon] * U__[iU_u2];
@@ -147,7 +147,7 @@ namespace TwoPhaseSchwartzDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     result__[ 1   ] = ModelPars[iM_T2];
     if ( m_debug )
@@ -179,7 +179,7 @@ namespace TwoPhaseSchwartzDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
     result__[ 1   ] = 2 * ModelPars[iM_epsilon];
     if ( m_debug )

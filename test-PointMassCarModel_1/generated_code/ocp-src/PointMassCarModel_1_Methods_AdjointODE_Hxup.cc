@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_AdjointODE.cc                      |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -171,7 +171,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_wT];
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];
@@ -218,7 +218,7 @@ namespace PointMassCarModel_1Define {
     real_type t76  = ModelPars[iM_v__Omega__max];
     real_type t80  = t8 * MU__[4];
     real_type t81  = ModelPars[iM_v__fx__max];
-    result__[ 0   ] = t6 * t62 * t2 * t60 + t72 * t6 * t68 + t6 * t76 * t75 + t6 * t81 * t80 + t6 * t1 + t12 * t6 + t34 * t6 + t38 * t6 + t41 * t40 - t47 * t40 + t45 * t6 + t56 * t6 + t58 * t6 + t6 * t66 + t9 * t6;
+    result__[ 0   ] = t2 * t6 * t60 * t62 + t6 * t68 * t72 + t6 * t75 * t76 + t6 * t80 * t81 + t1 * t6 + t12 * t6 + t34 * t6 + t38 * t6 + t40 * t41 - t40 * t47 + t45 * t6 + t56 * t6 + t58 * t6 + t6 * t66 + t6 * t9;
     real_type t84  = inv_zeta__dot_D_2(t2, t3, t4, t5);
     real_type t93  = cos(t3);
     real_type t96  = t62 * t2;
@@ -290,7 +290,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_wT];
     real_type t2   = X__[iX_V];
     real_type t3   = X__[iX_alpha];

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_problem.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -124,7 +124,7 @@ namespace ForwardBackwardDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = 1.0 / t2;
     real_type t6   = U__[iU_a];
@@ -153,7 +153,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t7   = U__[iU_a] * U__[iU_a];
     real_type result__ = ModelPars[iM_wT] / X__[iX_v] + t7 * ModelPars[iM_epsilon];
     if ( m_debug ) {
@@ -182,8 +182,8 @@ namespace ForwardBackwardDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    Path2D::SegmentClass const & segmentLeft  = m_pTrajectory->get_segment_by_index(i_segment_left);
-    Path2D::SegmentClass const & segmentRight = m_pTrajectory->get_segment_by_index(i_segment_right);
+    Path2D::SegmentClass const & segmentLeft  = pTrajectory->get_segment_by_index(i_segment_left);
+    Path2D::SegmentClass const & segmentRight = pTrajectory->get_segment_by_index(i_segment_right);
     real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
@@ -208,8 +208,8 @@ namespace ForwardBackwardDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    Path2D::SegmentClass const & segmentLeft  = m_pTrajectory->get_segment_by_index(i_segment_left);
-    Path2D::SegmentClass const & segmentRight = m_pTrajectory->get_segment_by_index(i_segment_right);
+    Path2D::SegmentClass const & segmentLeft  = pTrajectory->get_segment_by_index(i_segment_left);
+    Path2D::SegmentClass const & segmentRight = pTrajectory->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     if ( m_debug )
@@ -260,7 +260,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t3   = X__[iX_v] * X__[iX_v];
     result__[ 0   ] = -1.0 / t3 * ModelPars[iM_wT];
     result__[ 1   ] = 2 * ModelPars[iM_epsilon] * U__[iU_a];
@@ -290,7 +290,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = t2 * t2;
     result__[ 0   ] = 2 / t3 / t2 * ModelPars[iM_wT];
@@ -316,7 +316,7 @@ namespace ForwardBackwardDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -392,8 +392,8 @@ namespace ForwardBackwardDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    Path2D::SegmentClass const & segmentLeft  = m_pTrajectory->get_segment_by_index(i_segment_left);
-    Path2D::SegmentClass const & segmentRight = m_pTrajectory->get_segment_by_index(i_segment_right);
+    Path2D::SegmentClass const & segmentLeft  = pTrajectory->get_segment_by_index(i_segment_left);
+    Path2D::SegmentClass const & segmentRight = pTrajectory->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_v] - XL__[iX_v];
     result__[ 1   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
     if ( m_debug )
@@ -431,8 +431,8 @@ namespace ForwardBackwardDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    Path2D::SegmentClass const & segmentLeft  = m_pTrajectory->get_segment_by_index(i_segment_left);
-    Path2D::SegmentClass const & segmentRight = m_pTrajectory->get_segment_by_index(i_segment_right);
+    Path2D::SegmentClass const & segmentLeft  = pTrajectory->get_segment_by_index(i_segment_left);
+    Path2D::SegmentClass const & segmentRight = pTrajectory->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;
@@ -462,7 +462,7 @@ namespace ForwardBackwardDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     result__[ 0   ] = LimitV_min(ModelPars[iM_v_min] - t2);
     result__[ 1   ] = LimitV_max(t2 - ModelPars[iM_v_max]);
@@ -506,7 +506,7 @@ namespace ForwardBackwardDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     result__[ 0   ] = 1.0 / X__[iX_v];
     // do not check
     // Mechatronix::check_in_segment( result__, "integrated_post_eval", 1, i_segment );

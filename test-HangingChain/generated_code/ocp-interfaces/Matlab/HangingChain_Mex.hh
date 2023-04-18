@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Mex.cc                                            |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ class ProblemStorage : public MODEL_CLASS {
 
   // user defined Object instances (external)
 
-  MeshStd              m_mesh;
+  MeshStd              mesh;
 
 public:
 
@@ -219,6 +219,16 @@ public:
 
   // --------------------------------------------------------------------------
 
+  /*\
+   |  _   _               ___             _   _
+   | | | | |___ ___ _ _  | __|  _ _ _  __| |_(_)___ _ _  ___
+   | | |_| (_-</ -_) '_| | _| || | ' \/ _|  _| / _ \ ' \(_-<
+   |  \___//__/\___|_|   |_| \_,_|_||_\__|\__|_\___/_||_/__/
+  \*/
+  // user defined functions which has a body defined in MAPLE
+  void do_x_guess( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_x_guess_D( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
+  void do_x_guess_DD( int nlhs, mxArray *plhs[], int nrhs, mxArray const *prhs[] );
 
 };
 

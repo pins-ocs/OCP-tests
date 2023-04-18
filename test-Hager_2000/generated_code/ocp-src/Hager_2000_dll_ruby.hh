@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Hager_2000_dll_ruby.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace Hager_2000Define {
     Hager_2000 m_model;
 
     // user defined Object instances (external)
-    MeshStd    m_mesh;
+    MeshStd    mesh;
 
     // block copy constructor
     Hager_2000_Problem( Hager_2000_Problem const & );
@@ -110,7 +110,7 @@ namespace Hager_2000Define {
       ThreadPoolBase * TP
     )
     : m_model("Hager_2000",console,TP)
-    , m_mesh( "mesh" )
+    , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -130,8 +130,8 @@ namespace Hager_2000Define {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        m_mesh.setup(gc_data("Mesh"));
-        ptrs[ "pMesh" ] = &m_mesh;
+        mesh.setup(gc_data("Mesh"));
+        ptrs[ "pMesh" ] = &mesh;
 
         m_model.setup( gc_data );
       }
@@ -154,7 +154,8 @@ namespace Hager_2000Define {
     void
     guess( GenericContainer & gc_data ) {
       m_model.guess( gc_data );
-      m_model.info();
+      integer level = 2;
+      m_model.info_model( level );
     }
 
     HAGER_2000_API_DLL

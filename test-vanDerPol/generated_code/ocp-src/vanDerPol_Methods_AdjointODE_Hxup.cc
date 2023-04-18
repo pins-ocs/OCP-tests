@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: vanDerPol_Methods_AdjointODE.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -80,12 +80,12 @@ namespace vanDerPolDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_x1];
     real_type t4   = uControl(U__[iU_u], -1, 1);
     real_type t7   = MU__[1];
     real_type t8   = X__[iX_x2];
-    result__[ 0   ] = 2 * t1 + 2 * t4 * t1 + (-2 * t8 * t1 - 1) * t7;
+    result__[ 0   ] = 2 * t1 + 2 * t4 * t1 + (-2 * t1 * t8 - 1) * t7;
     real_type t17  = t1 * t1;
     result__[ 1   ] = 2 * t8 + 2 * t4 * t8 + MU__[0] + (-t17 + 1) * t7;
     if ( m_debug )
@@ -121,7 +121,7 @@ namespace vanDerPolDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = U__[iU_u];
     real_type t2   = uControl(t1, -1, 1);
     real_type t3   = MU__[1];

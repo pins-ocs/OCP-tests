@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_DrugDisplacement_Methods_UserFunctions.cc                 |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -493,7 +493,7 @@ namespace LUUS_DrugDisplacementDefine {
     real_type t2   = t1 * t1;
     real_type t3   = g3(xo__x1, xo__x2);
     real_type t4   = g4(xo__x1, xo__x2);
-    real_type t8   = t4 * t3 - 0.215296e4 * xo__x1 * xo__x2;
+    real_type t8   = t3 * t4 - 0.215296e4 * xo__x1 * xo__x2;
     real_type t9   = 1.0 / t8;
     real_type t12  = g2(xo__x1, xo__x2);
     real_type t13  = t8 * t8;

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_Main.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,9 +51,9 @@ main() {
 
     // Auxiliary values
     real_type tol_ctrl0 = 0.01;
-    real_type tol_ctrl = tol_ctrl0;
     real_type epsi_ctrl0 = 0.01;
     real_type epsi_ctrl = epsi_ctrl0;
+    real_type tol_ctrl = tol_ctrl0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -178,8 +178,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS_PathConstrained_data.Mesh["s0"] = 0;
-ICLOCS_PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 ICLOCS_PathConstrained_data.Mesh["segments"][0]["length"] = 1;
+ICLOCS_PathConstrained_data.Mesh["segments"][0]["n"] = 400;
 
 
     // alias for user object classes passed as pointers
@@ -199,7 +199,8 @@ ICLOCS_PathConstrained_data.Mesh["segments"][0]["length"] = 1;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

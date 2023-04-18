@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_Data.lua                                   |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -20,15 +20,15 @@
 -- User Header
 
 -- Auxiliary values
-up_epsi0  = 0.1
 p_tol0    = 0.1
 p_epsi0   = 0.1
-up_tol0   = 0.01
-road_tol0 = 0.01
 m         = 700.0
-kD        = 0.2500000000/m
+road_tol0 = 0.01
+up_epsi0  = 0.1
 wT0       = 0.01
 wT        = wT0
+up_tol0   = 0.01
+kD        = 0.2500000000/m
 
 content = {
 
@@ -93,14 +93,12 @@ content = {
 
   -- setup solver for controls
   ControlSolver = {
-    -- 'Hyness', 'NewtonDumped', 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
-    solver = 'NewtonDumped',
+    -- 'Hyness', 'NewtonDumped', 'Minimize'
+    solver = 'Minimize',
     -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV' for Hyness and NewtonDumped
     factorization = 'LU',
     Iterative = false,
     InfoLevel = -1, -- suppress all messages
-    -- 'LevenbergMarquardt', 'YixunShi', 'QuasiNewton'
-    initialize_control_solver = 'QuasiNewton',
 
     -- solver parameters
     NewtonDumped = {
@@ -127,16 +125,23 @@ content = {
       check_ratio_norm_one_d = 2,  -- check that ratio of ||d(x_{k+1})||_1/||d(x_{k})||_1 <= NUMBER
     },
 
-    Hyness = { max_iter = 50, tolerance = 1.0e-10 },
+    Hyness   = { max_iter = 50, tolerance = 1.0e-10 },
 
-    LevenbergMarquardt = { max_iter = 50, tolerance = 1.0e-10, low_tolerance = 1e-6 },
-    YixunShi           = { max_iter = 50, tolerance = 1.0e-10, low_tolerance = 1e-6 },
-    QuasiNewton = {
-      max_iter      = 50,
-      tolerance     = 1.0e-10,
-      low_tolerance = 1e-6,
-      update        = 'BFGS',  -- 'BFGS', 'DFP', 'SR1' for Quasi Newton
-      linesearch    = 'EXACT', -- 'EXACT', 'ARMIJO'
+    Minimize => {
+      max_iter     = 50,
+      tolerance    = 1.0e-10,
+      c0           = 0.01,
+      lambda_dump  = 0.6,
+      lambda_min   = 0.0001,
+      lambda_med   = 0.01,
+      mu_start     = 1,
+      mu_min       = 1e-30,
+      mu_max       = 1e20,
+      mu_epsi      = 1e-8,
+      dump_min     = 0.1,
+      dump_max     = 0.9,
+      max_ok_low   = 10,
+      max_small_mu = 10
     },
   },
 
@@ -151,16 +156,26 @@ content = {
 
   -- setup solver
   Solver = {
-    -- Linear algebra factorization selection:
-    -- 'LU', 'QR', 'QRP', 'SUPERLU'
+    -- ==================================================================
+    -- proxymal parameters
+    sigma_bar = 0e-3,
+    rho_bar   = 0e-3,
+    -- ==================================================================
+
+    -- ==================================================================
+    -- Select from: 'LU', 'QR', 'QRP', 'SUPERLU'
     factorization = 'LU',
+    -- ==================================================================
 
-    -- Last Block selection:
-    -- 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
+    -- ==================================================================
+    -- Select from: 'LU', 'LUPQ', 'QR', 'QRP', 'SVD', 'LSS', 'LSY', 'PINV'
     last_factorization = 'LUPQ', -- automatically use PINV if singular
+    -- ==================================================================
 
-    -- choose solves: Hyness, NewtonDumped
+    -- ==================================================================
+    -- select from: Hyness, NewtonDumped
     solver = "NewtonDumped",
+    -- ==================================================================
 
     -- solver parameters
     NewtonDumped = {
@@ -364,81 +379,81 @@ content = {
       
       {
         length     = 190.0,
-        gridSize   = 1.0,
         rightWidth = 60.0,
         curvature  = 0.0,
+        gridSize   = 1.0,
         leftWidth  = 15/2.0,
       },
       
       {
         length     = 973.8937227,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.003225806452,
+        gridSize   = 1.0,
         leftWidth  = 60.0,
       },
       
       {
         length     = 180.0,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 235.619449,
-        gridSize   = 1.0,
         rightWidth = 15.0,
         curvature  = 0.006666666667,
+        gridSize   = 1.0,
         leftWidth  = 20.0,
       },
       
       {
         length     = 240.0,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 235.619449,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = -1/150.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 200.0,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 125.6637062,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.025,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 480.0,
-        gridSize   = 1.0,
         rightWidth = 30.0,
         curvature  = 0.0,
+        gridSize   = 1.0,
         leftWidth  = 30.0,
       },
       
       {
         length     = 10.0,
-        gridSize   = 0.1,
         rightWidth = 30.0,
         curvature  = 0.0,
+        gridSize   = 0.1,
         leftWidth  = 30.0,
       },
     },

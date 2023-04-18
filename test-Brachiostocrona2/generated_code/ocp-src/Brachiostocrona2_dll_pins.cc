@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona2_dll_pins.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -121,7 +121,7 @@ namespace Brachiostocrona2Define {
 
     integer infoLevel = 1;
     gc_data.get_if_exists( "InfoLevel", infoLevel );
-    pConsole->changeLevel( infoLevel );
+    pConsole->change_level( infoLevel );
 
     // setup the solver
     //bool ok = ocp.setup( id.c_str(), ocp.gc_data );

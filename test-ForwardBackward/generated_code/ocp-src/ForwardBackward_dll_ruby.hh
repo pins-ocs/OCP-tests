@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_dll_ruby.hh                                    |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace ForwardBackwardDefine {
     ForwardBackward m_model;
 
     // user defined Object instances (external)
-    Path2D     m_trajectory;
+    Path2D     trajectory;
 
     // block copy constructor
     ForwardBackward_Problem( ForwardBackward_Problem const & );
@@ -110,7 +110,7 @@ namespace ForwardBackwardDefine {
       ThreadPoolBase * TP
     )
     : m_model("ForwardBackward",console,TP)
-    , m_trajectory( "trajectory" )
+    , trajectory( "trajectory" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -130,8 +130,8 @@ namespace ForwardBackwardDefine {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        m_trajectory.setup(gc_data("Trajectory"));
-        ptrs[ "pTrajectory" ] = &m_trajectory;
+        trajectory.setup(gc_data("Trajectory"));
+        ptrs[ "pTrajectory" ] = &trajectory;
 
         m_model.setup( gc_data );
       }
@@ -154,7 +154,8 @@ namespace ForwardBackwardDefine {
     void
     guess( GenericContainer & gc_data ) {
       m_model.guess( gc_data );
-      m_model.info();
+      integer level = 2;
+      m_model.info_model( level );
     }
 
     FORWARDBACKWARD_API_DLL

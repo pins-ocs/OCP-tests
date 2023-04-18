@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Main.cc                                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,6 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type R0 = 1;
+    real_type R = R0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -105,7 +107,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 1;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -130,7 +132,7 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
-    data_Parameters["R"] = 10000;
+    data_Parameters["R"] = R;
 
     // Guess Parameters
 
@@ -141,6 +143,8 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
+    data_Parameters["R0"] = R0;
+    data_Parameters["R1"] = 10000;
 
     // Constraints Parameters
 
@@ -176,7 +180,8 @@ FlowInAchannel_data.Mesh["segments"][0]["n"] = 100;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

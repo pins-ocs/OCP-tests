@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_Methods_AdjointODE.cc                              |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace gtocX_2burnDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1 - ModelPars[iM_w_guess];
     real_type t3   = X__[iX_p];
     real_type t4   = Q__[iQ_zeta];
@@ -106,7 +106,7 @@ namespace gtocX_2burnDefine {
     real_type t49  = cos(t30);
     real_type t50  = t49 * t33;
     real_type t59  = t19 * MU__[5];
-    real_type t62  = t28 * t49 + t29 * t34 + 1;
+    real_type t62  = t49 * t28 + t34 * t29 + 1;
     real_type t63  = t62 * t62;
     real_type t64  = t3 * t3;
     result__[ 0   ] = 2 * t12 * (t12 * t3 - 1) * t2 + (t35 * t26 / 2 + t34 * t42 * t41 * t39) * t18 + (-t50 * t26 / 2 - t49 * t42 * t41 * t39) * t48 - 3.0 / 2.0 * t24 / t20 / t64 * t63 * t59;
@@ -127,9 +127,9 @@ namespace gtocX_2burnDefine {
     real_type t117 = k_guess(t10);
     result__[ 4   ] = (2 * X__[iX_k] - 2 * t117) * t2;
     real_type t120 = L_guess(t10, t6);
-    real_type t126 = t28 * t34 - t29 * t49;
+    real_type t126 = t34 * t28 - t49 * t29;
     real_type t128 = ray_D_4(t3, t28, t29, t30);
-    result__[ 5   ] = (2 * t30 - 2 * t120) * t2 + t126 * t76 + (t128 * t34 * t39 * t41 + t39 * t50) * t18 + (-t49 * t128 * t41 * t39 + t35 * t39) * t48 - 2 * t126 * t93 * t90;
+    result__[ 5   ] = (2 * t30 - 2 * t120) * t2 + t126 * t76 + (t34 * t128 * t41 * t39 + t50 * t39) * t18 + (-t49 * t128 * t41 * t39 + t35 * t39) * t48 - 2 * t126 * t93 * t90;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 6, i_segment );
   }
@@ -175,7 +175,7 @@ namespace gtocX_2burnDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_w_guess];
     real_type t2   = 1 - t1;
     real_type t3   = Q__[iQ_zeta];
@@ -318,7 +318,7 @@ namespace gtocX_2burnDefine {
     real_type t364 = t152 * t152;
     real_type t368 = ray_D_4_4(t17, t27, t28, t29);
     real_type t388 = t185 * t185;
-    result__[ 17  ] = 2 - t210 + t360 * t212 + t362 * t257 + (t33 * t364 * t47 * t49 + t33 * t368 * t41 * t47 + 2 * t170 * t47 - t34 * t47) * t15 + (-t364 * t47 * t49 * t61 - t368 * t41 * t47 * t61 + 2 * t154 * t47 + t47 * t62) * t60 + 2 * t23 * t20 * t388 * t77 - 2 * t362 * t250 * t117;
+    result__[ 17  ] = 2 - t210 + t360 * t212 + t362 * t257 + (t33 * t364 * t49 * t47 + t33 * t368 * t41 * t47 + 2 * t170 * t47 - t34 * t47) * t15 + (-t61 * t364 * t49 * t47 - t61 * t368 * t41 * t47 + 2 * t154 * t47 + t62 * t47) * t60 + 2 * t23 * t20 * t388 * t77 - 2 * t362 * t250 * t117;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 18, i_segment );
   }

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: FlowInAchannel_Methods_AdjointODE.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -69,7 +69,7 @@ namespace FlowInAchannelDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t3   = ModelPars[iM_R] * MU__[3];
     result__[ 0   ] = -X__[iX_u3] * t3;
     result__[ 1   ] = X__[iX_u2] * t3 + MU__[0];
@@ -106,8 +106,8 @@ namespace FlowInAchannelDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t3   = ModelPars[iM_R] * MU__[3];
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t3   = MU__[3] * ModelPars[iM_R];
     result__[ 0   ] = -t3;
     result__[ 1   ] = t3;
     result__[ 2   ] = result__[1];

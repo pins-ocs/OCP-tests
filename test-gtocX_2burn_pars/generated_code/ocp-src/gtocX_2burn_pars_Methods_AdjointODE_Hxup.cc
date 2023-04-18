@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: gtocX_2burn_pars_Methods_AdjointODE.cc                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -73,7 +73,7 @@ namespace gtocX_2burn_parsDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = 1 - ModelPars[iM_w_guess];
     real_type t3   = X__[iX_f];
     real_type t4   = Q__[iQ_zeta];
@@ -85,7 +85,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t16  = cos(t15);
     real_type t18  = X__[iX_g];
     real_type t19  = sin(t15);
-    real_type t21  = -t16 * t3 - t18 * t19 - 1;
+    real_type t21  = -t16 * t3 - t19 * t18 - 1;
     real_type t22  = ALIAS_ray_positive_D(t21);
     real_type t24  = MU__[0];
     real_type t25  = t8 - t6;
@@ -119,7 +119,7 @@ namespace gtocX_2burn_parsDefine {
     real_type t88  = t87 * t34;
     real_type t89  = t16 * t88;
     real_type t96  = t19 * t88;
-    result__[ 2   ] = (2 * t15 - 2 * t73) * t2 + t79 * t22 + (t19 * t37 * t82 * t83 + t82 * t89) * t24 + (-t16 * t37 * t82 * t83 + t82 * t96) * t42 - 2 * t79 * t54 * t51;
+    result__[ 2   ] = (2 * t15 - 2 * t73) * t2 + t79 * t22 + (t19 * t83 * t37 * t82 + t89 * t82) * t24 + (-t16 * t83 * t37 * t82 + t96 * t82) * t42 - 2 * t79 * t54 * t51;
     real_type t104 = p_guess(0);
     real_type t105 = 1.0 / t104;
     real_type t113 = t31 / t28 * t25;
@@ -176,7 +176,7 @@ namespace gtocX_2burn_parsDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = ModelPars[iM_w_guess];
     real_type t2   = 2 * t1;
     real_type t3   = X__[iX_f];

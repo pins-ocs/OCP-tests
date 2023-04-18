@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Brachiostocrona_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,12 +50,12 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type g = 9.81;
     real_type yf = -2;
-    real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type low_tolerance0 = 0.1;
-    real_type low_tolerance = low_tolerance0;
     real_type xf = 5;
+    real_type low_tolerance = low_tolerance0;
+    real_type g = 9.81;
+    real_type Tf = (-2.0*yf/g)^(1/2.0);
     real_type Vf = (xf^2+yf^2)^(1/2.0)/(-2.0*yf/g)^(1/2.0);
     integer InfoLevel = 4;
 
@@ -211,7 +211,8 @@ Brachiostocrona_data.Mesh["segments"][0]["n"] = 100;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Methods_ODE.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -88,7 +88,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     result__[ 0   ] = 1.0 / t2 * U__[iU_a] - ModelPars[iM_c0] - t2 * ModelPars[iM_c1] - V__[0];
     if ( m_debug )
@@ -121,7 +121,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     real_type t2   = X__[iX_v];
     real_type t3   = t2 * t2;
     result__[ 0   ] = -1.0 / t3 * U__[iU_a] - ModelPars[iM_c1];
@@ -160,7 +160,7 @@ namespace ForwardBackwardDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Path2D::SegmentClass const & segment = m_pTrajectory->get_segment_by_index(i_segment);
+    Path2D::SegmentClass const & segment = pTrajectory->get_segment_by_index(i_segment);
     result__[ 0   ] = 1;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "A_sparse", 1, i_segment );

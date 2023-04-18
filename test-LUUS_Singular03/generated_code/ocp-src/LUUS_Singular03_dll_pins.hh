@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_dll_pins.hh                                    |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -96,7 +96,7 @@ namespace LUUS_Singular03Define {
 
     // user defined Object instances (external)
 
-    MeshStd    m_mesh;
+    MeshStd    mesh;
 
     // block copy constructor
     LUUS_Singular03_Problem( LUUS_Singular03_Problem const & );
@@ -114,7 +114,7 @@ namespace LUUS_Singular03Define {
       ThreadPoolBase * TP
     )
     : m_model("LUUS_Singular03",console,TP)
-    , m_mesh( "mesh" )
+    , mesh( "mesh" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -136,8 +136,8 @@ namespace LUUS_Singular03Define {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        m_mesh.setup(gc_data("Mesh"));
-        ptrs[ "pMesh" ] = &m_mesh;
+        mesh.setup(gc_data("Mesh"));
+        ptrs[ "pMesh" ] = &mesh;
 
         m_model.setup( gc_data );
         ok    = true;
@@ -159,7 +159,8 @@ namespace LUUS_Singular03Define {
     void
     guess( GenericContainer const & gc_guess ) {
       m_model.guess( gc_guess );
-      m_model.info();
+      integer level = 2;
+      m_model.info_model( level );
     }
 
     LUUS_SINGULAR03_API_DLL

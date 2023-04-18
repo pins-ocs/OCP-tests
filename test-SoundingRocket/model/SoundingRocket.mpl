@@ -53,9 +53,7 @@ GUESS := [
   x2 = 0,
   x3 = zeta*Tf_guess
 ];
-UGUESS := [
-  u = B/2
-];
+U_GUESS := [ u = 1/2 ];
 CONT :=[
   [
     W = W0*(1-s)+W1*s
@@ -80,7 +78,9 @@ generateOCProblem(
   optimization_parameters = [Tf=Tf_guess],
   continuation            = CONT,
   states_guess            = GUESS,
-  controls_guess          = UGUESS
+  controls_guess          = U_GUESS
   #admissible_region       = [[sz(zeta)>0,"node"]]
 );
+ocp := getOCProblem();
+eval(ocp);
 # if used in batch mode use the comment to quit;

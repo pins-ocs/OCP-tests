@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ForwardBackward_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,20 +50,20 @@ main() {
     Path2D           trajectory( "trajectory" );
 
     // Auxiliary values
-    real_type epsilon0 = 0.1;
-    real_type epsilon = epsilon0;
-    real_type c1_0 = 0;
-    real_type c1 = c1_0;
     real_type c0_0 = 0;
     real_type c0 = c0_0;
+    real_type v_epsi = 0.01;
+    real_type c1_0 = 0;
+    real_type c1 = c1_0;
     real_type E_tol0 = 0.25;
-    real_type a_tol = 0.01;
-    real_type a_epsi = 0.01;
     real_type E_tol = E_tol0;
+    real_type a_tol = 0.01;
+    real_type v_tol = 0.01;
     real_type E_epsi0 = 0.25;
     real_type E_epsi = E_epsi0;
-    real_type v_tol = 0.01;
-    real_type v_epsi = 0.01;
+    real_type a_epsi = 0.01;
+    real_type epsilon0 = 0.1;
+    real_type epsilon = epsilon0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -239,7 +239,8 @@ main() {
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

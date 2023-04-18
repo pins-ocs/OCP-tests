@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1.hh                                         |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -135,7 +135,7 @@ namespace PointMassCarModel_1Define {
     // User classes (internal) - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // User classes (external) - - - - - - - - - - - - - - - - - - - - - - - - -
-    Mechatronix::Road2D * m_pRoad;
+    Mechatronix::Road2D * pRoad;
 
     // block copy constructor  - - - - - - - - - - - - - - - - - - - - - - - - -
     PointMassCarModel_1( PointMassCarModel_1 const & );
@@ -199,7 +199,7 @@ namespace PointMassCarModel_1Define {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     POINTMASSCARMODEL_1_API_DLL
-    void info_classes() const;
+    void info_model( integer level ) const;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // C++ initializer (raccolti in setup( gc ))

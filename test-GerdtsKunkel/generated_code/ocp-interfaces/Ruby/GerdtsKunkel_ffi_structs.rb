@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: GerdtsKunkel_ffi_structs.rb                                       #
 #                                                                          #
-#  version: 1.0   date 20/3/2023                                           #
+#  version: 1.0   date 9/5/2023                                            #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -40,15 +40,23 @@ module GerdtsKunkel
   class GerdtsKunkel_model_params < FFI::Struct
     layout(
 
-      :x1_f, :data_t,
+      :x1_f,          :data_t,
 
-      :x1_i, :data_t,
+      :x1_i,          :data_t,
 
-      :x2_f, :data_t,
+      :x2_f,          :data_t,
 
-      :x2_i, :data_t,
+      :x2_i,          :data_t,
 
-      :x3_i, :data_t,
+      :x3_i,          :data_t,
+
+      :epsilon_max,   :data_t,
+
+      :epsilon_min,   :data_t,
+
+      :tolerance_max, :data_t,
+
+      :tolerance_min, :data_t,
 
     )
 

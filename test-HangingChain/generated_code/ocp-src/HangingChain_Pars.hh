@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Pars.hh                                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -18,8 +18,8 @@
 #ifndef HANGINGCHAINPARS_DOT_HH
 #define HANGINGCHAINPARS_DOT_HH
 
-#define numBc                    3
-#define numModelPars             6
+#define numBc                    4
+#define numModelPars             8
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -27,7 +27,7 @@
 #define numXvars                 2
 #define numLvars                 2
 #define numUvars                 1
-#define numOMEGAvars             3
+#define numOMEGAvars             4
 #define numQvars                 1
 #define numPvars                 0
 #define numPostProcess           0
@@ -52,11 +52,13 @@
 
 // ModelPars Maps
 #define iM_L           0
-#define iM_L0          1
-#define iM_L1          2
-#define iM_a           3
-#define iM_b           4
-#define iM_u0          5
+#define iM_W           1
+#define iM_W0          2
+#define iM_W1          3
+#define iM_WG          4
+#define iM_a           5
+#define iM_b           6
+#define iM_epsilon     7
 
 #endif
 

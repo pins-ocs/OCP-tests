@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: HangingChain_ffi_structs.rb                                       #
 #                                                                          #
-#  version: 1.0   date 20/3/2023                                           #
+#  version: 1.0   date 9/5/2023                                            #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -40,17 +40,21 @@ module HangingChain
   class HangingChain_model_params < FFI::Struct
     layout(
 
-      :L,  :data_t,
+      :L,       :data_t,
 
-      :L0, :data_t,
+      :W,       :data_t,
 
-      :L1, :data_t,
+      :W0,      :data_t,
 
-      :a,  :data_t,
+      :W1,      :data_t,
 
-      :b,  :data_t,
+      :WG,      :data_t,
 
-      :u0, :data_t,
+      :a,       :data_t,
+
+      :b,       :data_t,
+
+      :epsilon, :data_t,
 
     )
 
@@ -69,6 +73,8 @@ module HangingChain
       :initial_z, :bool,
 
       :final_x,   :bool,
+
+      :final_z,   :bool,
 
     )
 

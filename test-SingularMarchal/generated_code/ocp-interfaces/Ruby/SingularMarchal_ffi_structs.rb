@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: SingularMarchal_ffi_structs.rb                                    #
 #                                                                          #
-#  version: 1.0   date 20/3/2023                                           #
+#  version: 1.0   date 9/5/2023                                            #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -40,15 +40,19 @@ module SingularMarchal
   class SingularMarchal_model_params < FFI::Struct
     layout(
 
-      :epsilon, :data_t,
+      :epsilon,     :data_t,
 
-      :x_f,     :data_t,
+      :x_f,         :data_t,
 
-      :x_i,     :data_t,
+      :x_i,         :data_t,
 
-      :y_f,     :data_t,
+      :y_f,         :data_t,
 
-      :y_i,     :data_t,
+      :y_i,         :data_t,
+
+      :epsilon_max, :data_t,
+
+      :epsilon_min, :data_t,
 
     )
 

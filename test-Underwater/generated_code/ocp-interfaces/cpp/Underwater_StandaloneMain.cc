@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,8 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsi_penalty = 0.1;
-    real_type epsi_max = epsi_penalty;
+    real_type epsi_max = 0.1;
+    real_type epsi_penalty = epsi_max;
     real_type tol_penalty = 0.01;
     integer InfoLevel = 4;
 
@@ -124,11 +124,13 @@ main() {
     data_BoundaryConditions["initial_vx"] = SET;
     data_BoundaryConditions["initial_vz"] = SET;
     data_BoundaryConditions["initial_theta"] = SET;
+    data_BoundaryConditions["initial_Omega"] = SET;
     data_BoundaryConditions["final_x"] = SET;
     data_BoundaryConditions["final_z"] = SET;
     data_BoundaryConditions["final_vx"] = SET;
     data_BoundaryConditions["final_vz"] = SET;
     data_BoundaryConditions["final_theta"] = SET;
+    data_BoundaryConditions["final_Omega"] = SET;
 
     // Guess
     GenericContainer & data_Guess = gc_data["Guess"];
@@ -147,6 +149,8 @@ main() {
     data_Parameters["Tguess"] = 10;
 
     // Boundary Conditions
+    data_Parameters["Omega_f"] = 0;
+    data_Parameters["Omega_i"] = 0;
     data_Parameters["theta_f"] = 0;
     data_Parameters["theta_i"] = 0;
     data_Parameters["vx_f"] = 0;
@@ -221,7 +225,8 @@ Underwater_data.Mesh["segments"][0]["n"] = 1000;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

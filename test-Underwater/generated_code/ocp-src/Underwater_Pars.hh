@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Pars.hh                                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -18,8 +18,8 @@
 #ifndef UNDERWATERPARS_DOT_HH
 #define UNDERWATERPARS_DOT_HH
 
-#define numBc                    10
-#define numModelPars             16
+#define numBc                    12
+#define numModelPars             18
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -27,7 +27,7 @@
 #define numXvars                 6
 #define numLvars                 6
 #define numUvars                 3
-#define numOMEGAvars             10
+#define numOMEGAvars             12
 #define numQvars                 1
 #define numPvars                 1
 #define numPostProcess           3
@@ -62,22 +62,24 @@
 #define iP_T           0
 
 // ModelPars Maps
-#define iM_Tguess      0
-#define iM_inertia     1
-#define iM_m1          2
-#define iM_m3          3
-#define iM_theta_f     4
-#define iM_theta_i     5
-#define iM_vx_f        6
-#define iM_vx_i        7
-#define iM_vz_f        8
-#define iM_vz_i        9
-#define iM_x_f         10
-#define iM_x_i         11
-#define iM_z_f         12
-#define iM_z_i         13
-#define iM_epsi_max    14
-#define iM_epsi_min    15
+#define iM_Omega_f     0
+#define iM_Omega_i     1
+#define iM_Tguess      2
+#define iM_inertia     3
+#define iM_m1          4
+#define iM_m3          5
+#define iM_theta_f     6
+#define iM_theta_i     7
+#define iM_vx_f        8
+#define iM_vx_i        9
+#define iM_vz_f        10
+#define iM_vz_i        11
+#define iM_x_f         12
+#define iM_x_i         13
+#define iM_z_f         14
+#define iM_z_i         15
+#define iM_epsi_max    16
+#define iM_epsi_min    17
 
 #endif
 

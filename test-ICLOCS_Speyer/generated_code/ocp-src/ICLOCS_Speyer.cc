@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_Speyer.cc                                               |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -174,13 +174,13 @@ namespace ICLOCS_SpeyerDefine {
     real_type s
   ) {
     int msg_level = 3;
-    m_console->message(
-      fmt::format(
-        "\nContinuation step N.{} s={:.5}, ds={:.5}, old_s={:5}\n",
-        phase, s, s-old_s, old_s
-      ),
-      msg_level
-    );
+    m_console->message( fmt::format(
+      "\nContinuation step N.{} s={}, ds={}, old_s={}\n",
+      phase,
+      fmt::format("{:.5}", s),
+      fmt::format("{:.5}", s-old_s),
+      fmt::format("{:.5}", old_s)
+    ), msg_level );
     UTILS_ASSERT(
       0 <= old_s && old_s < s && s <= 1,
       "ICLOCS_Speyer::update_continuation( phase number={}, old_s={}, s={} ) "
@@ -310,7 +310,7 @@ namespace ICLOCS_SpeyerDefine {
       gc.exists("pMesh"),
       "in ICLOCS_Speyer::setup_pointers(gc) cant find key `pMesh' in gc\n"
     );
-    m_pMesh = gc("pMesh").get_pointer<MeshStd*>();
+    pMesh = gc("pMesh").get_pointer<MeshStd*>();
   }
 
   /* --------------------------------------------------------------------------
@@ -321,21 +321,47 @@ namespace ICLOCS_SpeyerDefine {
   //  |_|_| |_|_|  \___/ \____|_|\__,_|___/___/\___||___/
   */
   void
-  ICLOCS_Speyer::info_classes() const {
-    int msg_level = 3;
+  ICLOCS_Speyer::info_model( integer level ) const {
+    if ( m_console == nullptr || m_console->get_level() < level ) return;
 
-    m_console->message("\nUser class (pointer)\n",msg_level);
-    m_console->message( "\nUser function `pMesh`\n",msg_level);
-    m_console->message( m_pMesh->info(),msg_level);
+    // ==================================================================
+    this->info( level );
+    this->info_BC( level );
 
-    m_console->message("\nMODEL PARAMETERS BEGIN\n",msg_level);
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No control penalties/barriers" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No constraints type LT" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No constraints 1D" ), level);
+
+    // ==================================================================
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No user class (local)" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "User class (pointer)" ), level);
+    m_console->PINS_COLOR_REVERSED( fmt::format(
+      "{:^73}\n", "User function `pMesh`"
+    ), level );
+    m_console->message( pMesh->info(),level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "No user mapped functions" ), level);
+
+    // ==================================================================
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "MODEL PARAMETERS" ), level);
     for ( integer i = 0; i < numModelPars; ++i ) {
-      m_console->message(
-        fmt::format("  {:.>40} = {}\n",namesModelPars[i], ModelPars[i]),
-        msg_level
-      );
+      m_console->PINS_COLOR_REVERSED( fmt::format(
+        "|{:.>41} = {:.<27}|\n",
+        fmt::format( " {}", namesModelPars[i] ),
+        fmt::format( "{:.5} ", ModelPars[i] )
+      ), level );
     }
-    m_console->message("MODEL PARAMETERS END\n",msg_level);
+    m_console->PINS_COLOR_TITLE( fmt::format( "+{:.^71}+\n", "END" ), level);
 
   }
 
@@ -363,16 +389,10 @@ namespace ICLOCS_SpeyerDefine {
     this->setup_controls( gc );
 
     // setup nonlinear system with object handling mesh domain
-    this->setup( m_pMesh, gc );
+    this->setup( pMesh, gc );
 
     // Begin: User Setup Code
     // End: User Setup Code
-
-    int msg_level = 2;
-    m_console->message( this->info(), msg_level );
-
-    this->info_BC();
-    this->info_classes();
   }
 
   /* --------------------------------------------------------------------------
@@ -385,33 +405,43 @@ namespace ICLOCS_SpeyerDefine {
   */
   void
   ICLOCS_Speyer::get_names( GenericContainer & out ) const {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & X_names = out["state_names"].set_vec_string();
+    X_names.reserve(numXvars);
     for ( integer i = 0; i < numXvars; ++i ) X_names.push_back(namesXvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & LM_names = out["lagrange_multiplier_names"].set_vec_string();
+    LM_names.reserve(numLvars);
     for ( integer i = 0; i < numLvars; ++i ) LM_names.push_back(namesLvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & U_names = out["control_names"].set_vec_string();
+    U_names.reserve(numUvars);
     for ( integer i = 0; i < numUvars; ++i ) U_names.push_back(namesUvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & Q_names = out["mesh_variable_names"].set_vec_string();
+    Q_names.reserve(numQvars);
     for ( integer i = 0; i < numQvars; ++i ) Q_names.push_back(namesQvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & P_names = out["parameter_names"].set_vec_string();
+    P_names.reserve(numPvars);
     for ( integer i = 0; i < numPvars; ++i ) P_names.push_back(namesPvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & OMEGA_names = out["bc_lagrange_multiplier_names"].set_vec_string();
+    OMEGA_names.reserve(numOMEGAvars);
     for ( integer i = 0; i < numOMEGAvars; ++i ) OMEGA_names.push_back(namesOMEGAvars[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & PP_names = out["post_processing_names"].set_vec_string();
+    PP_names.reserve(numPostProcess);
     for ( integer i = 0; i < numPostProcess; ++i ) PP_names.push_back(namesPostProcess[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     for ( integer i = 0; i < numIntegratedPostProcess; ++i )
       PP_names.push_back(namesIntegratedPostProcess[i]);
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     vec_string_type & model_names = out["model_names"].set_vec_string();
+    model_names.reserve(numModelPars);
     for ( integer i = 0; i < numModelPars; ++i )
       model_names.push_back(namesModelPars[i]);
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   }
 
   // save model parameters

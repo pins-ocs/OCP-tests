@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Pars.hh                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -19,7 +19,7 @@
 #define SINGULARMARCHALPARS_DOT_HH
 
 #define numBc                    4
-#define numModelPars             5
+#define numModelPars             7
 #define numConstraintLT          0
 #define numConstraint1D          0
 #define numConstraint2D          0
@@ -32,7 +32,7 @@
 #define numPvars                 0
 #define numPostProcess           1
 #define numIntegratedPostProcess 0
-#define numContinuationSteps     0
+#define numContinuationSteps     1
 
 // Xvars
 #define iX_x           0
@@ -56,6 +56,8 @@
 #define iM_x_i         2
 #define iM_y_f         3
 #define iM_y_i         4
+#define iM_epsilon_max 5
+#define iM_epsilon_min 6
 
 #endif
 

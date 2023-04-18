@@ -13,9 +13,7 @@ loadDynamicSystem(
   controls  = cvars,
   states    = qvars
 );
-addBoundaryConditions(
-  initial=[x1=x1_i,x2=x2_i,x3=x3_i]
-);
+addBoundaryConditions( initial=[ x1=x1_i, x2=x2_i, x3=x3_i ] );
 infoBoundaryConditions();
 addControlBound(
   u,

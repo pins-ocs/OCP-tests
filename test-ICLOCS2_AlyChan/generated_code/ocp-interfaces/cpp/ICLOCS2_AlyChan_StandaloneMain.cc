@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS2_AlyChan_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,10 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type u_tol_max = 1e-06;
-    real_type u_tol = u_tol_max;
     real_type u_epsi_max = 1e-06;
     real_type u_epsi = u_epsi_max;
+    real_type u_tol_max = 1e-06;
+    real_type u_tol = u_tol_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -173,8 +173,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 ICLOCS2_AlyChan_data.Mesh["s0"] = 0;
-ICLOCS2_AlyChan_data.Mesh["segments"][0]["length"] = 1/2*Pi;
 ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
+ICLOCS2_AlyChan_data.Mesh["segments"][0]["length"] = 1/2*Pi;
 
 
     // alias for user object classes passed as pointers
@@ -194,7 +194,8 @@ ICLOCS2_AlyChan_data.Mesh["segments"][0]["n"] = 400;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

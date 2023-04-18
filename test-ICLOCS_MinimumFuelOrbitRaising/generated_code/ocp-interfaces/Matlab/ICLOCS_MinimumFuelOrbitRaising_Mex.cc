@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_MinimumFuelOrbitRaising_Mex.cc                          |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -95,7 +95,7 @@ do_set_info_level(
   #define CMD MODEL_NAME "_Mex('set_info_level',obj,infoL): "
   CHECK_IN_OUT( 3, 0 );
   int64_t ilev = Utils::mex_get_int64( arg_in_2, CMD " infoL" );
-  pConsole->changeLevel( ilev );
+  pConsole->change_level( ilev );
   #undef CMD
 }
 

@@ -1,4 +1,5 @@
-restart: with(plots):;
+restart:
+with(plots):;
 with(XOptima):;
 g1 := u1(zeta)/m1 ;
 g2 := u2(zeta)/m3 ;
@@ -10,16 +11,16 @@ EQ4    := diff(vx(zeta),zeta)    = T*(g1-vz(zeta)*Omega(zeta)*(m3/m1)):
 EQ5    := diff(vz(zeta),zeta)    = T*(g2+vx(zeta)*Omega(zeta)*(m1/m3)):
 EQ6    := diff(Omega(zeta),zeta) = T*(g3+vx(zeta)*vz(zeta)*(m3-m1)/inertia):
 EQNS_T := [ EQ||(1..6) ]: <%> ;
-qvars := [x(zeta),z(zeta),theta(zeta),vx(zeta),vz(zeta),Omega(zeta)] ;
-cvars := [u1(zeta),u2(zeta),u3(zeta)] ;
+qvars := map( [x,z,theta,vx,vz,Omega], (zeta));
+cvars := map( [u1,u2,u3], (zeta));
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
   states    = qvars
 );
 addBoundaryConditions(
-  initial = [x,z,vx,vz,theta],
-  final   = [x,z,vx,vz,theta]
+  initial = [x,z,vx,vz,theta,Omega],
+  final   = [x,z,vx,vz,theta,Omega]
 );
 infoBoundaryConditions();
 addControlBound(
@@ -49,8 +50,8 @@ addControlBound(
 setTarget( mayer = T );
 pars := [
   inertia      = 0.12,
-  epsi_penalty = 0.1,
-  epsi_max     = epsi_penalty,
+  epsi_penalty = epsi_max,
+  epsi_max     = 0.1,
   epsi_min     = 1e-7,
   tol_penalty  = 0.01,
   x_i          = 0,
@@ -63,6 +64,8 @@ pars := [
   vz_f         = 0,
   theta_i      = 0,
   theta_f      = 0,
+  Omega_i      = 0,
+  Omega_f      = 0,
   m1           = 13.2,
   m3           = 25.6,
   Tguess       = 10
@@ -74,6 +77,11 @@ GUESS := [
   vx    = (x_f-x_i)/Tguess,
   vz    = sin(zeta*6.28)/Tguess,
   Omega = 0
+];
+UGUESS := [
+  u1 = 0,
+  u2 = 0,
+  u3 = 0
 ];
 CONTINUATION := [
   # prima continuazione
@@ -95,6 +103,7 @@ generateOCProblem(
   mesh                    = [length=1,n=1000],
   continuation            = CONTINUATION,
   optimization_parameters = [ T = Tguess ],
-  states_guess            = GUESS
+  states_guess            = GUESS,
+  controls_guess          = UGUESS
 ) ;
 # if used in batch mode use the comment to quit;

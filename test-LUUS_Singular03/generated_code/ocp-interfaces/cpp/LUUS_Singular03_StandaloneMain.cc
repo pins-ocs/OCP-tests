@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: LUUS_Singular03_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -51,10 +51,10 @@ main() {
 
     // Auxiliary values
     real_type u_epsilon0 = 0.01;
-    real_type u_tolerance0 = 0.01;
     real_type Tf = 5;
     real_type epsi_x0 = 0.0001;
     real_type epsi_x = epsi_x0;
+    real_type u_tolerance0 = 0.01;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -175,8 +175,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 LUUS_Singular03_data.Mesh["s0"] = 0;
-LUUS_Singular03_data.Mesh["segments"][0]["length"] = Tf;
 LUUS_Singular03_data.Mesh["segments"][0]["n"] = 1000;
+LUUS_Singular03_data.Mesh["segments"][0]["length"] = Tf;
 
 
     // alias for user object classes passed as pointers
@@ -196,7 +196,8 @@ LUUS_Singular03_data.Mesh["segments"][0]["n"] = 1000;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

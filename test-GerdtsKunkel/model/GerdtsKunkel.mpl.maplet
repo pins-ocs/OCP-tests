@@ -1,79 +1,0 @@
-
-# 
-# XOPTIMA Automatic Code Generation for Optimal Control Problems 
-# 
-# Optimal Control Problem: OCP from 
-# Authors: E. Bertolazzi, F. Biral
-# Date:
-# 
-# Structure Exploitation in an Interior- Point Method for Fully Discretized, State Constrained Optimal Control Problems
-# Andreas Huber, Matthias Gerdts & Enrico Bertolazzi
-# Vietnam Journal of Mathematics, 2019
-restart:
-with(XOptima):
-#`diff/h`   := proc() h_1(args[1])*diff(args[1],args[2]) end:
-#`diff/h_1` := proc() h_2(args[1])*diff(args[1],args[2]) end:
-with(plots):
-# Dynamical System
-# User defined functions
-# Dynamical system
-ODE1 := diff(x1(t),t)=x2(t):ODE2 := diff(x2(t),t)=u(t):
-ODE3 := diff(x3(t),t)=u(t)^2/2:ode  := subs(t=zeta,Vector([ODE1,ODE2,ODE3])):<ode>;
-# OCP (PINS generation)
-# Load Dynamical system
-xvars := [x1(zeta),x2(zeta),x3(zeta)] ;
-uvars := [u(zeta)] ;
-loadDynamicSystem(  equations = ode,  controls  = uvars,  states    = xvars);
-# Define BC
-addBoundaryConditions(initial=[x1,x2,x3],final=[x1,x2]);
-infoBoundaryConditions();
-# Define target
-setTarget(
-  mayer    = 0,
-  lagrange = u(zeta)^2+2*x(zeta)^2
-);
-setTarget( mayer = x3(zeta_f) );
-# Define control bounds
-
-# States bounds
-addUnilateralConstraint(
-  x1(zeta) <= 1/9, x1Limitation,
-  epsilon   = 0.001,
-  tolerance = 0.001,
-  scale     = 1+0*u(zeta)^2/2);
-# Parameters
-PARS := [  x1_i = 0,
-  x2_i = 1,
-  x3_i = 0,
-  x1_f = 0,
-  x2_f = -1];
-# Generate C++ Code
-project_name := "GerdtsKunkel";project_dir  := "../generated_code";
-generateOCProblem(  "GerdtsKunkel",
-  parameters   = PARS,
-  mesh         = [length=1, n=1000],
-  states_guess = [lambda2__xo=0, lambda3__xo=-1 ]);
-# Execute Code and Numerical Solution
-# if used in batch mode use the comment to quit
-# quit
-# Compile and execute
-#launchSolver(project_dir,project_name);
-compileSolver(project_dir,project_name);
-runSolver(project_dir);
-# Solution analysis
-with(plots):
-XOptimaPlots:-loadSolution(project_dir,project_name); # # load solution
-hhdrs := XOptimaPlots:-getHeaders(): nops(%);
-XOptimaPlots:-plotSolution(
-  zeta,[u,u_cell],
-  line_opts  = [[color="Blue",thickness=3], [color="Red",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Hager 2000"
-);
-XOptimaPlots:-plotSolution(
-  zeta,[x1,x2,x3],
-  line_opts  = [[color="Blue",thickness=3],                [color="Red",thickness=1],                [color="Green",thickness=1]],
-  plot_opts  = [gridlines=true, axes=boxed,labels=["Time","States"],scaling=unconstrained],
-  plot_title = "Hager 2000"
-);
-

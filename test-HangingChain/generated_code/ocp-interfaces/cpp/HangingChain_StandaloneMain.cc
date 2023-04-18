@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,11 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type b = 3;
-    real_type a = 1;
-    real_type u0 = b-a;
-    real_type L0 = (u0^2+1)^(1/2.0);
-    real_type L = L0;
+    real_type W0 = 0;
+    real_type W = W0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -124,6 +121,7 @@ main() {
     data_BoundaryConditions["initial_x"] = SET;
     data_BoundaryConditions["initial_z"] = SET;
     data_BoundaryConditions["final_x"] = SET;
+    data_BoundaryConditions["final_z"] = SET;
 
     // Guess
     GenericContainer & data_Guess = gc_data["Guess"];
@@ -134,22 +132,24 @@ main() {
 
     GenericContainer & data_Parameters = gc_data["Parameters"];
     // Model Parameters
-    data_Parameters["L"] = L;
+    data_Parameters["W"] = W;
+    data_Parameters["epsilon"] = 1e-08;
 
     // Guess Parameters
-    data_Parameters["u0"] = u0;
 
     // Boundary Conditions
-    data_Parameters["a"] = a;
-    data_Parameters["b"] = b;
+    data_Parameters["L"] = 4;
+    data_Parameters["a"] = 1;
+    data_Parameters["b"] = 3;
 
     // Post Processing Parameters
 
     // User Function Parameters
+    data_Parameters["WG"] = 4;
 
     // Continuation Parameters
-    data_Parameters["L0"] = L0;
-    data_Parameters["L1"] = 4;
+    data_Parameters["W0"] = W0;
+    data_Parameters["W1"] = 1;
 
     // Constraints Parameters
 
@@ -165,7 +165,7 @@ main() {
     // User defined classes: M E S H
 HangingChain_data.Mesh["s0"] = 0;
 HangingChain_data.Mesh["segments"][0]["length"] = 1;
-HangingChain_data.Mesh["segments"][0]["n"] = 400;
+HangingChain_data.Mesh["segments"][0]["n"] = 40;
 
 
     // alias for user object classes passed as pointers
@@ -185,7 +185,8 @@ HangingChain_data.Mesh["segments"][0]["n"] = 400;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

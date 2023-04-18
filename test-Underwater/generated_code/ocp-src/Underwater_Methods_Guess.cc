@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_Guess.cc                                    |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -91,7 +91,7 @@ namespace UnderwaterDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       real_type t1   = ModelPars[iM_x_i];
       real_type t2   = Q__[iQ_zeta];
@@ -272,7 +272,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     bool ok = true;
 
     return ok;
@@ -302,9 +302,9 @@ namespace UnderwaterDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     std::fill_n( UGUESS__.pointer(), 3, 0 );
-    UGUESS__[ iU_u1 ] = u3Control.solve(-1.0 / ModelPars[iM_m1] * MU__[3], -1, 1);
-    UGUESS__[ iU_u2 ] = u3Control.solve(-1.0 / ModelPars[iM_m3] * MU__[4], -1, 1);
-    UGUESS__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * MU__[5], -1, 1);
+    UGUESS__[ iU_u1 ] = 0;
+    UGUESS__[ iU_u2 ] = 0;
+    UGUESS__[ iU_u3 ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( UGUESS__.pointer(), "u_guess_eval", 3, i_segment );
   }
@@ -328,7 +328,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && u1Control.check_range(U__[iU_u1], -1, 1);
     ok = ok && u2Control.check_range(U__[iU_u2], -1, 1);

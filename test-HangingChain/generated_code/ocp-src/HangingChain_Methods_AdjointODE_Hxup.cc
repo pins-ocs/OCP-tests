@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_AdjointODE.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -69,9 +69,12 @@ namespace HangingChainDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_u] * U__[iU_u];
-    result__[ 0   ] = sqrt(t2 + 1);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    real_type t3   = U__[iU_u] * U__[iU_u];
+    real_type t5   = sqrt(t3 + 1);
+    real_type t10  = x_guess(Q__[iQ_zeta]);
+    result__[ 0   ] = t5 * t1 + 2 * (X__[iX_x] - t10) * (1 - t1);
     result__[ 1   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "Hxp_eval", 2, i_segment );
@@ -81,11 +84,12 @@ namespace HangingChainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer HangingChain::DHxpDxpuv_numRows() const { return 2; }
   integer HangingChain::DHxpDxpuv_numCols() const { return 5; }
-  integer HangingChain::DHxpDxpuv_nnz()     const { return 1; }
+  integer HangingChain::DHxpDxpuv_nnz()     const { return 2; }
 
   void
   HangingChain::DHxpDxpuv_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
   }
 
 
@@ -101,13 +105,15 @@ namespace HangingChainDefine {
     integer i_segment  = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = t1 * t1;
-    real_type t4   = sqrt(t2 + 1);
-    result__[ 0   ] = t1 / t4;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    result__[ 0   ] = 2 - 2 * t1;
+    real_type t3   = U__[iU_u];
+    real_type t4   = t3 * t3;
+    real_type t6   = sqrt(t4 + 1);
+    result__[ 1   ] = t3 / t6 * t1;
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 1, i_segment );
+      Mechatronix::check_in_segment( result__, "DHxpDxpuv_sparse", 2, i_segment );
   }
 
 }

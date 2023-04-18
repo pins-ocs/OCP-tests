@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: ICLOCS_PathConstrained_dll_ruby.cc                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -87,7 +87,7 @@ namespace ICLOCS_PathConstrainedDefine {
     string error;
     integer infoLevel = 1;
     gc_data.get_if_exists( "InfoLevel", infoLevel );
-    pConsole->changeLevel( infoLevel );
+    pConsole->change_level( infoLevel );
     if ( it == problems.end() ) {
       problems[id] = new ICLOCS_PathConstrained_Problem(pConsole,pTP);
       return problems[id]->setup(gc_data,error);

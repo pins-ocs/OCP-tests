@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_3_dll_ruby.hh                                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace PointMassCarModel_3Define {
     PointMassCarModel_3 m_model;
 
     // user defined Object instances (external)
-    Road2D     m_road;
+    Road2D     road;
 
     // block copy constructor
     PointMassCarModel_3_Problem( PointMassCarModel_3_Problem const & );
@@ -110,7 +110,7 @@ namespace PointMassCarModel_3Define {
       ThreadPoolBase * TP
     )
     : m_model("PointMassCarModel_3",console,TP)
-    , m_road( "road" )
+    , road( "road" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -130,8 +130,8 @@ namespace PointMassCarModel_3Define {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        m_road.setup(gc_data("Road"));
-        ptrs[ "pRoad" ] = &m_road;
+        road.setup(gc_data("Road"));
+        ptrs[ "pRoad" ] = &road;
 
         m_model.setup( gc_data );
       }
@@ -154,7 +154,8 @@ namespace PointMassCarModel_3Define {
     void
     guess( GenericContainer & gc_data ) {
       m_model.guess( gc_data );
-      m_model.info();
+      integer level = 2;
+      m_model.info_model( level );
     }
 
     POINTMASSCARMODEL_3_API_DLL

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: GerdtsKunkel_Main.cc                                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,6 +50,10 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
+    real_type tolerance_max = 0.0001;
+    real_type epsilon_max = 0.0001;
+    real_type tolerance = tolerance_max;
+    real_type epsilon = epsilon_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -105,7 +109,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 1;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -146,6 +150,10 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
+    data_Parameters["epsilon_max"] = epsilon_max;
+    data_Parameters["epsilon_min"] = 1e-08;
+    data_Parameters["tolerance_max"] = tolerance_max;
+    data_Parameters["tolerance_min"] = 1e-08;
 
     // Constraints Parameters
 
@@ -160,8 +168,8 @@ main() {
     // PenaltyBarrier1DLessThan
     GenericContainer & data_x1Limitation = data_Constraints["x1Limitation"];
     data_x1Limitation["subType"]   = "PENALTY_REGULAR";
-    data_x1Limitation["epsilon"]   = 0.001;
-    data_x1Limitation["tolerance"] = 0.001;
+    data_x1Limitation["epsilon"]   = epsilon;
+    data_x1Limitation["tolerance"] = tolerance;
     data_x1Limitation["active"]    = true;
     // Constraint1D: none defined
     // Constraint2D: none defined
@@ -170,7 +178,7 @@ main() {
     // User defined classes: M E S H
 GerdtsKunkel_data.Mesh["s0"] = 0;
 GerdtsKunkel_data.Mesh["segments"][0]["length"] = 1;
-GerdtsKunkel_data.Mesh["segments"][0]["n"] = 1000;
+GerdtsKunkel_data.Mesh["segments"][0]["n"] = 100;
 
 
     // alias for user object classes passed as pointers
@@ -190,7 +198,8 @@ GerdtsKunkel_data.Mesh["segments"][0]["n"] = 1000;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangingChain_Methods_problem.cc                                |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -52,7 +52,7 @@ namespace HangingChainDefine {
 
   void
   HangingChain::continuation_step_1( real_type s ) {
-    ModelPars[iM_L] = ModelPars[iM_L0] * (1 - s) + ModelPars[iM_L1] * s;
+    ModelPars[iM_W] = ModelPars[iM_W0] * (1 - s) + ModelPars[iM_W1] * s;
   }
 
   /*\
@@ -74,11 +74,15 @@ namespace HangingChainDefine {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t2   = U__[iU_u];
-    real_type t3   = t2 * t2;
-    real_type t5   = sqrt(t3 + 1);
-    real_type result__ = t2 * MU__[0] + t5 * MU__[1] + t5 * X__[iX_x];
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = X__[iX_x];
+    real_type t4   = U__[iU_u];
+    real_type t5   = t4 * t4;
+    real_type t7   = sqrt(t5 + 1);
+    real_type t11  = x_guess(Q__[iQ_zeta]);
+    real_type t13  = pow(t2 - t11, 2);
+    real_type result__ = t7 * t2 * t1 + t13 * (1 - t1) + t5 * ModelPars[iM_epsilon] + t4 * MU__[0] + t7 * MU__[1];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "H_eval(...) return {}\n", result__ );
     }
@@ -102,10 +106,14 @@ namespace HangingChainDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t3   = U__[iU_u] * U__[iU_u];
-    real_type t5   = sqrt(t3 + 1);
-    real_type result__ = t5 * X__[iX_x];
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = X__[iX_x];
+    real_type t5   = U__[iU_u] * U__[iU_u];
+    real_type t7   = sqrt(t5 + 1);
+    real_type t11  = x_guess(Q__[iQ_zeta]);
+    real_type t13  = pow(t2 - t11, 2);
+    real_type result__ = t7 * t2 * t1 + t13 * (1 - t1) + t5 * ModelPars[iM_epsilon];
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "lagrange_target(...) return {}\n", result__ );
     }
@@ -132,9 +140,9 @@ namespace HangingChainDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
-    real_type result__ = pow(-XR__[iX_z] + ModelPars[iM_L], 2);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
+    real_type result__ = 0;
     if ( m_debug ) {
       UTILS_ASSERT( Utils::is_finite(result__), "mayer_target(...) return {}\n", result__ );
     }
@@ -158,12 +166,12 @@ namespace HangingChainDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 0;
     result__[ 1   ] = 0;
     result__[ 2   ] = 0;
-    result__[ 3   ] = 2 * XR__[iX_z] - 2 * ModelPars[iM_L];
+    result__[ 3   ] = 0;
     if ( m_debug )
       Mechatronix::check_in_segment2( result__, "DmayerDxxp_eval", 4, i_segment_left, i_segment_right );
   }
@@ -173,11 +181,11 @@ namespace HangingChainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer HangingChain::D2mayerD2xxp_numRows() const { return 4; }
   integer HangingChain::D2mayerD2xxp_numCols() const { return 4; }
-  integer HangingChain::D2mayerD2xxp_nnz()     const { return 1; }
+  integer HangingChain::D2mayerD2xxp_nnz()     const { return 0; }
 
   void
   HangingChain::D2mayerD2xxp_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 3   ; jIndex[0 ] = 3   ;
+    // EMPTY!
   }
 
 
@@ -188,17 +196,7 @@ namespace HangingChainDefine {
     P_const_p_type P__,
     real_ptr       result__
   ) const {
-    integer  i_segment_left = LEFT__.i_segment;
-    real_const_ptr     QL__ = LEFT__.q;
-    real_const_ptr     XL__ = LEFT__.x;
-    integer i_segment_right = RIGHT__.i_segment;
-    real_const_ptr     QR__ = RIGHT__.q;
-    real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
-    result__[ 0   ] = 2;
-    if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "D2mayerD2xxp_eval", 1, i_segment_left, i_segment_right );
+    // EMPTY!
   }
 
   /*\
@@ -222,12 +220,16 @@ namespace HangingChainDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = t1 * t1;
-    result__[ 0   ] = sqrt(t2 + 1);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    real_type t2   = U__[iU_u];
+    real_type t3   = t2 * t2;
+    real_type t5   = sqrt(t3 + 1);
+    real_type t8   = X__[iX_x];
+    real_type t10  = x_guess(Q__[iQ_zeta]);
+    result__[ 0   ] = t5 * t1 + 2 * (t8 - t10) * (1 - t1);
     result__[ 1   ] = 0;
-    result__[ 2   ] = t1 / result__[0] * X__[iX_x];
+    result__[ 2   ] = t2 / t5 * t8 * t1 + 2 * t2 * ModelPars[iM_epsilon];
     if ( m_debug )
       Mechatronix::check_in_segment( result__, "DlagrangeDxpu_eval", 3, i_segment );
   }
@@ -235,13 +237,14 @@ namespace HangingChainDefine {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   integer HangingChain::D2lagrangeD2xpu_numRows() const { return 3; }
   integer HangingChain::D2lagrangeD2xpu_numCols() const { return 3; }
-  integer HangingChain::D2lagrangeD2xpu_nnz()     const { return 3; }
+  integer HangingChain::D2lagrangeD2xpu_nnz()     const { return 4; }
 
   void
   HangingChain::D2lagrangeD2xpu_pattern( integer iIndex[], integer jIndex[] ) const {
-    iIndex[0 ] = 0   ; jIndex[0 ] = 2   ;
-    iIndex[1 ] = 2   ; jIndex[1 ] = 0   ;
-    iIndex[2 ] = 2   ; jIndex[2 ] = 2   ;
+    iIndex[0 ] = 0   ; jIndex[0 ] = 0   ;
+    iIndex[1 ] = 0   ; jIndex[1 ] = 2   ;
+    iIndex[2 ] = 2   ; jIndex[2 ] = 0   ;
+    iIndex[3 ] = 2   ; jIndex[3 ] = 2   ;
   }
 
 
@@ -255,18 +258,20 @@ namespace HangingChainDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
-    real_type t1   = U__[iU_u];
-    real_type t2   = t1 * t1;
-    real_type t3   = t2 + 1;
-    real_type t4   = sqrt(t3);
-    real_type t5   = 1.0 / t4;
-    result__[ 0   ] = t1 * t5;
-    result__[ 1   ] = result__[0];
-    real_type t6   = X__[iX_x];
-    result__[ 2   ] = -t2 / t4 / t3 * t6 + t5 * t6;
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
+    real_type t1   = ModelPars[iM_W];
+    result__[ 0   ] = 2 - 2 * t1;
+    real_type t3   = U__[iU_u];
+    real_type t4   = t3 * t3;
+    real_type t5   = t4 + 1;
+    real_type t6   = sqrt(t5);
+    real_type t7   = 1.0 / t6;
+    result__[ 1   ] = t3 * t7 * t1;
+    result__[ 2   ] = result__[1];
+    real_type t10  = X__[iX_x] * t1;
+    result__[ 3   ] = -t4 / t6 / t5 * t10 + t7 * t10 + 2 * ModelPars[iM_epsilon];
     if ( m_debug )
-      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 3, i_segment );
+      Mechatronix::check_in_segment( result__, "D2lagrangeD2xpu_eval", 4, i_segment );
   }
 
   /*\
@@ -286,7 +291,7 @@ namespace HangingChainDefine {
     real_type s,
     Q_p_type  result__
   ) const {
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = s;
   }
 
@@ -362,8 +367,8 @@ namespace HangingChainDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XR__[iX_x] - XL__[iX_x];
     result__[ 1   ] = XR__[iX_z] - XL__[iX_z];
     result__[ 2   ] = LR__[iL_lambda1__xo] - LL__[iL_lambda1__xo];
@@ -407,8 +412,8 @@ namespace HangingChainDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = -1;
     result__[ 1   ] = 1;
     result__[ 2   ] = -1;

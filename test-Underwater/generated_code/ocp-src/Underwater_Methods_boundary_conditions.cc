@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_boundary_conditions.cc                      |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -84,7 +84,7 @@ namespace UnderwaterDefine {
    |   \___\___/_||_\__,_|_|\__|_\___/_||_/__/
   \*/
 
-  integer Underwater::bc_numEqns() const { return 10; }
+  integer Underwater::bc_numEqns() const { return 12; }
 
   void
   Underwater::bc_eval(
@@ -99,26 +99,28 @@ namespace UnderwaterDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = XL__[iX_x] - ModelPars[iM_x_i];
     result__[ 1   ] = XL__[iX_z] - ModelPars[iM_z_i];
     result__[ 2   ] = XL__[iX_vx] - ModelPars[iM_vx_i];
     result__[ 3   ] = XL__[iX_vz] - ModelPars[iM_vz_i];
     result__[ 4   ] = XL__[iX_theta] - ModelPars[iM_theta_i];
-    result__[ 5   ] = XR__[iX_x] - ModelPars[iM_x_f];
-    result__[ 6   ] = XR__[iX_z] - ModelPars[iM_z_f];
-    result__[ 7   ] = XR__[iX_vx] - ModelPars[iM_vx_f];
-    result__[ 8   ] = XR__[iX_vz] - ModelPars[iM_vz_f];
-    result__[ 9   ] = XR__[iX_theta] - ModelPars[iM_theta_f];
+    result__[ 5   ] = XL__[iX_Omega] - ModelPars[iM_Omega_i];
+    result__[ 6   ] = XR__[iX_x] - ModelPars[iM_x_f];
+    result__[ 7   ] = XR__[iX_z] - ModelPars[iM_z_f];
+    result__[ 8   ] = XR__[iX_vx] - ModelPars[iM_vx_f];
+    result__[ 9   ] = XR__[iX_vz] - ModelPars[iM_vz_f];
+    result__[ 10  ] = XR__[iX_theta] - ModelPars[iM_theta_f];
+    result__[ 11  ] = XR__[iX_Omega] - ModelPars[iM_Omega_f];
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "bc_eval", 10, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "bc_eval", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  integer Underwater::DbcDxxp_numRows() const { return 10; }
+  integer Underwater::DbcDxxp_numRows() const { return 12; }
   integer Underwater::DbcDxxp_numCols() const { return 13; }
-  integer Underwater::DbcDxxp_nnz()     const { return 10; }
+  integer Underwater::DbcDxxp_nnz()     const { return 12; }
 
   void
   Underwater::DbcDxxp_pattern( integer iIndex[], integer jIndex[] ) const {
@@ -127,11 +129,13 @@ namespace UnderwaterDefine {
     iIndex[2 ] = 2   ; jIndex[2 ] = 3   ;
     iIndex[3 ] = 3   ; jIndex[3 ] = 4   ;
     iIndex[4 ] = 4   ; jIndex[4 ] = 2   ;
-    iIndex[5 ] = 5   ; jIndex[5 ] = 6   ;
-    iIndex[6 ] = 6   ; jIndex[6 ] = 7   ;
-    iIndex[7 ] = 7   ; jIndex[7 ] = 9   ;
-    iIndex[8 ] = 8   ; jIndex[8 ] = 10  ;
-    iIndex[9 ] = 9   ; jIndex[9 ] = 8   ;
+    iIndex[5 ] = 5   ; jIndex[5 ] = 5   ;
+    iIndex[6 ] = 6   ; jIndex[6 ] = 6   ;
+    iIndex[7 ] = 7   ; jIndex[7 ] = 7   ;
+    iIndex[8 ] = 8   ; jIndex[8 ] = 9   ;
+    iIndex[9 ] = 9   ; jIndex[9 ] = 10  ;
+    iIndex[10] = 10  ; jIndex[10] = 8   ;
+    iIndex[11] = 11  ; jIndex[11] = 11  ;
   }
 
 
@@ -148,8 +152,8 @@ namespace UnderwaterDefine {
     integer i_segment_right = RIGHT__.i_segment;
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;
@@ -160,8 +164,10 @@ namespace UnderwaterDefine {
     result__[ 7   ] = 1;
     result__[ 8   ] = 1;
     result__[ 9   ] = 1;
+    result__[ 10  ] = 1;
+    result__[ 11  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 10, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "DbcDxxp_sparse", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -208,23 +214,23 @@ namespace UnderwaterDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = OMEGA__[0] + LL__[iL_lambda1__xo];
     result__[ 1   ] = OMEGA__[1] + LL__[iL_lambda2__xo];
     result__[ 2   ] = OMEGA__[4] + LL__[iL_lambda3__xo];
     result__[ 3   ] = OMEGA__[2] + LL__[iL_lambda4__xo];
     result__[ 4   ] = OMEGA__[3] + LL__[iL_lambda5__xo];
-    result__[ 5   ] = LL__[iL_lambda6__xo];
-    result__[ 6   ] = OMEGA__[5] - LR__[iL_lambda1__xo];
-    result__[ 7   ] = OMEGA__[6] - LR__[iL_lambda2__xo];
-    result__[ 8   ] = OMEGA__[9] - LR__[iL_lambda3__xo];
-    result__[ 9   ] = OMEGA__[7] - LR__[iL_lambda4__xo];
-    result__[ 10  ] = OMEGA__[8] - LR__[iL_lambda5__xo];
-    result__[ 11  ] = -LR__[iL_lambda6__xo];
+    result__[ 5   ] = OMEGA__[5] + LL__[iL_lambda6__xo];
+    result__[ 6   ] = OMEGA__[6] - LR__[iL_lambda1__xo];
+    result__[ 7   ] = OMEGA__[7] - LR__[iL_lambda2__xo];
+    result__[ 8   ] = OMEGA__[10] - LR__[iL_lambda3__xo];
+    result__[ 9   ] = OMEGA__[8] - LR__[iL_lambda4__xo];
+    result__[ 10  ] = OMEGA__[9] - LR__[iL_lambda5__xo];
+    result__[ 11  ] = OMEGA__[11] - LR__[iL_lambda6__xo];
     result__[ 12  ] = 1;
     if ( m_debug )
-      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 10, i_segment_left, i_segment_right );
+      Mechatronix::check_in_segment2( result__, "fd_BC_eval", 12, i_segment_left, i_segment_right );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -267,8 +273,8 @@ namespace UnderwaterDefine {
     real_const_ptr     QR__ = RIGHT__.q;
     real_const_ptr     XR__ = RIGHT__.x;
     real_const_ptr     LR__ = RIGHT__.lambda;
-    MeshStd::SegmentClass const & segmentLeft  = m_pMesh->get_segment_by_index(i_segment_left);
-    MeshStd::SegmentClass const & segmentRight = m_pMesh->get_segment_by_index(i_segment_right);
+    MeshStd::SegmentClass const & segmentLeft  = pMesh->get_segment_by_index(i_segment_left);
+    MeshStd::SegmentClass const & segmentRight = pMesh->get_segment_by_index(i_segment_right);
     result__[ 0   ] = 1;
     result__[ 1   ] = 1;
     result__[ 2   ] = 1;

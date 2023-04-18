@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Main.cc                                            |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,22 +50,22 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type rw = 0.3;
-    real_type h__b = 1;
     real_type v__0 = 10;
-    real_type tol_l = 0.01;
-    real_type TT__max = 800;
-    real_type eps_c0 = 0.1;
-    real_type eps_c = eps_c0;
+    real_type rw = 0.3;
+    real_type tol_c0 = 0.1;
+    real_type tol_c = tol_c0;
     real_type L = 300;
-    real_type mesh_np = 2.000000000*L;
+    real_type h__b = 1;
     real_type omega__0 = 1/rw*v__0;
     real_type eps_l = 0.01;
     real_type w__t0 = 1;
     real_type w__t = w__t0;
+    real_type tol_l = 0.01;
+    real_type mesh_np = 2.000000000*L;
+    real_type TT__max = 800;
     real_type E__pow = 60*TT__max;
-    real_type tol_c0 = 0.1;
-    real_type tol_c = tol_c0;
+    real_type eps_c0 = 0.1;
+    real_type eps_c = eps_c0;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -226,8 +226,8 @@ main() {
 
     // ClipIntervalWithErf
     GenericContainer & data_clipInt = gc_MappedObjects["clipInt"];
-    data_clipInt["h"] = 0.01;
     data_clipInt["delta"] = 0;
+    data_clipInt["h"] = 0.01;
     data_clipInt["delta2"] = 0;
 
     // SignRegularizedWithErf
@@ -295,12 +295,12 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 TyreDynamic_data.Mesh["s0"] = 0;
-TyreDynamic_data.Mesh["segments"][0]["length"] = .1*L;
 TyreDynamic_data.Mesh["segments"][0]["n"] = round(.4*mesh_np);
-TyreDynamic_data.Mesh["segments"][1]["length"] = .8*L;
+TyreDynamic_data.Mesh["segments"][0]["length"] = .1*L;
 TyreDynamic_data.Mesh["segments"][1]["n"] = round(.8*mesh_np);
-TyreDynamic_data.Mesh["segments"][2]["length"] = .1*L;
+TyreDynamic_data.Mesh["segments"][1]["length"] = .8*L;
 TyreDynamic_data.Mesh["segments"][2]["n"] = round(.4*mesh_np);
+TyreDynamic_data.Mesh["segments"][2]["length"] = .1*L;
 
 
     // alias for user object classes passed as pointers
@@ -320,7 +320,8 @@ TyreDynamic_data.Mesh["segments"][2]["n"] = round(.4*mesh_np);
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

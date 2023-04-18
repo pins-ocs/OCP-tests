@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: Underwater_Methods_controls.cc                                 |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -91,7 +91,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t2   = U__[iU_u1];
     real_type t3   = u1Control(t2, -1, 1);
@@ -132,7 +132,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
     result__[ 0   ] = t3 * t1 + 1.0 / ModelPars[iM_m1] * t1 * MU__[3];
@@ -173,7 +173,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t2   = ALIAS_u1Control_D_1(U__[iU_u1], -1, 1);
     real_type t4   = 1.0 / ModelPars[iM_m1];
     result__[ 0   ] = MU__[3] * t4 + t2;
@@ -217,7 +217,7 @@ namespace UnderwaterDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = P__[iP_T];
     real_type t3   = ALIAS_u1Control_D_1_1(U__[iU_u1], -1, 1);
     result__[ 0   ] = t3 * t1;
@@ -256,7 +256,7 @@ namespace UnderwaterDefine {
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
     integer i_segment = NODE__.i_segment;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     U__[ iU_u1 ] = u3Control.solve(-1.0 / ModelPars[iM_m1] * MU__[3], -1, 1);
     U__[ iU_u2 ] = u3Control.solve(-1.0 / ModelPars[iM_m3] * MU__[4], -1, 1);
     U__[ iU_u3 ] = u3Control.solve(-1.0 / ModelPars[iM_inertia] * MU__[5], -1, 1);

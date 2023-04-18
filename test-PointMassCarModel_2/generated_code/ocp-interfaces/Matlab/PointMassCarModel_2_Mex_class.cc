@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_2_Mex_class.cc                               |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -24,7 +24,7 @@ ProblemStorage::ProblemStorage(
 )
 : MODEL_CLASS(cname,console,TP)
 // user defined Object instances (external)
-, m_road( "road" )
+, road( "road" )
 {}
 
 ProblemStorage::~ProblemStorage() {}

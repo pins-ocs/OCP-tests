@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: SingularMarchal_Main.cc                                        |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -50,7 +50,8 @@ main() {
     MeshStd          mesh( "mesh" );
 
     // Auxiliary values
-    real_type epsilon = 1e-08;
+    real_type epsilon_max = 0.0001;
+    real_type epsilon = epsilon_max;
     integer InfoLevel = 4;
 
     GenericContainer &  data_ControlSolver = gc_data["ControlSolver"];
@@ -106,7 +107,7 @@ main() {
 
     // continuation parameters
     data_Solver["ns_continuation_begin"] = 1;
-    data_Solver["ns_continuation_end"]   = 0;
+    data_Solver["ns_continuation_end"]   = 1;
 
     GenericContainer & data_Continuation = data_Solver["continuation"];
     data_Continuation["initial_step"]    = 0.2   ; // initial step for continuation
@@ -146,6 +147,8 @@ main() {
     // User Function Parameters
 
     // Continuation Parameters
+    data_Parameters["epsilon_max"] = epsilon_max;
+    data_Parameters["epsilon_min"] = 1e-10;
 
     // Constraints Parameters
 
@@ -169,8 +172,8 @@ main() {
     // User defined classes initialization
     // User defined classes: M E S H
 SingularMarchal_data.Mesh["s0"] = 0;
-SingularMarchal_data.Mesh["segments"][0]["length"] = 8;
 SingularMarchal_data.Mesh["segments"][0]["n"] = 1000;
+SingularMarchal_data.Mesh["segments"][0]["length"] = 8;
 
 
     // alias for user object classes passed as pointers
@@ -190,7 +193,8 @@ SingularMarchal_data.Mesh["segments"][0]["n"] = 1000;
     model.guess( gc_data("Guess","main") );
 
     // print info about the solver setup
-    model.info();
+    integer level = 2;
+    model.info_model( level );
 
     // solve nonlinear system
     // model->set_timeout_ms( 100 );

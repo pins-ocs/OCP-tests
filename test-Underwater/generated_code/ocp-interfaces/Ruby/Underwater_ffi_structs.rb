@@ -3,7 +3,7 @@
 #                                                                          #
 #  file: Underwater_ffi_structs.rb                                         #
 #                                                                          #
-#  version: 1.0   date 20/3/2023                                           #
+#  version: 1.0   date 9/5/2023                                            #
 #                                                                          #
 #  Copyright (C) 2023                                                      #
 #                                                                          #
@@ -39,6 +39,10 @@ module Underwater
 
   class Underwater_model_params < FFI::Struct
     layout(
+
+      :Omega_f,  :data_t,
+
+      :Omega_i,  :data_t,
 
       :Tguess,   :data_t,
 
@@ -94,6 +98,8 @@ module Underwater
 
       :initial_theta, :bool,
 
+      :initial_Omega, :bool,
+
       :final_x,       :bool,
 
       :final_z,       :bool,
@@ -103,6 +109,8 @@ module Underwater
       :final_vz,      :bool,
 
       :final_theta,   :bool,
+
+      :final_Omega,   :bool,
 
     )
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: PointMassCarModel_1_Methods_Guess.cc                           |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -161,7 +161,7 @@ namespace PointMassCarModel_1Define {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_V     ] = ModelPars[iM_V0];
       X__[ iX_Omega ] = 0.1000000000e-1 * X__[iX_V];
@@ -320,7 +320,7 @@ namespace PointMassCarModel_1Define {
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
     real_const_ptr L__ = NODE__.lambda;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     /* REMOVED */ Xoptima__check__node__lt(0, X__[iX_V], Xoptima__message_node_check_0);
     return true;
   }
@@ -341,7 +341,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     bool ok = true;
     real_type t1   = X__[iX_fx];
     real_type t2   = t1 * t1;
@@ -410,7 +410,7 @@ namespace PointMassCarModel_1Define {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    Road2D::SegmentClass const & segment = m_pRoad->get_segment_by_index(i_segment);
+    Road2D::SegmentClass const & segment = pRoad->get_segment_by_index(i_segment);
     // controls range check
     ok = ok && v__OmegaControl.check_range(U__[iU_v__Omega], -1, 1);
     ok = ok && v__fxControl.check_range(U__[iU_v__fx], -1, 1);

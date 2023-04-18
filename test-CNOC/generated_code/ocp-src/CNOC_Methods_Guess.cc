@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_Methods_Guess.cc                                          |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -163,7 +163,7 @@ namespace CNOCDefine {
     X_p_type       X__,
     L_p_type       L__
   ) const {
-    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     { // open block to avoid temporary clash
       X__[ iX_s   ] = Q__[iQ_zeta];
       X__[ iX_n   ] = 0;
@@ -339,7 +339,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     bool ok = true;
     ok = ok && timePositive.check_range(-X__[iX_coV]);
     real_type t3   = X__[iX_vs] * X__[iX_vs];
@@ -420,7 +420,7 @@ namespace CNOCDefine {
     integer i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    ToolPath2D::SegmentClass const & segment = m_pToolPath2D->get_segment_by_index(i_segment);
+    ToolPath2D::SegmentClass const & segment = pToolPath2D->get_segment_by_index(i_segment);
     // controls range check
     real_type t2   = ModelPars[iM_jn_max];
     ok = ok && jnControl.check_range(U__[iU_jn], -t2, t2);

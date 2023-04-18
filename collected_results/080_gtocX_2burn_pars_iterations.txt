@@ -1,0 +1,162 @@
++----------------------- MODEL:gtocX_2burn_pars ------------------------+
++................................ DIMS .................................+
+| dims                      = u=0, q=1, x=3, p=3, bc(act./tot.)=(6/6)   |
+| total                     = nZ=315, nP=150, nU=0, Q=51                |
+| index start               = omega=306, p=312                          |
+| post processing           = n_post=21, n_Ipost=0                      |
++................................ MESH .................................+
+| num_nodes                 = 51                                        |
+| num_segments              = 1                                         |
++............................... THREADS ...............................+
+| number of threads         = 15                                        |
+| U / JU / F / JF / LU      = true / true / true / true / true          |
++............................... PARAMS ................................+
+| m_debug                   = false                                     |
+| Solver                    = NewtonDumped                              |
+| Solver Controls           = MINIMIZE                                  |
+| Jacobian/Jacobian BC      = ANALYTIC / ANALYTIC                       |
+| Initializer Controls      = use_guess                                 |
+| Initialize Multipliers    = false                                     |
+| Initialize Guess          = zero + default                            |
+| Continuation interval     = [1,2]                                     |
+| mesh/solver class pointer = 0x7ff7b5983420 / 0x7fee6c00e220           |
+| mu_bar/sigma_bar          = 0.001/0.001                               |
++........................... LINEAR ALGEBRA ............................+
+| rows x cols               = 315 x 315                                 |
+| nblock/block size         = 50 / 6                                    |
+| qr/qx/nr/nx               = 6 / 6 / 3 / 3                             |
+| last blok rows x cols     = 21 x 21                                   |
+| thread [factorize/solve]  = [ true / true]                            |
+| solve block               = CyclicReduction+LU                        |
+| solve last block          = LastBlock LUPQ                            |
++-----------------------------------------------------------------------+
++.................Boundary Conditions activation status.................+
+[xx] = activated, [  ] = NOT activated
+[ 0] initial_x
+[ 1] initial_y
+[ 2] initial_z
+[ 3] final_x
+[ 4] final_y
+[ 5] final_z
++.....................No control penalties/barriers.....................+
++..........................Constraints type LT..........................+
+ray_positive = {
+  Type      = LESS THAN
+  SubType   = BarrierLog, h=0.001
+  Tolerance = 0.001
+  Epsilon   = 0.001
+  Active    = YES
+}
++...........................No constraints 1D...........................+
++.........................No user class (local).........................+
++.........................User class (pointer)..........................+
+                          User function `pMesh`                          
+BEGIN Mesh[mesh]
+  num. segments = 1
+  num. nodes    = 51
+  Segment N.0: s0 = 0 length = 1 npts = 51 no data set
+END Mesh[mesh]
++.......................No user mapped functions........................+
++...........................MODEL PARAMETERS............................+
+|..................................... muS = 0.57587 ...................|
+|.................................. time_f = 27 ........................|
+|.................................. time_i = 0 .........................|
+|................................. w_guess = 0 .........................|
+|............................... epsi_norm = 0.01 ......................|
+|.............................. retrograde = -1 ........................|
+|................................ w_nonlin = 0 .........................|
++..................................END..................................+
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  1, 1] ( 0.000237 , 2.09e-07 ) [ 0.000368 , 9.7e-08  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  2, 1] ( 2.09e-07 , 1.13e-14 ) [ 9.7e-08  , 4.17e-15 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1
+
+Continuation step N.1 s=0.2, ds=0.2, old_s=0
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  3, 1] ( 3.17e-05 , 2.47e-15 ) [ 5.99e-05 , 3.21e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.5, ds=0.3, old_s=0.2
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  4, 1] ( 4.76e-05 , 2.25e-15 ) [ 8.98e-05 , 1.22e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=0.95, ds=0.45, old_s=0.5
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  5, 1] ( 7.14e-05 , 2.72e-15 ) [ 0.000135 ,  8e-17   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.1 s=1, ds=0.05, old_s=0.95
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  6, 1] ( 7.94e-06 , 2.22e-15 ) [ 1.5e-05  , 7.4e-17  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2
+
+Continuation step N.2 s=0.2, ds=0.2, old_s=0
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[  7, 1] (  0.0351  , 0.000368 ) [ 0.00925  , 0.000173 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  8, 1] ( 0.000368 , 1.08e-07 ) [ 0.000167 , 9.46e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[  9, 1] ( 1.08e-07 ,  2e-14   ) [ 9.47e-08 ,  1e-14   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.5, ds=0.3, old_s=0.2
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 10, 1] (  0.054   ,  0.0016  ) [  0.0155  , 0.000587 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 11, 1] (  0.0016  , 1.4e-06  ) [ 0.000555 , 9.22e-07 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 12, 1] ( 1.4e-06  , 2.41e-12 ) [ 9.23e-07 , 8.06e-13 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=0.95, ds=0.45, old_s=0.5
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 13, 1] (  0.0844  ,  0.0104  ) [  0.0283  , 0.00302  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 14, 1] (  0.0104  , 4.01e-05 ) [ 0.00281  ,  2e-05   ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 15, 1] ( 4.01e-05 , 2.21e-09 ) [ 2.02e-05 , 5.4e-10  ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 16, 1] ( 2.21e-09 , 2.55e-15 ) [ 5.4e-10  , 7.84e-17 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
+Continuation step N.2 s=1, ds=0.05, old_s=0.95
+[iter, Dumping] (|f0|_1,|f1|_1) [|d0|_1,|d1|_1] lambda [Angle:Armijo:f_2:d_2:f_1:d_1:bad:adm:upd:fun:jac:merit] OCP_solver_NewtonDumped
+[ 17, 1] (  0.0102  ,  0.0003  ) [  0.0043  , 8.01e-05 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 18, 1] (  0.0003  , 3.48e-08 ) [ 7.96e-05 , 1.66e-08 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+[ 19, 1] ( 3.48e-08 , 3.42e-15 ) [ 1.66e-08 , 4.13e-16 ] 1          [0:0:0:0:0:0:0:0:0:0:0:0]
+
++.................. CONTROLS nonlinear system solver ...................+
+|               Analytical solution for control(s) used!                |
++..................... BIG nonlinear system solver .....................+
++-----------------------------NewtonDumped------------------------------+
+| Converged       = YES             | tolerance       = 1e-09           |
+| N. Equations    = 315             | N. System pars  = 150             |
++------------------------------ STATISTIC ------------------------------+
+| Elapsed Time    = 15.9 [ms]       | timeout         = 0 [ms]          |
+| iteration       = 19              | Memory Used     = 139Kb(+22b)     |
+| max iterations  = 40              | max acc. iter.  = 800             |
++---------------------------- CONTINUATION -----------------------------+
+| Initial Step    = 0.2             | Minimum Step    = 0.001           |
+| Reduce Factor   = 0.5             | Augment Factor  = 1.5             |
+| Few iterations  = 8               |                                   |
++----------------------------- EVALUATIONS -----------------------------+
+| Function        = 28              | Jacobian        = 19              |
+| Factorization   = 19              | Inversion       = 38              |
++----------------------- SOLVER MERIT_F2_and_D2 ------------------------+
+| n_power         = 2               | check_angle     = 120 [degree]    |
+| c1              = 0.01            | lambda_min      = 1e-10           |
+| dump_min        = 0.4             | dump_max        = 0.95            |
+| ratio ||f||_2   = 2               | ratio ||d||_2   = 2               |
+| ratio ||f||_1   = 2               | ratio ||d||_1   = 2               |
++........................... last residuals ............................+
+| last ||f||_inf  = 3.8192e-14      | last ||d||_inf  = 2.5395e-15      |
+| last ||f||_1    = 3.4241e-15      | last ||d||_1    = 4.1334e-16      |
+| last ||f||_2    = 7.5847e-15      | last ||d||_2    = 7.7265e-16      |
++-----------------------------------------------------------------------+
+|              __   __             ___  __   __   ___  __               |
+|             /  ` /  \ |\ | \  / |__  |__) / _` |__  |  \              |
+|             \__, \__/ | \|  \/  |___ |  \ \__> |___ |__/              |
+|                                                                       |
++-----------------------------------------------------------------------+
+Check Jacobian Begin
+Check DabcDxlxlpu: all OK
+Check DodeDxpuv:all OK
+Check DhcDxlxlop:  OK
+Check Jacobian End
+target [Lagrange,Mayer]       = [ 0, 0 ]
+[Penalties/Barriers,Controls] = [ 0, 0 ]
+Optimization parameters:
+h: -0.0655370757577170421
+k: 4.08222640841026329e-33
+p: 1.85767113762416392
+All Done Folks!

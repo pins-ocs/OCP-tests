@@ -14,35 +14,35 @@ loadDynamicSystem(
   states    = qvars
 );
 #Describe(addBoundaryConditions);
-addBoundaryConditions(
-  initial=[u=0,u1=0],
-  final=[u=1,u1=0]
-);
+addBoundaryConditions( initial=[u=0,u1=0], final=[u=1,u1=0] );
 infoBoundaryConditions();
 setTarget(
   mayer    = 0,
   lagrange = 0
 );
-pars := [
-  R = 10000
+pars := [ 
+  R0 = 1,
+  R1 = 10000,
+  R  = R0
 ];
-GG := zeta^2*(3 - 2*zeta);
+GG := 1-zeta; #zeta^2*(3 - 2*zeta);
 GUESS := [
   u  = GG,
   u1 = diff(GG,zeta),
   u2 = diff(GG,zeta,zeta),
   u3 = diff(GG,zeta,zeta,zeta)
 ];
-CONT := [];
+CONT := [
+  [ R = R0+s*(R1-R0) ]
+];
 #Describe(generateOCProblem);
+project_dir  := "../generated_code";
+project_name := "FlowInAchannel";
 generateOCProblem(
-  "FlowInAchannel",
-  parameters       = pars,
-  mesh             = [[length=1,n=100]],
-  continuation     = CONT,
-  #controls_guess   = [u=1],
-  states_guess     = GUESS
+  project_name,
+  parameters   = pars,
+  mesh         = [[length=1,n=100]],
+  continuation = CONT,
+  states_guess = GUESS
 );
-#ocp := getOCProblem();
-#eval(ocp);
-;
+# if used in batch mode use the comment to quit;

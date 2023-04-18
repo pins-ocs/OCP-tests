@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: HangGlider_Main.cc                                             |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -61,7 +61,7 @@ main() {
 
     // change info level
     if ( gc_data.exists( "InfoLevel" ) )
-      console.changeLevel( gc_data("InfoLevel").get_as_int() );
+      console.change_level( gc_data("InfoLevel").get_as_int() );
 
     // alias for user object classes passed as pointers
     GenericContainer & ptrs = gc_data["Pointers"];
@@ -79,8 +79,9 @@ main() {
     // initialize nonlinear system initial point
     m_model->guess( gc_data("Guess","main") );
 
-    // print information about solver
-    m_model->info();
+    // print information about nonlinear system and solver
+    integer level = 2;
+    m_model->info_model( level );
 
     // solve nonlinear system
     // m_model->set_timeout_ms( 100 );

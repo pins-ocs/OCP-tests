@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: TyreDynamic_Methods_Guess.cc                                   |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -106,7 +106,7 @@ namespace TyreDynamicDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     real_type t1   = X__[iX_v];
     result__[ 0   ] = MU__[0] * ModelPars[iM_m] * t1;
     result__[ 1   ] = MU__[1] * t1 * ModelPars[iM_Iw];
@@ -144,7 +144,7 @@ namespace TyreDynamicDefine {
     integer  i_segment = NODE__.i_segment;
     real_const_ptr Q__ = NODE__.q;
     real_const_ptr X__ = NODE__.x;
-    MeshStd::SegmentClass const & segment = m_pMesh->get_segment_by_index(i_segment);
+    MeshStd::SegmentClass const & segment = pMesh->get_segment_by_index(i_segment);
     result__[ 0   ] = MU__[0] * ModelPars[iM_m];
     result__[ 1   ] = MU__[1] * ModelPars[iM_Iw];
     result__[ 2   ] = MU__[2] * ModelPars[iM_l__x];

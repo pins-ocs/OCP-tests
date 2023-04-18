@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------*\
  |  file: CNOC_dll_ruby.hh                                               |
  |                                                                       |
- |  version: 1.0   date 20/3/2023                                        |
+ |  version: 1.0   date 9/5/2023                                         |
  |                                                                       |
  |  Copyright (C) 2023                                                   |
  |                                                                       |
@@ -92,7 +92,7 @@ namespace CNOCDefine {
     CNOC       m_model;
 
     // user defined Object instances (external)
-    ToolPath2D m_toolPath2D;
+    ToolPath2D toolPath2D;
 
     // block copy constructor
     CNOC_Problem( CNOC_Problem const & );
@@ -110,7 +110,7 @@ namespace CNOCDefine {
       ThreadPoolBase * TP
     )
     : m_model("CNOC",console,TP)
-    , m_toolPath2D( "toolPath2D" )
+    , toolPath2D( "toolPath2D" )
     {
       Mechatronix::activate_ctrlC();
     }
@@ -130,8 +130,8 @@ namespace CNOCDefine {
         */
         GenericContainer & ptrs = gc_data["Pointers"];
         // setup user object classes
-        m_toolPath2D.setup(gc_data("ToolPath2D"));
-        ptrs[ "pToolPath2D" ] = &m_toolPath2D;
+        toolPath2D.setup(gc_data("ToolPath2D"));
+        ptrs[ "pToolPath2D" ] = &toolPath2D;
 
         m_model.setup( gc_data );
       }
@@ -154,7 +154,8 @@ namespace CNOCDefine {
     void
     guess( GenericContainer & gc_data ) {
       m_model.guess( gc_data );
-      m_model.info();
+      integer level = 2;
+      m_model.info_model( level );
     }
 
     CNOC_API_DLL
