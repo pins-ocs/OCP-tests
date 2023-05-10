@@ -12,6 +12,7 @@ DerivedData
 
 .bundle
 .vscode
+.mpl
 dumps
 
 # Compiled Object files
