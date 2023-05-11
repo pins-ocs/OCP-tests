@@ -19,7 +19,7 @@ with(XOptima):;
 EQ1    := diff(x1(t),t) = T*u(t):
 EQ2    := diff(x2(t),t) = T*cos(x1(t)):
 EQ3    := diff(x3(t),t) = T*sin(x1(t)):
-EQNS_T := [ EQ||(1..3)]: <%> ;
+EQNS_T := [ EQ||(1..3)]: <%>;
 xvars := map([x1,x2,x3],(t));
 uvars := [u(t)];
 loadDynamicSystem(
@@ -29,59 +29,73 @@ loadDynamicSystem(
 );
 addBoundaryConditions(
   initial=[x1,x2,x3],
-  final=[x2=0,x3=0]
+  final=[x2,x3]
 );
 infoBoundaryConditions();
-setTarget( mayer = T, lagrange = 0 );
+setTarget(
+  mayer    = T,
+  lagrange = T*WG*( (x1(zeta)-guess_x1(zeta))^2+
+                    (x2(zeta)-guess_x2(zeta))^2+
+                    (x3(zeta)-guess_x3(zeta))^2 )
+);
 addControlBound(
   u,
   controlType = "U_COS_LOGARITHMIC",
   min         = -2,
   max         = 2,
-  epsilon     = epsi_ctrl,
-  tolerance   = tol_ctrl,
+  epsilon     = u_epsi_max,
+  tolerance   = u_tol_max,
   scale       = 1
 );
 addUnilateralConstraint(
   T>0,
-  tfbound,
-  epsilon   = epsi_T,
-  tolerance = tol_T,
+  Tbound,
+  epsilon   = T_epsi_max,
+  tolerance = T_tol_max,
   barrier   = true
 );
-#addUserFunction();
-#addUserFunction();
+addUserFunction( guess_x1(s) = x1_i*(1-s)        );
+addUserFunction( guess_x2(s) = x2_i*(1-s)+x2_f*s );
+addUserFunction( guess_x3(s) = x3_i*(1-s)+x3_f*s );
 PARS :=  [
-  epsi_ctrl0 = 0.01,
-  tol_ctrl0  = 0.01,
-  epsi_ctrl1 = 0.0001,
-  tol_ctrl1  = 0.0001,
-  epsi_ctrl  = epsi_ctrl0,
-  tol_ctrl   = tol_ctrl0,
-  epsi_T     = 0.01,
-  tol_T      = 0.1,
+  u_epsi_max = 0.01, u_epsi_min = 1e-4,
+  u_tol_max  = 0.01, u_tol_min  = 1e-4,
+  T_epsi_max = 0.01, T_epsi_min = 1e-4,
+  T_tol_max  = 0.01, T_tol_min  = 1e-4,
+
+
   x1_i       = Pi/2,
   x2_i       = 4,
   x3_i       = 0,
-  T_init     = 100
+
+
+  x2_f       = 0,
+  x3_f       = 0,
+
+
+  T_init     = 100,
+  WG0        = 1,
+  WG         = WG0
 ];
 OPT_PARS := [];
 POST := [[ zeta*T, "time"] ];
 IPOST := [[x1(zeta)^2+x2(zeta)^2,"intTarget"]];
 GUESS := [
-  x1 = x1_i*(1-zeta),
-  x2 = x2_i*(1-zeta),
-  x3 = 0,
-  lambda3__xo = -1 # must be initialized
+  x1 = guess_x1(zeta),
+  x2 = guess_x2(zeta),
+  x3 = guess_x3(zeta)
 ];
 PGUESS := [
   T = T_init
 ];
 MESH_DEF := [length=1,n=400];
 CONT := [
+  [ WG = WG0*(1-s) ],
   [ 
-    ["u","epsilon"]   = epsi_ctrl0^(1-s)*epsi_ctrl1^s,
-    ["u","tolerance"] = tol_ctrl0^(1-s)*tol_ctrl1^s
+    ["u","epsilon"]        = u_epsi_max^(1-s)*u_epsi_min^s,
+    ["u","tolerance"]      = u_tol_max^(1-s)*u_tol_min^s,
+    ["Tbound","epsilon"]   = T_epsi_max^(1-s)*T_epsi_min^s,
+    ["Tbound","tolerance"] = T_tol_max^(1-s)*T_tol_min^s
   ]
 ];
 project_dir  := "../generated_code";

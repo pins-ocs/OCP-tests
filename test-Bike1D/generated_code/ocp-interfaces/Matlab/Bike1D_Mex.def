@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "Bike1D_Mex"
-DESCRIPTION  'Mex file for Bike1D'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

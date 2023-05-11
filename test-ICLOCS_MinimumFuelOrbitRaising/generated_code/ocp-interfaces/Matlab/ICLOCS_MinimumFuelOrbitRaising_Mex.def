@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "ICLOCS_MinimumFuelOrbitRaising_Mex"
-DESCRIPTION  'Mex file for ICLOCS_MinimumFuelOrbitRaising'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "GunnAndThomas_Mex"
-DESCRIPTION  'Mex file for GunnAndThomas'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

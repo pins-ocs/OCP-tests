@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "Hager_2000_Mex"
-DESCRIPTION  'Mex file for Hager_2000'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction

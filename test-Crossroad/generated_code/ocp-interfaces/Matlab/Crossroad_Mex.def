@@ -1,9 +1,0 @@
-
-; mexFunction.def : Declares the module parameters for the DLL.
-
-LIBRARY      "Crossroad_Mex"
-DESCRIPTION  'Mex file for Crossroad'
-
-EXPORTS
-    ; Explicit exports can go here
-    mexFunction
