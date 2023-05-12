@@ -15,9 +15,9 @@
  iteration = 6     Brake
  iteration = 35    BrysonDenham
  iteration = 180   CNOC
- iteration = -1    Chachuat3_44
- iteration = -1    CristianiMartinon
- iteration = 75    Crossroad
+ iteration = 124   Chachuat3_44
+ iteration = 24    CristianiMartinon
+ iteration = 45    Crossroad
  iteration = 2     Dadebo1
  iteration = 6     Dido
  iteration = 238   EconomicGrowthModel
@@ -29,7 +29,7 @@
  iteration = 96    GoddardRocket
  iteration = 29    GunnAndThomas
  iteration = 1     Hager_2000
- iteration = -1    HangGlider
+ iteration = 68    HangGlider
  iteration = 118   HangingChain
  iteration = 6     HyperSensitive
  iteration = -1    HypersonicProblem3DOF
@@ -38,11 +38,11 @@
  iteration = -1    ICLOCS2_ParallelParking_WORKING_ON
  iteration = 56    ICLOCS_Catalyst
  iteration = 8     ICLOCS_ContinuousMP
- iteration = -1    ICLOCS_MinimumFuelOrbitRaising
+ iteration = 34    ICLOCS_MinimumFuelOrbitRaising
  iteration = 554   ICLOCS_PathConstrained
  iteration = 95    ICLOCS_SingularArc
  iteration = 36    ICLOCS_Speyer
- iteration = -1    ICLOCS_StirredTank
+ iteration = 376   ICLOCS_StirredTank
  iteration = 64    ICLOCS_TwoLinkRobotArm
  iteration = 60    LUUS_DrugDisplacement
  iteration = 310   LUUS_Singular02
@@ -57,7 +57,7 @@
  iteration = -1    PointMassCarModel_5
  iteration = -1    Pugliese
  iteration = 19    ROSS_Ball_Mizel
- iteration = 402   ROSS_Fuller
+ iteration = 298   ROSS_Fuller
  iteration = 13    Rayleight
  iteration = 42    RobotArm
  iteration = 57    SecondOrderSingularRegulator
@@ -71,7 +71,7 @@
  iteration = 115   SoundingRocket
  iteration = -1    StirredTank
  iteration = 48    Train
- iteration = -1    TwoPhaseSchwartz
+ iteration = 42    TwoPhaseSchwartz
  iteration = 4     TwoStageCSTR
  iteration = -1    TyreDynamic
  iteration = 631   Underwater

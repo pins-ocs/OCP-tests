@@ -166,6 +166,7 @@ task :matlab do
   cd ROOT
 end
 
+desc "Execute in MATLAB starting from shell".green
 task :run_matlab do
   cd ROOT+'/generated_code/ocp-interfaces/Matlab' do
     case OS
@@ -194,6 +195,7 @@ task :cleanup do
   sh "git submodule update --checkout --recursive"
 end
 
+desc "Clean generated tests".green
 task :clean_test do
   puts "do clean_test".green
   Dir.glob("test-*/generated_code").each do |f|

@@ -83,8 +83,7 @@ PARS := [
   epsi_mass_min = 0.0001, tol_mass_min = 0.0001,
 
   WG     = WG_max,
-  WG_max = 1,
-  tf = 1
+  WG_max = 1
 ];
 POST := [
   [zeta*TimeSize,"Time"],

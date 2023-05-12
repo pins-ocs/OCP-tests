@@ -25,15 +25,15 @@ addControlBound(
   controlType = "U_LOGARITHMIC",
   min         = 0,
   max         = 2,
-  epsilon     = epsi_ctrl,
-  tolerance   = tol_ctrl,
+  epsilon     = u_epsi_max,
+  tolerance   = u_tol_max,
   scale       = 1
 );
 addUnilateralConstraint(
   TimeSize >= T_min,
   tfbound,
-  epsilon   = epsi_T,
-  tolerance = tol_T,
+  epsilon   = T_epsi_max,
+  tolerance = T_tol_max,
   barrier   = true
 );
 addBilateralConstraint(
@@ -41,8 +41,8 @@ addBilateralConstraint(
   x1bound,
   min       = 0,
   max       = 1,
-  epsilon   = x_epsi,
-  tolerance = x_tol,
+  epsilon   = x_epsi_max,
+  tolerance = x_tol_max,
   barrier   = true
 );
 addBilateralConstraint(
@@ -50,33 +50,26 @@ addBilateralConstraint(
   x2bound,
   min       = 0,
   max       = 1,
-  epsilon   = x_epsi,
-  tolerance = x_tol,
+  epsilon   = x_epsi_max,
+  tolerance = x_tol_max,
   barrier   = true
 );
 PARS := [
 
+  u_epsi_max = 0.1, u_epsi_min = 1e-4,
+  u_tol_max  = 0.1, u_tol_min  = 1e-4,
 
-  epsi_ctrl0 = 0.1,
-  epsi_ctrl1 = 0.001,
-  epsi_ctrl  = epsi_ctrl0,
+  x_epsi_max = 0.01, x_epsi_min = 1e-4,
+  x_tol_max  = 0.01, x_tol_min  = 1e-4,
 
 
-  tol_ctrl0  = 0.1,
-  tol_ctrl1  = 0.001,
-  tol_ctrl   = tol_ctrl0,
-
-  x_epsi    = 0.01,
-  x_tol     = 0.01,
-
-  epsi_T    = 0.01,
-  tol_T     = 1,
+  T_epsi_max = 0.01, T_epsi_min = 0.001,
+  T_tol_max  = 1,    T_tol_min  = 0.1,
 
   a         = 600*0.000195,
   theta     = 20,
   k         = 300,
   En        = 5,
-
 
   Tc        = 0.38158,
   Tf        = 0.3947,
@@ -84,10 +77,8 @@ PARS := [
   x1_i      = 0.98,
   x2_i      = 0.39,
 
-
   x1_f      = 0.2632,
   x2_f      = 0.6519,
-
 
   u_f       = 0.76,
 
@@ -95,7 +86,7 @@ PARS := [
   T_min     = 10,
 
   w_time_max = 1,
-  w_time_min = 0.01,
+  w_time_min = 0.01,# must be >= 0.01 or do not converge
   w_time     = w_time_max
 ];
 POST := [
@@ -106,8 +97,17 @@ CONT := [
     w_time = w_time_max + s*(w_time_min-w_time_max)
   ],
   [ 
-    ["u","epsilon"]   = epsi_ctrl0+s*(epsi_ctrl1-epsi_ctrl0),
-    ["u","tolerance"] = tol_ctrl0+s*(tol_ctrl1-tol_ctrl0)
+    ["u","epsilon"]         = (1-s)*u_epsi_max+s*u_epsi_min,
+    ["u","tolerance"]       = (1-s)*u_tol_max+s*u_tol_min,
+
+    ["x1bound","epsilon"]   = (1-s)*x_epsi_max+s*x_epsi_min,
+    ["x1bound","tolerance"] = (1-s)*x_tol_max+s*x_tol_min,
+
+    ["x2bound","epsilon"]   = (1-s)*x_epsi_max+s*x_epsi_min,
+    ["x2bound","tolerance"] = (1-s)*x_tol_max+s*x_tol_min,
+
+    ["tfbound","epsilon"]   = (1-s)*T_epsi_max+s*T_epsi_min,
+    ["tfbound","tolerance"] = (1-s)*T_tol_max+s*T_tol_min
   ]
 ];
 GUESS := [

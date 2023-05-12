@@ -24,7 +24,7 @@ addBoundaryConditions(
 infoBoundaryConditions();
 setTarget(
   mayer    = 0,
-  lagrange = -vr(zeta)+epsilon*(theta(zeta)-guess_theta(zeta))^2 +
+  lagrange = -vr(zeta)+WG*(theta(zeta)-guess_theta(zeta))^2 +
              WG*( (r(zeta)-guess_r(zeta))^2 + 
                   (vr(zeta)-guess_vr(zeta))^2 + 
                   (vt(zeta)-guess_vt(zeta))^2 )
@@ -41,8 +41,8 @@ PARS := [
   epsilon     = epsilon_max,
   epsilon_max = 1,
   epsilon_min = 0,
-  theta_min   = 1,
-  theta_max   = 4
+  theta_min   = 0,
+  theta_max   = 2*Pi
 ];
 POST := [
   [ guess_theta(zeta), "THETA_guess" ],
@@ -61,7 +61,10 @@ GUESS := [
   vr = guess_vr(zeta),
   vt = guess_vt(zeta)
 ];
+UGUESS := [ theta = guess_theta(zeta) ];
 REGION := [
+  [ theta(zeta) > theta_min, "cell" ],
+  [ theta(zeta) < theta_max, "cell" ]
 ];
 MESH_DEF := [length=tf,n=400];
 project_dir  := "../generated_code";
@@ -77,7 +80,7 @@ generateOCProblem(
   mesh                  = MESH_DEF,
   continuation          = CONT,
   controls_iterative    = false,
-  controls_guess        = [theta=0],
+  controls_guess        = UGUESS,
   #controls_user_defined = U_SOLVED,
   states_guess          = GUESS,
   admissible_region     = REGION
