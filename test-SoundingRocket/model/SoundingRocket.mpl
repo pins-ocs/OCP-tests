@@ -14,7 +14,7 @@ loadDynamicSystem(
   controls  = cvars,
   states    = qvars
 );
-addBoundaryConditions( initial = [x1=0,x2=0,x3=0], final = [x3] );
+addBoundaryConditions( initial = [x1=0,x2=0,x3=0], generic = [[x3(zeta_f)-b,"x3_final"]] );
 infoBoundaryConditions();
 addControlBound(
   u,
@@ -40,7 +40,9 @@ PARS := [
 
   B     = 4*g,
   kappa = 0.002,
-  b     = 350,
+  b_i   = 10,
+  b_f   = 350,
+  b     = b_i,
 
   Tf_guess = 20,
   W0       = 1,
@@ -56,7 +58,8 @@ GUESS := [
 U_GUESS := [ u = 1/2 ];
 CONT :=[
   [
-    W = W0*(1-s)+W1*s
+    W = W0*(1-s)+W1*s,
+    b = (1-s)*b_i+s*b_f
   ],
   [
     ["u","epsilon"]   = pow_average__xo(s,epsi0,epsi1),
@@ -74,13 +77,13 @@ generateOCProblem(
   admissible_region       = [Tf>0],
   post_processing         = POST,
   parameters              = PARS,
-  mesh                    = [length=1,n=100],
+  mesh                    = [length=1,n=50],
   optimization_parameters = [Tf=Tf_guess],
   continuation            = CONT,
   states_guess            = GUESS,
   controls_guess          = U_GUESS
   #admissible_region       = [[sz(zeta)>0,"node"]]
 );
-ocp := getOCProblem();
-eval(ocp);
+#ocp := getOCProblem();
+#eval(ocp);
 # if used in batch mode use the comment to quit;
