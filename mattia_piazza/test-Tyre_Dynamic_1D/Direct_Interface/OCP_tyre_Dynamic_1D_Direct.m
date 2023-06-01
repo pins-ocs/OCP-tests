@@ -273,12 +273,13 @@ classdef OCP_tyre_Dynamic_1D_Direct < OCP_NLP
 
       subplot( 4, 1, 4 );
       hold on
+      grid on
       F_ = reshape( [1;1] * F, 1, 2*(self.N-1) ) ;
       
       nn = reshape( [ nodes(1:end-1) ; nodes(2:end)], 1, 2*(self.N-1) ) ;
       plot( nn, F_, 'Linewidth', 2 ) ;
-      title('Controls') ;
-      legend(["F"]);
+      title('Control') ;
+      legend(["p__0"]);
       
       hold off 
       
@@ -583,13 +584,13 @@ classdef OCP_tyre_Dynamic_1D_Direct < OCP_NLP
     end
     
     function tvU = TVU_custom( self, tL, tC, tR, UCL, UCR )
-      w__tv = 0;
+      w__tv = 10^(-4);
       delta = (UCL - UCR);
       tvU = w__tv * self.vec_square(delta);
     end
     
     function tvG = TVU_custom_gradient( self, tL, tC, tR, UCL, UCR )
-      w__tv = 0;
+      w__tv = 10^(-4);
       delta  = (UCL - UCR);
       Ddelta = [eye(self.nu), -eye(self.nu)];
       tvG = w__tv * self.Dvec_square(delta) * Ddelta;
