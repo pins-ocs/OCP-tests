@@ -1,0 +1,4 @@
+ax0_max	8.392460
+ax0_min	15.868324
+ax0_max_mag	15.868324
+Omega0_max	1.177281

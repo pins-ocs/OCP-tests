@@ -1,0 +1,268 @@
+% ----------------------------------------
+%% Create the road file
+% ----------------------------------------
+clc; clearvars; close all;
+
+set(0,'DefaultFigureWindowStyle','docked');
+set(0,'defaultAxesFontSize',18)
+set(0,'DefaultLegendFontSize',18)
+
+% Set LaTeX as default interpreter for axis labels, ticks and legends
+set(0,'defaulttextinterpreter','latex')
+set(groot,'defaultAxesTickLabelInterpreter','latex');
+set(groot,'defaultLegendInterpreter','latex');
+
+% ------------------
+%% Create road data and fit with clothoids
+% ------------------
+x0     = 0;
+y0     = 0;
+theta0 = 0;
+
+S = ClothoidList();
+
+addseg  = @(l,c) S.push_back( c, 0, l );
+addseg1 = @(l) S.push_back( 0, 0, l );
+
+% |||||||||||||||||||||||||||||||||||||   START GRID   |||||||||||||||||||||||||||||||||||||||||
+S.push_back( x0, y0, theta0, 0, 0, 684.8194564 );
+%addseg1(684.8194564);
+
+% CORNER Elf
+addseg(61.37799034,1/37.86990612);
+
+% STRAIGHT LINE
+addseg1(18.75920636);
+
+% CORNER Renault
+addseg(80.069112926,-1/64.36843302);
+
+% STRAIGHT LINE
+addseg1(80.68297222);
+
+% CORNER 1 
+addseg(63.11609498,1/104.64002904);
+
+% CORNER 2 
+addseg(163.8592568,1/115.87061646);
+
+% CORNER 3 
+addseg(156.52619938,1/212.94807617);
+
+% STRAIGHT LINE
+addseg1(231.8817849);
+
+% CORNER Repsol 1
+addseg(105.68477598,1/56.81280378);
+
+% CORNER Repsol 2
+addseg(129.95040312,1/100.24537215);
+
+% STRAIGHT LINE
+addseg1(180.49228976);
+
+% CORNER Seat
+addseg(89.44476175,-1/35.11755175);
+
+% STRAIGHT LINE
+addseg1(107.04294776);
+
+% CORNER 1
+addseg(60.48237024,-1/469.97031844);
+
+% CORNER 2
+addseg(84.29604548,-1/186.41064472);
+
+% STRAIGHT LINE
+addseg1(91.23648198);
+
+% CORNER
+addseg(68.0044283,-1/42.61284759);
+
+% STRAIGHT LINE
+addseg1(28.82157832);
+
+% CORNER
+addseg(45.5246094,1/74.87247217);
+
+% STRAIGHT LINE
+addseg1(176.26004018);
+
+% CORNER Campsa
+addseg(143.1226559,1/94.70681912);
+
+% STRAIGHT LINE
+addseg1(515.31737357);
+
+% CORNER la caixa 1  
+addseg(59.80535775,-1/35.58231261);
+
+% CORNER la caixa 2  
+addseg(51.93254416,-1/69.93813673);
+
+% CORNER la caixa 3  
+addseg(113.90487362,-1/119.98115513);
+
+% STRAIGHT LINE
+addseg1(50.34381636);
+
+% CORNER Banc Sabadel  
+addseg(186.01599897,1/58.9644632);
+
+% STRAIGHT LINE
+addseg1(137.73626904);
+
+% CORNER new holland 
+addseg(106.47043326,1/83.40969586);
+
+% STRAIGHT LINE
+addseg1(149.97055459);
+
+% CORNER 
+addseg(155.00375877,1/100.42825682);
+
+% STRAIGHT LINE
+%addseg1(349.10204373);
+S.push_back_G1( x0, y0, theta0); % close curve
+
+absc_step_eval = 5;
+abscissa_eval  = 0:absc_step_eval:S.length;
+if (isempty(find(abscissa_eval==S.length,1)))
+    abscissa_eval = [abscissa_eval,S.length];
+end
+[x_road,y_road] = S.evaluate(abscissa_eval);
+
+% ------------------
+%% Fit the circuit with a list of G2 clothoids
+% ------------------
+SP_C = ClothoidSplineG2();
+S_G2 = SP_C.buildP2(x_road',y_road');
+% Evaluate the G2 spline list at the end points of each of the G2 clothoids composing the list 
+[abscissa_G2,~,~] = S_G2.getSTK();
+[x_ev,y_ev,theta_ev,~] = S_G2.evaluate(abscissa_G2);
+
+% Rotate the points so as to make x_ev(1) = 0, y_ev(1) = 0, theta_ev(1) = 0
+theta_rot = theta_ev(1);
+RotMat = [cos(theta_rot) -sin(theta_rot); ...
+          sin(theta_rot) cos(theta_rot)];
+x_start = x_ev(1);
+y_start = y_ev(1);
+for jj=1:length(x_ev)      
+    rotated_points = pinv(RotMat)*[x_ev(jj)-x_start; y_ev(jj)-y_start]; 
+    x_ev(jj) = rotated_points(1);
+    y_ev(jj) = rotated_points(2);
+end
+theta_ev = theta_ev - theta_rot;
+
+% Fit with G1 clothoids, using the evaluation points obtained from the G2 clothoid list
+S_G1 = ClothoidList();
+for kk=1:length(abscissa_G2)-1
+    S_G1.push_back_G1(x_ev(kk),y_ev(kk),theta_ev(kk), x_ev(kk+1),y_ev(kk+1),theta_ev(kk+1));
+end
+% Evaluate the G1 spline list at the end points of each of the G1 clothoids composing the list. 
+% Notice that x_sampled == x_ev, y_sampled == y_ev
+[abscissae_sampled,theta_sampled,kappa_sampled] = S_G1.getSTK();
+[x_sampled,y_sampled] = S_G1.eval(abscissae_sampled);
+
+% Circuit width
+width_L_road = 4;
+width_R_road = 4;
+width_L_save = ones(size(abscissae_sampled))*width_L_road(1);
+width_R_save = ones(size(abscissae_sampled))*width_R_road(1);
+
+% Mesh step of curvilinear abscissa
+mesh_step = 1;
+
+% ------------------
+%% Plot the circuit 
+% ------------------
+% rebuild the clothoid list to verify that the result is ok
+S_reconstr_build = ClothoidList; 
+x0     = x_sampled(1);
+y0     = y_sampled(1);
+theta0 = theta_sampled(1);
+S_reconstr_build.build(x0, y0, theta0, abscissae_sampled, kappa_sampled);  
+
+figure('Name','Circuit','NumberTitle','off'), clf  
+hold on
+axis equal
+% S_G2.plot;
+S_reconstr_build.plot;
+% plot(x_ev,y_ev,'ko','MarkerSize',8)
+% plot(x_sampled,y_sampled,'go','MarkerSize',8);
+% plot(x_road,y_road,'bo','MarkerSize',6)
+grid on
+xlabel('x [m]')
+ylabel('y [m]')
+title('Circuit')
+
+% ------------------
+%% ROAD FILE - Save the clothoids fitting data
+% ------------------
+circuitName = 'Catalunya';
+% -------------
+% txt road file
+% -------------
+referenceRoad = fopen(strcat('road_',circuitName,'.txt'),'w');
+% Headers
+fprintf(referenceRoad,'%s\t%s\t%s\t%s\t%s\t%s\t%s\n','abscissa','curvature','X','Y','theta','width_L','width_R');
+for ii=1:length(abscissae_sampled)
+    fprintf(referenceRoad,'%.20e\t%.20e\t%.20e\t%.20e\t%.20e\t%.20e\t%.20e\n',abscissae_sampled(ii),kappa_sampled(ii),x_sampled(ii),y_sampled(ii),theta_sampled(ii),width_L_save(ii),width_R_save(ii));
+end
+fclose(referenceRoad);
+
+% -------------
+% csv road file
+% -------------
+table_csv = array2table([abscissae_sampled',kappa_sampled',x_sampled',y_sampled',theta_sampled',width_L_save',width_R_save']);
+table_csv.Properties.VariableNames = {'abscissa','curvature','X','Y','theta','width_L','width_R'};
+writetable(table_csv,strcat('road_',circuitName,'.csv'));
+
+% ------------------
+%% ROAD FILE for off-line MLT 
+% ------------------
+numExtraPts_MLT = 200;  % n° of extra points to include in the MLT road file, so that the vehicle is driven for more than 1 lap
+abscissae_sampled_MLT = [abscissae_sampled, abscissae_sampled(end)+abscissae_sampled(2:numExtraPts_MLT)];
+kappa_sampled_MLT     = [kappa_sampled, kappa_sampled(2:numExtraPts_MLT)];
+x_sampled_MLT         = [x_sampled, x_sampled(2:numExtraPts_MLT)];
+y_sampled_MLT         = [y_sampled, y_sampled(2:numExtraPts_MLT)];
+theta_sampled_MLT     = [theta_sampled, theta_sampled(2:numExtraPts_MLT)];
+width_L_save_MLT      = ones(size(abscissae_sampled_MLT))*width_L_road(1);
+width_R_save_MLT      = ones(size(abscissae_sampled_MLT))*width_R_road(1);
+
+% -------------
+% txt road file
+% -------------
+referenceRoad = fopen(strcat('road_',circuitName,'_MLT.txt'),'w');
+% Headers
+fprintf(referenceRoad,'%s\t%s\t%s\t%s\t%s\t%s\t%s\n','abscissa','curvature','X','Y','theta','width_L','width_R');
+% Values
+for ii=1:length(abscissae_sampled_MLT)
+    fprintf(referenceRoad,'%.20e\t%.20e\t%.20e\t%.20e\t%.20e\t%.20e\t%.20e\n',abscissae_sampled_MLT(ii),kappa_sampled_MLT(ii),x_sampled_MLT(ii),y_sampled_MLT(ii),theta_sampled_MLT(ii),width_L_save_MLT(ii),width_R_save_MLT(ii));
+end
+fclose(referenceRoad);
+
+% -------------
+% csv road file
+% -------------
+table_MLT_csv = array2table([abscissae_sampled_MLT',kappa_sampled_MLT',x_sampled_MLT',y_sampled_MLT',theta_sampled_MLT',width_L_save_MLT',width_R_save_MLT']);
+table_MLT_csv.Properties.VariableNames = {'abscissa','curvature','X','Y','theta','width_L','width_R'};
+writetable(table_MLT_csv,strcat('road_',circuitName,'_MLT.csv'));
+
+% ------------------
+%% Set the initial conditions for the vehicle
+% ------------------
+x_veh0     = x0;
+y_veh0     = y0;
+psi_veh0   = theta0;
+delta_veh0 = 0;
+z_veh0     = 0;
+phi_veh0   = 0;
+mu_veh0    = 0;
+if (~exist(strcat('./Mesh_and_initialCondits_',circuitName,'/IC'),'dir'))
+    mkdir(strcat('./Mesh_and_initialCondits_',circuitName,'/IC'))
+end
+file_IC = fopen(strcat('./Mesh_and_initialCondits_',circuitName,'/IC/',circuitName,'_IC.txt'),'w');
+fprintf(file_IC,'pose,x0,y0,psi0,delta0,z0,phi0,mu0\n');
+fprintf(file_IC,'%s,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f\n',strcat(circuitName,'_IC'),x_veh0,y_veh0,psi_veh0,delta_veh0,z_veh0,phi_veh0,mu_veh0);
+fclose(file_IC);

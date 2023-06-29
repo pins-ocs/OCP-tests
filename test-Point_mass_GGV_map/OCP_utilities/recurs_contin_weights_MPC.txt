@@ -1,0 +1,12 @@
+n_cont_ampl	100.0000000000
+xi_cont_ampl	0.0000000000
+vx_cont_ampl	0.0000000000
+ax_cont_ampl	0.0000000000
+Omega_cont_ampl	2000.0000000000
+vy_cont_ampl	100.0000000000
+zeta_n_cont	10.0000000000
+zeta_xi_cont	10.0000000000
+zeta_vx_cont	10.0000000000
+zeta_ax_cont	10.0000000000
+zeta_Omega_cont	10.0000000000
+zeta_vy_cont	10.0000000000
