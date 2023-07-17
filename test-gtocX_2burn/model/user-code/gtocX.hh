@@ -172,7 +172,7 @@ namespace gtocX {
   bool
   build_Lambert_guess(
     real_type       t0,
-    real_type const P0[3],
+    dvec3_t const & P0,
     real_type       t1,
     Astro const   & To,
     real_type       muS,

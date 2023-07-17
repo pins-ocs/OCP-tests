@@ -1,5 +1,4 @@
 #include "gtocX.hh"
-#include "gtocX_utils.hh"
 
 #include <fstream>
 #include <sstream>
@@ -93,7 +92,7 @@ namespace gtocX {
     real_type     muS,
     Astro       & guess
   ) {
-    real_type P0[3], P1[3], V0[3], V1[3];
+    dvec3_t P0, P1, V0, V1;
     integer m = 0;
     From.position( t0, P0 );
     To.position( t1, P1 );
@@ -106,13 +105,13 @@ namespace gtocX {
   bool
   build_Lambert_guess(
     real_type       t0,
-    real_type const P0[3],
+    dvec3_t const & P0,
     real_type       t1,
     Astro const   & To,
     real_type       muS,
     Astro         & guess
   ) {
-    real_type P1[3], V0[3], V1[3];
+    dvec3_t P1, V0, V1;
     integer m = 0;
     To.position( t1, P1 );
     integer ok = Lambert( P0, P1, t1-t0, m, muS, V0, V1 );
