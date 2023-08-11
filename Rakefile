@@ -110,7 +110,7 @@ end
 
 desc "Build executable".green
 task :main do
-  ENV['PATH'] = ENV['PATH']+PATHLIB
+  ENV['PATH'] = ENV['PATH']+":"+PATHLIB
   dir = ROOT+'/generated_code'
   if File.exist?(dir) then
     cd dir do
@@ -130,7 +130,7 @@ end
 
 desc "Run executable".green
 task :run do
-  ENV['PATH'] = ENV['PATH']+PATHLIB
+  ENV['PATH'] = ENV['PATH']+":"+PATHLIB
   dir = ROOT+'/generated_code'
   if File.exist?(dir) then
     cd dir do
