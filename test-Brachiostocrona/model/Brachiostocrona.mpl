@@ -22,11 +22,11 @@ addBoundaryConditions(
 infoBoundaryConditions() ;
 addControlBound(
   vtheta,
-  scale       = T,
-  controlType = "U_QUADRATIC",
-  maxabs      = 10,
-  epsilon     = 0.001,
-  tolerance   = 0.001
+  scale      = T,
+  subtype    = "COS_LOGARITHMIC",
+  maxabs     = 10,
+  epsilon    = epsi0,
+  tolerance  = tol0
 );
 #addUnilateralConstraint( T > 0,
 #                         TimePositive,
@@ -36,26 +36,34 @@ addControlBound(
 addUnilateralConstraint(
   y(zeta) > low(x(zeta)),
   LowBound,
+  subtype   = "BARRIER_0",
   scale     = 1,
   epsilon   = 0,
-  tolerance = low_tolerance
+  tolerance = low_tolerance0
 );
 setTarget( mayer = T );
 LEN  := evalf(sqrt(xf^2+yf^2));
 TIME := evalf(sqrt(-2*yf/g));
 VF   := evalf(LEN/TIME);
 PARS := [
-  mass           = 1,
-  xf             = 5,
-  yf             = -2,
-  Vf             = VF,
-  Tf             = TIME,
-  g              = 9.81,
-  y0_low         = -0.2,
-  slope_low      = -1.5/4,
+  mass      = 1,
+  xf        = 5,
+  yf        = -2,
+  Vf        = VF,
+  Tf        = TIME,
+  g         = 9.81,
+  y0_low    = -0.2,
+  slope_low = -1.5/4,
+
+
+  epsi0 = 0.1,
+  epsi1 = 1e-4,
+
+  tol0  = 0.1,
+  tol1  = 1e-4,
+
   low_tolerance0 = 0.1,
-  low_tolerance1 = 1e-6,
-  low_tolerance  = low_tolerance0
+  low_tolerance1 = 1e-6
 ];
 GUESS := [
   x     = zeta*xf,
@@ -65,6 +73,8 @@ GUESS := [
 ];
 CONT :=[
   [
+    [vtheta,"tolerance"]   = pow_average__xo(s,tol0,tol1),
+    [vtheta,"epsilon"]     = pow_average__xo(s,epsi0,epsi1),
     [LowBound,"tolerance"] = pow_average__xo(s,low_tolerance0,low_tolerance1)
   ]
 ];

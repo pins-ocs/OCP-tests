@@ -48,3 +48,4 @@ dumps
 *.bak
 /**/build
 /**/.idea
+test-PointMassCarModel_1/Xcode

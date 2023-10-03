@@ -28,13 +28,12 @@ addControlBound(
   scale       = T,
   max         = 1,
   min         = -1,
-  epsilon     = 0.1,
-  tolerance   = 0.01,
-  controlType = "U_COS_LOGARITHMIC"
+  epsilon     = epsi0,
+  tolerance   = tol0,
+  controlType = "COS_LOGARITHMIC"
 ):;
 addUnilateralConstraint(
   T>0, Tpositive,
-  #barrier   = true,
   scale     = 1,
   epsilon   = 0.1,
   tolerance = 0.01
@@ -48,7 +47,9 @@ PARS := [
   tau      = 0.01,
   W_A_TAU0 = 0.1,
   W_A_TAU1 = 0,
-  W_A_TAU  = W_A_TAU0
+  W_A_TAU  = W_A_TAU0,
+  epsi0    = 0.1, epsi1 = 0.001,
+  tol0     = 0.1, tol1  = 0.001
 ];
 #Describe(addUserFunction):;
 addUserFunction( guess_x(s)     = x_i );
@@ -60,7 +61,13 @@ GUESS := [
   a_tau = guess_a_tau(zeta)
 ];
 CONT := [
-  [ W_A_TAU = W_A_TAU0*(1-s)+W_A_TAU1*s ]
+  [ 
+    W_A_TAU = W_A_TAU0*(1-s)+W_A_TAU1*s
+  ],
+  [ 
+    ["a","tolerance"] = tol0*(1-s)+tol1*s,
+    ["a","epsilon"]   = epsi0*(1-s)+epsi1*s
+  ]
 ];
 project_dir  := "../generated_code";
 project_name := "Brake";
@@ -69,7 +76,7 @@ generateOCProblem(
   parameters              = PARS,
   states_guess            = GUESS,
   optimization_parameters = [ T = Tguess ],
-  #continuation            = CONT,
+  continuation            = CONT,
   controls_iterative      = true,
   controls_guess          = [ a = 0 ],
   mesh                    = [[length = 1, n = 50]],
