@@ -95,14 +95,19 @@ PARS := [
   time_f     = 27
 ];
 #Describe(generateOCProblem) ;
+project_name := "gtocX_2burn_pars";
+project_dir  := "../generated_code";
 generateOCProblem(
-  "gtocX_2burn_pars",
-  parameters        = PARS,
-  post_processing   = POST,
-  states_guess      = GUESS,
+  project_name,
+  output_directory        = project_dir,
+  parameters              = PARS,
+  post_processing         = POST,
+  states_guess            = GUESS,
   optimization_parameters = PGUESS,
-  continuation      = CONTINUATION,
-  admissible_region = [ p > 0 ], 
-  mesh              = [length=1, n=50],
-  clean             = false
+  continuation            = CONTINUATION,
+  admissible_region       = [ p > 0 ], 
+  mesh                    = [length=1, n=50],
+  user_code_header        = ["gtocX.hh"],
+  user_code_namespace     = ["AstroLib"],
+  clean                   = false
 );

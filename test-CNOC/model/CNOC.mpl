@@ -235,8 +235,8 @@ dataOCP := [
   epsi_CTRL = 0.01,
   tol_CTRL  = 0.01
 ];
-post_int_list := [ [coV(zeta),"time"] ] ;
 post_list := [
+  [coV(zeta),["coV","time"] ],
   [sqrt(vs(zeta)^2+vn(zeta)^2),"feed"],
   [sqrt(as(zeta)^2+an(zeta)^2),"acc"],
   [sqrt(js(zeta)^2+jn(zeta)^2),"jerk"],
@@ -263,11 +263,10 @@ project_name := "CNOC";
 #Describe(generateOCProblem):;
 generateOCProblem(
   project_name, 
-  integral_post_processing = post_int_list,
-  post_processing          = post_list,
-  parameters               = dataOCP,
-  #controls_guess          = [js=0,jn=0],
-  states_guess             = guess_list,
-  clean                    = false
+  post_processing = post_list,
+  parameters      = dataOCP,
+  #controls_guess = [js=0,jn=0],
+  states_guess    = guess_list,
+  clean           = false
 );
 # if used in batch mode use the comment to quit;

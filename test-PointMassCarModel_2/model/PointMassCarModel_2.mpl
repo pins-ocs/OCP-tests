@@ -128,7 +128,8 @@ addControlBound(
   max         = 1,
   u_penalties_opts
 );
-out_vars := [
+POST := [
+  [1/ZDOT,           "dtdzeta"],
   [xV(zeta,n(zeta)), "xV"],              
   [yV(zeta,n(zeta)), "yV"],
   [subs(t=zeta,fy),  "fy"],
@@ -166,13 +167,12 @@ continuation_param := [
   ]
 ];
 project_name := "PointMassCarModel_2";
-int_out_vars := [[1/ZDOT, "t"]];
+project_dir  := "../generated_code";
 generateOCProblem(
   project_name, 
   parameters               = [ op(point_mass_data), op(other_params) ] ,
   standard_post_processing = true,
-  post_processing          = out_vars,
-  integral_post_processing = int_out_vars,
+  post_processing          = POST,
   continuation             = continuation_param,
   states_guess             = states_guess_expr,
   admissible_region        = admissible_region_expr 
@@ -183,4 +183,4 @@ generateOCProblem(
 ocp := getOCProblem();
 ocp["bvp"]["interface_equations"][6];
 indices(ocp);
-;
+# if used in batch mode use the comment to quit;

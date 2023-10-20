@@ -54,7 +54,7 @@ PARS := [
   Tf           = 6
 ];
 OPT_PARS := [];
-IPOST := [[x1(zeta)^2,"intTarget"]];
+POST := [ [x1(zeta)^2,"Target"] ];
 GUESS := [ x1=x1_i, x2=x2_i, x3=x3_i ];
 MESH_DEF := [ length=Tf, n=1000 ];
 CONT := [
@@ -69,10 +69,10 @@ project_name := "LUUS_Singular04";
 #Describe(generateOCProblem);
 generateOCProblem(
   project_name,
-  integral_post_processing = IPOST,
-  parameters               = PARS,
-  continuation             = CONT,
-  mesh                     = MESH_DEF,
-  states_guess             = GUESS
+  post_processing = POST,
+  parameters      = PARS,
+  continuation    = CONT,
+  mesh            = MESH_DEF,
+  states_guess    = GUESS
 );
 # if used in batch mode use the comment to quit;

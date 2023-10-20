@@ -64,22 +64,24 @@ PARS :=  [
   T_tol_max  = 0.01, T_tol_min  = 1e-4,
 
 
-  x1_i       = Pi/2,
-  x2_i       = 4,
-  x3_i       = 0,
+  x1_i = Pi/2,
+  x2_i = 4,
+  x3_i = 0,
 
 
-  x2_f       = 0,
-  x3_f       = 0,
+  x2_f = 0,
+  x3_f = 0,
 
 
-  T_init     = 100,
-  WG0        = 1,
-  WG         = WG0
+  T_init = 100,
+  WG0    = 1,
+  WG     = WG0
 ];
 OPT_PARS := [];
-POST := [[ zeta*T, "time"] ];
-IPOST := [[x1(zeta)^2+x2(zeta)^2,"intTarget"]];
+POST := [
+  [ zeta*T,                "time"   ],
+  [ x1(zeta)^2+x2(zeta)^2, "Target" ]
+];
 GUESS := [
   x1 = guess_x1(zeta),
   x2 = guess_x2(zeta),
@@ -103,12 +105,11 @@ project_name := "ICLOCS_SingularArc";
 #Describe(generateOCProblem);
 generateOCProblem(
   project_name,
-  post_processing          = POST,
-  integral_post_processing = IPOST,
-  parameters               = PARS,
-  continuation             = CONT,
-  mesh                     = MESH_DEF,
-  states_guess             = GUESS,
-  optimization_parameters  = PGUESS
+  post_processing         = POST,
+  parameters              = PARS,
+  continuation            = CONT,
+  mesh                    = MESH_DEF,
+  states_guess            = GUESS,
+  optimization_parameters = PGUESS
 );
 # if used in batch mode use the comment to quit;

@@ -141,6 +141,7 @@ addControlBound(
   u_penalties_opts
 );
 out_vars := [
+  [sqrt_inv_Vseg(zeta)^2, ["dtdzeta","t"]],
   [Kappa(s(zeta)),      "Kappa"],
   [leftWidth(s(zeta)),  "leftWidth"],
   [rightWidth(s(zeta)), "rightWidth"],
@@ -195,13 +196,11 @@ continuation_param := [
   ]
 ];
 project_name := "PointMassCarModel_3";
-int_out_vars := [[sqrt_inv_Vseg(zeta)^2, "t"]];
 generateOCProblem( clean=false,
   project_name, 
   parameters               = [ op(point_mass_data), op(other_params) ],
   standard_post_processing = true,
   post_processing          = out_vars,
-  integral_post_processing = int_out_vars,
   continuation             = continuation_param,
   states_guess             = states_guess_expr,
   admissible_region        = admissible_region_expr,
@@ -210,10 +209,3 @@ generateOCProblem( clean=false,
   #mesh = [[length = 1, n = Num_mesh_points]],
   #excluded = [ "Main.cc", "Data.lua", "run_ffi.rb"]#, "run.rb"]#, "Data.rb" ]
 );
-ocp := getOCProblem();
-ocp["bvp"]["interface_equations"][1..7];
-ocp["bvp"]["interface_equations"][8..14];
-indices(ocp["bvp"]);
-ocp["bvp"]["boundary_conditions"];
-OCP_data["bc_vec"];
-;

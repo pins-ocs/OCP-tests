@@ -22,7 +22,6 @@ infoBoundaryConditions() ;
 pp := (t,a,b)->exp(-b*(t-a)^2);
 qq := 3*pp(t,3,12)+3*pp(t,6,10)+3*pp(t,10,6)+8*pp(t,15,4)+0.01;
 plot(qq,t=0..20);
-100*int(qq,t=0..20);
 addUserFunction(p_base(t,a,b)=exp(-b*(t-a)^2));
 addUserFunction(q_lower(t)=3*p_base(t,3,12)
                           +3*p_base(t,6,10)
@@ -34,26 +33,22 @@ addUnilateralConstraint(
   SUMQ >= q_lower(zeta),
   Ybound,
   barrier   = true,
-  epsilon   = epsi,
-  tolerance = tol,
-  scale     = 1, #+SUMQ,
-  barrier   = true
+  epsilon   = 0,
+  tolerance = tol0,
+  scale     = 1,
+  subtype   = "BARRIER_LOG0"
 );
 TARGET1 := SUMQ;
 TARGET2 := u1(zeta)^2+u2(zeta)^2;
-setTarget( lagrange = W*TARGET1 + TARGET2/100 );
+setTarget( lagrange = W*TARGET1 + TARGET2/W );
 PARS := [
   y1_i  = 2, y2_i = 1, y3_i = 2, y4_i = 1,
   y1_f  = 2, y2_f = 3, y3_f = 1, y4_f = -2,
   W     = W0,
-  W0    = 0,
+  W0    = 1,
   W1    = 100,
-  epsi0 = 0.1,
-  epsi1 = 0.001,
-  epsi  = epsi0,
-  tol0  = 0.1,
-  tol1  = 0.001,
-  tol   = tol0
+  tol0  = 0.01,
+  tol1  = 0.001
 ];
 GUESS := [
   y1 = y1_i + zeta*(y1_f-y1_i),
@@ -63,8 +58,9 @@ GUESS := [
 ];
 CONT := [
   [
-    ["Ybound","epsilon"]   = epsi0*(1-s)+epsi1*s,
-    ["Ybound","tolerance"] = tol0*(1-s)+tol1*s,
+    ["Ybound","tolerance"] = tol0*(1-s)+tol1*s
+  ],
+  [
     W = (1-s)*W0+s*W1
   ]
 ];
@@ -81,16 +77,21 @@ Mesh := [
 Mesh2 := [length=20, n=4000];
 project_dir  := "../generated_code";
 project_name := "AlpRider";
+SOLVER_PARS := table( [
+  "continuation_min_step" = 1e-6,
+  "max_step_iter"         = 20,
+  "max_accumulated_iter"  = 10000
+]);
+getOCPsolverParameters();
+#Describe(generateOCProblem);
 generateOCProblem(
-  "AlpRider", clean=true,
+  project_name, clean=true,
   parameters           = PARS,
   mesh                 = Mesh2,
   states_guess         = GUESS,
   continuation         = CONT,
   post_processing      = POST,
   # change parameter of the solver for convergence
-  continuation_min_step = 1e-6,
-  max_step_iter         = 20,
-  max_accumulated_iter  = 10000
+  solver_parameters    = SOLVER_PARS
 );
 # if used in batch mode use the comment to quit;

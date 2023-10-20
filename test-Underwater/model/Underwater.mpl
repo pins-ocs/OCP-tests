@@ -11,8 +11,8 @@ EQ4    := diff(vx(zeta),zeta)    = T*(g1-vz(zeta)*Omega(zeta)*(m3/m1)):
 EQ5    := diff(vz(zeta),zeta)    = T*(g2+vx(zeta)*Omega(zeta)*(m1/m3)):
 EQ6    := diff(Omega(zeta),zeta) = T*(g3+vx(zeta)*vz(zeta)*(m3-m1)/inertia):
 EQNS_T := [ EQ||(1..6) ]: <%> ;
-qvars := map( [x,z,theta,vx,vz,Omega], (zeta));
-cvars := map( [u1,u2,u3], (zeta));
+qvars := map( [x,z,theta,vx,vz,Omega], (zeta) );
+cvars := map( [u1,u2,u3], (zeta) );
 loadDynamicSystem(
   equations = EQNS_T,
   controls  = cvars,
@@ -23,26 +23,28 @@ addBoundaryConditions(
   final   = [x,z,vx,vz,theta,Omega]
 );
 infoBoundaryConditions();
+CTYPE := "{CTRL_TYPE}";
+SCALE := T;
 addControlBound(
   u1,
-  scale       = T,
-  controlType = "U_COS_LOGARITHMIC",
+  scale       = SCALE,
+  controlType = CTYPE,
   maxabs      = 1,
   epsilon     = epsi_max,
   tolerance   = tol_max
 );
 addControlBound(
   u2,
-  scale       = T,
-  controlType = "U_COS_LOGARITHMIC",
+  scale       = SCALE,
+  controlType = CTYPE,
   maxabs      = 1,
   epsilon     = epsi_max,
   tolerance   = tol_max
 );
 addControlBound(
   u3,
-  scale       = T,
-  controlType = "U_COS_LOGARITHMIC",
+  scale       = SCALE,
+  controlType = CTYPE,
   maxabs      = 1,
   epsilon     = epsi_max,
   tolerance   = tol_max
@@ -100,6 +102,9 @@ CONTINUATION := [
     [u3,"tolerance"] = tol
   ]
 ];
+PREFIX := [
+  "CTRL_TYPE = 'COS_LOGARITHMIC'"
+];
 project_dir  := "../generated_code";
 project_name := "Underwater";
 generateOCProblem(
@@ -110,6 +115,7 @@ generateOCProblem(
   continuation            = CONTINUATION,
   optimization_parameters = [ T = Tguess ],
   states_guess            = GUESS,
-  controls_guess          = UGUESS
+  controls_guess          = UGUESS,
+  data_file_header        = PREFIX
 ) ;
 # if used in batch mode use the comment to quit;

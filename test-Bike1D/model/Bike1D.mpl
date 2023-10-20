@@ -64,11 +64,9 @@ PARS := [
   vmax    = 100
 ];
 POST := [
+  [ 1/v(zeta), "dtime" ],
   [ Tmax_normalized(v(zeta)), "Tmax_norma" ]
 ];
-IPOST := [
-  [ 1/v(zeta), "time" ]
-]:;
 CONTINUATION := [];
 GUESS := [ v = v_i ];
 MESH_DEF := [[ length=1000, n=1000 ]];
@@ -77,7 +75,6 @@ project_name := "Bike1D";
 generateOCProblem(
   project_name,
   standard_post_processing = true,
-  integral_post_processing = IPOST,
   post_processing          = POST,
   parameters               = PARS,
   continuation             = CONTINUATION,

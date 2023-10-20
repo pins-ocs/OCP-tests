@@ -95,8 +95,11 @@ PARS := [
   time_f     = 27
 ];
 #Describe(generateOCProblem) ;
+project_name := "gtocX_2burn";
+project_dir  := "../generated_code";
 generateOCProblem(
-  "gtocX_2burn",
+  project_name,
+  output_directory        = project_dir,
   parameters              = PARS,
   post_processing         = POST,
   states_guess            = GUESS,
@@ -105,5 +108,7 @@ generateOCProblem(
   admissible_region       = [ p(zeta) > 0 ], 
   mesh                    = [length=1, n=50],
   external_frameworks     = [],
+  user_code_header        = ["gtocX.hh"],
+  user_code_namespace     = ["AstroLib"],
   clean                   = false
 );
