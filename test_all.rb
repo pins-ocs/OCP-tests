@@ -48,7 +48,7 @@ def do_test(dir,idx,ffile,ffile2)
     rescue => e
       p e
       ffile.puts name
-      #binding.pry
+      binding.pry
     end
   end
   begin

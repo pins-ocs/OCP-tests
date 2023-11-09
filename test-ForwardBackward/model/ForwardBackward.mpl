@@ -106,10 +106,8 @@ POST := [
            -c1*v(zeta)^2,  "ax"          ],
   [ kappa(zeta)*v(zeta)^2, "ay"          ],
   [ sqrt(ELL2),            "ELL"         ],
-  [ E_max,                 "E_max"       ]
-];
-IPOST := [
-   [ 1/v(zeta), "time" ]
+  [ E_max,                 "E_max"       ],
+  [ 1/v(zeta),             ["dtime_dzeta", "time"] ]
 ];
 CONT := [
   [
@@ -150,7 +148,6 @@ project_name := "ForwardBackward";
 generateOCProblem(
   project_name,
   post_processing          = POST,
-  integral_post_processing = IPOST,
   parameters               = PARS,
   #optimization_parameters  = [ E_max = 1000 ],
   continuation             = CONT,

@@ -43,13 +43,12 @@ U_GUESS := [ u = min(1.9,max(0.1,(x(zeta)+1-zeta)/2)+1) ];
 Describe(generateOCProblem):;
 generateOCProblem(
   "SingularConstrainedCalogero",
-  integral_post_processing = [ [u(zeta)*(zeta-4), "int_target"] ],
-  post_processing          = [ [x(zeta)+1-zeta, "ineq_arg"] ],
-  mesh                     = [ length=3, n=600 ],
-  parameters               = PARS,
-  continuation             = CONT,
-  controls_iterative       = true,
-  controls_guess           = U_GUESS,
-  states_guess             = [ x = zeta]
+  post_processing    = [ [x(zeta)+1-zeta, "ineq_arg"], [u(zeta)*(zeta-4), ["target", "int_target"]]],
+  mesh               = [ length=3, n=600 ],
+  parameters         = PARS,
+  continuation       = CONT,
+  controls_iterative = true,
+  controls_guess     = U_GUESS,
+  states_guess       = [ x = zeta]
 );
 ;
