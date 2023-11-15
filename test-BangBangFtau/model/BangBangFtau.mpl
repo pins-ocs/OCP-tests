@@ -60,7 +60,6 @@ project_dir  := "../generated_code";
 project_name := "BangBangFtau";
 generateOCProblem(
   project_name,
-  standard_post_processing = true,
   post_processing    = POST,
   parameters         = PARS,
   continuation       = CONTINUATION,

@@ -169,14 +169,10 @@ continuation_param := [
 project_name := "PointMassCarModel_1";
 generateOCProblem(
   project_name, 
-  parameters               = [ op(point_mass_data), op(other_params) ] ,
-  standard_post_processing = true,
-  post_processing          = out_vars,
-  continuation             = continuation_param,
-  states_guess             = states_guess_expr,
-  admissible_region        = admissible_region_expr 
-  #controls_guess         = controls_guess_expression,
-  #mesh = [[length = 1, n = Num_mesh_points]],
-  #excluded = [ "Main.cc", "Data.lua", "run_ffi.rb"]#, "run.rb"]#, "Data.rb" ]
+  parameters        = [ op(point_mass_data), op(other_params) ] ,
+  post_processing   = out_vars,
+  continuation      = continuation_param,
+  states_guess      = states_guess_expr,
+  admissible_region = admissible_region_expr
 );
 ;

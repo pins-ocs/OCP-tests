@@ -74,16 +74,10 @@ project_dir  := "../generated_code";
 project_name := "Bike1D";
 generateOCProblem(
   project_name,
-  standard_post_processing = true,
-  post_processing          = POST,
-  parameters               = PARS,
-  continuation             = CONTINUATION,
-  mesh                     = MESH_DEF,
-  states_guess             = GUESS
+  post_processing = POST,
+  parameters      = PARS,
+  continuation    = CONTINUATION,
+  mesh            = MESH_DEF,
+  states_guess    = GUESS
 );
-ocp := getOCProblem();
-#eval(ocp);
-eval(ocp["FD"]);
-eval(ocp["ode"]);
-eval(ocp["controls"]["u"]);
 # if used in batch mode use the comment to quit;

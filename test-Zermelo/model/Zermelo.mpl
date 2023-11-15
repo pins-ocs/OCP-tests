@@ -30,7 +30,7 @@ setTarget(
      (vy(zeta)-vy_guess(zeta))^2
   )
 );
-addUnilateralConstraint( T>=0, Tpositive, barrier=true );
+addUnilateralConstraint( T>=0, Tpositive );
 CONTROL_GUESS := [ u = arctan2(-mu4__xo(zeta), -mu3__xo(zeta)) ];
 addUserFunction(x_guess(zeta)=x_i+zeta*Tguess*vx_i);
 addUserFunction(y_guess(zeta)=y_i+zeta*Tguess*vy_i);
@@ -64,7 +64,7 @@ project_dir  := "../generated_code";
 project_name := "Zermelo";
 generateOCProblem(
   project_name,
-  integral_post_processing = [[zeta*T,"Time"]],
+  post_processing          = [[zeta*T,["dTimeDzeta","Time"]]],
   optimization_parameters  = [ T = Tguess],
   parameters               = PARS,
   continuation             = CONT,

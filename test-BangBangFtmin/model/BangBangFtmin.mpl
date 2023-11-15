@@ -26,13 +26,12 @@ project_dir  := "../generated_code";
 project_name := "BangBangFtmin";
 generateOCProblem(
   project_name,
-  standard_post_processing = true,
-  admissible_region        = [ [ T > 0, "pars" ] ],
-  optimization_parameters  = [ T = 1 ],
-  post_processing = POST,
-  parameters      = PARS,
-  continuation    = CONTINUATION,
-  mesh            = MESH_DEF,
-  states_guess    = GUESS
+  admissible_region       = [ [ T > 0, "pars" ] ],
+  optimization_parameters = [ T = 1 ],
+  post_processing         = POST,
+  parameters              = PARS,
+  continuation            = CONTINUATION,
+  mesh                    = MESH_DEF,
+  states_guess            = GUESS
 );
 # if used in batch mode use the comment to quit;
