@@ -6,7 +6,7 @@ ode := [EQ||(1..2)]:<%>;
 xvars := [x(t),v(t)];
 uvars := [F(t)];
 loadDynamicSystem(equations=ode,controls=uvars,states=xvars);
-addBoundaryConditions(initial=[x=0,v=0],final=[x=2,v=0]);
+addBoundaryConditions(initial=[x=x0,v=v0],final=[x=x1,v=v1]);
 infoBoundaryConditions();
 setTarget( mayer = T );
 addControlBound(
@@ -15,7 +15,19 @@ addControlBound(
   maxabs = 1,
   scale  = T
 );
-PARS := [];
+addUnilateralConstraint(
+  T >= 0,
+  T_limit,
+  tolerance = 0.01,
+  epsilon   = 0.01
+);
+PARS := [
+  x0 = 0,
+  v0 = 0,
+  x1 = 2,
+  v1 = 0,
+  T_guess = 10 
+];
 POST := [
   [ zeta*T, "time" ]
 ];
@@ -27,7 +39,7 @@ project_name := "BangBangFtmin";
 generateOCProblem(
   project_name,
   admissible_region       = [ [ T > 0, "pars" ] ],
-  optimization_parameters = [ T = 1 ],
+  optimization_parameters = [ T = T_guess ],
   post_processing         = POST,
   parameters              = PARS,
   continuation            = CONTINUATION,
