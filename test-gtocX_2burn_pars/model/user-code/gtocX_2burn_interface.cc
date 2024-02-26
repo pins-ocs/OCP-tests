@@ -24,7 +24,7 @@
 #include "gtocX_2burn_pars.hh"
 #include "gtocX_2burn_pars_Pars.hh"
 
-namespace gtocX_2burn_parsDefine {
+namespace gtocX_2burn_pars {
 
   using namespace std;
   using namespace MechatronixLoad;

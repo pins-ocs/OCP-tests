@@ -20,11 +20,11 @@
 
 #include "Train.hh"
 
-namespace TrainDefine {
+namespace Train {
 
   using namespace std;
   using namespace MechatronixLoad;
-  
+
   static real_type epsilon = 0.05;
   static real_type ss[3] = { -2, 0, 2 };
   static real_type zz[2] = { 2, 4 };
@@ -46,7 +46,7 @@ namespace TrainDefine {
       res += (ss[j+1]-ss[j])/(1+power2((x-zz[j])/epsilon));
     return res / m_pi / epsilon;
   }
-  
+
   real_type
   Train::h_DD( real_type x ) const {
     real_type res = 0;
