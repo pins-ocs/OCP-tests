@@ -102,6 +102,7 @@
 98: test-Zermelo
 99: test-gtocX_2burn
 100: test-gtocX_2burn_pars
-101: test-vanDerPol
-102: test-wheel_slip_dynamics_with_actuator
-103: test-wheel_slip_dynamics_with_actuator_ocp
+101: test-identitfication_acado
+102: test-vanDerPol
+103: test-wheel_slip_dynamics_with_actuator
+104: test-wheel_slip_dynamics_with_actuator_ocp

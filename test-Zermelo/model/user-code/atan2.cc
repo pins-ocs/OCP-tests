@@ -20,11 +20,11 @@
 
 #include "Zermelo.hh"
 
-namespace ZermeloDefine {
+namespace Zermelo {
 
   using namespace std;
   using namespace MechatronixLoad;
-  
+
   real_type
   Zermelo::arctan2( real_type y, real_type x ) const {
     return atan2(y,x);
